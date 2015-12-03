@@ -1,8 +1,11 @@
 node_modules
 bower_components
 coverage
-.DS_Store
 public
 app/common/config/env.js
 app/common/config/env-local.js
 app/env-local.js
+*.zip
+*/*.zip
+build/*
+.idea
