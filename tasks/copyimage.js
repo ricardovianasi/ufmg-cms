@@ -1,6 +1,6 @@
-var gulp   = require('gulp');
+var gulp = require('gulp');
 
-gulp.task('copyimage',function () {
+gulp.task('copyimage', function () {
   return gulp.src('./app/assets/img/*.*')
     .pipe(gulp.dest('./build/assets/img'));
 });

@@ -1,26 +1,25 @@
-var gulp         = require('gulp'),
-    minifyCSS    = require('gulp-minify-css'),
-    concat       = require('gulp-concat'),
-    rename       = require('gulp-rename'),
-    sass         = require('gulp-sass'),
-    cssGlobbing  = require('gulp-css-globbing'),
-    cmq          = require('gulp-merge-media-queries'),
-    autoprefixer = require('gulp-autoprefixer'),
-    sourcemaps   = require('gulp-sourcemaps'),
-    plumber = require('gulp-plumber');
+var gulp = require('gulp');
+var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+var cssGlobbing = require('gulp-css-globbing');
+var cmq = require('gulp-merge-media-queries');
+var autoprefixer = require('gulp-autoprefixer');
+var sourcemaps = require('gulp-sourcemaps');
+var plumber = require('gulp-plumber');
 
-gulp.task('css', function() {
-
+gulp.task('css', function () {
   gulp.src('./app/assets/scss/main.scss')
     .pipe(plumber())
-  	.pipe(cssGlobbing({ extensions: ['.scss', '.css'] }))
+    .pipe(cssGlobbing({extensions: ['.scss', '.css']}))
     .pipe(sourcemaps.init())
-    .pipe(sass.sync().on('error', function(error){
-        console.log(error);
+    .pipe(sass.sync().on('error', function (error) {
+      console.log(error);
     }))
     .pipe(autoprefixer({
-            browsers: ['not ie <= 8'],
-            cascade: false
+      browsers: ['not ie <= 8'],
+      cascade: false
     }))
     .pipe(concat('main.css'))
     .pipe(cmq())
