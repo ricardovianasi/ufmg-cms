@@ -19,6 +19,7 @@ gulp.task('build', [
 
 //task for developer
 gulp.task('dev', [
+          'env',
           'build',
           'watch',
           'browser-sync']);
@@ -26,5 +27,6 @@ gulp.task('dev', [
 
 //task for prepare deploy
 gulp.task('production',[
+          'env',
           'build',
           'imagemin']);
