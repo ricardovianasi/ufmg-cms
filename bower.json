@@ -1,0 +1,25 @@
+{
+  "name": "cms-portal-ufmg",
+  "version": "0.0.1",
+  "description": "cms novo portal ufmg",
+  "homepage": "https://github.com/dielduarte/teste-agrid",
+  "authors": [
+    "dielduarte <magdiel.kesller@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-loading-bar": "~0.8.0",
+    "angular-mocks": "~1.4.7",
+    "angular-route": "~1.4.8",
+    "angular-ui-router": "~0.2.15"
+  }
+}
