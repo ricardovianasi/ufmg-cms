@@ -11,7 +11,7 @@ gulp.task('jade', ['generate-index'], function() {
     .pipe(plumber())
     .pipe(jade({pretty: true}))
     .pipe(minifyHTML())
-    .pipe(gulp.dest('./public/'))
+    .pipe(gulp.dest('./build/'))
 });
 
 
@@ -21,5 +21,5 @@ gulp.task('generate-index', function(){
     .pipe(plumber())
     .pipe(jade({pretty: true}))
     .pipe(minifyHTML())
-    .pipe(gulp.dest('./public/'))
+    .pipe(gulp.dest('./build/'))
 });;

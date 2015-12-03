@@ -27,5 +27,5 @@ gulp.task('css', function() {
     .pipe(minifyCSS())
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./public/assets/css'));
+    .pipe(gulp.dest('./build/assets/css'));
 });
