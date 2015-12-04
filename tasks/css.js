@@ -12,7 +12,9 @@ var plumber = require('gulp-plumber');
 gulp.task('css', function () {
   gulp.src('./app/assets/scss/main.scss')
     .pipe(plumber())
-    .pipe(cssGlobbing({extensions: ['.scss', '.css']}))
+    .pipe(cssGlobbing({
+      extensions: ['.scss', '.css', '.sass']
+    }))
     .pipe(sourcemaps.init())
     .pipe(sass.sync().on('error', function (error) {
       console.log(error);
