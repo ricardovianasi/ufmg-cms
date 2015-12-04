@@ -28,7 +28,19 @@ var files = [
   'bower_components/angular-ui-mask/dist/mask.min.js'
 ];
 
-gulp.task('build-vendors', function () {
+var styles = [
+  'bower_components/angular-toastr/dist/angular-toastr.min.css',
+  'bower_components/font-awesome/css/font-awesome.min.css',
+  'bower_components/bootstrap/dist/css/bootstrap.min.css',
+  'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
+  'bower_components/ng-responsive-calendar/dist/css/calendar.min.css',
+  'bower_components/angular-ui-select/dist/select.min.css',
+  'bower_components/cropper/dist/cropper.min.css',
+  'bower_components/ng-cropper/dist/ngCropper.all.min.css',
+  'app/assets/scripts/redactor/redactor.css'
+];
+
+gulp.task('build-vendors', ['build-vendors-css'], function () {
   gulp.src(files)
     .pipe(gulpif(/[.]js$/, concat('vendors.js')))
     .pipe(rename({
@@ -36,3 +48,26 @@ gulp.task('build-vendors', function () {
     }))
     .pipe(gulp.dest('./build/scripts/'));
 });
+
+gulp.task('build-vendors-css', function(){
+  gulp.src(styles)
+    .pipe(gulpif(/[.]css$/, concat('vendors.css')))
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(gulp.dest('./build/assets/css/'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
