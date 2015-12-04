@@ -9,6 +9,9 @@
       'SidebarDirectiveModule',
       'ServiceModule',
       'FilterModule',
-      'HelperModule'
+      'HelperModule',
+      'mediaModule',
+      'calendarModule',
+      'galleryModule'
     ]);
 })();
