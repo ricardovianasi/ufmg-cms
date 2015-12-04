@@ -10,7 +10,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 
 gulp.task('css', function () {
-  gulp.src('./app/assets/scss/main.scss')
+  gulp.src('./app/assets/styles/main.sass')
     .pipe(plumber())
     .pipe(cssGlobbing({
       extensions: ['.scss', '.css', '.sass']

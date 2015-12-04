@@ -2,7 +2,7 @@ node_modules
 bower_components
 coverage
 public
-app/common/config/env*.js
+app/common/config/env*
 app/env-local.js
 *.zip
 */*.zip
