@@ -9,3 +9,4 @@ app/env-local.js
 */*.zip
 build/*
 .idea
+app/env-local.json
