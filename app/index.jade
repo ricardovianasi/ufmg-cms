@@ -1,8 +1,29 @@
-html(ng-app="app")
+doctype html
+html(ng-app='app')
   head
-    title cms - UFMG
-    link(rel="stylesheet", href="assets/css/main.min.css")
+    meta(charset='utf-8')
+    title UFMG CMS
+    meta(name='viewport', content='width=device-width')
+    // Styles
+    link(rel='stylesheet', type='text/css', href='assets/css/main.min.css')
   body
-    ng-view
-    script(src="scripts/vendors.min.js")
-    script(src="scripts/app.min.js")
+    .cms-container
+      header.header
+        .row
+          .col-xs-3.bor-right-gray
+            a.clearfix.header-logo(href='#/')
+              .pull-left
+                img(src='assets/img/logo.png', alt='')
+              .header-logo-title.pull-left
+                | Universidade Federal
+                br
+                | de Minas Gerais
+          .col-xs-9
+            | Gerenciador de Conteúdo
+      .sidebar-menu.pull-left
+        ufmg-sidebar
+      .body.pull-left
+        section(ng-view)
+    // JS
+    script(src='scripts/vendors.min.js')
+    script(src='scripts/app.min.js')
