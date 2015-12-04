@@ -1,0 +1,138 @@
+header.view-header.clearfix
+  .pull-left
+    h2 Calendário Acadêmico
+    ol.breadcrumb
+      li.active
+        | Calendário Acadêmico
+  .pull-right
+    a.btn.btn-primary.btn-lg.pull-left.spacer-right(ng-click="diasLetivos('lg')")
+      | DIAS LETIVOS
+    a.btn.btn-primary.btn-lg.pull-left(ng-click="addEvent('lg')")
+      | NOVO REGISTRO
+.row.list-header
+  .col-xs-5
+    ul.list-inline.list-status
+      li
+        a(ng-click="itemStatus = ''")
+          span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }")
+            | Tudo
+          span.small ({{ calendar.length }})
+      li
+        a(ng-click="itemStatus = 'publish'")
+          span(ng-class="{ 'strong': itemStatus == 'publish'}")
+            | Publicados
+          span.small ({{ (calendar | filter: {status: 'publish'}).length }})
+      li
+        a(ng-click="itemStatus = 'public'")
+          span(ng-class="{ 'strong': itemStatus == 'public'}")
+            | Público
+          span.small ({{ (calendar | filter: {status: 'public'}).length }})
+  .col-xs-7
+    .pull-right
+      .pull-left.list-select.spacer-right
+        .form-group
+          select.form-control(ng-model='regional.id')
+            option(value='1') Campus: Belo Horizonte
+            option(value='2') Campus: Montes Claros
+            option(value='') Todos os campus
+      .pull-left
+        form.form-inline(action='')
+          .form-group
+            input.form-control(type='text', ng-model='search', placeholder='Pesquisar')
+div(ng-show='viewCalendar')
+  calendar(calendar-mode="'month'", event-source='eventSource')
+.row(ng-show='!viewCalendar')
+  .col-xs-12
+    .row
+      .form-group.col-xs-3
+        select.form-control(ng-model='active_period_filter', ng-options='convertPeriodStr(period_filter_item) for period_filter_item in period_filter')
+    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+      thead
+        tr(role='row')
+          th(style='width: 50%')
+            | Título
+          th.tac(style='width: 15%')
+            | Autor
+          th.tac(style='width: 15%')
+            | Campus
+          th.tac(style='width: 15%;')
+            | Data da Publicação
+      tbody
+        tr.odd(role='row', ng-repeat='item in calendar | filter: search | \
+        filter: { regional: { id: regional.id } } | \
+        filter: { period: active_period_filter } | \
+        filter: {status: itemStatus}')
+          td
+            .clearfix
+              .listing-actions.pull-left
+                a.btn.btn-warning(ng-click="editEvent('lg', item)")
+                  i.fa.fa-pencil
+              .pull-left
+                .clearfix
+                  .calendar-week-day.pull-left(style='width: 100px')
+                    strong
+                      | {{ convertDate(item.init_date) | date: 'dd' }}
+                      | {{ item.end_date ? 'à '+(convertDate(item.end_date) | date: 'dd') : '' }}
+                    br
+                    small
+                      | {{ getWeekDay(item.init_date) }}
+                      | {{ item.end_date ? 'à '+getWeekDay(item.end_date) : '' }}
+                  .pull-left(style='width: 260px')
+                    | {{ item.description }}
+            //
+          td.tac {{ item.author.name }}
+          td.tac {{ item.regional.name }}
+          td.tac
+            strong {{ item.published_at }}
+            br
+            small {{ item.status }}
+          //
+            <td class="tac">
+            <a href="" class="btn btn-primary">
+            <i class="fa fa-eye"></i>
+            </a>
+            <a  ng-click="editEvent('lg', item)" class="btn btn-warning">
+            <i class="fa fa-pencil"></i>
+            </a>
+            <a ng-click="removeEvent(item.id, item.description)" class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+            </a>
+            </td>
+//
+  <div class="row">
+  <div class="col-xs-6">
+  <div class="pagination">
+  Exibindo 1-10 de 57 resultados
+  </div>
+  </div>
+  <div class="col-xs-6">
+  <div class="pull-right">
+  <ul class="pagination">
+  <li class="paginate_button previous disabled" aria-controls="example-1" tabindex="0">
+  <a href="#">Anterior</a>
+  </li>
+  <li class="paginate_button active" aria-controls="example-1" tabindex="0">
+  <a href="#">1</a>
+  </li>
+  <li class="paginate_button " aria-controls="example-1" tabindex="0">
+  <a href="#">2</a>
+  </li>
+  <li class="paginate_button " aria-controls="example-1" tabindex="0">
+  <a href="#">3</a>
+  </li>
+  <li class="paginate_button " aria-controls="example-1" tabindex="0">
+  <a href="#">4</a>
+  </li>
+  <li class="paginate_button " aria-controls="example-1" tabindex="0">
+  <a href="#">5</a>
+  </li>
+  <li class="paginate_button " aria-controls="example-1" tabindex="0">
+  <a href="#">6</a>
+  </li>
+  <li class="paginate_button next" aria-controls="example-1" tabindex="0">
+  <a href="#">Próximo</a>
+  </li>
+  </ul>
+  </div>
+  </div>
+  </div>

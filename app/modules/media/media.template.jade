@@ -1,0 +1,67 @@
+header.view-header.clearfix
+  .pull-left
+    h2 Mídia
+    ol.breadcrumb
+      li.active Mídia
+  .pull-right
+    a.btn.btn-primary.btn-lg.pull-left(ng-href='#/media/new') NOVA MÍDIA
+.row.list-header
+  .col-xs-5
+    ul.list-inline.list-status
+      li
+        a(ng-click="itemStatus = ''")
+          span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }") Tudo
+          span.small ({{ media.total }})
+      li
+        a(ng-click="itemStatus = 'publish'")
+          span(ng-class="{ 'strong': itemStatus == 'published'}") Publicados
+          span.small ({{ (media.items | filter: {status: 'published'}).length }})
+      li
+        a(ng-click="itemStatus = 'draft'")
+          span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
+          span.small ({{ (media.items | filter: {status: 'draft'}).length }})
+  .col-xs-7
+    .pull-right
+      .pull-left
+        form.form-inline(action='')
+          .form-group
+            input.form-control(type='text', ng-model='search', placeholder='Pesquisar')
+.row
+  .col-xs-12
+    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+      thead
+        tr(role='row')
+          th(style='width: 50%') Título
+          th.tac(style='width: 20%') Autor
+          th.tac(style='width: 13%;') Data de Criação
+          th.tac(style='width: 140px') Ações
+      tbody
+        tr.odd(role='row', ng-repeat='item in media.items | filter: search | filter: {status: itemStatus}')
+          td
+            .clearfix
+              .pull-left.spacer-right
+                img(ng-src='{{item.url}}', alt='', style='max-width: 120px; max-height: 120px; overflow: hidden; height: auto;')
+              .pull-left
+                | {{ item.title }}
+                small {{ item.subtitle }}
+          td.tac {{ item.author.name }}
+          td.tac
+            strong
+              | {{ convertDate(item.created_at) | date: 'dd/MM/yyyy' }}
+            br
+            small(ng-if='item.updated_at')
+              | Atualizado em
+              br
+              | {{ convertDate(item.updated_at) | date:
+              |                         'dd/MM/yyyy' }}
+            // <small ng-repeat="status_item in status | filter: { status: item.status } | limitTo: 1">({{ status_item.name }})</small>
+          td.tac
+            a.btn.btn-primary(target='_blank', ng-href='{{item.url}}')
+              i.fa.fa-eye
+            a.btn.btn-warning(ng-href='#/media/edit/{{item.id}}')
+              i.fa.fa-pencil
+            a.btn.btn-danger(ng-click='removeMedia(item.id, item.title)')
+              i.fa.fa-trash
+.row(ng-show='media.total > 30')
+  .col-xs-12
+    pagination.pagination-sm(boundary-links='true', total-items='media.total', items-per-page='media.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
