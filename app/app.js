@@ -12,6 +12,7 @@
       'HelperModule',
       'mediaModule',
       'calendarModule',
-      'galleryModule'
+      'galleryModule',
+      'eventsModule'
     ]);
 })();
