@@ -1,0 +1,87 @@
+header.view-header.clearfix
+  .pull-left
+    h2 Galerias
+    ol.breadcrumb
+      li.active Galerias
+  .pull-right
+    a.btn.btn-primary.btn-lg.pull-left(ng-href='#/gallery/new') NOVA GALERIA
+.row.list-header
+  .col-xs-7
+    ul.list-inline.list-status
+      li
+        a(ng-click="itemStatus = ''")
+          span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }") Tudo
+          span.small ({{ galleries.total }})
+      li
+        a(ng-click="itemStatus = 'publish'")
+          span(ng-class="{ 'strong': itemStatus == 'published'}") Publicados
+          span.small ({{ (galleries.items | filter: {status: 'published'}).length }})
+      li
+        a(ng-click="itemStatus = 'draft'")
+          span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
+          span.small ({{ (galleries.items | filter: {status: 'draft'}).length }})
+  .col-xs-5
+    .pull-right
+      .pull-left
+        form.form-inline(action='')
+          .form-group
+            input.form-control(type='text', ng-model='search', placeholder='Pesquisar')
+.row
+  .col-xs-12
+    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+      thead
+        tr(role='row')
+          th(style='width: 60%') Título
+          th.tac(style='width: 20%') Autor
+          th.tac(style='width: 20%;') Data da Publicação
+      tbody
+        tr.odd(role='row', ng-repeat='gallery in galleries.items | filter: search | filter: {status: itemStatus}')
+          td
+            .clearfix
+              .listing-actions.pull-left
+                a.btn.btn-warning(ng-href='#/gallery/edit/{{gallery.id}}')
+                  i.fa.fa-pencil
+              .pull-left
+                | {{ gallery.title }}
+          td {{ gallery.author.name }}
+          td
+            strong {{ gallery.published_at }}
+            br
+            small {{ gallery.status }}
+          //
+            <td>
+            {{ gallery.title }}
+            <small>
+            {{ gallery.subtitle }}
+            </small>
+            </td>
+            <td class="tac">
+            {{ gallery.author.name }}
+            </td>
+            <td class="tac">
+            <strong>
+            {{ gallery.status }}
+            </strong><br>
+            <small ng-repeat="status_item in status | filter: { status: gallery.status } | limitTo: 1">({{ status_item.name }})</small>
+            </td>
+            <td class="tac">
+            <a
+            ng-href="{{gallery.page_url}}"
+            target="_blank"
+            class="btn btn-primary">
+            <i class="fa fa-eye"></i>
+            </a>
+            <a
+            ng-href="#/gallery/edit/{{gallery.id}}"
+            class="btn btn-warning">
+            <i class="fa fa-pencil"></i>
+            </a>
+            <a
+            ng-click="removeGallery(gallery.id, gallery.title)"
+            class="btn btn-danger">
+            <i class="fa fa-trash"></i>
+            </a>
+            </td>
+.row(ng-show='galleries.total > 30')
+  .col-xs-12
+    pagination.pagination-sm(boundary-links='true', total-items='galleries.total', items-per-page='galleries.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
