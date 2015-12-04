@@ -5,7 +5,10 @@
     .module('app', [
       'ngRoute',
       'IndexRouteModule',
+      'PagesRouteModule',
       'SidebarDirectiveModule',
-      'NavigationServiceModule'
+      'ServiceModule',
+      'FilterModule',
+      'HelperModule'
     ]);
 })();
