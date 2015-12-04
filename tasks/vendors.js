@@ -7,6 +7,8 @@ var files = [
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/jquery/dist/jquery.min.js.map',
   'bower_components/cropper/dist/cropper.min.js',
+  'app/assets/scripts/redactor/redactor.js',
+  'app/assets/scripts/redactor/pt_br.js',
   'bower_components/lodash/dist/lodash.min.js',
   'bower_components/requirejs/require.js',
   'bower_components/angular/angular.min.js',
