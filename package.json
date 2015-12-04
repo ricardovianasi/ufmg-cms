@@ -1,7 +1,7 @@
 {
   "name": "cms-portal-ufmg",
   "version": "0.0.1",
-  "description": "cms novo portal ufmg",
+  "description": "CMS Novo Portal UFMG",
   "main": "public/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,10 +10,9 @@
     "type": "git",
     "url": "150.164.80.212:/var/www/repos/ufmg-cms.bare"
   },
-  "author": "Diel Duarte",
+  "author": "UFMG",
   "license": "MIT",
   "devDependencies": {
-    "bower": "*",
     "browser-sync": "^2.9.11",
     "gifsicle": "0.1.3",
     "gulp": "*",
