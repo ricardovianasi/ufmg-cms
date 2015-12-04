@@ -12,7 +12,7 @@ var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 
 gulp.task('js', function () {
-  return gulp.src(['./app/**/*.js'])
+  return gulp.src(['./app/**/*.js', '!app/assets/scripts/**/*.js'])
     .pipe(plumber())
     .pipe(jshint({
       esnext: true,
