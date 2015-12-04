@@ -4,7 +4,8 @@
   angular
     .module('app', [
       'ngRoute',
-      'IndexRouteModule'
+      'IndexRouteModule',
+      'SidebarDirectiveModule',
+      'NavigationServiceModule'
     ]);
-
 })();
