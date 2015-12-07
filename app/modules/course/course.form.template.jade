@@ -1,0 +1,42 @@
+header.view-header.clearfix
+  .pull-left
+    h2 Cursos
+    ol.breadcrumb
+      li
+        a(ng-href='#/course') Cursos
+      li.active(ng-if='course.name')
+        | {{course.name}}
+form.form(action='')
+  .row
+    .col-xs-8
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Nome
+            input.form-control(type='text', ng-model='course.name', ng-disabled='true')
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Tags
+            ui-select(multiple='', tagging='', tagging-tokens=',', tagging-label='', ng-model='course.tags', theme='bootstrap', sortable='true', ng-disabled='disabled', title='Digite uma tag')
+              ui-select-match(placeholder='Selecione as tags') {{$item}}
+              ui-select-choices(repeat='color in availableColors | filter:$select.search')
+                | {{color}}
+      .row
+        .col-xs-12
+          .pages-module.pages-module-cover
+            .chosen-cover
+              span.label.label-danger.remove-image(ng-show='course.cover_url', ng-click='removeImage()')
+                span.fa.fa-remove
+                |  REMOVER IMAGEM
+            .add-module(ng-show='!course.cover_url', ngf-accept="'image/*'", ngf-select='', ng-model='course_cover', ngf-multiple='false')
+              | + Adicionar Capa
+            .uploaded-image(ng-show='course.cover_url')
+              img(ng-src='{{course.cover_url}}', alt='')
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Descrição
+            textarea(ng-model='course.description', redactor='redactorConfig', cols='30', rows='10')
+    .col-xs-4
+      publishment-options(route-model='course')

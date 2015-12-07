@@ -1,0 +1,79 @@
+header.view-header.clearfix
+  .pull-left
+    h2 Cursos
+    ol.breadcrumb
+      li.active
+        | Cursos
+  .pull-right
+.row.list-header
+  .col-xs-5
+    ul.list-inline.list-status
+      li
+        a(ng-click="itemStatus = ''")
+          span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }")
+            | Tudo
+          span.small ({{ courses.length }})
+      li
+        a(ng-click="itemStatus = 'publish'")
+          span(ng-class="{ 'strong': itemStatus == 'published'}")
+            | Publicados
+          span.small ({{ (courses | filter: {status: 'published'}).length }})
+      li
+        a(ng-click="itemStatus = 'draft'")
+          span(ng-class="{ 'strong': itemStatus == 'draft'}")
+            | Rascunho
+          span.small ({{ (courses | filter: {status: 'draft'}).length }})
+  .col-xs-7
+    .pull-right
+      .pull-left.spacer-right
+        select.form-control(name='', id='')
+          option(value='') Graduação
+      .pull-left
+        form.form-inline(action='')
+          .form-group
+            input.form-control(type='text', ng-model='search', placeholder='Pesquisar')
+.row
+  .col-xs-12
+    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+      thead
+        tr(role='row')
+          th(style='width: 50%')
+            | Curso
+          th(style='width: 50%')
+            | Percurso
+          //
+            <th class="tac" style="width: 20%">
+            Data da Publicação
+            </th>
+      tbody
+        tr.odd(role='row', ng-repeat='item in course_routes | filter: search | filter: {status: itemStatus}')
+          td
+            .clearfix
+              .listing-actions.pull-left
+                a.btn.btn-warning(ng-href='#/course/edit/{{item.id}}')
+                  i.fa.fa-pencil
+              .pull-left
+                small {{ item.undergraduate_course.name }}
+          td
+            small {{ item.name }}
+          //
+            <td>
+            <strong>
+            {{ item.published_at }}
+            </strong><br>
+            </td>
+          //
+            <td>
+            </td>
+            <td>
+            </td>
+            <td class="tac">
+            Graduação
+            </td>
+            <td class="tac">
+            <a
+            ng-href="#/course/edit/{{ item.id }}"
+            class="btn btn-warning">
+            <i class="fa fa-pencil"></i>
+            </a>
+            </td>
