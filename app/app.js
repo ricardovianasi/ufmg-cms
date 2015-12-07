@@ -15,6 +15,7 @@
       'galleryModule',
       'eventsModule',
       'courseModule',
-      'newsModule'
+      'newsModule',
+      'releasesModule'
     ]);
 })();
