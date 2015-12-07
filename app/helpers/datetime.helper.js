@@ -5,7 +5,6 @@
     .factory('DateTimeHelper', [
       '$filter',
       function ($filter) {
-        'use strict';
 
         /**
          * @param {number} from

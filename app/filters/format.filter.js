@@ -4,8 +4,6 @@
   angular.module('FilterModule')
     .filter('format', [
       function () {
-        'use strict';
-
         return function (str) {
           if (!str || arguments.length <= 1) {
             return str;
