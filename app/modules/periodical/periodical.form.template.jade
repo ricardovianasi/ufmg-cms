@@ -1,0 +1,47 @@
+header.view-header.clearfix
+  .pull-left
+    h2
+      span(ng-if='periodical.name') {{periodical.name}}
+      span(ng-if='!periodical.name') Novo Periódico
+    ol.breadcrumb
+      li
+        a(ng-href='#/periodicals') Periódicos Jornalistas
+      li.active(ng-if='!periodical.name')
+        | Novo Periódico
+      li.active(ng-if='periodical.name')
+        | {{periodical.name}}
+.row
+  .col-xs-12
+    .form-group
+      label(for='') Nome:
+      input.form-control(type='text', ng-model='periodical.name')
+    .form-group
+      label(for='')
+        | Logo:
+        small
+          | A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px
+      .pages-module
+        .chosen-cover
+          span.label.label-danger.remove-image(ng-show='periodical.url', ng-click='removeImage()')
+            span.fa.fa-remove
+            |  REMOVER IMAGEM
+        .add-module(ng-show='!periodical.url', ngf-accept="'image/*'", ngf-select='', ng-model='add_photos', ngf-multiple='false') + Adicionar Logo
+        .uploaded-image.periodical-logo(ng-show='periodical.url')
+          img(ng-src='{{periodical.url}}', alt='')
+    .form-group
+      label(for='') Identificador (slogan):
+      input.form-control(type='text', ng-model='periodical.identifier')
+.row
+  .col-xs-4
+    .form-group
+      label(for='') Data da Criação:
+      input.form-control(type='text', ng-model='periodical.date')
+  .col-xs-4
+    .form-group
+      label(for='') Formato de Data:
+      select.form-control(ng-model='periodical.date_format', ng-options='date_format.id as date_format.id for date_format in date_formats')
+.row
+  .col-xs-12
+    hr
+    .pull-right
+      button.btn.btn-success.pull-left(ng-click='publish(periodical)') Salvar

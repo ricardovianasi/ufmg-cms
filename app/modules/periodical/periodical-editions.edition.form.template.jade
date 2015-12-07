@@ -1,0 +1,105 @@
+header.view-header.clearfix
+  .pull-left
+    h2
+      span(ng-if='edition.theme') {{edition.theme}}
+      span(ng-if='!edition.theme') Nova Galeria
+    ol.breadcrumb
+      li
+        a(ng-href='#/periodicals') Periódicos Jornalísticos
+      li
+        a(ng-href='#/periodicals/{{periodical.id}}/editions') {{periodical.name}}
+      li.active(ng-if='!edition.theme')
+        | Nova Edição
+      li.active(ng-if='edition.theme')
+        | {{edition.theme}}
+.row
+  .col-xs-8
+    .row
+      .col-xs-12
+        .form-group
+          label(for='') Tema:
+          input.form-control(type='text', ng-model='edition.theme')
+    .row
+      .col-xs-3
+        .form-group
+          label(for='') Número:
+          input.form-control(type='text', ng-model='edition.number')
+      .col-xs-3
+        .form-group
+          label(for='') Data de Publicação:
+          input.form-control(type='text', ng-model='edition.publish_date')
+      .col-xs-6
+        .form-group
+          label(for='') Arquivo PDF:
+          input.form-control(ng-show='!edition.file', type='file', ngf-accept="'pdf'", ngf-select='', ng-model='edition_file', ngf-multiple='false')
+          .clearfix.form-control(ng-show='edition.file')
+            .pull-left
+              | {{edition.file_name}}
+            .pull-right
+              span.label.label-danger.remove-image(ng-show='edition.file', ng-click="removeImage('pdf')")
+                span.fa.fa-remove
+                |  REMOVER
+          // <input type="text" ng-model="edition.file" class="form-control">
+    .row
+      .col-xs-12
+        .pages-module.edition-bg-thumb
+          .add-module(ng-show='!edition.background')
+            | + Adicionar Imagem de Fundo
+            .tac
+              br
+              button.btn.btn-primary(ngf-accept="'image/*'", ngf-select='', ng-model='edition_background', ngf-multiple='false') Carregar Imagem
+          div(ng-show='edition.background')
+            .chosen-cover
+              span.label.label-danger.remove-image(ng-click="removeImage('background')")
+                span.fa.fa-remove
+                |  REMOVER IMAGEM
+            .uploaded-image
+              img(ng-src='{{edition.background_url}}', alt='')
+    .row
+      .col-xs-8(as-sortable='sortableOptions', ng-model='edition.articles')
+        .pages-module(ng-repeat='article in edition.articles', as-sortable-item='')
+          .clearfix
+            .pull-right
+              span.label.label-default(ng-click='editArticle($index, article)')
+                span.fa.fa-pencil
+                |  EDITAR
+              span.label.label-danger(ng-click='removeArticle($index, article)')
+                span.fa.fa-remove
+                |  REMOVER
+              span.label.label-primary(as-sortable-item-handle='')
+                span.fa.fa-arrows-v
+                |  MOVER
+          .article-summary.clearfix
+            .pull-left.article-summary-left
+              .wide-arrow
+              .article-summary-title
+                | {{article.title}}
+            .pull-right.article-summary-number
+              | {{article.page_number}}
+        .pages-module
+          .add-module(ng-click='addArticle()') + Adicionar Artigo
+      .col-xs-4
+        .edition-cover-container
+          .pages-module.edition-cover-thumb
+            .add-module(ng-show='!edition.cover')
+              | +
+              br
+              |                             Capa Digitalizada
+              .tac
+                br
+                button.btn.btn-primary(ngf-accept="'image/*'", ngf-select='', ng-model='edition_cover', ngf-multiple='false') Carregar Imagem
+            div(ng-show='edition.cover')
+              .chosen-cover
+                span.label.label-danger.remove-image(ng-click="removeImage('cover')")
+                  span.fa.fa-remove
+                  |  REMOVER IMAGEM
+              .uploaded-image.edition-cover-image
+                img(ng-src='{{edition.cover_url}}', alt='')
+  .col-xs-4
+    br
+    publishment-options(route-model='edition')
+.row
+  .col-xs-12
+    hr
+    .pull-right
+      button.btn.btn-success.pull-left(ng-click='publish(edition)') Salvar
