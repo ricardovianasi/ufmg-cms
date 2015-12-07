@@ -14,6 +14,7 @@
       'calendarModule',
       'galleryModule',
       'eventsModule',
-      'courseModule'
+      'courseModule',
+      'newsModule'
     ]);
 })();

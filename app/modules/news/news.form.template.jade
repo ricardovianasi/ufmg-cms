@@ -1,0 +1,64 @@
+header.view-header.clearfix.spacer-bottom
+  .pull-left
+    h2
+      span(ng-if='news.title') {{news.title}}
+      span(ng-if='!news.title') Novo Periódico
+    ol.breadcrumb
+      li
+        a(ng-href='#/news') Notícias
+      li.active(ng-if='!news.title')
+        | Nova Notícia
+      li.active(ng-if='news.title')
+        | {{news.title}}
+form.form(action='')
+  .row
+    .col-xs-8
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Título
+            input.form-control(type='text', ng-model='news.title')
+      .row
+        .col-xs-8
+          .form-group
+            label(for='') Bigode
+            input.form-control(type='text', ng-model='news.subtitle')
+        .col-xs-4
+          .form-group
+            label(for='') Tipo
+            select.form-control.pull-left(ng-model='news.type', ng-options='type.id as type.name for type in types')
+      .row
+        .col-xs-6
+          .form-group
+            label(for='') Autor
+            input.form-control(type='text', ng-model='news.author')
+        .col-xs-6
+          .form-group
+            label(for='') Categoria
+            select.form-control.pull-left(ng-model='news.category', ng-options='category.id as category.name for category in categories')
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Tags
+            ui-select(multiple='', tagging='', tagging-tokens=',', tagging-label='', ng-model='news.tags', theme='bootstrap', sortable='true', ng-disabled='disabled', title='Digite uma tag')
+              ui-select-match(placeholder='Selecione as tags') {{$item}}
+              ui-select-choices(repeat='color in availableColors | filter:$select.search')
+                | {{color}}
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Thumb:
+            input.form-control(ng-show='!news.thumb', type='file', ngf-select='', ng-model='news_thumb', ngf-multiple='false')
+            .clearfix.form-control(ng-show='news.thumb')
+              .pull-left
+                | {{news.thumb_name}}
+              .pull-right
+                span.label.label-danger.remove-image(ng-show='news.thumb', ng-click="removeImage('pdf')")
+                  span.fa.fa-remove
+                  |  REMOVER
+    .col-xs-4
+      br
+      publishment-options(route-model='news')
+  .row
+    .col-xs-8
+      textarea(ng-model='news.text', redactor='redactorConfig', cols='30', rows='30')
