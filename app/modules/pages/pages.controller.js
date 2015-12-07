@@ -1,18 +1,18 @@
 ;(function () {
   'use strict';
 
-  angular.module('PagesControllerModule', [
-      'PagesServiceModule',
-      'NotificationServiceModule',
-      'StatusServiceModule'
-    ])
-    .controller('PagesController', [
+  angular.module('pagesModule')
+    .controller('PagesController', PagesController);
+
+    PagesController.$inject = [
       '$scope',
       '$modal',
       'PagesService',
       'NotificationService',
-      'StatusService',
-      function ($scope, $modal, PagesService, NotificationService, StatusService) {
+      'StatusService'
+    ];
+
+    function  PagesController($scope, $modal, PagesService, NotificationService, StatusService) {
         console.log('... PagesController');
 
         $scope.status = [];
@@ -79,6 +79,5 @@
             $modalInstance.dismiss('cancel');
           };
         };
-      }
-    ]);
+      };
 })();

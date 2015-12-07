@@ -1,28 +1,10 @@
 ;(function () {
   'use strict';
 
-  angular.module('PagesEditControllerModule', [
-      'EventsServiceModule',
-      'GalleryServiceModule',
-      'MediaServiceModule',
-      'NewsServiceModule',
-      'NotificationServiceModule',
-      'ModuleServiceModule',
-      'PagesServiceModule',
-      'StatusServiceModule',
-      'TagsServiceModule',
-      'WidgetsServiceModule',
-      'DateTimeHelperModule',
-      'FormatFilterModule',
-      'PublishmentDirectiveModule',
-      'ngSanitize',
-      'ui.select',
-      'as.sortable',
-      'ngFileUpload',
-      'angular-redactor',
-      'ngCropper'
-    ])
-    .controller('PagesEditController', [
+  angular.module('pagesModule')
+    .controller('PagesEditController', PagesEditController);
+
+    PagesEditController.$inject = [
       '$scope',
       '$http',
       '$modal',
@@ -40,8 +22,10 @@
       'StatusService',
       'TagsService',
       'WidgetsService',
-      'DateTimeHelper',
-      function ($scope,
+      'DateTimeHelper'
+    ];
+
+    function PagesEditController($scope,
                 $http,
                 $modal,
                 $location,
@@ -322,6 +306,5 @@
         MediaService.getMedia().then(function (data) {
           $scope.media = data.data;
         });
-      }
-    ]);
+      };
 })();

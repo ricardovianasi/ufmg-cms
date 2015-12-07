@@ -1,26 +1,10 @@
 ;(function () {
   'use strict';
 
-  angular.module('PagesNewControllerModule', [
-      'EventsServiceModule',
-      'GalleryServiceModule',
-      'MediaServiceModule',
-      'ModuleServiceModule',
-      'NewsServiceModule',
-      'NotificationServiceModule',
-      'PagesServiceModule',
-      'StatusServiceModule',
-      'TagsServiceModule',
-      'WidgetsServiceModule',
-      'DateTimeHelperModule',
-      'FormatFilterModule',
-      'as.sortable',
-      'ngSanitize',
-      'ui.select',
-      'ngFileUpload',
-      'angular-redactor'
-    ])
-    .controller('PagesNewController', [
+  angular.module('pagesModule')
+    .controller('PagesNewController', PagesNewController);
+
+    PagesNewController.$inject = [
       '$scope',
       '$http',
       '$modal',
@@ -37,8 +21,10 @@
       'StatusService',
       'TagsService',
       'WidgetsService',
-      'DateTimeHelper',
-      function ($scope,
+      'DateTimeHelper'
+    ];
+
+    function PagesNewController($scope,
                 $http,
                 $modal,
                 $location,
@@ -275,6 +261,5 @@
         MediaService.getIcons().then(function (data) {
           $scope.icons = data.data;
         });
-      }
-    ]);
+      };
 })();

@@ -1,15 +1,8 @@
 ;(function () {
   'use strict';
 
-  angular.module('PagesRouteModule', [
-      'ngRoute',
-      'PagesControllerModule',
-      'PagesNewControllerModule',
-      'PagesEditControllerModule'
-    ])
-    .config([
-      '$routeProvider',
-      function ($routeProvider) {
+  angular.module('pagesModule')
+    .config('$routeProvider', function ($routeProvider) {
         $routeProvider
           .when('/pages', {
             templateUrl: '/views/pages.template.html',
@@ -26,6 +19,5 @@
             controller: 'PagesEditController',
             controllerAs: 'ctrl'
           });
-      }
-    ]);
+      });
 })();
