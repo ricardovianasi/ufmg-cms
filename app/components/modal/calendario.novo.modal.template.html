@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-if="type=='add'">Adicionar novo registro</h3>
+    <h3 class="modal-title" ng-if="type=='edit'">Editar registro</h3>
+</div>
+<div class="modal-body">
+    <form action="" class="form">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="">Local</label>
+                            <select 
+                            ng-model="newRegister.regional" 
+                            ng-options="regional_item.id as regional_item.name for regional_item in regional"
+                            class="form-control">
+                                <!-- <option 
+                                ng-repeat="regional_item in regional" 
+                                value="{{regional_item.id}}"
+                                ng-selected="{{regional_item.id == newRegister.regional.id}}">{{regional_item.name}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="">Descrição do evento</label>
+                            <input type="text" ng-model="newRegister.description" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="well well-sm">
+                	<div class="row">
+	                    <div class="col-xs-6">
+	                        <div class="form-group">
+	                            <label for="">
+	                            	<span class="fa fa-calendar"></span> Data de Início
+                            	</label>
+	                            <input type="text" ng-model="newRegister.init_date" class="form-control">
+	                        </div>
+	                        <div class="checkbox">
+								<label>
+									<input ng-model="newRegister.highlight" ng-checked="newRegister.highlight" type="checkbox"> <strong>Registro em destaque</strong>
+								</label>
+							</div>
+	                    </div>
+	                    <div class="col-xs-6">
+	                        <div class="form-group">
+	                            <label for="">
+	                            	<span class="fa fa-calendar"></span> Data de fim
+                            	</label>
+	                            <input type="text" ng-model="newRegister.end_date" class="form-control">
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-success" ng-disabled="!newRegister.regional && !newRegister.description && !newRegister.init_date" ng-click="ok()">Salvar</button>
+</div>

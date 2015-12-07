@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h3 class="modal-title">Dias Letivos</h3>
+</div>
+<div class="modal-body">
+    <form action="" class="form">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="">Mês</label>
+                    <select class="form-control" 
+                    ng-model="period.month" 
+                    ng-change="periodUpdate(period.month, period.year, period.regional)"
+                    ng-options="convertMonthStr(month) for month in time_months">
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="">Ano</label>
+                    <select class="form-control" 
+                    ng-model="period.year" 
+                    ng-options="year for year in time_years"
+                    ng-change="periodUpdate(period.month, period.year, period.regional)">
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4"> 
+                <div class="form-group">
+                    <label for="">Local</label>
+                    <select 
+                    ng-model="period.regional" 
+                    class="form-control"
+                    ng-change="periodUpdate(period.month, period.year, period.regional)">
+                        <option value=""></option>
+                        <option 
+                        ng-repeat="regional_item in regional" 
+                        value="{{regional_item.id}}"
+                        ng-selected="{{regional_item.id == period.regional}}">{{regional_item.name}}</option>
+                    </select>
+                </div> 
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-xs-12">
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="">Dias letivos do mês</label>
+                        <input type="text" class="form-control" ng-model="period.school_days">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="">Sábados letivos <small>(Digite os dias separando com vírgula).</small></label>
+                        <input type="text" class="form-control" ng-model="period.school_saturdays">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-success" ng-click="ok()">Salvar</button>
+</div>

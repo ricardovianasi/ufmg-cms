@@ -1,0 +1,89 @@
+html
+  body
+    .row
+      .col-xs-7
+        // Description
+        .form-group
+          label Descri&ccedil;&atilde;o:
+          |             
+          textarea.form-control(cols='30', rows='4', title='Descrição', ng-model='widget.content.description')
+        // Release
+        .form-group
+          label Anexar release:
+          |             
+          select.form-control(title='Status', ng-model='widget.content.release.id', ng-options='release.id as release.title for release in releases.items')
+      // Edition Cover
+      .col-xs-5
+        .form-group
+          .pages-module.edition-cover-thumb
+            .add-module(ng-show='!widget.content.image')
+              | +
+              br
+              |                     Capa Digitalizada
+              |                     
+              .tac
+                br
+                |                         
+                button.btn.btn-primary(type='button', ngf-accept="'image/*'", ngf-select='', ng-model='widget.content.image', ngf-multiple='false')
+                  | Carregar Imagem
+            |                 
+            div(ng-show='widget.content.image')
+              .chosen-cover
+                span.label.label-danger.remove-image(ng-click='removeImage()')
+                  span.fa.fa-remove
+                  |  REMOVER IMAGEM
+              |                     
+              .uploaded-image.edition-cover-image
+                img(alt='', ng-src='{{ widget.content.image.url }}')
+    // Specialists
+    .row
+      .col-xs-12
+        .form-group
+          .clearfix
+            .pull-left
+              label Especialistas:
+            |                 
+            .pull-right
+              button.btn.btn-primary.btn-sm(type='button', style='margin-bottom: 3px', ng-click='addSpecialist()')
+                span.fa.fa-plus
+          |             
+          .well.well-sm(ng-repeat='specialist in widget.content.specialists')
+            .clearfix(ng-click='specialist.opened = true')
+              .pull-left
+                strong Especialista:
+                |                         {{ specialist.name }}
+              |                     
+              .pull-right
+                button.btn.btn-danger.btn-sm(type='button', ng-click='removeSpecialist($index)')
+                  span.fa.fa-trash
+            |                 
+            div(ng-show='specialist.opened')
+              .row
+                .col-xs-6
+                  .form-group
+                    label Nome:
+                    |                                 
+                    input.form-control(type='text', title='Nome', ng-model='specialist.name')
+                |                         
+                .col-xs-6
+                  .form-group
+                    label T&iacute;tulo/cargo:
+                    |                                 
+                    input.form-control(type='text', title='Título/cargo', ng-model='specialist.title_job')
+              |                     
+              .row
+                .col-xs-6
+                  .form-group
+                    label Email:
+                    |                                 
+                    input.form-control(type='text', title='Email', ng-model='specialist.email')
+                |                         
+                .col-xs-6
+                  .form-group
+                    label Telefone:
+                    |                                 
+                    input.form-control(type='text', title='Telefone', ng-model='specialist.phone')
+              |                     
+              .row
+                .col-xs-12
+                  button.pull-right.btn.btn-primary(type='button', ng-click='specialist.opened = false') salvar

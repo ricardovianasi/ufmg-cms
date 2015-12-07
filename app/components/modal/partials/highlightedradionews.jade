@@ -1,0 +1,32 @@
+html
+  body
+    .form-group
+      label Selecione as not&iacute;cias:
+      |     
+      ul.dashed-list
+        li.as-sortable-item.clearfix(ng-repeat='news in widget.news.items track by $index')
+          .gal-list-left.pull-left
+            strong {{ news.title }}
+          |             
+          .pull-right
+            button.btn.btn-success(type='button', ng-click='removeNews($index)') Excluir
+        |         
+        li.as-sortable-item.clearfix(ng-hide='widget.news.length >= 4')
+          div
+            | + Inserir Destaque
+          |             
+          .clearfix
+            .pull-left.gal-list-select-container
+              ui-select(ng-model='widget.news_selected')
+                ui-select-match(placeholder='Buscar notícia')
+                  | {{$select.selected.title}}
+                |                         
+                ui-select-choices(repeat="item in news.items | filter: { type: {\
+                id: 3,\
+                name: 'Audio',\
+                icon_class: 'fa-volume-up'\
+                } } | filter: $select.search")
+                  div(ng-bind-html='item.title | highlight: $select.search')
+            |                 
+            .pull-right
+              button.btn.btn-success(type='button', ng-disabled='!widget.news_selected', ng-click='addGallery(widget.news_selected)') OK

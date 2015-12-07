@@ -1,9 +1,8 @@
 ;(function () {
   'use strict';
 
-  angular.module('SidebarDirectiveModule', [
-      'NavigationServiceModule'
-    ])
+  angular
+    .module('componentsModule')
     .controller('SidebarController', [
       '$scope',
       'NavigationService',

@@ -1,7 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular.module('SidebarDirectiveModule')
+  angular.module('componentsModule')
     .directive('ufmgSidebar', [
       function () {
         return {

@@ -1,0 +1,156 @@
+<div class="modal-header clearfix">
+    <div class="pull-left">
+        <h3 class="modal-title">
+            Inserir Imagem
+        </h3>
+    </div>
+    <div class="pull-right">
+        <span class="fa fa-close fa-2x" ng-click="closeInsertImage()"></span>
+    </div>
+</div>
+<div class="modal-body clearfix">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-tabs tac">
+                <li 
+                role="presentation" 
+                ng-repeat="step in steps" 
+                ng-class="{ active: active_step == step }">
+                    <a>
+                        {{step.step}}
+                    </a>
+                </li>
+            </ul>
+            <br>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-show="active_step.slug == 'format'">
+                <div class="btn-group">
+                    <button 
+                    type="button" 
+                    class="btn btn-default"
+                    ng-click="selectFormat(format)"
+                    ng-class="{ active: selectedFormat == format }"
+                    ng-repeat="format in formats">
+                        <strong>{{format.name}}</strong><br>
+                        <small>{{format.size}} px</small>
+                        <div class="format">
+                            <div 
+                            ng-class="{
+                            'format-vertical': format.type == 'vertical',
+                            'format-medium': format.type == 'medium',
+                            'format-big': format.type == 'big',
+                            'format-wide': format.type == 'wide' }
+                            "></div>
+                        </div>
+                    </button>
+                </div>
+                <div class="modal-footer spacer-top"></div>
+            </div>
+            <div ng-show="active_step.slug == 'selectlibrary'">
+                <h5>Selecione a biblioteca desejada:</h5>
+                <div class="btn-group library-btn-group">
+                    <button 
+                    type="button" 
+                    class="btn btn-default library-btn"
+                    ng-click="selectLibrary(library)"
+                    ng-class="{ active: selectedLibrary == library }"
+                    ng-repeat="library in libraries"
+                    ng-disabled="!library.enabled">
+                        <div>
+                            <span class="fa fa-desktop fa-4x"></span>
+                        </div>
+                        <strong>{{library.name}}</strong><br>
+                    </button>
+                </div>
+                <div class="modal-footer spacer-top"></div>
+            </div>
+            <div ng-show="active_step.slug == 'media'">
+                <div class="library-list-container clearfix">
+                    <div 
+                    class="image-library-list" 
+                    ngf-accept="'image/*'" 
+                    ngf-select
+                    ng-model="upload_photo"
+                    ngf-multiple="false">
+                        <span class="fa fa-camera fa-2x"></span><br>
+                        Enviar Foto
+                    </div>
+                    <div 
+                    class="image-library-list" 
+                    ng-repeat="file in media | reverse"
+                    ng-click="selectImage(file)"
+                    ng-class="{ active: selected_image == file }">
+                        <img 
+                        ng-src="{{file.url}}" 
+                        alt="{{file.filename}}">
+                        <div class="selected-icon">
+                            <span class="fa fa-check-square-o"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer spacer-top">
+                    <!-- <button 
+                    class="btn btn-danger" 
+                    ng-click="closeInsertImage()">
+                        Cancelar
+                    </button> -->
+                    <button 
+                    class="btn btn-success"
+                    ng-click="showCropper()"
+                    ng-disabled="!selected_image">
+                        Escolher imagem selecionada
+                    </button>
+                </div>
+            </div>
+            <div ng-show="active_step.slug == 'publish'">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="crop-container">
+                            <div class="img-container">
+                                <img ng-if="dataUrl"
+                                ng-src="{{dataUrl}}"
+                                ng-cropper
+                                ng-cropper-proxy="cropperProxy"
+                                ng-cropper-show="showEvent"
+                                ng-cropper-hide="hideEvent"
+                                ng-cropper-options="options">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label for="">Autor</label>
+                            <input 
+                            type="text" 
+                            ng-model="image.author" 
+                            class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Legenda</label>
+                            <textarea
+                            ng-model="image.legend" 
+                            class="form-control"
+                            rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer spacer-top">
+                    <button 
+                    class="btn btn-info" 
+                     ng-click="okInsertImage()">
+                        Inserir imagem
+                    </button>
+                    <button 
+                    class="btn btn-success" 
+                     ng-click="okInsertImage()">
+                        Cortar e Inserir imagem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="clearfix">
+    <label>Links:</label>
+
+    <div class="pull-right">
+        <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm"
+                ng-click="addLink()">
+            <span class="fa fa-plus"></span>
+        </button>
+    </div>
+</div>
+
+<div class="well well-sm"
+     ng-repeat="link in widget.links">
+    <div class="clearfix">
+        <div class="pull-left">Link {{ $index + 1 }}</div>
+        <div class="pull-right">
+            <button type="button" class="btn btn-danger btn-sm"
+                    ng-click="removeLink($index)">
+                <span class="fa fa-trash"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Label do link:</label>
+
+                <input type="text" class="form-control" title="Label do link"
+                       ng-model="link.label">
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Página:</label>
+
+                <select class="form-control" title="Página"
+                        ng-model="link.page"
+                        ng-options="page.id as page.title for page in pages.items">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

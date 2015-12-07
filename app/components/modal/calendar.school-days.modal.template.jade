@@ -1,0 +1,50 @@
+html
+  body
+    .modal-header
+      h3.modal-title Dias Letivos
+    .modal-body
+      form.form(action='')
+        .row
+          .col-xs-4
+            .form-group
+              label(for='') M&ecirc;s
+              |                     
+              select.form-control(ng-model='period.month', ng-change='periodUpdate(period.month, period.year, period.regional)', ng-options='convertMonthStr(month) for month in time_months')
+          |             
+          .col-xs-4
+            .form-group
+              label(for='') Ano
+              |                     
+              select.form-control(ng-model='period.year', ng-options='year for year in time_years', ng-change='periodUpdate(period.month, period.year, period.regional)')
+          |             
+          .col-xs-4
+            .form-group
+              label(for='') Local
+              |                     
+              select.form-control(ng-model='period.regional', ng-change='periodUpdate(period.month, period.year, period.regional)')
+                option(value='')
+                |                         
+                option(ng-repeat='regional_item in regional', value='{{regional_item.id}}', ng-selected='{{regional_item.id == period.regional}}') {{regional_item.name}}
+        |         
+        div
+          .row
+            .col-xs-12
+          |             
+          .row
+            .col-xs-6
+              .form-group
+                label(for='') Dias letivos do m&ecirc;s
+                |                         
+                input.form-control(type='text', ng-model='period.school_days')
+            |                 
+            .col-xs-6
+              .form-group
+                label(for='')
+                  | S&aacute;bados letivos 
+                  small (Digite os dias separando com v&iacute;rgula).
+                |                         
+                input.form-control(type='text', ng-model='period.school_saturdays')
+    .modal-footer
+      button.btn.btn-danger(ng-click='cancel()') Cancelar
+      |     
+      button.btn.btn-success(ng-click='ok()') Salvar

@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label>Evento destaque:</label>
+
+    <select class="form-control" title="Evento destaque"
+            ng-model="widget.event_id"
+            ng-options="event.id as event.name for event in events.items">
+    </select>
+</div>

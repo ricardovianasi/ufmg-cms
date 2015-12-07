@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label>Selecione o evento:</label>
+
+    <ul class="selection-list">
+        <li
+            ng-repeat="item in events.items | limitTo: 30"
+            ng-click="item.selected = !item.selected"
+            ng-class="{ active: item.selected }">{{ item.name }}
+        </li>
+    </ul>
+</div>

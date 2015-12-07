@@ -1,0 +1,13 @@
+html
+  body
+    .modal-header
+      h3.modal-title M&oacute;dulo
+    .modal-body
+      ul.gallery-list.gallery-modal-list.clearfix
+        li.dashed.gallery-item(ng-repeat='photo in media', ng-class="{ 'selected': photo.selected }")
+          .gallery-thumb(ng-click='photo.selected = !photo.selected')
+            img(ng-src='{{photo.url}}', alt='{{photo.altText}}')
+    .modal-footer
+      button.btn.btn-danger(ng-click='cancel()') Cancelar
+      |     
+      button.btn.btn-success(ng-click='ok()') Salvar

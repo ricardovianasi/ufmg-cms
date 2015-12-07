@@ -1,0 +1,53 @@
+<div class="form-group">
+    <label>Galerias em destaque:</label>
+
+    <ul class="dashed-list">
+        <li class="as-sortable-item clearfix"
+            ng-repeat="gallery in widget.galleries.items track by $index">
+            <div class="gal-list-left pull-left">
+                <div class="gallery-thumb pull-left">
+                    <img alt="{{ photo.file.altText }}"
+                         ng-src="{{ gallery.photos[0].file.url }}">
+                </div>
+
+                <div class="gallery-title pull-left">
+                    {{ gallery.title }}
+                </div>
+            </div>
+
+            <div class="pull-right">
+                <button type="button" class="btn btn-success"
+                        ng-click="removeGallery($index)">Excluir</button>
+            </div>
+        </li>
+
+        <li class="as-sortable-item clearfix"
+            ng-hide="widget.galleries.length >= 4">
+            <div>
+                + Inserir Destaque
+            </div>
+
+            <div class="clearfix">
+                <div class="pull-left gal-list-select-container">
+                    <ui-select class=""
+                               ng-model="widget.gallery_selected">
+                        <ui-select-match placeholder="Buscar galeria">
+                            {{$select.selected.title}}
+                        </ui-select-match>
+
+                        <ui-select-choices repeat="gallery in galleries.items | filter: $select.search">
+                            <div
+                                ng-bind-html="gallery.title | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success"
+                            ng-disabled="!widget.gallery_selected"
+                            ng-click="addGallery(widget.gallery_selected)">OK</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

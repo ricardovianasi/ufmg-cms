@@ -1,0 +1,103 @@
+html
+  body
+    .modal-header
+      h3.modal-title Widget
+    .modal-body
+      .row
+        .col-xs-6
+          .form-group
+            label(for='') T&iacute;tulo
+            | &#x9;&#x9;&#x9;&#x9;
+            input.form-control(type='text', ng-model='article.title')
+        | &#x9;&#x9;
+        .col-xs-6
+          .form-group
+            label(for='') Subt&iacute;tulo
+            | &#x9;&#x9;&#x9;&#x9;
+            input.form-control(type='text', ng-model='article.subtitle')
+      | &#x9;
+      .row
+        .col-xs-6
+          .form-group
+            label(for='') Nome do Autor
+            | &#x9;&#x9;&#x9;&#x9;
+            input.form-control(type='text', ng-model='article.author_name')
+        | &#x9;&#x9;
+        .col-xs-6
+          .form-group
+            label(for='') N&uacute;mero da P&aacute;gina
+            | &#x9;&#x9;&#x9;&#x9;
+            input.form-control(type='text', ng-model='article.page_number')
+      | &#x9;
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Tags:
+            | &#x9;&#x9;   &#x9;&#x9;
+            ui-select(multiple='', tagging='', tagging-tokens=',', tagging-label='', ng-model='article.tags', theme='bootstrap', sortable='true', ng-disabled='disabled', title='Digite uma tag')
+              ui-select-match(placeholder='Selecione as tags') {{$item}}
+              |     &#x9;&#x9;&#x9;&#x9;
+              ui-select-choices(repeat='color in availableColors | filter:$select.search')
+                | {{color}}
+      | &#x9;
+      .row
+        .col-xs-6
+          .form-group
+            label(for='') Capa
+            | &#x9;&#x9;&#x9;&#x9;
+            .pages-module.article-cover-thumb
+              .add-module(ng-show='!article.cover')
+                | +
+                br
+                |  
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Capa Digitalizada
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .tac
+                  br
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                  button.btn.btn-primary(ngf-accept="'image/*'", ngf-select='', ng-model='article_cover', ngf-multiple='false') Carregar Imagem
+              | &#x9;&#x9;&#x9;&#x9;&#x9;
+              div(ng-show='article.cover')
+                .chosen-cover
+                  span.label.label-danger.remove-image(ng-click="removeImage('cover')")
+                    span.fa.fa-remove
+                    |  REMOVER IMAGEM
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .uploaded-image
+                  img(ng-src='{{article.cover_url}}', alt='')
+        | &#x9;&#x9;
+        .col-xs-6
+          .form-group
+            label(for='') Thumb
+            | &#x9;&#x9;&#x9;&#x9;
+            .pages-module.article-cover-thumb
+              .add-module(ng-show='!article.thumb')
+                | +
+                br
+                |  
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Capa Digitalizada
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .tac
+                  br
+                  | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                  button.btn.btn-primary(ngf-accept="'image/*'", ngf-select='', ng-model='article_thumb', ngf-multiple='false') Carregar Imagem
+              | &#x9;&#x9;&#x9;&#x9;&#x9;
+              div(ng-show='article.thumb')
+                .chosen-cover
+                  span.label.label-danger.remove-image(ng-click="removeImage('thumb')")
+                    span.fa.fa-remove
+                    |  REMOVER IMAGEM
+                | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                .uploaded-image
+                  img(ng-src='{{article.thumb_url}}', alt='')
+      | &#x9;
+      .row
+        .col-xs-12
+          .form-group
+            label(for='') Conte&uacute;do
+            | &#x9;&#x9;&#x9;&#x9;
+            textarea(ng-model='article.content', redactor='redactorConfig', cols='30', rows='10')
+    .modal-footer
+      button.btn.btn-danger(ng-click='cancel()') Cancelar
+      |     
+      button.btn.btn-success(ng-click='ok()') Salvar
