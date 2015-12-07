@@ -17,6 +17,7 @@
       'courseModule',
       'newsModule',
       'releasesModule',
-      'periodicalModule'
+      'periodicalModule',
+      'clippingsModule'
     ]);
 })();

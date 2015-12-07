@@ -1,0 +1,56 @@
+header.view-header.clearfix
+  h1.pull-left {{ title }}
+  .pull-right
+section.clearfix.spacer-bottom
+  // Breadcrumb
+  ol.breadcrumb.pull-left
+    li
+      a(href='#/') Dashboard
+    li
+      a(href='#/clippings') Clippings
+    li.active
+      | {{ breadcrumb }}
+form.form(action='')
+  .row
+    .col-xs-10
+      .row
+        // Origin
+        .col-xs-7
+          .form-group
+            label(for='origin') Origem da Matéria
+            input#origin.form-control(type='text', name='origin', ng-model='clipping.origin')
+        // Date
+        .col-xs-5
+          .form-group
+            label Data de Publicação
+            .row
+              .col-xs-4
+                select.form-control(title='Dia', ng-model='clipping.date.day')
+                  option(value='{{ day }}', ng-repeat='day in time_days')
+                    | {{ day }}
+              .col-xs-4
+                select.form-control(title='Mês', ng-model='clipping.date.month')
+                  option(value='{{ month }}', ng-repeat='month in time_months')
+                    | {{ month }}
+              .col-xs-4
+                select.form-control(title='Ano', ng-model='clipping.date.year')
+                  option(value='{{ year }}', ng-repeat='year in time_years')
+                    | {{ year }}
+      // Title
+      .row
+        .col-xs-12
+          .control-group
+            label(for='title') Título da Matéria
+            input#title.form-control(type='text', name='title', ng-model='clipping.title')
+      // URL
+      .row
+        .col-xs-12
+          .control-group
+            label(for='url') URL da Matéria
+            input#url.form-control(type='text', name='url', ng-model='clipping.url')
+  .row
+    .col-xs-12
+      hr
+      .pull-right
+        a.btn.btn-danger.pull-left.spacer-right Cancelar
+        a.btn.btn-success.pull-left(ng-click='publish(clipping)') Salvar
