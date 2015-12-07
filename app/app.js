@@ -13,6 +13,7 @@
       'mediaModule',
       'calendarModule',
       'galleryModule',
-      'eventsModule'
+      'eventsModule',
+      'courseModule'
     ]);
 })();
