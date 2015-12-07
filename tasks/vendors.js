@@ -42,7 +42,15 @@ var styles = [
   'app/assets/scripts/redactor/redactor.css'
 ];
 
-gulp.task('build-vendors', ['build-vendors-css'], function () {
+var EXTERNAL_FONTS = [
+  'bower_components/font-awesome/fonts/fontawesome-webfont.eot',
+  'bower_components/font-awesome/fonts/fontawesome-webfont.svg',
+  'bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
+  'bower_components/font-awesome/fonts/fontawesome-webfont.woff',
+  'bower_components/font-awesome/fonts/fontawesome-webfont.woff2'
+];
+
+gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
   gulp.src(files)
     .pipe(gulpif(/[.]js$/, concat('vendors.js')))
     .pipe(rename({
@@ -60,6 +68,11 @@ gulp.task('build-vendors-css', function(){
     .pipe(gulp.dest('./build/assets/css/'));
 });
 
+
+gulp.task('build-vendors-fonts', function(){
+  gulp.src(EXTERNAL_FONTS)
+    .pipe(gulp.dest('./build/assets/fonts/'));
+});
 
 
 
