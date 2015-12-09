@@ -30,6 +30,7 @@
     var loadPeriodicals = function (page) {
       PeriodicalService.getPeriodicals(null, page).then(function (data) {
         $scope.periodicals = data.data;
+        console.log(data.data);
       });
     };
 

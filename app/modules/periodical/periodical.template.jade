@@ -38,7 +38,7 @@ header.view-header.clearfix
         tr(role='row')
           th(style='width: 52%') Título
           th.tac(style='width: 24%') Autor
-          th.tac(style='width: 24%;') Data da Publicação
+          th.tac(style='width: 24%;') Data da Criação
       tbody
         tr.odd(role='row', ng-repeat='item in periodicals.items | filter: search | filter: {status: itemStatus}')
           td
@@ -52,7 +52,7 @@ header.view-header.clearfix
           td {{ item.author.name }}
           td
             strong
-              | {{ convertDate(item.published_at) }}
+              | {{ convertDate(item.created_at) }}
             br
             small {{ item.status }}
           //
