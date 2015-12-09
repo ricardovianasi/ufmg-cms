@@ -14,6 +14,7 @@
       'toastr',
       'ui.bootstrap',
       'ui.select',
+      'ui.mask',
 
       // App Modules
       'componentsModule',
@@ -23,6 +24,7 @@
       'pagesModule',
       'periodicalModule',
       'serviceModule',
+      'releasesModule',
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

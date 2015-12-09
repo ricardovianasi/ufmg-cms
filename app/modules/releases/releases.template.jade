@@ -12,7 +12,7 @@ section.clearfix.spacer-bottom
       span.fa.fa-plus
       |    NOVO RELEASE
 .row.list-header
-  .col-xs-4
+  .col-xs-5
     ul.list-inline.list-status
       li
         a(ng-click="itemStatus = ''")
@@ -34,7 +34,7 @@ section.clearfix.spacer-bottom
           span(ng-class="{ 'strong': itemStatus == 'scheduled'}")
             | Agendado
           span.small ({{ (releases.items|filter: {status: 'scheduled'}).length }})
-  .col-xs-8
+  .col-xs-7
     .pull-right
       .pull-left
         form.form-inline(action='')
@@ -69,4 +69,4 @@ section.clearfix.spacer-bottom
               i.fa.fa-trash
 .row(ng-show='releases.total > 30')
   .col-xs-12
-    pagination.pagination-sm(boundary-links='true', total-items='releases.total', items-per-page='releases.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
+    uib-pagination.pagination-sm(boundary-links='true', total-items='releases.total', items-per-page='releases.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')

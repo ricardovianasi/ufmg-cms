@@ -8,7 +8,7 @@ angular
 
   ReleasesEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$timeout',
     '$location',
     '$routeParams',

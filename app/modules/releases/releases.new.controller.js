@@ -8,7 +8,7 @@
 
     ReleasesNewController.$inject = [
       '$scope',
-      '$modal',
+      '$uibModal',
       '$timeout',
       '$location',
       '$filter',

@@ -3,7 +3,7 @@
 
   angular
     .module('releasesModule')
-    .config('$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
 
       $routeProvider
         .when('/releases', {
@@ -21,5 +21,5 @@
           controller: 'ReleasesEditController',
           controllerAs: 'ctrl'
         });
-    });
+    }]);
 })();

@@ -8,7 +8,7 @@
 
     ReleasesController.$inject = [
       '$scope',
-      '$modal',
+      '$uibModal',
       '$filter',
       'NotificationService',
       'ReleasesService',
@@ -51,7 +51,7 @@
 
         $scope.confirmationModal = function (size, title) {
           removeConfirmationModal = $modal.open({
-            templateUrl: '/views/confirmation.modal.template.html',
+            templateUrl: 'components/modal/confirmation.modal.template.html',
             controller: ConfirmationModalCtrl,
             backdrop: 'static',
             size: size,
