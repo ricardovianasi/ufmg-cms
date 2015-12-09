@@ -15,7 +15,6 @@ var expect = require('gulp-expect-file');
 var files = [
   // Env
   'app/common/config/env.js',
-  'app/components/publishment/publishment.directive.js',
 
   // Helpers
   'app/helpers/helper.module.js',
@@ -48,11 +47,12 @@ var files = [
   'app/services/widgets.service.js',
 
   // Components
+  'app/components/articles/article.modal.controller.js',
   'app/components/components.module.js',
   'app/components/modules/module.modal.controller.js',
+  'app/components/publishment/publishment.directive.js',
   'app/components/sidebar/sidebar.controller.js',
   'app/components/sidebar/sidebar.directive.js',
-  'app/components/articles/article.modal.controller.js',
 
   // Modules
   'app/modules/clippings/clippings.controller.js',

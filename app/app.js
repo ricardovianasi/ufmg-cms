@@ -17,18 +17,18 @@
       'ui.mask',
 
       // App Modules
+      'clippingsModule',
       'componentsModule',
+      'courseModule',
       'filterModule',
       'helperModule',
       'indexModule',
+      'mediaModule',
+      'newsModule',
       'pagesModule',
       'periodicalModule',
-      'serviceModule',
       'releasesModule',
-      'clippingsModule',
-      'newsModule',
-      'courseModule',
-      'mediaModule'
+      'serviceModule',
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',
