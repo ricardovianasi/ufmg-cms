@@ -2,103 +2,107 @@
   'use strict';
 
   angular.module('serviceModule')
-    .factory('GalleryService', [
-      '$q',
-      '$http',
-      '$filter',
-      function ($q, $http, $filter) {
-        console.log('... GalleryService');
+    .factory('GalleryService', GalleryService);
 
-        var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'gallery');
+  GalleryService.$inject = [
+    '$q',
+    '$http',
+    '$filter',
+    'apiUrl'
+  ];
 
-        return {
-          /**
-           * @param page
-           *
-           * @returns {*}
-           */
-          getGalleries: function (page) {
-            page = page || 1;
+  function GalleryService($q, $http, $filter, apiUrl) {
+    console.log('... GalleryService');
 
-            var deferred = $q.defer();
-            var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
+    var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
 
-            $http.get(url).then(function (data) {
-              deferred.resolve(data);
-            });
+    return {
+      /**
+       * @param page
+       *
+       * @returns {*}
+       */
+      getGalleries: function (page) {
+        page = page || 1;
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           *
-           * @returns {*}
-           */
-          getGallery: function (id) {
-            var deferred = $q.defer();
+        var deferred = $q.defer();
+        var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
 
-            $http.get(APIUrl + '/gallery/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.get(url).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param gallery
-           *
-           * @returns {*}
-           */
-          newGallery: function (gallery) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       *
+       * @returns {*}
+       */
+      getGallery: function (id) {
+        var deferred = $q.defer();
 
-            $http.post(APIUrl + '/gallery', gallery).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.get(apiUrl + '/gallery/' + id).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param gallery
-           *
-           * @returns {*}
-           */
-          updateGallery: function (id, gallery) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param gallery
+       *
+       * @returns {*}
+       */
+      newGallery: function (gallery) {
+        var deferred = $q.defer();
 
-            $http.put(APIUrl + '/gallery/' + id, gallery).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.post(apiUrl + '/gallery', gallery).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           *
-           * @returns {*}
-           */
-          removeGallery: function (id) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param gallery
+       *
+       * @returns {*}
+       */
+      updateGallery: function (id, gallery) {
+        var deferred = $q.defer();
 
-            $http.delete(APIUrl + '/gallery/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.put(apiUrl + '/gallery/' + id, gallery).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @returns {*}
-           */
-          getCategories: function () {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       *
+       * @returns {*}
+       */
+      removeGallery: function (id) {
+        var deferred = $q.defer();
 
-            $http.get(APIUrl + '/gallery/category').then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.delete(apiUrl + '/gallery/' + id).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          }
-        };
+        return deferred.promise;
+      },
+      /**
+       * @returns {*}
+       */
+      getCategories: function () {
+        var deferred = $q.defer();
+
+        $http.get(apiUrl + '/gallery/category').then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
       }
-    ]);
+    };
+  }
 })();

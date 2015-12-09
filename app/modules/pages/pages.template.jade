@@ -55,7 +55,7 @@ html
                 small {{ item.status }}
     .row(ng-show='pages.total > 30')
       .col-xs-12
-        pagination.pagination-sm(
+        uib-pagination.pagination-sm(
           boundary-links='true',
           total-items='pages.total',
           items-per-page='pages.page_size',

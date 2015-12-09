@@ -2,23 +2,27 @@
   'use strict';
 
   angular.module('serviceModule')
-    .factory('TagsService', [
-      '$http',
-      '$q',
-      function ($http, $q) {
-        console.log('... TagsService');
+    .factory('TagsService', TagsService);
 
-        return {
-          getTags: function () {
-            var deferred = $q.defer();
+  TagsService.$inject = [
+    '$http',
+    '$q',
+    'apiUrl'
+  ];
 
-            $http.get(APIUrl + '/tag').then(function (data) {
-              deferred.resolve(data);
-            });
+  function TagsService($http, $q, apiUrl) {
+    console.log('... TagsService');
 
-            return deferred.promise;
-          }
-        };
+    return {
+      getTags: function () {
+        var deferred = $q.defer();
+
+        $http.get(apiUrl+'/tag').then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
       }
-    ]);
+    };
+  }
 })();

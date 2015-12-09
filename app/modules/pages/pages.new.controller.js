@@ -6,15 +6,12 @@
 
   PagesNewController.$inject = [
     '$scope',
-    '$http',
-    '$modal',
+    '$uibModal',
     '$location',
     '$timeout',
-    '$filter',
     'EventsService',
     'GalleryService',
     'MediaService',
-    'ModuleService',
     'NewsService',
     'NotificationService',
     'PagesService',
@@ -25,15 +22,12 @@
   ];
 
   function PagesNewController($scope,
-                              $http,
-                              $modal,
+                              $uibModal,
                               $location,
                               $timeout,
-                              $filter,
                               EventsService,
                               GalleryService,
                               MediaService,
-                              ModuleService,
                               NewsService,
                               NotificationService,
                               PagesService,
@@ -119,9 +113,9 @@
     // Modal - Add/Edit Module
     // Modals
     $scope.addModule = function (column) {
-      var moduleModal = $modal.open({
-        templateUrl: '/views/module.modal.template.html',
-        controller: ModuleModalCtrl,
+      var moduleModal = $uibModal.open({
+        templateUrl: '/components/modal/module.modal.template.html',
+        controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
         resolve: {
@@ -154,9 +148,9 @@
     var editModuleModal;
 
     $scope.editModule = function (column, idx) {
-      editModuleModal = $modal.open({
-        templateUrl: '/views/module.modal.template.html',
-        controller: ModuleModalCtrl,
+      editModuleModal = $uibModal.open({
+        templateUrl: '/components/modal/module.modal.template.html',
+        controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
         resolve: {
@@ -196,8 +190,8 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+      removeConfirmationModal = $uibModal.open({
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -219,8 +213,6 @@
         $modalInstance.dismiss('cancel');
       };
     };
-
-    var ModuleModalCtrl = ModuleModalController;
 
     NewsService.getNewsTypes().then(function (data) {
       $scope.news_types = data.data;
