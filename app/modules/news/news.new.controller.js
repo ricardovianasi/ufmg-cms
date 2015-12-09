@@ -9,7 +9,7 @@
   NewsNewController.$inject = [
     '$scope',
     'MediaService',
-    '$modal',
+    '$uibModal',
     'NewsService',
     'NotificationService',
     'StatusService',

@@ -7,7 +7,7 @@
 
   NewsEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     'NewsService',
     'NotificationService',
     'StatusService',

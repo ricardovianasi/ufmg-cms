@@ -7,12 +7,13 @@
 
   NewsController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     'NewsService',
-    'NotificationService'
+    'NotificationService',
+    'DateTimeHelper'
   ];
 
-  function NewsController($scope, $modal, NewsService, NotificationService) {
+  function NewsController($scope, $modal, NewsService, NotificationService, DateTimeHelper) {
 
     console.log('... NoticiasController');
 
@@ -32,7 +33,7 @@
     };
 
     $scope.convertDate = function (date) {
-      return new Date(date);
+      return DateTimeHelper.dateToStr(date);
     };
 
     $scope.removeNews = function (id, description) {

@@ -14,8 +14,8 @@ header.view-header.clearfix
           span.small ({{ news.total }})
       li
         a(ng-click="itemStatus = 'publish'")
-          span(ng-class="{ 'strong': itemStatus == 'published'}") Publicados
-          span.small ({{ (news.items | filter: {status: 'published'}).length }})
+          span(ng-class="{ 'strong': itemStatus == 'publish'}") Publicados
+          span.small ({{ (news.items | filter: {status: 'publish'}).length }})
       li
         a(ng-click="itemStatus = 'draft'")
           span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
@@ -35,7 +35,7 @@ header.view-header.clearfix
           th.tac(style='width: 25%') Status
           th.tac(style='width: 25%') Data da Publicação
       tbody
-        tr.odd(role='row', ng-repeat='item in news.items | filter: {description: search} | filter: {status: itemStatus}')
+        tr.odd(role='row', ng-repeat='item in news.items | filter: search | filter: {status: itemStatus}')
           td
             .clearfix
               .listing-actions.pull-left
@@ -45,7 +45,7 @@ header.view-header.clearfix
                 | {{ item.title }}
           td {{ item.status }}
           td
-            strong {{ convertDate(item.published_at) }}
+            strong {{ convertDate(item.scheduled_at) }}
 .row(ng-show='news.total > 30')
   .col-xs-12
-    pagination.pagination-sm(boundary-links='true', total-items='news.total', items-per-page='news.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
+    uib-pagination.pagination-sm(boundary-links='true', total-items='news.total', items-per-page='news.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')

@@ -25,7 +25,8 @@
       'periodicalModule',
       'serviceModule',
       'releasesModule',
-      'clippingsModule'
+      'clippingsModule',
+      'newsModule'
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

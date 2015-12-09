@@ -6,9 +6,11 @@
       '$http',
       '$filter',
       '$q',
-      function ($http, $filter, $q) {
+      'apiUrl',
+      function ($http, $filter, $q, apiUrl) {
         console.log('... NewsService');
 
+        var APIUrl = apiUrl;
         var NEWS_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'news');
 
         return {

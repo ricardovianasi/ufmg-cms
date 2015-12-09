@@ -3,7 +3,7 @@
 
   angular
     .module("newsModule")
-    .config("$routeProvider", function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
       $routeProvider
         .when("/news", {
@@ -21,5 +21,5 @@
           controller: "NewsEditController",
           controllerAs: "ctrl"
         });
-    });
+    }]);
 })();
