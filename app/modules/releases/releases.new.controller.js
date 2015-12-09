@@ -196,5 +196,5 @@
             $location.path('/releases');
           });
         };
-      };
+      }
 })();

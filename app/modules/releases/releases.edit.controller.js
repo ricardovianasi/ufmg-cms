@@ -229,6 +229,5 @@ angular
         $scope.title = $scope.title+release.name;
         $scope.breadcrumb = $scope.title;
       });
-    };
-
+    }
 })();

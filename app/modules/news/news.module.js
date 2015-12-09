@@ -8,5 +8,4 @@
                            'angular-redactor',
                            'ngFileUpload']);
 
-});
-
+})();

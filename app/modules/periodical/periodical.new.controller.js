@@ -53,5 +53,5 @@ angular
                 $location.path('/periodicals');
     		});
     	};
-  };
+  }
 })();

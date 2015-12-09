@@ -1,19 +1,19 @@
-;(function(){
+;(function () {
   'use strict';
 
-  angular
-    .module('componentsModule')
+  angular.module('componentsModule')
     .controller('ArticleModalController', ArticleModalController);
 
-    ArticleModalController.$inject = [
-      '$scope',
-      '$modalInstance',
-      'article',
-      'MediaService',
-      '$timeout'
-    ];
+  ArticleModalController.$inject = [
+    '$scope',
+    '$modalInstance',
+    'article',
+    'MediaService',
+    '$timeout'
+  ];
 
   function ArticleModalController($scope, $modalInstance, article, MediaService, $timeout) {
+    console.log('... ArticleModalController');
 
     if (article) {
       $scope.article = {
@@ -121,6 +121,7 @@
           $scope.article.thumb = '';
           $scope.article.thumb_url = '';
         }
+
         $scope.$apply();
       });
     };
@@ -132,6 +133,5 @@
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
-  };
-
+  }
 })();
