@@ -13,74 +13,92 @@ var jshint = require('gulp-jshint');
 var expect = require('gulp-expect-file');
 
 var files = [
-  'app/common/config/env-production.js',
+  // Env
+  'app/common/config/env.js',
+  'app/components/publishment/publishment.directive.js',
+
+  // Helpers
   'app/helpers/helper.module.js',
   'app/helpers/datetime.helper.js',
+
+  // Filters
   'app/filters/filter.module.js',
   'app/filters/format.filter.js',
   'app/filters/reverse.filter.js',
-  'app/services/service.module.js',
-  'app/services/navigation.service.js',
-  'app/services/periodical.service.js',
-  'app/services/notification.service.js',
-  'app/services/status.service.js',
-  'app/services/serialize.service.js',
-  'app/services/media.service.js',
-  'app/services/releases.service.js',
-  'app/services/module.service.js',
-  'app/services/pages.service.js',
+
+  // Services
   'app/services/clippings.service.js',
-  'app/services/news.service.js',
   'app/services/course.service.js',
+  'app/services/events.service.js',
+  'app/services/gallery.service.js',
+  'app/services/media.service.js',
+  'app/services/module.service.js',
+  'app/services/navigation.service.js',
+  'app/services/news.service.js',
+  'app/services/news.service.js',
+  'app/services/notification.service.js',
+  'app/services/pages.service.js',
+  'app/services/periodical.service.js',
+  'app/services/releases.service.js',
+  'app/services/serialize.service.js',
+  'app/services/service.module.js',
+  'app/services/status.service.js',
+  'app/services/tags.service.js',
   'app/services/upload.service.js',
+  'app/services/widgets.service.js',
+
+  // Components
   'app/components/components.module.js',
   'app/components/modules/module.modal.controller.js',
   'app/components/sidebar/sidebar.controller.js',
   'app/components/sidebar/sidebar.directive.js',
   'app/components/articles/article.modal.controller.js',
-  'app/modules/periodical/periodical.module.js',
-  'app/modules/periodical/periodical.route.js',
-  'app/modules/periodical/periodical.controller.js',
-  'app/modules/periodical/periodical.edit.controller.js',
-  'app/modules/periodical/periodical.new.controller.js',
-  'app/modules/periodical/periodical-editions.controller.js',
-  'app/modules/periodical/periodical-editions.edition.edit.controller.js',
-  'app/modules/index/index.module.js',
-  'app/modules/index/index.route.js',
-  'app/modules/index/index.controller.js',
-  'app/modules/pages/pages.module.js',
-  'app/modules/pages/pages.controller.js',
-  'app/modules/pages/pages.edit.controller.js',
-  'app/modules/pages/pages.new.controller.js',
-  'app/modules/pages/pages.route.js',
-  'app/modules/releases/releases.module.js',
-  'app/modules/releases/releases.route.js',
-  'app/modules/releases/releases.controller.js',
-  'app/modules/releases/releases.edit.controller.js',
-  'app/modules/releases/releases.new.controller.js',
-  'app/modules/clippings/clippings.module.js',
-  'app/modules/clippings/clippings.route.js',
+
+  // Modules
   'app/modules/clippings/clippings.controller.js',
-  'app/modules/clippings/clippings.new.controller.js',
   'app/modules/clippings/clippings.edit.controller.js',
-  'app/modules/news/news.module.js',
-  'app/modules/news/news.route.js',
-  'app/modules/news/news.controller.js',
-  'app/modules/news/news.edit.controller.js',
-  'app/modules/news/news.new.controller.js',
-  'app/modules/course/course.module.js',
-  'app/modules/course/course.route.js',
+  'app/modules/clippings/clippings.module.js',
+  'app/modules/clippings/clippings.new.controller.js',
+  'app/modules/clippings/clippings.route.js',
   'app/modules/course/course.controller.js',
   'app/modules/course/course.edit.controller.js',
+  'app/modules/course/course.module.js',
   'app/modules/course/course.new.controller.js',
-  'app/modules/media/media.module.js',
-  'app/modules/media/media.route.js',
+  'app/modules/course/course.route.js',
+  'app/modules/index/index.controller.js',
+  'app/modules/index/index.module.js',
+  'app/modules/index/index.route.js',
   'app/modules/media/media.controller.js',
   'app/modules/media/media.edit.controller.js',
+  'app/modules/media/media.module.js',
   'app/modules/media/media.new.controller.js',
+  'app/modules/media/media.route.js',
+  'app/modules/news/news.controller.js',
+  'app/modules/news/news.edit.controller.js',
+  'app/modules/news/news.module.js',
+  'app/modules/news/news.new.controller.js',
+  'app/modules/news/news.route.js',
+  'app/modules/pages/pages.controller.js',
+  'app/modules/pages/pages.edit.controller.js',
+  'app/modules/pages/pages.module.js',
+  'app/modules/pages/pages.new.controller.js',
+  'app/modules/pages/pages.route.js',
+  'app/modules/periodical/periodical-editions.controller.js',
+  'app/modules/periodical/periodical-editions.edition.edit.controller.js',
+  'app/modules/periodical/periodical.controller.js',
+  'app/modules/periodical/periodical.edit.controller.js',
+  'app/modules/periodical/periodical.module.js',
+  'app/modules/periodical/periodical.new.controller.js',
+  'app/modules/periodical/periodical.route.js',
+  'app/modules/releases/releases.controller.js',
+  'app/modules/releases/releases.edit.controller.js',
+  'app/modules/releases/releases.module.js',
+  'app/modules/releases/releases.new.controller.js',
+  'app/modules/releases/releases.route.js',
+
+  // Common
   'app/app.js',
-  'app/common/config/app.config.js',
-  "app/components/publishment/publishment.directive.js",
+  'app/common/config/app.config.js'
 ];
 
 gulp.task('test-js', function () {
@@ -97,7 +115,7 @@ gulp.task('test-js', function () {
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
     .pipe(sourcemaps.init())
-    .pipe(babel())
+    .pipe(babel({compact: false}))
     .pipe(rename({
       suffix: '.min'
     }))

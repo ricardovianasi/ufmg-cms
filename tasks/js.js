@@ -24,7 +24,7 @@ gulp.task('js', function () {
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
     .pipe(sourcemaps.init())
-    .pipe(babel())
+    .pipe(babel({compact: false}))
     .pipe(uglify())
     .pipe(rename({
       suffix: '.min'
