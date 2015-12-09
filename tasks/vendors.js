@@ -37,7 +37,7 @@ var styles = [
   'bower_components/bootstrap/dist/css/bootstrap.min.css',
   'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
   'bower_components/ng-responsive-calendar/dist/css/calendar.min.css',
-  'bower_components/angular-ui-select/dist/select.min.css',
+  'bower_components/ui-select/dist/select.min.css',
   'bower_components/cropper/dist/cropper.min.css',
   'bower_components/ng-cropper/dist/ngCropper.all.min.css',
   'app/assets/scripts/redactor/redactor.css'
