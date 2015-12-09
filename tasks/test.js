@@ -29,6 +29,7 @@ var files = [
   "app/components/modules/module.modal.controller.js",
   "app/components/sidebar/sidebar.controller.js",
   "app/components/sidebar/sidebar.directive.js",
+  "app/components/articles/article.modal.controller.js",
   "app/modules/periodical/periodical.module.js",
   "app/modules/periodical/periodical.route.js",
   "app/modules/periodical/periodical.controller.js",

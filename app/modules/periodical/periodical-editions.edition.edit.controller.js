@@ -117,7 +117,7 @@ angular
         $scope.addArticle = function () {
             var articleModal = $modal.open({
                 templateUrl: '/views/article.modal.template.html',
-                controller: ArticleModalCtrl,
+                controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
@@ -135,7 +135,7 @@ angular
         $scope.editArticle = function (idx, article) {
             editArticleModal = $modal.open({
                 templateUrl: '/views/article.modal.template.html',
-                controller: ArticleModalCtrl,
+                controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
