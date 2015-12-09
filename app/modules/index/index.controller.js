@@ -1,11 +1,11 @@
 ;(function () {
-  "use strict";
+  'use strict';
 
   angular
-    .module("indexModule")
-    .controller("IndexController", IndexController);
+    .module('indexModule')
+    .controller('IndexController', IndexController);
 
-    function IndexController() {
-      console.log('... IndexController');
-    };
+  function IndexController() {
+    console.log('... IndexController');
+  }
 })();

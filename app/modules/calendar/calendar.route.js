@@ -1,16 +1,14 @@
-;(function(){
+;(function () {
   'use strict';
 
   angular
-    .module("calendarModule")
-    .config("$routeProvider", function($routeProvider) {
-      "use strict";
-
+    .module('calendarModule')
+    .config('$routeProvider', function ($routeProvider) {
       $routeProvider
-        .when("/calendar", {
-          templateUrl: "/modules/calendar/calendar.template.html",
-          controller: "CalendarController",
-          controllerAs: "ctrl"
+        .when('/calendar', {
+          templateUrl: '/modules/calendar/calendar.template.html',
+          controller: 'CalendarController',
+          controllerAs: 'ctrl'
         });
     });
 

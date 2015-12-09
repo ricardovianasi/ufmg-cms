@@ -1,20 +1,20 @@
-;(function(){
+;(function () {
   'use strict';
 
-  angular
-    .module('componentsModule')
+  angular.module('componentsModule')
     .controller('ModuleModalController', ModuleModalController);
 
-    function ModuleModalController($scope,
-                                   $modal,
-                                   $filter,
-                                   $timeout,
-                                   MediaService,
-                                   ModuleService,
-                                   $modalInstance,
-                                   module,
-                                   widgets,
-                                   extraContent) {
+  function ModuleModalController($scope,
+                                 $modal,
+                                 $filter,
+                                 $timeout,
+                                 MediaService,
+                                 ModuleService,
+                                 $modalInstance,
+                                 module,
+                                 widgets,
+                                 extraContent) {
+    console.log('... ModuleModalController');
 
     $scope.widgets = widgets;
     $scope.galleries = extraContent.galleries;
@@ -459,5 +459,5 @@
     $scope.preparePartial = function () {
       ModuleService.preparePartial($scope);
     };
-  };
+  }
 })();
