@@ -10,6 +10,7 @@ var babel = require('gulp-babel');
 var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
+var expect = require('gulp-expect-file');
 
 var files = [
   'app/common/config/env-production.js',
@@ -25,7 +26,7 @@ var files = [
   'app/services/status.service.js',
   'app/services/serialize.service.js',
   'app/services/media.service.js',
-  'app/services/release.service.js',
+  'app/services/releases.service.js',
   'app/services/module.service.js',
   'app/services/pages.service.js',
   'app/components/components.module.js',
@@ -56,6 +57,7 @@ var files = [
 gulp.task('test-js', function () {
   return gulp.src(files)
     .pipe(plumber())
+    .pipe(expect({ errorOnFailure: true }, files))
     .pipe(jshint({
       esnext: true,
       strict: true

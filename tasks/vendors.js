@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var gulpif = require('gulp-if');
+var expect = require('gulp-expect-file');
 
 var files = [
   'bower_components/jquery/dist/jquery.min.js',
@@ -52,6 +53,7 @@ var EXTERNAL_FONTS = [
 
 gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
   gulp.src(files)
+    .pipe(expect({ errorOnFailure: true }, files))
     .pipe(gulpif(/[.]js$/, concat('vendors.js')))
     .pipe(rename({
       suffix: '.min'
@@ -61,6 +63,7 @@ gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], functio
 
 gulp.task('build-vendors-css', function(){
   gulp.src(styles)
+    .pipe(expect({ errorOnFailure: true }, styles))
     .pipe(gulpif(/[.]css$/, concat('vendors.css')))
     .pipe(rename({
       suffix: '.min'
@@ -71,6 +74,7 @@ gulp.task('build-vendors-css', function(){
 
 gulp.task('build-vendors-fonts', function(){
   gulp.src(EXTERNAL_FONTS)
+    .pipe(expect({ errorOnFailure: true }, EXTERNAL_FONTS))
     .pipe(gulp.dest('./build/assets/fonts/'));
 });
 
