@@ -7,7 +7,7 @@
 
   CourseController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     'CourseService',
     'NotificationService',
     'StatusService'

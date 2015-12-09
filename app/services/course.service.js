@@ -5,14 +5,15 @@
     .factory('CourseService', [
       '$q',
       '$http',
-      function ($q, $http) {
+      'apiUrl',
+      function ($q, $http, apiUrl) {
         console.log('... CourseService');
 
         return {
           getCourseRoutes: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl + '/route').then(function (data) {
+            $http.get(apiUrl + '/route').then(function (data) {
               deferred.resolve(data);
             });
 
@@ -20,7 +21,7 @@
           },
           // addCourse: function () {
           //   var deferred = $q.defer();
-          //   $http.post(APIUrl+'', ).then(function(data){
+          //   $http.post(apiUrl+'', ).then(function(data){
           //     deferred.resolve(data);
           //   })
           //   return deferred.promise;
@@ -28,7 +29,7 @@
           getCourse: function (id) {
             var deferred = $q.defer();
 
-            $http.get(APIUrl + '/route/' + id).then(function (data) {
+            $http.get(apiUrl + '/route/' + id).then(function (data) {
               deferred.resolve(data);
             });
 
@@ -47,7 +48,7 @@
               obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
             }
 
-            $http.put(APIUrl + '/route/' + id, obj).then(function (data) {
+            $http.put(apiUrl + '/route/' + id, obj).then(function (data) {
               deferred.resolve(data);
             });
 
@@ -56,7 +57,7 @@
           getCourses: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl + '/course').then(function (data) {
+            $http.get(apiUrl + '/course').then(function (data) {
               deferred.resolve(data);
             });
 
@@ -64,7 +65,7 @@
           }
           // removeCourse: function () {
           //   var deferred = $q.defer();
-          //   $http.delete(APIUrl+'', ).then(function(data){
+          //   $http.delete(apiUrl+'', ).then(function(data){
           //     deferred.resolve(data);
           //   })
           //   return deferred.promise;

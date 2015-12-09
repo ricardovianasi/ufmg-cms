@@ -8,7 +8,7 @@
     '$timeout',
     '$location',
     '$scope',
-    '$modal',
+    '$uibModal',
     'Upload',
     '$routeParams',
     'CourseService',

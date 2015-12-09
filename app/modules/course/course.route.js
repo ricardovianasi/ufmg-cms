@@ -4,7 +4,7 @@
 
   angular
     .module('courseModule')
-    .config('$routeProvider', function($routeProvider){
+    .config(['$routeProvider', function($routeProvider){
 
       $routeProvider
         .when('/course', {
@@ -22,7 +22,6 @@
           controller: 'CourseEditController',
           controllerAs: 'ctrl'
         });
-    }
-  );
+    }]);
 
 })();
