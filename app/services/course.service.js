@@ -1,7 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular.module('ServiceModule')
+  angular.module('serviceModule')
     .factory('CourseService', [
       '$q',
       '$http',

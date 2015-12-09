@@ -1,7 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular.module('ServiceModule')
+  angular.module('serviceModule')
     .factory('UploadService', ['$q', '$http', 'Upload', function ($q, $http, Upload) {
       console.log('... UploadService');
 

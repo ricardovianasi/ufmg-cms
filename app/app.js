@@ -3,25 +3,31 @@
 
   angular
     .module('app', [
-      'ngRoute',
-      'toastr',
-      'ngFileUpload',
-      // 'ui.select',
-      'as.sortable',
+      // Dependencies
       'angular-redactor',
-      'ui.bootstrap',
+      'as.sortable',
       'env',
-      'HelperModule',
-      'FilterModule',
-      'ServiceModule',
+      'ngCropper',
+      'ngFileUpload',
+      'ngRoute',
+      'ngSanitize',
+      'toastr',
+      'ui.bootstrap',
+      'ui.select',
+
+      // App Modules
       'componentsModule',
+      'filterModule',
+      'helperModule',
       'indexModule',
-      'periodicalModule'
+      'pagesModule',
+      'periodicalModule',
+      'serviceModule'
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
-      // 'ServiceModule',
-      // 'FilterModule',
-      // 'HelperModule',
+      // 'serviceModule',
+      // 'filterModule',
+      // 'helperModule',
       // 'mediaModule',
       // 'calendarModule',
       // 'galleryModule',

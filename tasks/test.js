@@ -13,12 +13,12 @@ var jshint = require('gulp-jshint');
 
 var files = [
   "app/common/config/env-production.js",
-  "app/helpers/helperModule.js",
+  "app/helpers/helper.module.js",
   "app/helpers/datetime.helper.js",
-  "app/filters/filterModule.js",
+  "app/filters/filter.module.js",
   "app/filters/format.filter.js",
   "app/filters/reverse.filter.js",
-  "app/services/serviceModule.js",
+  "app/services/service.module.js",
   "app/services/navigation.service.js",
   "app/services/periodical.service.js",
   "app/services/notification.service.js",
@@ -44,8 +44,6 @@ var files = [
   "app/common/config/app.config.js",
   "app/components/publishment/publishment.directive.js"
 ];
-
-
 
 gulp.task('test-js', function () {
   return gulp.src(files)

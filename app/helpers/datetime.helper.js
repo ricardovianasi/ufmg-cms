@@ -1,7 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular.module('HelperModule')
+  angular.module('helperModule')
     .factory('DateTimeHelper', [
       '$filter',
       function ($filter) {

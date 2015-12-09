@@ -1,7 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular.module('FilterModule')
+  angular.module('filterModule')
     .filter('format', [
       function () {
         return function (str) {

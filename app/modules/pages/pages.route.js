@@ -2,7 +2,9 @@
   'use strict';
 
   angular.module('pagesModule')
-    .config('$routeProvider', function ($routeProvider) {
+    .config([
+      '$routeProvider',
+      function ($routeProvider) {
         $routeProvider
           .when('/pages', {
             templateUrl: '/views/pages.template.html',
@@ -19,5 +21,6 @@
             controller: 'PagesEditController',
             controllerAs: 'ctrl'
           });
-      });
+      }
+    ]);
 })();
