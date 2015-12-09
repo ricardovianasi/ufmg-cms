@@ -5,12 +5,10 @@
     .controller('ModuleModalController', ModuleModalController);
 
   function ModuleModalController($scope,
-                                 $modal,
-                                 $filter,
-                                 $timeout,
+                                 $uibModal,
+                                 $uibModalInstance,
                                  MediaService,
                                  ModuleService,
-                                 $modalInstance,
                                  module,
                                  widgets,
                                  extraContent) {
@@ -89,7 +87,7 @@
       $scope.widget.links.splice(idx, 1);
     };
 
-    var UploadImageModalCtrl = function ($scope, $modalInstance, $timeout, $sce, Cropper) {
+    var UploadImageModalCtrl = function ($scope, $uibModalInstance, $timeout, $sce, Cropper) {
       $scope.upload_photo = null;
       $scope.imageLink = '';
 
@@ -312,7 +310,7 @@
         };
 
         if (!crop) {
-          $modalInstance.close({
+          $uibModalInstance.close({
             type: $scope.selectedFormat.type,
             url: $scope.selected_image.url,
             legend: $scope.form.legend ? $scope.form.legend : '',
@@ -320,7 +318,7 @@
           });
         } else {
           MediaService.cropImage($scope.selected_image.id, obj).then(function (data) {
-            $modalInstance.close({
+            $uibModalInstance.close({
               type: $scope.selectedFormat.type,
               url: data.data.url,
               legend: $scope.form.legend ? $scope.form.legend : '',
@@ -331,7 +329,7 @@
       };
 
       $scope.closeInsertImage = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
 
       $scope.$on("cropme:done", function (ev, result, canvasEl) {
@@ -354,7 +352,7 @@
           var _this = this;
 
           _this.selection.save();
-          moduleModal = $modal.open({
+          moduleModal = $uibModal.open({
             templateUrl: '/views/upload-images.modal.template.html',
             controller: UploadImageModalCtrl,
             backdrop: 'static',
@@ -449,11 +447,11 @@
 
       console.log('>>> ok', _obj);
 
-      $modalInstance.close(_obj);
+      $uibModalInstance.close(_obj);
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     $scope.preparePartial = function () {

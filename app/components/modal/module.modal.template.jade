@@ -1,28 +1,25 @@
-html
-  body
-    .modal-header
-      h3.modal-title Widget - {{ widget.type }}
-    .modal-body
-      form(action='')
-        fieldset
-          .form-group
-            label T&iacute;tulo do Widget:
-            |                 
-            input.form-control(type='text', title='Título do Widget', ng-model='widget.title')
-          |             
-          .form-group(ng-if='!module')
-            label M&oacute;dulo:
-            |                 
-            ui-select(ng-model='widget.selected')
-              ui-select-match(placeholder='Buscar Widget')
-                | {{ $select.selected.label }}
-              |                     
-              ui-select-choices(repeat='widget in widgets|filter: $select.search')
-                div(ng-bind-html='widget.label|highlight: $select.search')
-          // Insert partial dynamically acording to widget type
-          div(onload='preparePartial($event)', ng-if="widget.type !== ''", ng-include="'partials/{0}.html'|format:widget.type")
-    .modal-footer
-      button.btn.btn-danger(type='button', ng-click='cancel()') Cancelar
-      |     
-      button.btn.btn-success(type='button', ng-disabled="widget.title == '' || widget.type == ''", ng-click='ok()')
-        | Salvar
+.modal-header
+  h3.modal-title Widget - {{ widget.type }}
+.modal-body
+  form(action='')
+    fieldset
+      .form-group
+        label T&iacute;tulo do Widget:
+        input.form-control(type='text', title='Título do Widget', ng-model='widget.title')
+      .form-group(ng-if='!module')
+        label M&oacute;dulo:
+        ui-select(ng-model='widget.selected')
+          ui-select-match(placeholder='Buscar Widget')
+            | {{ $select.selected.label }}
+          ui-select-choices(repeat='widget in widgets|filter: $select.search')
+            div(ng-bind-html='widget.label|highlight: $select.search')
+      // Insert partial dynamically acording to widget type
+      div(onload='preparePartial($event)',
+        ng-if="widget.type !== undefined",
+        ng-include="'components/modal/partials/{0}.html'|format:widget.type")
+.modal-footer
+  button.btn.btn-danger(type='button', ng-click='cancel()') Cancelar
+  button.btn.btn-success(type='button',
+    ng-disabled="widget.title == '' || widget.type == ''",
+    ng-click='ok()')
+    | Salvar
