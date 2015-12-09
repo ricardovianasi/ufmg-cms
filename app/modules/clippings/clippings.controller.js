@@ -6,7 +6,7 @@
 
   ClippingsController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$filter',
     'ClippingsService',
     'DateTimeHelper',
@@ -36,21 +36,21 @@
     // Confirmation to remove
     var removeConfirmationModal;
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope,  $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+         $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+         $uibModalInstance.dismiss('cancel');
       };
     };
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,

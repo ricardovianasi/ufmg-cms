@@ -7,7 +7,7 @@
 
   ClippingsNewController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$timeout',
     '$location',
     '$filter',
@@ -28,6 +28,7 @@
                                   NotificationService,
                                   StatusService,
                                   DateTimeHelper) {
+
     console.log('... ClippingsNewController');
 
     $scope.title = 'Novo Clipping';

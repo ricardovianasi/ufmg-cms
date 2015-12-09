@@ -7,7 +7,7 @@
 
   ClippingsEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$timeout',
     '$location',
     '$routeParams',
