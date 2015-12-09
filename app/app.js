@@ -22,7 +22,7 @@
       'indexModule',
       'pagesModule',
       'periodicalModule',
-      'serviceModule'
+      'serviceModule',
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

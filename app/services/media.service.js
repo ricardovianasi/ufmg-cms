@@ -10,7 +10,7 @@
       'SerializeService',
       '$httpParamSerializer',
       'apiUrl',
-      function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer, apiUrl){
+      function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer, apiUrl) {
         console.log('... MediaService');
 
         var APIUrl = apiUrl;

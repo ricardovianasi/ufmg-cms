@@ -6,13 +6,13 @@
 
   PagesController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     'PagesService',
     'NotificationService',
     'StatusService'
   ];
 
-  function PagesController($scope, $modal, PagesService, NotificationService, StatusService) {
+  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService) {
     console.log('... PagesController');
 
     $scope.status = [];
@@ -55,7 +55,7 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
