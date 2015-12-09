@@ -5,7 +5,8 @@
     .factory('StatusService', [
       '$http',
       '$q',
-      function ($http, $q) {
+      'apiUrl',
+      function ($http, $q, apiUrl) {
         console.log('... StatusService');
 
         return {
@@ -21,7 +22,7 @@
           getStatus: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl + '/status').then(function (data) {
+            $http.get(apiUrl + '/status').then(function (data) {
               deferred.resolve(data);
             });
 

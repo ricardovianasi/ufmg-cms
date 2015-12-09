@@ -6,9 +6,11 @@
       '$q',
       '$http',
       '$filter',
-      function ($q, $http, $filter) {
+      'apiUrl',
+      function ($q, $http, $filter, apiUrl) {
         console.log('... PeriodicalService');
 
+        var APIUrl = apiUrl;
         var PERIODICAL_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'periodical');
 
         return {

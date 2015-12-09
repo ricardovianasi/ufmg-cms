@@ -75,4 +75,4 @@ header.view-header.clearfix
             </td>
 .row(ng-show='periodicals.total > 30')
   .col-xs-12
-    pagination.pagination-sm(boundary-links='true', total-items='periodicals.total', items-per-page='periodicals.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
+    uib-pagination.pagination-sm(boundary-links='true', total-items='periodicals.total', items-per-page='periodicals.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')

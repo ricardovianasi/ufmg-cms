@@ -2,9 +2,5 @@
   'use strict';
 
   angular
-    .module('periodicalModule', ['ngRoute',
-                                 'ngFileUpload',
-                                 'ui.select',
-                                 'as.sortable',
-                                 'angular-redactor']);
+    .module('periodicalModule', []);
 })();

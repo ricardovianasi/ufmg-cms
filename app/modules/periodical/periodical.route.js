@@ -3,7 +3,7 @@
 
   angular
     .module("periodicalModule")
-     .config("$routeProvider", function($routeProvider) {
+     .config(["$routeProvider", function($routeProvider) {
 
       $routeProvider
         .when("/periodicals", {
@@ -36,7 +36,7 @@
           controller: "PeriodicalEditionNewController",
           controllerAs: "ctrl"
         });
-    });
+    }]);
 })();
 
 // articles[][title]

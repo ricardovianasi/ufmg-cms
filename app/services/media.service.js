@@ -9,9 +9,11 @@
       'Upload',
       'SerializeService',
       '$httpParamSerializer',
-      function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer) {
+      'apiUrl',
+      function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer, apiUrl){
         console.log('... MediaService');
 
+        var APIUrl = apiUrl;
         var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'file');
 
         return {

@@ -9,7 +9,7 @@ angular
     '$scope',
     'PeriodicalService',
     'DateTimeHelper',
-    '$modal',
+    '$uibModal',
     'NotificationService'
   ];
 

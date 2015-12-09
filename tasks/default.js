@@ -11,7 +11,7 @@ gulp.task('build', [
   'jade',
   'copyimage',
   'css',
-  'js',
+  'test-js',
   'build-vendors'
 ]);
 

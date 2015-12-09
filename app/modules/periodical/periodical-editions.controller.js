@@ -15,7 +15,7 @@
       'MediaService',
       'DateTimeHelper',
       '$location',
-      '$modal'
+      '$uibModal'
     ];
 
     function PeriodicalEditionsController($scope,
