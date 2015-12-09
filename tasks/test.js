@@ -41,7 +41,8 @@ var files = [
   "app/modules/index/index.route.js",
   "app/modules/index/index.controller.js",
   "app/app.js",
-  "app/common/config/app.config.js"
+  "app/common/config/app.config.js",
+  "app/components/publishment/publishment.directive.js"
 ];
 
 

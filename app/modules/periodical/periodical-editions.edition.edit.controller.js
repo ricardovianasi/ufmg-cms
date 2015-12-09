@@ -7,7 +7,7 @@
 
   PeriodicalEditionEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$routeParams',
     'PeriodicalService',
     'StatusService',
@@ -109,12 +109,10 @@
       });
     };
 
-    var ArticleModalCtrl = ArticleModalController;
-
     $scope.addArticle = function () {
       var articleModal = $modal.open({
         templateUrl: '/views/article.modal.template.html',
-        controller: ArticleModalCtrl,
+        controller: 'ArticleModalController',
         backdrop: 'static',
         size: 'lg',
         resolve: {
@@ -164,11 +162,9 @@
             });
         };
 
-        var ArticleModalCtrl = ArticleModalController;
-
         $scope.addArticle = function () {
             var articleModal = $modal.open({
-                templateUrl: '/views/article.modal.template.html',
+                templateUrl: 'components/modal/article.modal.template.html',
                 controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
@@ -186,7 +182,7 @@
 
         $scope.editArticle = function (idx, article) {
             editArticleModal = $modal.open({
-                templateUrl: '/views/article.modal.template.html',
+                templateUrl: 'components/modal/article.modal.template.html',
                 controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
@@ -219,7 +215,7 @@
     var removeConfirmationModal;
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -231,14 +227,14 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
