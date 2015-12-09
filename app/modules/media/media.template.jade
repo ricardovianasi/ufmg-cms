@@ -64,4 +64,4 @@ header.view-header.clearfix
               i.fa.fa-trash
 .row(ng-show='media.total > 30')
   .col-xs-12
-    pagination.pagination-sm(boundary-links='true', total-items='media.total', items-per-page='media.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
+    uib-pagination.pagination-sm(boundary-links='true', total-items='media.total', items-per-page='media.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')

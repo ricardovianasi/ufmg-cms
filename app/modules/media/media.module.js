@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('mediaModule', ['ngRoute']);
+    .module('mediaModule', []);
 })();

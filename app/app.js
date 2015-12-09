@@ -27,7 +27,8 @@
       'releasesModule',
       'clippingsModule',
       'newsModule',
-      'courseModule'
+      'courseModule',
+      'mediaModule'
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

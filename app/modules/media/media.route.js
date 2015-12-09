@@ -3,7 +3,7 @@
 
   angular
     .module("mediaModule")
-    .config("$routeProvider", function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
       $routeProvider
         .when("/media", {
           templateUrl: "/modules/media/media.template.html",
@@ -20,5 +20,5 @@
           controller: "MediaEditController",
           controllerAs: "ctrl"
         });
-    });
+    }]);
 })();

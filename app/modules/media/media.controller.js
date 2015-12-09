@@ -10,7 +10,7 @@
     'MediaService',
     'StatusService',
     'NotificationService',
-    '$modal'
+    '$uibModal'
   ];
 
   function MediaController($scope, MediaService, StatusService, NotificationService, $modal) {

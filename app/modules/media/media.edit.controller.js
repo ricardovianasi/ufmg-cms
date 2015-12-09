@@ -6,7 +6,7 @@
 
   MediaEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$location',
     '$routeParams',
     'StatusService',
