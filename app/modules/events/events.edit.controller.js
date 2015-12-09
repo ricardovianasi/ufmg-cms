@@ -6,7 +6,6 @@
 
   EventsEditController.$inject = [
     '$scope',
-    '$modal',
     '$timeout',
     '$location',
     '$routeParams',
@@ -19,7 +18,6 @@
   ];
 
   function EventsEditController($scope,
-                                $modal,
                                 $timeout,
                                 $location,
                                 $routeParams,

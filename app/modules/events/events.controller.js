@@ -6,13 +6,11 @@
 
   EventsController.$inject = [
     '$scope',
-    '$modal',
     'EventsService',
-    'NotificationService',
     'DateTimeHelper'
   ];
 
-  function EventsController($scope, $modal, EventsService, NotificationService, DateTimeHelper) {
+  function EventsController($scope, EventsService, DateTimeHelper) {
     console.log('... EventsController');
 
     $scope.title = 'Eventos';

@@ -1,8 +1,5 @@
-;(function(){
+;(function () {
   'use strict';
 
-  angular
-    .module('eventsModule', ['ngRoute',
-                             'ngFileUpload',
-                             'ui.mask']);
+  angular.module('eventsModule', []);
 })();

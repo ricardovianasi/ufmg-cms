@@ -71,27 +71,17 @@
       getEvents: function (page) {
         page = page || 1;
 
-        var deferred = $q.defer();
         var url = $filter('format')('{0}?page={1}', EVENT_ENDPOINT, page);
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       },
       /**
        * @returns {*}
        */
       getEventsCategories: function () {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, 'category');
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       },
       /**
        * @param data
@@ -99,15 +89,9 @@
        * @returns {*}
        */
       store: function (data) {
-        var deferred = $q.defer();
-
         data = _parseData(data);
 
-        $http.post(EVENT_ENDPOINT, data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.post(EVENT_ENDPOINT, data);
       },
       /**
        * @param data
@@ -116,16 +100,11 @@
        * @returns {*}
        */
       update: function (data, id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
         data = _parseData(data);
 
-        $http.put(url, data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.put(url, data);
       },
       /**
        * @param id
@@ -133,14 +112,9 @@
        * @returns {*}
        */
       destroy: function (id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
-        $http.delete(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.delete(url);
       },
       /**
        * @param id
@@ -148,14 +122,9 @@
        * @returns {*}
        */
       getEvent: function (id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       }
     };
   }

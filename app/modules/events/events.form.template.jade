@@ -1,7 +1,7 @@
 header.view-header.spacer-bottom.clearfix
   .pull-left
     h2
-      span(ng-if='event.name') {{event.name}}
+      span(ng-if='event.name') {{ event.name }}
       span(ng-if='!event.name') Novo Evento
     ol.breadcrumb
       li
@@ -9,7 +9,7 @@ header.view-header.spacer-bottom.clearfix
       li.active(ng-if='!event.name')
         | Novo Evento
       li.active(ng-if='event.name')
-        | {{event.name}}
+        | {{ event.name }}
 .row
   .col-xs-8
     .row
@@ -17,7 +17,9 @@ header.view-header.spacer-bottom.clearfix
         // Categoria
         .form-group
           label(for='category') Categoria / Tipo do Evento
-          select#category.form-control(name='category', ng-model='event.type', ng-options='category.id as category.name for category in categories')
+          select#category.form-control(name='category',
+            ng-model='event.type',
+            ng-options='category.id as category.name for category in categories')
         // Nome
         .form-group
           label(for='name') Nome do Evento
@@ -25,7 +27,14 @@ header.view-header.spacer-bottom.clearfix
         // Tags
         .form-group
           label(for='tags') Tags
-          ui-select#tags(name='tags', title='Digite uma tag', multiple='', tagging='', sortable='true', tagging-tokens=',|ENTER|TAB', tagging-label='', ng-model='event.tags', theme='bootstrap', ng-disabled='disabled')
+          ui-select#tags(name='tags', title='Digite uma tag', multiple='',
+            tagging='',
+            sortable='true',
+            tagging-tokens=',|ENTER|TAB',
+            tagging-label='',
+            ng-model='event.tags',
+            theme='bootstrap',
+            ng-disabled='disabled')
             ui-select-match(placeholder='Selecione as tags')
               | {{ $item }}
             ui-select-choices(repeat='color in availableColors | filter:$select.search')
@@ -37,10 +46,14 @@ header.view-header.spacer-bottom.clearfix
             span.label.label-danger.remove-image(ng-click="imgHandler.removeImage('poster')", ng-show='event.poster')
               span.fa.fa-remove
               |  Remover Cartaz
-          .add-module(ngf-select='', ngf-accept="'image/*'", ngf-multiple='false', ng-model='event.poster', ng-show='!event.poster')
+          .add-module(ngf-select='',
+            ngf-accept="'image/*'",
+            ngf-multiple='false',
+            ng-model='event.poster',
+            ng-show='!event.poster')
             | + Adicionar Capa
           .uploaded-image(ng-show='event.poster')
-            img(alt='', ng-src='{{event.poster.url}}')
+            img(alt='', ng-src='{{ event.poster.url }}')
     // Foto
     .row
       .col-xs-12
@@ -49,7 +62,11 @@ header.view-header.spacer-bottom.clearfix
             span.label.label-danger.remove-image(ng-click="imgHandler.removeImage('photo')", ng-show='event.photo')
               span.fa.fa-remove
               |  Remover Foto
-          .add-module(ngf-select='', ngf-accept="'image/*'", ngf-multiple='false', ng-model='event.photo', ng-show='!event.photo')
+          .add-module(ngf-select='',
+            ngf-accept="'image/*'",
+            ngf-multiple='false',
+            ng-model='event.photo',
+            ng-show='!event.photo')
             | + Adicionar Foto
           .uploaded-image(ng-show='event.photo')
             img(alt='', ng-src='{{ event.photo.url }}')
@@ -62,7 +79,9 @@ header.view-header.spacer-bottom.clearfix
             li(ng-repeat='course in courses')
               .checkbox
                 label(for='course-{{ course.id }}')
-                  input(type='checkbox', value='{{ course.id }}', name='courses[]', id='course-{{ course.id }}', ng-checked='event.courses.indexOf(course.id) > -1', ng-click='toggleSelection(course.id)')
+                  input(type='checkbox', value='{{ course.id }}', name='courses[]', id='course-{{ course.id }}',
+                    ng-checked='event.courses.indexOf(course.id) > -1',
+                    ng-click='toggleSelection(course.id)')
                   |  {{ course.name }}
     .row
       // Audio
@@ -86,7 +105,9 @@ header.view-header.spacer-bottom.clearfix
       .col-xs-12
         .form-group
           label(for='datasheet') Ficha Técnica
-          textarea#datasheet(name='datasheet', cols='30', rows='5', ng-model='event.datasheet', redactor='redactorConfig')
+          textarea#datasheet(name='datasheet', cols='30', rows='5',
+            ng-model='event.datasheet',
+            redactor='redactorConfig')
     .row
       .col-xs-6
         .well.well-sm
@@ -97,13 +118,23 @@ header.view-header.spacer-bottom.clearfix
                 label(for='initDate')
                   span.fa.fa-calendar
                   |  Data de início
-                input#initDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='initDate', ng-model='event.initDate', ng-focus='datepickerOpt.initDate.open(this, $event)', datepicker-popup='{{ datepickerOpt.initDate.format }}', datepicker-options='datepickerOpt.initDate.dateOptions', is-open='datepickerOpt.initDate.status.opened', min-date='datepickerOpt.initDate.minDate', max-date='datepickerOpt.initDate.maxDate')
+                input#initDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='initDate',
+                  ng-model='event.initDate',
+                  ng-focus='datepickerOpt.initDate.open(this, $event)',
+                  datepicker-popup='{{ datepickerOpt.initDate.format }}',
+                  datepicker-options='datepickerOpt.initDate.dateOptions',
+                  is-open='datepickerOpt.initDate.status.opened',
+                  min-date='datepickerOpt.initDate.minDate',
+                  max-date='datepickerOpt.initDate.maxDate')
             .col-xs-6
               .form-group
                 label
                   i.fa.fa-clock-o
                   |  Horário de início
-                timepicker(ng-model='event.initTime', hour-step='1', minute-step='1', show-meridian='timepickerOpt.initTime.isMeridian')
+                timepicker(ng-model='event.initTime',
+                  hour-step='1',
+                  minute-step='1',
+                  show-meridian='timepickerOpt.initTime.isMeridian')
           // Fim
           .row
             .col-xs-6
@@ -111,13 +142,23 @@ header.view-header.spacer-bottom.clearfix
                 label(for='endDate')
                   span.fa.fa-calendar
                   |  Data de fim
-                input#endDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='endDate', ng-model='event.endDate', ng-focus="datepickerOpt.endDate.open(this, $event, 'initDate')", datepicker-popup='{{ datepickerOpt.endDate.format }}', datepicker-options='datepickerOpt.endDate.dateOptions', is-open='datepickerOpt.endDate.status.opened', min-date='datepickerOpt.endDate.minDate', max-date='datepickerOpt.endDate.maxDate')
+                input#endDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='endDate',
+                  ng-model='event.endDate',
+                  ng-focus="datepickerOpt.endDate.open(this, $event, 'initDate')",
+                  datepicker-popup='{{ datepickerOpt.endDate.format }}',
+                  datepicker-options='datepickerOpt.endDate.dateOptions',
+                  is-open='datepickerOpt.endDate.status.opened',
+                  min-date='datepickerOpt.endDate.minDate',
+                  max-date='datepickerOpt.endDate.maxDate')
             .col-xs-6
               .form-group
                 label
                   i.fa.fa-clock-o
                   |  Horário de fim
-                timepicker(ng-model='event.endTime', hour-step='1', minute-step='1', show-meridian='timepickerOpt.endTime.isMeridian')
+                timepicker(ng-model='event.endTime',
+                  hour-step='1',
+                  minute-step='1',
+                  show-meridian='timepickerOpt.endTime.isMeridian')
       // Duração
       .col-xs-3
         .well.well-sm
@@ -175,14 +216,3 @@ header.view-header.spacer-bottom.clearfix
           input#site.form-control(type='text', name='site', ng-model='event.site')
   .col-xs-4
     publishment-options(route-model='event')
-//
-  <div class="row">
-  <div class="col-xs-12">
-  <hr>
-  <div class="pull-right">
-  <a class="btn btn-danger pull-left spacer-right">Cancelar</a>
-  <a class="btn btn-success pull-left"
-  ng-click="publish(event)">Salvar</a>
-  </div>
-  </div>
-  </div>

@@ -2,7 +2,9 @@
   'use strict';
 
   angular.module('eventsModule')
-    .config('$routeProvider', function ($routeProvider) {
+    .config([
+      '$routeProvider',
+      function ($routeProvider) {
         $routeProvider
           .when('/events', {
             templateUrl: '/modules/events/events.template.html',
@@ -20,5 +22,5 @@
             controllerAs: 'ctrl'
           });
       }
-    );
+    ]);
 })();

@@ -20,6 +20,7 @@
       'clippingsModule',
       'componentsModule',
       'courseModule',
+      'eventsModule',
       'filterModule',
       'helperModule',
       'indexModule',

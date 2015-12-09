@@ -6,7 +6,6 @@
 
   EventsNewController.$inject = [
     '$scope',
-    '$modal',
     '$timeout',
     '$location',
     'CourseService',
@@ -18,7 +17,6 @@
   ];
 
   function EventsNewController($scope,
-                               $modal,
                                $timeout,
                                $location,
                                CourseService,
@@ -42,7 +40,7 @@
     /**
      * Controls event.courses array
      *
-     * @param {integer} courseId
+     * @param {number} courseId
      */
     $scope.toggleSelection = function toggleSelection(courseId) {
       var idx = $scope.event.courses.indexOf(courseId);
