@@ -4,8 +4,10 @@
   angular.module('serviceModule')
     .factory('ModuleService', [
       'MediaService',
+      'NewsService',
       'ReleasesService',
-      function (MediaService, ReleasesService) {
+      'TagsService',
+      function (MediaService, NewsService, ReleasesService, TagsService) {
         console.log('... ModuleService');
 
         var _obj = {};
@@ -443,6 +445,24 @@
           }
         };
 
+        /**
+         * @param $scope
+         *
+         * @private
+         */
+        var _preparingNews = function ($scope) {
+          $scope.news_types = [];
+          $scope.tags = [];
+
+          NewsService.getNewsTypes().then(function (data) {
+            $scope.news_types = data.data;
+          });
+
+          TagsService.getTags().then(function (data) {
+            $scope.tags = data.data[0];
+          });
+        };
+
         // Partial preparing
         var _preparing = {
           /**
@@ -508,7 +528,22 @@
             $scope.removeSpecialist = function (idx) {
               $scope.widget.content.specialists.splice(idx, 1);
             };
-          }
+          },
+          /**
+           * Sidebar Button
+           *
+           * @param $scope
+           */
+          sidebarbutton: function ($scope) {
+            $scope.icons = [];
+
+            MediaService.getIcons().then(function (data) {
+              console.log(data);
+              $scope.icons = data.data;
+            });
+          },
+          relatednews: _preparingNews,
+          listnews: _preparingNews
         };
 
         return {

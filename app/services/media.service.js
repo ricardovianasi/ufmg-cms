@@ -17,47 +17,47 @@
         var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'file');
 
         return {
+          /**
+           * @param id
+           *
+           * @returns {*}
+           */
           getFile: function (id) {
-            var deferred = $q.defer();
-
-            $http.get(APIUrl + '/file/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
+            return $http.get(APIUrl+'/file/'+id);
           },
+          /**
+           * @returns {*}
+           */
           getIcons: function () {
-            var deferred = $q.defer();
-
-            $http.get(APIUrl + '/file/icon').then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
+            return $http.get(APIUrl+'/file/icon');
           },
+          /**
+           * @param page
+           *
+           * @returns {*}
+           */
           getMedia: function (page) {
             page = page || 1;
 
-            var deferred = $q.defer();
             var url = $filter('format')('{0}?page={1}', MEDIA_ENDPOINT, page);
 
-            $http.get(url).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
+            return $http.get(url);
           },
+          /**
+           * @param id
+           *
+           * @returns {*}
+           */
           removeMedia: function (id) {
-            var deferred = $q.defer();
-
-            $http.delete(APIUrl + '/file/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
+            return $http.delete(APIUrl+'/file/'+id);
           },
+          /**
+           * @param id
+           * @param {Object} obj
+           *
+           * @returns {*}
+           */
           cropImage: function (id, obj) {
-            var deferred = $q.defer();
             obj = {
               x: parseInt(obj.x),
               y: parseInt(obj.y),
@@ -66,21 +66,24 @@
               resize_width: obj.resize_width,
               resize_height: obj.resize_height
             };
-            $http.post(APIUrl + '/file/' + id + '/crop', $httpParamSerializer(obj), {
+
+            return $http.post(APIUrl+'/file/'+id+'/crop', $httpParamSerializer(obj), {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
-            }).then(function (data) {
-              deferred.resolve(data);
             });
-
-            return deferred.promise;
           },
+          /**
+           *
+           * @param file
+           *
+           * @returns {*}
+           */
           newFile: function (file) {
             var deferred = $q.defer();
 
             Upload.upload({
-              url: APIUrl + '/file',
+              url: APIUrl+'/file',
               fields: {
                 title: file.title ? file.title : '',
                 description: file.description ? file.description : '',
@@ -96,16 +99,14 @@
 
             return deferred.promise;
           },
+          /**
+           * @param id
+           * @param obj
+           *
+           * @returns {*}
+           */
           updateFile: function (id, obj) {
-            var deferred = $q.defer();
-
-
-            $http.put(APIUrl + '/file/' +
-              id, obj).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
+            return $http.put(APIUrl+'/file/'+id, obj);
           }
         };
       }

@@ -7,92 +7,71 @@
   NewsService.$inject = [
     '$http',
     '$filter',
-    '$q',
     'apiUrl'
   ];
 
-  function NewsService($http, $filter, $q, apiUrl) {
+  function NewsService($http, $filter, apiUrl) {
     console.log('... NewsService');
 
     var NEWS_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'news');
 
     return {
+      /**
+       * @param id
+       * @param page
+       *
+       * @returns {*}
+       */
       getNews: function (id, page) {
         page = page || 1;
 
-        var deferred = $q.defer();
         var url = $filter('format')('{0}?page={1}', NEWS_ENDPOINT, page);
 
         if (id) {
           url = $filter('format')('{0}/{1}', NEWS_ENDPOINT, id);
 
-          $http.get(url).then(function (data) {
-            deferred.resolve(data);
-          });
-
-          return deferred.promise;
+          return $http.get(url);
         }
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       },
+      /**
+       * @returns {*}
+       */
       getNewsCategories: function () {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + '/news/category').then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(apiUrl+'/news/category');
       },
+      /**
+       * @returns {*}
+       */
       getNewsTypes: function () {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + '/news/type').then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(apiUrl+'/news/type');
       },
+      /**
+       * @param data
+       *
+       * @returns {*}
+       */
       postNews: function (data) {
-        var deferred = $q.defer();
-
-        $http.post(apiUrl + '/news', data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.post(apiUrl+'/news', data);
       },
+      /**
+       * @param id
+       * @param data
+       *
+       * @returns {*}
+       */
       updateNews: function (id, data) {
-        var deferred = $q.defer();
-
-        $http.put(apiUrl + '/news/' + id, data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.put(apiUrl+'/news/'+id, data);
       },
+      /**
+       * @param id
+       *
+       * @returns {*|{method}|boolean}
+       */
       removeNews: function (id) {
-        var deferred = $q.defer();
-
-        $http.delete(apiUrl + '/news/' + id).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.delete(apiUrl+'/news/'+id);
       }
-      // success: function (title, msg) {
-      //   toastr.success(title, msg)
-      // },
-      // error: function (title, msg) {
-      //   toastr.error(title, msg)
-      // },
-      // warning: function (title, msg) {
-      //   toastr.warning(title, msg)
-      // }
     };
   }
 })();
