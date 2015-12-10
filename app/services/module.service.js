@@ -508,6 +508,14 @@
             $scope.removeSpecialist = function (idx) {
               $scope.widget.content.specialists.splice(idx, 1);
             };
+          },
+          sidebarbutton: function ($scope) {
+            $scope.icons = [];
+
+            MediaService.getIcons().then(function (data) {
+              console.log(data);
+              $scope.icons = data.data;
+            });
           }
         };
 

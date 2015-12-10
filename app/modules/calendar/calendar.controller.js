@@ -78,7 +78,7 @@
 
     $scope.diasLetivos = function (size) {
       var modalCalendarSchoolDays = $modal.open({
-        templateUrl: 'components/modal/calendar.school-days.modal.template.html',
+        templateUrl: '/components/modal/calendar.school-days.modal.template.html',
         controller: modalCalendarSchoolDaysCtrl,
         backdrop: 'static',
         size: size,
@@ -101,7 +101,7 @@
 
     $scope.addEvent = function (size) {
       var modalCalendarioNovo = $modal.open({
-        templateUrl: 'components/modal/calendario.novo.modal.template.html',
+        templateUrl: '/components/modal/calendario.novo.modal.template.html',
         controller: ModalCalendarioNovoCtrl,
         backdrop: 'static',
         size: size,
@@ -120,7 +120,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -146,7 +146,7 @@
 
     $scope.editEvent = function (size, event) {
       var modalCalendarEditEvent = $modal.open({
-        templateUrl: 'components/modal/calendario.novo.modal.template.html',
+        templateUrl: '/components/modal/calendario.novo.modal.template.html',
         controller: ModalEditEventCtrl,
         backdrop: 'static',
         size: size,

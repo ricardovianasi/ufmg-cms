@@ -7,7 +7,7 @@ angular
 
       return {
         restrict: 'E',
-        templateUrl: 'components/publishment/publishment.template.html',
+        templateUrl: '/components/publishment/publishment.template.html',
         scope: {
           obj: '=routeModel'
         },

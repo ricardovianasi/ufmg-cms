@@ -50,7 +50,6 @@
     $scope.news = [];
     $scope.pages = [];
     $scope.events = [];
-    $scope.icons = [];
     $scope.columns = PagesService.COLUMNS;
 
     $scope.time_days = DateTimeHelper.getDays();
@@ -214,44 +213,44 @@
       };
     };
 
-    NewsService.getNewsTypes().then(function (data) {
-      $scope.news_types = data.data;
-    });
-
-    NewsService.getNews().then(function (data) {
-      $scope.news = data.data;
-    });
+    //NewsService.getNewsTypes().then(function (data) {
+    //  $scope.news_types = data.data;
+    //});
+    //
+    //NewsService.getNews().then(function (data) {
+    //  $scope.news = data.data;
+    //});
 
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
 
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
-
-    GalleryService.getGalleries().then(function (data) {
-      $scope.galleries = data.data;
-    });
-
-    GalleryService.getCategories().then(function (data) {
-      $scope.categories = data.data;
-    });
-
-    TagsService.getTags().then(function (data) {
-      $scope.tags = data.data;
-    });
-
-    PagesService.getPages().then(function (data) {
-      $scope.pages = data.data;
-    });
-
-    EventsService.getEvents().then(function (data) {
-      $scope.events = data.data;
-    });
-
-    MediaService.getIcons().then(function (data) {
-      $scope.icons = data.data;
-    });
+    //StatusService.getStatus().then(function (data) {
+    //  $scope.status = data.data;
+    //});
+    //
+    //GalleryService.getGalleries().then(function (data) {
+    //  $scope.galleries = data.data;
+    //});
+    //
+    //GalleryService.getCategories().then(function (data) {
+    //  $scope.categories = data.data;
+    //});
+    //
+    //TagsService.getTags().then(function (data) {
+    //  $scope.tags = data.data;
+    //});
+    //
+    //PagesService.getPages().then(function (data) {
+    //  $scope.pages = data.data;
+    //});
+    //
+    //EventsService.getEvents().then(function (data) {
+    //  $scope.events = data.data;
+    //});
+    //
+    //MediaService.getIcons().then(function (data) {
+    //  $scope.icons = data.data;
+    //});
   }
 })();

@@ -4,17 +4,14 @@ html
       .col-xs-4
         .form-group
           label Texto do Bot&atilde;o
-          |             
           input.form-control(type='text', title='Texto do Botão', ng-model='widget.label')
-      |     
       .col-xs-4
         .form-group
           label Url
-          |             
           input.form-control(type='text', title='Url', ng-model='widget.url')
-      |     
       .col-xs-4
         .form-group
           label &Iacute;cone
-          |             
-          select.form-control(title='Ícone', ng-model='widget.icon', ng-options='icon.id as icon.label for icon in icons.items')
+          select.form-control(title='Ícone',
+            ng-model='widget.icon',
+            ng-options='icon.id as icon.label for icon in icons')
