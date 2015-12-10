@@ -54,13 +54,8 @@
 
             $scope.gallery.photos.push(_file);
             NotificationService.success('"' + data.title + '"' + ' enviado para Biblioteca de Mídia.');
+            $scope.editPhotos($scope.gallery.photos.length - 1);
           });
-
-          if (idx + 1 == $scope.add_photos.length) {
-            setTimeout(function () {
-              $scope.editPhotos();
-            }, 250);
-          }
         });
       }
     });
@@ -114,7 +109,6 @@
     };
 
     $scope.removePhoto = function (id) {
-      console.log($scope.gallery.photos, id);
       var idx = _.findIndex($scope.gallery.photos, function(files){
         return files.file.id == id ? id : '';
       });
@@ -139,7 +133,7 @@
       });
     };
 
-    $scope.editPhotos = function () {
+    $scope.editPhotos = function (index) {
       EditPhotosModal = $uibModal.open({
         templateUrl: '/components/modal/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
@@ -148,6 +142,9 @@
         resolve: {
           photos: function () {
             return $scope.gallery.photos;
+          },
+          index: function(){
+            return index;
           }
         }
       });
@@ -168,13 +165,10 @@
       });
     };
 
-    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, NotificationService) {
+    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, NotificationService, index) {
       $scope.photos = photos;
-
-      $scope.currentPhotoIdx = photos.length - 1;
+      $scope.currentPhotoIdx = index;
       $scope.currentPhoto = $scope.photos[$scope.currentPhotoIdx];
-      console.log($scope.currentPhoto);
-      console.log($scope.photos);
 
       $scope.nextPhoto = function (index) {
         // não é o último
@@ -199,7 +193,6 @@
         $uibModalInstance.close($scope.photos);
       };
       $scope.cancel = function () {
-        $scope.photos.pop();
         $uibModalInstance.dismiss();
       };
     };

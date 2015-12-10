@@ -47,6 +47,8 @@ header.view-header.clearfix
               .pull-right
                 span.label.label-primary(as-sortable-item-handle='')
                   span.fa.fa-arrows
+                span.label.label-warning(ng-click='editPhotos($index)')
+                  span.fa.fa-pencil
                 span.label.label-danger(ng-click='removePhoto(photo.file.id)')
                   span.fa.fa-remove
             .gallery-thumb
