@@ -445,6 +445,24 @@
           }
         };
 
+        /**
+         * @param $scope
+         *
+         * @private
+         */
+        var _preparingNews = function ($scope) {
+          $scope.news_types = [];
+          $scope.tags = [];
+
+          NewsService.getNewsTypes().then(function (data) {
+            $scope.news_types = data.data;
+          });
+
+          TagsService.getTags().then(function (data) {
+            $scope.tags = data.data[0];
+          });
+        };
+
         // Partial preparing
         var _preparing = {
           /**
@@ -511,6 +529,11 @@
               $scope.widget.content.specialists.splice(idx, 1);
             };
           },
+          /**
+           * Sidebar Button
+           *
+           * @param $scope
+           */
           sidebarbutton: function ($scope) {
             $scope.icons = [];
 
@@ -519,18 +542,8 @@
               $scope.icons = data.data;
             });
           },
-          relatednews: function ($scope) {
-            $scope.news_types = [];
-            $scope.tags = [];
-
-            NewsService.getNewsTypes().then(function (data) {
-              $scope.news_types = data.data;
-            });
-
-            TagsService.getTags().then(function (data) {
-              $scope.tags = data.data[0];
-            });
-          }
+          relatednews: _preparingNews,
+          listnews: _preparingNews
         };
 
         return {
