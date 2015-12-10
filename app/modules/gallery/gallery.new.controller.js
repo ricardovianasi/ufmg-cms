@@ -1,16 +1,14 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('galleryModule')
+  angular.module('galleryModule')
     .controller('GalleryNewController', GalleryNewController);
 
   GalleryNewController.$inject = [
     '$scope',
     '$location',
-    '$modal',
+    '$uibModal',
     'StatusService',
-    'UploadService',
     'GalleryService',
     'MediaService',
     'NotificationService'
@@ -18,9 +16,8 @@
 
   function GalleryNewController($scope,
                                 $location,
-                                $modal,
+                                $uibModal,
                                 StatusService,
-                                UploadService,
                                 GalleryService,
                                 MediaService,
                                 NotificationService) {
@@ -42,11 +39,12 @@
     $scope.gallery.category = '';
     $scope.gallery.photos = [];
 
-    var EditPhotosModal, ConfirmationModal, removeConfirmationModal;
+    var EditPhotosModal;
+    var removeConfirmationModal;
 
     $scope.editPhotos = function () {
-      EditPhotosModal = $modal.open({
-        templateUrl: '/views/photos-edit.modal.template.html',
+      EditPhotosModal = $uibModal.open({
+        templateUrl: '/components/modal/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -103,7 +101,7 @@
     };
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -181,8 +179,8 @@
     var MediaLibraryModal;
 
     $scope.openMediaLibrary = function () {
-      MediaLibraryModal = $modal.open({
-        templateUrl: '/views/media-library.modal.template.html',
+      MediaLibraryModal = $uibModal.open({
+        templateUrl: '/components/modal/media-library.modal.template.html',
         controller: MediaLibraryModalCtrl,
         backdrop: 'static',
         size: 'lg'

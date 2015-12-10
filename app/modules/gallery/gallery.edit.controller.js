@@ -6,7 +6,7 @@
 
   GalleryEditController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$location',
     '$routeParams',
     'StatusService',
@@ -15,7 +15,7 @@
   ];
 
   function GalleryEditController($scope,
-                                 $modal,
+                                 $uibModal,
                                  $location,
                                  $routeParams,
                                  StatusService,
@@ -82,7 +82,7 @@
     var removeConfirmationModal, EditPhotosModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -115,7 +115,7 @@
     };
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -129,7 +129,7 @@
     };
 
     $scope.editPhotos = function () {
-      EditPhotosModal = $modal.open({
+      EditPhotosModal = $uibModal.open({
         templateUrl: '/views/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
         backdrop: 'static',
@@ -191,7 +191,7 @@
     var MediaLibraryModal;
 
     $scope.openMediaLibrary = function () {
-      MediaLibraryModal = $modal.open({
+      MediaLibraryModal = $uibModal.open({
         templateUrl: '/views/media-library.modal.template.html',
         controller: MediaLibraryModalCtrl,
         backdrop: 'static',

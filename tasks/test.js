@@ -26,6 +26,7 @@ var files = [
   'app/filters/reverse.filter.js',
 
   // Services
+  'app/services/calendar.service.js',
   'app/services/clippings.service.js',
   'app/services/course.service.js',
   'app/services/events.service.js',
@@ -44,7 +45,6 @@ var files = [
   'app/services/tags.service.js',
   'app/services/upload.service.js',
   'app/services/widgets.service.js',
-  'app/services/calendar.service.js',
 
   // Components
   'app/components/articles/article.modal.controller.js',
@@ -55,6 +55,9 @@ var files = [
   'app/components/sidebar/sidebar.directive.js',
 
   // Modules
+  'app/modules/calendar/calendar.controller.js',
+  'app/modules/calendar/calendar.module.js',
+  'app/modules/calendar/calendar.route.js',
   'app/modules/clippings/clippings.controller.js',
   'app/modules/clippings/clippings.edit.controller.js',
   'app/modules/clippings/clippings.module.js',
@@ -70,6 +73,11 @@ var files = [
   'app/modules/events/events.module.js',
   'app/modules/events/events.new.controller.js',
   'app/modules/events/events.route.js',
+  'app/modules/gallery/gallery.controller.js',
+  'app/modules/gallery/gallery.edit.controller.js',
+  'app/modules/gallery/gallery.module.js',
+  'app/modules/gallery/gallery.new.controller.js',
+  'app/modules/gallery/gallery.route.js',
   'app/modules/index/index.controller.js',
   'app/modules/index/index.module.js',
   'app/modules/index/index.route.js',
@@ -100,9 +108,6 @@ var files = [
   'app/modules/releases/releases.module.js',
   'app/modules/releases/releases.new.controller.js',
   'app/modules/releases/releases.route.js',
-  'app/modules/calendar/calendar.module.js',
-  'app/modules/calendar/calendar.route.js',
-  'app/modules/calendar/calendar.controller.js',
 
   // Common
   'app/app.js',

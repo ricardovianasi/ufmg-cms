@@ -48,40 +48,14 @@ header.view-header.clearfix
             strong {{ gallery.published_at }}
             br
             small {{ gallery.status }}
-          //
-            <td>
-            {{ gallery.title }}
-            <small>
-            {{ gallery.subtitle }}
-            </small>
-            </td>
-            <td class="tac">
-            {{ gallery.author.name }}
-            </td>
-            <td class="tac">
-            <strong>
-            {{ gallery.status }}
-            </strong><br>
-            <small ng-repeat="status_item in status | filter: { status: gallery.status } | limitTo: 1">({{ status_item.name }})</small>
-            </td>
-            <td class="tac">
-            <a
-            ng-href="{{gallery.page_url}}"
-            target="_blank"
-            class="btn btn-primary">
-            <i class="fa fa-eye"></i>
-            </a>
-            <a
-            ng-href="#/gallery/edit/{{gallery.id}}"
-            class="btn btn-warning">
-            <i class="fa fa-pencil"></i>
-            </a>
-            <a
-            ng-click="removeGallery(gallery.id, gallery.title)"
-            class="btn btn-danger">
-            <i class="fa fa-trash"></i>
-            </a>
-            </td>
 .row(ng-show='galleries.total > 30')
   .col-xs-12
-    pagination.pagination-sm(boundary-links='true', total-items='galleries.total', items-per-page='galleries.page_size', ng-model='currentPage', previous-text='‹', next-text='›', first-text='«', last-text='»', ng-change='changePage()')
+    uib-pagination.pagination-sm(boundary-links='true',
+      total-items='galleries.total',
+      items-per-page='galleries.page_size',
+      ng-model='currentPage',
+      previous-text='‹',
+      next-text='›',
+      first-text='«',
+      last-text='»',
+      ng-change='changePage()')

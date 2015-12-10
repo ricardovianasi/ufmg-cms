@@ -17,10 +17,12 @@
       'ui.mask',
 
       // App Modules
+      'calendarModule',
       'clippingsModule',
       'componentsModule',
       'courseModule',
       'eventsModule',
+      'galleryModule',
       'filterModule',
       'helperModule',
       'indexModule',
@@ -29,8 +31,7 @@
       'pagesModule',
       'periodicalModule',
       'releasesModule',
-      'serviceModule',
-      'calendarModule'
+      'serviceModule'
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

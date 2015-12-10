@@ -1,19 +1,18 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('galleryModule')
+  angular.module('galleryModule')
     .controller('GalleryController', GalleryController);
 
   GalleryController.$inject = [
     '$scope',
+    '$uibModal',
     'GalleryService',
     'StatusService',
-    'NotificationService',
-    '$modal'
+    'NotificationService'
   ];
 
-  function GalleryController($scope, GalleryService, StatusService, NotificationService, $modal) {
+  function GalleryController($scope, $uibModal, GalleryService, StatusService, NotificationService) {
     console.log('... GaleriasController');
 
     $scope.galleries = [];
@@ -49,7 +48,7 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
