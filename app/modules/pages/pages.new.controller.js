@@ -44,7 +44,6 @@
     $scope.widgets = [];
     $scope.status = [];
     $scope.galleries = [];
-    $scope.categories = [];
     $scope.news = [];
     $scope.pages = [];
     $scope.events = [];
@@ -221,10 +220,6 @@
     //
     //GalleryService.getGalleries().then(function (data) {
     //  $scope.galleries = data.data;
-    //});
-    //
-    //GalleryService.getCategories().then(function (data) {
-    //  $scope.categories = data.data;
     //});
     //
     //PagesService.getPages().then(function (data) {

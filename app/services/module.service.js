@@ -3,11 +3,12 @@
 
   angular.module('serviceModule')
     .factory('ModuleService', [
+      'GalleryService',
       'MediaService',
       'NewsService',
       'ReleasesService',
       'TagsService',
-      function (MediaService, NewsService, ReleasesService, TagsService) {
+      function (GalleryService, MediaService, NewsService, ReleasesService, TagsService) {
         console.log('... ModuleService');
 
         var _obj = {};
@@ -543,7 +544,14 @@
             });
           },
           relatednews: _preparingNews,
-          listnews: _preparingNews
+          listnews: _preparingNews,
+          lastimagessidebar: function ($scope) {
+            $scope.categories = [];
+
+            GalleryService.getCategories().then(function (data) {
+              $scope.categories = data.data;
+            });
+          }
         };
 
         return {
