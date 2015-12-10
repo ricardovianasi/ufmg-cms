@@ -1,14 +1,14 @@
-html
-  body
-    .form-group
-      label Tipo de Not&iacute;cia:
-      |     
-      select.form-control(title='Tipo de Notícia', ng-model='widget.typeNews', ng-options='news_type.id as news_type.name for news_type in news_types.items')
-    .form-group
-      label N&uacute;mero de not&iacute;cias:
-      |     
-      input.form-control(type='text', title='Número de notícias', ng-model='widget.limit')
-    .form-group
-      label Tag:
-      |     
-      select.form-control(title='Tag', ng-model='widget.tag', ng-options='tag.id as tag.name for tag in tags.items')
+.form-group
+  label Tipo de Not&iacute;cia:
+  select.form-control(title='Tipo de Notícia',
+    ng-model='widget.typeNews',
+    ng-options='news_type.id as news_type.name for news_type in news_types')
+.form-group
+  label N&uacute;mero de not&iacute;cias:
+  input.form-control(type='text', title='Número de notícias',
+    ng-model='widget.limit')
+.form-group
+  label Tag:
+  select.form-control(title='Tag',
+    ng-model='widget.tag',
+    ng-options='tag.id as tag.name for tag in tags')

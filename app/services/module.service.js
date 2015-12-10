@@ -4,8 +4,10 @@
   angular.module('serviceModule')
     .factory('ModuleService', [
       'MediaService',
+      'NewsService',
       'ReleasesService',
-      function (MediaService, ReleasesService) {
+      'TagsService',
+      function (MediaService, NewsService, ReleasesService, TagsService) {
         console.log('... ModuleService');
 
         var _obj = {};
@@ -515,6 +517,18 @@
             MediaService.getIcons().then(function (data) {
               console.log(data);
               $scope.icons = data.data;
+            });
+          },
+          relatednews: function ($scope) {
+            $scope.news_types = [];
+            $scope.tags = [];
+
+            NewsService.getNewsTypes().then(function (data) {
+              $scope.news_types = data.data;
+            });
+
+            TagsService.getTags().then(function (data) {
+              $scope.tags = data.data[0];
             });
           }
         };

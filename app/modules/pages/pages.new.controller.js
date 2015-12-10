@@ -45,8 +45,6 @@
     $scope.status = [];
     $scope.galleries = [];
     $scope.categories = [];
-    $scope.news_types = [];
-    $scope.tags = [];
     $scope.news = [];
     $scope.pages = [];
     $scope.events = [];
@@ -123,19 +121,19 @@
           },
           widgets: function () {
             return $scope.widgets;
-          },
-          extraContent: function () {
-            return {
-              icons: $scope.icons,
-              events: $scope.events,
-              pages: $scope.pages,
-              news: $scope.news,
-              tags: $scope.tags,
-              news_types: $scope.news_types,
-              galleries: $scope.galleries,
-              categories: $scope.categories
-            };
           }
+          //extraContent: function () {
+          //  return {
+          //    icons: $scope.icons,
+          //    events: $scope.events,
+          //    pages: $scope.pages,
+          //    news: $scope.news,
+          //    tags: $scope.tags,
+          //    news_types: $scope.news_types,
+          //    galleries: $scope.galleries,
+          //    categories: $scope.categories
+          //  };
+          //}
         }
       });
 
@@ -213,14 +211,6 @@
       };
     };
 
-    //NewsService.getNewsTypes().then(function (data) {
-    //  $scope.news_types = data.data;
-    //});
-    //
-    //NewsService.getNews().then(function (data) {
-    //  $scope.news = data.data;
-    //});
-
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
@@ -237,10 +227,6 @@
     //  $scope.categories = data.data;
     //});
     //
-    //TagsService.getTags().then(function (data) {
-    //  $scope.tags = data.data;
-    //});
-    //
     //PagesService.getPages().then(function (data) {
     //  $scope.pages = data.data;
     //});
@@ -249,8 +235,8 @@
     //  $scope.events = data.data;
     //});
     //
-    //MediaService.getIcons().then(function (data) {
-    //  $scope.icons = data.data;
+    //NewsService.getNews().then(function (data) {
+    //  $scope.news = data.data;
     //});
   }
 })();
