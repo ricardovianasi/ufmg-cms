@@ -30,6 +30,7 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
+      'calendarModule'
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('calendarModule', ['ngRoute']);
+    .module('calendarModule', []);
 
 })();

@@ -44,6 +44,7 @@ var files = [
   'app/services/tags.service.js',
   'app/services/upload.service.js',
   'app/services/widgets.service.js',
+  'app/services/calendar.service.js',
 
   // Components
   'app/components/articles/article.modal.controller.js',
@@ -99,6 +100,9 @@ var files = [
   'app/modules/releases/releases.module.js',
   'app/modules/releases/releases.new.controller.js',
   'app/modules/releases/releases.route.js',
+  'app/modules/calendar/calendar.module.js',
+  'app/modules/calendar/calendar.route.js',
+  'app/modules/calendar/calendar.controller.js',
 
   // Common
   'app/app.js',

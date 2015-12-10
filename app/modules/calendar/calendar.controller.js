@@ -7,7 +7,7 @@
   CalendarController.$inject = [
     '$scope',
     'CalendarService',
-    '$modal',
+    '$uibModal',
     '$http',
     '$timeout',
     'SerializeService',
@@ -78,7 +78,7 @@
 
     $scope.diasLetivos = function (size) {
       var modalCalendarSchoolDays = $modal.open({
-        templateUrl: '/views/calendar.school-days.modal.template.html',
+        templateUrl: 'components/modal/calendar.school-days.modal.template.html',
         controller: modalCalendarSchoolDaysCtrl,
         backdrop: 'static',
         size: size,
@@ -101,7 +101,7 @@
 
     $scope.addEvent = function (size) {
       var modalCalendarioNovo = $modal.open({
-        templateUrl: '/views/calendario.novo.modal.template.html',
+        templateUrl: 'components/modal/calendario.novo.modal.template.html',
         controller: ModalCalendarioNovoCtrl,
         backdrop: 'static',
         size: size,
@@ -120,7 +120,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -132,21 +132,21 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
     $scope.editEvent = function (size, event) {
       var modalCalendarEditEvent = $modal.open({
-        templateUrl: '/views/calendario.novo.modal.template.html',
+        templateUrl: 'components/modal/calendario.novo.modal.template.html',
         controller: ModalEditEventCtrl,
         backdrop: 'static',
         size: size,
@@ -180,7 +180,7 @@
       });
     };
 
-    var ModalEditEventCtrl = function ($scope, $http, $modalInstance, regional, event, type) {
+    var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type) {
       $scope.type = type;
 
       var new_init_date = CalendarService.convertDate(event.init_date);
@@ -201,16 +201,16 @@
             NotificationService.success('Evento atualizado com sucesso.');
           }
 
-          $modalInstance.close();
+          $uibModalInstance.close();
         });
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
-    var modalCalendarSchoolDaysCtrl = function ($scope, $http, $modalInstance, schoolDays, regional) {
+    var modalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional) {
       $scope.convertMonthStr = function (period) {
         var months = [
           'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
@@ -266,16 +266,16 @@
 
       $scope.ok = function () {
         CalendarService.updatePeriod($scope.period).then(function (data) {
-          $modalInstance.close();
+          $uibModalInstance.close();
         });
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
-    var ModalCalendarioNovoCtrl = function ($scope, $modalInstance, regional, type) {
+    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type) {
       $scope.type = type;
       $scope.regional = regional;
       $scope.newRegister = {
@@ -287,12 +287,12 @@
 
       $scope.ok = function () {
         CalendarService.postCalendar($scope.newRegister).then(function (data) {
-          $modalInstance.close();
+          $uibModalInstance.close();
         });
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
   }

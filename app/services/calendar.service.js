@@ -6,7 +6,8 @@
       '$http',
       '$q',
       'SerializeService',
-      function ($http, $q, SerializeService) {
+      'apiUrl',
+      function ($http, $q, SerializeService, apiUrl) {
         console.log('... CalendarService');
 
         var week = [
@@ -51,7 +52,7 @@
 
             var serializeObject = new SerializeService(new_calendar),
               deferred = $q.defer();
-            $http.put(APIUrl+'/calendar/'+calendar.id, serializeObject, {
+            $http.put(apiUrl+'/calendar/'+calendar.id, serializeObject, {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -64,7 +65,7 @@
           postCalendar: function (data) {
             // post
             var deferred = $q.defer();
-            $http.post(APIUrl+'/calendar', data).then(function (data) {
+            $http.post(apiUrl+'/calendar', data).then(function (data) {
               deferred.resolve(data);
             });
             return deferred.promise;
@@ -72,7 +73,7 @@
           removeCalendar: function (id) {
             // del
             var deferred = $q.defer();
-            $http.delete(APIUrl+'/calendar'+'/'+id).then(function (data) {
+            $http.delete(apiUrl+'/calendar'+'/'+id).then(function (data) {
               deferred.resolve(data);
             });
             return deferred.promise;
@@ -99,7 +100,7 @@
           getCalendar: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl+'/calendar').then(function (data) {
+            $http.get(apiUrl+'/calendar').then(function (data) {
               deferred.resolve(data);
             });
 
@@ -108,7 +109,7 @@
           getRegional: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl+'/regional').then(function (data) {
+            $http.get(apiUrl+'/regional').then(function (data) {
               deferred.resolve(data);
             });
 
@@ -117,7 +118,7 @@
           getSchoolDays: function () {
             var deferred = $q.defer();
 
-            $http.get(APIUrl+'/period').then(function (data) {
+            $http.get(apiUrl+'/period').then(function (data) {
               deferred.resolve(data);
             });
 
@@ -134,7 +135,7 @@
             var serializeObject = new SerializeService(new_period);
             var deferred = $q.defer();
 
-            $http.post(APIUrl+'/period/', serializeObject, {
+            $http.post(apiUrl+'/period/', serializeObject, {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
