@@ -210,8 +210,10 @@
       MediaLibraryModal.result.then(function (data) {
         angular.forEach(data, function (file) {
           var _file = {
-            url: file.url,
-            id: file.id
+            file: {
+              url: file.url,
+              id: file.id
+            }
           };
           $scope.gallery.photos.push(_file);
         });
@@ -221,7 +223,7 @@
     var MediaLibraryModalCtrl = function ($scope, $uibModalInstance, MediaService) {
       $scope.media = [];
       MediaService.getMedia().then(function (data) {
-        $scope.media = data.data;
+        $scope.media = data.data.items;
       });
 
       $scope.ok = function () {
