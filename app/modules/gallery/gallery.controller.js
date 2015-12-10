@@ -49,7 +49,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -61,15 +61,15 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
   }

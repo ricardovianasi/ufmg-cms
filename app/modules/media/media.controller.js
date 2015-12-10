@@ -1,19 +1,18 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module("mediaModule")
-    .controller("MediaController", MediaController);
+  angular.module('mediaModule')
+    .controller('MediaController', MediaController);
 
   MediaController.$inject = [
     '$scope',
+    '$uibModal',
     'MediaService',
     'StatusService',
-    'NotificationService',
-    '$uibModal'
+    'NotificationService'
   ];
 
-  function MediaController($scope, MediaService, StatusService, NotificationService, $modal) {
+  function MediaController($scope, $uibModal, MediaService, StatusService, NotificationService) {
     console.log('... MediaController');
 
     $scope.media = [];
@@ -43,8 +42,8 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+      removeConfirmationModal = $uibModal.open({
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -61,24 +60,17 @@
         NotificationService.success('Mídia removida com sucesso.');
         loadMedia();
       });
-      // $scope.confirmationModal('md', 'Você deseja excluir a mídia "'+description+'"?');
-      // removeConfirmationModal.result.then(function(data){
-      //     MediaService.removeMedia(id).then(function(data){
-      //         NotificationService.success('Mídia removida com sucesso.');
-      //         loadMedia();
-      //     });
-      // });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
   }

@@ -10,9 +10,7 @@
     '$location',
     '$routeParams',
     'StatusService',
-    'UploadService',
-    'MediaService',
-    'Upload'
+    'MediaService'
   ];
 
   function MediaEditController($scope,
@@ -20,9 +18,7 @@
                                $location,
                                $routeParams,
                                StatusService,
-                               UploadService,
-                               MediaService,
-                               Upload) {
+                               MediaService) {
     console.log('... GalleryEditController');
 
     $scope.status = [];
@@ -62,7 +58,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -74,18 +70,21 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
+
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
+
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
     $scope.removePhoto = function (id) {
       var idx = _.findIndex($scope.gallery.photos, {id: id});
+
       $scope.confirmationModal('md', 'Você deseja excluir esta foto?');
       removeConfirmationModal.result.then(function (data) {
         $scope.gallery.photos.splice(idx, 1);
@@ -94,7 +93,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -108,7 +107,7 @@
 
     $scope.editPhoto = function (id) {
       EditPhotosModal = $modal.open({
-        templateUrl: '/views/photos-edit.modal.template.html',
+        templateUrl: '/components/modal/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -127,7 +126,7 @@
       });
     };
 
-    var EditPhotosModalCtrl = function ($scope, $modalInstance, photos, id) {
+    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, id) {
       $scope.photos = angular.copy(photos);
 
       var index = _.findIndex($scope.photos, {id: id});
@@ -135,11 +134,11 @@
       $scope.currentPhoto = $scope.photos[index];
 
       $scope.ok = function () {
-        $modalInstance.close($scope.photos);
+        $uibModalInstance.close($scope.photos);
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
       };
     };
   }

@@ -30,9 +30,11 @@
       $scope.gallery = data.data;
       $scope.gallery.category = '' + data.data.category.id + '';
     });
+
     GalleryService.getCategories().then(function (data) {
       $scope.categories = data.data;
     });
+
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
     });
@@ -83,7 +85,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -95,13 +97,13 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
@@ -116,7 +118,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -130,7 +132,7 @@
 
     $scope.editPhotos = function () {
       EditPhotosModal = $uibModal.open({
-        templateUrl: '/views/photos-edit.modal.template.html',
+        templateUrl: '/components/modal/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -155,7 +157,7 @@
       });
     };
 
-    var EditPhotosModalCtrl = function ($scope, $modalInstance, photos) {
+    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos) {
       $scope.photos = photos;
 
       $scope.currentPhoto = $scope.photos[0];
@@ -181,10 +183,10 @@
         }
       };
       $scope.ok = function () {
-        $modalInstance.close($scope.photos);
+        $uibModalInstance.close($scope.photos);
       };
       $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
       };
     };
 
@@ -192,7 +194,7 @@
 
     $scope.openMediaLibrary = function () {
       MediaLibraryModal = $uibModal.open({
-        templateUrl: '/views/media-library.modal.template.html',
+        templateUrl: '/components/modal/media-library.modal.template.html',
         controller: MediaLibraryModalCtrl,
         backdrop: 'static',
         size: 'lg'
@@ -209,7 +211,7 @@
       });
     };
 
-    var MediaLibraryModalCtrl = function ($scope, $modalInstance, MediaService) {
+    var MediaLibraryModalCtrl = function ($scope, $uibModalInstance, MediaService) {
       $scope.media = [];
       MediaService.getMedia().then(function (data) {
         $scope.media = data.data;
@@ -220,11 +222,11 @@
           return file.selected === true;
         });
 
-        $modalInstance.close(selectedPhotos);
+        $uibModalInstance.close(selectedPhotos);
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $uibModalInstance.dismiss();
       };
     };
 

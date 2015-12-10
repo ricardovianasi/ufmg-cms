@@ -1,14 +1,12 @@
 ;(function(){
   'use strict';
 
-  angular
-    .module('componentsModule')
+  angular.module('componentsModule')
     .config([
-      "$routeProvider",
-      "$locationProvider",
-      "$provide",
+      '$routeProvider',
+      '$locationProvider',
+      '$provide',
       function ($routeProvider, $locationProvider, $provide) {
-
         $provide.decorator('taOptions', [
           'taRegisterTool',
           '$delegate',
@@ -22,14 +20,12 @@
               tooltiptext: 'oir',
               action: function ($scope, $timeout) {
                 var _this = this;
-
-
-
-                var UploadImageModalCtrl = function ($scope, $modalInstance, $timeout, $sce, Cropper) {
+                var UploadImageModalCtrl = function ($scope, $uibModalInstance, $timeout, $sce, Cropper) {
                   $scope.add_photos = null;
                   $scope.imageLink = '';
 
-                  var file, data;
+                  var file;
+                  var data;
 
                   $scope.onFile = function (blob) {
                     file = blob;
@@ -43,8 +39,10 @@
                       });
                     });
                   };
+
                   $scope.cropper = {};
                   $scope.cropperProxy = 'cropper.first';
+
                   $scope.preview = function () {
                     if (!file || !data) {
                       return;
@@ -54,10 +52,15 @@
                       ($scope.preview || ($scope.preview = {})).dataUrl = dataUrl;
                     });
                   };
+
                   $scope.clear = function (degrees) {
-                    if (!$scope.cropper.first) return;
+                    if (!$scope.cropper.first) {
+                      return;
+                    }
+
                     $scope.cropper.first('clear');
                   };
+
                   $scope.scale = function (width) {
                     Cropper.crop(file, data)
                       .then(function (blob) {
@@ -163,11 +166,11 @@
                     };
 
                     MediaService.cropImage($scope.imageId, obj).then(function (data) {
-                      $modalInstance.close(data.data.url);
+                      $uibModalInstance.close(data.data.url);
                     });
                   };
                   $scope.closeInsertImage = function () {
-                    $modalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss('cancel');
                   };
 
                   $scope.$on("cropme:done", function (ev, result, canvasEl) {
@@ -176,7 +179,7 @@
                 };
 
                 var moduleModal = $modal.open({
-                  templateUrl: '/views/upload-images.modal.template.html',
+                  templateUrl: '/components/modal/upload-images.modal.template.html',
                   controller: UploadImageModalCtrl,
                   backdrop: 'static',
                   size: 'lg'

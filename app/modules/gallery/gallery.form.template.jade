@@ -1,7 +1,7 @@
 header.view-header.clearfix
   .pull-left
     h2
-      span(ng-if='gallery.title') {{gallery.title}}
+      span(ng-if='gallery.title') {{ gallery.title }}
       span(ng-if='!gallery.title') Nova Galeria
     ol.breadcrumb
       li
@@ -9,56 +9,54 @@ header.view-header.clearfix
       li.active(ng-if='!gallery.title')
         | Nova Galeria
       li.active(ng-if='gallery.title')
-        | {{gallery.title}}
+        | {{ gallery.title }}
 .row
   .col-xs-8
     .row
       .col-xs-8
         .form-group
-          label(for='') Título
+          label Título
           input.form-control(type='text', ng-model='gallery.title')
       .col-xs-4
         .form-group
-          label(for='') Categoria
+          label Categoria
           select.form-control(ng-model='gallery.category')
             option(value='{{ category.id }}', ng-repeat='category in categories') {{ category.name }}
     .row
       .col-xs-12
         .form-group
-          label(for='')
-            | Adicionar fotos à galeria de imagens:
+          label Adicionar fotos à galeria de imagens:
             small(ng-show='(gallery.photos | filter: {selected: true}).length > 0')
               | ( Selecionadas: {{ (gallery.photos | filter: {selected: true}).length }}/{{ (gallery.photos).length }} )
         .dashed.gallery-item.upload-photos
           div(ngf-accept="'image/*'", ngf-select='', ngf-multiple='true', ng-model='add_photos')
             span.fa.fa-camera
             br
-            |                       Incluir Fotos
+            | Incluir Fotos
           hr
           div(ng-click='openMediaLibrary()')
             span.fa.fa-file-image-o
             br
-            |                       Biblioteca de Mídia
+            | Biblioteca de Mídia
         ul#gallery-list.sortable-row.gallery-list.clearfix(as-sortable='sortableOptions', ng-model='gallery.photos')
-          li.dashed.gallery-item.as-sortable-item.as-sortable-dragging(ng-if='gallery.photos.length > 0', ng-repeat='photo in gallery.photos', as-sortable-item='', ng-class="{ 'selected': photo.selected }")
+          li.dashed.gallery-item.as-sortable-item.as-sortable-dragging(ng-if='gallery.photos.length > 0',
+            ng-repeat='photo in gallery.photos',
+            as-sortable-item='',
+            ng-class="{ 'selected': photo.selected }")
             .gallery-photo-control
               .pull-right
-                //
-                  <span class="label label-default" ng-click="editPhoto(photo.id)">
-                  <span class="fa fa-pencil"></span>
-                  </span>&nbsp;
                 span.label.label-primary(as-sortable-item-handle='')
                   span.fa.fa-arrows
                 span.label.label-danger(ng-click='removePhoto(photo.id)')
                   span.fa.fa-remove
             .gallery-thumb
-              img(ng-src='{{photo.file.url}}', alt='{{photo.file.altText}}')
+              img(ng-src='{{ photo.file.url }}', alt='{{ photo.file.altText }}')
         #sortable-container
           .sortable-row(as-sortable='sortableOptions', ng-model='itemsList.items1')
             div(ng-repeat='item in itemsList.items1', as-sortable-item='')
-              div(as-sortable-item-handle='') {{item.Label}}
+              div(as-sortable-item-handle='') {{ item.Label }}
           .sortable-row(as-sortable='sortableOptions', ng-model='itemsList.items2')
             div(ng-repeat='item in itemsList.items2', as-sortable-item='')
-              div(as-sortable-item-handle='') {{item.Label}}
+              div(as-sortable-item-handle='') {{ item.Label }}
   .col-xs-4
     publishment-options(route-model='gallery')

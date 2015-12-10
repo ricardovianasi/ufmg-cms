@@ -6,13 +6,13 @@
 
   ArticleModalController.$inject = [
     '$scope',
-    '$modalInstance',
+    '$uibModalInstance',
     'article',
     'MediaService',
     '$timeout'
   ];
 
-  function ArticleModalController($scope, $modalInstance, article, MediaService, $timeout) {
+  function ArticleModalController($scope, $uibModalInstance, article, MediaService, $timeout) {
     console.log('... ArticleModalController');
 
     if (article) {
@@ -127,11 +127,11 @@
     };
 
     $scope.ok = function () {
-      $modalInstance.close($scope.article);
+      $uibModalInstance.close($scope.article);
     };
 
     $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
   }
 })();

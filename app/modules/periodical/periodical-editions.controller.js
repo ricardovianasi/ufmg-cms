@@ -1,31 +1,25 @@
 ;(function () {
-  "use strict";
+  'use strict';
 
   angular
-    .module("periodicalModule")
-    .controller("PeriodicalEditionsController", PeriodicalEditionsController);
+    .module('periodicalModule')
+    .controller('PeriodicalEditionsController', PeriodicalEditionsController);
 
   PeriodicalEditionsController.$inject = [
     '$scope',
     '$routeParams',
+    '$uibModal',
     'PeriodicalService',
-    'StatusService',
     'NotificationService',
-    'MediaService',
-    'DateTimeHelper',
-    '$location',
-    '$uibModal'
+    'DateTimeHelper'
   ];
 
   function PeriodicalEditionsController($scope,
                                         $routeParams,
+                                        $uibModal,
                                         PeriodicalService,
-                                        StatusService,
                                         NotificationService,
-                                        MediaService,
-                                        DateTimeHelper,
-                                        $location,
-                                        $modal) {
+                                        DateTimeHelper) {
     console.log('... PeriodicalEditionsController');
 
     $scope.loadEditions = function () {
@@ -59,7 +53,7 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: '/views/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -72,15 +66,15 @@
       });
     };
 
-    var ConfirmationModalCtrl = function ($scope, $modalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
   }

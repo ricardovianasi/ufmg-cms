@@ -1,8 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('galleryModule')
+  angular.module('galleryModule')
     .config([
       '$routeProvider',
       function ($routeProvider) {
