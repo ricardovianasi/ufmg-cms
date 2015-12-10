@@ -2,29 +2,23 @@ html
   body
     .modal-header
       h3.modal-title
-        | Editar Imagens 
+        | Editar Imagens
         small(ng-show='photos.length != 1') ({{currentPhotoIdx+1}}/{{photos.length}})
-    .modal-body(ng-repeat='photo in photos', ng-show='currentPhoto == photo')
+    .modal-body(ng-repeat='photo in photos', ng-show='currentPhoto.file == photo.file')
       // TEla 4 - iNFO - modal
       .row
         .col-xs-8.tac
-          img(ng-src='{{photo.url}}', style='max-width: 100%; height: auto;')
-        |         
+          img(ng-src='{{photo.file.url}}', style='max-width: 100%; height: auto;')
         .col-xs-4
           .btn-group(ng-show='photos.length != 1')
             button.btn.btn-primary(ng-disabled='currentPhotoIdx == 0', ng-click='previousPhoto(currentPhotoIdx)') &laquo;
-            |                 
             button.btn.btn-primary(ng-disabled='currentPhotoIdx == photos.length-1', ng-click='nextPhoto(currentPhotoIdx)') &raquo;
-          |             
           .form-group
             label(for='') Autor
-            |                 
-            input.form-control(type='text', ng-model='photo.author')
-          |             
+            input.form-control(type='text', ng-model='photo.file.author.name')
           .form-group
             label(for='') Legenda
-            |                 
-            input.form-control(type='text', ng-model='photo.caption')
+            input.form-control(type='text', ng-model='photo.file.legend')
           //
             <div class="form-group">
             <label for="">Title</label>
@@ -45,6 +39,5 @@ html
     .modal-footer
       button.btn.btn-danger(ng-click='cancel()')
         | Cancelar
-      |     
       button.btn.btn-success(ng-click='ok()')
         | Salvar Todas

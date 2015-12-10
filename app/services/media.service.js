@@ -99,6 +99,7 @@
           updateFile: function (id, obj) {
             var deferred = $q.defer();
 
+
             $http.put(APIUrl + '/file/' +
               id, obj).then(function (data) {
               deferred.resolve(data);

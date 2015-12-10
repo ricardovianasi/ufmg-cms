@@ -47,7 +47,7 @@ header.view-header.clearfix
               .pull-right
                 span.label.label-primary(as-sortable-item-handle='')
                   span.fa.fa-arrows
-                span.label.label-danger(ng-click='removePhoto(photo.id)')
+                span.label.label-danger(ng-click='removePhoto(photo.file.id)')
                   span.fa.fa-remove
             .gallery-thumb
               img(ng-src='{{ photo.file.url }}', alt='{{ photo.file.altText }}')

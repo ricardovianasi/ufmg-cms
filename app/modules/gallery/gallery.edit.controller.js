@@ -11,7 +11,8 @@
     '$routeParams',
     'StatusService',
     'GalleryService',
-    'MediaService'
+    'MediaService',
+    'NotificationService'
   ];
 
   function GalleryEditController($scope,
@@ -20,7 +21,8 @@
                                  $routeParams,
                                  StatusService,
                                  GalleryService,
-                                 MediaService) {
+                                 MediaService,
+                                 NotificationService) {
     console.log('... GalleryEditController');
 
     $scope.status = [];
@@ -44,8 +46,10 @@
         angular.forEach($scope.add_photos, function (file, idx) {
           MediaService.newFile(file).then(function (data) {
             var _file = {
-              url: data.url,
-              id: data.id
+              file: {
+                url: data.url,
+                id: data.id
+              }
             };
 
             $scope.gallery.photos.push(_file);
@@ -63,6 +67,7 @@
 
     $scope.publish = function (gallery) {
       var _photos = [];
+      console.log(gallery);
 
       angular.forEach(gallery.photos, function (photo) {
 
@@ -77,6 +82,7 @@
       };
 
       GalleryService.updateGallery(gallery.id, obj).then(function (data) {
+        NotificationService.success('Galeria atualizada com sucesso!');
         $location.path('/galleries');
       });
     };
@@ -108,7 +114,10 @@
     };
 
     $scope.removePhoto = function (id) {
-      var idx = _.findIndex($scope.gallery.photos, {id: id});
+      console.log($scope.gallery.photos, id);
+      var idx = _.findIndex($scope.gallery.photos, function(files){
+        return files.file.id == id ? id : '';
+      });
 
       $scope.confirmationModal('md', 'Você deseja remover esta imagem da galeria?');
       removeConfirmationModal.result.then(function (data) {
@@ -144,24 +153,28 @@
       });
 
       EditPhotosModal.result.then(function (data) {
-        angular.forEach(data, function (file) {
+        angular.forEach(data, function (files) {
           var obj = {
-            title: file.title ? file.title : '',
-            description: file.description ? file.description : '',
-            altText: file.alt_text ? file.alt_text : '',
-            legend: file.legend ? file.legend : ''
+            title: files.file.title ? files.file.title : '',
+            description: files.file.description ? files.file.description : '',
+            altText: files.file.alt_text ? files.file.alt_text : '',
+            legend: files.file.legend ? files.file.legend : ''
           };
 
-          MediaService.updateFile(file.id, obj);
+            MediaService.updateFile(files.file.id, obj);
         });
+
+        NotificationService.success('Ediçao realizada com sucesso!');
       });
     };
 
-    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos) {
+    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, NotificationService) {
       $scope.photos = photos;
 
-      $scope.currentPhoto = $scope.photos[0];
-      $scope.currentPhotoIdx = 0;
+      $scope.currentPhotoIdx = photos.length - 1;
+      $scope.currentPhoto = $scope.photos[$scope.currentPhotoIdx];
+      console.log($scope.currentPhoto);
+      console.log($scope.photos);
 
       $scope.nextPhoto = function (index) {
         // não é o último
@@ -186,6 +199,7 @@
         $uibModalInstance.close($scope.photos);
       };
       $scope.cancel = function () {
+        $scope.photos.pop();
         $uibModalInstance.dismiss();
       };
     };
