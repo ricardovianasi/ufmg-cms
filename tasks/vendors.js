@@ -48,7 +48,13 @@ var EXTERNAL_FONTS = [
   'bower_components/font-awesome/fonts/fontawesome-webfont.svg',
   'bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
   'bower_components/font-awesome/fonts/fontawesome-webfont.woff',
-  'bower_components/font-awesome/fonts/fontawesome-webfont.woff2'
+  'bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot',
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg',
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf',
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff',
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2'
+
 ];
 
 gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
