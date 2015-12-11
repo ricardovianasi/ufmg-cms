@@ -248,7 +248,7 @@
       removeConfirmationModal.result.then(function (data) {
         GalleryService.removeGallery(id).then(function (data) {
           NotificationService.success('Galeria removida com sucesso.');
-          loadGalleries();
+          $location.path('/galleries');
         });
       });
     };
