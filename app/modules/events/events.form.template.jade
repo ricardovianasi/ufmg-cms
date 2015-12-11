@@ -121,7 +121,7 @@ header.view-header.spacer-bottom.clearfix
                 input#initDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='initDate',
                   ng-model='event.initDate',
                   ng-focus='datepickerOpt.initDate.open(this, $event)',
-                  datepicker-popup='{{ datepickerOpt.initDate.format }}',
+                  uib-datepicker-popup='{{ datepickerOpt.initDate.format }}',
                   datepicker-options='datepickerOpt.initDate.dateOptions',
                   is-open='datepickerOpt.initDate.status.opened',
                   min-date='datepickerOpt.initDate.minDate',
@@ -131,7 +131,7 @@ header.view-header.spacer-bottom.clearfix
                 label
                   i.fa.fa-clock-o
                   |  Horário de início
-                timepicker(ng-model='event.initTime',
+                uib-timepicker(ng-model='event.initTime',
                   hour-step='1',
                   minute-step='1',
                   show-meridian='timepickerOpt.initTime.isMeridian')
@@ -145,7 +145,7 @@ header.view-header.spacer-bottom.clearfix
                 input#endDate.form-control.ng-pristine.ng-untouched.ng-valid(type='text', name='endDate',
                   ng-model='event.endDate',
                   ng-focus="datepickerOpt.endDate.open(this, $event, 'initDate')",
-                  datepicker-popup='{{ datepickerOpt.endDate.format }}',
+                  uib-datepicker-popup='{{ datepickerOpt.endDate.format }}',
                   datepicker-options='datepickerOpt.endDate.dateOptions',
                   is-open='datepickerOpt.endDate.status.opened',
                   min-date='datepickerOpt.endDate.minDate',
@@ -155,7 +155,7 @@ header.view-header.spacer-bottom.clearfix
                 label
                   i.fa.fa-clock-o
                   |  Horário de fim
-                timepicker(ng-model='event.endTime',
+                uib-timepicker(ng-model='event.endTime',
                   hour-step='1',
                   minute-step='1',
                   show-meridian='timepickerOpt.endTime.isMeridian')
