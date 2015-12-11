@@ -242,5 +242,15 @@
     $scope.sortableOptions = {
       containment: '#gallery-list'//optional param.
     };
+
+    $scope.remove = function (id) {
+      $scope.confirmationModal('md', 'Tem certeza que deseja excluir a galeria ?');
+      removeConfirmationModal.result.then(function (data) {
+        GalleryService.removeGallery(id).then(function (data) {
+          NotificationService.success('Galeria removida com sucesso.');
+          loadGalleries();
+        });
+      });
+    };
   }
 })();

@@ -24,15 +24,9 @@
        */
       getGalleries: function (page) {
         page = page || 1;
-
-        var deferred = $q.defer();
         var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       },
       /**
        * @param id
@@ -40,13 +34,7 @@
        * @returns {*}
        */
       getGallery: function (id) {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + '/gallery/' + id).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(apiUrl + '/gallery/' + id);
       },
       /**
        * @param gallery
@@ -54,13 +42,7 @@
        * @returns {*}
        */
       newGallery: function (gallery) {
-        var deferred = $q.defer();
-
-        $http.post(apiUrl + '/gallery', gallery).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.post(apiUrl + '/gallery', gallery);
       },
       /**
        * @param id
@@ -69,13 +51,7 @@
        * @returns {*}
        */
       updateGallery: function (id, gallery) {
-        var deferred = $q.defer();
-
-        $http.put(apiUrl + '/gallery/' + id, gallery).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.put(apiUrl + '/gallery/' + id, gallery);
       },
       /**
        * @param id
@@ -83,25 +59,13 @@
        * @returns {*}
        */
       removeGallery: function (id) {
-        var deferred = $q.defer();
-
-        $http.delete(apiUrl + '/gallery/' + id).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.delete(apiUrl + '/gallery/' + id);
       },
       /**
        * @returns {*}
        */
       getCategories: function () {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + '/gallery/category').then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(apiUrl + '/gallery/category');
       }
     };
   }
