@@ -122,7 +122,7 @@
     // Modals
     $scope.addModule = function (column) {
       var moduleModal = $uibModal.open({
-        templateUrl: '/components/modal/module.modal.template.html',
+        templateUrl: 'components/modal/module.modal.template.html',
         controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
@@ -158,7 +158,7 @@
 
     $scope.editModule = function (column, idx) {
       editModuleModal = $uibModal.open({
-        templateUrl: '/components/modal/module.modal.template.html',
+        templateUrl: 'components/modal/module.modal.template.html',
         controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
@@ -201,7 +201,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/components/modal/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,

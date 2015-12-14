@@ -179,7 +179,7 @@
                 };
 
                 var moduleModal = $modal.open({
-                  templateUrl: '/components/modal/upload-images.modal.template.html',
+                  templateUrl: 'components/modal/upload-images.modal.template.html',
                   controller: UploadImageModalCtrl,
                   backdrop: 'static',
                   size: 'lg'

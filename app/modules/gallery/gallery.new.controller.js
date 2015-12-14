@@ -44,7 +44,7 @@
 
     $scope.editPhotos = function () {
       EditPhotosModal = $uibModal.open({
-        templateUrl: '/components/modal/photos-edit.modal.template.html',
+        templateUrl: 'components/modal/photos-edit.modal.template.html',
         controller: EditPhotosModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -102,7 +102,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/components/modal/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -185,7 +185,7 @@
 
     $scope.openMediaLibrary = function () {
       MediaLibraryModal = $uibModal.open({
-        templateUrl: '/components/modal/media-library.modal.template.html',
+        templateUrl: 'components/modal/media-library.modal.template.html',
         controller: MediaLibraryModalCtrl,
         backdrop: 'static',
         size: 'lg'
