@@ -9,6 +9,7 @@
     '$q',
     '$filter',
     'apiUrl',
+    'EventsService',
     'GalleryService',
     'MediaService',
     'NewsService',
@@ -20,6 +21,7 @@
                         $q,
                         $filter,
                         apiUrl,
+                        EventsService,
                         GalleryService,
                         MediaService,
                         NewsService,
@@ -729,7 +731,17 @@
           });
         },
         highlightedgalleries: _preparingGalleries,
-        highlightedgallery: _preparingGalleries
+        highlightedgallery: _preparingGalleries,
+        /**
+         * @param $scope
+         */
+        highlightedevents: function ($scope) {
+          $scope.events = [];
+
+          EventsService.getEvents().then(function (data) {
+            $scope.events = data.data;
+          });
+        }
       };
 
       return {
