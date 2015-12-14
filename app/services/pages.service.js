@@ -553,6 +553,23 @@
         }
       };
 
+      var _prepareItems = function ($scope) {
+        $scope.addItem = function (item, type) {
+          if ($scope.widget[type]) {
+            $scope.widget[type].push(item);
+          } else {
+            $scope.widget[type] = [];
+            $scope.widget[type].push(item);
+          }
+        };
+
+        $scope.removeItem = function (idx, type) {
+          if ($scope.widget[type][idx]) {
+            $scope.widget[type].splice(idx, 1);
+          }
+        };
+      };
+
       /**
        * @param $scope
        *
@@ -569,6 +586,21 @@
         TagsService.getTags().then(function (data) {
           $scope.tags = data.data[0];
         });
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingGalleries = function ($scope) {
+        $scope.galleries = [];
+
+        GalleryService.getGalleries().then(function (data) {
+          $scope.galleries = data.data;
+        });
+
+        _prepareItems($scope);
       };
 
       // Partial preparing
@@ -684,20 +716,7 @@
             $scope.news = data.data;
           });
 
-          $scope.addGallery = function (gal) {
-            if ($scope.widget.galleries) {
-              $scope.widget.galleries.push(gal);
-            } else {
-              $scope.widget.galleries = [];
-              $scope.widget.galleries.push(gal);
-            }
-          };
-
-          $scope.removeGallery = function (idx) {
-            if ($scope.widget.galleries[idx]) {
-              $scope.widget.galleries.splice(idx, 1);
-            }
-          };
+          _prepareItems($scope);
         },
         /**
          * @param $scope
@@ -708,7 +727,9 @@
           NewsService.getNews().then(function (data) {
             $scope.news = data.data;
           });
-        }
+        },
+        highlightedgalleries: _preparingGalleries,
+        highlightedgallery: _preparingGalleries
       };
 
       return {

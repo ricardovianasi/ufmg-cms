@@ -61,12 +61,6 @@
       }
     };
 
-    $scope.removeNews = function (idx) {
-      if ($scope.widget.news[idx]) {
-        $scope.widget.news.splice(idx, 1);
-      }
-    };
-
     $scope.removeLink = function (idx) {
       $scope.widget.links.splice(idx, 1);
     };

@@ -33,7 +33,6 @@
     $scope.publishment = 'published';
     $scope.widgets = [];
     $scope.status = [];
-    $scope.events = [];
     $scope.columns = PagesService.COLUMNS;
 
     $scope.time_days = DateTimeHelper.getDays();
@@ -191,10 +190,6 @@
 
     //StatusService.getStatus().then(function (data) {
     //  $scope.status = data.data;
-    //});
-    //
-    //GalleryService.getGalleries().then(function (data) {
-    //  $scope.galleries = data.data;
     //});
     //
     //EventsService.getEvents().then(function (data) {

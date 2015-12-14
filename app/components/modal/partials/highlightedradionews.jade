@@ -2,12 +2,12 @@
   label Selecione as not&iacute;cias:
 
   ul.dashed-list
-    li.as-sortable-item.clearfix(ng-repeat='news in widget.news.items track by $index')
+    li.as-sortable-item.clearfix(ng-repeat='news in widget.news track by $index')
       .gal-list-left.pull-left
         strong {{ news.title }}
       .pull-right
         button.btn.btn-success(type='button',
-          ng-click='removeNews($index)') Excluir
+          ng-click="removeItem($index, 'news')") Excluir
 
     li.as-sortable-item.clearfix(ng-hide='widget.news.length >= 4')
       div + Inserir Destaque
@@ -24,4 +24,6 @@
         .pull-right
           button.btn.btn-success(type='button',
             ng-disabled='!widget.news_selected',
-            ng-click='addGallery(widget.news_selected)') OK
+            ng-click="addItem(widget.news_selected, 'news')") OK
+
+  pre {{ widget.news|json }}
