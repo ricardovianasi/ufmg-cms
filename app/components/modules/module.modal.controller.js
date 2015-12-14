@@ -8,7 +8,7 @@
                                  $uibModal,
                                  $uibModalInstance,
                                  MediaService,
-                                 ModuleService,
+                                 PagesService,
                                  module,
                                  widgets) {
     console.log('... ModuleModalController');
@@ -40,7 +40,7 @@
       $scope.widget.title = module.title;
       $scope.widget.selected.type = module.type;
 
-      angular.extend($scope.widget, ModuleService.parseWidgetToLoad($scope.module));
+      angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
     var moduleModal;
@@ -454,7 +454,7 @@
     };
 
     $scope.preparePartial = function () {
-      ModuleService.preparePartial($scope);
+      PagesService.module().preparePartial($scope);
     };
   }
 })();

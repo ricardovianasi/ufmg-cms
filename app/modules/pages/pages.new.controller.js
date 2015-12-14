@@ -9,14 +9,9 @@
     '$uibModal',
     '$location',
     '$timeout',
-    'EventsService',
-    'GalleryService',
     'MediaService',
-    'NewsService',
     'NotificationService',
     'PagesService',
-    'StatusService',
-    'TagsService',
     'WidgetsService',
     'DateTimeHelper'
   ];
@@ -25,17 +20,12 @@
                               $uibModal,
                               $location,
                               $timeout,
-                              EventsService,
-                              GalleryService,
                               MediaService,
-                              NewsService,
                               NotificationService,
                               PagesService,
-                              StatusService,
-                              TagsService,
                               WidgetsService,
                               DateTimeHelper) {
-    console.log('... PaginasNovoController');
+    console.log('... PagesNewController');
 
     $scope.title = 'Nova Página';
     $scope.breadcrumb_active = $scope.title;
@@ -43,9 +33,7 @@
     $scope.publishment = 'published';
     $scope.widgets = [];
     $scope.status = [];
-    $scope.galleries = [];
     $scope.news = [];
-    $scope.pages = [];
     $scope.events = [];
     $scope.columns = PagesService.COLUMNS;
 
@@ -220,10 +208,6 @@
     //
     //GalleryService.getGalleries().then(function (data) {
     //  $scope.galleries = data.data;
-    //});
-    //
-    //PagesService.getPages().then(function (data) {
-    //  $scope.pages = data.data;
     //});
     //
     //EventsService.getEvents().then(function (data) {
