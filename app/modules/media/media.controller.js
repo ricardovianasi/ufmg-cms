@@ -59,6 +59,8 @@
       MediaService.removeMedia(id).then(function (data) {
         NotificationService.success('Mídia removida com sucesso.');
         loadMedia();
+      }, function(error){
+        NotificationService.error('A imagem esta vinculada a alguma postagem, por este motivo nao e possivel exclui-la.');
       });
     };
 
