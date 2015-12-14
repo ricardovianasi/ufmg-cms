@@ -698,6 +698,16 @@
               $scope.widget.galleries.splice(idx, 1);
             }
           };
+        },
+        /**
+         * @param $scope
+         */
+        highlightednews: function ($scope) {
+          $scope.news = [];
+
+          NewsService.getNews().then(function (data) {
+            $scope.news = data.data;
+          });
         }
       };
 
