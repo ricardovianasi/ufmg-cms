@@ -58,7 +58,9 @@
     $scope.removeMedia = function (id, description) {
       MediaService.removeMedia(id).then(function (data) {
         NotificationService.success('Mídia removida com sucesso.');
-        loadMedia();
+        loadMedia($scope.currentPage);
+      }, function(error){
+        NotificationService.error('A imagem está vinculada a alguma postagem, por este motivo não é possível exclui-la.');
       });
     };
 
