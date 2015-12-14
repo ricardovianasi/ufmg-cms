@@ -5,7 +5,7 @@ html
     .modal-body.modal__scroll--default
       .row
         .col-md-3(ng-repeat='photo in media.items', ng-class="{ 'selected': photo.selected }", class="selected--resolveBorder")
-          .gallery-thumb(ng-click='addMediaSelected(photo.id, $index)')
+          .gallery-thumb(ng-click='addMediaSelected(photo.id, $index, photo)')
             img(ng-src='{{photo.url}}', alt='{{photo.altText}}', class="media-img")
 
     .row(ng-show='media.total > 30')

@@ -239,7 +239,8 @@
           return file.selected === true;
         });
 
-        $uibModalInstance.close(selectedPhotos);
+        console.log(mediaSelected);
+        $uibModalInstance.close(mediaSelected);
       };
 
       $scope.cancel = function () {
@@ -256,15 +257,16 @@
        * @param {integer} id
        * @param {integer} array index
        */
-      $scope.addMediaSelected = function(id, scopeIndex){
+      $scope.addMediaSelected = function(id, scopeIndex, photoObjetc){
         var idExists;
         var index;
+
 
         if(mediaSelected.length > 0){
           idExists = _.findIndex(mediaSelected, {'id': id });
 
           if(idExists == -1) {
-            mediaSelected.push({'id':id});
+            mediaSelected.push(photoObjetc);
           }
           else {
             index = mediaSelected.indexOf(id);
@@ -277,7 +279,7 @@
 
         }
         else{
-          mediaSelected.push({'id':id});
+          mediaSelected.push(photoObjetc);
         }
 
         selectImage();
