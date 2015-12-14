@@ -33,7 +33,6 @@
     $scope.publishment = 'published';
     $scope.widgets = [];
     $scope.status = [];
-    $scope.news = [];
     $scope.events = [];
     $scope.columns = PagesService.COLUMNS;
 
@@ -109,18 +108,6 @@
           widgets: function () {
             return $scope.widgets;
           }
-          //extraContent: function () {
-          //  return {
-          //    icons: $scope.icons,
-          //    events: $scope.events,
-          //    pages: $scope.pages,
-          //    news: $scope.news,
-          //    tags: $scope.tags,
-          //    news_types: $scope.news_types,
-          //    galleries: $scope.galleries,
-          //    categories: $scope.categories
-          //  };
-          //}
         }
       });
 
@@ -212,10 +199,6 @@
     //
     //EventsService.getEvents().then(function (data) {
     //  $scope.events = data.data;
-    //});
-    //
-    //NewsService.getNews().then(function (data) {
-    //  $scope.news = data.data;
     //});
   }
 })();

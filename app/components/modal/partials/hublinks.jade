@@ -1,47 +1,39 @@
-html
-  body
-    .form-group
-      .clearfix
-        label Links:
-        |         
-        .pull-right
-          button.btn.btn-primary.btn-sm(type='button', style='margin-bottom: 3px', ng-click='addLink()')
-            span.fa.fa-plus
-      |     
-      pre.
-        \n{{ widget.links|json }}        
-      |     
-      .well.well-sm(ng-repeat='link in widget.links')
-        .clearfix
-          .pull-left Link {{ $index + 1 }}
-          |             
-          .pull-right
-            button.btn.btn-danger.btn-sm(type='button', ng-click='removeLink($index)')
-              span.fa.fa-trash
-        |         
-        .row
-          .col-xs-4
-            .form-group
-              label Label do link:
-              |                     
-              input.form-control(type='text', title='Label do link', ng-model='link.label')
-          |             
-          .col-xs-4
-            .form-group
-              label Destino do link:
-              |                     
-              select.form-control(title='Destino do link', ng-model='link.link_type')
-                option(value='page', ng-selected="link.link_type == 'page'") P&aacute;ginas internas
-                |                         
-                option(value='link', ng-selected="link.link_type == 'link'") Url externa
-          |             
-          .col-xs-4
-            .form-group(ng-show="link.link_type == 'page'")
-              label P&aacute;gina:
-              |                     
-              select.form-control(title='Página', ng-model='link.page', ng-options='page.id as page.title for page in pages.items')
-            |                 
-            .form-group(ng-show="link.link_type == 'link'")
-              label Url do link:
-              |                     
-              input.form-control(type='text', title='Url do link', ng-model='link.external_url')
+.form-group
+  .clearfix
+    label Links:
+    .pull-right
+      button.btn.btn-primary.btn-sm(type='button', style='margin-bottom: 3px',
+        ng-click='addLink()')
+        span.fa.fa-plus
+  .well.well-sm(ng-repeat='link in widget.links')
+    .clearfix
+      .pull-left Link {{ $index + 1 }}
+      .pull-right
+        button.btn.btn-danger.btn-sm(type='button',
+          ng-click='removeLink($index)')
+          span.fa.fa-trash
+    .row
+      .col-xs-4
+        .form-group
+          label Label do link:
+          input.form-control(type='text', title='Label do link',
+            ng-model='link.label')
+      .col-xs-4
+        .form-group
+          label Destino do link:
+          select.form-control(title='Destino do link',
+            ng-model='link.link_type')
+            option(value='page',
+              ng-selected="link.link_type == 'page'") P&aacute;ginas internas
+            option(value='link',
+              ng-selected="link.link_type == 'link'") Url externa
+      .col-xs-4
+        .form-group(ng-show="link.link_type == 'page'")
+          label P&aacute;gina:
+          select.form-control(title='Página',
+            ng-model='link.page',
+            ng-options='page.id as page.title for page in pages.items')
+        .form-group(ng-show="link.link_type == 'link'")
+          label Url do link:
+          input.form-control(type='text', title='Url do link',
+            ng-model='link.external_url')

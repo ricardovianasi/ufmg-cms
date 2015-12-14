@@ -61,21 +61,6 @@
       }
     };
 
-    $scope.addGallery = function (gal) {
-      if ($scope.widget.galleries) {
-        $scope.widget.galleries.push(gal);
-      } else {
-        $scope.widget.galleries = [];
-        $scope.widget.galleries.push(gal);
-      }
-    };
-
-    $scope.removeGallery = function (idx) {
-      if ($scope.widget.galleries[idx]) {
-        $scope.widget.galleries.splice(idx, 1);
-      }
-    };
-
     $scope.removeNews = function (idx) {
       if ($scope.widget.news[idx]) {
         $scope.widget.news.splice(idx, 1);

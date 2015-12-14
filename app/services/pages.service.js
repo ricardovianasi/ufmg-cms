@@ -673,6 +673,31 @@
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+        },
+        /**
+         * @param $scope
+         */
+        highlightedradionews: function ($scope) {
+          $scope.news = [];
+
+          NewsService.getNews().then(function (data) {
+            $scope.news = data.data;
+          });
+
+          $scope.addGallery = function (gal) {
+            if ($scope.widget.galleries) {
+              $scope.widget.galleries.push(gal);
+            } else {
+              $scope.widget.galleries = [];
+              $scope.widget.galleries.push(gal);
+            }
+          };
+
+          $scope.removeGallery = function (idx) {
+            if ($scope.widget.galleries[idx]) {
+              $scope.widget.galleries.splice(idx, 1);
+            }
+          };
         }
       };
 
