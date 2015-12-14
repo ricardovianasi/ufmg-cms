@@ -4,9 +4,21 @@ html
       h3.modal-title M&oacute;dulo
     .modal-body.modal__scroll--default
       .row
-        .col-md-3(ng-repeat='photo in media', ng-class="{ 'selected': photo.selected }", class="selected--resolveBorder")
-          .gallery-thumb(ng-click='photo.selected = !photo.selected')
+        .col-md-3(ng-repeat='photo in media.items', ng-class="{ 'selected': photo.selected }", class="selected--resolveBorder")
+          .gallery-thumb(ng-click='addMediaSelected(photo.id, $index)')
             img(ng-src='{{photo.url}}', alt='{{photo.altText}}', class="media-img")
+
+    .row(ng-show='media.total > 30')
+      .col-xs-12
+        uib-pagination.pagination-sm(boundary-links='true',
+          total-items='media.total',
+          items-per-page='media.page_size',
+          ng-model='currentPage',
+          previous-text='‹',
+          next-text='›',
+          first-text='«',
+          last-text='»',
+          ng-change='changePage()')
     .modal-footer
       button.btn.btn-danger(ng-click='cancel()') Cancelar
       button.btn.btn-success(ng-click='ok()') Salvar

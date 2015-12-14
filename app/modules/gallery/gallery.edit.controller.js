@@ -208,6 +208,7 @@
       });
 
       MediaLibraryModal.result.then(function (data) {
+        console.log(data);
         angular.forEach(data, function (file) {
           var _file = {
             file: {
@@ -222,12 +223,19 @@
 
     var MediaLibraryModalCtrl = function ($scope, $uibModalInstance, MediaService) {
       $scope.media = [];
-      MediaService.getMedia().then(function (data) {
-        $scope.media = data.data.items;
-      });
+      var mediaSelected = [];
+
+      var loadMedia = function(page){
+        MediaService.getMedia(page).then(function (data) {
+          $scope.media = data.data;
+          selectImage();
+        });
+      };
+
+      loadMedia();
 
       $scope.ok = function () {
-        var selectedPhotos = _.filter($scope.media, function (file) {
+        var selectedPhotos = _.filter($scope.media.items, function (file) {
           return file.selected === true;
         });
 
@@ -237,6 +245,57 @@
       $scope.cancel = function () {
         $uibModalInstance.dismiss();
       };
+
+      $scope.changePage = function () {
+        loadMedia($scope.currentPage);
+      };
+
+      /**
+       * add id in mediaSelected array
+       *
+       * @param {integer} id
+       * @param {integer} array index
+       */
+      $scope.addMediaSelected = function(id, scopeIndex){
+        var idExists;
+        var index;
+
+        if(mediaSelected.length > 0){
+          idExists = _.findIndex(mediaSelected, {'id': id });
+
+          if(idExists == -1) {
+            mediaSelected.push({'id':id});
+          }
+          else {
+            index = mediaSelected.indexOf(id);
+            mediaSelected.splice(index, 1);
+            $scope.media.items[scopeIndex].selected = false;
+            setTimeout(function () {
+              $scope.$apply();
+            });
+          }
+
+        }
+        else{
+          mediaSelected.push({'id':id});
+        }
+
+        selectImage();
+      };
+
+      /**
+       * verify if the item is selected and mark this.selected == true
+       *
+       * @param {integer} id
+       */
+      function selectImage(){
+        angular.forEach($scope.media.items, function(value, key){
+          angular.forEach(mediaSelected, function(v, k){
+            if(value.id == v.id)
+              $scope.media.items[key].selected = true;
+          });
+        });
+      }
     };
 
     $scope.sortableOptions = {
