@@ -1,17 +1,20 @@
 .publishment-options
   h4.publishment-title Opções de Publicação
+
   .publishment-body
     .clearfix
       .pull-left
-        button.btn.btn-sm.btn-default(type='button', ng-click="obj.status='draft'") Salvar como rascunho
-      .pull-right
-        button.btn.btn-sm.btn-default(type='button')
-          span.fa.fa-eye
+        button.btn.btn-sm.btn-default(type='button',
+          ng-click="saveDraft($event)") Salvar como rascunho
+
     .publishment-block
       .form-group
         label Status:
         .publishment-form
-          select.form-control(title='Status', ng-model='obj.status', ng-options='option.status as option.name for option in statuses')
+          select.form-control(title='Status',
+            ng-model='obj.status',
+            ng-options='option.status as option.name for option in statuses')
+
     .publishment-block
       .form-group(ng-show="obj.status == 'scheduled'")
         .publishment-form
@@ -19,14 +22,22 @@
             .pull-left.input-group.input-group-sm(style='width: 48%')
               span.input-group-addon
                 span.fa.fa-calendar
-              input.form-control(type='text', title='Data', ng-model='obj.scheduled_date')
+              input.form-control(type='text', title='Data',
+                ng-model='obj.scheduled_date')
+
             .pull-right.input-group.input-group-sm(style='width: 48%')
               span.input-group-addon
                 span.fa.fa-calendar
-              input.form-control(type='text', title='Hora', ng-model='obj.scheduled_time')
+              input.form-control(type='text', title='Hora',
+                ng-model='obj.scheduled_time')
+
   .clearfix
     .pull-left
-      button.btn.btn-sm.btn-danger(type='button', ng-show='obj.id', ng-click='remove(obj.id)')
+      button.btn.btn-sm.btn-danger(type='button',
+        ng-show='obj.id',
+        ng-click='remove(obj.id)')
         span.fa.fa-trash
+
     .pull-right
-      button.btn.btn-sm.btn-primary(type='button', ng-click='publish(obj)') Salvar
+      button#publish-button.btn.btn-sm.btn-primary(type='button',
+        ng-click='publish(obj)') Salvar

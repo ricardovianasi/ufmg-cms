@@ -14,15 +14,6 @@
     console.log('... ModuleModalController');
 
     $scope.widgets = widgets;
-    //$scope.galleries = extraContent.galleries;
-    //$scope.categories = extraContent.categories;
-    //$scope.news_types = extraContent.news_types;
-    //$scope.tags = extraContent.tags ? extraContent.tags[0] : [];
-    //$scope.news = extraContent.news;
-    //$scope.pages = extraContent.pages;
-    //$scope.events = extraContent.events;
-    //$scope.icons = extraContent.icons;
-
     $scope.widget = {
       selected: {},
       type: '',

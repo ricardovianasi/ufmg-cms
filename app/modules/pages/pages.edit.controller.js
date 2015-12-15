@@ -11,15 +11,11 @@
     '$routeParams',
     '$timeout',
     '$filter',
-    'EventsService',
-    'GalleryService',
     'MediaService',
-    'NewsService',
     'NotificationService',
     'PagesService',
-    'StatusService',
-    'TagsService',
     'WidgetsService',
+    'StatusService',
     'DateTimeHelper'
   ];
 
@@ -29,34 +25,21 @@
                                $routeParams,
                                $timeout,
                                $filter,
-                               EventsService,
-                               GalleryService,
                                MediaService,
-                               NewsService,
                                NotificationService,
                                PagesService,
-                               StatusService,
-                               TagsService,
                                WidgetsService,
+                               StatusService,
                                DateTimeHelper) {
     console.log('... PaginasEditarController');
 
     $scope.widgets = [];
     $scope.status = [];
-    $scope.galleries = [];
-    $scope.categories = [];
-    $scope.news_types = [];
-    $scope.tags = [];
-    $scope.news = [];
-    $scope.pages = [];
-    $scope.events = [];
-    $scope.icons = [];
     $scope.columns = PagesService.COLUMNS;
-    $scope.media = [];
 
     $scope.page = {
       image: null,
-      status: 'published',
+      status: StatusService.STATUS_PUBLISHED,
       columns: 2,
       tags: [],
       title: null,
@@ -224,7 +207,7 @@
       };
     };
 
-    // Pages Service
+    // Get Page
     PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
       var page = data.data;
       var tags = page.tags;
@@ -250,55 +233,8 @@
       angular.extend($scope.page, page);
     });
 
-    PagesService.getPages().then(function (data) {
-      $scope.pages = data.data;
-    });
-
-    // News Service
-    NewsService.getNewsTypes().then(function (data) {
-      $scope.news_types = data.data;
-    });
-
-    NewsService.getNews().then(function (data) {
-      $scope.news = data.data;
-    });
-
-    // Widgets Service
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
-    });
-
-    // Status Service
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
-
-    // Gallery Service
-    GalleryService.getGalleries().then(function (data) {
-      $scope.galleries = data.data;
-    });
-
-    GalleryService.getCategories().then(function (data) {
-      $scope.categories = data.data;
-    });
-
-    // Tags Service
-    TagsService.getTags().then(function (data) {
-      $scope.tags = data.data;
-    });
-
-    // Events Service
-    EventsService.getEvents().then(function (data) {
-      $scope.events = data.data;
-    });
-
-    // Media Service
-    MediaService.getIcons().then(function (data) {
-      $scope.icons = data.data;
-    });
-
-    MediaService.getMedia().then(function (data) {
-      $scope.media = data.data;
     });
   }
 })();
