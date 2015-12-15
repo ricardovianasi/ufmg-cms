@@ -7,6 +7,7 @@ var expect = require('gulp-expect-file');
 var files = [
   'bower_components/jquery/dist/jquery.min.js',
   'bower_components/jquery/dist/jquery.min.map',
+  'bower_components/datatables/media/js/jquery.dataTables.js',
   'bower_components/cropper/dist/cropper.min.js',
   'app/assets/scripts/redactor/redactor.js',
   'app/assets/scripts/redactor/pt_br.js',
@@ -28,13 +29,17 @@ var files = [
   'bower_components/ng-sortable/dist/ng-sortable.min.js',
   'bower_components/ng-file-upload/ng-file-upload-all.min.js',
   'bower_components/ng-cropper/dist/ngCropper.js',
-  'bower_components/angular-ui-mask/dist/mask.min.js'
+  'bower_components/angular-ui-mask/dist/mask.min.js',
+  'bower_components/angular-datatables/dist/angular-datatables.min.js',
+  'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
+  'bower_components/bootstrap/dist/js/bootstrap.min.js',
 ];
 
 var styles = [
   'bower_components/angular-toastr/dist/angular-toastr.min.css',
   'bower_components/font-awesome/css/font-awesome.min.css',
   'bower_components/bootstrap/dist/css/bootstrap.min.css',
+  'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
   'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
   'bower_components/ng-responsive-calendar/dist/css/calendar.min.css',
   'bower_components/ui-select/dist/select.min.css',

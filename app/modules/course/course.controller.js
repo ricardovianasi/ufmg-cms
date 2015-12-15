@@ -47,10 +47,6 @@
       $scope.confirmationModal('md', 'Você deseja excluir o curso "' + description + '"?');
       removeConfirmationModal.result.then(function (data) {
         NotificationService.success('Curso removido com sucesso.');
-        // PaginasService.removePage(id).then(function(data){
-        //     NotificationService.success('Página removida com sucesso.');
-        //     $scope.loadPages();
-        // });
       });
     };
 

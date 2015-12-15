@@ -755,7 +755,7 @@
          * @param $scope
          */
         highlightedradionews: function ($scope) {
-          _preparingNews($scope)
+          _preparingNews($scope);
           _prepareItems($scope);
         },
         /**

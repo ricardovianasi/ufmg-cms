@@ -15,6 +15,8 @@
       'ui.bootstrap',
       'ui.select',
       'ui.mask',
+      'datatables',
+      'datatables.bootstrap',
 
       // App Modules
       'calendarModule',
@@ -31,7 +33,7 @@
       'pagesModule',
       'periodicalModule',
       'releasesModule',
-      'serviceModule'
+      'serviceModule',
       // 'PagesRouteModule',
       // 'SidebarDirectiveModule',
       // 'serviceModule',

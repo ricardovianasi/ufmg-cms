@@ -20,17 +20,11 @@ header.view-header.clearfix
         a(ng-click="itemStatus = 'draft'")
           span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
           span.small ({{ (pages.items | filter: {status: 'draft'}).length }})
-  .col-xs-5
-    .pull-right
-      .pull-left
-        form.form-inline(action='')
-          .form-group
-            input.form-control(type='text', placeholder='Pesquisar', ng-model='search')
 .row
   .col-xs-12
-    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+    table(datatable="ng" dt-options="dtOptions"  dt-column-defs="dtColumnDefs" class="table table-striped table-bordered")
       thead
-        tr(role='row')
+        tr
           th(style='width: 50%') Título
           th.tac(style='width: 20%') Autor
           th.tac(style='width: 13%;') Data da Publicação
@@ -48,14 +42,4 @@ header.view-header.clearfix
             strong {{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}
             br
             small {{ item.status }}
-.row(ng-show='pages.total > 30')
-  .col-xs-12
-    uib-pagination.pagination-sm(boundary-links='true',
-      total-items='pages.total',
-      items-per-page='pages.page_size',
-      ng-model='currentPage',
-      previous-text='‹',
-      next-text='›',
-      first-text='«',
-      last-text='»',
-      ng-change='changePage()')
+
