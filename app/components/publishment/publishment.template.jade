@@ -5,7 +5,7 @@
     .clearfix
       .pull-left
         button.btn.btn-sm.btn-default(type='button',
-          ng-click="obj.status='draft'") Salvar como rascunho
+          ng-click="saveDraft($event)") Salvar como rascunho
 
     .publishment-block
       .form-group
@@ -37,6 +37,7 @@
         ng-show='obj.id',
         ng-click='remove(obj.id)')
         span.fa.fa-trash
+
     .pull-right
-      button.btn.btn-sm.btn-primary(type='button',
+      button#publish-button.btn.btn-sm.btn-primary(type='button',
         ng-click='publish(obj)') Salvar
