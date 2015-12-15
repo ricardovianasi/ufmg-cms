@@ -115,6 +115,19 @@
     };
 
     /**
+     * @param $scope
+     *
+     * @private
+     */
+    var _getTags = function ($scope) {
+      $scope.tags = [];
+
+      TagsService.getTags().then(function (data) {
+        $scope.tags = data.data[0];
+      });
+    };
+
+    /**
      * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial}}
      *
      * @private
@@ -555,6 +568,11 @@
         }
       };
 
+      /**
+       * @param $scope
+       *
+       * @private
+       */
       var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
           if ($scope.widget[type]) {
@@ -577,17 +595,29 @@
        *
        * @private
        */
-      var _preparingNews = function ($scope) {
+      var _preparingNewsTypes = function ($scope) {
         $scope.news_types = [];
-        $scope.tags = [];
 
         NewsService.getNewsTypes().then(function (data) {
           $scope.news_types = data.data;
         });
 
-        TagsService.getTags().then(function (data) {
-          $scope.tags = data.data[0];
+        _getTags($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingNews = function ($scope) {
+        $scope.news = [];
+
+        NewsService.getNews().then(function (data) {
+          $scope.news = data.data;
         });
+
+        _getTags($scope);
       };
 
       /**
@@ -603,6 +633,19 @@
         });
 
         _prepareItems($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingEvents = function ($scope) {
+        $scope.events = [];
+
+        EventsService.getEvents().then(function (data) {
+          $scope.events = data.data;
+        });
       };
 
       // Partial preparing
@@ -684,8 +727,8 @@
             $scope.icons = data.data;
           });
         },
-        relatednews: _preparingNews,
-        listnews: _preparingNews,
+        relatednews: _preparingNewsTypes,
+        listnews: _preparingNewsTypes,
         /**
          * Last Images Sidebar
          *
@@ -712,36 +755,20 @@
          * @param $scope
          */
         highlightedradionews: function ($scope) {
-          $scope.news = [];
-
-          NewsService.getNews().then(function (data) {
-            $scope.news = data.data;
-          });
-
+          _preparingNews($scope)
           _prepareItems($scope);
         },
         /**
          * @param $scope
          */
-        highlightednews: function ($scope) {
-          $scope.news = [];
-
-          NewsService.getNews().then(function (data) {
-            $scope.news = data.data;
-          });
-        },
+        highlightednews: _preparingNews,
         highlightedgalleries: _preparingGalleries,
         highlightedgallery: _preparingGalleries,
-        /**
-         * @param $scope
-         */
-        highlightedevents: function ($scope) {
-          $scope.events = [];
-
-          EventsService.getEvents().then(function (data) {
-            $scope.events = data.data;
-          });
-        }
+        highlightedevents: _preparingEvents,
+        highlightedevent: _preparingEvents,
+        gallery: _preparingGalleries,
+        eventlist: _getTags,
+        editorialnews: _preparingNews
       };
 
       return {
