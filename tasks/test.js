@@ -32,7 +32,6 @@ var files = [
   'app/services/events.service.js',
   'app/services/gallery.service.js',
   'app/services/media.service.js',
-  'app/services/module.service.js',
   'app/services/navigation.service.js',
   'app/services/news.service.js',
   'app/services/notification.service.js',

@@ -1,68 +1,61 @@
-html
-  body
-    header.view-header.clearfix
+header.view-header.clearfix
+  .pull-left
+    h2 Páginas
+    ol.breadcrumb
+      li.active Páginas
+  .pull-right
+    a.btn.btn-primary.btn-lg.pull-left(ng-href='#/pages/new') NOVA PÁGINA
+.row.list-header
+  .col-xs-7
+    ul.list-inline.list-status
+      li
+        a(ng-click="itemStatus = ''")
+          span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }") Tudo
+          span.small ({{ pages.total }})
+      li
+        a(ng-click="itemStatus = 'publish'")
+          span(ng-class="{ 'strong': itemStatus == 'published'}") Publicados
+          span.small ({{ (pages.items | filter: {status: 'published'}).length }})
+      li
+        a(ng-click="itemStatus = 'draft'")
+          span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
+          span.small ({{ (pages.items | filter: {status: 'draft'}).length }})
+  .col-xs-5
+    .pull-right
       .pull-left
-        h2 Páginas
-        ol.breadcrumb
-          li.active
-            | Páginas
-      .pull-right
-        a.btn.btn-primary.btn-lg.pull-left(ng-href='#/pages/new')
-          | NOVA PÁGINA
-    .row.list-header
-      .col-xs-7
-        ul.list-inline.list-status
-          li
-            a(ng-click="itemStatus = ''")
-              span(ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }") Tudo
-              span.small ({{ pages.total }})
-          li
-            a(ng-click="itemStatus = 'publish'")
-              span(ng-class="{ 'strong': itemStatus == 'published'}") Publicados
-              span.small ({{ (pages.items | filter: {status: 'published'}).length }})
-          li
-            a(ng-click="itemStatus = 'draft'")
-              span(ng-class="{ 'strong': itemStatus == 'draft'}") Rascunho
-              span.small ({{ (pages.items | filter: {status: 'draft'}).length }})
-      .col-xs-5
-        .pull-right
-          .pull-left
-            form.form-inline(action='')
-              .form-group
-                input.form-control(type='text', placeholder='Pesquisar', ng-model='search')
-    .row
-      .col-xs-12
-        table.table.table-bordered(cellspacing='0', width='100%', role='grid')
-          thead
-            tr(role='row')
-              th(style='width: 50%') Título
-              th.tac(style='width: 20%') Autor
-              th.tac(style='width: 13%;') Data da Publicação
-          tbody
-            tr.odd(role='row', ng-repeat='item in pages.items | filter: search | filter: {status: itemStatus}')
-              td
-                .clearfix
-                  .listing-actions.pull-left
-                    a.btn.btn-warning(ng-href='#/pages/edit/{{ item.id }}')
-                      i.fa.fa-pencil
-                  .pull-left
-                    a(target='_blank', ng-href='{{ item.page_url }}')
-                      | {{ item.title }}
-              td {{ item.author.name }}
-              td
-                strong {{ convertDate(item.scheduled_at)|date:'dd/MM/yyyy' }}
-                br
-                small {{ item.status }}
-    .row(ng-show='pages.total > 30')
-      .col-xs-12
-        uib-pagination.pagination-sm(
-          boundary-links='true',
-          total-items='pages.total',
-          items-per-page='pages.page_size',
-          ng-model='currentPage',
-          previous-text='‹',
-          next-text='›',
-          first-text='«',
-          last-text='»',
-          ng-change='changePage()'
-        )
+        form.form-inline(action='')
+          .form-group
+            input.form-control(type='text', placeholder='Pesquisar', ng-model='search')
+.row
+  .col-xs-12
+    table.table.table-bordered(cellspacing='0', width='100%', role='grid')
+      thead
+        tr(role='row')
+          th(style='width: 50%') Título
+          th.tac(style='width: 20%') Autor
+          th.tac(style='width: 13%;') Data da Publicação
+      tbody
+        tr.odd(role='row', ng-repeat='item in pages.items | filter: search | filter: {status: itemStatus}')
+          td
+            .clearfix
+              .listing-actions.pull-left
+                a.btn.btn-warning(ng-href='#/pages/edit/{{ item.id }}')
+                  i.fa.fa-pencil
+              .pull-left
+                a(target='_blank', ng-href='{{ item.page_url }}') {{ item.title }}
+          td {{ item.author.name }}
+          td
+            strong {{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}
+            br
+            small {{ item.status }}
+.row(ng-show='pages.total > 30')
+  .col-xs-12
+    uib-pagination.pagination-sm(boundary-links='true',
+      total-items='pages.total',
+      items-per-page='pages.page_size',
+      ng-model='currentPage',
+      previous-text='‹',
+      next-text='›',
+      first-text='«',
+      last-text='»',
+      ng-change='changePage()')

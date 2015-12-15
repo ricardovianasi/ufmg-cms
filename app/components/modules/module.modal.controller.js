@@ -8,7 +8,7 @@
                                  $uibModal,
                                  $uibModalInstance,
                                  MediaService,
-                                 ModuleService,
+                                 PagesService,
                                  module,
                                  widgets) {
     console.log('... ModuleModalController');
@@ -40,7 +40,7 @@
       $scope.widget.title = module.title;
       $scope.widget.selected.type = module.type;
 
-      angular.extend($scope.widget, ModuleService.parseWidgetToLoad($scope.module));
+      angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
     var moduleModal;
@@ -58,27 +58,6 @@
           label: '',
           external_url: ''
         });
-      }
-    };
-
-    $scope.addGallery = function (gal) {
-      if ($scope.widget.galleries) {
-        $scope.widget.galleries.push(gal);
-      } else {
-        $scope.widget.galleries = [];
-        $scope.widget.galleries.push(gal);
-      }
-    };
-
-    $scope.removeGallery = function (idx) {
-      if ($scope.widget.galleries[idx]) {
-        $scope.widget.galleries.splice(idx, 1);
-      }
-    };
-
-    $scope.removeNews = function (idx) {
-      if ($scope.widget.news[idx]) {
-        $scope.widget.news.splice(idx, 1);
       }
     };
 
@@ -454,7 +433,7 @@
     };
 
     $scope.preparePartial = function () {
-      ModuleService.preparePartial($scope);
+      PagesService.module().preparePartial($scope);
     };
   }
 })();

@@ -9,14 +9,9 @@
     '$uibModal',
     '$location',
     '$timeout',
-    'EventsService',
-    'GalleryService',
     'MediaService',
-    'NewsService',
     'NotificationService',
     'PagesService',
-    'StatusService',
-    'TagsService',
     'WidgetsService',
     'DateTimeHelper'
   ];
@@ -25,28 +20,18 @@
                               $uibModal,
                               $location,
                               $timeout,
-                              EventsService,
-                              GalleryService,
                               MediaService,
-                              NewsService,
                               NotificationService,
                               PagesService,
-                              StatusService,
-                              TagsService,
                               WidgetsService,
                               DateTimeHelper) {
-    console.log('... PaginasNovoController');
+    console.log('... PagesNewController');
 
     $scope.title = 'Nova Página';
     $scope.breadcrumb_active = $scope.title;
 
     $scope.publishment = 'published';
     $scope.widgets = [];
-    $scope.status = [];
-    $scope.galleries = [];
-    $scope.news = [];
-    $scope.pages = [];
-    $scope.events = [];
     $scope.columns = PagesService.COLUMNS;
 
     $scope.time_days = DateTimeHelper.getDays();
@@ -110,7 +95,7 @@
     // Modals
     $scope.addModule = function (column) {
       var moduleModal = $uibModal.open({
-        templateUrl: '/components/modal/module.modal.template.html',
+        templateUrl: 'components/modal/module.modal.template.html',
         controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
@@ -121,18 +106,6 @@
           widgets: function () {
             return $scope.widgets;
           }
-          //extraContent: function () {
-          //  return {
-          //    icons: $scope.icons,
-          //    events: $scope.events,
-          //    pages: $scope.pages,
-          //    news: $scope.news,
-          //    tags: $scope.tags,
-          //    news_types: $scope.news_types,
-          //    galleries: $scope.galleries,
-          //    categories: $scope.categories
-          //  };
-          //}
         }
       });
 
@@ -145,7 +118,7 @@
 
     $scope.editModule = function (column, idx) {
       editModuleModal = $uibModal.open({
-        templateUrl: '/components/modal/module.modal.template.html',
+        templateUrl: 'components/modal/module.modal.template.html',
         controller: 'ModuleModalController',
         backdrop: 'static',
         size: 'lg',
@@ -187,7 +160,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/components/modal/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
@@ -216,22 +189,6 @@
 
     //StatusService.getStatus().then(function (data) {
     //  $scope.status = data.data;
-    //});
-    //
-    //GalleryService.getGalleries().then(function (data) {
-    //  $scope.galleries = data.data;
-    //});
-    //
-    //PagesService.getPages().then(function (data) {
-    //  $scope.pages = data.data;
-    //});
-    //
-    //EventsService.getEvents().then(function (data) {
-    //  $scope.events = data.data;
-    //});
-    //
-    //NewsService.getNews().then(function (data) {
-    //  $scope.news = data.data;
     //});
   }
 })();

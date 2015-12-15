@@ -164,7 +164,7 @@
 
         $scope.addArticle = function () {
             var articleModal = $modal.open({
-                templateUrl: '/components/modal/article.modal.template.html',
+                templateUrl: 'components/modal/article.modal.template.html',
                 controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
@@ -182,7 +182,7 @@
 
         $scope.editArticle = function (idx, article) {
             editArticleModal = $modal.open({
-                templateUrl: '/components/modal/article.modal.template.html',
+                templateUrl: 'components/modal/article.modal.template.html',
                 controller: 'ArticleModalController',
                 backdrop: 'static',
                 size: 'lg',
@@ -215,7 +215,7 @@
     var removeConfirmationModal;
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/components/modal/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,

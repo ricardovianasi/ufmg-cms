@@ -43,7 +43,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/components/modal/confirmation.modal.template.html',
+        templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,

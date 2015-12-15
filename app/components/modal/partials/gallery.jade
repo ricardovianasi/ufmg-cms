@@ -1,6 +1,6 @@
-html
-  body
-    .form-group
-      label Galeria:
-      |     
-      select.form-control(title='Galeria', ng-model='widget.gallery_id', ng-options='gallery.id as gallery.title for gallery in galleries.items')
+.form-group
+  label Galeria:
+
+  select.form-control(title='Galeria',
+    ng-model='widget.gallery_id',
+    ng-options='gallery.id as gallery.title for gallery in galleries.items')
