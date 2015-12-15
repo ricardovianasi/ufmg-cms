@@ -18,10 +18,10 @@ form.form(action='')
         .col-xs-12
           .form-group
             label(for='') Tags
-            ui-select(multiple='', tagging='', tagging-tokens=',', tagging-label='', ng-model='course.tags', theme='bootstrap', sortable='true', ng-disabled='disabled', title='Digite uma tag')
+            ui-select(multiple tagging tagging-tokens=',' ng-model='course.tags' theme='bootstrap', ng-disabled='disabled', title='Digite uma tag')
               ui-select-match(placeholder='Selecione as tags') {{$item}}
-              ui-select-choices(repeat='color in availableColors | filter:$select.search')
-                | {{color}}
+              ui-select-choices(repeat='tag in course.tags | filter:$select.search')
+                | {{tags}}
       .row
         .col-xs-12
           .pages-module.pages-module-cover

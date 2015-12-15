@@ -19,13 +19,6 @@
 
             return deferred.promise;
           },
-          // addCourse: function () {
-          //   var deferred = $q.defer();
-          //   $http.post(apiUrl+'', ).then(function(data){
-          //     deferred.resolve(data);
-          //   })
-          //   return deferred.promise;
-          // },
           getCourse: function (id) {
             var deferred = $q.defer();
 
@@ -63,13 +56,6 @@
 
             return deferred.promise;
           }
-          // removeCourse: function () {
-          //   var deferred = $q.defer();
-          //   $http.delete(apiUrl+'', ).then(function(data){
-          //     deferred.resolve(data);
-          //   })
-          //   return deferred.promise;
-          // }
         };
       }
     ]);
