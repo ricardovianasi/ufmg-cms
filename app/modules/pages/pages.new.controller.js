@@ -13,6 +13,7 @@
     'NotificationService',
     'PagesService',
     'WidgetsService',
+    'StatusService',
     'DateTimeHelper'
   ];
 
@@ -24,13 +25,14 @@
                               NotificationService,
                               PagesService,
                               WidgetsService,
+                              StatusService,
                               DateTimeHelper) {
     console.log('... PagesNewController');
 
     $scope.title = 'Nova Página';
     $scope.breadcrumb_active = $scope.title;
 
-    $scope.publishment = 'published';
+    $scope.publishment = StatusService.STATUS_PUBLISHED;
     $scope.widgets = [];
     $scope.columns = PagesService.COLUMNS;
 
@@ -51,7 +53,7 @@
     $scope.page = {
       image: null,
       scheduled_at: {},
-      status: 'published',
+      status: StatusService.STATUS_PUBLISHED,
       columns: 2,
       tags: [],
       title: null,
@@ -186,9 +188,5 @@
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
-
-    //StatusService.getStatus().then(function (data) {
-    //  $scope.status = data.data;
-    //});
   }
 })();
