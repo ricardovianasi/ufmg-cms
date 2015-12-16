@@ -274,20 +274,35 @@
          * @param widget
          */
         highlightedradionews: function (widget) {
-          _obj.news = widget.content.news;
-          // if (widget.news) {
-          //   _obj.news = widget.news;
-          // } else {
-          //   if (widget.content.news) {
-          //     var newsToSelect = [];
+          _obj.news = widget.news;
 
-          //     angular.forEach(widget.content.news, function (news) {
-          //       newsToSelect.push(news.id);
-          //     });
+          if (widget.news) {
+            var newsToSelect = [];
 
-          //     _obj.news = newsToSelect;
-          //   }
-          // }
+            angular.forEach(widget.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
+            _obj.news = newsToSelect;
+          }
+        },
+        /**
+         * Highlighted News Video
+         *
+         * @param widget
+         */
+        highlightednewsvideo: function (widget) {
+          _obj.news = widget.news;
+
+          if (widget.news) {
+            var newsToSelect = [];
+
+            angular.forEach(widget.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
+            _obj.news = newsToSelect;
+          }
         },
         /**
          * Editorial News
@@ -394,6 +409,18 @@
             }
           }
         },
+
+        highlightednewsvideo: function(widget){
+          _obj.text = widget.text;
+
+          if('content' in widget) {
+            _obj.news = widget.content.news;
+          }
+          else{
+            _obj.news = widget.news;
+          }
+
+        },
         /**
          * Gallery
          *
@@ -488,27 +515,6 @@
               _obj.news = newsToSelect;
             }
           }
-        },
-        /**
-         * Highlighted Radio News
-         *
-         * @param widget
-         */
-        highlightedradionews: function (widget) {
-          _obj.news = widget.content.news;
-          // if (widget.news) {
-          //   _obj.news = widget.news;
-          // } else {
-          //   if (widget.content.news) {
-          //     var newsToSelect = [];
-
-          //     angular.forEach(widget.content.news, function (news) {
-          //       newsToSelect.push(news.id);
-          //     });
-
-          //     _obj.news = newsToSelect;
-          //   }
-          // }
         },
         /**
          * Editorial News
@@ -755,6 +761,14 @@
          * @param $scope
          */
         highlightedradionews: function ($scope) {
+          _preparingNews($scope);
+          _prepareItems($scope);
+        },
+
+        /**
+         * @param $scope
+         */
+        highlightednewsvideo: function ($scope) {
           _preparingNews($scope);
           _prepareItems($scope);
         },

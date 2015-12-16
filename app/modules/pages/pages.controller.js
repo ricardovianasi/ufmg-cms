@@ -10,10 +10,11 @@
     'PagesService',
     'NotificationService',
     'StatusService',
-    'dataTableConfigService'
+    'dataTableConfigService',
+    '$timeout'
   ];
 
-  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService, dataTableConfigService) {
+  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService, dataTableConfigService, $timeout) {
     console.log('... PagesController');
 
     $scope.status = [];
@@ -22,7 +23,9 @@
 
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
-      $scope.dtOptions = dataTableConfigService.init();
+      $timeout(function () {
+        $scope.dtOptions = dataTableConfigService.init();
+      });
     });
 
     /**

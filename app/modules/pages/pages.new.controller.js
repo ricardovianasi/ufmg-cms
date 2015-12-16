@@ -29,6 +29,10 @@
                               DateTimeHelper) {
     console.log('... PagesNewController');
 
+    WidgetsService.getWidgets().then(function (data) {
+      $scope.widgets = data.data;
+    });
+
     $scope.title = 'Nova Página';
     $scope.breadcrumb_active = $scope.title;
 
@@ -184,9 +188,5 @@
         $uibModalInstance.dismiss('cancel');
       };
     };
-
-    WidgetsService.getWidgets().then(function (data) {
-      $scope.widgets = data.data;
-    });
   }
 })();
