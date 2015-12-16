@@ -11,7 +11,7 @@
         ui-select(ng-model='widget.selected')
           ui-select-match(placeholder='Buscar Widget')
             | {{ $select.selected.label }}
-          ui-select-choices(repeat='widget in widgets|filter: $select.search')
+          ui-select-choices(repeat='widget in widgets.items|filter: $select.search')
             div(ng-bind-html='widget.label|highlight: $select.search')
       // Insert partial dynamically acording to widget type
       div(onload='preparePartial($event)',
