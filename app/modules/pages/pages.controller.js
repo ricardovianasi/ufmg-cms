@@ -23,9 +23,6 @@
 
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
-      $timeout(function () {
-        $scope.dtOptions = dataTableConfigService.init();
-      });
     });
 
     /**
@@ -34,6 +31,7 @@
     var loadPages = function (page) {
       PagesService.getPages(page).then(function (data) {
         $scope.pages = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 
