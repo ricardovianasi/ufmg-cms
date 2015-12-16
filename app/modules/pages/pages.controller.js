@@ -10,11 +10,10 @@
     'PagesService',
     'NotificationService',
     'StatusService',
-    'DTOptionsBuilder',
-    'DTColumnDefBuilder'
+    'dataTableConfigService'
   ];
 
-  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService, DTOptionsBuilder, DTColumnDefBuilder) {
+  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService, dataTableConfigService) {
     console.log('... PagesController');
 
     $scope.status = [];
@@ -23,6 +22,7 @@
 
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
+      $scope.dtOptions = dataTableConfigService.init();
     });
 
     /**
@@ -31,47 +31,6 @@
     var loadPages = function (page) {
       PagesService.getPages(page).then(function (data) {
         $scope.pages = data.data;
-
-        /**
-        * config DTOptionsBuilder
-        */
-        $scope.dtOptions = DTOptionsBuilder
-                            .newOptions()
-                            .withPaginationType('full_numbers')
-                            .withDisplayLength(30)
-                            .withLanguage({
-                                "sEmptyTable":     "Nenhum dado foi encontrado. :(",
-                                "sInfo":           "Mostrando de _START_ hà _END_ de _TOTAL_ resultados",
-                                "sInfoEmpty":      "Mostrando de 0 hà 0 de 0 resultados",
-                                "sInfoFiltered":   "(Filtrado de _MAX_ resultados)",
-                                "sInfoPostFix":    "",
-                                "sInfoThousands":  ",",
-                                "sLengthMenu":     "Mostrar _MENU_ resultados",
-                                "sLoadingRecords": "Carregando...",
-                                "sProcessing":     "Processando...",
-                                "sSearch":         "Pesquisar: ",
-                                "sZeroRecords":    "Não foram encontrados resultados",
-                                "oPaginate": {
-                                    "sFirst":    "<<",
-                                    "sLast":     ">>",
-                                    "sNext":     ">",
-                                    "sPrevious": "<"
-                                },
-                                "oAria": {
-                                    "sSortAscending":  ": filtro ascendente ativo",
-                                    "sSortDescending": ": filtro descendente ativo"
-                                }
-                            })
-                            .withBootstrap();
-
-        /**
-        * config DTColumnDefBuilder
-        */
-        $scope.dtColumns = [
-          DTColumnDefBuilder.newColumnDef(0),
-          DTColumnDefBuilder.newColumnDef(1),
-          DTColumnDefBuilder.newColumnDef(2)
-        ];
       });
     };
 

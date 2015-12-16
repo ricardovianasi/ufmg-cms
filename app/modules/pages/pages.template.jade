@@ -22,7 +22,7 @@ header.view-header.clearfix
           span.small ({{ (pages.items | filter: {status: 'draft'}).length }})
 .row
   .col-xs-12
-    table(datatable="ng" dt-options="dtOptions"  dt-column-defs="dtColumnDefs" class="table table-striped table-bordered")
+    table(datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered")
       thead
         tr
           th(style='width: 50%') Título
