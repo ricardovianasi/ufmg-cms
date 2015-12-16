@@ -8,5 +8,3 @@
 ```
 
 # UFMG CMS
-
-## Modules
