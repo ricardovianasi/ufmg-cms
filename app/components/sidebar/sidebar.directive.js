@@ -5,7 +5,7 @@
     .directive('ufmgSidebar', [
       function () {
         return {
-          restrict: 'E',
+          restrict: 'A',
           templateUrl: 'components/sidebar/sidebar.template.html',
           controller: 'SidebarController',
           link: function () {
