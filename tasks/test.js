@@ -114,7 +114,12 @@ var files = [
   'app/common/config/app.config.js'
 ];
 
-gulp.task('test-js', function () {
+gulp.task('copy-xenon', function () {
+  gulp.src('app/assets/xenon/js/**/*.js')
+    .pipe(gulp.dest('./build/assets/js/'));
+});
+
+gulp.task('test-js', ['copy-xenon'], function () {
   return gulp.src(files)
     .pipe(plumber())
     .pipe(expect({ errorOnFailure: true }, files))

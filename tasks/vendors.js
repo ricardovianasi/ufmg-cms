@@ -6,21 +6,16 @@ var expect = require('gulp-expect-file');
 
 var files = [
   'bower_components/jquery/dist/jquery.min.js',
-  'bower_components/jquery/dist/jquery.min.map',
   'bower_components/datatables/media/js/jquery.dataTables.js',
+  'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/cropper/dist/cropper.min.js',
   'app/assets/scripts/redactor/redactor.js',
   'app/assets/scripts/redactor/pt_br.js',
   'bower_components/lodash/lodash.min.js',
-  'bower_components/requirejs/require.js',
   'bower_components/angular/angular.min.js',
-  'bower_components/angular/angular.min.js.map',
   'bower_components/angular-route/angular-route.min.js',
-  'bower_components/angular-route/angular-route.min.js.map',
   'bower_components/angular-resource/angular-resource.min.js',
-  'bower_components/angular-resource/angular-resource.min.js.map',
   'bower_components/angular-sanitize/angular-sanitize.min.js',
-  'bower_components/angular-sanitize/angular-sanitize.min.js.map',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
@@ -32,7 +27,6 @@ var files = [
   'bower_components/angular-ui-mask/dist/mask.min.js',
   'bower_components/angular-datatables/dist/angular-datatables.min.js',
   'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
-  'bower_components/bootstrap/dist/js/bootstrap.min.js',
 ];
 
 var styles = [
@@ -45,7 +39,15 @@ var styles = [
   'bower_components/ui-select/dist/select.min.css',
   'bower_components/cropper/dist/cropper.min.css',
   'bower_components/ng-cropper/dist/ngCropper.all.min.css',
-  'app/assets/scripts/redactor/redactor.css'
+  'app/assets/scripts/redactor/redactor.css',
+
+  // God Damn Xenon
+  'app/assets/xenon/css/fonts/linecons/css/linecons.css',
+  'app/assets/xenon/css/xenon-core.css',
+  'app/assets/xenon/css/xenon-forms.css',
+  //'app/assets/xenon/css/xenon.css',
+  'app/assets/xenon/css/xenon-components.css',
+  'app/assets/xenon/css/xenon-skins.css'
 ];
 
 var EXTERNAL_FONTS = [
@@ -58,8 +60,11 @@ var EXTERNAL_FONTS = [
   'bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg',
   'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf',
   'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2'
-
+  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2',
+  'app/assets/xenon/css/fonts/linecons/font/linecons.eot',
+  'app/assets/xenon/css/fonts/linecons/font/linecons.svg',
+  'app/assets/xenon/css/fonts/linecons/font/linecons.ttf',
+  'app/assets/xenon/css/fonts/linecons/font/linecons.woff'
 ];
 
 gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
@@ -82,22 +87,8 @@ gulp.task('build-vendors-css', function(){
     .pipe(gulp.dest('./build/assets/css/'));
 });
 
-
 gulp.task('build-vendors-fonts', function(){
   gulp.src(EXTERNAL_FONTS)
     .pipe(expect({ errorOnFailure: true }, EXTERNAL_FONTS))
     .pipe(gulp.dest('./build/assets/fonts/'));
 });
-
-
-
-
-
-
-
-
-
-
-
-
-

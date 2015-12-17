@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var spawn = require('child_process').spawn;
 
 // Taks default gulp!
 gulp.task('default', function () {
@@ -27,3 +28,22 @@ gulp.task('production', [
   'build',
   'imagemin'
 ]);
+
+gulp.task('auto-reload', function () {
+  var p;
+
+  gulp.watch(['gulpfile.js', 'tasks/*.js'], spawnChildren);
+  spawnChildren();
+
+  function spawnChildren(e) {
+    // kill previous spawned process
+    if (p) {
+      p.kill();
+    }
+
+    // `spawn` a child `gulp` process linked to the parent `stdio`
+    p = spawn('gulp', ['default'], {
+      stdio: 'inherit'
+    });
+  }
+});

@@ -44,6 +44,7 @@
     "jshint-stylish": "^1.0.0",
     "node-sass": "3.3.3",
     "require-dir": "~0.1.0",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "yargs": "^3.31.0"
   }
 }
