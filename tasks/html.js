@@ -16,7 +16,6 @@ gulp.task('html', ['generate-index'], function () {
 gulp.task('generate-index', function () {
   gulp.src('./app/index.html')
     .pipe(plumber())
-    .pipe(jade({pretty: true}))
     .pipe(minifyHTML())
     .pipe(gulp.dest('./build/'))
 });
