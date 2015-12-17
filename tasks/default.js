@@ -8,7 +8,7 @@ gulp.task('default', function () {
 //task for build
 gulp.task('build', [
   'env',
-  'jade',
+  'html',
   'copyimage',
   'css',
   'test-js',

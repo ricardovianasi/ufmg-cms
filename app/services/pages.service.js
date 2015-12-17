@@ -368,6 +368,15 @@
 
             _obj.specialists.push(specialist);
           });
+        },
+
+        /**
+         * Last Tv Programs
+         *
+         * @param widget
+         */
+        lasttvprograms: function(widget){
+          console.log('lasttvprograms parsesave >>>>>>>>>>>', widget);
         }
       };
 
@@ -571,6 +580,15 @@
         highlightedrelease: function (widget) {
           _obj.title = widget.title;
           _obj.content = widget.content;
+        },
+
+         /**
+         * Last Tv Programs
+         *
+         * @param widget
+         */
+        lasttvprograms: function(widget){
+          console.log('lasttvprograms parseload >>>>>>>>>>>', widget);
         }
       };
 
