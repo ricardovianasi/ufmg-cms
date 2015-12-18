@@ -24,9 +24,9 @@
 
     </div>
 </div>
-<form class=form>
-    <div class=row>
-        <div class=col-xs-8>
+<div class=row>
+    <div class="col-xs-8 panel panel-default">
+        <form class=form>
             <div class=row>
                 <div class=col-xs-12>
                     <div class=form-group>
@@ -91,9 +91,10 @@
                     <div class=pull-right><a ng-click class="btn btn-danger pull-left spacer-right">Cancelar</a><a ng-click=publish(page) class="btn btn-success pull-left">Salvar</a></div>
                 </div>
             </div>
-        </div>
-        <div class=col-xs-4>
-            <publishment-options route-model=page></publishment-options>
-        </div>
+        </form>
     </div>
-</form>
+    <div class=col-xs-4>
+        <publishment-options route-model=page></publishment-options>
+    </div>
+</div>
+
