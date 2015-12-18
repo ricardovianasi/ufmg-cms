@@ -32,7 +32,6 @@ var files = [
 var styles = [
   'bower_components/angular-toastr/dist/angular-toastr.min.css',
   'bower_components/font-awesome/css/font-awesome.min.css',
-  'bower_components/bootstrap/dist/css/bootstrap.min.css',
   'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
   'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
   'bower_components/ng-responsive-calendar/dist/css/calendar.min.css',
@@ -42,10 +41,10 @@ var styles = [
   'app/assets/scripts/redactor/redactor.css',
 
   // God Damn Xenon
+  'app/assets/xenon/css/bootstrap.css',
   'app/assets/xenon/css/fonts/linecons/css/linecons.css',
   'app/assets/xenon/css/xenon-core.css',
   'app/assets/xenon/css/xenon-forms.css',
-  //'app/assets/xenon/css/xenon.css',
   'app/assets/xenon/css/xenon-components.css',
   'app/assets/xenon/css/xenon-skins.css'
 ];
