@@ -8,11 +8,12 @@
     '$scope',
     '$uibModal',
     'MediaService',
+    'dataTableConfigService',
     'StatusService',
     'NotificationService'
   ];
 
-  function MediaController($scope, $uibModal, MediaService, StatusService, NotificationService) {
+  function MediaController($scope, $uibModal, MediaService, dataTableConfigService, StatusService, NotificationService) {
     console.log('... MediaController');
 
     $scope.media = [];
@@ -22,6 +23,7 @@
     var loadMedia = function (page) {
       MediaService.getMedia(page).then(function (data) {
         $scope.media = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 
