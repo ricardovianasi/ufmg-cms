@@ -72,16 +72,24 @@
                             <div class=pull-right><span ng-click="editModule('main', $index)" class="label label-default"><span class="fa fa-pencil"></span>EDITAR</span><span ng-click="removeModule('main', $index)" class="label label-danger"><span class="fa fa-remove"></span>REMOVER</span><span as-sortable-item-handle class="label label-primary"><span class="fa fa-arrows-v"></span>MOVER</span>
                             </div>
                         </div>
-                        <h4 class=tac>{{ item.title }}<small>{{ item.type }}</small></h4></div>
+                         <h4 class=tac>
+                            {{ item.title }}
+                        </h4>
+                        <small>{{ item.type }}</small>
+                    </div>
                     <div ng-click="addModule('main')" class="pages-module add-module">+ Adicionar Módulo</div>
                 </div>
                 <div id=sort-side as-sortable=sortableOptions ng-model=page.widgets.side ng-class="{ 'col-xs-4': page.columns == 2, 'hidden': page.columns == 1 }">
-                    <div ng-repeat="item in page.widgets.side" as-sortable-item class=pages-module>
+                    <div ng-repeat="item in page.widgets.side" as-sortable-item class="pages-module">
                         <div class=clearfix>
                             <div class=pull-right><span ng-click="editModule('side', $index)" class="label label-default"><span class="fa fa-pencil"></span>EDITAR</span><span ng-click="removeModule('side', $index)" class="label label-danger"><span class="fa fa-remove"></span>REMOVER</span><span as-sortable-item-handle class="label label-primary"><span class="fa fa-arrows-v"></span>MOVER</span>
                             </div>
                         </div>
-                        <h4 class=tac>{{ item.title }}<small>{{ item.type }}</small></h4></div>
+                        <h4 class=tac>
+                            {{ item.title }}
+                        </h4>
+                        <small>{{ item.type }}</small>
+                    </div>
                     <div ng-click="addModule('side', $index)" class="pages-module add-module">+ Adicionar Módulo</div>
                 </div>
             </div>
