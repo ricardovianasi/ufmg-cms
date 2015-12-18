@@ -1,1 +1,44 @@
-<div class=publishment-options><h4 class=publishment-title>Opções de Publicação</h4><div class=publishment-body><div class=clearfix><div class=pull-left><button type=button ng-click=saveDraft($event) class="btn btn-sm btn-default">Salvar como rascunho</button></div></div><div class=publishment-block><div class=form-group><label>Status:</label><div class=publishment-form><select title=Status ng-model=obj.status ng-options="option.status as option.name for option in statuses" class=form-control></select></div></div></div><div class=publishment-block><div ng-show="obj.status == 'scheduled'" class=form-group><div class=publishment-form><div class=clearfix><div style="width: 48%" class="pull-left input-group input-group-sm"><span class=input-group-addon><span class="fa fa-calendar"></span></span> <input type=text title=Data ng-model=obj.scheduled_date class=form-control></div><div style="width: 48%" class="pull-right input-group input-group-sm"><span class=input-group-addon><span class="fa fa-calendar"></span></span> <input type=text title=Hora ng-model=obj.scheduled_time class=form-control></div></div></div></div></div></div><div class=clearfix><div class=pull-left><button type=button ng-show=obj.id ng-click=remove(obj.id) class="btn btn-sm btn-danger"><span class="fa fa-trash"></span></button></div><div class=pull-right><button id=publish-button type=button ng-click=publish(obj) class="btn btn-sm btn-primary">Salvar</button></div></div></div>
+<div class="panel panel-default publishment-options">
+    <h4 class="publishment-title">Opções de Publicação</h4>
+    <div class="publishment-body">
+        <div class="clearfix">
+            <div class="pull-left">
+                <button type=button ng-click=saveDraft($event) class="btn btn-sm btn-gray">Salvar como rascunho</button>
+            </div>
+        </div>
+        <div class="publishment-block">
+            <div class="form-group">
+                <label>Status:</label>
+                <div class="publishment-form">
+                    <select title=Status ng-model=obj.status ng-options="option.status as option.name for option in statuses.items" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+        <div class="publishment-block">
+            <div ng-show="obj.status == 'scheduled'" class="form-group">
+                <div class="publishment-form">
+                    <div class="clearfix">
+                        <div style="width: 48%" class="pull-left input-group input-group-sm">
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                            <input type=text title=Data ng-model=obj.scheduled_date class="form-control">
+                        </div>
+                        <div style="width: 48%" class="pull-right input-group input-group-sm">
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                            <input type=text title=Hora ng-model=obj.scheduled_time class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=clearfix>
+        <div class=pull-left>
+            <button type=button ng-show=obj.id ng-click=remove(obj.id) class="btn btn-sm btn-danger">
+                <span class="fa fa-trash"></span>
+            </button>
+        </div>
+        <div class=pull-right>
+            <button id=publish-button type=button ng-click=publish(obj) class="btn btn-sm btn-secondary">Salvar</button>
+        </div>
+    </div>
+</div>
