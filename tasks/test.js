@@ -49,6 +49,7 @@ var files = [
   // Components
   'app/components/articles/article.modal.controller.js',
   'app/components/components.module.js',
+  'app/components/upload.image.modal.controller.js',
   'app/components/modules/module.modal.controller.js',
   'app/components/publishment/publishment.directive.js',
   'app/components/sidebar/sidebar.controller.js',
