@@ -7,12 +7,18 @@
   GalleryController.$inject = [
     '$scope',
     '$uibModal',
+    'dataTableConfigService',
     'GalleryService',
     'StatusService',
     'NotificationService'
   ];
 
-  function GalleryController($scope, $uibModal, GalleryService, StatusService, NotificationService) {
+  function GalleryController($scope,
+                            $uibModal,
+                            dataTableConfigService,
+                            GalleryService,
+                            StatusService,
+                            NotificationService) {
     console.log('... GaleriasController');
 
     $scope.galleries = [];
@@ -22,6 +28,7 @@
     var loadGalleries = function (page) {
       GalleryService.getGalleries(page).then(function (data) {
         $scope.galleries = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 
