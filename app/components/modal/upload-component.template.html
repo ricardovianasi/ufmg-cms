@@ -44,7 +44,12 @@
 
             <div class="row">
                 <div class="col-md-2 imageGroup  text-center">
-                    <a href="#" class="btn  btn-xs btn-primary">Enviar Arquivo</a>
+                    <a href="#" class="btn  btn-xs btn-primary"
+                                ngf-accept="'image/*'"
+                                ngf-select ng-model="vm.add_photos"
+                                ngf-multiple="false">
+                                    Enviar Arquivo
+                    </a>
                 </div>
 
                 <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items">
