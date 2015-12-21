@@ -13,8 +13,9 @@
       function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer, apiUrl) {
         console.log('... MediaService');
 
-        var APIUrl = apiUrl;
-        var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'file');
+        var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'file');
+        var PAGE = 1;
+        var PAGE_SIZE = 30;
 
         return {
           /**
@@ -23,23 +24,26 @@
            * @returns {*}
            */
           getFile: function (id) {
-            return $http.get(APIUrl+'/file/'+id);
+            return $http.get(apiUrl+'/file/'+id);
           },
           /**
            * @returns {*}
            */
           getIcons: function () {
-            return $http.get(APIUrl+'/file/icon');
+            return $http.get(apiUrl+'/file/icon');
           },
           /**
            * @param page
+           * @param page_size
            *
            * @returns {*}
            */
-          getMedia: function (page) {
-            page = page || 1;
-
-            var url = $filter('format')('{0}?page={1}', MEDIA_ENDPOINT, page);
+          getMedia: function (page, page_size) {
+            var queryString = $filter('queryString')({
+              page: page || PAGE,
+              page_size: page_size || PAGE_SIZE
+            });
+            var url = $filter('format')('{0}?{1}', MEDIA_ENDPOINT, queryString);
 
             return $http.get(url);
           },
@@ -49,7 +53,7 @@
            * @returns {*}
            */
           removeMedia: function (id) {
-            return $http.delete(APIUrl+'/file/'+id);
+            return $http.delete(apiUrl+'/file/'+id);
           },
           /**
            * @param id
@@ -67,7 +71,7 @@
               resize_height: obj.resize_height
             };
 
-            return $http.post(APIUrl+'/file/'+id+'/crop', $httpParamSerializer(obj), {
+            return $http.post(apiUrl+'/file/'+id+'/crop', $httpParamSerializer(obj), {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
@@ -83,7 +87,7 @@
             var deferred = $q.defer();
 
             Upload.upload({
-              url: APIUrl+'/file',
+              url: apiUrl+'/file',
               fields: {
                 title: file.title ? file.title : '',
                 description: file.description ? file.description : '',
@@ -106,7 +110,7 @@
            * @returns {*}
            */
           updateFile: function (id, obj) {
-            return $http.put(APIUrl+'/file/'+id, obj);
+            return $http.put(apiUrl+'/file/'+id, obj);
           }
         };
       }
