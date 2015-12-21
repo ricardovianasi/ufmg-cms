@@ -34,19 +34,5 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
-      // 'PagesRouteModule',
-      // 'SidebarDirectiveModule',
-      // 'serviceModule',
-      // 'filterModule',
-      // 'helperModule',
-      // 'mediaModule',
-      // 'calendarModule',
-      // 'galleryModule',
-      // 'eventsModule',
-      // 'courseModule',
-      // 'newsModule',
-      // 'releasesModule',
-      // 'periodicalModule',
-      // 'clippingsModule'
     ]);
 })();
