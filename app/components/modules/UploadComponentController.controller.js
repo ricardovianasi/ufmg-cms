@@ -18,7 +18,7 @@
       };
 
       vm._openMidia = _openMidia;
-
+      vm.changePage = _changePage;
 
       /**
       *  _openMidia Function
@@ -33,11 +33,15 @@
       *  _loadMidia Function
       * get all media
       */
-      function _loadMidia(){
-        MediaService.getMedia().then(function(result){
+      function _loadMidia(page){
+        MediaService.getMedia(page, 27).then(function(result){
           vm.midia = result.data;
           console.log(vm.midia);
         });
+      }
+
+      function _changePage(){
+        _loadMidia(vm.currentPage);
       }
     }
 })();

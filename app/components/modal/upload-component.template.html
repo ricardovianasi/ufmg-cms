@@ -50,19 +50,22 @@
                 <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items">
                     <img ng-src="{{ midia.url }}" alt="">
                 </div>
+
+            </div>
+            <div ng-show="vm.midia.total > 30" class="row">
+                <div class="col-xs-12 text-right">
+                    <uib-pagination boundary-links="true" total-items="vm.midia.total" items-per-page="vm.midia.page_size" ng-model="vm.currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="vm.changePage()" class="pagination-sm"></uib-pagination>
+                </div>
             </div>
 
         </div>
         <div class="tab-pane" id="messages-3">
 
         </div>
+
+
     </div>
 
-    <div ng-show="midia.total > 30" class=row>
-        <div class=col-xs-12>
-            <uib-pagination boundary-links="true" total-items="midia.total" items-per-page="midia.page_size" ng-model="currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="changePage()" class="pagination-sm"></uib-pagination>
-        </div>
-    </div>
 </div>
 
 <div class="modal-footer">
