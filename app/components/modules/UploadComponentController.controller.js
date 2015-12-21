@@ -17,7 +17,12 @@
         midia: false
       };
 
-      vm.currentFile = {};
+      vm.currentFile = {
+        url: '',
+        id: '',
+        author: '',
+        legend: ''
+      };
 
       vm._openMidia = _openMidia;
       vm.changePage = _changePage;
@@ -30,8 +35,11 @@
       $scope.$watch('vm.add_photos', function () {
         if (vm.add_photos) {
           MediaService.newFile(vm.add_photos).then(function (data) {
+            console.log(data);
             vm.currentFile.url = data.url;
             vm.currentFile.id = data.id;
+            vm.currentFile.author = data.author.name;
+            vm.currentFile.legend = data.legend;
           });
         }
       });

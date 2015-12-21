@@ -43,6 +43,43 @@
             </form>
 
             <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-border">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <h4>Arquivo Enviado com sucesso!</h4>
+                                <img ng-src="{{ vm.currentFile.url }}" alt="" class="img-responsive">
+                            </div>
+                            <div class="col-md-6">
+                                <form action="" class="form-horizontal">
+                                    <h4>Preencha as informaçoes abaixo:</h4>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="field-1">Autor:</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ vm.currentFile.author }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="field-1">Legenda:</label>
+                                        <div class="col-sm-10">
+                                            <textarea name="" id="" cols="30" rows="10" class="form-control">
+                                                {{ vm.currentFile.legend }}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-right">
+                            <a href="" class="btn">Cancelar</a>
+                            <a href="" class="btn btn-secondary">Salvar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-2 imageGroup  text-center">
                     <a href="#" class="btn  btn-xs btn-primary"
                                 ngf-accept="'image/*'"
@@ -53,7 +90,7 @@
                 </div>
 
                 <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items">
-                    <img ng-src="{{ midia.url }}" alt="">
+                    <img ng-src="{{ midia.url }}" alt="" class="img-responsive">
                 </div>
 
             </div>
