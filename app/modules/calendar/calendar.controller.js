@@ -10,6 +10,7 @@
     '$uibModal',
     '$http',
     '$timeout',
+    'dataTableConfigService',
     'SerializeService',
     'NotificationService',
     'StatusService'
@@ -20,6 +21,7 @@
                               $modal,
                               $http,
                               $timeout,
+                              dataTableConfigService,
                               SerializeService,
                               NotificationService,
                               StatusService) {
@@ -37,6 +39,7 @@
     var loadCalendar = function () {
       CalendarService.getCalendar().then(function (data) {
         $scope.calendar = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
 
         angular.forEach(data.data.items, function (calendar_item) {
           $scope.period_filter.push(calendar_item.period);
