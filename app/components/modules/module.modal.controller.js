@@ -71,8 +71,8 @@
 
           _this.selection.save();
           moduleModal = $uibModal.open({
-            templateUrl: '/components/modal/upload-images.modal.template.html',
-            controller: 'UploadImageModalController',
+            templateUrl: '/components/modal/upload-component.template.html',
+            controller: 'UploadComponentController as vm',
             backdrop: 'static',
             size: 'lg'
           });

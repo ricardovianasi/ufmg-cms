@@ -54,6 +54,7 @@ var files = [
   'app/components/publishment/publishment.directive.js',
   'app/components/sidebar/sidebar.controller.js',
   'app/components/sidebar/sidebar.directive.js',
+  'app/components/modules/UploadComponentController.controller.js',
 
   // Modules
   'app/modules/calendar/calendar.controller.js',
