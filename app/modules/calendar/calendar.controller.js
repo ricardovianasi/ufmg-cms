@@ -23,7 +23,7 @@
                               SerializeService,
                               NotificationService,
                               StatusService) {
-    console.log('... CalendarioController');
+    console.log('... CalendarController');
 
     $scope.calendar = [];
     $scope.period_filter = [];
@@ -38,7 +38,7 @@
       CalendarService.getCalendar().then(function (data) {
         $scope.calendar = data.data;
 
-        angular.forEach(data.data, function (calendar_item) {
+        angular.forEach(data.data.items, function (calendar_item) {
           $scope.period_filter.push(calendar_item.period);
         });
 
