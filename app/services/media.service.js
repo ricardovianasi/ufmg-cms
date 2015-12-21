@@ -14,6 +14,7 @@
         console.log('... MediaService');
 
         var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'file');
+        var PAGE = 1;
         var PAGE_SIZE = 30;
 
         return {
@@ -33,15 +34,14 @@
           },
           /**
            * @param page
+           * @param page_size
            *
            * @returns {*}
            */
-          getMedia: function (page) {
-            page = page || 1;
-
+          getMedia: function (page, page_size) {
             var queryString = $filter('queryString')({
-              page: page,
-              page_size: PAGE_SIZE
+              page: page || PAGE,
+              page_size: page_size || PAGE_SIZE
             });
             var url = $filter('format')('{0}?{1}', MEDIA_ENDPOINT, queryString);
 
