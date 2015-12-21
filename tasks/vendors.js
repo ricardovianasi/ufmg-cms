@@ -27,6 +27,7 @@ var files = [
   'bower_components/angular-ui-mask/dist/mask.min.js',
   'bower_components/angular-datatables/dist/angular-datatables.min.js',
   'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
+  'bower_components/angular-animate/angular-animate.min.js'
 ];
 
 var styles = [
@@ -38,7 +39,9 @@ var styles = [
   'bower_components/ui-select/dist/select.min.css',
   'bower_components/cropper/dist/cropper.min.css',
   'bower_components/ng-cropper/dist/ngCropper.all.min.css',
+  'bower_components/animate.css/animate.min.css',
   'app/assets/scripts/redactor/redactor.css',
+
 
   // God Damn Xenon
   'app/assets/xenon/css/bootstrap.css',

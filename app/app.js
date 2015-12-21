@@ -7,6 +7,7 @@
       'angular-redactor',
       'as.sortable',
       'env',
+      'ngAnimate',
       'ngCropper',
       'ngFileUpload',
       'ngRoute',
