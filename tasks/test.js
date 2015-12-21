@@ -23,6 +23,7 @@ var files = [
   // Filters
   'app/filters/filter.module.js',
   'app/filters/format.filter.js',
+  'app/filters/queryString.filter.js',
   'app/filters/reverse.filter.js',
 
   // Services
