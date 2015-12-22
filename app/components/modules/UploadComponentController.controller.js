@@ -31,6 +31,7 @@
       if (vm.add_photos) {
         MediaService.newFile(vm.add_photos).then(function (data) {
           vm.currentFile = data;
+          _loadMidia();
         });
       }
     });
@@ -67,12 +68,8 @@
      *
      */
 
-    function _selectMidia(id, legend, url) {
-      vm.currentFile = {
-        url: url,
-        id: id,
-        legend: legend
-      };
+    function _selectMidia(data) {
+      vm.currentFile = data;
     }
 
     /**

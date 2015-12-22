@@ -95,7 +95,7 @@
 
                 <div class="col-md-2 imageGroup border-dashed text-center"
                      ng-repeat="midia in vm.midia.items|filter: vm.search"
-                     ng-click="vm.selectMidia(midia.id, midia.legend, midia.url)"
+                     ng-click="vm.selectMidia(midia)"
                      ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
 
                     <img alt="" class="img-responsive"
