@@ -29,7 +29,6 @@
                                            $location,
                                            $timeout) {
     console.log('... PeriodicalEditionEditController');
-
     $scope.edition = {};
     $scope.status = [];
 

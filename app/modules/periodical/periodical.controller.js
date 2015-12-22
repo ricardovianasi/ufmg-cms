@@ -9,10 +9,11 @@
     'PeriodicalService',
     'DateTimeHelper',
     '$uibModal',
-    'NotificationService'
+    'NotificationService',
+    'dataTableConfigService'
   ];
 
-  function PeriodicalController($scope, PeriodicalService, DateTimeHelper, $modal, NotificationService) {
+  function PeriodicalController($scope, PeriodicalService, DateTimeHelper, $modal, NotificationService, dataTableConfigService) {
 
     console.log('... PeriodicalController');
 
@@ -29,7 +30,7 @@
     var loadPeriodicals = function (page) {
       PeriodicalService.getPeriodicals(null, page).then(function (data) {
         $scope.periodicals = data.data;
-        console.log(data.data);
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 

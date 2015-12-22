@@ -10,7 +10,8 @@
     '$uibModal',
     'PeriodicalService',
     'NotificationService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    'dataTableConfigService'
   ];
 
   function PeriodicalEditionsController($scope,
@@ -18,7 +19,8 @@
                                         $uibModal,
                                         PeriodicalService,
                                         NotificationService,
-                                        DateTimeHelper) {
+                                        DateTimeHelper,
+                                        dataTableConfigService) {
     console.log('... PeriodicalEditionsController');
 
     $scope.periodical = {};
@@ -27,10 +29,14 @@
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
         $scope.editions = data.data;
 
+        console.log(data.data);
+
         if ($scope.editions.items.length) {
           $scope.periodical.id = $scope.editions.items[0].periodical.id;
           $scope.periodical.name = $scope.editions.items[0].periodical.name;
         }
+
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 

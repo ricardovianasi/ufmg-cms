@@ -16,7 +16,6 @@
   ];
 
   function PeriodicalEditController($scope, $routeParams, PeriodicalService, StatusService, NotificationService, MediaService, DateTimeHelper, $location) {
-
     console.log('... PeriodicalEditController');
 
     $scope.status = [];
