@@ -6,13 +6,19 @@
 
   PeriodicalController.$inject = [
     '$scope',
+    'dataTableConfigService',
     'PeriodicalService',
     'DateTimeHelper',
     '$uibModal',
     'NotificationService'
   ];
 
-  function PeriodicalController($scope, PeriodicalService, DateTimeHelper, $modal, NotificationService) {
+  function PeriodicalController($scope,
+                                dataTableConfigService,
+                                PeriodicalService,
+                                DateTimeHelper,
+                                $modal,
+                                NotificationService) {
 
     console.log('... PeriodicalController');
 
@@ -29,7 +35,7 @@
     var loadPeriodicals = function (page) {
       PeriodicalService.getPeriodicals(null, page).then(function (data) {
         $scope.periodicals = data.data;
-        console.log(data.data);
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 

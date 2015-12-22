@@ -7,12 +7,18 @@
   NewsController.$inject = [
     '$scope',
     '$uibModal',
+    'dataTableConfigService',
     'NewsService',
     'NotificationService',
     'DateTimeHelper'
   ];
 
-  function NewsController($scope, $modal, NewsService, NotificationService, DateTimeHelper) {
+  function NewsController($scope,
+                          $modal,
+                          dataTableConfigService,
+                          NewsService,
+                          NotificationService,
+                          DateTimeHelper) {
 
     console.log('... NoticiasController');
 
@@ -22,6 +28,7 @@
     var loadNews = function (page) {
       NewsService.getNews(null, page).then(function (data) {
         $scope.news = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 

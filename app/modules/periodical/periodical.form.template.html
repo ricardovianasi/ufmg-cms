@@ -1,1 +1,53 @@
-<header class="view-header clearfix"><div class=pull-left><h2><span ng-if=periodical.name>{{periodical.name}}</span><span ng-if=!periodical.name>Novo Periódico</span></h2><ol class=breadcrumb><li><a ng-href=#/periodicals>Periódicos Jornalistas</a></li><li ng-if=!periodical.name class=active>Novo Periódico</li><li ng-if=periodical.name class=active>{{periodical.name}}</li></ol></div></header><div class=row><div class=col-xs-12><div class=form-group><label>Nome:</label> <input type=text ng-model=periodical.name class=form-control></div><div class=form-group><label>Logo:<small>A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px</small></label><div class=pages-module><div class=chosen-cover><span ng-show=periodical.url ng-click=removeImage() class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span></div><div ng-show=!periodical.url ngf-accept="'image/*'" ngf-select ng-model=add_photos ngf-multiple=false class=add-module>+ Adicionar Logo</div><div ng-show=periodical.url class="uploaded-image periodical-logo"><img ng-src={{periodical.url}}></div></div></div><div class=form-group><label>Identificador (slogan):</label> <input type=text ng-model=periodical.identifier class=form-control></div></div></div><div class=row><div class=col-xs-4><div class=form-group><label>Data da Criação:</label> <input type=text ng-model=periodical.date class=form-control></div></div><div class=col-xs-4><div class=form-group><label>Formato de Data:</label><select ng-model=periodical.date_format ng-options="date_format.id as date_format.id for date_format in date_formats" class=form-control></select></div></div></div><div class=row><div class=col-xs-12><hr><div class=pull-right><button ng-click=publish(periodical) class="btn btn-success pull-left">Salvar</button></div></div></div>
+<header class="view-header clearfix">
+    <div class=pull-left>
+        <h2><span ng-if=periodical.name>{{periodical.name}}</span><span ng-if=!periodical.name>Novo Periódico</span></h2>
+        <ol class=breadcrumb>
+            <li><a ng-href=#/periodicals>Periódicos Jornalistas</a></li>
+            <li ng-if=!periodical.name class=active>Novo Periódico</li>
+            <li ng-if=periodical.name class=active>{{periodical.name}}</li>
+        </ol>
+    </div>
+</header>
+<div class=row>
+    <div class=col-xs-12>
+        <div class=form-group>
+            <label>Nome:</label>
+            <input type=text ng-model=periodical.name class=form-control>
+        </div>
+        <div class=form-group>
+            <label>Logo:<small>A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px</small></label>
+            <div class=pages-module>
+                <div class=chosen-cover><span ng-show=periodical.url ng-click=removeImage() class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span>
+                </div>
+                <div ng-show=!periodical.url ngf-accept="'image/*'" ngf-select ng-model=add_photos ngf-multiple=false class=add-module>+ Adicionar Logo</div>
+                <div ng-show=periodical.url class="uploaded-image periodical-logo"><img ng-src={{periodical.url}}></div>
+            </div>
+        </div>
+        <div class=form-group>
+            <label>Identificador (slogan):</label>
+            <input type=text ng-model=periodical.identifier class=form-control>
+        </div>
+    </div>
+</div>
+<div class=row>
+    <div class=col-xs-4>
+        <div class=form-group>
+            <label>Data da Criação:</label>
+            <input type=text ng-model=periodical.date class=form-control>
+        </div>
+    </div>
+    <div class=col-xs-4>
+        <div class=form-group>
+            <label>Formato de Data:</label>
+            <select ng-model=periodical.date_format ng-options="date_format.id as date_format.id for date_format in date_formats" class=form-control></select>
+        </div>
+    </div>
+</div>
+<div class=row>
+    <div class=col-xs-12>
+        <hr>
+        <div class=pull-right>
+            <button ng-click=publish(periodical) class="btn btn-success pull-left">Salvar</button>
+        </div>
+    </div>
+</div>

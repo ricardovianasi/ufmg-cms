@@ -9,11 +9,18 @@
     '$uibModal',
     '$filter',
     'ClippingsService',
+    'dataTableConfigService',
     'DateTimeHelper',
     'NotificationService'
   ];
 
-  function ClippingsController($scope, $modal, $filter, ClippingsService, DateTimeHelper, NotificationService) {
+  function ClippingsController($scope,
+                              $modal,
+                              $filter,
+                              ClippingsService,
+                              dataTableConfigService,
+                              DateTimeHelper,
+                              NotificationService) {
     console.log('... ClippingsController');
 
     $scope.title = 'Clippings';
@@ -24,6 +31,7 @@
     var loadClippings = function (page) {
       ClippingsService.getClippings(page).then(function (data) {
         $scope.clippings = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 
