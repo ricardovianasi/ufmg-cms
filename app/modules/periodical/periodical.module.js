@@ -1,6 +1,5 @@
 ;(function(){
   'use strict';
 
-  angular
-    .module('periodicalModule', []);
+  angular.module('periodicalModule', []);
 })();

@@ -1,8 +1,7 @@
 ;(function () {
   "use strict";
 
-  angular
-    .module("periodicalModule")
+  angular.module("periodicalModule")
     .controller("PeriodicalEditController", PeriodicalEditController);
 
   PeriodicalEditController.$inject = [

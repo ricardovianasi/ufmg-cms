@@ -1,8 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('periodicalModule')
+  angular.module('periodicalModule')
     .controller('PeriodicalEditionsController', PeriodicalEditionsController);
 
   PeriodicalEditionsController.$inject = [
@@ -22,12 +21,13 @@
                                         DateTimeHelper) {
     console.log('... PeriodicalEditionsController');
 
+    $scope.periodical = {};
+
     $scope.loadEditions = function () {
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
         $scope.editions = data.data;
 
         if ($scope.editions.items.length) {
-          $scope.periodical = {};
           $scope.periodical.id = $scope.editions.items[0].periodical.id;
           $scope.periodical.name = $scope.editions.items[0].periodical.name;
         }
