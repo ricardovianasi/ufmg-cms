@@ -60,7 +60,7 @@
                                         <label class="col-sm-2 control-label" for="field-1">Autor:</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ vm.currentFile.author }}">
+                                            <input type="text" class="form-control" id="field-1" placeholder="Autor:" ng-model="vm.currentFile.author.name" value="{{ vm.currentFile.author.name }}">
                                         </div>
                                     </div>
 
@@ -68,9 +68,7 @@
                                         <label class="col-sm-2 control-label" for="field-1">Legenda:</label>
 
                                         <div class="col-sm-10">
-                                            <textarea name="" id="" cols="30" rows="10" class="form-control">
-                                                {{ vm.currentFile.legend }}
-                                            </textarea>
+                                            <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="vm.currentFile.legend">{{ vm.currentFile.legend }}</textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -79,7 +77,7 @@
 
                         <div class="panel-footer text-right margin-top-footer">
                             <a href="" class="btn">Cancelar</a>
-                            <a href="" class="btn btn-secondary">Salvar</a>
+                            <a href="" class="btn btn-secondary" ng-click="vm.updateMidia()">Salvar</a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +95,7 @@
 
                 <div class="col-md-2 imageGroup border-dashed text-center"
                      ng-repeat="midia in vm.midia.items|filter: vm.search"
-                     ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)"
+                     ng-click="vm.selectMidia(midia.id, midia.legend, midia.url)"
                      ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
 
                     <img alt="" class="img-responsive"

@@ -18,16 +18,10 @@
       midia: false
     };
 
-    vm.currentFile = {
-      url: '',
-      id: '',
-      author: '',
-      legend: ''
-    };
-
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
+    vm.updateMidia = _updateMidia;
 
     /**
      *  watch for vm.add_photos model
@@ -36,12 +30,7 @@
     $scope.$watch('vm.add_photos', function () {
       if (vm.add_photos) {
         MediaService.newFile(vm.add_photos).then(function (data) {
-          vm.currentFile = {
-            url: data.url,
-            id: data.id,
-            author: data.author.name,
-            legend: data.legend
-          };
+          vm.currentFile = data;
         });
       }
     });
@@ -77,13 +66,30 @@
      *  _selectMidia Function
      *
      */
-    function _selectMidia(id, author, legend, url) {
+
+    function _selectMidia(id, legend, url) {
       vm.currentFile = {
         url: url,
         id: id,
-        author: author,
         legend: legend
       };
+    }
+
+    /**
+     * function _updateMidia
+     */
+    function _updateMidia(){
+
+      var obj = {
+        title: vm.currentFile.title,
+        description: vm.currentFile.description,
+        altText: vm.currentFile.alt_text,
+        legend: vm.currentFile.legend
+      };
+
+      MediaService.updateFile(vm.currentFile.id, obj).then(function(result){
+        console.log(result);
+      });
     }
   }
 })();
