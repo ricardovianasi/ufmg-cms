@@ -7,16 +7,14 @@
   UploadComponentController.$inject = [
     'dataTableConfigService',
     '$scope',
-    'MediaService'
+    'MediaService',
+    'tabsService'
   ];
 
-  function UploadComponentController(dataTableConfigService, $scope, MediaService) {
+  function UploadComponentController(dataTableConfigService, $scope, MediaService, tabsService) {
     var vm = this;
 
-    vm.tabs = {
-      home: false,
-      midia: false
-    };
+    vm.tabs = tabsService.getTabs();
 
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;

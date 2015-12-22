@@ -46,6 +46,7 @@ var files = [
   'app/services/upload.service.js',
   'app/services/widgets.service.js',
   'app/services/dataTableConfig.service.js',
+  'app/services/tabs.service.js',
 
   // Components
   'app/components/articles/article.modal.controller.js',
