@@ -6,11 +6,15 @@
 
   EventsController.$inject = [
     '$scope',
+    'dataTableConfigService',
     'EventsService',
     'DateTimeHelper'
   ];
 
-  function EventsController($scope, EventsService, DateTimeHelper) {
+  function EventsController($scope,
+                            dataTableConfigService,
+                            EventsService,
+                            DateTimeHelper) {
     console.log('... EventsController');
 
     $scope.title = 'Eventos';
@@ -20,6 +24,7 @@
     var loadEvents = function (page) {
       EventsService.getEvents(page).then(function (data) {
         $scope.events = data.data;
+        $scope.dtOptions = dataTableConfigService.init();
       });
     };
 

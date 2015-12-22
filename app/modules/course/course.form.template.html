@@ -1,1 +1,55 @@
-<header class="view-header clearfix"><div class=pull-left><h2>Cursos</h2><ol class=breadcrumb><li><a ng-href=#/course>Cursos</a></li><li ng-if=course.name class=active>{{course.name}}</li></ol></div></header><form class=form><div class=row><div class=col-xs-8><div class=row><div class=col-xs-12><div class=form-group><label>Nome</label> <input type=text ng-model=course.name ng-disabled=true class=form-control></div></div></div><div class=row><div class=col-xs-12><div class=form-group><label>Tags</label><ui-select multiple=multiple tagging=tagging tagging-tokens=, ng-model=course.tags theme=bootstrap ng-disabled=disabled title="Digite uma tag"><ui-select-match placeholder="Selecione as tags">{{$item}}</ui-select-match><ui-select-choices repeat="tag in course.tags | filter:$select.search">{{tags}}</ui-select-choices></ui-select></div></div></div><div class=row><div class=col-xs-12><div class="pages-module pages-module-cover"><div class=chosen-cover><span ng-show=course.cover_url ng-click=removeImage() class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span></div><div ng-show=!course.cover_url ngf-accept="'image/*'" ngf-select ng-model=course_cover ngf-multiple=false class=add-module>+ Adicionar Capa</div><div ng-show=course.cover_url class=uploaded-image><img ng-src={{course.cover_url}}></div></div></div></div><div class=row><div class=col-xs-12><div class=form-group><label>Descrição</label> <textarea ng-model=course.description redactor=redactorConfig cols=30 rows=10></textarea></div></div></div></div><div class=col-xs-4><publishment-options route-model=course></publishment-options></div></div></form>
+<header class="view-header clearfix">
+    <div class=pull-left>
+        <h2>Cursos</h2>
+        <ol class=breadcrumb>
+            <li><a ng-href=#/course>Cursos</a></li>
+            <li ng-if=course.name class=active>{{course.name}}</li>
+        </ol>
+    </div>
+</header>
+<form class=form>
+    <div class=row>
+        <div class=col-xs-8>
+            <div class=row>
+                <div class=col-xs-12>
+                    <div class=form-group>
+                        <label>Nome</label>
+                        <input type=text ng-model=course.name ng-disabled=true class=form-control>
+                    </div>
+                </div>
+            </div>
+            <div class=row>
+                <div class=col-xs-12>
+                    <div class=form-group>
+                        <label>Tags</label>
+                        <ui-select multiple=multiple tagging=tagging tagging-tokens=, ng-model=course.tags theme=bootstrap ng-disabled=disabled title="Digite uma tag">
+                            <ui-select-match placeholder="Selecione as tags">{{$item}}</ui-select-match>
+                            <ui-select-choices repeat="tag in course.tags | filter:$select.search">{{tags}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <div class=row>
+                <div class=col-xs-12>
+                    <div class="pages-module pages-module-cover">
+                        <div class=chosen-cover><span ng-show=course.cover_url ng-click=removeImage() class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span>
+                        </div>
+                        <div ng-show=!course.cover_url ngf-accept="'image/*'" ngf-select ng-model=course_cover ngf-multiple=false class=add-module>+ Adicionar Capa</div>
+                        <div ng-show=course.cover_url class=uploaded-image><img ng-src={{course.cover_url}}></div>
+                    </div>
+                </div>
+            </div>
+            <div class=row>
+                <div class=col-xs-12>
+                    <div class=form-group>
+                        <label>Descrição</label>
+                        <textarea ng-model=course.description redactor=redactorConfig cols=30 rows=10></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=col-xs-4>
+            <publishment-options route-model=course></publishment-options>
+        </div>
+    </div>
+</form>

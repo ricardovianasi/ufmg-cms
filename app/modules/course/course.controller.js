@@ -8,11 +8,17 @@
     '$scope',
     '$uibModal',
     'CourseService',
+    'dataTableConfigService',
     'NotificationService',
     'StatusService'
   ];
 
-  function CourseController($scope, $modal, CourseService, NotificationService, StatusService) {
+  function CourseController($scope,
+                            $modal,
+                            CourseService,
+                            dataTableConfigService,
+                            NotificationService,
+                            StatusService) {
     console.log('... CourseController');
 
     $scope.status = [];
@@ -24,6 +30,7 @@
 
     CourseService.getCourseRoutes().then(function (data) {
       $scope.courses = data.data;
+      $scope.dtOptions = dataTableConfigService.init();
     });
 
 
