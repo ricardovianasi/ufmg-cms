@@ -35,26 +35,6 @@
 
     var moduleModal;
 
-    $scope.addLink = function () {
-      if ($scope.widget.links) {
-        $scope.widget.links.push({
-          label: '',
-          page: '',
-          external_url: ''
-        });
-      } else {
-        $scope.widget.links = [];
-        $scope.widget.links.push({
-          label: '',
-          external_url: ''
-        });
-      }
-    };
-
-    $scope.removeLink = function (idx) {
-      $scope.widget.links.splice(idx, 1);
-    };
-
     jQuery.Redactor.prototype.imagencrop = function () {
       return {
         init: function () {
@@ -77,6 +57,7 @@
             size: 'lg'
           });
 
+          // Insert into textarea
           moduleModal.result.then(function (data) {
             var cropped = {
               vertical: function (data) {
