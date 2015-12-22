@@ -39,7 +39,8 @@
      * open tab media, and call _loadMidia function
      */
     function _openMidia() {
-      vm.tabs.midia = true;
+      tabsService.selectTab('midia');
+      vm.tabs = tabsService.getTabs();
       _loadMidia();
     }
 
@@ -83,7 +84,8 @@
       };
 
       MediaService.updateFile(vm.currentFile.id, obj).then(function(result){
-        console.log(result);
+        tabsService.selectTab('crop');
+        vm.tabs = tabsService.getTabs();
       });
     }
   }

@@ -8,29 +8,34 @@
     console.log('... TabsService');
 
     var tabs = {
-      home: false,
+      home: true,
       midia: false,
       crop: false
     };
 
     return {
-      getTabs: getTabs,
-      selectTab: selectTab
+      getTabs: _getTabs,
+      selectTab: _selectTab
     };
 
-    function getTabs(){
+    /**
+     * @return {tabs}
+     */
+    function _getTabs(){
       return tabs;
     }
 
-    function selectTab(nextTab) {
+    /**
+     * @param  {nextTab}
+     * @return {organized tabs}
+     */
+    function _selectTab(nextTab) {
       angular.forEach(tabs, function(value, key) {
           if(key == nextTab)
             tabs[key] = true;
           else
             tabs[key] = false;
       });
-
-      console.log(tabs);
     }
   }
 })();
