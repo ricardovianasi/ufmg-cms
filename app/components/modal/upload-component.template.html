@@ -11,12 +11,14 @@
                 <span class="hidden-xs">Biblioteca de Fotos</span>
             </a>
         </li>
+
         <li ng-class="{active: vm.tabs.midia}">
             <a href="#midia">
                 <span class="visible-xs"><i class="fa-user"></i></span>
                 <span class="hidden-xs">Selecione ou faça upload</span>
             </a>
         </li>
+
         <li>
             <a href="#messages-3">
                 <span class="visible-xs"><i class="fa-envelope-o"></i></span>
@@ -27,14 +29,14 @@
 
     <div class="tab-content">
         <div class="tab-pane text-center pictureLib" id="home" ng-class="{active: !vm.tabs.midia}">
-            <a ng-click="vm._openMidia()">
+            <a ng-click="vm.openMidia()">
                 <span class="fa fa-desktop fa-4x"></span>
                 <h3>Bibliotéca de Midia</h3>
                 <span>(fonte de armezanamento de gerenciador de conteudo)</span>
             </a>
         </div>
-        <div class="tab-pane midia" id="midia" ng-class="{active: vm.tabs.midia}">
 
+        <div class="tab-pane midia" id="midia" ng-class="{active: vm.tabs.midia}">
             <form action="" class="midia__form">
                 <div class="form-group">
                     <input type="text" placeholder="procure as fotos na biblioteca" ng-model="vm.search">
@@ -50,6 +52,7 @@
                                 <h4>Arquivo Enviado com sucesso!</h4>
                                 <img ng-src="{{ vm.currentFile.url }}" alt="" class="img-responsive">
                             </div>
+
                             <div class="col-md-6">
                                 <form action="" class="form-horizontal">
                                     <h4>Preencha as informaçoes abaixo:</h4>
@@ -60,8 +63,10 @@
                                             <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ vm.currentFile.author }}">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="field-1">Legenda:</label>
+
                                         <div class="col-sm-10">
                                             <textarea name="" id="" cols="30" rows="10" class="form-control">
                                                 {{ vm.currentFile.legend }}
@@ -71,6 +76,7 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="panel-footer text-right margin-top-footer">
                             <a href="" class="btn">Cancelar</a>
                             <a href="" class="btn btn-secondary">Salvar</a>
@@ -82,36 +88,42 @@
             <div class="row">
                 <div class="col-md-2 imageGroup  text-center">
                     <a href="#" class="btn  btn-xs btn-primary"
-                                ngf-accept="'image/*'"
-                                ngf-select ng-model="vm.add_photos"
-                                ngf-multiple="false">
-                                    Enviar Arquivo
+                       ngf-accept="'image/*'"
+                       ngf-select ng-model="vm.add_photos"
+                       ngf-multiple="false">
+                        Enviar Arquivo
                     </a>
                 </div>
 
                 <div class="col-md-2 imageGroup border-dashed text-center"
-                    ng-repeat="midia in vm.midia.items | filter: vm.search"
-                    ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)"
-                    ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
+                     ng-repeat="midia in vm.midia.items|filter: vm.search"
+                     ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)"
+                     ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
 
-                    <img ng-src="{{ midia.url }}" alt="" class="img-responsive" ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                    <img alt="" class="img-responsive"
+                         ng-src="{{ midia.url }}"
+                         ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                 </div>
-
             </div>
+
             <div ng-show="vm.midia.total > 30" class="row">
                 <div class="col-xs-12 text-right">
-                    <uib-pagination boundary-links="true" total-items="vm.midia.total" items-per-page="vm.midia.page_size" ng-model="vm.currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="vm._changePage()" class="pagination-sm"></uib-pagination>
+                    <uib-pagination boundary-links="true"
+                                    total-items="vm.midia.total"
+                                    items-per-page="vm.midia.page_size"
+                                    ng-model="vm.currentPage"
+                                    previous-text="‹"
+                                    next-text="›"
+                                    first-text="«"
+                                    last-text="»"
+                                    ng-change="vm.changePage()"
+                                    class="pagination-sm"></uib-pagination>
                 </div>
             </div>
-
-        </div>
-        <div class="tab-pane" id="messages-3">
-
         </div>
 
-
+        <div class="tab-pane" id="messages-3"></div>
     </div>
-
 </div>
 
 <div class="modal-footer">
