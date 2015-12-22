@@ -1,1 +1,48 @@
-<header class="view-header clearfix"><div class=pull-left><h2>{{ periodical.name }}</h2><ol class=breadcrumb><li class=active><a href=#/periodicals>Periódicos Jornalísticos</a></li><li class=active>{{ periodical.name }}</li></ol></div><div class=pull-right><a ng-href="#/periodicals/{{ periodical.id }}/edition/new" class="btn btn-primary btn-lg pull-left">NOVA EDIÇÃO</a></div></header><div class="row list-header"><div class=col-xs-12><div class=pull-right><form class=form-inline><div class=form-group><input type=text ng-model=search placeholder=Pesquisar class=form-control></div></form></div></div></div><div class=row><div class=col-xs-12><table cellspacing=0 width=100% role=grid class="table table-bordered"><thead><tr role=row><th style="width: 60%">Título</th><th style="width: 20%" class=tac>Autor</th><th style="width: 20%;" class=tac>Data de Publicação</th></tr></thead><tbody><tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus }" class=odd><td><div class=clearfix><div class="listing-actions pull-left"><a ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a></div><div class=pull-left><strong>{{ item.number }}</strong> {{ item.theme }}</div></div></td><td>{{ item.author.name }}</td><td><strong>{{ convertDate(item.published_at) }}</strong><br><small>{{ item.status }}</small></td></tr></tbody></table></div></div>
+<header class="view-header clearfix">
+    <div class=pull-left><h2>{{ periodical.name }}</h2>
+        <ol class=breadcrumb>
+            <li class=active><a href=#/periodicals>Periódicos Jornalísticos</a></li>
+            <li class=active>{{ periodical.name }}</li>
+        </ol>
+    </div>
+    <div class=pull-right><a ng-href="#/periodicals/{{ periodical.id }}/edition/new"
+                             class="btn btn-primary btn-lg pull-left">NOVA EDIÇÃO</a></div>
+</header>
+<div class="row list-header">
+    <div class=col-xs-12>
+        <div class=pull-right>
+            <form class=form-inline>
+                <div class=form-group><input type=text ng-model=search placeholder=Pesquisar class=form-control></div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class=row>
+    <div class=col-xs-12>
+        <table cellspacing=0 width=100% role=grid class="table table-bordered">
+            <thead>
+            <tr role=row>
+                <th style="width: 60%">Título</th>
+                <th style="width: 20%" class=tac>Autor</th>
+                <th style="width: 20%;" class=tac>Data de Publicação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus }" class=odd>
+                <td>
+                    <div class=clearfix>
+                        <div class="listing-actions pull-left"><a
+                            ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}"
+                            class="btn btn-warning"><i class="fa fa-pencil"></i></a></div>
+                        <div class=pull-left><strong>{{ item.number }}</strong> {{ item.theme }}</div>
+                    </div>
+                </td>
+                <td>{{ item.author.name }}</td>
+                <td><strong>{{ convertDate(item.published_at) }}</strong><br>
+                    <small>{{ item.status }}</small>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

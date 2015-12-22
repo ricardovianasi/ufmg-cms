@@ -28,6 +28,7 @@
     </ul>
 
     <div class="tab-content">
+        <!-- Biblioteca de Midia -->
         <div class="tab-pane text-center pictureLib" id="home" ng-class="{active: vm.tabs.home}">
             <a ng-click="vm.openMidia()">
                 <span class="fa fa-desktop fa-4x"></span>
@@ -36,6 +37,7 @@
             </a>
         </div>
 
+        <!-- Lista de Imagens -->
         <div class="tab-pane midia" id="midia" ng-class="{active: vm.tabs.midia}">
             <form action="" class="midia__form">
                 <div class="form-group">
@@ -120,6 +122,7 @@
             </div>
         </div>
 
+        <!-- Crop -->
         <div class="tab-pane" id="crop" ng-class="{active: vm.tabs.crop}">
             aqui vai ser feito o crop da imagem
         </div>

@@ -6,25 +6,25 @@
 
   PeriodicalEditionNewController.$inject = [
     '$scope',
-    '$modal',
+    '$uibModal',
     '$routeParams',
+    '$location',
+    '$timeout',
     'PeriodicalService',
     'StatusService',
     'NotificationService',
-    'MediaService',
-    '$location',
-    '$timeout'
+    'MediaService'
   ];
 
   function PeriodicalEditionNewController($scope,
-                                          $modal,
+                                          $uibModal,
                                           $routeParams,
+                                          $location,
+                                          $timeout,
                                           PeriodicalService,
                                           StatusService,
                                           NotificationService,
-                                          MediaService,
-                                          $location,
-                                          $timeout) {
+                                          MediaService) {
     console.log('... PeriodicalEditionNewController');
 
     $scope.edition = {};
@@ -79,11 +79,11 @@
       });
     };
 
-    var ArticleModalCtrl = ArticleModalController;
+    var ArticleModalCtrl = 'ArticleModalController';
 
     $scope.addArticle = function () {
-      var articleModal = $modal.open({
-        templateUrl: '/views/article.modal.template.html',
+      var articleModal = $uibModal.open({
+        templateUrl: '/components/modal/article.modal.template.html',
         controller: ArticleModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -102,8 +102,8 @@
     var editArticleModal;
 
     $scope.editArticle = function (idx, article) {
-      editArticleModal = $modal.open({
-        templateUrl: '/views/article.modal.template.html',
+      editArticleModal = $uibModal.open({
+        templateUrl: '/components/modal/article.modal.template.html',
         controller: ArticleModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -136,7 +136,7 @@
 
     // var removeConfirmationModal;
     // $scope.confirmationModal = function (size, title) {
-    //     removeConfirmationModal = $modal.open({
+    //     removeConfirmationModal = $uibModal.open({
     //         templateUrl: '/views/confirmation.modal.template.html',
     //         controller: ConfirmationModalCtrl,
     //         backdrop: 'static',
