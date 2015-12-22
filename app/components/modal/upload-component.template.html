@@ -37,7 +37,7 @@
 
             <form action="" class="midia__form">
                 <div class="form-group">
-                    <input type="text" placeholder="procure as fotos na biblioteca">
+                    <input type="text" placeholder="procure as fotos na biblioteca" ng-model="vm.search">
                     <span class="fa fa-search fa-4x"></span>
                 </div>
             </form>
@@ -89,7 +89,11 @@
                     </a>
                 </div>
 
-                <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items" ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                <div class="col-md-2 imageGroup border-dashed text-center"
+                    ng-repeat="midia in vm.midia.items | filter: vm.search"
+                    ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)"
+                    ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
+
                     <img ng-src="{{ midia.url }}" alt="" class="img-responsive" ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                 </div>
 

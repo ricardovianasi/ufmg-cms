@@ -36,7 +36,6 @@
       $scope.$watch('vm.add_photos', function () {
         if (vm.add_photos) {
           MediaService.newFile(vm.add_photos).then(function (data) {
-            console.log(data);
             vm.currentFile = {
               url: data.url,
               id: data.id,
