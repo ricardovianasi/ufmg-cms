@@ -1,68 +1,92 @@
-(function(){
+(function () {
   'use strict';
 
-  angular
-    .module('componentsModule')
+  angular.module('componentsModule')
     .controller('UploadComponentController', UploadComponentController);
 
-    UploadComponentController.$inject = ['dataTableConfigService',
-                                         '$scope',
-                                         'MediaService'];
+  UploadComponentController.$inject = [
+    'dataTableConfigService',
+    '$scope',
+    'MediaService',
+    'tabsService'
+  ];
 
-    function UploadComponentController(dataTableConfigService, $scope, MediaService){
-      var vm = this;
+  function UploadComponentController(dataTableConfigService, $scope, MediaService, tabsService) {
+    var vm = this;
 
-      vm.tabs = {
-        home: false,
-        midia: false
-      };
+    vm.tabs = tabsService.getTabs();
 
-      vm.currentFile = {};
+    vm.openMidia = _openMidia;
+    vm.changePage = _changePage;
+    vm.selectMidia = _selectMidia;
+    vm.updateMidia = _updateMidia;
 
-      vm._openMidia = _openMidia;
-      vm.changePage = _changePage;
-
-
-      /**
-      *  watch for vm.add_photos model
-      *
-      */
-      $scope.$watch('vm.add_photos', function () {
-        if (vm.add_photos) {
-          MediaService.newFile(vm.add_photos).then(function (data) {
-            vm.currentFile.url = data.url;
-            vm.currentFile.id = data.id;
-          });
-        }
-      });
-
-
-      /**
-      *  _openMidia Function
-      * open tab media, and call _loadMidia function
-      */
-      function _openMidia(){
-        vm.tabs.midia = true;
-        _loadMidia();
-      }
-
-      /**
-      *  _loadMidia Function
-      * get all media
-      */
-      function _loadMidia(page){
-        MediaService.getMedia(page, 27).then(function(result){
-          vm.midia = result.data;
-          console.log(vm.midia);
+    /**
+     *  watch for vm.add_photos model
+     *
+     */
+    $scope.$watch('vm.add_photos', function () {
+      if (vm.add_photos) {
+        MediaService.newFile(vm.add_photos).then(function (data) {
+          vm.currentFile = data;
+          _loadMidia();
         });
       }
+    });
 
-      /**
-      *  _changePage Function
-      *
-      */
-      function _changePage(){
-        _loadMidia(vm.currentPage);
-      }
+    /**
+     *  _openMidia Function
+     * open tab media, and call _loadMidia function
+     */
+    function _openMidia() {
+      tabsService.selectTab('midia');
+      vm.tabs = tabsService.getTabs();
+      _loadMidia();
     }
+
+    /**
+     *  _loadMidia Function
+     * get all media
+     */
+    function _loadMidia(page) {
+      MediaService.getMedia(page, 27).then(function (result) {
+        vm.midia = result.data;
+      });
+    }
+
+    /**
+     *  _changePage Function
+     *
+     */
+    function _changePage() {
+      _loadMidia(vm.currentPage);
+    }
+
+    /**
+     *  _selectMidia Function
+     *
+     */
+
+    function _selectMidia(data) {
+      vm.currentFile = data;
+    }
+
+    /**
+     * function _updateMidia
+     */
+    function _updateMidia(){
+
+      var obj = {
+        title: vm.currentFile.title,
+        description: vm.currentFile.description,
+        altText: vm.currentFile.alt_text,
+        legend: vm.currentFile.legend
+      };
+
+      MediaService.updateFile(vm.currentFile.id, obj).then(function(result){
+        tabsService.selectTab('crop');
+        vm.tabs = tabsService.getTabs();
+      });
+    }
+  }
 })();
