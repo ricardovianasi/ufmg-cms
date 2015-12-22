@@ -25,7 +25,8 @@
       };
 
       vm._openMidia = _openMidia;
-      vm.changePage = _changePage;
+      vm._changePage = _changePage;
+      vm._selectMidia = _selectMidia;
 
 
       /**
@@ -36,10 +37,12 @@
         if (vm.add_photos) {
           MediaService.newFile(vm.add_photos).then(function (data) {
             console.log(data);
-            vm.currentFile.url = data.url;
-            vm.currentFile.id = data.id;
-            vm.currentFile.author = data.author.name;
-            vm.currentFile.legend = data.legend;
+            vm.currentFile = {
+              url: data.url,
+              id: data.id,
+              author: data.author.name,
+              legend: data.legend
+            };
           });
         }
       });
@@ -49,6 +52,7 @@
       *  _openMidia Function
       * open tab media, and call _loadMidia function
       */
+
       function _openMidia(){
         vm.tabs.midia = true;
         _loadMidia();
@@ -58,6 +62,7 @@
       *  _loadMidia Function
       * get all media
       */
+
       function _loadMidia(page){
         MediaService.getMedia(page, 27).then(function(result){
           vm.midia = result.data;
@@ -69,8 +74,23 @@
       *  _changePage Function
       *
       */
+
       function _changePage(){
         _loadMidia(vm.currentPage);
+      }
+
+      /**
+      *  _selectMidia Function
+      *
+      */
+
+      function _selectMidia(id, author, legend, url){
+        vm.currentFile = {
+          url: url,
+          id: id,
+          author: author,
+          legend: legend
+        };
       }
     }
 })();

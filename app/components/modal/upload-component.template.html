@@ -89,14 +89,14 @@
                     </a>
                 </div>
 
-                <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items">
-                    <img ng-src="{{ midia.url }}" alt="" class="img-responsive">
+                <div class="col-md-2 imageGroup border-dashed text-center" ng-repeat="midia in vm.midia.items" ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                    <img ng-src="{{ midia.url }}" alt="" class="img-responsive" ng-click="vm._selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                 </div>
 
             </div>
             <div ng-show="vm.midia.total > 30" class="row">
                 <div class="col-xs-12 text-right">
-                    <uib-pagination boundary-links="true" total-items="vm.midia.total" items-per-page="vm.midia.page_size" ng-model="vm.currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="vm.changePage()" class="pagination-sm"></uib-pagination>
+                    <uib-pagination boundary-links="true" total-items="vm.midia.total" items-per-page="vm.midia.page_size" ng-model="vm.currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="vm._changePage()" class="pagination-sm"></uib-pagination>
                 </div>
             </div>
 
