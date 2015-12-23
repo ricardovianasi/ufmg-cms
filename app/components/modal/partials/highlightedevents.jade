@@ -1,7 +1,0 @@
-.form-group
-  label Selecione o evento:
-
-  ul.selection-list
-    li(ng-repeat='item in events.items | limitTo: 30',
-      ng-click='item.selected = !item.selected',
-      ng-class='{ active: item.selected }') {{ item.name }}
