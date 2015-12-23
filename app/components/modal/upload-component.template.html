@@ -13,14 +13,14 @@
         </li>
 
         <li ng-class="{active: vm.tabs.midia}">
-            <a href="#midia">
+            <a href="javascript:void(0)">
                 <span class="visible-xs"><i class="fa-user"></i></span>
                 <span class="hidden-xs">Selecione ou faça upload</span>
             </a>
         </li>
 
         <li ng-class="{active: vm.tabs.crop}">
-            <a href="#crop">
+            <a href="javascript:void(0)">
                 <span class="visible-xs"><i class="fa-envelope-o"></i></span>
                 <span class="hidden-xs">Edição de imagem</span>
             </a>
@@ -124,7 +124,39 @@
 
         <!-- Crop -->
         <div class="tab-pane" id="crop" ng-class="{active: vm.tabs.crop}">
-            aqui vai ser feito o crop da imagem
+            <div class="row" ng-if="vm.currentFile.url">
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-border">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img ng-src="{{ vm.currentFile.url }}" alt="" class="img-responsive">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    oi
+                                </div>
+                                <div class="col-md-3">
+                                    oi
+                                </div>
+                                <div class="col-md-3">
+                                    oi
+                                </div>
+                                <div class="col-md-3">
+                                    oi
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer text-right margin-top-footer">
+                            <a href="" class="btn">Cancelar</a>
+                            <a href="" class="btn btn-secondary" ng-click="vm.updateMidia()">Salvar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

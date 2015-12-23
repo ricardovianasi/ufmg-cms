@@ -6,6 +6,7 @@
 
   PeriodicalController.$inject = [
     '$scope',
+    'dataTableConfigService',
     'PeriodicalService',
     'DateTimeHelper',
     '$uibModal',
@@ -13,7 +14,12 @@
     'dataTableConfigService'
   ];
 
-  function PeriodicalController($scope, PeriodicalService, DateTimeHelper, $modal, NotificationService, dataTableConfigService) {
+  function PeriodicalController($scope,
+                                dataTableConfigService,
+                                PeriodicalService,
+                                DateTimeHelper,
+                                $modal,
+                                NotificationService) {
 
     console.log('... PeriodicalController');
 
