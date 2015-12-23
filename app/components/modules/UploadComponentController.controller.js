@@ -5,13 +5,14 @@
     .controller('UploadComponentController', UploadComponentController);
 
   UploadComponentController.$inject = [
-    'dataTableConfigService',
     '$scope',
+    '$uibModalInstance',
+    'dataTableConfigService',
     'MediaService',
     'tabsService'
   ];
 
-  function UploadComponentController(dataTableConfigService, $scope, MediaService, tabsService) {
+  function UploadComponentController($scope, $uibModalInstance, dataTableConfigService, MediaService, tabsService) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -20,6 +21,7 @@
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
+    vm.cancel = _cancel;
 
     /**
      *  watch for vm.add_photos model
@@ -74,7 +76,7 @@
     /**
      * function _updateMidia
      */
-    function _updateMidia(){
+    function _updateMidia() {
 
       var obj = {
         title: vm.currentFile.title,
@@ -83,9 +85,19 @@
         legend: vm.currentFile.legend
       };
 
-      MediaService.updateFile(vm.currentFile.id, obj).then(function(result){
+      MediaService.updateFile(vm.currentFile.id, obj).then(function (result) {
         tabsService.selectTab('crop');
         vm.tabs = tabsService.getTabs();
+      });
+    }
+
+    /**
+     *
+     * @private
+     */
+    function _cancel() {
+      $uibModalInstance.dismiss('cancel', function () {
+        tabsService.selectTab('home');
       });
     }
   }
