@@ -67,7 +67,8 @@
                                         <label class="col-sm-2 control-label" for="field-1">Autor:</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ vm.currentFile.author.name }}"
+                                            <input type="text" class="form-control" id="field-1" placeholder="Autor:"
+                                                   value="{{ vm.currentFile.author.name }}"
                                                    ng-model="vm.currentFile.author.name">
                                         </div>
                                     </div>
@@ -85,9 +86,10 @@
                         </div>
 
                         <div class="panel-footer text-right margin-top-footer">
-                            <a href="#" class="btn">Cancelar</a>
-                            <a href="#" class="btn btn-secondary"
-                               ng-click="vm.updateMidia()">Salvar</a>
+                            <button type="button" class="btn">Cancelar</button>
+                            <button type="button" class="btn btn-secondary"
+                                    ng-click="vm.updateMidia()">Salvar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -161,8 +163,9 @@
                         </div>
 
                         <div class="panel-footer text-right margin-top-footer">
-                            <a href="" class="btn">Cancelar</a>
-                            <a href="" class="btn btn-secondary" ng-click="vm.updateMidia()">Salvar</a>
+                            <button type="button" class="btn">Cancelar</button>
+                            <button type="button" class="btn btn-secondary"
+                                    ng-click="vm.updateMidia()">Salvar</button>
                         </div>
                     </div>
                 </div>

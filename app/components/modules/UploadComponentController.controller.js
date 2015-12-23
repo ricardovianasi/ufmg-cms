@@ -17,11 +17,45 @@
 
     vm.tabs = tabsService.getTabs();
 
+    tabsService.selectTab('home');
+
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
     vm.cancel = _cancel;
+
+    var formats = {
+      vertical: {
+        name: 'Vertical',
+        width: 352,
+        height: 540,
+        cropWidth: 276,
+        cropHeight: 424
+      },
+      medium: {
+        name: 'Médio',
+        width: 712,
+        height: 474,
+        cropWidth: 568,
+        cropHeight: 378
+      },
+      big: {
+        name: 'Grande',
+        width: 1192,
+        height: 744,
+        cropWidth: 568,
+        cropHeight: 355
+      },
+      wide: {
+        name: 'Widescreen',
+        type: 'wide',
+        width: 1920,
+        height: 504,
+        cropWidth: 568,
+        cropHeight: 149
+      }
+    };
 
     /**
      *  watch for vm.add_photos model
@@ -42,7 +76,9 @@
      */
     function _openMidia() {
       tabsService.selectTab('midia');
+
       vm.tabs = tabsService.getTabs();
+
       _loadMidia();
     }
 
@@ -77,7 +113,6 @@
      * function _updateMidia
      */
     function _updateMidia() {
-
       var obj = {
         title: vm.currentFile.title,
         description: vm.currentFile.description,
@@ -85,8 +120,9 @@
         legend: vm.currentFile.legend
       };
 
-      MediaService.updateFile(vm.currentFile.id, obj).then(function (result) {
+      MediaService.updateFile(vm.currentFile.id, obj).then(function () {
         tabsService.selectTab('crop');
+
         vm.tabs = tabsService.getTabs();
       });
     }
@@ -96,9 +132,7 @@
      * @private
      */
     function _cancel() {
-      $uibModalInstance.dismiss('cancel', function () {
-        tabsService.selectTab('home');
-      });
+      $uibModalInstance.dismiss('cancel');
     }
   }
 })();
