@@ -1,1 +1,18 @@
-<div class=sidebar-menu-inner><ul id=main-menu class=main-menu><li ng-repeat="navItem in navigation" ng-click="navItem.submenuState ? (navItem.submenuState = !navItem.submenuState) : (navItem.submenuState = true)"><a ng-href="#/{{ navItem.location }}"><i class=linecons-cog></i> <span class=title>{{ navItem.name }}</span></a><ul ng-if=navItem.submenu ng-show=navItem.submenuState><li ng-repeat="subnavItem in navItem.submenu"><a ng-href="#/{{ subnavItem.location }}"><span class=title>{{ subnavItem.name }}</span></a></li></ul></li></ul></div>
+<div class="sidebar-menu-inner">
+    <ul id="main-menu" class="main-menu">
+        <li ng-repeat="navItem in navigation" ng-click="navItem.submenuState ? (navItem.submenuState = !navItem.submenuState) : (navItem.submenuState = true)">
+            <a ng-href="#/{{ navItem.location }}">
+                <i class=linecons-cog></i>
+                <span class=title>{{ navItem.name }}</span>
+            </a>
+
+            <ul ng-if="navItem.submenu" ng-show="navItem.submenuState">
+                <li ng-repeat="subnavItem in navItem.submenu">
+                    <a ng-href="#/{{ subnavItem.location }}">
+                        <span class=title>{{ subnavItem.name }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
