@@ -54,7 +54,7 @@
             templateUrl: '/components/modal/upload-component.template.html',
             controller: 'UploadComponentController as vm',
             backdrop: 'static',
-            size: 'lg'
+            size: 'xl'
           });
 
           // Insert into textarea

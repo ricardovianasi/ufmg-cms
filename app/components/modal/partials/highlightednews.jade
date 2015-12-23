@@ -1,6 +1,0 @@
-.form-group
-  label Selecione as not&iacute;cias:
-  ul.selection-list
-    li(ng-repeat='item in news.items | limitTo: 30',
-      ng-click='item.selected = !item.selected',
-      ng-class='{ active: item.selected }') {{ item.title }}
