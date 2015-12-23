@@ -16,29 +16,34 @@
                 </a>
             </li>
         </ol>
-    </div>
+
+    </div><!--breadcrumb-env-->
 </div>
-<div class=row>
-    <div class=col-xs-12>
+
+<div class="row">
+    <div class="col-xs-12">
         <div class="panel panel-default">
+
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a ng-click="itemStatus = ''" class="btn" ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
+                    <a ng-click="itemStatus = ''"  class="btn" ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
                         <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
-                         <span class=small>({{ periodicals.total }})</span>
+                        <span class=small>({{ periodicals.total }})</span>
                     </a>
-                     <a ng-click="itemStatus = 'publish'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'publish'}">
+
+                    <a ng-click="itemStatus = 'publish'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'publish'}">
                         <span ng-class="{ 'strong': itemStatus == 'published'}">Publicados</span>
                         <span class=small>({{ (periodicals.items | filter: {status: 'published'}).length }})</span>
-                     </a>
+                    </a>
+
                     <a ng-click="itemStatus = 'draft'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'draft'}">
                         <span ng-class="{ 'strong': itemStatus == 'draft'}">Rascunho</span>
-                        <span class=small>({{ (periodicals  .items | filter: {status: 'draft'}).length }})</span>
+                        <span class=small>({{ (periodicals.items | filter: {status: 'draft'}).length }})</span>
                     </a>
                 </div>
 
 
-                <div class=pull-right>
+                <div class="pull-right">
                     <a ng-href="#/periodicals/new" class="btn btn-secondary btn-lg pull-left">NOVO PERIÓDICO</a>
                 </div>
             </div>
@@ -77,6 +82,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div><!--panel-->
     </div><!--col-xs-12-->
 </div><!--row-->

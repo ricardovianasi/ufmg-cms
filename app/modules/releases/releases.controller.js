@@ -8,12 +8,19 @@
       '$scope',
       '$uibModal',
       '$filter',
+      'dataTableConfigService',
       'NotificationService',
       'ReleasesService',
       'DateTimeHelper'
     ];
 
-    function ReleasesController($scope, $modal, $filter, NotificationService, ReleasesService, DateTimeHelper) {
+    function ReleasesController($scope,
+                                $modal,
+                                $filter,
+                                dataTableConfigService,
+                                NotificationService,
+                                ReleasesService,
+                                DateTimeHelper) {
         console.log('... ReleasesController');
 
         $scope.title = 'Releases';
@@ -24,6 +31,7 @@
         var loadReleases = function (page) {
           ReleasesService.getReleases(page).then(function (data) {
             $scope.releases = data.data;
+             $scope.dtOptions = dataTableConfigService.init();
           });
         };
 

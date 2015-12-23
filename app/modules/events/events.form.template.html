@@ -14,7 +14,7 @@
             <div class=col-xs-8>
                 <div class=form-group>
                     <label for=category>Categoria / Tipo do Evento</label>
-                    <select id=category name=category ng-model=event.type ng-options="category.id as category.name for category in categories" class=form-control></select>
+                    <select id=category name=category ng-model=event.type ng-options="category.id as category.name for category in categories.items" class=form-control></select>
                 </div>
                 <div class=form-group>
                     <label for=name>Nome do Evento</label>
@@ -52,7 +52,7 @@
                 <div class=form-group>
                     <label>Cursos de Interesse</label>
                     <ul class="clearfix events-courses-list">
-                        <li ng-repeat="course in courses">
+                        <li ng-repeat="course in courses.items">
                             <div class=checkbox>
                                 <label for="course-{{ course.id }}">
                                     <input type=checkbox value="{{ course.id }}" name=courses[] id="course-{{ course.id }}" ng-checked="event.courses.indexOf(course.id) &gt; -1" ng-click=toggleSelection(course.id)> {{ course.name }}</label>
