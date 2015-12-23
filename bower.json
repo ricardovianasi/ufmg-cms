@@ -41,6 +41,7 @@
     "JsImageCrop": "js-ng-img-crop#*",
     "lodash": "~3.10.1",
     "moment": "~2.10.6",
+    "mr-image": "~0.0.2",
     "ng-cropper": "~0.4.1",
     "ng-file-upload-shim": "~10.1.7",
     "ng-img-crop": "~0.3.2",
