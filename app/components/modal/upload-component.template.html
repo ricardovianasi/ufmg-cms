@@ -137,37 +137,38 @@
         <!-- Crop -->
         <div class="tab-pane" id="crop" ng-class="{active: vm.tabs.crop}">
             <div class="row">
-                <div class="col-md-3">
-                    oi
-                </div>
-                <div class="col-md-3">
-                    oi
-                </div>
-                <div class="col-md-3">
-                    oi
-                </div>
-                <div class="col-md-3">
-                    oi
+                <div class="col-md-3"
+                     ng-repeat="(key, format) in vm.formats">
+                    <a href="javascript:void(0);" class="btn btn-primary btn-sm"
+                       ng-class="{'btn-secondary': vm.activeFormat == key}"
+                       ng-click="vm.setFormat(key)">{{ format.name }} ({{ format.width }}x{{ format.height }})</a>
                 </div>
             </div>
+
             <div class="row" ng-if="vm.currentFile.url">
                 <div class="col-md-12">
-                    <div class="panel panel-default panel-border">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <img ng-src="{{ vm.currentFile.url }}" alt="" class="img-responsive">
-                                </div>
-                            </div>
+                    <div mr-image
+                         mr-src="vm.currentFile.url"
+                         mr-max-width="960"
+                         mr-selector="vm.selector"
+                         mr-aspect-ratio="vm.aspectRatio"></div>
 
-                        </div>
+                    <!--<div class="panel panel-default panel-border">-->
+                        <!--<div class="panel-body">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-12">-->
+                                    <!--<img ng-src="{{ vm.currentFile.url }}" alt="" class="img-responsive">-->
+                                <!--</div>-->
+                            <!--</div>-->
 
-                        <div class="panel-footer text-right margin-top-footer">
-                            <button type="button" class="btn">Cancelar</button>
-                            <button type="button" class="btn btn-secondary"
-                                    ng-click="vm.updateMidia()">Salvar</button>
-                        </div>
-                    </div>
+                        <!--</div>-->
+
+                        <!--<div class="panel-footer text-right margin-top-footer">-->
+                            <!--<button type="button" class="btn">Cancelar</button>-->
+                            <!--<button type="button" class="btn btn-secondary"-->
+                                    <!--ng-click="vm.updateMidia()">Salvar</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
         </div>

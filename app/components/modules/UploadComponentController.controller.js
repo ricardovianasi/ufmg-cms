@@ -19,43 +19,63 @@
 
     tabsService.selectTab('home');
 
+    vm.selector = {
+      //x1: 0,
+      //x2: 0,
+      //y1: 0,
+      //y2: 0
+    };
+    vm.formats = {
+      vertical: {
+        name: 'Vertical',
+        width: 352,
+        height: 540
+      },
+      medium: {
+        name: 'Médio',
+        width: 712,
+        height: 474
+      },
+      big: {
+        name: 'Grande',
+        width: 1192,
+        height: 744
+      },
+      wide: {
+        name: 'Widescreen',
+        width: 1920,
+        height: 504
+      }
+    };
+
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
     vm.cancel = _cancel;
+    vm.setFormat = _setFormat;
+    vm.activeFormat = '';
 
-    var formats = {
-      vertical: {
-        name: 'Vertical',
-        width: 352,
-        height: 540,
-        cropWidth: 276,
-        cropHeight: 424
-      },
-      medium: {
-        name: 'Médio',
-        width: 712,
-        height: 474,
-        cropWidth: 568,
-        cropHeight: 378
-      },
-      big: {
-        name: 'Grande',
-        width: 1192,
-        height: 744,
-        cropWidth: 568,
-        cropHeight: 355
-      },
-      wide: {
-        name: 'Widescreen',
-        type: 'wide',
-        width: 1920,
-        height: 504,
-        cropWidth: 568,
-        cropHeight: 149
-      }
-    };
+    // Set default format
+    _setFormat('medium');
+
+    /**
+     * @param format
+     *
+     * @private
+     */
+    function _setFormat(format) {
+      var obj = vm.formats[format];
+
+      vm.selector = angular.extend(vm.selector, {
+        x1: 0,
+        y1: 0,
+        x2: obj.width,
+        y2: obj.height
+      });
+      vm.activeFormat = format;
+      vm.aspectRatio = 1 / (obj.height / obj.width);
+    }
 
     /**
      *  watch for vm.add_photos model
