@@ -27,6 +27,8 @@
     $scope.periodical = {};
 
     PeriodicalService.getPeriodicals($routeParams.id).then(function (data) {
+
+      $scope.periodical.id = data.data.id;
       $scope.periodical.name = data.data.name;
       $scope.periodical.logo = data.data.logo ? data.data.logo.id : '';
       $scope.periodical.url = data.data.logo ? data.data.logo.url : '';

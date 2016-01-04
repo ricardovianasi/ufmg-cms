@@ -6,15 +6,21 @@
 
   PagesController.$inject = [
     '$scope',
+    '$timeout',
     '$uibModal',
+    'dataTableConfigService',
     'PagesService',
     'NotificationService',
-    'StatusService',
-    'dataTableConfigService',
-    '$timeout'
+    'StatusService'
   ];
 
-  function PagesController($scope, $uibModal, PagesService, NotificationService, StatusService, dataTableConfigService, $timeout) {
+  function PagesController($scope,
+                          $timeout,
+                          $uibModal,
+                          dataTableConfigService,
+                          PagesService,
+                          NotificationService,
+                          StatusService) {
     console.log('... PagesController');
 
     $scope.status = [];
