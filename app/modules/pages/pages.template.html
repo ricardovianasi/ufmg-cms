@@ -25,21 +25,21 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a href="#" class="btn"
+                    <a class="btn"
                        ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}"
                        ng-click="itemStatus = ''">
                         <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
                         <span class=small>({{ pages.total }})</span>
                     </a>
 
-                    <a href="#" class="btn"
+                    <a class="btn"
                        ng-class="{ 'btn-gray': itemStatus == 'publish'}"
                        ng-click="itemStatus = 'publish'">
                         <span ng-class="{ 'strong': itemStatus == 'published'}">Publicados</span>
                         <span class=small>({{ (pages.items | filter: {status: 'published'}).length }})</span>
                     </a>
 
-                    <a href="#" class="btn"
+                    <a class="btn"
                        ng-class="{ 'btn-gray': itemStatus == 'draft'}"
                        ng-click="itemStatus = 'draft'">
                         <span ng-class="{ 'strong': itemStatus == 'draft'}">Rascunho</span>

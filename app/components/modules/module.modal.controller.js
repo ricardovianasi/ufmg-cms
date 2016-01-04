@@ -55,7 +55,7 @@
           _this.selection.save();
 
           moduleModal = $uibModal.open({
-            templateUrl: '/components/modal/upload-component.template.html',
+            templateUrl: 'components/modal/upload-component.template.html',
             controller: 'UploadComponentController as vm',
             backdrop: 'static',
             size: 'xl'
