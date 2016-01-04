@@ -19,6 +19,7 @@
       'datatables',
       'datatables.bootstrap',
       'mrImage',
+      'ngLodash',
 
       // App Modules
       'calendarModule',

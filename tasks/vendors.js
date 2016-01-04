@@ -28,7 +28,8 @@ var files = [
   'bower_components/angular-datatables/dist/angular-datatables.min.js',
   'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
   'bower_components/angular-animate/angular-animate.min.js',
-  'bower_components/mr-image/dist/js/mr-image.min.js'
+  'bower_components/mr-image/dist/js/mr-image.min.js',
+  'bower_components/ng-lodash/build/ng-lodash.min.js'
 ];
 
 var styles = [
