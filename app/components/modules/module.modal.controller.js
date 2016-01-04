@@ -86,9 +86,7 @@
 
     $scope.redactorConfig = {
       lang: 'pt_br',
-      replaceDivs: false,
       plugins: ['imagencrop'],
-      paragraphize: false,
       linebreaks: false,
       formatting: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5'],
       buttons: [
