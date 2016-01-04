@@ -178,13 +178,6 @@
           author: vm.currentFile.author.name
         });
       });
-
-      //$uibModalInstance.close({
-      //  type: vm.activeFormat,
-      //  url: vm.currentFile.url,
-      //  legend: vm.currentFile.legend,
-      //  author: vm.currentFile.author.name
-      //});
     }
   }
 })();
