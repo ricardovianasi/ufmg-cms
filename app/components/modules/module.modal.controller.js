@@ -7,10 +7,13 @@
   function ModuleModalController($scope,
                                  $uibModal,
                                  $uibModalInstance,
+                                 lodash,
                                  PagesService,
                                  module,
                                  widgets) {
     console.log('... ModuleModalController');
+
+    var _ = lodash;
 
     $scope.widgets = widgets;
     $scope.widget = {
@@ -50,6 +53,7 @@
           var _this = this;
 
           _this.selection.save();
+
           moduleModal = $uibModal.open({
             templateUrl: '/components/modal/upload-component.template.html',
             controller: 'UploadComponentController as vm',
@@ -59,27 +63,13 @@
 
           // Insert into textarea
           moduleModal.result.then(function (data) {
-            var cropped = {
-              vertical: function (data) {
-                var html = '&nbsp;<figure class="vertical"><img src="' + data.url + '" title="' + data.author + '" alt="' + data.legend + '"><figcaption>' + data.legend + '</figcaption></figure><br><p></p>';
-                _this.selection.restore();
-                _this.insert.htmlWithoutClean(html);
-              },
-              medium: function (data) {
-                var html = '&nbsp;<figure class="medium"><img src="' + data.url + '" title="' + data.author + '" alt="' + data.legend + '"><figcaption>' + data.legend + '</figcaption></figure><br><p></p>';
-                _this.selection.restore();
-                _this.insert.htmlWithoutClean(html);
-              },
-              big: function (data) {
-                var html = '&nbsp;<section class="snippet snippet--big"><figure class="big"><img src="' + data.url + '" title="' + data.author + '" alt="' + data.legend + '"><figcaption>' + data.legend + '</figcaption></figure></section><br><p></p>';
-                _this.selection.restore();
-                _this.insert.htmlWithoutClean(html);
-              },
-              wide: function (data) {
-                var html = '&nbsp;<section class="snippet snippet--wide"><figure class="wide"><img src="' + data.url + '" title="' + data.author + '" alt="' + data.legend + '"><figcaption>' + data.legend + '</figcaption></figure></section><br><p></p>';
-                _this.selection.restore();
-                _this.insert.htmlWithoutClean(html);
-              }
+            var cropped = function (size, data) {
+              var html = _.template($('#figure-'+size).html());
+
+              console.log(html(data));
+
+              _this.selection.restore();
+              _this.insert.htmlWithoutClean(html(data));
             };
 
             var croppedObj = {
@@ -88,15 +78,7 @@
               author: data.author ? data.author : ''
             };
 
-            if (data.type == 'vertical') {
-              cropped.vertical(croppedObj);
-            } else if (data.type == 'medium') {
-              cropped.medium(croppedObj);
-            } else if (data.type == 'big') {
-              cropped.big(croppedObj);
-            } else if (data.type == 'wide') {
-              cropped.wide(croppedObj);
-            }
+            cropped(data.type, croppedObj);
           });
         }
       };

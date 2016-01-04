@@ -7,12 +7,11 @@
   UploadComponentController.$inject = [
     '$scope',
     '$uibModalInstance',
-    'dataTableConfigService',
     'MediaService',
     'tabsService'
   ];
 
-  function UploadComponentController($scope, $uibModalInstance, dataTableConfigService, MediaService, tabsService) {
+  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -53,6 +52,7 @@
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
     vm.cancel = _cancel;
+    vm.save = _save;
     vm.setFormat = _setFormat;
     vm.activeFormat = '';
 
@@ -124,7 +124,6 @@
      *  _selectMidia Function
      *
      */
-
     function _selectMidia(data) {
       vm.currentFile = data;
     }
@@ -153,6 +152,39 @@
      */
     function _cancel() {
       $uibModalInstance.dismiss('cancel');
+    }
+
+    /**
+     *
+     * @private
+     */
+    function _save() {
+      console.log(vm.selector);
+
+      var obj = {
+        x: vm.selector.x1,
+        y: vm.selector.y1,
+        width: vm.selector.x2,
+        height: vm.selector.y2,
+        resize_width: vm.formats[vm.activeFormat].width,
+        resize_height: vm.formats[vm.activeFormat].height
+      };
+
+      MediaService.cropImage(vm.currentFile.id, obj).then(function (data) {
+        $uibModalInstance.close({
+          type: vm.activeFormat,
+          url: data.data.url,
+          legend: vm.currentFile.legend,
+          author: vm.currentFile.author.name
+        });
+      });
+
+      //$uibModalInstance.close({
+      //  type: vm.activeFormat,
+      //  url: vm.currentFile.url,
+      //  legend: vm.currentFile.legend,
+      //  author: vm.currentFile.author.name
+      //});
     }
   }
 })();

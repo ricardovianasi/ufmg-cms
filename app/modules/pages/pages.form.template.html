@@ -1,11 +1,9 @@
 <div class="page-title">
-
     <div class="title-env">
         <h1 class="title">Nova Página</h1>
     </div>
 
     <div class="breadcrumb-env">
-
         <ol class="breadcrumb bc-1">
             <li>
                 <a href="#/"><i class="fa-home"></i>Home</a>
@@ -21,9 +19,9 @@
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
+
 <div class=row>
     <div class="col-xs-8 panel panel-default">
         <form class=form>
@@ -106,3 +104,39 @@
     </div>
 </div>
 
+<!-- Figure Templates -->
+<script type="text/x-lodash-template" id="figure-vertical">
+    &nbsp;<figure class="vertical">
+        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+        <figcaption><%= legend %></figcaption>
+    </figure>
+    <br><p></p>
+</script>
+
+<script type="text/x-lodash-template" id="figure-medium">
+    &nbsp;<figure class="medium">
+        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+        <figcaption><%= legend %></figcaption>
+    </figure>
+    <br><p></p>
+</script>
+
+<script type="text/x-lodash-template" id="figure-big">
+    &nbsp;<section class="snippet snippet--big">
+        <figure class="big">
+            <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+            <figcaption><%= legend %></figcaption>
+        </figure>
+    </section>
+    <br><p></p>
+</script>
+
+<script type="text/x-lodash-template" id="figure-wide">
+    &nbsp;<section class="snippet snippet--wide">
+        <figure class="wide">
+            <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+            <figcaption><%= legend %></figcaption>
+        </figure>
+    </section>
+    <br><p></p>
+</script>
