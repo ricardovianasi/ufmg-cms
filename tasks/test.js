@@ -119,11 +119,6 @@ var files = [
   'app/common/config/app.config.js'
 ];
 
-gulp.task('copy-xenon', function () {
-  gulp.src('app/assets/xenon/js/**/*.js')
-    .pipe(gulp.dest('./build/assets/js/'));
-});
-
 gulp.task('test-js', ['copy-xenon'], function () {
   return gulp.src(files)
     .pipe(plumber())
@@ -145,3 +140,4 @@ gulp.task('test-js', ['copy-xenon'], function () {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./build/scripts/'));
 });
+

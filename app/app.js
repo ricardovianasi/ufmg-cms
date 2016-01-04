@@ -18,6 +18,7 @@
       'ui.mask',
       'datatables',
       'datatables.bootstrap',
+      'mrImage',
 
       // App Modules
       'calendarModule',

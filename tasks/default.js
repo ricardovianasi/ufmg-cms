@@ -12,6 +12,7 @@ gulp.task('build', [
   'html',
   'copyimage',
   'css',
+  //'js',
   'test-js',
   'build-vendors'
 ]);
