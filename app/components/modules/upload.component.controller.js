@@ -18,12 +18,7 @@
 
     tabsService.selectTab('home');
 
-    vm.selector = {
-      //x1: 0,
-      //x2: 0,
-      //y1: 0,
-      //y2: 0
-    };
+    vm.selector = {};
     vm.formats = {
       vertical: {
         name: 'Vertical',
@@ -67,12 +62,6 @@
     function _setFormat(format) {
       var obj = vm.formats[format];
 
-      vm.selector = angular.extend(vm.selector, {
-        x1: 0,
-        y1: 0,
-        x2: obj.width,
-        y2: obj.height
-      });
       vm.activeFormat = format;
       vm.aspectRatio = 1 / (obj.height / obj.width);
     }
@@ -159,8 +148,6 @@
      * @private
      */
     function _save() {
-      console.log(vm.selector);
-
       var obj = {
         x: vm.selector.x1,
         y: vm.selector.y1,
