@@ -9,8 +9,6 @@ var files = [
   'bower_components/datatables/media/js/jquery.dataTables.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'bower_components/cropper/dist/cropper.min.js',
-  //'app/assets/scripts/redactor/redactor.js',
-  //'app/assets/scripts/redactor/pt_br.js',
   'app/assets/scripts/redactor-2/redactor.js',
   'app/assets/scripts/redactor-2/pt_br.js',
   'bower_components/lodash/lodash.min.js',
@@ -22,7 +20,6 @@ var files = [
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
   'bower_components/ui-select/dist/select.min.js',
-  //'bower_components/angular-redactor/angular-redactor.js',
   'bower_components/ng-sortable/dist/ng-sortable.min.js',
   'bower_components/ng-file-upload/ng-file-upload-all.min.js',
   'bower_components/ng-cropper/dist/ngCropper.js',
@@ -44,7 +41,6 @@ var styles = [
   'bower_components/cropper/dist/cropper.min.css',
   'bower_components/ng-cropper/dist/ngCropper.all.min.css',
   'bower_components/animate.css/animate.min.css',
-  //'app/assets/scripts/redactor/redactor.css',
   'app/assets/scripts/redactor-2/redactor.css',
   'bower_components/mr-image/dist/css/mr-image.min.css',
 
@@ -58,20 +54,9 @@ var styles = [
 ];
 
 var EXTERNAL_FONTS = [
-  'bower_components/font-awesome/fonts/fontawesome-webfont.eot',
-  'bower_components/font-awesome/fonts/fontawesome-webfont.svg',
-  'bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
-  'bower_components/font-awesome/fonts/fontawesome-webfont.woff',
-  'bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff',
-  'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2',
-  'app/assets/xenon/css/fonts/linecons/font/linecons.eot',
-  'app/assets/xenon/css/fonts/linecons/font/linecons.svg',
-  'app/assets/xenon/css/fonts/linecons/font/linecons.ttf',
-  'app/assets/xenon/css/fonts/linecons/font/linecons.woff'
+  'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
+  'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+  'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}'
 ];
 
 gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
