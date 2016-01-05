@@ -44,7 +44,9 @@
 
             // Insert into textarea
             moduleModal.result.then(function (data) {
-              callback(_this, data);
+              if (callback) {
+                callback(_this, data);
+              }
             });
           }
         };
