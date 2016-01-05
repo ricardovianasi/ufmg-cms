@@ -27,26 +27,7 @@ var files = [
   'app/filters/reverse.filter.js',
 
   // Services
-  'app/services/calendar.service.js',
-  'app/services/clippings.service.js',
-  'app/services/course.service.js',
-  'app/services/events.service.js',
-  'app/services/gallery.service.js',
-  'app/services/media.service.js',
-  'app/services/navigation.service.js',
-  'app/services/news.service.js',
-  'app/services/notification.service.js',
-  'app/services/pages.service.js',
-  'app/services/periodical.service.js',
-  'app/services/releases.service.js',
-  'app/services/serialize.service.js',
-  'app/services/service.module.js',
-  'app/services/status.service.js',
-  'app/services/tags.service.js',
-  'app/services/upload.service.js',
-  'app/services/widgets.service.js',
-  'app/services/dataTableConfig.service.js',
-  'app/services/tabs.service.js',
+  'app/services/**/*.js',
 
   // Components
   'app/components/articles/article.modal.controller.js',
@@ -123,7 +104,6 @@ var files = [
 gulp.task('test-js', ['copy-xenon'], function () {
   return gulp.src(files)
     .pipe(plumber())
-    .pipe(expect({ errorOnFailure: true }, files))
     .pipe(jshint({
       esnext: true,
       strict: true
@@ -141,4 +121,3 @@ gulp.task('test-js', ['copy-xenon'], function () {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./build/scripts/'));
 });
-
