@@ -5,7 +5,6 @@
     .controller('ModuleModalController', ModuleModalController);
 
   function ModuleModalController($scope,
-                                 $uibModal,
                                  $uibModalInstance,
                                  lodash,
                                  PagesService,
@@ -36,50 +35,25 @@
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
-    jQuery.Redactor.prototype.imagencrop = function () {
-      return {
-        init: function () {
-          var button = this.button.add('imagencrop', 'Image-N-Crop');
+    /**
+     * @param redactor
+     * @param data
+     */
+    $scope.imagencropCallback = function (redactor, data) {
+      var cropped = function (size, data) {
+        var html = _.template($('#figure-'+size).html());
 
-          this.button.addCallback(button, this.imagencrop.show);
-          this.button.setAwesome('imagencrop', 'fa-picture-o');
-        },
-        showEdit: function ($image) {
-          console.log('show edit', $image);
-        },
-        show: function () {
-          var _this = this;
-
-          _this.selection.save();
-
-          var moduleModal = $uibModal.open({
-            templateUrl: 'components/modal/upload-component.template.html',
-            controller: 'UploadComponentController as vm',
-            backdrop: 'static',
-            size: 'xl'
-          });
-
-          // Insert into textarea
-          moduleModal.result.then(function (data) {
-            var cropped = function (size, data) {
-              var html = _.template($('#figure-'+size).html());
-
-              console.log(html(data));
-
-              _this.selection.restore();
-              _this.insert.htmlWithoutClean(html(data));
-            };
-
-            var croppedObj = {
-              url: data.url,
-              legend: data.legend ? data.legend : '',
-              author: data.author ? data.author : ''
-            };
-
-            cropped(data.type, croppedObj);
-          });
-        }
+        redactor.selection.restore();
+        redactor.insert.raw(html(data));
       };
+
+      var croppedObj = {
+        url: data.url,
+        legend: data.legend ? data.legend : '',
+        author: data.author ? data.author : ''
+      };
+
+      cropped(data.type, croppedObj);
     };
 
     $scope.ok = function () {
