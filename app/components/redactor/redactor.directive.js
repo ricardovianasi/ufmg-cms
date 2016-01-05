@@ -7,10 +7,27 @@
 
   redactor.$inject = [
     'RedactorPluginService',
+    'lodash'
   ];
 
-  function redactor(RedactorPluginService) {
+  function redactor(RedactorPluginService, _) {
+    var _defaultOptions = {
+      lang: 'pt_br',
+      plugins: [],
+      buttons: [
+        'html',
+        'format',
+        'bold',
+        'italic',
+        'link',
+        'file'
+      ],
+      tabKey: false
+    };
+
     /**
+     * Apply plugins on Redactor according to directive attribute
+     *
      * @param list
      *
      * @private
@@ -32,23 +49,26 @@
        * @param controller
        */
       link: function ($scope, elem, attrs, controller) {
-        var options = $scope[attrs.redactor];
-        var plugins = attrs.plugins.split(',');
+        var options = angular.extend($scope[attrs.redactor] || {}, _defaultOptions);
+        var plugins = attrs.plugins ? attrs.plugins.split(',') : [];
         var list = {};
 
-        //
+        //look for plugins set on directive
         angular.forEach(plugins, function (plugin) {
           var pluginCallback = $scope[attrs[plugin+'Callback']] || null;
 
-          this[plugin] = RedactorPluginService.getPlugin(plugin).getOptions(pluginCallback);
-        }, list);
+          list[plugin] = RedactorPluginService.getPlugin(plugin).getOptions(pluginCallback);
+        });
 
-        //
         _applyPlugins(list);
 
         //
         controller.$render = function () {
           console.log('...render');
+
+          angular.extend(options.plugins, plugins);
+          //add buttons according to plugins
+          options.buttons.concat(plugins);
 
           elem.redactor(options);
         };
