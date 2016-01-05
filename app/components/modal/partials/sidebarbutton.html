@@ -1,1 +1,25 @@
-<html><body><div class=row><div class=col-xs-4><div class=form-group><label>Texto do Bot&atilde;o</label> <input type=text title="Texto do Botão" ng-model=widget.label class=form-control></div></div><div class=col-xs-4><div class=form-group><label>Url</label> <input type=text title=Url ng-model=widget.url class=form-control></div></div><div class=col-xs-4><div class=form-group><label>&Iacute;cone</label><select title=Ícone ng-model=widget.icon ng-options="icon.id as icon.label for icon in icons" class=form-control></select></div></div></div></body></html>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="form-group">
+            <label>Texto do Bot&atilde;o</label>
+            <input class="form-control" type="text" title="Texto do Botão"
+                   ng-model="widget.label">
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="form-group">
+            <label>Url</label>
+            <input type="text" title="Url" class="form-control"
+                   ng-model="widget.url">
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="form-group"><label>&Iacute;cone</label>
+            <select title="Ícone" class="form-control"
+                    ng-model="widget.icon"
+                    ng-options="icon.id as icon.label for icon in icons.items"></select>
+        </div>
+    </div>
+</div>

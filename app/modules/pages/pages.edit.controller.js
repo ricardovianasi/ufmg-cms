@@ -103,7 +103,11 @@
     };
 
     // Modals
-    $scope.addModule = function (column) {
+    /**
+     * @param column
+     * @param idx
+     */
+    var moduleHandler = function (column, idx) {
       var moduleModal = $uibModal.open({
         templateUrl: 'components/modal/module.modal.template.html',
         controller: 'ModuleModalController',
@@ -111,68 +115,36 @@
         size: 'lg',
         resolve: {
           module: function () {
+            if (typeof idx !== 'undefined') {
+              return $scope.page.widgets[column][idx];
+            }
+
             return false;
           },
           widgets: function () {
             return $scope.widgets;
-          },
-          extraContent: function () {
-            return {
-              icons: $scope.icons,
-              events: $scope.events,
-              pages: $scope.pages,
-              news: $scope.news,
-              tags: $scope.tags,
-              news_types: $scope.news_types,
-              galleries: $scope.galleries,
-              categories: $scope.categories,
-              media: $scope.media
-            };
           }
         }
       });
 
       moduleModal.result.then(function (data) {
-        $scope.page.widgets[column].push(data);
-      });
-    };
-
-    var editModuleModal;
-
-    $scope.editModule = function (column, idx) {
-      editModuleModal = $uibModal.open({
-        templateUrl: 'components/modal/module.modal.template.html',
-        controller: 'ModuleModalController',
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          module: function () {
-            return $scope.page.widgets[column][idx];
-          },
-          widgets: function () {
-            return $scope.widgets;
-          },
-          extraContent: function () {
-            return {
-              icons: $scope.icons,
-              events: $scope.events,
-              pages: $scope.pages,
-              news: $scope.news,
-              tags: $scope.tags,
-              news_types: $scope.news_types,
-              galleries: $scope.galleries,
-              categories: $scope.categories,
-              media: $scope.media
-            };
-          }
+        if (typeof idx !== 'undefined') {
+          $scope.page.widgets[column][idx] = data;
+        } else {
+          $scope.page.widgets[column].push(data);
         }
       });
-
-      editModuleModal.result.then(function (data) {
-        $scope.page.widgets[column][idx] = data;
-      });
     };
 
+    // Modal - Add/Edit Module
+    // Modals
+    $scope.addModule = moduleHandler;
+    $scope.editModule = moduleHandler;
+
+    /**
+     * @param column
+     * @param idx
+     */
     $scope.removeModule = function (column, idx) {
       $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
       removeConfirmationModal.result.then(function (data) {
@@ -182,6 +154,10 @@
 
     var removeConfirmationModal;
 
+    /**
+     * @param size
+     * @param title
+     */
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
@@ -196,6 +172,13 @@
       });
     };
 
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param title
+     *
+     * @constructor
+     */
     var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
