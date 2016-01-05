@@ -57,6 +57,7 @@ var files = [
   'app/components/sidebar/sidebar.controller.js',
   'app/components/sidebar/sidebar.directive.js',
   'app/components/modules/UploadComponentController.controller.js',
+  'app/components/redactor/redactor.directive.js',
 
   // Modules
   'app/modules/calendar/calendar.controller.js',
