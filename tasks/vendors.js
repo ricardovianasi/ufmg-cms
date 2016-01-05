@@ -41,8 +41,8 @@ var styles = [
   'bower_components/cropper/dist/cropper.min.css',
   'bower_components/ng-cropper/dist/ngCropper.all.min.css',
   'bower_components/animate.css/animate.min.css',
-  'app/assets/scripts/redactor-2/redactor.css',
   'bower_components/mr-image/dist/css/mr-image.min.css',
+  'app/assets/scripts/redactor-2/redactor.css',
 
   // God Damn Xenon
   'app/assets/xenon/css/bootstrap.css',
