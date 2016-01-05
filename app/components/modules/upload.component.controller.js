@@ -52,16 +52,27 @@
     vm.activeFormat = '';
 
     // Set default format
-    _setFormat('medium');
+    _setFormat('medium', false);
 
     /**
      * @param format
+     * @param setCrop
      *
      * @private
      */
-    function _setFormat(format) {
+    function _setFormat(format, setCrop) {
       var obj = vm.formats[format];
 
+      setCrop = setCrop || true;
+
+      if (setCrop) {
+        vm.selector = angular.extend(vm.selector, {
+          x1: 0,
+          y1: 0,
+          x2: obj.width,
+          y2: obj.height
+        });
+      }
       vm.activeFormat = format;
       vm.aspectRatio = 1 / (obj.height / obj.width);
     }
