@@ -36,8 +36,6 @@
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
-    var moduleModal;
-
     jQuery.Redactor.prototype.imagencrop = function () {
       return {
         init: function () {
@@ -54,7 +52,7 @@
 
           _this.selection.save();
 
-          moduleModal = $uibModal.open({
+          var moduleModal = $uibModal.open({
             templateUrl: 'components/modal/upload-component.template.html',
             controller: 'UploadComponentController as vm',
             backdrop: 'static',
@@ -82,37 +80,6 @@
           });
         }
       };
-    };
-
-    $scope.redactorConfig = {
-      lang: 'pt_br',
-      plugins: ['imagencrop'],
-      linebreaks: false,
-      formatting: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5'],
-      buttons: [
-        'html',
-        'formatting',
-        'bold',
-        'italic',
-        'deleted',
-        'unorderedlist',
-        'orderedlist',
-        'outdent',
-        'indent',
-        'image',
-        'file',
-        'link',
-        'alignment',
-        'horizontalrule',
-        'imagencrop'
-      ],
-      allowedAttr: [
-        ['section', 'class'],
-        ['div', 'class'],
-        ['img', ['src', 'alt', 'title']],
-        ['figure', 'class'],
-        ['a', ['href', 'title']]
-      ]
     };
 
     $scope.ok = function () {
