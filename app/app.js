@@ -4,7 +4,7 @@
   angular
     .module('app', [
       // Dependencies
-      'angular-redactor',
+      //'angular-redactor',
       'as.sortable',
       'env',
       'ngAnimate',
