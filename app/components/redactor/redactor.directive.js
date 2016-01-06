@@ -7,10 +7,9 @@
 
   redactor.$inject = [
     'RedactorPluginService',
-    'lodash'
   ];
 
-  function redactor(RedactorPluginService, _) {
+  function redactor(RedactorPluginService) {
     var _defaultOptions = {
       lang: 'pt_br',
       plugins: ['video'],
@@ -57,16 +56,16 @@
 
         //look for plugins set on directive
         angular.forEach(plugins, function (plugin) {
-          var pluginCallback = $scope[attrs[plugin+'Callback']] || null;
+          var pluginOptions = $scope[attrs[plugin+'Options']] || {};
 
-          list[plugin] = RedactorPluginService.getPlugin(plugin).getOptions(pluginCallback);
+          list[plugin] = RedactorPluginService.setPlugin(plugin, pluginOptions);
         });
 
         _applyPlugins(list);
 
         //
         controller.$render = function () {
-          console.log('...render');
+          console.log('... $render');
 
           options.plugins = options.plugins.concat(plugins);
 

@@ -29,7 +29,8 @@ var files = [
   'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
   'bower_components/angular-animate/angular-animate.min.js',
   'bower_components/mr-image/dist/js/mr-image.min.js',
-  'bower_components/ng-lodash/build/ng-lodash.min.js'
+  'bower_components/ng-lodash/build/ng-lodash.min.js',
+  'bower_components/log/log.min.js',
 ];
 
 var styles = [
@@ -51,13 +52,13 @@ var styles = [
   'app/assets/xenon/css/xenon-core.css',
   'app/assets/xenon/css/xenon-forms.css',
   'app/assets/xenon/css/xenon-components.css',
-  'app/assets/xenon/css/xenon-skins.css'
+  'app/assets/xenon/css/xenon-skins.css',
 ];
 
 var EXTERNAL_FONTS = [
   'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
   'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
-  'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}'
+  'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}',
 ];
 
 gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {

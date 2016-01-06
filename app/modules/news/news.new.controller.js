@@ -1,28 +1,24 @@
 ;(function () {
+  'use strict';
 
-  "use strict";
-
-  angular
-    .module("newsModule")
-    .controller("NewsNewController", NewsNewController);
+  angular.module('newsModule')
+    .controller('NewsNewController', NewsNewController);
 
   NewsNewController.$inject = [
     '$scope',
+    '$location',
     'MediaService',
-    '$uibModal',
     'NewsService',
     'NotificationService',
     'StatusService',
-    '$location'
   ];
 
   function NewsNewController($scope,
+                             $location,
                              MediaService,
-                             $modal,
                              NewsService,
                              NotificationService,
-                             StatusService,
-                             $location) {
+                             StatusService) {
     console.log('... NoticiasNovoController');
 
     $scope.title = 'Nova Notícia';
@@ -66,23 +62,41 @@
       });
     };
 
-
     // Cover Image - Upload
-
     $scope.$watch('news_thumb', function () {
       if ($scope.news_thumb) {
         $scope.upload([$scope.news_thumb]);
       }
     });
 
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
+
+          console.log(html(data));
+
+          redactor.selection.restore();
+          redactor.insert.raw(html(data));
+        };
+
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
+    };
+
     $scope.upload = function (files) {
       angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
         MediaService.newFile(file).then(function (data) {
           $scope.news.thumb = data.id;
           $scope.news.thumb_name = data.title;
