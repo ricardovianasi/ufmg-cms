@@ -7,19 +7,32 @@
   UploadComponentController.$inject = [
     '$scope',
     '$uibModalInstance',
+    'lodash',
     'MediaService',
-    'tabsService'
+    'tabsService',
+    'formats'
   ];
 
-  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService) {
+  /**
+   * @param $scope
+   * @param $uibModalInstance
+   * @param _
+   * @param MediaService
+   * @param tabsService
+   * @param formats
+   *
+   * @constructor
+   */
+  function UploadComponentController($scope, $uibModalInstance, _, MediaService, tabsService, formats) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
+    vm.selector = {};
+    vm.formats = {};
 
     tabsService.selectTab('home');
 
-    vm.selector = {};
-    vm.formats = {
+    var availableFormats = {
       vertical: {
         name: 'Vertical',
         width: 352,
@@ -42,6 +55,14 @@
       }
     };
 
+    formats = formats || ['vertical', 'medium', 'big', 'wide'];
+
+    angular.forEach(formats, function (item) {
+      log('_item >>>_', item);
+
+      vm.formats[item] = availableFormats[item];
+    });
+
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
@@ -52,7 +73,7 @@
     vm.activeFormat = '';
 
     // Set default format
-    _setFormat('medium', false);
+    _setFormat(formats[0], false);
 
     /**
      * @param format
@@ -61,7 +82,7 @@
      * @private
      */
     function _setFormat(format, setCrop) {
-      var obj = vm.formats[format];
+      var obj = availableFormats[format];
 
       setCrop = setCrop || true;
 
@@ -121,8 +142,10 @@
     }
 
     /**
-     *  _selectMidia Function
+     * _selectMidia Function
      *
+     * @param data
+     * @private
      */
     function _selectMidia(data) {
       vm.currentFile = data;
@@ -130,6 +153,8 @@
 
     /**
      * function _updateMidia
+     *
+     * @private
      */
     function _updateMidia() {
       var obj = {
@@ -147,7 +172,6 @@
     }
 
     /**
-     *
      * @private
      */
     function _cancel() {
@@ -155,7 +179,6 @@
     }
 
     /**
-     *
      * @private
      */
     function _save() {
@@ -164,8 +187,8 @@
         y: vm.selector.y1,
         width: vm.selector.x2,
         height: vm.selector.y2,
-        resize_width: vm.formats[vm.activeFormat].width,
-        resize_height: vm.formats[vm.activeFormat].height
+        resize_width: availableFormats[vm.activeFormat].width,
+        resize_height: availableFormats[vm.activeFormat].height
       };
 
       MediaService.cropImage(vm.currentFile.id, obj).then(function (data) {
