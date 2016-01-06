@@ -55,8 +55,7 @@
         };
 
         cropped(data.type, croppedObj);
-      },
-      formats: ['vertical', 'medium']
+      }
     };
 
     $scope.ok = function () {
