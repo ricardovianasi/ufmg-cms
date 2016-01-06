@@ -12,7 +12,7 @@
   function redactor(RedactorPluginService) {
     var _defaultOptions = {
       lang: 'pt_br',
-      plugins: [],
+      plugins: ['video'],
       buttons: [
         'html',
         'format',
@@ -33,9 +33,11 @@
      */
     var _applyPlugins = function (list) {
       angular.forEach(list, function (value, key) {
-        jQuery.Redactor.prototype[key] = function () {
-          return value;
-        };
+        if(value){
+          jQuery.Redactor.prototype[key] = function () {
+            return value;
+          };
+        }
       });
     };
 
@@ -65,9 +67,7 @@
         controller.$render = function () {
           console.log('... $render');
 
-          angular.extend(options.plugins, plugins);
-          //add buttons according to plugins
-          options.buttons.concat(plugins);
+          options.plugins = options.plugins.concat(plugins);
 
           elem.redactor(options);
         };
