@@ -35,25 +35,30 @@
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
-    /**
-     * @param redactor
-     * @param data
-     */
-    $scope.imagencropCallback = function (redactor, data) {
-      var cropped = function (size, data) {
-        var html = _.template($('#figure-'+size).html());
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
 
-        redactor.selection.restore();
-        redactor.insert.raw(html(data));
-      };
+          console.log(html(data));
 
-      var croppedObj = {
-        url: data.url,
-        legend: data.legend ? data.legend : '',
-        author: data.author ? data.author : ''
-      };
+          redactor.selection.restore();
+          redactor.insert.htmlWithoutClean(html(data));
+        };
 
-      cropped(data.type, croppedObj);
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
     };
 
     $scope.ok = function () {
