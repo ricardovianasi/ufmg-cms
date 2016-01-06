@@ -13,7 +13,7 @@
   function redactor(RedactorPluginService, _) {
     var _defaultOptions = {
       lang: 'pt_br',
-      plugins: [],
+      plugins: ['video'],
       buttons: [
         'html',
         'format',
@@ -68,9 +68,7 @@
         controller.$render = function () {
           console.log('...render');
 
-          angular.extend(options.plugins, plugins);
-          //add buttons according to plugins
-          options.buttons.concat(plugins);
+          options.plugins = options.plugins.concat(plugins);
 
           elem.redactor(options);
         };
