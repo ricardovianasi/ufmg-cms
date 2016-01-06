@@ -34,9 +34,11 @@
      */
     var _applyPlugins = function (list) {
       angular.forEach(list, function (value, key) {
-        jQuery.Redactor.prototype[key] = function () {
-          return value;
-        };
+        if(value){
+          jQuery.Redactor.prototype[key] = function () {
+            return value;
+          };
+        }
       });
     };
 

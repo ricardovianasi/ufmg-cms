@@ -70,7 +70,7 @@
        * @returns {*}
        */
       getOptions: function (callback) {
-        return _options[_plugin](callback);
+        return _options[_plugin] ? _options[_plugin](callback) : null;
       }
     };
   }
