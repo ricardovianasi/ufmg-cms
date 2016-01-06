@@ -6,10 +6,11 @@
     .directive('redactor', redactor);
 
   redactor.$inject = [
+    '$timeout',
     'RedactorPluginService',
   ];
 
-  function redactor(RedactorPluginService) {
+  function redactor($timeout, RedactorPluginService) {
     var _defaultOptions = {
       lang: 'pt_br',
       plugins: ['video'],
@@ -33,7 +34,7 @@
      */
     var _applyPlugins = function (list) {
       angular.forEach(list, function (value, key) {
-        if(value){
+        if (value) {
           jQuery.Redactor.prototype[key] = function () {
             return value;
           };
@@ -56,20 +57,50 @@
 
         //look for plugins set on directive
         angular.forEach(plugins, function (plugin) {
-          var pluginOptions = $scope[attrs[plugin+'Options']] || {};
+          var pluginOptions = $scope[attrs[plugin + 'Options']] || {};
 
           list[plugin] = RedactorPluginService.setPlugin(plugin, pluginOptions);
         });
 
         _applyPlugins(list);
 
-        //
-        controller.$render = function () {
-          console.log('... $render');
+        //redactor callbacks
+        options.callbacks = {
+          change: function updateModel(value) {
+            //$timeout to avoid $digest collision
+            $timeout(function () {
+              $scope.$apply(function () {
+                controller.$setViewValue(value);
+              });
+            });
+          }
+        };
 
+        var editor;
+
+        //$timeout to avoid $digest collision
+        //call $render() to set the initial value
+        $timeout(function () {
           options.plugins = options.plugins.concat(plugins);
 
-          elem.redactor(options);
+          editor = elem.redactor(options);
+
+          controller.$render();
+
+          elem.on('remove', function () {
+            elem.off('remove');
+            elem.redactor('core.destroy');
+          });
+        });
+
+        controller.$render = function () {
+          if (angular.isDefined(editor)) {
+            $timeout(function () {
+              elem.redactor('code.set', controller.$viewValue || '');
+              elem.redactor('placeholder.toggle');
+              $scope.redactorLoaded = true;
+            });
+          }
         };
       }
     };
