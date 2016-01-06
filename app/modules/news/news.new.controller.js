@@ -81,7 +81,7 @@
           console.log(html(data));
 
           redactor.selection.restore();
-          redactor.insert.htmlWithoutClean(html(data));
+          redactor.insert.raw(html(data));
         };
 
         var croppedObj = {
