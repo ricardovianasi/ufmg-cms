@@ -13,7 +13,7 @@
   function redactor($timeout, RedactorPluginService) {
     var _defaultOptions = {
       lang: 'pt_br',
-      plugins: ['video'],
+      plugins: ['video', 'audio'],
       buttons: [
         'html',
         'format',
