@@ -12,6 +12,7 @@ var files = [
   'app/assets/scripts/redactor-2/redactor.js',
   'app/assets/scripts/redactor-2/pt_br.js',
   'app/assets/scripts/redactor-plugins/video.js',
+  'app/assets/scripts/redactor-plugins/audio.js',
   'bower_components/lodash/lodash.min.js',
   'bower_components/angular/angular.min.js',
   'bower_components/angular-route/angular-route.min.js',
