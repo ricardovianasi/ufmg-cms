@@ -7,28 +7,25 @@
 
   NewsEditController.$inject = [
     '$scope',
-    '$uibModal',
+    '$routeParams',
+    '$location',
+    '$timeout',
     'NewsService',
     'NotificationService',
     'StatusService',
-    '$routeParams',
     'MediaService',
-    '$location',
-    '$timeout',
-    'DateTimeHelper'
+    'DateTimeHelper',
   ];
 
   function NewsEditController($scope,
-                              $modal,
+                              $routeParams,
+                              $location,
+                              $timeout,
                               NewsService,
                               NotificationService,
                               StatusService,
-                              $routeParams,
                               MediaService,
-                              $location,
-                              $timeout,
                               DateTimeHelper) {
-
     console.log('... NoticiasEditController');
 
     $scope.news = {};
@@ -110,6 +107,34 @@
         $scope.upload([$scope.news_thumb]);
       }
     });
+
+    $scope.redactorOptions = {
+      plugins: ['imagencrop']
+    };
+
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
+
+          redactor.selection.restore();
+          redactor.insert.raw(html(data));
+        };
+
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
+    };
 
     $scope.upload = function (files) {
       angular.forEach(files, function (file) {
