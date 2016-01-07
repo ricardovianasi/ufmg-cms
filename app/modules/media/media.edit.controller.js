@@ -8,6 +8,7 @@
     '$scope',
     '$uibModal',
     '$location',
+    '$document',
     '$routeParams',
     'StatusService',
     'MediaService'
@@ -16,6 +17,7 @@
   function MediaEditController($scope,
                                $modal,
                                $location,
+                               $document,
                                $routeParams,
                                StatusService,
                                MediaService) {
