@@ -58,10 +58,10 @@
        * @param {string} plugin
        * @param {Object} options
        *
-       * @returns {*}
+       * @returns {*}|{null}
        */
       setPlugin: function (plugin, options) {
-        return _plugins[plugin](options);
+        return _plugins[plugin] ? _plugins[plugin](options) : null;
       }
     };
   }

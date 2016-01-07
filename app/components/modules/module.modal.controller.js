@@ -35,6 +35,10 @@
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
+    $scope.redactorOptions = {
+      plugins: ['imagencrop']
+    };
+
     $scope.imagencropOptions = {
       /**
        * @param redactor

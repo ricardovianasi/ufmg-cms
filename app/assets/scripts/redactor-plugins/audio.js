@@ -1,13 +1,11 @@
-(function($)
-{
-  $.Redactor.prototype.soundcloud = function()
-  {
+(function ($) {
+  $.Redactor.prototype.soundcloud = function () {
     return {
       /**
        * settings object
        * @type {Object}
        */
-      getSettings: {
+      settings: {
         CLIENT_ID: 'b938f7d89a1136a2290545587e03e980',
         RESOLVE_URL: 'https://api.soundcloud.com/resolve.json'
       },
@@ -19,8 +17,12 @@
        */
       langs: {
         en: {
-          "modalTitle": "SoundCloud",
-          "description": "insert SoundCloud track link"
+          'modalTitle': 'SoundCloud',
+          'description': 'insert SoundCloud track link'
+        },
+        pt_br: {
+          'modalTitle': 'SoundCloud',
+          'description': 'inserir link de faixa do SoundCloud'
         }
       },
 
@@ -28,12 +30,11 @@
        * this function return soundcloud modal html structure
        * @return {string} modal html structure
        */
-      getTemplate: function()
-      {
+      getTemplate: function () {
         return '<div class="modal-section" id="redactor-modal-audio-insert">' +
                   '<section>' +
                     '<label>' + this.lang.get('description') + '</label>' +
-                    '<input id="soundCloudLink" style="width: 100%;">' +
+                    '<input class="soundCloudLink" style="width: 100%;">' +
                  '</section>' +
                  '<section>' +
                     '<button id="redactor-modal-button-action">Insert</button>' +
@@ -47,7 +48,7 @@
        * @param  {string} uri api track url
        * @return {string}     soundcloud iframe html structure
        */
-      getPlayer: function(uri){
+      getPlayer: function (uri) {
         return '<iframe  width="100%"' +
                         'height="166"'  +
                         'scrolling="no"'  +
@@ -66,8 +67,7 @@
        * this function add soundcloud button in menu
        * and set your callback action
        */
-      init: function()
-      {
+      init: function () {
         var button = this.button.add('soundcloud', this.lang.get('modalTitle'));
         this.button.setIcon(button, '<i class="fa fa-soundcloud"></i>');
         this.button.addCallback(button, this.soundcloud.show);
@@ -76,8 +76,7 @@
       /**
        * this function show modal and set action on insert button
        */
-      show: function()
-      {
+      show: function () {
         this.modal.addTemplate('audio', this.soundcloud.getTemplate());
         this.modal.load('audio', this.lang.get('modalTitle'), 700);
         this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.soundcloud.insert);
@@ -88,12 +87,11 @@
       /**
        * callback for insert button click
        */
-      insert: function()
-      {
+      insert: function () {
         var soundcloudClass = this;
-        var url = this.soundcloud.getSettings.RESOLVE_URL;
-        var client_id = this.soundcloud.getSettings.CLIENT_ID;
-        var soundCloudLink = $('#soundCloudLink').val();
+        var url = this.soundcloud.settings.RESOLVE_URL;
+        var client_id = this.soundcloud.settings.CLIENT_ID;
+        var soundCloudLink = $('.soundCloudLink', '#redactor-modal-audio-insert').val();
 
         $.ajax({
           method: "GET",
@@ -102,7 +100,7 @@
             url: soundCloudLink,
             client_id: client_id
           }
-        }).done(function( res ) {
+        }).done(function (res) {
           var data = soundcloudClass.soundcloud.getPlayer(res.uri);
 
           soundcloudClass.modal.close();
@@ -111,7 +109,6 @@
           soundcloudClass.insert.html(data);
         });
       }
-
     };
   };
 })(jQuery);

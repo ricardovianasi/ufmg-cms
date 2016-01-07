@@ -10,8 +10,14 @@
     'RedactorPluginService',
   ];
 
+  /**
+   * @param $timeout
+   * @param RedactorPluginService
+   *
+   * @returns {{restrict: string, require: string, link: link}}
+   */
   function redactor($timeout, RedactorPluginService) {
-    var _defaultOptions = {
+    var _options = {
       lang: 'pt_br',
       plugins: ['video', 'soundcloud'],
       buttons: [
@@ -28,64 +34,67 @@
     /**
      * Apply plugins on Redactor according to directive attribute
      *
-     * @param list
+     * @param $scope
+     * @param attrs
      *
      * @private
      */
-    var _applyPlugins = function (list) {
-      angular.forEach(list, function (value, key) {
-        if (value) {
-          jQuery.Redactor.prototype[key] = function () {
-            return value;
+    var _applyPlugins = function ($scope, attrs) {
+      angular.forEach(_options.plugins, function (plugin) {
+        var pluginOptions = $scope[attrs[plugin + 'Options']] || {};
+
+        var pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
+
+        if (pluginSource) {
+          jQuery.Redactor.prototype[plugin] = function () {
+            return pluginSource;
           };
         }
       });
     };
 
     return {
-      require: '?ngModel',
+      restrict: 'A',
+      require: 'ngModel',
       /**
        * @param $scope
        * @param elem
        * @param attrs
-       * @param controller
+       * @param ngModel
        */
-      link: function ($scope, elem, attrs, controller) {
-        var options = angular.extend($scope[attrs.redactor] || {}, _defaultOptions);
-        var plugins = attrs.plugins ? attrs.plugins.split(',') : [];
-        var list = {};
-
-        //look for plugins set on directive
-        angular.forEach(plugins, function (plugin) {
-          var pluginOptions = $scope[attrs[plugin + 'Options']] || {};
-
-          list[plugin] = RedactorPluginService.setPlugin(plugin, pluginOptions);
-        });
-
-        _applyPlugins(list);
-
+      link: function ($scope, elem, attrs, ngModel) {
         //redactor callbacks
-        options.callbacks = {
+        _options.callbacks = {
           change: function updateModel(value) {
             //$timeout to avoid $digest collision
             $timeout(function () {
               $scope.$apply(function () {
-                controller.$setViewValue(value);
+                ngModel.$setViewValue(value);
               });
             });
           }
         };
+
+        var additionalOptions = $scope.$eval(attrs.redactor) || {};
+        //as of angular.extend does not know how to treat array attributes
+        var defaultPlugins = _options.plugins;
+
+        angular.extend(_options, additionalOptions);
+
+        if (typeof additionalOptions.plugins !== 'undefined') {
+          _options.plugins = defaultPlugins.concat(additionalOptions.plugins);
+        }
+
+        _applyPlugins($scope, attrs);
 
         var editor;
 
         //$timeout to avoid $digest collision
         //call $render() to set the initial value
         $timeout(function () {
-          options.plugins = options.plugins.concat(plugins);
+          editor = elem.redactor(_options);
 
-          editor = elem.redactor(options);
-
-          controller.$render();
+          ngModel.$render();
 
           elem.on('remove', function () {
             elem.off('remove');
@@ -93,10 +102,10 @@
           });
         });
 
-        controller.$render = function () {
+        ngModel.$render = function () {
           if (angular.isDefined(editor)) {
             $timeout(function () {
-              elem.redactor('code.set', controller.$viewValue || '');
+              elem.redactor('code.set', ngModel.$viewValue || '');
               elem.redactor('placeholder.toggle');
               $scope.redactorLoaded = true;
             });
