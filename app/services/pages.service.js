@@ -812,7 +812,9 @@
         parseWidgetToSave: function (widget) {
           console.log('>>> parseWidgetToSave', widget);
 
-          _parseToSave[widget.type](widget);
+          if (typeof _parseToSave[widget.type] !== 'undefined') {
+            _parseToSave[widget.type](widget);
+          }
 
           return _obj;
         },
@@ -824,7 +826,9 @@
         parseWidgetToLoad: function (widget) {
           console.log('>>> parseWidgetToLoad', widget);
 
-          _parseToLoad[widget.type](widget);
+          if (typeof _parseToLoad[widget.type] !== 'undefined') {
+            _parseToLoad[widget.type](widget);
+          }
 
           return _obj;
         },
