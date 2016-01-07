@@ -3,52 +3,94 @@
   $.Redactor.prototype.audio = function()
   {
     return {
-       langs: {
-        en: {
-          "modalTitle": "Soundcloud",
-          "description": "insert soundcloud link"
-        }
-      },
-      getTemplate: function()
-      {
-        return String()
-        + '<div class="modal-section" id="redactor-modal-audio-insert">'
-          + '<section>'
-            + '<label>' + this.lang.get('description') + '</label>'
-            + '<input id="soundCloudLink" style="width: 100%;">'
-          + '</section>'
-          + '<section>'
-            + '<button id="redactor-modal-button-action">Insert</button>'
-            + '<button id="redactor-modal-button-cancel">Cancel</button>'
-          + '</section>'
-        + '</div>';
-      },
+      /**
+       * settings object
+       * @type {Object}
+       */
       getSettings: {
         CLIENT_ID: 'b938f7d89a1136a2290545587e03e980',
         RESOLVE_URL: 'https://api.soundcloud.com/resolve.json'
       },
-      getPlayer: function(uri){
-        return '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' + uri + '&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>';
+
+      /**
+       * lang object
+       * default is en
+       * @type {Object}
+       */
+      langs: {
+        en: {
+          "modalTitle": "SoundCloud",
+          "description": "insert SoundCloud track link"
+        }
       },
+
+      /**
+       * this function return soundcloud modal html structure
+       * @return {string} modal html structure
+       */
+      getTemplate: function()
+      {
+        return '<div class="modal-section" id="redactor-modal-audio-insert">' +
+                  '<section>' +
+                    '<label>' + this.lang.get('description') + '</label>' +
+                    '<input id="soundCloudLink" style="width: 100%;">' +
+                 '</section>' +
+                 '<section>' +
+                    '<button id="redactor-modal-button-action">Insert</button>' +
+                    '<button id="redactor-modal-button-cancel">Cancel</button>' +
+                  '</section>' +
+               '</div>';
+      },
+
+      /**
+       * this function
+       * @param  {string} uri api track url
+       * @return {string}     soundcloud iframe html structure
+       */
+      getPlayer: function(uri){
+        return '<iframe  width="100%"' +
+                        'height="166"'  +
+                        'scrolling="no"'  +
+                        'frameborder="no"' +
+                        'src="https://w.soundcloud.com/player/?url=' + uri + '&amp;' +
+                              'color=ff5500&amp;' +
+                              'auto_play=false&amp;' +
+                              'hide_related=false&amp;' +
+                              'show_comments=true&amp;' +
+                              'show_user=true&amp;' +
+                              'show_reposts=false">' +
+                '</iframe>';
+      },
+
+      /**
+       * this function add soundcloud button in menu
+       * and set your callback action
+       */
       init: function()
       {
-        var button = this.button.add('soundcloud', this.lang.get('title'));
-        this.button.addCallback(button, this.audio.show);
+        var button = this.button.add('soundcloud', this.lang.get('modalTitle'));
         this.button.setIcon(button, '<i class="fa fa-soundcloud"></i>');
+        this.button.addCallback(button, this.audio.show);
       },
+
+      /**
+       * this function show modal and set action on insert button
+       */
       show: function()
       {
         this.modal.addTemplate('audio', this.audio.getTemplate());
-
         this.modal.load('audio', this.lang.get('modalTitle'), 700);
-
-        // action button
         this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.audio.insert);
         this.modal.show();
 
       },
+
+      /**
+       * callback for insert button click
+       */
       insert: function()
       {
+        var audioClass = this;
         var url = this.audio.getSettings.RESOLVE_URL;
         var client_id = this.audio.getSettings.CLIENT_ID;
         var soundCloudLink = $('#soundCloudLink').val();
@@ -56,24 +98,18 @@
         $.ajax({
           method: "GET",
           url: url,
-          data: { url: soundCloudLink, client_id: client_id }
+          data: {
+            url: soundCloudLink,
+            client_id: client_id
+          }
         }).done(function( res ) {
-          console.log( res );
+          var data = audioClass.audio.getPlayer(res.uri);
 
-          var data = this.audio.getPlayer(res.uri);
-          this.modal.close();
-          // this.placeholder.hide();
-
-          // buffer
-          this.buffer.set();
-
-          // insert
-          this.air.collapsed();
-          this.insert.html(data);
+          audioClass.modal.close();
+          audioClass.buffer.set();
+          audioClass.air.collapsed();
+          audioClass.insert.html(data);
         });
-
-
-
       }
 
     };
