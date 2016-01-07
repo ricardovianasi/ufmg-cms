@@ -71,7 +71,9 @@
                             <td>
                                 <div>
                                     <div class="pull-left spacer-right">
-                                        <img ng-src="{{item.url}}" style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
+                                        <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'" style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
+
+                                        <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
                                     </div>
                                     <div class="pull-left">
                                         {{ item.title }}<small>{{ item.subtitle }}</small>
