@@ -106,7 +106,6 @@
           if (angular.isDefined(editor)) {
             $timeout(function () {
               elem.redactor('code.set', ngModel.$viewValue || '');
-              elem.redactor('placeholder.toggle');
               $scope.redactorLoaded = true;
             });
           }
