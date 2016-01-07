@@ -39,19 +39,20 @@
      * @private
      */
     var _parseData = function (page) {
-      var clean_page = {};
+      var cleanPage = {};
 
-      clean_page.image = page.image ? page.image.id : null;
-      clean_page.status = page.status;
+      cleanPage.image = page.image ? page.image.id : null;
+      cleanPage.status = page.status;
 
       if (page.status == 'scheduled') {
-        clean_page.scheduled_at = page.scheduled_date + ' ' + page.scheduled_time;
+        cleanPage.scheduled_at = page.scheduled_date + ' ' + page.scheduled_time;
       }
 
-      clean_page.tags = page.tags;
-      clean_page.title = page.title;
-      // clean_page.slug = page.title;
-      clean_page.widgets = {
+      cleanPage.tags = page.tags;
+      cleanPage.title = page.title;
+      //@todo: change this to editable slug
+      // cleanPage.slug = page.title;
+      cleanPage.widgets = {
         main: [],
         side: []
       };
@@ -74,7 +75,7 @@
           //angular.extend(obj, ModuleService.parseWidgetToSave(widget));
           angular.extend(obj, _module.parseWidgetToSave(widget));
 
-          clean_page.widgets[column].push(obj);
+          cleanPage.widgets[column].push(obj);
         }
       };
 
@@ -89,14 +90,18 @@
 
       // If we are updating the Page
       if (page.id) {
-        clean_page.id = page.id;
+        cleanPage.id = page.id;
 
-        delete clean_page.created_at;
-        delete clean_page.udpated_at;
-        delete clean_page.scheduled_at;
+        delete cleanPage.created_at;
+        delete cleanPage.udpated_at;
+        delete cleanPage.scheduled_at;
       }
 
-      return clean_page;
+      if (page.columns == 1) {
+        cleanPage.widgets.side = [];
+      }
+
+      return cleanPage;
     };
 
     /**
