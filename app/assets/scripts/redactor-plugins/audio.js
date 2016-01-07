@@ -1,6 +1,6 @@
 (function($)
 {
-  $.Redactor.prototype.audio = function()
+  $.Redactor.prototype.soundcloud = function()
   {
     return {
       /**
@@ -70,7 +70,7 @@
       {
         var button = this.button.add('soundcloud', this.lang.get('modalTitle'));
         this.button.setIcon(button, '<i class="fa fa-soundcloud"></i>');
-        this.button.addCallback(button, this.audio.show);
+        this.button.addCallback(button, this.soundcloud.show);
       },
 
       /**
@@ -78,9 +78,9 @@
        */
       show: function()
       {
-        this.modal.addTemplate('audio', this.audio.getTemplate());
+        this.modal.addTemplate('audio', this.soundcloud.getTemplate());
         this.modal.load('audio', this.lang.get('modalTitle'), 700);
-        this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.audio.insert);
+        this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.soundcloud.insert);
         this.modal.show();
 
       },
@@ -90,9 +90,9 @@
        */
       insert: function()
       {
-        var audioClass = this;
-        var url = this.audio.getSettings.RESOLVE_URL;
-        var client_id = this.audio.getSettings.CLIENT_ID;
+        var soundcloudClass = this;
+        var url = this.soundcloud.getSettings.RESOLVE_URL;
+        var client_id = this.soundcloud.getSettings.CLIENT_ID;
         var soundCloudLink = $('#soundCloudLink').val();
 
         $.ajax({
@@ -103,12 +103,12 @@
             client_id: client_id
           }
         }).done(function( res ) {
-          var data = audioClass.audio.getPlayer(res.uri);
+          var data = soundcloudClass.soundcloud.getPlayer(res.uri);
 
-          audioClass.modal.close();
-          audioClass.buffer.set();
-          audioClass.air.collapsed();
-          audioClass.insert.html(data);
+          soundcloudClass.modal.close();
+          soundcloudClass.buffer.set();
+          soundcloudClass.air.collapsed();
+          soundcloudClass.insert.html(data);
         });
       }
 
