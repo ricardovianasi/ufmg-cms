@@ -58,8 +58,6 @@
     formats = formats || ['vertical', 'medium', 'big', 'wide'];
 
     angular.forEach(formats, function (item) {
-      log('_item >>>_', item);
-
       vm.formats[item] = availableFormats[item];
     });
 
