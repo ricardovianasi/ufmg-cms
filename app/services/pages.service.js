@@ -50,7 +50,7 @@
 
       clean_page.tags = page.tags;
       clean_page.title = page.title;
-      clean_page.slug = page.title;
+      // clean_page.slug = page.title;
       clean_page.widgets = {
         main: [],
         side: []
