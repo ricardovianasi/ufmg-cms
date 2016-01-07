@@ -69,6 +69,10 @@
       }
     });
 
+    $scope.redactorOptions = {
+      plugins: ['imagencrop']
+    };
+
     $scope.imagencropOptions = {
       /**
        * @param redactor
@@ -77,8 +81,6 @@
       callback: function (redactor, data) {
         var cropped = function (size, data) {
           var html = _.template($('#figure-' + size).html());
-
-          console.log(html(data));
 
           redactor.selection.restore();
           redactor.insert.raw(html(data));
