@@ -133,5 +133,33 @@
         $scope.$apply();
       });
     };
+
+    $scope.redactorOptions = {
+      plugins: ['imagencrop']
+    };
+
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
+
+          redactor.selection.restore();
+          redactor.insert.raw(html(data));
+        };
+
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
+    };
   }
 })();
