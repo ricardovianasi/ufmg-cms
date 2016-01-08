@@ -37,7 +37,7 @@
     }
 
     $scope.redactorOptions = {
-      plugins: ['imagencrop']
+      plugins: ['imagencrop', 'audioUpload']
     };
 
     $scope.imagencropOptions = {
@@ -62,6 +62,19 @@
         cropped(data.type, croppedObj);
       },
       formats: columns == 2 ? ['vertical', 'medium'] : null
+    };
+
+    $scope.audioUploadOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var html = _.template($('#audio').html());
+
+        redactor.selection.restore();
+        redactor.insert.raw(html(data));
+      }
     };
 
     $scope.ok = function () {
