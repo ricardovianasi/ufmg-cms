@@ -886,7 +886,7 @@
                 return $scope.widgets;
               },
               columns: function () {
-                return $scope.columns;
+                return $scope.page.columns;
               }
             }
           });

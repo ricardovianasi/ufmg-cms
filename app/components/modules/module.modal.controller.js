@@ -9,7 +9,8 @@
                                  lodash,
                                  PagesService,
                                  module,
-                                 widgets) {
+                                 widgets,
+                                 columns) {
     clog('... ModuleModalController');
 
     var _ = lodash;
@@ -59,7 +60,8 @@
         };
 
         cropped(data.type, croppedObj);
-      }
+      },
+      formats: columns == 2 ? ['vertical', 'medium'] : null
     };
 
     $scope.ok = function () {
