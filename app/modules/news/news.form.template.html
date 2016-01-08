@@ -130,7 +130,8 @@
                     <textarea cols="30" rows="30"
                               ng-model="news.text"
                               redactor="redactorOptions"
-                              imagencrop-options="imagencropOptions"></textarea>
+                              imagencrop-options="imagencropOptions"
+                              audioUpload-options="audioUploadOptions"></textarea>
                 </div>
             </div><!--row-->
         </form>
@@ -141,4 +142,4 @@
     </div>
 </div>
 
-<ng-include src="'components/widget/partials/figures.html'"></ng-include>
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
