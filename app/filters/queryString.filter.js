@@ -12,6 +12,8 @@
             var v = obj[p];
 
             str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
+
+            console.log(str);
           }
 
           return str.join("&");

@@ -49,16 +49,18 @@
 
 
                         <div class="pages-module pages-module-cover">
-                            <img ng-show="file.url" ng-src="{{file.url}}" style="max-width: 100%; height: auto;">
+                            <img ng-show="file.url && file.type != 'mp3'" ng-src="{{file.url}}" style="max-width: 100%; height: auto;">
+
+                             <div ng-show="file.url && file.type === 'mp3'" audio audio-url="file.url"></div>
 
                             <ul ng-show="!file.url" class="gallery-list">
-                                <li ngf-accept="'image/*'"
+                                <li ngf-accept="'*/*'"
                                     ngf-select ng-model="add_photos"
                                     ngf-multiple="false"
                                     class="dashed gallery-item media-item upload-photos">
 
                                     <span class="fa fa-camera fa-2x"></span>
-                                    <br>Incluir Fotos
+                                    <br>Incluir arquivos
                                 </li>
                             </ul>
                         </div>

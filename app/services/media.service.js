@@ -38,11 +38,18 @@
            *
            * @returns {*}
            */
-          getMedia: function (page, page_size) {
-            var queryString = $filter('queryString')({
-              page: page || PAGE,
-              page_size: page_size || PAGE_SIZE
-            });
+          getMedia: function (page, page_size, search) {
+
+            var obj = {
+                page: page || PAGE,
+                page_size: page_size || PAGE_SIZE
+            };
+
+            if(typeof search != 'undefined')
+              obj.search = search;
+
+            var queryString = $filter('queryString')(obj);
+
             var url = $filter('format')('{0}?{1}', MEDIA_ENDPOINT, queryString);
 
             return $http.get(url);

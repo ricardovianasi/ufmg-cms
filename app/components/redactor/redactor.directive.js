@@ -41,7 +41,9 @@
      */
     var _applyPlugins = function ($scope, attrs) {
       angular.forEach(_options.plugins, function (plugin) {
-        var pluginOptions = $scope[attrs[plugin + 'Options']] || {};
+        var pluginOptions = $scope[attrs[plugin.toLowerCase() + 'Options']] || {};
+
+        log('_plugin opotions >>>>>_',pluginOptions);
 
         var pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
 
