@@ -8,6 +8,7 @@
     '$http',
     '$q',
     '$filter',
+    '$uibModal',
     'apiUrl',
     'EventsService',
     'GalleryService',
@@ -17,9 +18,26 @@
     'TagsService'
   ];
 
+  /**
+   * @param $http
+   * @param $q
+   * @param $filter
+   * @param apiUrl
+   * @param EventsService
+   * @param GalleryService
+   * @param MediaService
+   * @param NewsService
+   * @param ReleasesService
+   * @param TagsService
+   *
+   * @returns {{COLUMNS: *[], getPages: _getPages, addPage: addPage, getPage: getPage, updatePage: updatePage, removePage: removePage, module: module}}
+   *
+   * @constructor
+   */
   function PagesService($http,
                         $q,
                         $filter,
+                        $uibModal,
                         apiUrl,
                         EventsService,
                         GalleryService,
@@ -133,11 +151,11 @@
     };
 
     /**
-     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial}}
+     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial, handle}}
      *
      * @private
      */
-    var _module = (function (_getPages) {
+    var _module = (function (_getPages, $uibModal) {
       var _obj = {};
 
       // Parse widget object to send its data to webservice
@@ -844,9 +862,45 @@
           if (_preparing[$scope.widget.type]) {
             _preparing[$scope.widget.type]($scope);
           }
+        },
+        /**
+         * @param $scope
+         * @param column
+         * @param idx
+         */
+        handle: function ($scope, column, idx) {
+          var moduleModal = $uibModal.open({
+            templateUrl: 'components/modal/module.modal.template.html',
+            controller: 'ModuleModalController',
+            backdrop: 'static',
+            size: 'lg',
+            resolve: {
+              module: function () {
+                if (typeof idx !== 'undefined') {
+                  return $scope.page.widgets[column][idx];
+                }
+
+                return false;
+              },
+              widgets: function () {
+                return $scope.widgets;
+              },
+              columns: function () {
+                return $scope.columns;
+              }
+            }
+          });
+
+          moduleModal.result.then(function (data) {
+            if (typeof idx !== 'undefined') {
+              $scope.page.widgets[column][idx] = data;
+            } else {
+              $scope.page.widgets[column].push(data);
+            }
+          });
         }
       };
-    })(_getPages);
+    })(_getPages, $uibModal);
 
     return {
       // Columns defaults

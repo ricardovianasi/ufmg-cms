@@ -114,7 +114,7 @@
                          as-sortable-item>
                         <div class="clearfix">
                             <div class=pull-right>
-                                <span ng-click="editModule('main', $index)" class="label label-default">
+                                <span ng-click="handleModule('main', $index)" class="label label-default">
                                     <span class="fa fa-pencil"></span>EDITAR
                                 </span>
 
@@ -132,7 +132,7 @@
                         <small>{{ item.type }}</small>
                     </div>
 
-                    <div ng-click="addModule('main')" class="pages-module add-module">
+                    <div ng-click="handleModule('main')" class="pages-module add-module">
                         + Adicionar Módulo
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                          as-sortable-item>
                         <div class="clearfix">
                             <div class="pull-right">
-                                <span ng-click="editModule('side', $index)" class="label label-default">
+                                <span ng-click="handleModule('side', $index)" class="label label-default">
                                     <span class="fa fa-pencil"></span>EDITAR
                                 </span>
 
@@ -164,7 +164,7 @@
                         <small>{{ item.type }}</small>
                     </div>
 
-                    <div ng-click="addModule('side', $index)" class="pages-module add-module">
+                    <div ng-click="handleModule('side')" class="pages-module add-module">
                         + Adicionar Módulo
                     </div>
                 </div>

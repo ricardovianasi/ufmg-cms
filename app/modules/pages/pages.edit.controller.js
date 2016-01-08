@@ -102,44 +102,10 @@
       });
     };
 
-    // Modals
-    /**
-     * @param column
-     * @param idx
-     */
-    var moduleHandler = function (column, idx) {
-      var moduleModal = $uibModal.open({
-        templateUrl: 'components/modal/module.modal.template.html',
-        controller: 'ModuleModalController',
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          module: function () {
-            if (typeof idx !== 'undefined') {
-              return $scope.page.widgets[column][idx];
-            }
-
-            return false;
-          },
-          widgets: function () {
-            return $scope.widgets;
-          }
-        }
-      });
-
-      moduleModal.result.then(function (data) {
-        if (typeof idx !== 'undefined') {
-          $scope.page.widgets[column][idx] = data;
-        } else {
-          $scope.page.widgets[column].push(data);
-        }
-      });
-    };
-
     // Modal - Add/Edit Module
-    // Modals
-    $scope.addModule = moduleHandler;
-    $scope.editModule = moduleHandler;
+    $scope.handleModule = function (column, idx) {
+      return PagesService.module().handle($scope, column, idx);
+    };
 
     /**
      * @param column
