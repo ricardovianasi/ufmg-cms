@@ -9,7 +9,7 @@
     ];
 
     function dataTableConfigService(DTOptionsBuilder) {
-      console.log('... dataTableConfigService');
+      clog('... dataTableConfigService');
 
       return {
         init: init

@@ -82,7 +82,7 @@
     function _setFormat(format, setCrop) {
       var obj = availableFormats[format];
 
-      if (!!setCrop) {
+      if (setCrop !== false) {
         vm.selector = angular.extend(vm.selector, {
           x1: 0,
           y1: 0,

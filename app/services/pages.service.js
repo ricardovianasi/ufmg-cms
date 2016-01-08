@@ -8,6 +8,7 @@
     '$http',
     '$q',
     '$filter',
+    '$uibModal',
     'apiUrl',
     'EventsService',
     'GalleryService',
@@ -17,9 +18,26 @@
     'TagsService'
   ];
 
+  /**
+   * @param $http
+   * @param $q
+   * @param $filter
+   * @param apiUrl
+   * @param EventsService
+   * @param GalleryService
+   * @param MediaService
+   * @param NewsService
+   * @param ReleasesService
+   * @param TagsService
+   *
+   * @returns {{COLUMNS: *[], getPages: _getPages, addPage: addPage, getPage: getPage, updatePage: updatePage, removePage: removePage, module: module}}
+   *
+   * @constructor
+   */
   function PagesService($http,
                         $q,
                         $filter,
+                        $uibModal,
                         apiUrl,
                         EventsService,
                         GalleryService,
@@ -27,7 +45,7 @@
                         NewsService,
                         ReleasesService,
                         TagsService) {
-    console.log('... PagesService');
+    clog('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
 
@@ -133,11 +151,11 @@
     };
 
     /**
-     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial}}
+     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial, handle}}
      *
      * @private
      */
-    var _module = (function (_getPages) {
+    var _module = (function (_getPages, $uibModal) {
       var _obj = {};
 
       // Parse widget object to send its data to webservice
@@ -381,7 +399,7 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          console.log('lasttvprograms parsesave >>>>>>>>>>>', widget);
+          clog('lasttvprograms parsesave >>>>>>>>>>>', widget);
         }
       };
 
@@ -593,7 +611,7 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          console.log('lasttvprograms parseload >>>>>>>>>>>', widget);
+          clog('lasttvprograms parseload >>>>>>>>>>>', widget);
         }
       };
 
@@ -752,7 +770,7 @@
           $scope.icons = [];
 
           MediaService.getIcons().then(function (data) {
-            console.log(data);
+            clog(data);
             $scope.icons = data.data;
           });
         },
@@ -815,7 +833,7 @@
          * @returns {object}
          */
         parseWidgetToSave: function (widget) {
-          console.log('>>> parseWidgetToSave', widget);
+          clog('>>> parseWidgetToSave', widget);
 
           if (typeof _parseToSave[widget.type] !== 'undefined') {
             _parseToSave[widget.type](widget);
@@ -829,7 +847,7 @@
          * @returns {object}
          */
         parseWidgetToLoad: function (widget) {
-          console.log('>>> parseWidgetToLoad', widget);
+          clog('>>> parseWidgetToLoad', widget);
 
           if (typeof _parseToLoad[widget.type] !== 'undefined') {
             _parseToLoad[widget.type](widget);
@@ -844,9 +862,45 @@
           if (_preparing[$scope.widget.type]) {
             _preparing[$scope.widget.type]($scope);
           }
+        },
+        /**
+         * @param $scope
+         * @param column
+         * @param idx
+         */
+        handle: function ($scope, column, idx) {
+          var moduleModal = $uibModal.open({
+            templateUrl: 'components/modal/module.modal.template.html',
+            controller: 'ModuleModalController',
+            backdrop: 'static',
+            size: 'lg',
+            resolve: {
+              module: function () {
+                if (typeof idx !== 'undefined') {
+                  return $scope.page.widgets[column][idx];
+                }
+
+                return false;
+              },
+              widgets: function () {
+                return $scope.widgets;
+              },
+              columns: function () {
+                return $scope.page.columns;
+              }
+            }
+          });
+
+          moduleModal.result.then(function (data) {
+            if (typeof idx !== 'undefined') {
+              $scope.page.widgets[column][idx] = data;
+            } else {
+              $scope.page.widgets[column].push(data);
+            }
+          });
         }
       };
-    })(_getPages);
+    })(_getPages, $uibModal);
 
     return {
       // Columns defaults

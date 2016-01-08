@@ -17,7 +17,7 @@ angular
   ];
 
   function PeriodicalNewController($scope, $routeParams, PeriodicalService, StatusService, NotificationService, MediaService, DateTimeHelper, $location) {
-        console.log('... PeriodicalNewController');
+        clog('... PeriodicalNewController');
 
         $scope.status = [];
 

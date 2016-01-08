@@ -13,7 +13,7 @@
   ];
 
   function EventsService($http, $q, $filter, DateTimeHelper, apiUrl) {
-    console.log('... EventsService');
+    clog('... EventsService');
 
     var EVENT_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'event');
 

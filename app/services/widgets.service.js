@@ -11,7 +11,7 @@
   ];
 
   function WidgetsService($http, $q, apiUrl) {
-    console.log('... WidgetsService');
+    clog('... WidgetsService');
 
     return {
       /**

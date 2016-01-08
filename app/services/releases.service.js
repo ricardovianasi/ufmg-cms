@@ -14,7 +14,7 @@
   ];
 
   function ReleasesService($http, $q, $filter, DateTimeHelper, StatusService, apiUrl) {
-    console.log('... ReleasesService');
+    clog('... ReleasesService');
 
     var RELEASE_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'release');
 

@@ -32,7 +32,7 @@ angular
               StatusService,
               DateTimeHelper) {
 
-      console.log('... ReleasesEditController');
+      clog('... ReleasesEditController');
 
       $scope.title = 'Editar Evento: ';
       $scope.breadcrumb = $scope.title;

@@ -21,7 +21,7 @@
                                 GalleryService,
                                 MediaService,
                                 NotificationService) {
-    console.log('... GaleriasNovoController');
+    clog('... GaleriasNovoController');
 
     $scope.status = [];
     $scope.categories = [];

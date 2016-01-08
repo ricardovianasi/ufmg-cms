@@ -28,7 +28,7 @@
                                            DateTimeHelper,
                                            $location,
                                            $timeout) {
-    console.log('... PeriodicalEditionEditController');
+    clog('... PeriodicalEditionEditController');
     $scope.edition = {};
     $scope.status = [];
 

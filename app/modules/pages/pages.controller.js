@@ -21,7 +21,7 @@
                           PagesService,
                           NotificationService,
                           StatusService) {
-    console.log('... PagesController');
+    clog('... PagesController');
 
     $scope.status = [];
     $scope.pages = [];

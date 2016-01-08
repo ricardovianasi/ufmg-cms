@@ -9,8 +9,9 @@
                                  lodash,
                                  PagesService,
                                  module,
-                                 widgets) {
-    console.log('... ModuleModalController');
+                                 widgets,
+                                 columns) {
+    clog('... ModuleModalController');
 
     var _ = lodash;
 
@@ -59,7 +60,8 @@
         };
 
         cropped(data.type, croppedObj);
-      }
+      },
+      formats: columns == 2 ? ['vertical', 'medium'] : null
     };
 
     $scope.ok = function () {
@@ -71,7 +73,7 @@
 
       angular.extend(_obj, $scope.widget);
 
-      console.log('>>> ok', _obj);
+      clog('>>> ok', _obj);
 
       $uibModalInstance.close(_obj);
     };
