@@ -7,16 +7,18 @@
 
   redactor.$inject = [
     '$timeout',
+    'lodash',
     'RedactorPluginService',
   ];
 
   /**
    * @param $timeout
+   * @param _
    * @param RedactorPluginService
    *
    * @returns {{restrict: string, require: string, link: link}}
    */
-  function redactor($timeout, RedactorPluginService) {
+  function redactor($timeout, _, RedactorPluginService) {
     var _options = {
       lang: 'pt_br',
       plugins: ['video', 'soundcloud'],
@@ -86,6 +88,8 @@
         if (typeof additionalOptions.plugins !== 'undefined') {
           _options.plugins = defaultPlugins.concat(additionalOptions.plugins);
         }
+
+        _options.plugins = _.uniq(_options.plugins);
 
         _applyPlugins($scope, attrs);
 
