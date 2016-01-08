@@ -74,6 +74,26 @@
 
 <script src="assets/js/TweenMax.min.js"></script>
 <script src="scripts/vendors.min.js"></script>
+
+<script>
+    function clog() {
+        var args = Array.prototype.slice.call(arguments);
+
+        //in case logging without title
+        if (args.length > 1 && typeof args[0] !== 'string') {
+            log(args);
+        }
+
+        var title = '[c="color:#eee;background-color:#333"] {title} >>> [c]'.replace('{title}', args.splice(0, 1)[0]);
+
+        if (!args.length) {
+            log(title);
+        } else {
+            log(title, args);
+        }
+    }
+</script>
+
 <script src="scripts/app.min.js"></script>
 
 <!-- Bottom Scripts -->
