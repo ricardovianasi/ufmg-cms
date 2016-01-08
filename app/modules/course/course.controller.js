@@ -19,7 +19,7 @@
                             dataTableConfigService,
                             NotificationService,
                             StatusService) {
-    console.log('... CourseController');
+    clog('... CourseController');
 
     $scope.status = [];
     $scope.courses = [];

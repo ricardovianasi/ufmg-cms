@@ -21,7 +21,7 @@
                                 NotificationService,
                                 ReleasesService,
                                 DateTimeHelper) {
-        console.log('... ReleasesController');
+        clog('... ReleasesController');
 
         $scope.title = 'Releases';
         $scope.releases = [];

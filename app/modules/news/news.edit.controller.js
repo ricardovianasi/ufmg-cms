@@ -26,7 +26,7 @@
                               StatusService,
                               MediaService,
                               DateTimeHelper) {
-    console.log('... NoticiasEditController');
+    clog('... NoticiasEditController');
 
     $scope.news = {};
     $scope.news.tags = [];

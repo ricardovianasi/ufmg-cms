@@ -5,7 +5,7 @@
     .factory('tabsService', tabsService);
 
   function tabsService() {
-    console.log('... TabsService');
+    clog('... TabsService');
 
     var tabs = {
       home: true,

@@ -257,7 +257,7 @@
     };
 
     $scope.$on("cropme:done", function (ev, result, canvasEl) {
-      console.log(ev, result, canvasEl);
+      clog(ev, result, canvasEl);
     });
   }
 })();

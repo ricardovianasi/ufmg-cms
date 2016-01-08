@@ -25,7 +25,7 @@
                                NotificationService,
                                StatusService,
                                DateTimeHelper) {
-    console.log('... EventsNewController');
+    clog('... EventsNewController');
 
     $scope.title = 'Novo Evento';
     $scope.breadcrumb = $scope.title;

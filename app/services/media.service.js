@@ -11,7 +11,7 @@
       '$httpParamSerializer',
       'apiUrl',
       function ($q, $http, $filter, Upload, SerializeService, $httpParamSerializer, apiUrl) {
-        console.log('... MediaService');
+        clog('... MediaService');
 
         var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'file');
         var PAGE = 1;

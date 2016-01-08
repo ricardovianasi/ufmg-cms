@@ -12,7 +12,7 @@
   ];
 
   function GalleryService($q, $http, $filter, apiUrl) {
-    console.log('... GalleryService');
+    clog('... GalleryService');
 
     var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
 

@@ -20,7 +20,7 @@
                           NotificationService,
                           DateTimeHelper) {
 
-    console.log('... NoticiasController');
+    clog('... NoticiasController');
 
     $scope.news = [];
     $scope.currentPage = 1;

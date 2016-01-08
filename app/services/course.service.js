@@ -7,7 +7,7 @@
       '$http',
       'apiUrl',
       function ($q, $http, apiUrl) {
-        console.log('... CourseService');
+        clog('... CourseService');
 
         return {
           getCourseRoutes: function () {

@@ -27,7 +27,7 @@
                         NewsService,
                         ReleasesService,
                         TagsService) {
-    console.log('... PagesService');
+    clog('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
 
@@ -381,7 +381,7 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          console.log('lasttvprograms parsesave >>>>>>>>>>>', widget);
+          clog('lasttvprograms parsesave >>>>>>>>>>>', widget);
         }
       };
 
@@ -593,7 +593,7 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          console.log('lasttvprograms parseload >>>>>>>>>>>', widget);
+          clog('lasttvprograms parseload >>>>>>>>>>>', widget);
         }
       };
 
@@ -752,7 +752,7 @@
           $scope.icons = [];
 
           MediaService.getIcons().then(function (data) {
-            console.log(data);
+            clog(data);
             $scope.icons = data.data;
           });
         },
@@ -815,7 +815,7 @@
          * @returns {object}
          */
         parseWidgetToSave: function (widget) {
-          console.log('>>> parseWidgetToSave', widget);
+          clog('>>> parseWidgetToSave', widget);
 
           if (typeof _parseToSave[widget.type] !== 'undefined') {
             _parseToSave[widget.type](widget);
@@ -829,7 +829,7 @@
          * @returns {object}
          */
         parseWidgetToLoad: function (widget) {
-          console.log('>>> parseWidgetToLoad', widget);
+          clog('>>> parseWidgetToLoad', widget);
 
           if (typeof _parseToLoad[widget.type] !== 'undefined') {
             _parseToLoad[widget.type](widget);

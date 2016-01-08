@@ -31,7 +31,7 @@
                                WidgetsService,
                                StatusService,
                                DateTimeHelper) {
-    console.log('... PaginasEditarController');
+    clog('... PaginasEditarController');
 
     $scope.widgets = [];
     $scope.status = [];

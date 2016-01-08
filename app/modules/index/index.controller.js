@@ -6,6 +6,6 @@
     .controller('IndexController', IndexController);
 
   function IndexController() {
-    console.log('... IndexController');
+    clog('... IndexController');
   }
 })();

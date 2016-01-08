@@ -9,7 +9,7 @@
       'DateTimeHelper',
       'apiUrl',
       function ($http, $q, $filter, DateTimeHelper, apiUrl) {
-        console.log('... ClippingsService');
+        clog('... ClippingsService');
 
         var APIUrl = apiUrl;
         var CLIPPING_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'clipping');

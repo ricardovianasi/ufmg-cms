@@ -19,7 +19,7 @@
                                $routeParams,
                                StatusService,
                                MediaService) {
-    console.log('... GalleryEditController');
+    clog('... GalleryEditController');
 
     $scope.status = [];
     $scope.file = {};

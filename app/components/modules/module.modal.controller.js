@@ -10,7 +10,7 @@
                                  PagesService,
                                  module,
                                  widgets) {
-    console.log('... ModuleModalController');
+    clog('... ModuleModalController');
 
     var _ = lodash;
 
@@ -71,7 +71,7 @@
 
       angular.extend(_obj, $scope.widget);
 
-      console.log('>>> ok', _obj);
+      clog('>>> ok', _obj);
 
       $uibModalInstance.close(_obj);
     };

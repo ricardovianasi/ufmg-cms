@@ -19,7 +19,7 @@
                             GalleryService,
                             StatusService,
                             NotificationService) {
-    console.log('... GaleriasController');
+    clog('... GaleriasController');
 
     $scope.galleries = [];
     $scope.status = [];

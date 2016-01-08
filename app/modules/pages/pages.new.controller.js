@@ -27,7 +27,7 @@
                               WidgetsService,
                               StatusService,
                               DateTimeHelper) {
-    console.log('... PagesNewController');
+    clog('... PagesNewController');
 
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;

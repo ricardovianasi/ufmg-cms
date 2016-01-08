@@ -21,7 +21,7 @@
                                 $modal,
                                 NotificationService) {
 
-    console.log('... PeriodicalController');
+    clog('... PeriodicalController');
 
     $scope.periodicals = [];
     $scope.currentPage = 1;

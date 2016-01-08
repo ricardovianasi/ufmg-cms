@@ -15,7 +15,7 @@
                             dataTableConfigService,
                             EventsService,
                             DateTimeHelper) {
-    console.log('... EventsController');
+    clog('... EventsController');
 
     $scope.title = 'Eventos';
     $scope.events = [];

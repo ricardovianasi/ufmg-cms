@@ -11,7 +11,7 @@
   ];
 
   function TagsService($http, $q, apiUrl) {
-    console.log('... TagsService');
+    clog('... TagsService');
 
     return {
       getTags: function () {

@@ -19,7 +19,7 @@
                              NewsService,
                              NotificationService,
                              StatusService) {
-    console.log('... NoticiasNovoController');
+    clog('... NoticiasNovoController');
 
     $scope.title = 'Nova Notícia';
     $scope.breadcrumb = 'Nova Notícia';

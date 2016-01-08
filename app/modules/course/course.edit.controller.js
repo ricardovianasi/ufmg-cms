@@ -29,7 +29,7 @@
                                 StatusService,
                                 DateTimeHelper,
                                 MediaService) {
-    console.log('... CourseController');
+    clog('... CourseController');
 
 
     /**
@@ -73,7 +73,7 @@
         $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
       }
 
-      console.log($scope.course);
+      clog($scope.course);
     });
 
 

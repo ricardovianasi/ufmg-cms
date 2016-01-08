@@ -7,7 +7,7 @@
   NotificationService.$inject = ['toastr'];
 
   function NotificationService(toastr) {
-    console.log('... NotificationService');
+    clog('... NotificationService');
 
     return {
       success: function (title, msg) {

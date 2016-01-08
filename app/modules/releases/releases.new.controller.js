@@ -30,7 +30,7 @@
                 StatusService,
                 DateTimeHelper) {
 
-        console.log('... ReleasesNewController');
+        clog('... ReleasesNewController');
 
         $scope.title = 'Novo Release';
         $scope.breadcrumb = $scope.title;
