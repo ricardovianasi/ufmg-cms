@@ -69,7 +69,7 @@
      * get all media
      */
     function _loadMidia(page) {
-      MediaService.getMedia(page, 27).then(function (result) {
+      MediaService.getMedia(page, 27, 'type=mp3').then(function (result) {
         vm.midia = result.data;
       });
     }
