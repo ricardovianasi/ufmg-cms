@@ -7,7 +7,6 @@
   UploadComponentController.$inject = [
     '$scope',
     '$uibModalInstance',
-    'lodash',
     'MediaService',
     'tabsService',
     'formats'
@@ -16,14 +15,13 @@
   /**
    * @param $scope
    * @param $uibModalInstance
-   * @param _
    * @param MediaService
    * @param tabsService
    * @param formats
    *
    * @constructor
    */
-  function UploadComponentController($scope, $uibModalInstance, _, MediaService, tabsService, formats) {
+  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
