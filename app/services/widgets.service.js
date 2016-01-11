@@ -21,7 +21,6 @@
         var deferred = $q.defer();
 
         $http.get(apiUrl + '/widget').then(function (data) {
-          console.log(data);
           deferred.resolve(data);
         });
 

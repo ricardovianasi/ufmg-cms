@@ -399,7 +399,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parsesave >>>>>>>>>>>', widget);
+          _obj.type = widget.type;
+          _obj.title = widget.title;
         }
       };
 
@@ -611,7 +612,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parseload >>>>>>>>>>>', widget);
+          clog('lasttvprograms parse to load >>>>>>', widget);
+          _obj.type = widget.type;
         }
       };
 
@@ -810,6 +812,10 @@
          * @param $scope
          */
         highlightednewsvideo: function ($scope) {
+          _preparingNews($scope);
+          _prepareItems($scope);
+        },
+        lasttvprograms: function($scope){
           _preparingNews($scope);
           _prepareItems($scope);
         },
