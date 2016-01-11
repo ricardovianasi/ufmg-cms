@@ -1,17 +1,17 @@
-<div class=modal-header>
+<div class="modal-header">
     <h3 class="modal-title">Widget - {{ widget.type }}</h3>
 </div>
 
 <div class="modal-body">
     <form>
         <fieldset>
-            <div class=form-group>
+            <div class="form-group">
                 <label>T&iacute;tulo do Widget:</label>
                 <input type="text" title="Título do Widget" class="form-control"
                        ng-model="widget.title">
             </div>
 
-            <div ng-if="!module" class=form-group>
+            <div ng-if="!module" class="form-group">
                 <label>M&oacute;dulo:</label>
 
                 <ui-select ng-model="widget.selected" theme="bootstrap">
@@ -30,10 +30,10 @@
 </div>
 
 <div class=modal-footer>
-    <button type=button class="btn btn-danger"
+    <button type="button" class="btn btn-danger"
             ng-click="cancel()">Cancelar</button>
 
-    <button type=button class="btn btn-success"
+    <button type="button" class="btn btn-success"
             ng-disabled="widget.title == '' || widget.type == ''"
             ng-click="ok()">
         Salvar
