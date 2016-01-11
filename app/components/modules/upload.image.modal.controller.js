@@ -11,6 +11,14 @@
     'Cropper'
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModalInstance
+   * @param $timeout
+   * @param Cropper
+   *
+   * @constructor
+   */
   function UploadImageModalController($scope, $uibModalInstance, $timeout, Cropper) {
     $scope.upload_photo = null;
     $scope.imageLink = '';
@@ -40,18 +48,27 @@
 
     $scope.active_step = $scope.steps[0];
 
+    /**
+     * @param idx
+     */
     $scope.activeStep = function (idx) {
       $scope.active_step = $scope.steps[idx];
     };
 
     $scope.selected_image = '';
 
+    /**
+     * @param image
+     */
     $scope.selectImage = function (image) {
       if ($scope.selected_image != image) {
         $scope.selected_image = image;
       }
     };
 
+    /**
+     * @param blob
+     */
     $scope.onFile = function (blob) {
       file = blob;
       angular.forEach([blob], function (file) {
@@ -68,6 +85,9 @@
     $scope.cropper = {};
     $scope.cropperProxy = 'cropper.first';
 
+    /**
+     *
+     */
     $scope.preview = function () {
       if (!file || !data) {
         return;
@@ -78,7 +98,10 @@
       });
     };
 
-    $scope.clear = function (degrees) {
+    /**
+     *
+     */
+    $scope.clear = function () {
       if (!$scope.cropper.first) {
         return;
       }
@@ -86,6 +109,9 @@
       $scope.cropper.first('clear');
     };
 
+    /**
+     * @param width
+     */
     $scope.scale = function (width) {
       Cropper.crop(file, data)
         .then(function (blob) {
@@ -102,6 +128,9 @@
     $scope.showEvent = 'show';
     $scope.hideEvent = 'hide';
 
+    /**
+     *
+     */
     $scope.hideCropper = function () {
       $scope.dataUrl = '';
       $scope.$broadcast($scope.hideEvent);
@@ -161,6 +190,9 @@
 
     $scope.selected_library = '';
 
+    /**
+     * @param library
+     */
     $scope.selectLibrary = function (library) {
       $scope.selected_library = library;
       $scope.activeStep(2);
@@ -181,6 +213,9 @@
       }
     };
 
+    /**
+     * @param format
+     */
     $scope.selectFormat = function (format) {
       $scope.selectedFormat = format;
 
@@ -202,6 +237,9 @@
       description: ''
     };
 
+    /**
+     *
+     */
     $scope.showCropper = function () {
       $scope.activeStep(3);
       $scope.dataUrl = $scope.selected_image.url;
@@ -223,6 +261,9 @@
       }
     });
 
+    /**
+     * @param crop
+     */
     $scope.okInsertImage = function (crop) {
       var obj = {
         x: position.x,
@@ -252,6 +293,9 @@
       }
     };
 
+    /**
+     *
+     */
     $scope.closeInsertImage = function () {
       $uibModalInstance.dismiss('cancel');
     };
