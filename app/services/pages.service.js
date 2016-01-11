@@ -146,7 +146,7 @@
       $scope.tags = [];
 
       TagsService.getTags().then(function (data) {
-        $scope.tags = data.data[0];
+        $scope.tags = data.data.items[0];
       });
     };
 
@@ -772,7 +772,6 @@
           $scope.icons = [];
 
           MediaService.getIcons().then(function (data) {
-            clog(data);
             $scope.icons = data.data;
           });
         },

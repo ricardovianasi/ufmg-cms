@@ -53,7 +53,7 @@
       containment: '#sort-main'
     };
 
-    $scope.page_image = null;
+    $scope.page_cover = null;
     $scope.page = {
       image: null,
       scheduled_at: {},
@@ -67,7 +67,11 @@
       }
     };
 
-    // Publish
+    /**
+     * Publish
+     *
+     * @param page
+     */
     $scope.publish = function (page) {
       PagesService.addPage(page).then(function () {
         NotificationService.success('Página criada com sucesso.');
@@ -75,29 +79,49 @@
       });
     };
 
-    // Cover Image - Upload
-    $scope.$watch('page_image', function () {
-      if ($scope.page_image) {
-        $scope.upload([$scope.page_image]);
-      }
-    });
+    /**
+     * Cover Image - Upload
+     */
+    $scope.uploadCover = function () {
+      var moduleModal = $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl',
+        resolve: {
+          formats: function () {
+            return ['pageCover'];
+          }
+        }
+      });
 
-    $scope.upload = function (files) {
-      angular.forEach(files, function (file) {
-        MediaService.newFile(file).then(function (data) {
-          $scope.page.image = {url: data.url, id: data.id};
-        });
+      // Insert into textarea
+      moduleModal.result.then(function (data) {
+        $scope.page.image = {
+          url: data.url,
+          id: data.id
+        };
       });
     };
 
-    $scope.removeImage = function () {
+    /**
+     * Cover Image - Remove
+     */
+    $scope.removeCover = function () {
       $timeout(function () {
         $scope.page.image = '';
         $scope.$apply();
       });
     };
 
-    // Modal - Add/Edit Module
+    /**
+     * Modal - Add/Edit Module
+     *
+     * @param column
+     * @param idx
+     *
+     * @returns {*}
+     */
     $scope.handleModule = function (column, idx) {
       return PagesService.module().handle($scope, column, idx);
     };
