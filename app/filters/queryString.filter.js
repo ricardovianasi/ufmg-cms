@@ -2,24 +2,27 @@
   'use strict';
 
   angular.module('filterModule')
-    .filter('queryString', [
-      function () {
-        var qs = function(obj, prefix){
-          var str = [];
+    .filter('queryString', QueryString);
 
-          for (var p in obj) {
-            var k = prefix ? prefix + "[" + p + "]" : p;
-            var v = obj[p];
+  /**
+   * @returns {qs}
+   *
+   * @constructor
+   */
+  function QueryString() {
+    var qs = function (obj, prefix) {
+      var str = [];
 
-            str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
+      for (var p in obj) {
+        var k = prefix ? prefix + "[" + p + "]" : p;
+        var v = obj[p];
 
-            console.log(str);
-          }
-
-          return str.join("&");
-        };
-
-        return qs;
+        str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
       }
-    ]);
+
+      return str.join("&");
+    };
+
+    return qs;
+  }
 })();

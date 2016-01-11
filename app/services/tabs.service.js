@@ -4,6 +4,9 @@
   angular.module('serviceModule')
     .factory('tabsService', tabsService);
 
+  /**
+   * @returns {{getTabs: _getTabs, selectTab: _selectTab}}
+   */
   function tabsService() {
     clog('... TabsService');
 
@@ -19,22 +22,22 @@
     };
 
     /**
-     * @return {tabs}
+     * @returns {{home: boolean, midia: boolean, crop: boolean}}
+     *
+     * @private
      */
-    function _getTabs(){
+    function _getTabs() {
       return tabs;
     }
 
     /**
-     * @param  {nextTab}
-     * @return {organized tabs}
+     * @param nextTab
+     *
+     * @private
      */
     function _selectTab(nextTab) {
-      angular.forEach(tabs, function(value, key) {
-          if(key == nextTab)
-            tabs[key] = true;
-          else
-            tabs[key] = false;
+      angular.forEach(tabs, function (value, key) {
+        tabs[key] = key == nextTab;
       });
     }
   }

@@ -84,18 +84,35 @@
       }
     });
 
-    $scope.upload = function (files) {
-      angular.forEach(files, function (file) {
-        MediaService.newFile(file).then(function (data) {
-          $scope.page.image = {
-            id: data.id,
-            url: data.url
-          };
-        });
+    /**
+     * Cover Image - Upload
+     */
+    $scope.uploadCover = function () {
+      var moduleModal = $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl',
+        resolve: {
+          formats: function () {
+            return ['pageCover'];
+          }
+        }
+      });
+
+      // Insert into textarea
+      moduleModal.result.then(function (data) {
+        $scope.page.image = {
+          url: data.url,
+          id: data.id
+        };
       });
     };
 
-    $scope.removeImage = function () {
+    /**
+     * Cover Image - Remove
+     */
+    $scope.removeCover = function () {
       $timeout(function () {
         $scope.page.image = '';
         $scope.$apply();

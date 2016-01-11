@@ -770,7 +770,6 @@
           $scope.icons = [];
 
           MediaService.getIcons().then(function (data) {
-            clog(data);
             $scope.icons = data.data;
           });
         },

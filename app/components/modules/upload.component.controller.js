@@ -7,7 +7,6 @@
   UploadComponentController.$inject = [
     '$scope',
     '$uibModalInstance',
-    'lodash',
     'MediaService',
     'tabsService',
     'formats'
@@ -16,14 +15,13 @@
   /**
    * @param $scope
    * @param $uibModalInstance
-   * @param _
    * @param MediaService
    * @param tabsService
    * @param formats
    *
    * @constructor
    */
-  function UploadComponentController($scope, $uibModalInstance, _, MediaService, tabsService, formats) {
+  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -52,6 +50,11 @@
         name: 'Widescreen',
         width: 1920,
         height: 504
+      },
+      pageCover: {
+        name: 'Capa da Página',
+        width: 1920,
+        height: 444
       }
     };
 
@@ -190,6 +193,7 @@
       MediaService.cropImage(vm.currentFile.id, obj).then(function (data) {
         $uibModalInstance.close({
           type: vm.activeFormat,
+          id: data.data.id,
           url: data.data.url,
           legend: vm.currentFile.legend,
           author: vm.currentFile.author.name
