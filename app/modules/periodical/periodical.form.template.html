@@ -1,0 +1,105 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">
+            <span ng-if="periodical.name">{{periodical.name}}</span>
+            <span ng-if="!periodical.name">Novo Periódico</span>
+        </h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/periodicals">
+                    <strong>Periódicos Jornalistas</strong>
+                </a>
+            </li>
+            <li class="active" ng-if="!periodical.name">
+                <a href="#/periodicals/new">
+                    <strong>Novo Periódico</strong>
+                </a>
+            </li>
+
+            <li class="active" ng-if="periodical.name">
+                <a href="#periodicals/edit/{{periodical.id}}">
+                    <strong>{{periodical.name}}</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+<div class=row>
+    <div class="col-xs-12 panel panel-default">
+        <form class="form">
+            <div class="row">
+                <div class="form-group">
+                    <label>Nome:</label>
+                    <input type="text" ng-model="periodical.name" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>
+                        Logo:<small>A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px</small>
+                    </label>
+
+                    <div class="pages-module">
+                        <div class="chosen-cover">
+                            <span ng-show="periodical.url" ng-click="removeImage()" class="label label-danger remove-image">
+                            <span class="fa fa-remove"></span>
+                            REMOVER IMAGEM</span>
+                        </div>
+
+                        <div ng-show="!periodical.url" ngf-accept="'image/*'" ngf-select ng-model="add_photos" ngf-multiple="false" class="add-module">+ Adicionar Logo</div>
+
+                        <div ng-show="periodical.url" class="uploaded-image periodical-logo">
+                            <img ng-src="{{periodical.url}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Identificador (slogan):</label>
+                    <input type="text" ng-model="periodical.identifier" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class=form-group>
+                    <label>Data da Criação:</label>
+                    <input type="text" ng-model="periodical.date" class="form-control">
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Formato de Data:</label>
+                    <select ng-model="periodical.date_format" ng-options="date_format.id as date_format.id for date_format in date_formats" class="form-control"></select>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <a ng-click class="btn btn-danger pull-left spacer-right">Cancelar</a>
+                        <a ng-click="publish(periodical)" class="btn btn-success pull-left">Salvar</a></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

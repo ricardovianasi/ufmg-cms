@@ -1,0 +1,107 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Nova Mídia</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/media">
+                    <strong>Páginas</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/media">
+                    <strong>Nova Mídia</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+
+            <form class="form">
+
+
+                <!-- <div class=row>
+                    <div class=col-xs-12>
+                        <div class="pages-module pages-module-cover">
+                            <div class=chosen-cover><span ng-click=removeImage() ng-show=page.image class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span>
+                            </div>
+                            <div ngf-accept="'image/*'" ngf-select ng-model=page_image ngf-multiple=false ng-show=!page.image class=add-module>+ Adicionar Capa</div>
+                            <div ng-show=page.image class=uploaded-image><img ng-src="{{ page.image.url }}"></div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+
+                <div class="row">
+                    <div class="col-xs-8">
+
+
+                        <div class="pages-module pages-module-cover">
+                            <img ng-show="file.url && file.type != 'mp3'" ng-src="{{file.url}}" style="max-width: 100%; height: auto;">
+
+                             <div ng-show="file.url && file.type === 'mp3'" audio audio-url="file.url"></div>
+
+                            <ul ng-show="!file.url" class="gallery-list">
+                                <li ngf-accept="'*/*'"
+                                    ngf-select ng-model="add_photos"
+                                    ngf-multiple="false"
+                                    class="dashed gallery-item media-item upload-photos">
+
+                                    <span class="fa fa-camera fa-2x"></span>
+                                    <br>Incluir arquivos
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label>Título</label>
+                            <input type="text" ng-model="file.title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Legenda</label>
+                            <input type="text" ng-model="file.legend" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" ng-model="file.description" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Texto Alternativo</label>
+                            <input type="text" ng-model="file.alt_text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hr>
+                        <div class="pull-right">
+                            <button ng-click="publish(file)" class="btn btn-success pull-left">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div><!--.panel-->
+    </div><!--.col-xs-12-->
+</div><!--.row-->
+
+
+
+
+
+

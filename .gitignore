@@ -1,0 +1,12 @@
+node_modules
+bower_components
+coverage
+public
+app/common/config/env*
+app/env-local.js
+*.zip
+*/*.zip
+build/*
+.idea
+app/env-local.json
+.DS_Store

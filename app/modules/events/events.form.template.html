@@ -1,0 +1,296 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Novo Evento</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/events">
+                    <strong>Eventos</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/events/new">
+                    <strong>Novo Evento</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-8 panel panel-default">
+        <form class="form">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="form-group">
+                        <label for="category">Categoria / Tipo do Evento</label>
+
+                        <select id="category" name="category" ng-model="event.type" ng-options="category.id as category.name for category in categories.items" class="form-control"></select>
+                    </div>
+
+                    <div class='form-group'>
+                        <label for="name">Nome do Evento</label>
+                        <input id="name" type="text" name="name" ng-model="event.name" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+
+                        <ui-select id="tags" name="tags" title="Digite uma tag" multiple tagging sortable="true" tagging-tokens=",|ENTER|TAB" tagging-label ng-model="event.tags" theme="bootstrap" ng-disabled="disabled">
+                            <ui-select-match placeholder="Selecione as tags">{{ $item }}</ui-select-match>
+
+                            <ui-select-choices repeat="color in availableColors | filter:$select.search">{{ color }}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div style="margin-top: 20px" class="pages-module pages-module-cover">
+                        <div class="chosen-cover">
+                            <span ng-click="imgHandler.removeImage('poster')" ng-show=event.poster class="label label-danger remove-image">
+                                <span class="fa fa-remove"></span> Remover Cartaz
+                            </span>
+                        </div>
+
+                        <div ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="event.poster" ng-show="!event.poster" class="add-module">+ Adicionar Capa</div>
+
+                        <div ng-show="event.poster" class="uploaded-image">
+                            <img ng-src="{{ event.poster.url }}">
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pages-module pages-module-cover">
+                        <div class="chosen-cover">
+                            <span ng-click="imgHandler.removeImage('photo')" ng-show="event.photo" class="label label-danger remove-image">
+                                <span class="fa fa-remove"></span> Remover Foto
+                            </span>
+                        </div>
+
+                        <div ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="event.photo" ng-show="!event.photo" class="add-module">+ Adicionar Foto</div>
+
+                        <div ng-show="event.photo" class="uploaded-image">
+                            <img ng-src="{{ event.photo.url }}">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!--row-->
+                <div class="col-xs-12">
+                    <div class=form-group>
+                        <label>Cursos de Interesse</label>
+
+                        <ul class="clearfix events-courses-list">
+                            <li ng-repeat="course in courses.items">
+                                <div class="checkbox">
+                                    <label for="course-{{ course.id }}">
+                                        <input type="checkbox" value="{{ course.id }}" name="courses[]" id="course-{{ course.id }}" ng-checked="event.courses.indexOf(course.id) &gt; -1" ng-click="toggleSelection(course.id)"> {{ course.name }}
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="audio">Áudio</label>
+                        <input id="audio" type="text" name="audio" ng-model="event.audio" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="video">Vídeo</label>
+                        <input id="video" type="text" name="video" ng-model="event.video" class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Descrição</label>
+                        <textarea id="description" name="description" cols="30" rows="5" ng-model="event.description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div><!--row-->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="datasheet">Ficha Técnica</label>
+                        <textarea id="datasheet" name="datasheet" cols="30" rows="5" ng-model="event.datasheet" redactor="redactorConfig"></textarea>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="initDate">
+                                        <span class="fa fa-calendar"></span> Data de início</label>
+
+                                        <input id="initDate" type="text" name="initDate"
+                                            ng-model="event.initDate"
+                                            ng-focus="datepickerOpt.initDate.open(this, $event)"
+                                            uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
+                                            datepicker-options="datepickerOpt.initDate.dateOptions"
+                                            is-open="datepickerOpt.initDate.status.opened"
+                                            min-date="datepickerOpt.initDate.minDate"
+                                            max-date="datepickerOpt.initDate.maxDate"
+                                            class="form-control ng-pristine ng-untouched ng-valid">
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fa fa-clock-o"></i> Horário de início
+                                    </label>
+
+                                    <uib-timepicker ng-model="event.initTime" hour-step="1" minute-step="1" show-meridian="timepickerOpt.initTime.isMeridian"></uib-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="endDate">
+                                        <span class="fa fa-calendar"></span> Data de fim
+                                    </label>
+
+                                    <input id="endDate" type="text" name="endDate"
+                                        ng-model="event.endDate"
+                                        ng-focus="datepickerOpt.endDate.open(this, $event, 'initDate')"
+                                        uib-datepicker-popup="{{ datepickerOpt.endDate.format }}"
+                                        datepicker-options="datepickerOpt.endDate.dateOptions"
+                                        is-open="datepickerOpt.endDate.status.opened"
+                                        min-date="datepickerOpt.endDate.minDate"
+                                        max-date="datepickerOpt.endDate.maxDate"
+                                        class="form-control ng-pristine ng-untouched ng-valid">
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fa fa-clock-o"></i> Horário de fim
+                                    </label>
+
+                                    <uib-timepicker ng-model="event.endTime" hour-step="1" minute-step="1" show-meridian="timepickerOpt.endTime.isMeridian"></uib-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="duration">
+                                        <i class="fa fa-history"></i> Duração
+                                    </label>
+
+                                    <input id="duration" type="text" name="duration" ng-model="event.duration" ui-mask="99:99" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="local">Local</label>
+                        <input id="local" type="text" name="local" ng-model="event.local" class='form-control'>
+                    </div>
+
+                    <div class='form-group'>
+                        <label for='investment'>Investimento</label>
+                        <input id="investment" type="text" name="investment" ng-model="event.investment" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="address">Endereço</label>
+                        <input id="address" type="text" name="address" ng-model='event.address' class='form-control'>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enrollment">Inscrição</label>
+                        <input id="enrollment" type="text" name="enrollment" ng-model="event.registration" class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <div class="well well-sm">
+                                <label for="free">
+                                    <input id="free" type="checkbox" name="free" ng-model="event.free"> Evento Gratuito</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label for='phone'>Telefone</label>
+                        <input id="phone" type="text" name="phone" ng-model="event.phone" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label for="email">E-mail de contato</label>
+                        <input id="email" type="text" name="email" ng-model="event.email" class='form-control'>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label for="site">Site</label>
+                        <input id="site" type="text" name="site" ng-model="event.site" class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+        </form>
+    </div>
+
+    <div class="col-xs-4">
+        <publishment-options route-model="event"></publishment-options>
+
+    </div>
+</div>

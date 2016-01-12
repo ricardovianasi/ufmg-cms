@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3 class="modal-title">Editar Imagens
+        <small ng-show="photos.length != 1">({{ currentPhotoIdx+1 }}/{{ photos.length }})</small>
+    </h3>
+</div>
+
+<div class="modal-body"
+     ng-repeat="photo in photos"
+     ng-show="currentPhoto.file == photo.file">
+    <div class="row">
+        <div class="col-xs-8 tac">
+            <img style="max-width: 100%; height: auto;"
+                 ng-src="{{ photo.file.url }}">
+        </div>
+
+        <div class="col-xs-4">
+            <div class="btn-group"
+                 ng-show="photos.length != 1">
+                <button class="btn btn-primary"
+                        ng-disabled="currentPhotoIdx == 0"
+                        ng-click="previousPhoto(currentPhotoIdx)">&laquo;</button>
+                <button class="btn btn-primary"
+                        ng-disabled="currentPhotoIdx == photos.length-1"
+                        ng-click="nextPhoto(currentPhotoIdx)">&raquo;</button>
+            </div>
+
+            <div class="form-group">
+                <label>Autor</label>
+                <input type="text" class="form-control"
+                       ng-model="photo.file.author.name">
+            </div>
+
+            <div class="form-group">
+                <label>Legenda</label>
+                <input type="text" class="form-control"
+                       ng-model="photo.file.legend">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-danger"
+            ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-success"
+            ng-click="ok()">Salvar Todas</button>
+</div>

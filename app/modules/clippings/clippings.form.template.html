@@ -1,0 +1,102 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">{{ title }}</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/clippings">
+                    <strong>Clippings</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/clippings/new">
+                    <strong>Novo Clipping</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 panel panel-default">
+        <form class="form">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-xs-7">
+                        <div class="form-group">
+                            <label for="origin">Origem da Matéria</label>
+                            <input id="origin" type="text" name="origin" ng-model="clipping.origin" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            <label>Data de Publicação</label>
+
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <select title="Dia" ng-model="clipping.date.day" class='form-control'>
+                                        <option value="{{ day }}" ng-repeat="day in time_days">{{ day }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <select title="Mês" ng-model='clipping.date.month' class="form-control">
+                                        <option value="{{ month }}" ng-repeat="month in time_months">{{ month }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <select title="Ano" ng-model="clipping.date.year" class="form-control">
+                                        <option value="{{ year }}" ng-repeat="year in time_years">{{ year }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="title">Título da Matéria</label>
+                        <input id="title" type="text" name="title" ng-model="clipping.title" class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="url">URL da Matéria</label>
+                        <input id="url" type="text" name="url" ng-model='clipping.url' class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+
+            <hr>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <a class="btn btn-danger pull-left spacer-right">Cancelar</a>
+                        <a ng-click="publish(clipping)" class="btn btn-success pull-left">Salvar</a>
+                    </div>
+                </div>
+            </div><!--row-->
+        </form>
+    </div>
+</div>

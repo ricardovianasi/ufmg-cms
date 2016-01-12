@@ -1,0 +1,94 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Novo Curso</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/course">
+                    <strong>Curso</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/course/new">
+                    <strong>Novo Curso</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-8 panel panel-default">
+        <form class="form">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" ng-model="course.name" ng-disabled="true" class="form-control">
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Tags</label>
+
+                        <ui-select multiple="multiple" tagging="tagging" tagging-tokens="," ng-model="course.tags" theme="bootstrap" ng-disabled="disabled" title="Digite uma tag">
+
+                            <ui-select-match placeholder="Selecione as tags">{{$item}}</ui-select-match>
+
+
+                            <ui-select-choices repeat="tag in course.tags | filter:$select.search">{{tags}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div><!--row-->
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pages-module pages-module-cover">
+                        <div class="chosen-cover">
+                            <span ng-show="course.cover_url" ng-click="removeImage()" class="label label-danger remove-image">
+                                <span class="fa fa-remove"></span> REMOVER IMAGEM
+                            </span>
+                        </div>
+
+                        <div ng-show="!course.cover_url" ngf-accept="'image/*'" ngf-select ng-model="course_cover" ngf-multiple="false" class='add-module'>+ Adicionar Capa</div>
+
+                        <div ng-show="course.cover_url" class="uploaded-image">
+                            <img ng-src="{{course.cover_url}}">
+                        </div>
+                    </div>
+                </div>
+            </div><!--row-->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea ng-model="course.description" redactor="redactorConfig" cols="50" rows="10"></textarea>
+                    </div>
+
+                </div>
+            </div><!--row-->
+
+        </form>
+    </div>
+
+    <div class="col-xs-4">
+        <publishment-options route-model="course"></publishment-options>
+
+    </div>
+</div>

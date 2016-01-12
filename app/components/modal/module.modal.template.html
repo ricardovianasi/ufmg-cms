@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h3 class="modal-title">Widget - {{ widget.type }}</h3>
+</div>
+
+<div class="modal-body">
+    <form>
+        <fieldset>
+            <div class="form-group">
+                <label>T&iacute;tulo do Widget:</label>
+                <input type="text" title="Título do Widget" class="form-control"
+                       ng-model="widget.title">
+            </div>
+
+            <div ng-if="!module" class="form-group">
+                <label>M&oacute;dulo:</label>
+
+                <ui-select ng-model="widget.selected" theme="bootstrap">
+                    <ui-select-match placeholder="Buscar Widget">{{ $select.selected.label }}</ui-select-match>
+                    <ui-select-choices repeat="widget in widgets.items|filter: $select.search" group-by="'group'">
+                        <div ng-bind-html="widget.label|highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div onload="preparePartial($event)"
+                 ng-if="widget.type !== undefined"
+                 ng-include="'components/modal/partials/{0}.html'|format:widget.type"></div>
+        </fieldset>
+    </form>
+</div>
+
+<div class=modal-footer>
+    <button type="button" class="btn btn-danger"
+            ng-click="cancel()">Cancelar</button>
+
+    <button type="button" class="btn btn-success"
+            ng-disabled="widget.title == '' || widget.type == ''"
+            ng-click="ok()">
+        Salvar
+    </button>
+</div>

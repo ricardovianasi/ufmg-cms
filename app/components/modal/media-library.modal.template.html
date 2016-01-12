@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h3 class=modal-title>M&oacute;dulo</h3>
+</div>
+
+<div class="modal-body modal__scroll--default">
+    <div class="row">
+        <div class="col-md-3 selected--resolveBorder"
+             ng-repeat="photo in media.items"
+             ng-class="{ 'selected': photo.selected }">
+            <div class="gallery-thumb"
+                 ng-click="addMediaSelected(photo.id, $index, photo)">
+                <img alt="{{ photo.altText }}" class="media-img"
+                     ng-src="{{ photo.url }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="media.total &gt; 30" class="row">
+    <div class="col-xs-12">
+        <uib-pagination class="pagination-sm"
+                        boundary-links="true"
+                        total-items="media.total"
+                        items-per-page="media.page_size"
+                        ng-model="currentPage"
+                        previous-text="‹"
+                        next-text="›"
+                        first-text="«"
+                        last-text="»"
+                        ng-change="changePage()">
+        </uib-pagination>
+    </div>
+</div>
+
+<div class=modal-footer>
+    <button class="btn btn-danger"
+            ng-click="cancel()">Cancelar</button>
+    <button class="btn btn-success"
+            ng-click="ok()">Salvar</button>
+</div>
