@@ -354,6 +354,7 @@
          * @param widget
          */
         internalmenu: function (widget) {
+          clog('internal menu pase to save', widget);
           _obj.links = widget.content ? widget.content.links : null;
         },
         /**
@@ -576,6 +577,7 @@
          * @param widget
          */
         internalmenu: function (widget) {
+          clog('internal menu pase to load', widget);
           _obj.links = widget.content ? widget.content.links : null;
         },
         /**
@@ -793,11 +795,15 @@
          * @param $scope
          */
         internalmenu: function ($scope) {
+
           $scope.pages = [];
+
+          _prepareItems($scope);
 
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+
         },
         /**
          * @param $scope
@@ -812,7 +818,6 @@
          */
         highlightednewsvideo: function ($scope) {
           _preparingNews($scope);
-          _prepareItems($scope);
         },
         lasttvprograms: function($scope){
           _preparingNews($scope);
