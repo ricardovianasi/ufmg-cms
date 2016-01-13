@@ -29,7 +29,7 @@
                                   StatusService,
                                   DateTimeHelper) {
 
-    clog('... ClippingsNewController');
+    console.log('... ClippingsNewController');
 
     $scope.title = 'Novo Clipping';
     $scope.breadcrumb = $scope.title;

@@ -13,7 +13,7 @@
   ];
 
   function ArticleModalController($scope, $uibModalInstance, article, MediaService, $timeout) {
-    clog('... ArticleModalController');
+    console.log('... ArticleModalController');
 
     if (article) {
       $scope.article = {

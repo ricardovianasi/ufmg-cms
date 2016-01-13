@@ -21,7 +21,7 @@
                               dataTableConfigService,
                               DateTimeHelper,
                               NotificationService) {
-    clog('... ClippingsController');
+    console.log('... ClippingsController');
 
     $scope.title = 'Clippings';
     $scope.clippings = [];

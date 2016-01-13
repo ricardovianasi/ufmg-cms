@@ -27,7 +27,7 @@
                                 NotificationService,
                                 StatusService,
                                 DateTimeHelper) {
-    clog('... EventsEditController');
+    console.log('... EventsEditController');
 
     $scope.title = 'Editar Evento: ';
     $scope.breadcrumb = $scope.title;

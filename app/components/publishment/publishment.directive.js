@@ -14,7 +14,7 @@
             obj: '=routeModel'
           },
           link: function ($scope, element, attrs) {
-            clog('... PublishmentDirective');
+            console.log('... PublishmentDirective');
 
             var obj = attrs.routeModel;
 

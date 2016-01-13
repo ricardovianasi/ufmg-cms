@@ -9,7 +9,7 @@
           templateUrl: 'components/sidebar/sidebar.template.html',
           controller: 'SidebarController',
           link: function () {
-            clog('... SidebarDirective');
+            console.log('... SidebarDirective');
           }
         };
       }

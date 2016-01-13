@@ -14,7 +14,7 @@
   ];
 
   function CourseNewController($scope, $modal, CourseService, NotificationService, StatusService) {
-    clog('... CourseController');
+    console.log('... CourseController');
 
     $scope.courses = [];
     CourseService.getCourses().then(function (data) {
