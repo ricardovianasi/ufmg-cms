@@ -22,6 +22,7 @@
    * @param $http
    * @param $q
    * @param $filter
+   * @param $uibModal
    * @param apiUrl
    * @param EventsService
    * @param GalleryService
@@ -45,7 +46,7 @@
                         NewsService,
                         ReleasesService,
                         TagsService) {
-    clog('... PagesService');
+    console.log('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
 
@@ -90,7 +91,6 @@
           obj.type = widget.type;
           obj.title = widget.title;
 
-          //angular.extend(obj, ModuleService.parseWidgetToSave(widget));
           angular.extend(obj, _module.parseWidgetToSave(widget));
 
           cleanPage.widgets[column].push(obj);
@@ -398,9 +398,18 @@
          *
          * @param widget
          */
-        lasttvprograms: function(widget){
+        lasttvprograms: function (widget) {
           _obj.type = widget.type;
           _obj.title = widget.title;
+        },
+        /**
+         * Communication Events
+         *
+         * @param widget
+         */
+        comevents: function (widget) {
+          _obj.type = widget.type;
+          _obj.event = widget.content.event.id;
         }
       };
 
@@ -442,14 +451,16 @@
             }
           }
         },
-
-        highlightednewsvideo: function(widget){
+        /**
+         * @param widget
+         */
+        highlightednewsvideo: function (widget) {
           _obj.text = widget.text;
 
-          if('content' in widget) {
+          if ('content' in widget) {
             _obj.news = widget.content.news;
           }
-          else{
+          else {
             _obj.news = widget.news;
           }
 
@@ -605,15 +616,24 @@
           _obj.title = widget.title;
           _obj.content = widget.content;
         },
-
-         /**
+        /**
          * Last Tv Programs
          *
          * @param widget
          */
-        lasttvprograms: function(widget){
-          clog('lasttvprograms parse to load >>>>>>', widget);
+        lasttvprograms: function (widget) {
           _obj.type = widget.type;
+        },
+        /**
+         * Communicaton Events
+         *
+         * @param widget
+         */
+        comevents: function (widget) {
+          _obj.content = widget.content;
+          _obj.event = {
+            selected: widget.content.event
+          };
         }
       };
 
@@ -622,7 +642,7 @@
        *
        * @private
        */
-      var _prepareItems = function ($scope) {
+      var _preparingItems = function ($scope) {
         $scope.addItem = function (item, type) {
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
@@ -681,7 +701,7 @@
           $scope.galleries = data.data;
         });
 
-        _prepareItems($scope);
+        _preparingItems($scope);
       };
 
       /**
@@ -804,19 +824,21 @@
          */
         highlightedradionews: function ($scope) {
           _preparingNews($scope);
-          _prepareItems($scope);
+          _preparingItems($scope);
         },
-
         /**
          * @param $scope
          */
         highlightednewsvideo: function ($scope) {
           _preparingNews($scope);
-          _prepareItems($scope);
+          _preparingItems($scope);
         },
-        lasttvprograms: function($scope){
+        /**
+         * @param $scope
+         */
+        lasttvprograms: function ($scope) {
           _preparingNews($scope);
-          _prepareItems($scope);
+          _preparingItems($scope);
         },
         /**
          * @param $scope
@@ -828,7 +850,16 @@
         highlightedevent: _preparingEvents,
         gallery: _preparingGalleries,
         eventlist: _getTags,
-        editorialnews: _preparingNews
+        editorialnews: _preparingNews,
+        /**
+         * @param $scope
+         */
+        comevents: function ($scope) {
+          $scope.event = {};
+          $scope.widget.content = $scope.widget.content || {};
+
+          _preparingEvents($scope);
+        }
       };
 
       return {
@@ -838,11 +869,13 @@
          * @returns {object}
          */
         parseWidgetToSave: function (widget) {
-          clog('>>> parseWidgetToSave', widget);
+          clog('parseWidgetToSave >>>', widget);
 
           if (typeof _parseToSave[widget.type] !== 'undefined') {
             _parseToSave[widget.type](widget);
           }
+
+          clog('_obj >>>', _obj);
 
           return _obj;
         },
@@ -852,7 +885,7 @@
          * @returns {object}
          */
         parseWidgetToLoad: function (widget) {
-          clog('>>> parseWidgetToLoad', widget);
+          clog('parseWidgetToLoad >>>', widget);
 
           if (typeof _parseToLoad[widget.type] !== 'undefined') {
             _parseToLoad[widget.type](widget);

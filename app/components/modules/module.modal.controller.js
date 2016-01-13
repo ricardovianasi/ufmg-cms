@@ -11,7 +11,7 @@
                                  module,
                                  widgets,
                                  columns) {
-    clog('... ModuleModalController');
+    console.log('... ModuleModalController');
 
     var _ = lodash;
 
@@ -34,6 +34,8 @@
       $scope.widget.selected.type = module.type;
 
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
+
+      clog('$scope.widget >>>', $scope.widget);
     }
 
     $scope.redactorOptions = {
@@ -86,7 +88,7 @@
 
       angular.extend(_obj, $scope.widget);
 
-      clog('>>> ok', _obj);
+      clog('OK >>>', _obj);
 
       $uibModalInstance.close(_obj);
     };
