@@ -8,7 +8,7 @@
       'SerializeService',
       'apiUrl',
       function ($http, $q, SerializeService, apiUrl) {
-        clog('... CalendarService');
+        console.log('... CalendarService');
 
         var week = [
           'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'

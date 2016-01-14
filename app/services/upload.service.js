@@ -3,7 +3,7 @@
 
   angular.module('serviceModule')
     .factory('UploadService', ['$q', '$http', 'Upload', function ($q, $http, Upload) {
-      clog('... UploadService');
+      console.log('... UploadService');
 
       return {
         uploadPhoto: function (files) {

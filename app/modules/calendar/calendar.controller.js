@@ -25,7 +25,7 @@
                               SerializeService,
                               NotificationService,
                               StatusService) {
-    clog('... CalendarController');
+    console.log('... CalendarController');
 
     $scope.calendar = [];
     $scope.period_filter = [];

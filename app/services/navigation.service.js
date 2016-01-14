@@ -4,7 +4,7 @@
   angular.module('serviceModule')
     .factory('NavigationService', [
       function () {
-        clog('... NavigationService');
+        console.log('... NavigationService');
 
         var menu = [
           {

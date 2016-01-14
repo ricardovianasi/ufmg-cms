@@ -21,7 +21,7 @@
                                         NotificationService,
                                         DateTimeHelper,
                                         dataTableConfigService) {
-    clog('... PeriodicalEditionsController');
+    console.log('... PeriodicalEditionsController');
 
     $scope.periodical = {};
 
@@ -29,7 +29,7 @@
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
         $scope.editions = data.data;
 
-        clog(data.data);
+        clog('data.data >>>', data.data);
 
         if ($scope.editions.items.length) {
           $scope.periodical.id = $scope.editions.items[0].periodical.id;

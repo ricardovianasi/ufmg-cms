@@ -25,7 +25,7 @@
                                NotificationService,
                                StatusService,
                                DateTimeHelper) {
-    clog('... EventsNewController');
+    console.log('... EventsNewController');
 
     $scope.title = 'Novo Evento';
     $scope.breadcrumb = $scope.title;
@@ -80,37 +80,45 @@
       endTime: DateTimeHelper.getTimepickerOpt()
     };
 
-    /**
-     * Redactor config
-     */
-    $scope.redactorConfig = {
-      lang: 'pt_br',
-      replaceDivs: false,
-      plugins: ['imagencrop'],
-      buttons: [
-        'html',
-        'formatting',
-        'bold',
-        'italic',
-        'deleted',
-        'unorderedlist',
-        'orderedlist',
-        'outdent',
-        'indent',
-        'image',
-        'file',
-        'link',
-        'alignment',
-        'horizontalrule',
-        'imagencrop'
-      ],
-      allowedAttr: [
-        ['section', 'class'],
-        ['div', 'class'],
-        ['img', ['src', 'alt']],
-        ['figure', 'class'],
-        ['a', ['href', 'title']]
-      ]
+    $scope.redactorOptions = {
+      plugins: ['imagencrop', 'audioUpload']
+    };
+
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
+
+          redactor.selection.restore();
+          redactor.insert.raw(html(data));
+        };
+
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
+    };
+
+    $scope.audioUploadOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var html = _.template($('#audio').html());
+
+        redactor.selection.restore();
+        redactor.insert.raw(html(data));
+      }
     };
 
     // Watch IMG elements to upload

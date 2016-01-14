@@ -20,8 +20,7 @@
                                 DateTimeHelper,
                                 $modal,
                                 NotificationService) {
-
-    clog('... PeriodicalController');
+    console.log('... PeriodicalController');
 
     $scope.periodicals = [];
     $scope.currentPage = 1;

@@ -7,7 +7,7 @@
       '$q',
       'apiUrl',
       function ($http, $q, apiUrl) {
-        clog('... StatusService');
+        console.log('... StatusService');
 
         return {
           STATUS_PUBLISHED: 'published',

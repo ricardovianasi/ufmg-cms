@@ -11,7 +11,7 @@
   ];
 
   function NewsService($http, $filter, apiUrl) {
-    clog('... NewsService');
+    console.log('... NewsService');
 
     var NEWS_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'news');
 
