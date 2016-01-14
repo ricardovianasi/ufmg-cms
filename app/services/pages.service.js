@@ -354,7 +354,31 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+
+          var widgetLinks = [];
+          var page;
+          var external_url;
+
+          angular.forEach(widget.links, function (links) {
+
+
+            if(!links.isExternal){
+              external_url = null;
+              page = links.page ? links.page.id : null;
+            }
+            else {
+              external_url = links.external_url ? links.external_url : null;
+              page = null;
+            }
+
+            widgetLinks.push({
+                "page": page,
+                "label": links.label,
+                "external_url": external_url
+            });
+          });
+
+          _obj.links = widgetLinks;
         },
         /**
          * Hub Links
@@ -587,7 +611,19 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+
+          var widgetlinks = [];
+
+          angular.forEach(widget.content.links, function (links) {
+              if(links.external_url){
+                links.isExternal = true;
+                widgetlinks.push(links);
+              } else {
+                widgetlinks.push(links);
+              }
+          });
+
+          _obj.links = widgetlinks;
         },
         /**
          * Hub Links
@@ -644,6 +680,7 @@
        */
       var _preparingItems = function ($scope) {
         $scope.addItem = function (item, type) {
+
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
           } else {
@@ -813,11 +850,15 @@
          * @param $scope
          */
         internalmenu: function ($scope) {
+
           $scope.pages = [];
+
+          _prepareItems($scope);
 
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+
         },
         /**
          * @param $scope
@@ -874,8 +915,6 @@
           if (typeof _parseToSave[widget.type] !== 'undefined') {
             _parseToSave[widget.type](widget);
           }
-
-          clog('_obj >>>', _obj);
 
           return _obj;
         },
