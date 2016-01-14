@@ -354,7 +354,31 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+
+          var widgetLinks = [];
+          var page;
+          var external_url;
+
+          angular.forEach(widget.links, function (links) {
+
+
+            if(!links.isExternal){
+              external_url = null;
+              page = links.page ? links.page.id : null;
+            }
+            else {
+              external_url = links.external_url ? links.external_url : null;
+              page = null;
+            }
+
+            widgetLinks.push({
+                "page": page,
+                "label": links.label,
+                "external_url": external_url
+            });
+          });
+
+          _obj.links = widgetLinks;
         },
         /**
          * Hub Links
@@ -399,7 +423,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parsesave >>>>>>>>>>>', widget);
+          _obj.type = widget.type;
+          _obj.title = widget.title;
         }
       };
 
@@ -575,7 +600,19 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+
+          var widgetlinks = [];
+
+          angular.forEach(widget.content.links, function (links) {
+              if(links.external_url){
+                links.isExternal = true;
+                widgetlinks.push(links);
+              } else {
+                widgetlinks.push(links);
+              }
+          });
+
+          _obj.links = widgetlinks;
         },
         /**
          * Hub Links
@@ -611,7 +648,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parseload >>>>>>>>>>>', widget);
+          clog('lasttvprograms parse to load >>>>>>', widget);
+          _obj.type = widget.type;
         }
       };
 
@@ -622,6 +660,7 @@
        */
       var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
+
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
           } else {
@@ -791,11 +830,15 @@
          * @param $scope
          */
         internalmenu: function ($scope) {
+
           $scope.pages = [];
+
+          _prepareItems($scope);
 
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+
         },
         /**
          * @param $scope
@@ -809,6 +852,9 @@
          * @param $scope
          */
         highlightednewsvideo: function ($scope) {
+          _preparingNews($scope);
+        },
+        lasttvprograms: function($scope){
           _preparingNews($scope);
           _prepareItems($scope);
         },
@@ -838,6 +884,7 @@
             _parseToSave[widget.type](widget);
           }
 
+          clog('>>>>>>> obj retornado:', _obj);
           return _obj;
         },
         /**

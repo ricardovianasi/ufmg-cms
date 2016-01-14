@@ -1,40 +1,43 @@
-<div class=clearfix>
+<div class="clearfix">
     <label>Links:</label>
 
-    <div class=pull-right>
-        <button type=button style="margin-bottom: 3px" ng-click=addLink() class="btn btn-primary btn-sm">
+    <div class="pull-right">
+        <button type="button" style="margin-bottom: 3px" ng-click="addItem(widget.links[widget.links.length], 'links')" class="btn btn-primary btn-sm">
             <i class="fa fa-plus"></i>
         </button>
     </div>
 </div>
 
 <div ng-repeat="link in widget.links" class="well well-sm">
-    <div class=clearfix>
-        <div class=pull-left>Link {{ $index + 1 }}</div>
+    <div class="clearfix">
+        <div class="pull-left">Link {{ $index + 1 }}</div>
 
-        <div class=pull-right>
-            <button type=button ng-click=removeLink($index) class="btn btn-danger btn-sm">
+        <div class="pull-right">
+            <button type="button" ng-click="removeItem($index, 'links')" class="btn btn-danger btn-sm">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
     </div>
 
-    <div class=row>
-        <div class=col-xs-6>
-            <div class=form-group>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
                 <label>Label do link:</label>
 
-                <input type=text title="Label do link" ng-model=link.label class=form-control>
+                <input type="text" title="Label do link" ng-model="widget.links[$index].label" class="form-control">
             </div>
         </div>
 
-        <div class=col-xs-6>
-            <div class=form-group>
+        <div class="col-xs-6">
+            <div class="form-group">
                 <label>P&aacute;gina:</label>
+                <input type="checkbox" ng-model="widget.links[$index].isExternal"> link externo
+                    {{ linkExterno | json }}
 
-                <select title=Página ng-model=link.page ng-options="page.id as page.title for page in pages.items"
-                        class=form-control>
+                <select ng-if="!widget.links[$index].isExternal" title="Página" ng-model="widget.links[$index].page.id" ng-options="page.id as page.title for page in pages.items"
+                        class="form-control">
                 </select>
+                <input type="text" class="form-control" ng-if="widget.links[$index].isExternal" ng-model="widget.links[$index].external_url">
             </div>
         </div>
     </div>

@@ -84,6 +84,8 @@
         type: $scope.widget.type
       };
 
+      clog('widtget', $scope.widget);
+
       angular.extend(_obj, $scope.widget);
 
       clog('>>> ok', _obj);
