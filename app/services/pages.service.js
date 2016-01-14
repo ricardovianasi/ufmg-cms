@@ -354,7 +354,6 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          clog('internal menu pase to save', widget.links);
 
           var widgetLinks = [];
           var page;
@@ -378,8 +377,6 @@
                 "external_url": external_url
             });
           });
-
-          clog('widgetLinks >>>>>>>>>>>>>>>>>>>>>>>', widgetLinks);
 
           _obj.links = widgetLinks;
         },
@@ -604,8 +601,6 @@
          */
         internalmenu: function (widget) {
 
-          clog('internal menu pase to load widgetlinks', widget);
-
           var widgetlinks = [];
 
           angular.forEach(widget.content.links, function (links) {
@@ -617,7 +612,6 @@
               }
           });
 
-          clog('internal menu pase to load widgetlinks', widgetlinks);
           _obj.links = widgetlinks;
         },
         /**
