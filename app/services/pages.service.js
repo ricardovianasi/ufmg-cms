@@ -354,6 +354,7 @@
          * @param widget
          */
         internalmenu: function (widget) {
+          clog('internal menu pase to save', widget);
           _obj.links = widget.content ? widget.content.links : null;
         },
         /**
@@ -399,7 +400,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parsesave >>>>>>>>>>>', widget);
+          _obj.type = widget.type;
+          _obj.title = widget.title;
         }
       };
 
@@ -575,6 +577,7 @@
          * @param widget
          */
         internalmenu: function (widget) {
+          clog('internal menu pase to load', widget);
           _obj.links = widget.content ? widget.content.links : null;
         },
         /**
@@ -611,7 +614,8 @@
          * @param widget
          */
         lasttvprograms: function(widget){
-          clog('lasttvprograms parseload >>>>>>>>>>>', widget);
+          clog('lasttvprograms parse to load >>>>>>', widget);
+          _obj.type = widget.type;
         }
       };
 
@@ -791,11 +795,15 @@
          * @param $scope
          */
         internalmenu: function ($scope) {
+
           $scope.pages = [];
+
+          _prepareItems($scope);
 
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+
         },
         /**
          * @param $scope
@@ -809,6 +817,9 @@
          * @param $scope
          */
         highlightednewsvideo: function ($scope) {
+          _preparingNews($scope);
+        },
+        lasttvprograms: function($scope){
           _preparingNews($scope);
           _prepareItems($scope);
         },
