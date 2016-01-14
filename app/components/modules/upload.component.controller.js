@@ -27,6 +27,9 @@
     vm.tabs = tabsService.getTabs();
     vm.selector = {};
     vm.formats = {};
+    vm.add_photos = null;
+    vm.image = null;
+    vm.activeFormat = '';
 
     tabsService.selectTab('home');
 
@@ -71,7 +74,6 @@
     vm.cancel = _cancel;
     vm.save = _save;
     vm.setFormat = _setFormat;
-    vm.activeFormat = '';
 
     // Set default format
     _setFormat(formats[0], false);
@@ -167,6 +169,7 @@
         tabsService.selectTab('crop');
 
         vm.tabs = tabsService.getTabs();
+        vm.image = $('img', '#mrImageContainer')[0];
       });
     }
 
@@ -184,11 +187,19 @@
       var obj = {
         x: vm.selector.x1,
         y: vm.selector.y1,
-        width: vm.selector.x2,
-        height: vm.selector.y2,
+        width: vm.selector.x2 - vm.selector.x1,
+        height: vm.selector.y2 - vm.selector.y1,
         resize_width: availableFormats[vm.activeFormat].width,
         resize_height: availableFormats[vm.activeFormat].height
       };
+
+      //Workaround for MrImage that does not provide these values
+      if (vm.image.naturalWidth != vm.image.width) {
+        obj.x = (vm.image.naturalWidth * vm.selector.x1) / vm.image.width;
+        obj.y = (vm.image.naturalHeight * vm.selector.y1) / vm.image.height;
+        obj.width = ((vm.image.naturalWidth * vm.selector.x2) / vm.image.width) - obj.x;
+        obj.height = ((vm.image.naturalHeight * vm.selector.y2) / vm.image.height) - obj.y;
+      }
 
       MediaService.cropImage(vm.currentFile.id, obj).then(function (data) {
         $uibModalInstance.close({
