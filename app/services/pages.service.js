@@ -354,8 +354,34 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          clog('internal menu pase to save', widget);
-          _obj.links = widget.content ? widget.content.links : null;
+          clog('internal menu pase to save', widget.links);
+
+          var widgetLinks = [];
+          var page;
+          var external_url;
+
+          angular.forEach(widget.links, function (links) {
+
+
+            if(!links.isExternal){
+              external_url = null;
+              page = links.page ? links.page.id : null;
+            }
+            else {
+              external_url = links.external_url ? links.external_url : null;
+              page = null;
+            }
+
+            widgetLinks.push({
+                "page": page,
+                "label": links.label,
+                "external_url": external_url
+            });
+          });
+
+          clog('widgetLinks >>>>>>>>>>>>>>>>>>>>>>>', widgetLinks);
+
+          _obj.links = widgetLinks;
         },
         /**
          * Hub Links
@@ -577,8 +603,22 @@
          * @param widget
          */
         internalmenu: function (widget) {
-          clog('internal menu pase to load', widget);
-          _obj.links = widget.content ? widget.content.links : null;
+
+          clog('internal menu pase to load widgetlinks', widget);
+
+          var widgetlinks = [];
+
+          angular.forEach(widget.content.links, function (links) {
+              if(links.external_url){
+                links.isExternal = true;
+                widgetlinks.push(links);
+              } else {
+                widgetlinks.push(links);
+              }
+          });
+
+          clog('internal menu pase to load widgetlinks', widgetlinks);
+          _obj.links = widgetlinks;
         },
         /**
          * Hub Links
@@ -626,6 +666,7 @@
        */
       var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
+
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
           } else {
@@ -849,6 +890,7 @@
             _parseToSave[widget.type](widget);
           }
 
+          clog('>>>>>>> obj retornado:', _obj);
           return _obj;
         },
         /**

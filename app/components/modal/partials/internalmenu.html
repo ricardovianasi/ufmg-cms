@@ -2,7 +2,7 @@
     <label>Links:</label>
 
     <div class="pull-right">
-        <button type="button" style="margin-bottom: 3px" ng-click="addItem(widget.links, 'links')" class="btn btn-primary btn-sm">
+        <button type="button" style="margin-bottom: 3px" ng-click="addItem(widget.links[widget.links.length], 'links')" class="btn btn-primary btn-sm">
             <i class="fa fa-plus"></i>
         </button>
     </div>
@@ -24,17 +24,20 @@
             <div class="form-group">
                 <label>Label do link:</label>
 
-                <input type="text" title="Label do link" ng-model="widget.links.label" class="form-control">
+                <input type="text" title="Label do link" ng-model="widget.links[$index].label" class="form-control">
             </div>
         </div>
 
         <div class="col-xs-6">
             <div class="form-group">
                 <label>P&aacute;gina:</label>
+                <input type="checkbox" ng-model="widget.links[$index].isExternal"> link externo
+                    {{ linkExterno | json }}
 
-                <select title="Página" ng-model="widget.links.page" ng-options="page.id as page.title for page in pages.items"
+                <select ng-if="!widget.links[$index].isExternal" title="Página" ng-model="widget.links[$index].page.id" ng-options="page.id as page.title for page in pages.items"
                         class="form-control">
                 </select>
+                <input type="text" class="form-control" ng-if="widget.links[$index].isExternal" ng-model="widget.links[$index].external_url">
             </div>
         </div>
     </div>
