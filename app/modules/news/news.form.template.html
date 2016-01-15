@@ -86,7 +86,7 @@
                         <ui-select title="Digite uma tag"
                                    multiple
                                    tagging
-                                   tagging-label
+                                   tagging-label="false"
                                    tagging-tokens=","
                                    ng-model="news.tags"
                                    theme="bootstrap"
@@ -94,7 +94,7 @@
                                    ng-disabled="disabled">
                             <ui-select-match placeholder="Selecione as tags">{{ $item }}</ui-select-match>
 
-                            <ui-select-choices repeat="color in availableColors | filter:$select.search">{{ color }}</ui-select-choices>
+                            <ui-select-choices repeat="color in availableColors | filter:$select.search | filter: {}">{{ color }}</ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
