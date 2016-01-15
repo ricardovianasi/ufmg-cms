@@ -33,7 +33,8 @@
       tabKey: false,
       pastePlainText: true,
       pasteImages: false,
-      pasteLinks: false
+      pasteLinks: false,
+      maxHeight: 500
     };
 
     /**

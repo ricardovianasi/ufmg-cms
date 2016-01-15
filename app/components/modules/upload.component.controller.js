@@ -30,6 +30,7 @@
     vm.add_photos = null;
     vm.image = null;
     vm.activeFormat = '';
+    vm.zoomOut = false;
 
     tabsService.selectTab('home');
 
@@ -71,6 +72,7 @@
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
+    vm.cancelUpdateMidia = _cancelUpdateMidia;
     vm.cancel = _cancel;
     vm.save = _save;
     vm.setFormat = _setFormat;
@@ -149,7 +151,9 @@
      * @private
      */
     function _selectMidia(data) {
+      vm.zoomOut = false;
       vm.currentFile = data;
+
     }
 
     /**
@@ -173,6 +177,9 @@
       });
     }
 
+    function _cancelUpdateMidia(){
+      vm.zoomOut = true;
+    }
     /**
      * @private
      */

@@ -50,7 +50,7 @@
             </form>
 
             <div class="row animated zoomIn"
-                 ng-if="vm.currentFile.url">
+                 ng-if="vm.currentFile.url && !vm.zoomOut">
                 <div class="col-md-12">
                     <div class="panel panel-default panel-border">
                         <div class="panel-body">
@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="panel-footer text-right margin-top-footer">
-                            <button type="button" class="btn">Cancelar</button>
+                            <button type="button" class="btn" ng-click="vm.cancelUpdateMidia()">Cancelar</button>
                             <button type="button" class="btn btn-secondary"
                                     ng-click="vm.updateMidia()">Salvar
                             </button>
