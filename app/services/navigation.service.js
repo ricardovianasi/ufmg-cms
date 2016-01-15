@@ -8,61 +8,61 @@
 
         var menu = [
           {
-            icon: 'pages',
+            icon: 'fa fa-file-o',
             name: 'Páginas',
             location: 'pages',
             enabled: true
           },
           {
-            icon: 'periodicals',
+            icon: 'fa fa-book',
             name: 'Periódicos Jornalísticos',
             location: 'periodicals',
             enabled: true
           },
           {
-            icon: 'modules',
+            icon: 'fa fa-bullhorn',
             name: 'Assessoria/Releases',
             location: 'releases',
             enabled: true
           },
           {
-            icon: 'modules',
+            icon: 'fa fa-bullhorn',
             name: 'Assessoria/Clippings',
             location: 'clippings',
             enabled: true
           },
           {
-            icon: 'news',
+            icon: 'fa fa-newspaper-o',
             name: 'Notícias',
             location: 'news',
             enabled: true
           },
           {
-            icon: 'courses',
+            icon: 'fa fa-circle-o',
             name: 'Cursos',
             location: 'course',
             enabled: true
           },
           {
-            icon: 'events',
+            icon: 'fa fa-thumb-tack',
             name: 'Eventos',
             location: 'events',
             enabled: true
           },
           {
-            icon: 'calendar',
+            icon: 'fa fa-picure-o',
             name: 'Galerias',
             location: 'galleries',
             enabled: true
           },
           {
-            icon: 'calendar',
+            icon: 'fa fa-calendar',
             name: 'Calendário Acadêmico',
             location: 'calendar',
             enabled: true
           },
           {
-            icon: 'talk',
+            icon: 'fa fa-film',
             name: 'Mídia',
             location: 'media',
             enabled: true
