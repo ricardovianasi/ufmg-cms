@@ -34,7 +34,14 @@
       pastePlainText: true,
       pasteImages: false,
       pasteLinks: false,
-      maxHeight: 500
+      maxHeight: 500,
+      formatting: ['p', 'blockquote'],
+      formattingAdd: {
+          "red-p-add": {
+              title: '<i class="fa fa-text-height"></i> Subtítulo',
+              args: ['h2', 'class', 'news__subtitle', 'toggle']
+          }
+      }
     };
 
     /**
