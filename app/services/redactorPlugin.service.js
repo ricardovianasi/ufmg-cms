@@ -9,7 +9,7 @@
   ];
 
   function RedactorPluginService($uibModal) {
-    clog('... RedactorPluginService');
+    console.log('... RedactorPluginService');
 
     var _plugins = {
       /**

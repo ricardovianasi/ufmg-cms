@@ -8,7 +8,7 @@
    * @returns {{getTabs: _getTabs, selectTab: _selectTab}}
    */
   function tabsService() {
-    clog('... TabsService');
+    console.log('... TabsService');
 
     var tabs = {
       home: true,

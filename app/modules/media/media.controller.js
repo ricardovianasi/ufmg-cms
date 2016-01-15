@@ -14,7 +14,7 @@
   ];
 
   function MediaController($scope, $uibModal, MediaService, dataTableConfigService, StatusService, NotificationService) {
-    clog('... MediaController');
+    console.log('... MediaController');
 
     $scope.media = [];
     $scope.status = [];

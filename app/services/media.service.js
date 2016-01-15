@@ -26,7 +26,7 @@
    * @constructor
    */
   function MediaService($q, $http, $filter, Upload, $httpParamSerializer, apiUrl) {
-    clog('... MediaService');
+    console.log('... MediaService');
 
     var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'file');
     var PAGE = 1;

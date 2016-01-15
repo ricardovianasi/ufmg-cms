@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label>
+        Selecionar Evento
+        <small>(Os próximos eventos serão exibidos automaticamente)</small>
+    </label>
+
+    <ui-select ng-model="widget.content.event" theme="bootstrap">
+        <ui-select-match placeholder="Buscar Evento">{{ $select.selected.name }}</ui-select-match>
+        <ui-select-choices repeat="event in events.items|filter: $select.search">
+            <div ng-bind-html="event.name|highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>

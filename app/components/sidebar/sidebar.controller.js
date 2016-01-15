@@ -7,7 +7,7 @@
       '$scope',
       'NavigationService',
       function ($scope, NavigationService) {
-        clog('... SidebarController');
+        console.log('... SidebarController');
 
         $scope.navigation = NavigationService.get();
       }

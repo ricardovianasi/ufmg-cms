@@ -1,9 +1,8 @@
 ;(function () {
-  "use strict";
+  'use strict';
 
-  angular
-    .module("periodicalModule")
-    .controller("PeriodicalEditionEditController", PeriodicalEditionEditController);
+  angular.module('periodicalModule')
+    .controller('PeriodicalEditionEditController', PeriodicalEditionEditController);
 
   PeriodicalEditionEditController.$inject = [
     '$scope',
@@ -28,7 +27,8 @@
                                            DateTimeHelper,
                                            $location,
                                            $timeout) {
-    clog('... PeriodicalEditionEditController');
+    console.log('... PeriodicalEditionEditController');
+
     $scope.edition = {};
     $scope.status = [];
 

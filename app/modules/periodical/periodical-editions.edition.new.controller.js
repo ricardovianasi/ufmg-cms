@@ -25,7 +25,7 @@
                                           StatusService,
                                           NotificationService,
                                           MediaService) {
-    clog('... PeriodicalEditionNewController');
+    console.log('... PeriodicalEditionNewController');
 
     $scope.edition = {};
     $scope.status = [];

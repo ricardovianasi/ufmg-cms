@@ -23,7 +23,7 @@
                                  GalleryService,
                                  MediaService,
                                  NotificationService) {
-    clog('... GalleryEditController');
+    console.log('... GalleryEditController');
 
     $scope.status = [];
     $scope.categories = [];
@@ -62,7 +62,8 @@
 
     $scope.publish = function (gallery) {
       var _photos = [];
-      clog(gallery);
+
+      clog('gallery >>>', gallery);
 
       angular.forEach(gallery.photos, function (photo) {
 
@@ -208,7 +209,8 @@
       });
 
       MediaLibraryModal.result.then(function (data) {
-        clog(data);
+        clog('data >>>', data);
+
         angular.forEach(data, function (file) {
           var _file = {
             file: {
@@ -239,7 +241,7 @@
           return file.selected === true;
         });
 
-        clog(mediaSelected);
+        clog('mediaSelected >>>', mediaSelected);
         $uibModalInstance.close(mediaSelected);
       };
 

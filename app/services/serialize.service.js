@@ -3,7 +3,7 @@
 
   angular.module('serviceModule')
     .factory('SerializeService', [function () {
-      clog('... SerializeService');
+      console.log('... SerializeService');
 
       return function (data) {
         if (!angular.isObject(data)) {

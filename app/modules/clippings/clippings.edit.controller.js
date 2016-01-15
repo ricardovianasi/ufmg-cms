@@ -30,7 +30,7 @@
                                    NotificationService,
                                    StatusService,
                                    DateTimeHelper) {
-    clog('... ClippingsEditController');
+    console.log('... ClippingsEditController');
 
     $scope.title = 'Editar Clipping: ';
     $scope.breadcrumb = $scope.title;

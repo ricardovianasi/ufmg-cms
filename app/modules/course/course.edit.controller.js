@@ -8,8 +8,6 @@
     '$timeout',
     '$location',
     '$scope',
-    '$uibModal',
-    'Upload',
     '$routeParams',
     'CourseService',
     'NotificationService',
@@ -21,46 +19,43 @@
   function CourseEditController($timeout,
                                 $location,
                                 $scope,
-                                $modal,
-                                Upload,
                                 $routeParams,
                                 CourseService,
                                 NotificationService,
                                 StatusService,
                                 DateTimeHelper,
                                 MediaService) {
-    clog('... CourseController');
-
+    console.log('... CourseController');
 
     /**
-    * get status
-    *
-    */
+     * get status
+     *
+     */
     $scope.status = [];
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
     });
 
     /**
-    * get selected course
-    *
-    * @param {integer} $routeParams.id
-    */
+     * get selected course
+     *
+     * @param {integer} $routeParams.id
+     */
     $scope.course = {};
     $scope.course.tags = [];
     CourseService.getCourse($routeParams.id).then(function (data) {
 
-     if(!_.isEmpty(data.data.detail) && !_.isEmpty(data.data.detail.cover)) {
+      if (!_.isEmpty(data.data.detail) && !_.isEmpty(data.data.detail.cover)) {
         $scope.course = data.data;
         $scope.course.cover = data.data.cover;
         $scope.course.cover_url = data.data.cover_url;
         $scope.course.description = data.data.description;
         $scope.course.status = data.data.detail.status;
-     }
+      }
 
       $scope.course.tags = [];
 
-      if(!_.isEmpty($scope.course.detail.tags)) {
+      if (!_.isEmpty($scope.course.detail.tags)) {
         angular.forEach($scope.course.detail.tags, function (tag) {
           $scope.course.tags.push(tag.name);
         });
@@ -73,7 +68,7 @@
         $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
       }
 
-      clog($scope.course);
+      clog('$scope.course >>>', $scope.course);
     });
 
 
