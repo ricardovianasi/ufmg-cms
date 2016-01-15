@@ -10,6 +10,7 @@
     '$routeParams',
     '$location',
     '$timeout',
+    '$uibModal',
     'NewsService',
     'NotificationService',
     'StatusService',
@@ -21,6 +22,7 @@
                               $routeParams,
                               $location,
                               $timeout,
+                              $uibModal,
                               NewsService,
                               NotificationService,
                               StatusService,
@@ -70,7 +72,47 @@
       $scope.breadcrumb_active = $scope.news.title;
     });
 
+       /**
+       * @param size
+       * @param title
+       */
+
+       var removeConfirmationModal;
+
+      $scope.confirmationModal = function (size, title) {
+        removeConfirmationModal = $uibModal.open({
+          templateUrl: 'components/modal/confirmation.modal.template.html',
+          controller: ConfirmationModalCtrl,
+          backdrop: 'static',
+          size: size,
+          resolve: {
+            title: function () {
+              return title;
+            }
+          }
+        });
+      };
+
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param title
+     *
+     * @constructor
+     */
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+      $scope.modal_title = title;
+
+      $scope.ok = function () {
+        $uibModalInstance.close();
+      };
+      $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+    };
+
     $scope.remove = function (id) {
+      $scope.confirmationModal('md', 'Você deseja excluir esta notícia?');
       NewsService.removeNews(id).then(function (data) {
         NotificationService.success('Notícia removida com sucesso.');
         $location.path('/news');
@@ -89,6 +131,7 @@
         tags: data.tags,
         thumb: data.thumb
       };
+
 
       if (_obj.status == 'scheduled') {
         _obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
