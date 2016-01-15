@@ -25,8 +25,8 @@
                 .withDisplayLength(30)
                 .withLanguage({
                     "sEmptyTable":     "Nenhum dado foi encontrado. :(",
-                    "sInfo":           "Mostrando de _START_ hà _END_ de _TOTAL_ resultados",
-                    "sInfoEmpty":      "Mostrando de 0 hà 0 de 0 resultados",
+                    "sInfo":           "Mostrando de _START_ á _END_ de _TOTAL_ resultados",
+                    "sInfoEmpty":      "Mostrando de 0 á 0 de 0 resultados",
                     "sInfoFiltered":   "(Filtrado de _MAX_ resultados)",
                     "sInfoPostFix":    "",
                     "sInfoThousands":  ",",
