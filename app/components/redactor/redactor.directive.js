@@ -30,7 +30,10 @@
         'link',
         'file'
       ],
-      tabKey: false
+      tabKey: false,
+      pastePlainText: true,
+      pasteImages: false,
+      pasteLinks: false
     };
 
     /**
