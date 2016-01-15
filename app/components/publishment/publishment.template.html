@@ -5,14 +5,23 @@
             <div class="pull-left">
                 <button type=button ng-click=saveDraft($event) class="btn btn-sm btn-gray">Salvar como rascunho</button>
             </div>
+            <div class="pull-right">
+                <button type=button class="btn btn-sm btn-gray">Pré-visualizar</button>
+            </div>
         </div>
         <div class="publishment-block">
             <div class="form-group">
+                <input type="checkbox"> Notícia UFMG
+            </div>
+            <div class="form-group">
+                <input type="checkbox" ng-click="scheduledStatus()"> Publicação Agendada
+            </div>
+           <!--  <div class="form-group">
                 <label>Status:</label>
                 <div class="publishment-form">
                     <select title=Status ng-model=obj.status ng-options="option.status as option.name for option in statuses.items" class="form-control"></select>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="publishment-block">
             <div ng-show="obj.status == 'scheduled'" class="form-group">
@@ -33,6 +42,9 @@
     </div>
     <div class=clearfix>
         <div class=pull-left>
+            <button type=button class="btn btn-sm btn-danger" ng-click="back()">
+                cancelar
+            </button>
             <button type=button ng-show=obj.id ng-click=remove(obj.id) class="btn btn-sm btn-danger">
                 <span class="fa fa-trash"></span>
             </button>

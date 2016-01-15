@@ -5,7 +5,8 @@
     .directive('publishmentOptions', [
       '$timeout',
       'StatusService',
-      function ($timeout, StatusService) {
+      '$location',
+      function ($timeout, StatusService, $location) {
 
         return {
           restrict: 'E',
@@ -31,6 +32,14 @@
               $timeout(function () {
                 angular.element('#publish-button').trigger('click');
               }, 100);
+            };
+
+            $scope.scheduledStatus = function() {
+              $scope.obj.status = 'scheduled';
+            };
+
+            $scope.back = function(){
+              $location.path('news');
             };
 
             // Statuses
