@@ -41,7 +41,8 @@
               title: '<i class="fa fa-text-height"></i> Subtítulo',
               args: ['h3', 'class', 'news__subtitle', 'toggle']
           }
-      }
+      },
+      linkTooltip: true
     };
 
     /**
