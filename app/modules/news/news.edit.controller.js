@@ -37,6 +37,27 @@
     $scope.status = [];
     $scope.types = [];
 
+    /**
+     * Datepicker options
+     */
+    $scope.datepickerOpt = {
+      initDate: DateTimeHelper.getDatepickerOpt(),
+      endDate: DateTimeHelper.getDatepickerOpt()
+    };
+
+    /**
+     * Add status 'on the fly', according to requirements
+     *
+     * @type {{opened: boolean}}
+     */
+    $scope.datepickerOpt.initDate.status = {
+      opened: false
+    };
+    $scope.datepickerOpt.endDate.status = {
+      opened: false
+    };
+
+
     NewsService.getNewsCategories().then(function (data) {
       $scope.categories = data.data;
     });
