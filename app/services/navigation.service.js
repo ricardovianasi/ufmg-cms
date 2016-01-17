@@ -50,7 +50,7 @@
             enabled: true
           },
           {
-            icon: 'fa fa-picure-o',
+            icon: 'fa fa-picture-o',
             name: 'Galerias',
             location: 'galleries',
             enabled: true

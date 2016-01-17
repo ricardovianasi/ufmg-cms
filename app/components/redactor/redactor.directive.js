@@ -21,7 +21,7 @@
   function redactor($timeout, _, RedactorPluginService) {
     var _options = {
       lang: 'pt_br',
-      plugins: ['video', 'soundcloud'],
+      plugins: ['video', 'soundcloud', 'uploadFiles'],
       buttons: [
         'html',
         'format',

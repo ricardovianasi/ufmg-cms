@@ -2,7 +2,7 @@
     <ul id="main-menu" class="main-menu">
         <li ng-repeat="navItem in navigation" ng-click="navItem.submenuState ? (navItem.submenuState = !navItem.submenuState) : (navItem.submenuState = true)">
             <a ng-href="#/{{ navItem.location }}">
-                <i class=linecons-cog></i>
+                <i class="{{ navItem.icon }}"></i>
                 <span class=title>{{ navItem.name }}</span>
             </a>
 
