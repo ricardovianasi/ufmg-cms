@@ -20,6 +20,8 @@
             var obj = attrs.routeModel;
 
             $scope.obj = $scope.$parent[obj];
+            console.log($scope.obj);
+            $scope.obj.highlight_ufmg = 0;
             $scope.publish = $scope.$parent.publish;
             $scope.remove = $scope.$parent.remove;
             $scope.statuses = [];
@@ -34,8 +36,20 @@
               }, 100);
             };
 
-            $scope.scheduledStatus = function() {
-              $scope.obj.status = 'scheduled';
+            $scope.status = function(status) {
+              if($scope.obj.status == status)
+                $scope.obj.status = '';
+              else
+                $scope.obj.status = status;
+            };
+
+            $scope.checkHighlightedUfmg = function(){
+              if($scope.obj.highlight_ufmg == 1)
+                $scope.obj.highlight_ufmg = 0;
+              else
+                $scope.obj.highlight_ufmg = 1;
+
+              console.log($scope.obj.highlight_ufmg);
             };
 
             $scope.back = function(){

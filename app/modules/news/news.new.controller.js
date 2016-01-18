@@ -75,7 +75,8 @@
         status: data.status,
         type: data.type,
         tags: data.tags,
-        thumb: data.thumb
+        thumb: data.thumb,
+        highlight_ufmg: data.highlight_ufmg
       };
 
       NewsService.postNews(_obj).then(function (data) {
