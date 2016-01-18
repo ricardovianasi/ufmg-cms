@@ -29,11 +29,11 @@
                     <div class="clearfix">
                         <div style="width: 48%" class="pull-left input-group input-group-sm">
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                            <input type=text title=Data ng-model=obj.scheduled_date class="form-control">
+                            <input type=text title=Data ng-model=obj.scheduled_date class="form-control" ui-mask="99/99/9999">
                         </div>
                         <div style="width: 48%" class="pull-right input-group input-group-sm">
                             <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                            <input type=text title=Hora ng-model=obj.scheduled_time class="form-control">
+                            <input type=text title=Hora ng-model=obj.scheduled_time class="form-control" ui-mask="99:99:99">
                         </div>
                     </div>
                 </div>
