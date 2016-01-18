@@ -162,7 +162,6 @@
         _obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
       }
 
-      console.log('update >>>>>>', _obj);
       NewsService.updateNews(data.id, _obj).then(function (data) {
         NotificationService.success('Notícia atualizada com sucesso.');
         $location.path('/news');

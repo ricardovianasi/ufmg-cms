@@ -1,8 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('componentsModule')
+  angular.module('componentsModule')
     .directive('redactor', redactor);
 
   redactor.$inject = [
@@ -76,6 +75,8 @@
        * @param ngModel
        */
       link: function ($scope, elem, attrs, ngModel) {
+        console.log('... RedactorDirective');
+
         //redactor callbacks
         _options.callbacks = {
           change: function updateModel(value) {

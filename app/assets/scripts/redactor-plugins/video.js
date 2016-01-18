@@ -51,7 +51,9 @@
         if (!data.match(/<iframe|<video/gi)) {
           data = this.clean.stripTags(data);
 
-          this.opts.videoContainerClass = (typeof this.opts.videoContainerClass === 'undefined') ? 'video-container' : this.opts.videoContainerClass;
+          this.opts.videoContainerClass = (typeof this.opts.videoContainerClass === 'undefined')
+            ? 'video-container'
+            : this.opts.videoContainerClass;
 
           // parse if it is link on youtube & vimeo
           var iframeStart = String()
