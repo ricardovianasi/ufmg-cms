@@ -85,6 +85,7 @@
       $scope.news.scheduled_date = scheduled_at.date;
       $scope.news.scheduled_time = scheduled_at.time;
       $scope.news.highlight_ufmg = data.data.highlight_ufmg;
+      $scope.news.news_url = data.data.news_url;
 
 
       angular.forEach(data.data.tags, function (tag) {
