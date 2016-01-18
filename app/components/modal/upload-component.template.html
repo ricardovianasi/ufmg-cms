@@ -140,7 +140,7 @@
                 <div class="col-md-3"
                      ng-repeat="(key, format) in vm.formats">
                     <a href="javascript:void(0);" class="btn btn-primary btn-sm"
-                       ng-class="{'btn-secondary': vm.activeFormat == key}"
+                       ng-class="{'btn-secondary': vm.activeFormat == key, 'btn-click': format.name == 'Vertical'}"
                        ng-click="vm.setFormat(key)">{{ format.name }} ({{ format.width }}x{{ format.height }})</a>
                 </div>
             </div>

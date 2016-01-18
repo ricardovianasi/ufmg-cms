@@ -9,7 +9,8 @@
     '$uibModalInstance',
     'MediaService',
     'tabsService',
-    'formats'
+    'formats',
+    '$timeout'
   ];
 
   /**
@@ -21,7 +22,7 @@
    *
    * @constructor
    */
-  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats) {
+  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats, $timeout) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -171,9 +172,12 @@
 
       MediaService.updateFile(vm.currentFile.id, obj).then(function () {
         tabsService.selectTab('crop');
-
         vm.tabs = tabsService.getTabs();
         vm.image = $('img', '#mrImageContainer')[0];
+
+        $timeout(function(){
+          $('.btn-click').trigger('click');
+        });
       });
     }
 
