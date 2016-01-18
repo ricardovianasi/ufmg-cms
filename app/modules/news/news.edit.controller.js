@@ -84,6 +84,8 @@
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
       $scope.news.scheduled_date = scheduled_at.date;
       $scope.news.scheduled_time = scheduled_at.time;
+      $scope.news.highlight_ufmg = data.data.highlight_ufmg;
+
 
       angular.forEach(data.data.tags, function (tag) {
         $scope.news.tags.push(tag.name);

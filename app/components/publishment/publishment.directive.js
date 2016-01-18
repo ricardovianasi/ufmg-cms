@@ -18,10 +18,9 @@
             console.log('... PublishmentDirective');
 
             var obj = attrs.routeModel;
-
+            console.log($scope.$parent[obj]);
             $scope.obj = $scope.$parent[obj];
-            console.log($scope.obj);
-            $scope.obj.highlight_ufmg = 0;
+            $scope.obj.highlight_ufmg = $scope.obj.highlight_ufmg;
             $scope.publish = $scope.$parent.publish;
             $scope.remove = $scope.$parent.remove;
             $scope.statuses = [];
