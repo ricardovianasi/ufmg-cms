@@ -86,18 +86,20 @@
 
 
             <div class="row">
-                <div class="form-group">
-                    <div class="pages-module pages-module-cover">
-                        <div class=chosen-cover>
-                            <span ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb" class="label label-danger remove-image">
-                                <span class="fa fa-remove"></span> Remover Thumb
-                            </span>
-                        </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="pages-module pages-module-cover">
+                            <div class=chosen-cover>
+                                <span ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb" class="label label-danger remove-image">
+                                    <span class="fa fa-remove"></span> Remover Thumb
+                                </span>
+                            </div>
 
-                        <div ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="release.thumb" ng-show="!release.thumb" class="add-module">+ Adicionar Thumb</div>
+                            <div ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="release.thumb" ng-show="!release.thumb" class="add-module">+ Adicionar Thumb</div>
 
-                        <div ng-show="release.thumb" class="uploaded-image">
-                            <img ng-src="{{ release.thumb.url }}">
+                            <div ng-show="release.thumb" class="uploaded-image">
+                                <img ng-src="{{ release.thumb.url }}">
+                            </div>
                         </div>
                     </div>
                 </div>
