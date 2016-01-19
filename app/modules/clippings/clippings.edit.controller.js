@@ -7,28 +7,20 @@
 
   ClippingsEditController.$inject = [
     '$scope',
-    '$uibModal',
-    '$timeout',
     '$location',
     '$routeParams',
     '$filter',
     'ClippingsService',
-    'MediaService',
     'NotificationService',
-    'StatusService',
     'DateTimeHelper'
   ];
 
   function ClippingsEditController($scope,
-                                   $modal,
-                                   $timeout,
                                    $location,
                                    $routeParams,
                                    $filter,
                                    ClippingsService,
-                                   MediaService,
                                    NotificationService,
-                                   StatusService,
                                    DateTimeHelper) {
     console.log('... ClippingsEditController');
 
