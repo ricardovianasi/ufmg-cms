@@ -1,0 +1,166 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Novo Destaque</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/featured">
+                    <strong>Destaque</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/featured/new">
+                    <strong>Novo Destaque</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+<div class="row">
+ <div class=row>
+    <div class=col-xs-7>
+        <div class=form-group>
+            <label>Descri&ccedil;&atilde;o:</label>
+
+            <textarea cols="30"
+                      rows="4"
+                      title="Descrição"
+                      class="form-control"
+                      ng-model="vm.featured.description">
+            </textarea>
+        </div>
+
+        <div class=form-group>
+            <label>Anexar release:</label>
+
+            <select title="Status"
+                    ng-model="vm.featured.release.id"
+                    ng-options="release.id as release.title for release in vm.releases.items"
+                    class=form-control>
+            </select>
+        </div>
+    </div>
+
+    <div class=col-xs-5>
+        <div class=form-group>
+            <div class="pages-module edition-cover-thumb">
+                <div ng-show=!vm.featured.image_upload class=add-module>
+                    +
+                    <br>
+                    Capa Digitalizada
+                    <div class=tac>
+                        <br>
+                        <button type=button ngf-accept="'image/*'" ngf-select ng-model=vm.featured.image_upload
+                                ngf-multiple=false class="btn btn-primary">
+                            Carregar Imagem
+                        </button>
+                    </div>
+                </div>
+
+                <div ng-show="vm.featured.image_upload.url">
+                    <div class=chosen-cover>
+                        <span ng-click=vm.removeImage() class="label label-danger remove-image">
+                            <i class="fa fa-remove"></i> REMOVER IMAGEM
+                        </span>
+                    </div>
+
+                    <div class="uploaded-image edition-cover-image">
+                        <img ng-src="{{ vm.featured.image_upload.url }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=row>
+        <div class=col-xs-12>
+            <div class=form-group>
+                <div class=clearfix>
+                    <div class=pull-left>
+                        <label>Especialistas:</label>
+                    </div>
+
+                    <div class=pull-right>
+                        <button type=button style="margin-bottom: 3px" ng-click=addSpecialist()
+                                class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div ng-repeat="specialist in widget.content.specialists" class="well well-sm">
+                    <div ng-click="specialist.opened = true" class=clearfix>
+                        <div class=pull-left>
+                            <strong>Especialista:</strong>
+
+                            {{ specialist.name }}
+                        </div>
+
+                        <div class=pull-right>
+                            <button type=button ng-click=removeSpecialist($index) class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show=specialist.opened>
+                        <div class=row>
+                            <div class=col-xs-6>
+                                <div class=form-group>
+                                    <label>Nome:</label>
+
+                                    <input type=text title=Nome ng-model=specialist.name class=form-control>
+                                </div>
+                            </div>
+
+                            <div class=col-xs-6>
+                                <div class=form-group>
+                                    <label>T&iacute;tulo/cargo:</label>
+
+                                    <input type=text title=Título/cargo ng-model=specialist.title_job class=form-control>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=row>
+                            <div class=col-xs-6>
+                                <div class=form-group>
+                                    <label>Email:</label>
+
+                                    <input type=text title=Email ng-model=specialist.email class=form-control>
+                                </div>
+                            </div>
+
+                            <div class=col-xs-6>
+                                <div class=form-group>
+                                    <label>Telefone:</label>
+
+                                    <input type=text title=Telefone ng-model=specialist.phone class=form-control>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=row>
+                            <div class=col-xs-12>
+                                <button type=button ng-click="specialist.opened = false" class="pull-right btn btn-primary">
+                                    salvar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
