@@ -4,17 +4,18 @@
 
   angular
     .module('featuredModule')
-    .controller('featuredNewController', featuredNewController);
+    .controller('featuredEditController', featuredEditController);
 
-    featuredNewController.$inject = ['$scope',
+    featuredEditController.$inject = ['$scope',
                                     'ReleasesService',
                                     'MediaService',
                                     'featuredService',
                                     '$timeout',
                                     'NotificationService',
-                                    '$location'];
+                                    '$location',
+                                    '$routeParams'];
 
-    function featuredNewController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location) {
+    function featuredEditController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $routeParams) {
 
       var vm = this; // jshint ignore:line
           vm.removeImage = _removeImage;
@@ -23,6 +24,11 @@
           vm.saveFeatured = _saveFeatured;
           vm.featured = {};
           vm.releases = {};
+          var _updateFeatured = {};
+
+        featuredService.getFeatured($routeParams.id).then(function(res){
+          vm.featured = res.data;
+        });
 
       // Cover Image - Upload
       $scope.$watch('vm.featured.photo', function () {
@@ -94,15 +100,21 @@
        */
       function _saveFeatured(){
         _parseToSave();
-        featuredService.save(vm.featured).then(function(res){
-          NotificationService.success('Destaque salvo com sucesso!');
+
+        featuredService.update(vm.featured.id, _updateFeatured).then(function(res){
+          NotificationService.success('Destaque alterado com sucesso!');
           $location.path('/featured');
         });
       }
 
       function _parseToSave(){
-        vm.featured.photo = vm.featured.photo.id;
-        // vm.featured.releases = vm.featured.releases.id;
+        _updateFeatured = {
+          title: vm.featured.title,
+          description: vm.featured.description,
+          specialists: vm.featured.specialists,
+          photo: vm.featured.photo.id,
+          release: vm.featured.release.id
+        };
       }
     }
 })();

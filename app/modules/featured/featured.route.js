@@ -8,18 +8,18 @@
       $routeProvider
         .when('/featured', {
           templateUrl: 'modules/featured/featured.template.html',
-          // controller: 'featuredModule',
-          // controllerAs: 'ctrl'
+          controller: 'featuredController',
+          controllerAs: 'vm'
         })
         .when('/featured/new', {
           templateUrl: 'modules/featured/featured.form.template.html',
           controller: 'featuredNewController',
           controllerAs: 'vm'
+        })
+        .when('/featured/edit/:id', {
+          templateUrl: 'modules/featured/featured.form.template.html',
+          controller: 'featuredEditController',
+          controllerAs: 'vm'
         });
-        // .when('/featured/edit/:id', {
-        //   templateUrl: 'modules/clippings/clippings.form.template.html',
-        //   controller: 'ClippingsEditController',
-        //   controllerAs: 'ctrl'
-        // });
     }]);
 })();

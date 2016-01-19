@@ -25,10 +25,17 @@
     </div>
 </div>
 
-<div class="row">
- <div class=row>
-    <div class=col-xs-7>
-        <div class=form-group>
+<div class="row panel panel-default col-md-10">
+ <div class="row">
+    <div class="col-xs-7">
+        <div class="form-group">
+            <label>Títutlo</label>
+
+        <input
+            class="form-control"
+            ng-model="vm.featured.title">
+        </div>
+        <div class="form-group">
             <label>Descri&ccedil;&atilde;o:</label>
 
             <textarea cols="30"
@@ -53,20 +60,20 @@
     <div class=col-xs-5>
         <div class=form-group>
             <div class="pages-module edition-cover-thumb">
-                <div ng-show=!vm.featured.image_upload class=add-module>
+                <div ng-show=!vm.featured.photo class=add-module>
                     +
                     <br>
                     Capa Digitalizada
                     <div class=tac>
                         <br>
-                        <button type=button ngf-accept="'image/*'" ngf-select ng-model=vm.featured.image_upload
+                        <button type=button ngf-accept="'image/*'" ngf-select ng-model=vm.featured.photo
                                 ngf-multiple=false class="btn btn-primary">
                             Carregar Imagem
                         </button>
                     </div>
                 </div>
 
-                <div ng-show="vm.featured.image_upload.url">
+                <div ng-show="vm.featured.photo.url">
                     <div class=chosen-cover>
                         <span ng-click=vm.removeImage() class="label label-danger remove-image">
                             <i class="fa fa-remove"></i> REMOVER IMAGEM
@@ -74,7 +81,7 @@
                     </div>
 
                     <div class="uploaded-image edition-cover-image">
-                        <img ng-src="{{ vm.featured.image_upload.url }}">
+                        <img ng-src="{{ vm.featured.photo.url }}">
                     </div>
                 </div>
             </div>
@@ -91,14 +98,15 @@
                     </div>
 
                     <div class=pull-right>
-                        <button type=button style="margin-bottom: 3px" ng-click=addSpecialist()
+                        <button type=button style="margin-bottom: 3px" ng-click="vm.addSpecialist()"
                                 class="btn btn-primary btn-sm">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
 
-                <div ng-repeat="specialist in widget.content.specialists" class="well well-sm">
+                <div ng-repeat="specialist in vm.featured.specialists"
+                    class="well well-sm">
                     <div ng-click="specialist.opened = true" class=clearfix>
                         <div class=pull-left>
                             <strong>Especialista:</strong>
@@ -107,52 +115,52 @@
                         </div>
 
                         <div class=pull-right>
-                            <button type=button ng-click=removeSpecialist($index) class="btn btn-danger btn-sm">
+                            <button type=button ng-click="vm.removeSpecialist($index)" class="btn btn-danger btn-sm">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div ng-show=specialist.opened>
-                        <div class=row>
-                            <div class=col-xs-6>
-                                <div class=form-group>
+                    <div ng-show="specialist.opened">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
                                     <label>Nome:</label>
 
-                                    <input type=text title=Nome ng-model=specialist.name class=form-control>
+                                    <input type="text" title="Nome" ng-model="specialist.name" class="form-control">
                                 </div>
                             </div>
 
-                            <div class=col-xs-6>
-                                <div class=form-group>
+                            <div class="col-xs-6">
+                                <div class="form-group">
                                     <label>T&iacute;tulo/cargo:</label>
 
-                                    <input type=text title=Título/cargo ng-model=specialist.title_job class=form-control>
+                                    <input type="text" title="Título/cargo" ng-model="specialist.title_job" class="form-control">
                                 </div>
                             </div>
                         </div>
 
-                        <div class=row>
-                            <div class=col-xs-6>
-                                <div class=form-group>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
                                     <label>Email:</label>
 
-                                    <input type=text title=Email ng-model=specialist.email class=form-control>
+                                    <input type="text" title="Email" ng-model="specialist.email" class="form-control">
                                 </div>
                             </div>
 
-                            <div class=col-xs-6>
-                                <div class=form-group>
+                            <div class="col-xs-6">
+                                <div class="form-group">
                                     <label>Telefone:</label>
 
-                                    <input type=text title=Telefone ng-model=specialist.phone class=form-control>
+                                    <input type="text" title="Telefone" ng-model="specialist.phone" class="form-control">
                                 </div>
                             </div>
                         </div>
 
-                        <div class=row>
-                            <div class=col-xs-12>
-                                <button type=button ng-click="specialist.opened = false" class="pull-right btn btn-primary">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button type="button" ng-click="specialist.opened = false" class="pull-right btn btn-primary">
                                     salvar
                                 </button>
                             </div>
@@ -160,6 +168,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" ng-click="vm.saveFeatured()" class="pull-right btn btn-lg btn-secondary">
+                salvar
+            </button>
         </div>
     </div>
 
