@@ -1,0 +1,74 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Destaques</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li class="active">
+                <a href="#/featured">
+                    <strong>Destaques</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div><!--breadcrumb-env-->
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+
+            <div class="btn-toolbar">
+                <div class="pull-right">
+                    <a ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
+                        <span class="fa fa-plus"></span> INSERIR NOVO DESTAQUE
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%">Título</th>
+                            <th style="width: 22%">Autor</th>
+                            <th style="width: 14%;">Data da criação</th>
+                            <th style="width: 130px">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search}" class="odd">
+                            <td>{{ featured.title }}</td>
+
+                            <td>{{ featured.author.name }}</td>
+
+                            <td>
+                                <strong>{{ vm.DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
+                                <br>
+                                <small>({{ featured.status }})</small>
+                            </td>
+
+                            <td>
+
+                                <a ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+
+                                <a ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!--panel-->
+    </div><!--col-xs-12-->
+</div><!--row-->

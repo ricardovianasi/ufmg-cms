@@ -37,5 +37,6 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
+      'featuredModule'
     ]);
 })();
