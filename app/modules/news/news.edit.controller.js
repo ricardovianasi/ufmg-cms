@@ -96,26 +96,33 @@
       $scope.breadcrumb_active = $scope.news.title;
     });
 
-       /**
-       * @param size
-       * @param title
-       */
+    /**
+     * @param size
+     * @param title
+     */
 
-       var removeConfirmationModal;
+    var removeConfirmationModal;
 
-      $scope.confirmationModal = function (size, title) {
-        removeConfirmationModal = $uibModal.open({
-          templateUrl: 'components/modal/confirmation.modal.template.html',
-          controller: ConfirmationModalCtrl,
-          backdrop: 'static',
-          size: size,
-          resolve: {
-            title: function () {
-              return title;
-            }
+    $scope.confirmationModal = function (size, title) {
+      removeConfirmationModal = $uibModal.open({
+        templateUrl: 'components/modal/confirmation.modal.template.html',
+        controller: ConfirmationModalCtrl,
+        backdrop: 'static',
+        size: size,
+        resolve: {
+          title: function () {
+            return title;
           }
-        });
-      };
+        }
+      });
+
+      removeConfirmationModal.result.then(function () {
+          NewsService.removeNews($routeParams.id).then(function () {
+            NotificationService.success('Notícia removida com sucesso.');
+            $location.path('/news');
+          });
+      });
+    };
 
     /**
      * @param $scope
@@ -135,12 +142,8 @@
       };
     };
 
-    $scope.remove = function (id) {
+    $scope.remove = function () {
       $scope.confirmationModal('md', 'Você deseja excluir esta notícia?');
-      NewsService.removeNews(id).then(function (data) {
-        NotificationService.success('Notícia removida com sucesso.');
-        $location.path('/news');
-      });
     };
 
     $scope.publish = function (data) {
