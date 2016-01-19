@@ -15,6 +15,7 @@
 
       var vm = this; // jshint ignore:line
           vm.removeImage = _removeImage;
+          vm.addSpecialist = _addSpecialist;
           vm.featured = {};
           vm.releases = {};
 
@@ -53,7 +54,7 @@
 
 
       // Specialists
-      $scope.addSpecialist = function () {
+      function _addSpecialist () {
         if (vm.featured.specialists) {
           vm.featured.specialists.push({
             name: '',
