@@ -1,9 +1,8 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module("newsModule")
-    .controller("NewsEditController", NewsEditController);
+  angular.module('newsModule')
+    .controller('NewsEditController', NewsEditController);
 
   NewsEditController.$inject = [
     '$scope',
@@ -11,6 +10,7 @@
     '$location',
     '$timeout',
     '$uibModal',
+    '$window',
     'NewsService',
     'NotificationService',
     'StatusService',
@@ -18,11 +18,27 @@
     'DateTimeHelper',
   ];
 
+  /**
+   * @param $scope
+   * @param $routeParams
+   * @param $location
+   * @param $timeout
+   * @param $uibModal
+   * @param $window
+   * @param NewsService
+   * @param NotificationService
+   * @param StatusService
+   * @param MediaService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function NewsEditController($scope,
                               $routeParams,
                               $location,
                               $timeout,
                               $uibModal,
+                              $window,
                               NewsService,
                               NotificationService,
                               StatusService,
@@ -31,8 +47,6 @@
     console.log('... NoticiasEditController');
 
     $scope.news = {};
-    $scope.news.tags = [];
-
     $scope.categories = [];
     $scope.status = [];
     $scope.types = [];
@@ -57,7 +71,6 @@
       opened: false
     };
 
-
     NewsService.getNewsCategories().then(function (data) {
       $scope.categories = data.data;
     });
@@ -71,22 +84,27 @@
     });
 
     NewsService.getNews($routeParams.id).then(function (data) {
-      $scope.news.id = data.data.id;
-      $scope.news.title = data.data.title ? data.data.title : '';
-      $scope.news.subtitle = data.data.subtitle ? data.data.subtitle : '';
-      $scope.news.author = data.data.author_name ? data.data.author_name : '';
-      $scope.news.category = data.data.category ? data.data.category.id : '';
-      $scope.news.text = data.data.text ? data.data.text : '';
-      $scope.news.status = data.data.status ? data.data.status : '';
-      $scope.news.type = data.data.type ? data.data.type.id : '';
-      $scope.news.thumb = data.data.thumb ? data.data.thumb.id : '';
-      $scope.news.thumb_name = data.data.thumb ? data.data.thumb.title : '';
+      $scope.news = {
+        id: data.data.id,
+        title: data.data.title || '',
+        subtitle: data.data.subtitle || '',
+        author: data.data.author_name || '',
+        category: data.data.category ? data.data.category.id : '',
+        text: data.data.text || '',
+        status: data.data.status || '',
+        type: data.data.type ? data.data.type.id : '',
+        thumb: data.data.thumb ? data.data.thumb.id : '',
+        thumb_name: data.data.thumb ? data.data.thumb.title : '',
+        highlight_ufmg: data.data.highlight_ufmg,
+        news_url: data.data.news_url
+      };
+
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
+
       $scope.news.scheduled_date = scheduled_at.date;
       $scope.news.scheduled_time = scheduled_at.time;
-      $scope.news.highlight_ufmg = data.data.highlight_ufmg;
-      $scope.news.news_url = data.data.news_url;
 
+      $scope.news.tags = [];
 
       angular.forEach(data.data.tags, function (tag) {
         $scope.news.tags.push(tag.name);
@@ -96,13 +114,12 @@
       $scope.breadcrumb_active = $scope.news.title;
     });
 
+    var removeConfirmationModal;
+
     /**
      * @param size
      * @param title
      */
-
-    var removeConfirmationModal;
-
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
@@ -146,7 +163,11 @@
       $scope.confirmationModal('md', 'Você deseja excluir esta notícia?');
     };
 
-    $scope.publish = function (data) {
+    /**
+     * @param data
+     * @param preview
+     */
+    $scope.publish = function (data, preview) {
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -165,14 +186,18 @@
         _obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
       }
 
-      NewsService.updateNews(data.id, _obj).then(function (data) {
+      NewsService.updateNews(data.id, _obj).then(function (news) {
         NotificationService.success('Notícia atualizada com sucesso.');
-        $location.path('/news');
+
+        if (!preview) {
+          $location.path('/news');
+        } else {
+          $window.open(news.data.news_url);
+        }
       });
     };
 
     // Cover Image - Upload
-
     $scope.$watch('news_thumb', function () {
       if ($scope.news_thumb) {
         $scope.upload([$scope.news_thumb]);
@@ -207,14 +232,11 @@
       formats: ['vertical', 'medium']
     };
 
+    /**
+     * @param files
+     */
     $scope.upload = function (files) {
       angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
         MediaService.newFile(file).then(function (data) {
           $scope.news.thumb = data.id;
           $scope.news.thumb_name = data.title;

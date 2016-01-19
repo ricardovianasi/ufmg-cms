@@ -1,6 +1,15 @@
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">Nova Notícia</h1>
+        <h1 class="title">
+            <span ng-if="news.id">
+                <span ng-if="news.title">Editar Notícia - {{ news.title }}</span>
+                <span ng-if="!news.title">Editar Notícia</span>
+            </span>
+            <span ng-if="!news.id">
+                <span ng-if="news.title">Nova Notícia - {{ news.title }}</span>
+                <span ng-if="!news.title">Nova Notícia</span>
+            </span>
+        </h1>
     </div>
 
     <div class="breadcrumb-env">
