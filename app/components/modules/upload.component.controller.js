@@ -42,7 +42,7 @@
         height: 540
       },
       medium: {
-        name: 'Médio',
+        name: 'Horizontal',
         width: 712,
         height: 474
       },
