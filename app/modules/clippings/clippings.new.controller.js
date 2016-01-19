@@ -1,34 +1,24 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('clippingsModule')
+  angular.module('clippingsModule')
     .controller('ClippingsNewController', ClippingsNewController);
 
   ClippingsNewController.$inject = [
     '$scope',
-    '$uibModal',
-    '$timeout',
     '$location',
-    '$filter',
     'ClippingsService',
-    'MediaService',
     'NotificationService',
     'StatusService',
     'DateTimeHelper'
   ];
 
   function ClippingsNewController($scope,
-                                  $modal,
-                                  $timeout,
                                   $location,
-                                  $filter,
                                   ClippingsService,
-                                  MediaService,
                                   NotificationService,
                                   StatusService,
                                   DateTimeHelper) {
-
     console.log('... ClippingsNewController');
 
     $scope.title = 'Novo Clipping';
@@ -36,7 +26,7 @@
     $scope.clipping = {
       title: '',
       date: {
-        year: null,
+        year: (new Date()).getFullYear(),
         month: null,
         day: null
       },
@@ -48,7 +38,7 @@
     // Time and Date
     $scope.time_days = DateTimeHelper.getDays();
     $scope.time_months = DateTimeHelper.getMonths();
-    $scope.time_years = ['2015', '2016', '2017'];
+    $scope.time_years = DateTimeHelper.yearRange(5); // 5 year back and forth
     $scope.time_hours = DateTimeHelper.getHours();
     $scope.time_minutes = DateTimeHelper.getMinutes();
 

@@ -221,14 +221,24 @@
             return new Date(date);
           },
           /**
-           *
            * @param date
+           *
            * @returns {padding}
            */
           dateToStr: function (date) {
             var d = new Date(date);
 
             return $filter('date')(d, 'dd/MM/yyyy');
+          },
+          /**
+           * @param {number} amount
+           *
+           * @returns {Array}
+           */
+          yearRange: function (amount) {
+            var currentYear = (new Date()).getFullYear();
+
+            return _makeRange(currentYear - amount, currentYear + amount);
           }
         };
       }
