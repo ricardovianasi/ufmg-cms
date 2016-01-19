@@ -33,50 +33,6 @@
     $scope.breadcrumb = $scope.title;
     $scope.release = {};
 
-    /**
-     * Redactor config
-     */
-    $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
-    };
-
-    $scope.imagencropOptions = {
-      /**
-       * @param redactor
-       * @param data
-       */
-      callback: function (redactor, data) {
-        var cropped = function (size, data) {
-          var html = _.template($('#figure-' + size).html());
-
-          redactor.selection.restore();
-          redactor.insert.raw(html(data));
-        };
-
-        var croppedObj = {
-          url: data.url,
-          legend: data.legend ? data.legend : '',
-          author: data.author ? data.author : ''
-        };
-
-        cropped(data.type, croppedObj);
-      },
-      formats: ['vertical', 'medium']
-    };
-
-    $scope.audioUploadOptions = {
-      /**
-       * @param redactor
-       * @param data
-       */
-      callback: function (redactor, data) {
-        var html = _.template($('#audio').html());
-
-        redactor.selection.restore();
-        redactor.insert.raw(html(data));
-      }
-    };
-
     // Time and Date
     $scope.time_days = DateTimeHelper.getDays();
     $scope.time_months = DateTimeHelper.getMonths();
