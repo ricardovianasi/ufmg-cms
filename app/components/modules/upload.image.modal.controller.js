@@ -147,7 +147,7 @@
         cropHeight: 424
       },
       {
-        name: 'Médio',
+        name: 'Horizontal',
         type: 'medium',
         size: '712x474',
         width: 712,
