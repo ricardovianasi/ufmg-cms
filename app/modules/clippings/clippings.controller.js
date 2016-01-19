@@ -8,6 +8,7 @@
     '$scope',
     '$uibModal',
     '$filter',
+    '$route',
     'ClippingsService',
     'dataTableConfigService',
     'DateTimeHelper',
@@ -15,12 +16,13 @@
   ];
 
   function ClippingsController($scope,
-                              $modal,
-                              $filter,
-                              ClippingsService,
-                              dataTableConfigService,
-                              DateTimeHelper,
-                              NotificationService) {
+                               $modal,
+                               $filter,
+                               $route,
+                               ClippingsService,
+                               dataTableConfigService,
+                               DateTimeHelper,
+                               NotificationService) {
     console.log('... ClippingsController');
 
     $scope.title = 'Clippings';
@@ -44,15 +46,15 @@
     // Confirmation to remove
     var removeConfirmationModal;
 
-    var ConfirmationModalCtrl = function ($scope,  $uibModalInstance, title) {
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
       $scope.ok = function () {
-         $uibModalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function () {
-         $uibModalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
@@ -76,7 +78,8 @@
       removeConfirmationModal.result.then(function () {
         ClippingsService.destroy(id).then(function () {
           NotificationService.success('Clipping removido com sucesso.');
-          loadClippings();
+
+          $route.reload();
         });
       });
     };
