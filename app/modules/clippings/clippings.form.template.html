@@ -1,27 +1,28 @@
 <div class="page-title">
-
     <div class="title-env">
         <h1 class="title">{{ title }}</h1>
     </div>
 
     <div class="breadcrumb-env">
-
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
+                <a href="#/">
+                    <i class="fa-home"></i>Home
+                </a>
             </li>
+
             <li>
                 <a href="#/clippings">
                     <strong>Clippings</strong>
                 </a>
             </li>
+
             <li class="active">
                 <a href="#/clippings/new">
                     <strong>Novo Clipping</strong>
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
 
@@ -33,7 +34,8 @@
                     <div class="col-xs-7">
                         <div class="form-group">
                             <label for="origin">Origem da Matéria</label>
-                            <input id="origin" type="text" name="origin" ng-model="clipping.origin" class="form-control">
+                            <input id="origin" type="text" name="origin" ng-model="clipping.origin"
+                                   class="form-control">
                         </div>
                     </div>
 
@@ -43,20 +45,23 @@
 
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <select title="Dia" ng-model="clipping.date.day" class='form-control'>
-                                        <option value="{{ day }}" ng-repeat="day in time_days">{{ day }}</option>
+                                    <select title="Dia" class='form-control'
+                                            ng-model="clipping.date.day"
+                                            ng-options="day as day for day in time_days">
                                     </select>
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <select title="Mês" ng-model='clipping.date.month' class="form-control">
-                                        <option value="{{ month }}" ng-repeat="month in time_months">{{ month }}</option>
+                                    <select title="Mês" class="form-control"
+                                            ng-model="clipping.date.month"
+                                            ng-options="month as month for month in time_months">
                                     </select>
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <select title="Ano" ng-model="clipping.date.year" class="form-control">
-                                        <option value="{{ year }}" ng-repeat="year in time_years">{{ year }}</option>
+                                    <select title="Ano" class="form-control"
+                                            ng-model="clipping.date.year"
+                                            ng-options="year as year for year in time_years">
                                     </select>
                                 </div>
                             </div>
@@ -64,7 +69,6 @@
                     </div>
                 </div>
             </div><!--row-->
-
 
             <div class="row">
                 <div class="col-xs-12">
@@ -75,7 +79,6 @@
                 </div>
             </div><!--row-->
 
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -84,8 +87,6 @@
                     </div>
                 </div>
             </div><!--row-->
-
-
 
             <hr>
 
