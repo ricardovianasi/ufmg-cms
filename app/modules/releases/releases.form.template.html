@@ -27,7 +27,16 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">{{ title }}</h1>
+        <h1 class="title">
+            <span ng-if="release.id">
+                <span ng-if="release.title">Editar Release - {{ release.title }}</span>
+                <span ng-if="!release.title">Editar Release</span>
+            </span>
+            <span ng-if="!release.id">
+                <span ng-if="release.title">Nova Release - {{ release.title }}</span>
+                <span ng-if="!release.title">Nova Release</span>
+            </span>
+        </h1>
     </div>
 
     <div class="breadcrumb-env">
@@ -50,7 +59,6 @@
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
 
@@ -86,26 +94,28 @@
             </div><!--row-->
 
             <div class="row">
-                <div class="form-group">
-                    <div class="pages-module pages-module-cover">
-                        <div class=chosen-cover>
-                            <a href="javascript:void(0);" class="label label-danger remove-image"
-                               ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb">
-                                <i class="fa fa-remove"></i> Remover Thumb
-                            </a>
-                        </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="pages-module pages-module-cover">
+                            <div class=chosen-cover>
+                                <a href="javascript:void(0);" class="label label-danger remove-image"
+                                   ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb">
+                                    <i class="fa fa-remove"></i> Remover Thumb
+                                </a>
+                            </div>
 
-                        <div class="add-module"
-                             ngf-select
-                             ngf-accept="'image/*'"
-                             ngf-multiple="false"
-                             ng-model="release.thumb"
-                             ng-show="!release.thumb">+ Adicionar Thumb
-                        </div>
+                            <div class="add-module"
+                                 ngf-select
+                                 ngf-accept="'image/*'"
+                                 ngf-multiple="false"
+                                 ng-model="release.thumb"
+                                 ng-show="!release.thumb">+ Adicionar Thumb
+                            </div>
 
-                        <div class="uploaded-image"
-                             ng-show="release.thumb">
-                            <img ng-src="{{ release.thumb.url }}">
+                            <div class="uploaded-image"
+                                 ng-show="release.thumb">
+                                <img ng-src="{{ release.thumb.url }}">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,7 +126,9 @@
                     <div class="form-group">
                         <label for="content">Adicionar conteúdo</label>
                         <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content"
-                                  redactor="redactorConfig"></textarea>
+                                  redactor="redactorOptions"
+                                  imagencrop-options="imagencropOptions"
+                                  audioUpload-options="audioUploadOptions"></textarea>
                     </div>
                 </div>
             </div><!--row-->
@@ -282,3 +294,5 @@
         <publishment-options route-model="release"></publishment-options>
     </div>
 </div>
+
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
