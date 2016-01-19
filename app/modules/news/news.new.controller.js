@@ -7,6 +7,7 @@
   NewsNewController.$inject = [
     '$scope',
     '$location',
+    '$window',
     'MediaService',
     'NewsService',
     'NotificationService',
@@ -16,6 +17,7 @@
 
   function NewsNewController($scope,
                              $location,
+                             $window,
                              MediaService,
                              NewsService,
                              NotificationService,
@@ -65,7 +67,7 @@
       $scope.status = data.data;
     });
 
-    $scope.publish = function (data) {
+    $scope.publish = function (data, preview) {
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -79,9 +81,14 @@
         highlight_ufmg: data.highlight_ufmg
       };
 
-      NewsService.postNews(_obj).then(function (data) {
+      NewsService.postNews(_obj).then(function (news) {
         NotificationService.success('Notícia criada com sucesso.');
-        $location.path('/news');
+
+        if (!preview) {
+          $location.path('/news');
+        } else {
+          $window.open(news.data.news_url);
+        }
       });
     };
 
