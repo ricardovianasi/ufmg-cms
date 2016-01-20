@@ -20,6 +20,7 @@
       'datatables.bootstrap',
       'mrImage',
       'ngLodash',
+      'ngInflection',
       'ngTagsInput',
 
       // App Modules

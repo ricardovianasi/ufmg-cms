@@ -25,33 +25,40 @@
     }
 </style>
 
-
-
-
 <div class="page-title">
-
     <div class="title-env">
-        <h1 class="title">{{ title }}</h1>
+        <h1 class="title">
+            <span ng-if="release.id">
+                <span ng-if="release.title">Editar Release - {{ release.title }}</span>
+                <span ng-if="!release.title">Editar Release</span>
+            </span>
+            <span ng-if="!release.id">
+                <span ng-if="release.title">Nova Release - {{ release.title }}</span>
+                <span ng-if="!release.title">Nova Release</span>
+            </span>
+        </h1>
     </div>
 
     <div class="breadcrumb-env">
-
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
+                <a href="#/">
+                    <i class="fa-home"></i>Home
+                </a>
             </li>
+
             <li>
                 <a href="#/releases">
                     <strong>Release</strong>
                 </a>
             </li>
+
             <li class="active">
                 <a href="#/gallery/new">
                     <strong>Novo release</strong>
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
 
@@ -72,45 +79,51 @@
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="subtitle">Bigode</label>
-                        <input id="subtitle" name="subtitle" type="text" ng-model="release.subtitle" class="form-control">
+                        <input id="subtitle" name="subtitle" type="text" ng-model="release.subtitle"
+                               class="form-control">
                     </div>
                 </div>
+
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="authorName">Autor</label>
-                        <input id="authorName" name="authorName" type="text" ng-model="release.authorName" class="form-control">
+                        <input id="authorName" name="authorName" type="text" ng-model="release.authorName"
+                               class="form-control">
                     </div>
                 </div>
             </div><!--row-->
 
-
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <div class="pages-module pages-module-cover">
-                            <div class=chosen-cover>
-                                <span ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb" class="label label-danger remove-image">
-                                    <span class="fa fa-remove"></span> Remover Thumb
+                        <input type="file" class="form-control"
+                               ngf-select
+                               ng-model="release.thumb"
+                               ngf-multiple="false"
+                               ng-show="!release.thumb">
+
+                        <div class="clearfix form-control"
+                             ng-show="release.thumb" style="height:auto">
+                            <div class="pull-left">{{ release.thumb.url }}</div>
+
+                            <div class="pull-right">
+                                <span class="label label-danger remove-image"
+                                      ng-show="release.thumb"
+                                      ng-click="imgHandler.removeImage('thumb')">
+                                    <span class="fa fa-remove"></span> REMOVER
                                 </span>
-                            </div>
-
-                            <div ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="release.thumb" ng-show="!release.thumb" class="add-module">+ Adicionar Thumb</div>
-
-                            <div ng-show="release.thumb" class="uploaded-image">
-                                <img ng-src="{{ release.thumb.url }}">
                             </div>
                         </div>
                     </div>
                 </div>
             </div><!--row-->
 
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="content">Adicionar conteúdo</label>
-                        <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorConfig"></textarea>
+                        <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content"
+                                  redactor="redactorOptions"></textarea>
                     </div>
                 </div>
             </div><!--row-->
@@ -134,6 +147,7 @@
                         <input id="email" type="text" name="email" ng-model="release.source.email" class="form-control">
                     </div>
                 </div>
+
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="phone">Telefone</label>
@@ -148,11 +162,11 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="whats">O que é</label>
-                        <input id="whats" type="text" name="whats" ng-model="release.service.whats" class="form-control">
+                        <input id="whats" type="text" name="whats" ng-model="release.service.whats"
+                               class="form-control">
                     </div>
                 </div>
             </div><!--row-->
-
 
             <div class="row">
                 <div class="col-xs-6">
@@ -179,24 +193,24 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="where">Onde</label>
-                        <input id="where" type="text" name="where" ng-model="release.service.where" class="form-control">
+                        <input id="where" type="text" name="where" ng-model="release.service.where"
+                               class="form-control">
                     </div>
                 </div>
             </div><!--row-->
 
             <hr>
-
-
             <h3>
                 Arquivos
-                <a href="#" ng-click="fileHandler.addItem($event)" class="pull-right btn btn-primary btn-sm">
+                <button class="pull-right btn btn-primary btn-sm"
+                        ng-click="fileHandler.addItem()">
                     <span class="fa fa-plus"></span>
-                </a>
+                </button>
             </h3>
-
 
             <div class="row">
                 <div class="col-xs-12">
@@ -207,9 +221,10 @@
                             </div>
 
                             <div class="pull-right">
-                                <a href=# ng-click="fileHandler.removeItem($event, idx)" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        ng-click="fileHandler.removeItem(idx)">
                                     <i class="fa fa-trash"></i>
-                                </a>
+                                </button>
                             </div>
                         </div>
 
@@ -219,24 +234,38 @@
                                     <label>URL</label>
                                     <input type="text" ng-model="release.files[idx].external_url" class="form-control">
                                 </div>
+
                                 <div class="form-group">
                                     <label>Arquivo</label>
 
                                     <div class="pages-module pages-module-cover">
                                         <div class="chosen-cover">
-                                            <span ng-click=fileHandler.removeFile(idx) ng-show=release.files[idx].file class="label label-danger remove-image"><span class="fa fa-remove"></span> Remover Arquivo</span>
+                                            <a class="label label-danger remove-image"
+                                               ng-click=fileHandler.removeFile(idx)
+                                               ng-show=release.files[idx].file>
+                                                <i class="fa fa-remove"></i> Remover Arquivo
+                                            </a>
                                         </div>
 
-                                        <div ngf-select ngf-accept="'*'" ngf-multiple="false" ng-model="release.files[idx].file" ng-show="!release.files[idx].file" class="add-module">+ Adicionar Arquivo</div>
+                                        <div class="add-module"
+                                             ngf-select
+                                             ngf-accept="'*'"
+                                             ngf-multiple="false"
+                                             ng-model="release.files[idx].file"
+                                             ng-show="!release.files[idx].file">+ Adicionar Arquivo
+                                        </div>
 
-                                        <div ng-show="release.files[idx].file" class="uploaded-image">{{ release.files[idx].file }}</div>
+                                        <div ng-show="release.files[idx].file" class="uploaded-image">
+                                            {{ release.files[idx].file }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="clearfix">
                                 <div class="pull-right">
-                                    <a href="#" ng-click="fileHandler.saveItem($event, idx)" class="btn btn-sm btn-primary">Salvar</a>
+                                    <button class="btn btn-sm btn-primary"
+                                            ng-click="fileHandler.saveItem(idx)">Salvar</button>
                                 </div>
                             </div>
                         </div>
@@ -250,3 +279,5 @@
         <publishment-options route-model="release"></publishment-options>
     </div>
 </div>
+
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
