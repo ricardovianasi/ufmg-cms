@@ -20,6 +20,7 @@
       'datatables.bootstrap',
       'mrImage',
       'ngLodash',
+      'ngTagsInput',
 
       // App Modules
       'calendarModule',
