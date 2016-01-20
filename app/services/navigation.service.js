@@ -32,6 +32,12 @@
             enabled: true
           },
           {
+            icon: 'fa fa-bullhorn',
+            name: 'Assessoria/Destaque',
+            location: 'featured',
+            enabled: true
+          },
+          {
             icon: 'fa fa-newspaper-o',
             name: 'Notícias',
             location: 'news',

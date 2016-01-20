@@ -20,6 +20,7 @@
       'datatables.bootstrap',
       'mrImage',
       'ngLodash',
+      'ngTagsInput',
 
       // App Modules
       'calendarModule',
@@ -37,5 +38,6 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
+      'featuredModule'
     ]);
 })();

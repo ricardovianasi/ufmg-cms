@@ -3,12 +3,12 @@
     <div class="publishment-body">
         <div class="clearfix">
             <div class="pull-left">
-                <button type=button ng-click=saveDraft($event) class="btn btn-sm btn-gray">Salvar como rascunho</button>
+                <button type=button ng-click=saveDraft($event) class="btn btn-sm btn-gray"><i class="fa fa-floppy-o"></i> Salvar como rascunho</button>
             </div>
 
             <div class="pull-right">
                 <a target="_blank" class="btn btn-sm btn-gray"
-                   ng-click="publish(obj, true)">Pré-visualizar</a>
+                   ng-click="publish(obj, true)"><i class="fa fa-eye"></i> Pré-visualizar</a>
             </div>
         </div>
 
@@ -59,7 +59,7 @@
         <div class=pull-left>
             <button type=button class="btn btn-sm btn-danger"
                     ng-click="back()">
-                Cancelar
+                <i class="fa fa-times"></i> Cancelar
             </button>
 
             <button type=button class="btn btn-sm btn-danger"
@@ -72,7 +72,7 @@
         <div class=pull-right>
             <button id=publish-button type=button class="btn btn-sm btn-secondary"
                     ng-click=publish(obj)>
-                Publicar
+                <i class="fa fa-check"></i> Publicar
             </button>
         </div>
     </div>
