@@ -23,7 +23,9 @@
                                         dataTableConfigService) {
     console.log('... PeriodicalEditionsController');
 
-    $scope.periodical = {};
+    $scope.periodical = {
+      id: $routeParams.id
+    };
 
     $scope.loadEditions = function () {
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
