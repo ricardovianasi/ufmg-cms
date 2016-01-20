@@ -32,6 +32,8 @@ var files = [
   'bower_components/mr-image/dist/js/mr-image.min.js',
   'bower_components/ng-lodash/build/ng-lodash.min.js',
   'bower_components/log/log.min.js',
+  'bower_components/inflection/inflection.min.js',
+  'bower_components/ngInflection/dist/ngInflection.min.js',
 ];
 
 var styles = [
