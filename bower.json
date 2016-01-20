@@ -52,6 +52,7 @@
     "ui-select": "angular-ui-select#~0.13.2",
     "ng-lodash": "~0.3.0",
     "log": "~0.3.0",
+    "ngInflection": "~1.1.10",
     "ng-tags-input": "3.0.0"
   }
 }

@@ -36,10 +36,10 @@
       maxHeight: 500,
       formatting: ['p', 'blockquote'],
       formattingAdd: {
-          "red-p-add": {
-              title: '<i class="fa fa-text-height"></i> Subtítulo',
-              args: ['h3', 'class', 'news__subtitle', 'toggle']
-          }
+        "red-p-add": {
+          title: '<i class="fa fa-text-height"></i> Subtítulo',
+          args: ['h3', 'class', 'news__subtitle', 'toggle']
+        }
       },
       linkTooltip: true
     };
@@ -90,18 +90,23 @@
         };
 
         var additionalOptions = $scope.$eval(attrs.redactor) || {};
-        //as of angular.extend does not know how to treat array attributes
-        var defaultPlugins = _options.plugins;
 
-        angular.extend(_options, additionalOptions);
+        if (additionalOptions.plugins !== false) {
+          //as of angular.extend does not know how to treat array attributes
+          var defaultPlugins = _options.plugins;
 
-        if (typeof additionalOptions.plugins !== 'undefined') {
-          _options.plugins = defaultPlugins.concat(additionalOptions.plugins);
+          angular.extend(_options, additionalOptions);
+
+          if (typeof additionalOptions.plugins !== 'undefined') {
+            _options.plugins = defaultPlugins.concat(additionalOptions.plugins);
+          }
+
+          _options.plugins = _.uniq(_options.plugins);
+
+          _applyPlugins($scope, attrs);
+        } else {
+          delete _options.plugins;
         }
-
-        _options.plugins = _.uniq(_options.plugins);
-
-        _applyPlugins($scope, attrs);
 
         var editor;
 
