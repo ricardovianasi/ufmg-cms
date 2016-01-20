@@ -171,7 +171,6 @@
                 </div>
             </div><!--row-->
 
-
             <div class="row">
                 <div class="col-xs-6">
                     <div class="form-group">
@@ -210,11 +209,11 @@
             <hr>
             <h3>
                 Arquivos
-                <a href="#" ng-click="fileHandler.addItem($event)" class="pull-right btn btn-primary btn-sm">
+                <button class="pull-right btn btn-primary btn-sm"
+                        ng-click="fileHandler.addItem()">
                     <span class="fa fa-plus"></span>
-                </a>
+                </button>
             </h3>
-
 
             <div class="row">
                 <div class="col-xs-12">
@@ -225,9 +224,10 @@
                             </div>
 
                             <div class="pull-right">
-                                <a href=# ng-click="fileHandler.removeItem($event, idx)" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        ng-click="fileHandler.removeItem(idx)">
                                     <i class="fa fa-trash"></i>
-                                </a>
+                                </button>
                             </div>
                         </div>
 
@@ -237,6 +237,7 @@
                                     <label>URL</label>
                                     <input type="text" ng-model="release.files[idx].external_url" class="form-control">
                                 </div>
+
                                 <div class="form-group">
                                     <label>Arquivo</label>
 
@@ -266,8 +267,8 @@
 
                             <div class="clearfix">
                                 <div class="pull-right">
-                                    <a href="#" ng-click="fileHandler.saveItem($event, idx)"
-                                       class="btn btn-sm btn-primary">Salvar</a>
+                                    <button class="btn btn-sm btn-primary"
+                                            ng-click="fileHandler.saveItem(idx)">Salvar</button>
                                 </div>
                             </div>
                         </div>

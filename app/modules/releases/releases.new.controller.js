@@ -9,6 +9,7 @@
     '$timeout',
     '$location',
     '$filter',
+    '$uibModal',
     'ReleasesService',
     'MediaService',
     'NotificationService',
@@ -20,6 +21,7 @@
                                  $timeout,
                                  $location,
                                  $filter,
+                                 $uibModal,
                                  ReleasesService,
                                  MediaService,
                                  NotificationService,
@@ -114,11 +116,9 @@
      */
     $scope.fileHandler = {
       /**
-       * @param {*} $e
+       *
        */
-      addItem: function ($e) {
-        $e.preventDefault();
-
+      addItem: function () {
         var idx = $scope.release.files.push({
           external_url: '',
           file: '',
@@ -129,7 +129,7 @@
         var watchee = $filter('format')('release.files[{0}].file', idx);
 
         $scope.$watch(watchee, function () {
-          if ($scope.release.files[idx].file && $scope.release.files[idx].file instanceof File) {
+          if ($scope.release.files[idx] && $scope.release.files[idx].file instanceof File) {
             $scope.fileHandler.uploadFile(idx, [
               $scope.release.files[idx].file
             ]);
@@ -137,21 +137,25 @@
         });
       },
       /**
-       * @param {*} $e
        * @param {number} idx
        */
-      removeItem: function ($e, idx) {
-        $e.preventDefault();
+      removeItem: function (idx) {
+        if ($scope.release.files[idx].external_url !== '' || $scope.release.files[idx].file !== '') {
+          confirmationModal('md', 'Você deseja excluir este arquivo?');
+
+          removeConfirmationModal.result.then(function () {
+            $scope.release.files.splice(idx, 1);
+          });
+
+          return;
+        }
 
         $scope.release.files.splice(idx, 1);
       },
       /**
-       * @param {*} $e
        * @param {number} idx
        */
-      saveItem: function ($e, idx) {
-        $e.preventDefault();
-
+      saveItem: function (idx) {
         $scope.release.files[idx].opened = false;
       },
       /**
@@ -177,6 +181,44 @@
           $scope.$apply();
         });
       }
+    };
+
+    var removeConfirmationModal;
+
+    /**
+     * @param size
+     * @param title
+     */
+    var confirmationModal = function (size, title) {
+      removeConfirmationModal = $uibModal.open({
+        templateUrl: 'components/modal/confirmation.modal.template.html',
+        controller: ConfirmationModalCtrl,
+        backdrop: 'static',
+        size: size,
+        resolve: {
+          title: function () {
+            return title;
+          }
+        }
+      });
+    };
+
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param title
+     *
+     * @constructor
+     */
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+      $scope.modal_title = title;
+
+      $scope.ok = function () {
+        $uibModalInstance.close();
+      };
+      $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
     };
 
     /**
