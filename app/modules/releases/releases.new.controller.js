@@ -67,10 +67,35 @@
       upload: function (elem, files) {
         angular.forEach(files, function (file) {
           MediaService.newFile(file).then(function (data) {
-            $scope.release[elem] = {
-              url: data.url,
-              id: data.id
+            var x = 0;
+            var y = 0;
+            var width = data.width;
+            var height = data.height;
+
+            if (data.width != data.height) {
+              x = (data.width / 2) - (256 / 2);
+              y = (data.height / 2) - (256 / 2);
+              width = 256;
+              height = 256;
+            }
+
+            var obj = {
+              x: x,
+              y: y,
+              width: width,
+              height: height,
+              resize_width: 256,
+              resize_height: 256,
             };
+
+            MediaService.cropImage(data.id, obj).then(function (data) {
+              var resp = data.data;
+
+              $scope.release[elem] = {
+                url: resp.url,
+                id: resp.id
+              };
+            });
           });
         });
       },
