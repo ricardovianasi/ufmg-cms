@@ -234,6 +234,17 @@
       });
     };
 
+    $scope.remove = function () {
+      confirmationModal('md', 'Você deseja excluir este release?');
+
+      removeConfirmationModal.result.then(function () {
+        ReleasesService.destroy($routeParams.id).then(function () {
+          NotificationService.success('Release removido com sucesso.');
+          $location.path('/releases');
+        });
+      });
+    };
+
     ReleasesService.getRelease($routeParams.id).then(function (data) {
       var release = data.data;
 

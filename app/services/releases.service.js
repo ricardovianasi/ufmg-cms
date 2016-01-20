@@ -6,14 +6,24 @@
 
   ReleasesService.$inject = [
     '$http',
-    '$q',
     '$filter',
     'DateTimeHelper',
     'StatusService',
     'apiUrl'
   ];
 
-  function ReleasesService($http, $q, $filter, DateTimeHelper, StatusService, apiUrl) {
+  /**
+   * @param $http
+   * @param $filter
+   * @param DateTimeHelper
+   * @param StatusService
+   * @param apiUrl
+   *
+   * @returns {{getReleases: getReleases, store: store, update: update, destroy: destroy, getRelease: getRelease}}
+   *
+   * @constructor
+   */
+  function ReleasesService($http, $filter, DateTimeHelper, StatusService, apiUrl) {
     console.log('... ReleasesService');
 
     var RELEASE_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'release');
@@ -68,8 +78,6 @@
 
         obj.scheduled_at = DateTimeHelper.toBrStandard(scheduled, true);
       }
-
-      clog('obj >>>', obj);
 
       return obj;
     };
