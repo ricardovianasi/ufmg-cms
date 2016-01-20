@@ -126,7 +126,7 @@
       });
     };
 
-        $scope.publish = function (data) {
+        $scope.publish = function (data, preview) {
             var obj = {};
             obj.articles = [];
 
@@ -157,7 +157,12 @@
 
             PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, obj).then(function (data) {
                 NotificationService.success('Edição atualizada com sucesso.');
-                $location.path('/periodicals/'+$routeParams.id+'/editions');
+
+                if (!preview) {
+                  $location.path('/periodicals/'+$routeParams.id+'/editions');
+                } else {
+                  $window.open(data.data.periodicals_url);
+                }
             });
         };
 
