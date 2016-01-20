@@ -6,14 +6,24 @@
 
   ReleasesService.$inject = [
     '$http',
-    '$q',
     '$filter',
     'DateTimeHelper',
     'StatusService',
     'apiUrl'
   ];
 
-  function ReleasesService($http, $q, $filter, DateTimeHelper, StatusService, apiUrl) {
+  /**
+   * @param $http
+   * @param $filter
+   * @param DateTimeHelper
+   * @param StatusService
+   * @param apiUrl
+   *
+   * @returns {{getReleases: getReleases, store: store, update: update, destroy: destroy, getRelease: getRelease}}
+   *
+   * @constructor
+   */
+  function ReleasesService($http, $filter, DateTimeHelper, StatusService, apiUrl) {
     console.log('... ReleasesService');
 
     var RELEASE_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'release');
@@ -26,25 +36,35 @@
      * @private
      */
     var _parseData = function (data) {
-      if (data.thumb) {
-        data.thumb = data.thumb.id;
-      }
+      var obj = {
+        id: data.id || null,
+        title: data.title,
+        subtitle: data.subtitle,
+        thumb: data.thumb ? data.thumb.id : null,
+        content: data.content,
+        source: data.source,
+        service: data.service,
+        files: [],
+        status: data.status,
+        authorName: data.authorName
+      };
 
       var when = new Date(
         data.service.when.year,
-        data.service.when.month
+        data.service.when.month - 1,
+        data.service.when.day
       );
 
-      data.service.when = DateTimeHelper.toBrStandard(when);
+      obj.service.when = DateTimeHelper.toBrStandard(when);
 
       angular.forEach(data.files, function (value) {
-        if (value.file !== '') {
-          value.file = value.id;
+        var file = value;
 
-          delete value.id;
+        if (value.file !== '') {
+          file.file = value.id;
         }
 
-        delete value.opened;
+        obj.files.push(file);
       });
 
       if (data.status === StatusService.STATUS_SCHEDULED) {
@@ -56,17 +76,10 @@
           data.scheduled_at.minute
         );
 
-        data.scheduled_at = DateTimeHelper.toBrStandard(scheduled, true);
+        obj.scheduled_at = DateTimeHelper.toBrStandard(scheduled, true);
       }
 
-      // If we are updating the Release
-      if (data.id) {
-        delete data.slug;
-        delete data.created_at;
-        delete data.udpated_at;
-      }
-
-      return data;
+      return obj;
     };
 
     return {
@@ -76,15 +89,9 @@
       getReleases: function (page) {
         page = page || 1;
 
-        var deferred = $q.defer();
-
         var url = $filter('format')('{0}?page={1}', RELEASE_ENDPOINT, page);
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       },
       /**
        * @param data
@@ -92,15 +99,9 @@
        * @returns {*}
        */
       store: function (data) {
-        var deferred = $q.defer();
-
         data = _parseData(data);
 
-        $http.post(RELEASE_ENDPOINT, data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.post(RELEASE_ENDPOINT, data);
       },
       /**
        * @param data
@@ -109,16 +110,11 @@
        * @returns {*}
        */
       update: function (data, id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', RELEASE_ENDPOINT, id);
 
         data = _parseData(data);
 
-        $http.put(url, data).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.put(url, data);
       },
       /**
        * @param id
@@ -126,14 +122,9 @@
        * @returns {*}
        */
       destroy: function (id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', RELEASE_ENDPOINT, id);
 
-        $http.delete(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.delete(url);
       },
       /**
        * @param id
@@ -141,14 +132,9 @@
        * @returns {*}
        */
       getRelease: function (id) {
-        var deferred = $q.defer();
         var url = $filter('format')('{0}/{1}', RELEASE_ENDPOINT, id);
 
-        $http.get(url).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(url);
       }
     };
   }

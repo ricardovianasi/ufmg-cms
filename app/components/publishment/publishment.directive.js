@@ -7,10 +7,11 @@
   PublishmentOptions.$inject = [
     '$timeout',
     '$location',
+    '$filter',
     'StatusService',
   ];
 
-  function PublishmentOptions($timeout, $location, StatusService) {
+  function PublishmentOptions($timeout, $location, $filter, StatusService) {
     return {
       restrict: 'E',
       templateUrl: 'components/publishment/publishment.template.html',
@@ -47,7 +48,7 @@
         };
 
         $scope.back = function () {
-          $location.path('news');
+          $location.path($filter('format')('/{0}', inflection.pluralize(attrs.routeModel)));
         };
 
         // Statuses
