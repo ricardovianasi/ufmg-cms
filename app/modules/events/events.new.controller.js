@@ -165,6 +165,7 @@
      * @param data
      */
     $scope.publish = function (data) {
+      data.tags = _.map(data.tags, 'text');
       EventsService.store(data).then(function () {
         NotificationService.success('Evento criado com sucesso.');
         $location.path('/events');

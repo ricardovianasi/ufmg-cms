@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label for="tags">Tags</label>
 
-                        <ui-select id="tags" name="tags" title="Digite uma tag"
+                      <!--   <ui-select id="tags" name="tags" title="Digite uma tag"
                                    multiple
                                    tagging
                                    tagging-label
@@ -62,7 +62,9 @@
                             <ui-select-choices repeat="color in availableColors | filter:$select.search">
                                 {{ color }}
                             </ui-select-choices>
-                        </ui-select>
+                        </ui-select> -->
+
+                        <tags-input ng-model="event.tags"></tags-input>
                     </div>
                 </div>
 

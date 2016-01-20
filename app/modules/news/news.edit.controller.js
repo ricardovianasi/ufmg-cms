@@ -168,6 +168,9 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
+      if(typeof data.highlight_ufmg == 'undefined')
+        data.highlight_ufmg = false;
+
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -181,6 +184,7 @@
         highlight_ufmg: data.highlight_ufmg
       };
 
+      _obj.tags = _.map(_obj.tags, 'text');
 
       if (_obj.status == 'scheduled') {
         _obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;

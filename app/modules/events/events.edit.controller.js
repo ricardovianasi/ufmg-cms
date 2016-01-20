@@ -166,6 +166,8 @@
      * @param data
      */
     $scope.publish = function (data) {
+      data.tags = _.map(data.tags, 'text');
+      console.log(data.tags);
       EventsService.update(data, $routeParams.id).then(function () {
         NotificationService.success('Evento atualizado com sucesso.');
         $location.path('/events');
