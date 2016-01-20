@@ -34,6 +34,7 @@ var files = [
   'bower_components/log/log.min.js',
   'bower_components/inflection/inflection.min.js',
   'bower_components/ngInflection/dist/ngInflection.min.js',
+  'bower_components/ng-tags-input/ng-tags-input.min.js',
 ];
 
 var styles = [
@@ -47,6 +48,7 @@ var styles = [
   'bower_components/animate.css/animate.min.css',
   'bower_components/mr-image/dist/css/mr-image.min.css',
   'app/assets/scripts/redactor-2/redactor.css',
+  'bower_components/ng-tags-input/ng-tags-input.min.css',
 
   // God Damn Xenon
   'app/assets/xenon/css/bootstrap.css',

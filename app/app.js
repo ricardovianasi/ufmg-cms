@@ -21,6 +21,7 @@
       'mrImage',
       'ngLodash',
       'ngInflection',
+      'ngTagsInput',
 
       // App Modules
       'calendarModule',
@@ -38,5 +39,6 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
+      'featuredModule'
     ]);
 })();
