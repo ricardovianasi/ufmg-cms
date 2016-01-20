@@ -41,34 +41,8 @@
     /**
      * Redactor config
      */
-    $scope.redactorConfig = {
-      lang: 'pt_br',
-      replaceDivs: false,
-      plugins: ['imagencrop'],
-      buttons: [
-        'html',
-        'formatting',
-        'bold',
-        'italic',
-        'deleted',
-        'unorderedlist',
-        'orderedlist',
-        'outdent',
-        'indent',
-        'image',
-        'file',
-        'link',
-        'alignment',
-        'horizontalrule',
-        'imagencrop'
-      ],
-      allowedAttr: [
-        ['section', 'class'],
-        ['div', 'class'],
-        ['img', ['src', 'alt']],
-        ['figure', 'class'],
-        ['a', ['href', 'title']]
-      ]
+    $scope.redactorOptions = {
+      plugins: false,
     };
 
     // Time and Date

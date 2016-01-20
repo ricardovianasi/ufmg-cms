@@ -40,6 +40,13 @@
     $scope.time_hours = DateTimeHelper.getHours();
     $scope.time_minutes = DateTimeHelper.getMinutes();
 
+    /**
+     * Redactor config
+     */
+    $scope.redactorOptions = {
+      plugins: false,
+    };
+
     $scope.$watch('release.thumb', function () {
       if ($scope.release.thumb && $scope.release.thumb instanceof File) {
         $scope.imgHandler.upload('thumb', [
