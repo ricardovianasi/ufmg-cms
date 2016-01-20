@@ -92,19 +92,6 @@
                         <label>
                             Tags <small>(Digite a tag e pressione ENTER para inserir)</small>
                         </label>
-                       <!--  <ui-select title="Digite uma tag"
-                                   multiple
-                                   tagging
-                                   tagging-label="false"
-                                   tagging-tokens=","
-                                   ng-model="news.tags"
-                                   theme="bootstrap"
-                                   sortable="true"
-                                   ng-disabled="disabled">
-                            <ui-select-match placeholder="Selecione as tags">{{ $item }}</ui-select-match>
-
-                            <ui-select-choices repeat="color in availableColors | filter:$select.search | filter: {}">{{ color }}</ui-select-choices>
-                        </ui-select> -->
                         <tags-input ng-model="news.tags"></tags-input>
                     </div>
                 </div>
