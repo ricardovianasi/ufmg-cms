@@ -96,25 +96,44 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <div class="pages-module pages-module-cover">
-                            <div class=chosen-cover>
-                                <a href="javascript:void(0);" class="label label-danger remove-image"
-                                   ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb">
-                                    <i class="fa fa-remove"></i> Remover Thumb
-                                </a>
-                            </div>
+                        <!--<div class="pages-module pages-module-cover">-->
+                            <!--<div class=chosen-cover>-->
+                                <!--<a href="javascript:void(0);" class="label label-danger remove-image"-->
+                                   <!--ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb">-->
+                                    <!--<i class="fa fa-remove"></i> Remover Thumb-->
+                                <!--</a>-->
+                            <!--</div>-->
 
-                            <div class="add-module"
-                                 ngf-select
-                                 ngf-accept="'image/*'"
-                                 ngf-multiple="false"
-                                 ng-model="release.thumb"
-                                 ng-show="!release.thumb">+ Adicionar Thumb
-                            </div>
+                            <!--<div class="add-module"-->
+                                 <!--ngf-select-->
+                                 <!--ngf-accept="'image/*'"-->
+                                 <!--ngf-multiple="false"-->
+                                 <!--ng-model="release.thumb"-->
+                                 <!--ng-show="!release.thumb">+ Adicionar Thumb-->
+                            <!--</div>-->
 
-                            <div class="uploaded-image"
-                                 ng-show="release.thumb">
-                                <img ng-src="{{ release.thumb.url }}">
+                            <!--<div class="uploaded-image"-->
+                                 <!--ng-show="release.thumb">-->
+                                <!--<img ng-src="{{ release.thumb.url }}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <input type="file" class="form-control"
+                               ngf-select
+                               ng-model="news_thumb"
+                               ngf-multiple="false"
+                               ng-show="!news.thumb">
+
+                        <div class="clearfix form-control"
+                             ng-show="news.thumb" style="height:auto">
+                            <div class="pull-left">{{ news.thumb_name }}</div>
+
+                            <div class="pull-right">
+                                <span class="label label-danger remove-image-news"
+                                      ng-show="news.thumb"
+                                      ng-click="removeImage('pdf')">
+                                    <span class="fa fa-remove"></span> REMOVER
+                                </span>
                             </div>
                         </div>
                     </div>

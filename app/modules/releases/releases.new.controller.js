@@ -10,6 +10,7 @@
     '$location',
     '$filter',
     '$uibModal',
+    '$window',
     'ReleasesService',
     'MediaService',
     'NotificationService',
@@ -22,6 +23,7 @@
                                  $location,
                                  $filter,
                                  $uibModal,
+                                 $window,
                                  ReleasesService,
                                  MediaService,
                                  NotificationService,
@@ -225,11 +227,17 @@
      * Post to Event Endpoint
      *
      * @param data
+     * @param preview
      */
-    $scope.publish = function (data) {
-      ReleasesService.store(data).then(function () {
+    $scope.publish = function (data, preview) {
+      ReleasesService.store(data).then(function (release) {
         NotificationService.success('Release criado com sucesso.');
-        $location.path('/releases');
+
+        if (!preview) {
+          $location.path('/releases');
+        } else {
+          $window.open(release.data.release_url);
+        }
       });
     };
   }
