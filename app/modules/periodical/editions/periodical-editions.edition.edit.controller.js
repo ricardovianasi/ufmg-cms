@@ -17,8 +17,22 @@
     '$timeout'
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModal
+   * @param $routeParams
+   * @param PeriodicalService
+   * @param StatusService
+   * @param NotificationService
+   * @param MediaService
+   * @param DateTimeHelper
+   * @param $location
+   * @param $timeout
+   *
+   * @constructor
+   */
   function PeriodicalEditionEditController($scope,
-                                           $modal,
+                                           $uibModal,
                                            $routeParams,
                                            PeriodicalService,
                                            StatusService,
@@ -67,13 +81,14 @@
       $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
       $scope.edition.background_url = data.data.background ? data.data.background.url : '';
       $scope.edition.file_name = data.data.file ? data.data.file.title : '';
+
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
+
       $scope.edition.scheduled_date = scheduled_at.date;
       $scope.edition.scheduled_time = scheduled_at.time;
     });
 
-
-    $scope.publish = function (data) {
+    $scope.publish = function (data, preview) {
       var obj = {};
       obj.articles = [];
 
@@ -97,6 +112,7 @@
       obj.publish_date = data.publish_date;
       obj.theme = data.theme;
       obj.status = data.status;
+      obj.articles.tags = _.map(obj.articles.tags, 'text');
 
       if (obj.status == 'scheduled') {
         obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
@@ -104,13 +120,18 @@
 
       PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, obj).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
-        $location.path('/periodicals/' + $routeParams.id + '/editions');
+
+        if (!preview) {
+          $location.path('/periodicals/' + $routeParams.id + '/editions');
+        } else {
+          $window.open(data.data.edition_url);
+        }
       });
     };
 
     $scope.addArticle = function () {
-      var articleModal = $modal.open({
-        templateUrl: '/views/article.modal.template.html',
+      var articleModal = $uibModal.open({
+        templateUrl: 'components/modal/article.modal.template.html',
         controller: 'ArticleModalController',
         backdrop: 'static',
         size: 'lg',
@@ -126,82 +147,25 @@
       });
     };
 
-        $scope.publish = function (data, preview) {
-            var obj = {};
-            obj.articles = [];
+    var editArticleModal;
 
-            angular.forEach(data.articles, function (article) {
-                obj.articles.push({
-                    title: article.title,
-                    subtitle: article.subtitle,
-                    author_name: article.author_name,
-                    page_number: article.page_number,
-                    cover: article.cover,
-                    thumb: article.thumb,
-                    tags: article.tags,
-                    content: article.content,
-                });
-            });
+    $scope.editArticle = function (idx, article) {
+      editArticleModal = $uibModal.open({
+        templateUrl: 'components/modal/article.modal.template.html',
+        controller: 'ArticleModalController',
+        backdrop: 'static',
+        size: 'lg',
+        resolve: {
+          article: function () {
+            return article;
+          }
+        }
+      });
 
-            obj.background = data.background;
-            obj.cover = data.cover;
-            obj.number = data.number;
-            obj.file = data.file;
-            obj.publish_date = data.publish_date;
-            obj.theme = data.theme;
-            obj.status = data.status;
-            obj.articles.tags = _.map(obj.articles.tags, 'text');
-
-            if (obj.status == 'scheduled') {
-                obj.scheduled_at = data.scheduled_date+' '+data.scheduled_time;
-            }
-
-            PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, obj).then(function (data) {
-                NotificationService.success('Edição atualizada com sucesso.');
-
-                if (!preview) {
-                  $location.path('/periodicals/'+$routeParams.id+'/editions');
-                } else {
-                  $window.open(data.data.edition_url);
-                }
-            });
-        };
-
-        $scope.addArticle = function () {
-            var articleModal = $modal.open({
-                templateUrl: 'components/modal/article.modal.template.html',
-                controller: 'ArticleModalController',
-                backdrop: 'static',
-                size: 'lg',
-                resolve: {
-                    article: function () { return false; }
-                }
-            });
-
-            articleModal.result.then(function (data) {
-                $scope.edition.articles.push(data);
-            });
-        };
-
-        var editArticleModal;
-
-        $scope.editArticle = function (idx, article) {
-            editArticleModal = $modal.open({
-                templateUrl: 'components/modal/article.modal.template.html',
-                controller: 'ArticleModalController',
-                backdrop: 'static',
-                size: 'lg',
-                resolve: {
-                    article: function () {
-                        return article;
-                    }
-                }
-            });
-
-            editArticleModal.result.then(function (data) {
-                $scope.edition.articles[idx] = data;
-            });
-        };
+      editArticleModal.result.then(function (data) {
+        $scope.edition.articles[idx] = data;
+      });
+    };
 
     $scope.sortableOptions = {
       accept: function (sourceItemHandleScope, destSortableScope) {
@@ -214,12 +178,17 @@
       $scope.confirmationModal('md', 'Você deseja excluir este artigo?');
       removeConfirmationModal.result.then(function (data) {
         $scope.edition.articles.splice(idx, 1);
+
+        $timeout(function () {
+          $scope.$apply();
+        });
       });
     };
 
     var removeConfirmationModal;
+
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -244,65 +213,59 @@
     };
 
     // Upload
-    // Cover Image - Upload
+    // PDF
+    $scope.edition_file = null;
 
-    var watchCover = $scope.$watch('edition_cover', function () {
-      if ($scope.edition_cover) {
-        $scope.upload([$scope.edition_cover], 'cover');
-      }
-    });
-
-    var watchBackground = $scope.$watch('edition_background', function () {
-      if ($scope.edition_background) {
-        $scope.upload([$scope.edition_background], 'background');
-      }
-    });
-
-    var watchFile = $scope.$watch('edition_file', function () {
+    $scope.$watch('edition_file', function () {
       if ($scope.edition_file) {
-        $scope.upload([$scope.edition_file], 'pdf');
+        $scope.uploadFile($scope.edition_file);
       }
     });
 
-    $scope.upload = function (files, type) {
-      angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
-        MediaService.newFile(file).then(function (data) {
-          if (type == 'cover') {
-            $scope.edition.cover = data.id;
-            $scope.edition.cover_url = data.url;
+    /**
+     * Upload files like pdf, txt, doc, etc. Not for images
+     *
+     * @param file
+     */
+    $scope.uploadFile = function (file) {
+      MediaService.newFile(file).then(function (data) {
+        $scope.edition.pdf = data.id;
+        $scope.edition.pdf_url = data.url;
+      });
+    };
+
+    /**
+     * @param type
+     */
+    $scope.uploadImage = function (type) {
+      var moduleModal = $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl',
+        resolve: {
+          formats: function () {
+            var formats = {
+              background: 'pageCover',
+              cover: 'digitalizedCover'
+            };
+
+            return [formats[type]];
           }
-          else if (type == 'background') {
-            $scope.edition.background = data.id;
-            $scope.edition.background_url = data.url;
-          }
-          else if (type == 'pdf') {
-            $scope.edition.file = data.id;
-            $scope.edition.file_name = data.title;
-          }
-        });
+        }
+      });
+
+      moduleModal.result.then(function (data) {
+        $scope.edition[type] = data.id;
+        $scope.edition[type+'_url'] = data.url;
       });
     };
 
     $scope.removeImage = function (type) {
       $timeout(function () {
-        if (type == 'cover') {
-          $scope.edition.cover = '';
-          $scope.edition.cover_url = '';
-        }
-        else if (type == 'background') {
-          $scope.edition.background = '';
-          $scope.edition.background_url = '';
-        }
-        else if (type == 'pdf') {
-          $scope.edition.file = '';
-          $scope.edition.file_name = '';
-        }
+        $scope.edition[type] = '';
+        $scope.edition[type+'_url'] = '';
+
         $scope.$apply();
       });
     };

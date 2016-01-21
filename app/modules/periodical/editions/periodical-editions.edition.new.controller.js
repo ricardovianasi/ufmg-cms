@@ -16,6 +16,19 @@
     'MediaService'
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModal
+   * @param $routeParams
+   * @param $location
+   * @param $timeout
+   * @param PeriodicalService
+   * @param StatusService
+   * @param NotificationService
+   * @param MediaService
+   *
+   * @constructor
+   */
   function PeriodicalEditionNewController($scope,
                                           $uibModal,
                                           $routeParams,
@@ -46,7 +59,6 @@
     $scope.edition.background = '';
     $scope.edition.status = '';
     $scope.edition.articles = [];
-
 
     $scope.publish = function (data, preview) {
       var obj = {};
@@ -125,7 +137,6 @@
       });
     };
 
-
     $scope.sortableOptions = {
       accept: function (sourceItemHandleScope, destSortableScope) {
         return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
@@ -133,40 +144,43 @@
       containment: '#sort-main'
     };
 
-    // $scope.removeModule = function (column, idx) {
-    //     $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
-    //     removeConfirmationModal.result.then(function(data){
-    //         $scope.page.widgets[column].splice(idx, 1);
-    //     });
-    // };
+    $scope.removeArticle = function (idx) {
+      $scope.confirmationModal('md', 'Você deseja excluir este artigo?');
+      removeConfirmationModal.result.then(function (data) {
+        $scope.edition.articles.splice(idx, 1);
 
-    // var removeConfirmationModal;
-    // $scope.confirmationModal = function (size, title) {
-    //     removeConfirmationModal = $uibModal.open({
-    //         templateUrl: '/views/confirmation.modal.template.html',
-    //         controller: ConfirmationModalCtrl,
-    //         backdrop: 'static',
-    //         size: size,
-    //         resolve: {
-    //             title: function () {
-    //                 return title;
-    //             }
-    //         }
-    //     });
-    // };
+        $timeout(function () {
+          $scope.$apply();
+        });
+      });
+    };
 
-    // var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-    //     $scope.modal_title = title;
+    var removeConfirmationModal;
 
-    //     $scope.ok = function () {
-    //         $uibModalInstance.close();
-    //     };
-    //     $scope.cancel = function () {
-    //         $uibModalInstance.dismiss('cancel');
-    //     };
-    // };
+    $scope.confirmationModal = function (size, title) {
+      removeConfirmationModal = $uibModal.open({
+        templateUrl: 'components/modal/confirmation.modal.template.html',
+        controller: ConfirmationModalCtrl,
+        backdrop: 'static',
+        size: size,
+        resolve: {
+          title: function () {
+            return title;
+          }
+        }
+      });
+    };
 
-    // var ModuleModalCtrl = ModuleModalController;
+    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+      $scope.modal_title = title;
+
+      $scope.ok = function () {
+        $uibModalInstance.close();
+      };
+      $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+    };
 
     // Upload
     // PDF
@@ -219,18 +233,9 @@
 
     $scope.removeImage = function (type) {
       $timeout(function () {
-        if (type == 'cover') {
-          $scope.edition.cover = '';
-          $scope.edition.cover_url = '';
-        }
-        else if (type == 'background') {
-          $scope.edition.background = '';
-          $scope.edition.background_url = '';
-        }
-        else if (type == 'pdf') {
-          $scope.edition.file = '';
-          $scope.edition.file_name = '';
-        }
+        $scope.edition[type] = '';
+        $scope.edition[type+'_url'] = '';
+
         $scope.$apply();
       });
     };

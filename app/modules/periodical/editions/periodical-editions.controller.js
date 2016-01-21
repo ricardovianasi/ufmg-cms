@@ -33,8 +33,6 @@
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
         $scope.editions = data.data;
 
-        clog('data.data >>>', data.data);
-
         if ($scope.editions.items.length) {
           $scope.periodical.id = $scope.editions.items[0].periodical.id;
           $scope.periodical.name = $scope.editions.items[0].periodical.name;
