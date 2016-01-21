@@ -72,7 +72,7 @@
           page_number: article.page_number,
           cover: article.cover,
           thumb: article.thumb,
-          tags: article.tags,
+          tags: _.map(article.tags, 'text'),
           content: article.content,
         });
       });
@@ -84,7 +84,6 @@
       obj.publish_date = data.publish_date;
       obj.theme = data.theme;
       obj.status = data.status;
-      obj.articles.tags = _.map(obj.articles.tags, 'text');
 
       PeriodicalService.newEdition($routeParams.id, obj).then(function (data) {
         NotificationService.success('Edição criada com sucesso.');
