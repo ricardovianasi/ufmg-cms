@@ -57,7 +57,7 @@
     $scope.edition.file = '';
     $scope.edition.cover = '';
     $scope.edition.background = '';
-    $scope.edition.status = '';
+    $scope.edition.status = StatusService.STATUS_DRAFT;
     $scope.edition.articles = [];
 
     $scope.publish = function (data, preview) {
