@@ -45,6 +45,7 @@
 
     $scope.edition = {};
     $scope.status = [];
+    $scope.highlight_ufmg_visible = false;
 
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
