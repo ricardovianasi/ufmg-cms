@@ -72,6 +72,7 @@
       obj.publish_date = data.publish_date;
       obj.theme = data.theme;
       obj.status = data.status;
+      obj.articles.tags = _.map(obj.articles.tags, 'text');
 
       PeriodicalService.newEdition($routeParams.id, obj).then(function (data) {
         NotificationService.success('Edição criada com sucesso.');
