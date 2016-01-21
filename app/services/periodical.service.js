@@ -2,165 +2,209 @@
   'use strict';
 
   angular.module('serviceModule')
-    .factory('PeriodicalService', [
-      '$q',
-      '$http',
-      '$filter',
-      'apiUrl',
-      function ($q, $http, $filter, apiUrl) {
-        console.log('... PeriodicalService');
+    .factory('PeriodicalService', PeriodicalService);
 
-        var APIUrl = apiUrl;
-        var PERIODICAL_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'periodical');
+  PeriodicalService.$inject = [
+    '$q',
+    '$http',
+    '$filter',
+    '$uibModal',
+    'apiUrl',
+  ];
 
-        return {
-          /**
-           * @param id
-           *
-           * @returns {*}
-           */
-          getPeriodicalEditions: function (id) {
-            var deferred = $q.defer();
+  /**
+   * @param $q
+   * @param $http
+   * @param $filter
+   * @param $uibModal
+   * @param apiUrl
+   *
+   * @returns {{getPeriodicalEditions: getPeriodicalEditions, getEdition: getEdition, newEdition: newEdition, updateEdition: updateEdition, removeEdition: removeEdition, getPeriodicals: getPeriodicals, newPeriodical: newPeriodical, updatePeriodical: updatePeriodical, removePeriodical: removePeriodical}}
+   *
+   * @constructor
+   */
+  function PeriodicalService($q, $http, $filter, $uibModal, apiUrl) {
+    console.log('... PeriodicalService');
 
-            $http.get(APIUrl + '/periodical/' + id + '/editions').then(function (data) {
-              deferred.resolve(data);
-            });
+    var APIUrl = apiUrl;
+    var PERIODICAL_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'periodical');
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param edition
-           *
-           * @returns {*}
-           */
-          getEdition: function (id, edition) {
-            var deferred = $q.defer();
+    return {
+      /**
+       * @param id
+       *
+       * @returns {*}
+       */
+      getPeriodicalEditions: function (id) {
+        var deferred = $q.defer();
 
-            $http.get(APIUrl + '/periodical/' + id + '/edition/' + edition).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.get(APIUrl + '/periodical/' + id + '/editions').then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param data
-           *
-           * @returns {*}
-           */
-          newEdition: function (id, data) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param edition
+       *
+       * @returns {*}
+       */
+      getEdition: function (id, edition) {
+        var deferred = $q.defer();
 
-            $http.post(APIUrl + '/periodical/' + id + '/edition', data).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.get(APIUrl + '/periodical/' + id + '/edition/' + edition).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param edition
-           * @param data
-           *
-           * @returns {*}
-           */
-          updateEdition: function (id, edition, data) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param data
+       *
+       * @returns {*}
+       */
+      newEdition: function (id, data) {
+        var deferred = $q.defer();
 
-            $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, data).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.post(APIUrl + '/periodical/' + id + '/edition', data).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param edition
-           *
-           * @returns {*}
-           */
-          removeEdition: function (id, edition) {
-            var deferred = $q.defer();
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param edition
+       * @param data
+       *
+       * @returns {*}
+       */
+      updateEdition: function (id, edition, data) {
+        var deferred = $q.defer();
 
-            $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition).then(function (data) {
-              deferred.resolve(data);
-            });
+        $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, data).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param page
-           *
-           * @returns {*}
-           */
-          getPeriodicals: function (id, page) {
-            page = page || 1;
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param edition
+       *
+       * @returns {*}
+       */
+      removeEdition: function (id, edition) {
+        var deferred = $q.defer();
 
-            var deferred = $q.defer();
-            var url = $filter('format')('{0}?page={1}', PERIODICAL_ENDPOINT, page);
+        $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition).then(function (data) {
+          deferred.resolve(data);
+        });
 
-            if (id) {
-              url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param page
+       *
+       * @returns {*}
+       */
+      getPeriodicals: function (id, page) {
+        page = page || 1;
 
-              $http.get(url).then(function (data) {
-                deferred.resolve(data);
-              });
+        var deferred = $q.defer();
+        var url = $filter('format')('{0}?page={1}', PERIODICAL_ENDPOINT, page);
 
-              return deferred.promise;
+        if (id) {
+          url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
+
+          $http.get(url).then(function (data) {
+            deferred.resolve(data);
+          });
+
+          return deferred.promise;
+        }
+
+        $http.get(APIUrl + '/periodical?page=' + page).then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
+      },
+      /**
+       * @param data
+       *
+       * @returns {*}
+       */
+      newPeriodical: function (data) {
+        var deferred = $q.defer();
+
+        $http.post(APIUrl + '/periodical', data).then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       * @param data
+       *
+       * @returns {*}
+       */
+      updatePeriodical: function (id, data) {
+        var deferred = $q.defer();
+
+        $http.put(APIUrl + '/periodical/' + id, data).then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
+      },
+      /**
+       * @param id
+       *
+       * @returns {*}
+       */
+      removePeriodical: function (id) {
+        var deferred = $q.defer();
+
+        $http.delete(APIUrl + '/periodical/' + id).then(function (data) {
+          deferred.resolve(data);
+        });
+
+        return deferred.promise;
+      },
+      /**
+       * @param idx
+       * @param article
+       */
+      handleArticle: function (idx, article) {
+        var articleModal = $uibModal.open({
+          templateUrl: 'components/modal/article.modal.template.html',
+          controller: 'ArticleModalController',
+          backdrop: 'static',
+          size: 'lg',
+          resolve: {
+            article: function () {
+              if (typeof article !== 'undefined') {
+                return article;
+              }
+
+              return false;
             }
-
-            $http.get(APIUrl + '/periodical?page=' + page).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          },
-          /**
-           * @param data
-           *
-           * @returns {*}
-           */
-          newPeriodical: function (data) {
-            var deferred = $q.defer();
-
-            $http.post(APIUrl + '/periodical', data).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           * @param data
-           *
-           * @returns {*}
-           */
-          updatePeriodical: function (id, data) {
-            var deferred = $q.defer();
-
-            $http.put(APIUrl + '/periodical/' + id, data).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          },
-          /**
-           * @param id
-           *
-           * @returns {*}
-           */
-          removePeriodical: function (id) {
-            var deferred = $q.defer();
-
-            $http.delete(APIUrl + '/periodical/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
           }
-        };
+        });
+
+        articleModal.result.then(function (data) {
+          if (typeof idx !== 'undefined') {
+            $scope.edition.articles[idx] = data;
+          } else {
+            $scope.edition.articles.push(data);
+          }
+        });
       }
-    ]);
+    };
+  }
 })();
