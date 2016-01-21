@@ -100,7 +100,7 @@
 
     $scope.addArticle = function () {
       var articleModal = $uibModal.open({
-        templateUrl: '/components/modal/article.modal.template.html',
+        templateUrl: 'components/modal/article.modal.template.html',
         controller: ArticleModalCtrl,
         backdrop: 'static',
         size: 'lg',
@@ -120,7 +120,7 @@
 
     $scope.editArticle = function (idx, article) {
       editArticleModal = $uibModal.open({
-        templateUrl: '/components/modal/article.modal.template.html',
+        templateUrl: 'components/modal/article.modal.template.html',
         controller: ArticleModalCtrl,
         backdrop: 'static',
         size: 'lg',
