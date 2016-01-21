@@ -11,7 +11,8 @@
     'PeriodicalService',
     'NotificationService',
     'DateTimeHelper',
-    'dataTableConfigService'
+    'dataTableConfigService',
+    '$route'
   ];
 
   function PeriodicalEditionsController($scope,
@@ -20,7 +21,8 @@
                                         PeriodicalService,
                                         NotificationService,
                                         DateTimeHelper,
-                                        dataTableConfigService) {
+                                        dataTableConfigService,
+                                        $route) {
     console.log('... PeriodicalEditionsController');
 
     $scope.periodical = {
@@ -30,8 +32,6 @@
     $scope.loadEditions = function () {
       PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
         $scope.editions = data.data;
-
-        clog('data.data >>>', data.data);
 
         if ($scope.editions.items.length) {
           $scope.periodical.id = $scope.editions.items[0].periodical.id;
@@ -49,11 +49,11 @@
     };
 
     $scope.removeEdition = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir o periódico "' + description + '"?');
+      $scope.confirmationModal('md', 'Você deseja excluir a edição "' + description + '"?');
       removeConfirmationModal.result.then(function (data) {
         PeriodicalService.removeEdition($routeParams.id, id).then(function (data) {
           NotificationService.success('Edição removida com sucesso.');
-          $scope.loadEditions();
+          $route.reload();
         });
       });
     };
@@ -62,7 +62,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,

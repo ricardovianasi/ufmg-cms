@@ -43,24 +43,7 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label>Tags:</label>
-
-                <ui-select title="Digite uma tag"
-                           multiple
-                           tagging
-                           tagging-label
-                           tagging-tokens=","
-                           ng-model="article.tags"
-                           theme="bootstrap"
-                           sortable="true"
-                           ng-disabled="disabled">
-                    <ui-select-match placeholder="Selecione as tags">
-                        {{ $item }}
-                    </ui-select-match>
-
-                    <ui-select-choices repeat="color in availableColors | filter:$select.search">
-                        {{ color }}
-                    </ui-select-choices>
-                </ui-select>
+                <tags-input ng-model="article.tags"></tags-input>
             </div>
         </div>
     </div>
@@ -73,12 +56,7 @@
                 <div class="pages-module article-cover-thumb">
                     <div class="add-module"
                          ng-show="!article.cover">
-                        +
-                        <br>
-                        Capa Digitalizada
                         <div class="tac">
-                            <br>
-
                             <button class="btn btn-primary"
                                     ngf-select
                                     ngf-accept="'image/*'"
@@ -111,11 +89,7 @@
                 <div class="pages-module article-cover-thumb">
                     <div class="add-module"
                          ng-show="!article.thumb">
-                        +
-                        <br>
-                        Capa Digitalizada
                         <div class="tac">
-                            <br>
                             <button class="btn btn-primary"
                                     ngf-select
                                     ngf-accept="'image/*'"

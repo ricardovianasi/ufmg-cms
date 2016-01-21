@@ -20,17 +20,17 @@
           controllerAs: 'ctrl'
         })
         .when('/periodicals/:id/editions', {
-          templateUrl: 'modules/periodical/periodical-editions.template.html',
+          templateUrl: 'modules/periodical/editions/periodical-editions.template.html',
           controller: 'PeriodicalEditionsController',
           controllerAs: 'ctrl'
         })
         .when('/periodicals/:id/edition/edit/:edition', {
-          templateUrl: 'modules/periodical/periodical-editions.edition.form.template.html',
+          templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
           controller: 'PeriodicalEditionEditController',
           controllerAs: 'ctrl'
         })
         .when('/periodicals/:id/edition/new', {
-          templateUrl: 'modules/periodical/periodical-editions.edition.form.template.html',
+          templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
           controller: 'PeriodicalEditionNewController',
           controllerAs: 'ctrl'
         });

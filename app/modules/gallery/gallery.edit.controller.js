@@ -63,8 +63,6 @@
     $scope.publish = function (gallery) {
       var _photos = [];
 
-      clog('gallery >>>', gallery);
-
       angular.forEach(gallery.photos, function (photo) {
 
         _photos.push({id: photo.file.id});
@@ -209,8 +207,6 @@
       });
 
       MediaLibraryModal.result.then(function (data) {
-        clog('data >>>', data);
-
         angular.forEach(data, function (file) {
           var _file = {
             file: {
@@ -241,7 +237,6 @@
           return file.selected === true;
         });
 
-        clog('mediaSelected >>>', mediaSelected);
         $uibModalInstance.close(mediaSelected);
       };
 

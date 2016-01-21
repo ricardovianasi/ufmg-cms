@@ -1,23 +1,32 @@
 <div class="page-title">
-
     <div class="title-env">
         <h1 class="title">
-            <span ng-if="periodical.name">{{periodical.name}}</span>
-            <span ng-if="!periodical.name">Novo Periódico</span>
+            <!--<span ng-if="periodical.name">{{ periodical.name }}</span>-->
+            <!--<span ng-if="!periodical.name">Novo Periódico</span>-->
+
+            <span ng-if="periodical.id">
+                <span ng-if="periodical.name">Editar Periódico - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Editar Periódico</span>
+            </span>
+            <span ng-if="!periodical.id">
+                <span ng-if="periodical.name">Novo Periódico - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Novo Periódico</span>
+            </span>
         </h1>
     </div>
 
     <div class="breadcrumb-env">
-
         <ol class="breadcrumb bc-1">
             <li>
                 <a href="#/"><i class="fa-home"></i>Home</a>
             </li>
+
             <li>
                 <a href="#/periodicals">
                     <strong>Periódicos Jornalistas</strong>
                 </a>
             </li>
+
             <li class="active" ng-if="!periodical.name">
                 <a href="#/periodicals/new">
                     <strong>Novo Periódico</strong>
@@ -25,70 +34,84 @@
             </li>
 
             <li class="active" ng-if="periodical.name">
-                <a href="#periodicals/edit/{{periodical.id}}">
-                    <strong>{{periodical.name}}</strong>
+                <a href="#periodicals/edit/{{ periodical.id }}">
+                    <strong>{{ periodical.name }}</strong>
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
+
 <div class=row>
     <div class="col-xs-12 panel panel-default">
         <form class="form">
             <div class="row">
-                <div class="form-group">
-                    <label>Nome:</label>
-                    <input type="text" ng-model="periodical.name" class="form-control">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Nome:</label>
+                        <input type="text" ng-model="periodical.name" class="form-control">
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group">
-                    <label>
-                        Logo:<small>A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px</small>
-                    </label>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>
+                            Logo <small>(A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px)</small>:
+                        </label>
 
-                    <div class="pages-module">
-                        <div class="chosen-cover">
-                            <span ng-show="periodical.url" ng-click="removeImage()" class="label label-danger remove-image">
-                            <span class="fa fa-remove"></span>
-                            REMOVER IMAGEM</span>
-                        </div>
+                        <input type="file" class="form-control"
+                               ngf-select
+                               ng-model="add_photos"
+                               ngf-multiple="false"
+                               ng-show="!periodical.url" style="height:auto">
 
-                        <div ng-show="!periodical.url" ngf-accept="'image/*'" ngf-select ng-model="add_photos" ngf-multiple="false" class="add-module">+ Adicionar Logo</div>
+                        <div class="clearfix form-control"
+                             ng-show="periodical.url">
+                            <div class="pull-left">{{ periodical.url }}</div>
 
-                        <div ng-show="periodical.url" class="uploaded-image periodical-logo">
-                            <img ng-src="{{periodical.url}}">
+                            <div class="pull-right">
+                                <span class="label label-danger remove-image-periodical"
+                                      ng-show="periodical.url"
+                                      ng-click="removeImage()">
+                                    <i class="fa fa-remove"></i> REMOVER
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <div class="row">
-                <div class="form-group">
-                    <label>Identificador (slogan):</label>
-                    <input type="text" ng-model="periodical.identifier" class="form-control">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>
+                            Identificador <small>(slogan)</small>:
+                        </label>
+                        <input type="text" ng-model="periodical.identifier" class="form-control">
+                    </div>
                 </div>
             </div>
 
-
             <div class="row">
-                <div class=form-group>
-                    <label>Data da Criação:</label>
-                    <input type="text" ng-model="periodical.date" class="form-control">
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="form-group">
-                    <label>Formato de Data:</label>
-                    <select ng-model="periodical.date_format" ng-options="date_format.id as date_format.id for date_format in date_formats" class="form-control"></select>
+                <div class="col-xs-3">
+                    <div class=form-group>
+                        <label>Data da Criação:</label>
+                        <input type="text" class="form-control"
+                               ng-model="periodical.date"
+                               ui-mask="99/99/9999">
+                    </div>
                 </div>
 
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label>Formato de Data:</label>
+                        <select class="form-control"
+                                ng-model="periodical.date_format"
+                                ng-options="date_format.id as date_format.id for date_format in date_formats"></select>
+                    </div>
+                </div>
             </div>
 
             <hr>
@@ -96,7 +119,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="pull-right">
-                        <a ng-click class="btn btn-danger pull-left spacer-right">Cancelar</a>
+                        <a ng-click class="btn btn-danger pull-left spacer-right" href="#/periodicals">Cancelar</a>
                         <a ng-click="publish(periodical)" class="btn btn-success pull-left">Salvar</a></div>
                 </div>
             </div>
