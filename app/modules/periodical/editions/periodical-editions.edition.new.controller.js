@@ -96,45 +96,7 @@
       });
     };
 
-    var ArticleModalCtrl = 'ArticleModalController';
-
-    $scope.addArticle = function () {
-      var articleModal = $uibModal.open({
-        templateUrl: 'components/modal/article.modal.template.html',
-        controller: ArticleModalCtrl,
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          article: function () {
-            return false;
-          }
-        }
-      });
-
-      articleModal.result.then(function (data) {
-        $scope.edition.articles.push(data);
-      });
-    };
-
-    var editArticleModal;
-
-    $scope.editArticle = function (idx, article) {
-      editArticleModal = $uibModal.open({
-        templateUrl: 'components/modal/article.modal.template.html',
-        controller: ArticleModalCtrl,
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          article: function () {
-            return article;
-          }
-        }
-      });
-
-      editArticleModal.result.then(function (data) {
-        $scope.edition.articles[idx] = data;
-      });
-    };
+    $scope.handleArticle = PeriodicalService.handleArticle;
 
     $scope.sortableOptions = {
       accept: function (sourceItemHandleScope, destSortableScope) {

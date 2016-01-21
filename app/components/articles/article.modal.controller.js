@@ -47,45 +47,58 @@
       };
     }
 
-    $scope.redactorConfig = {
-      lang: 'pt_br',
-      replaceDivs: false,
-      plugins: ['imagencrop'],
-      buttons: [
-        'html',
-        'formatting',
-        'bold',
-        'italic',
-        'deleted',
-        'unorderedlist',
-        'orderedlist',
-        'outdent',
-        'indent',
-        'image',
-        'file',
-        'link',
-        'alignment',
-        'horizontalrule',
-        'imagencrop'
-      ],
-      allowedAttr: [
-        ['section', 'class'],
-        ['div', 'class'],
-        ['img', ['src', 'alt']],
-        ['figure', 'class'],
-        ['a', ['href', 'title']]
-      ]
+    $scope.redactorOptions = {
+      plugins: ['imagencrop', 'audioUpload']
+    };
+
+    $scope.imagencropOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var cropped = function (size, data) {
+          var html = _.template($('#figure-' + size).html());
+
+          clog('redactor >>>', redactor);
+
+          redactor.selection.restore();
+          redactor.insert.raw(html(data));
+        };
+
+        var croppedObj = {
+          url: data.url,
+          legend: data.legend ? data.legend : '',
+          author: data.author ? data.author : ''
+        };
+
+        cropped(data.type, croppedObj);
+      },
+      formats: ['vertical', 'medium']
+    };
+
+    $scope.audioUploadOptions = {
+      /**
+       * @param redactor
+       * @param data
+       */
+      callback: function (redactor, data) {
+        var html = _.template($('#audio').html());
+
+        redactor.selection.restore();
+        redactor.insert.raw(html(data));
+      }
     };
 
     // Upload
     // Cover Image - Upload
-    var watchCover = $scope.$watch('article_cover', function () {
+    $scope.$watch('article_cover', function () {
       if ($scope.article_cover) {
         $scope.upload([$scope.article_cover], 'cover');
       }
     });
 
-    var watchThumb = $scope.$watch('article_thumb', function () {
+    $scope.$watch('article_thumb', function () {
       if ($scope.article_thumb) {
         $scope.upload([$scope.article_thumb], 'thumb');
       }
@@ -93,34 +106,17 @@
 
     $scope.upload = function (files, type) {
       angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
-
         MediaService.newFile(file).then(function (data) {
-          if (type == 'cover') {
-            $scope.article.cover = data.id;
-            $scope.article.cover_url = data.url;
-          } else if (type == 'thumb') {
-            $scope.article.thumb = data.id;
-            $scope.article.thumb_url = data.url;
-          }
+          $scope.article[type] = data.id;
+          $scope.article[type+'_url'] = data.url;
         });
       });
     };
 
     $scope.removeImage = function (type) {
       $timeout(function () {
-        if (type == 'cover') {
-          $scope.article.cover = '';
-          $scope.article.cover_url = '';
-        } else if (type == 'thumb') {
-          $scope.article.thumb = '';
-          $scope.article.thumb_url = '';
-        }
+        $scope.article[type] = '';
+        $scope.article[type+'_url'] = '';
 
         $scope.$apply();
       });

@@ -124,7 +124,9 @@
 
                 <textarea cols="30" rows="10"
                           ng-model="article.content"
-                          redactor="redactorConfig"></textarea>
+                          redactor="redactorOptions"
+                          imagencrop-options="imagencropOptions"
+                          audioUpload-options="audioUploadOptions"></textarea>
             </div>
         </div>
     </div>
@@ -139,3 +141,5 @@
             ng-click="ok()">Salvar
     </button>
 </div>
+
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
