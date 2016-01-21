@@ -50,6 +50,7 @@
     $scope.categories = [];
     $scope.status = [];
     $scope.types = [];
+    $scope.highlight_ufmg_visible = true;
 
     /**
      * Datepicker options

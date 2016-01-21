@@ -25,6 +25,7 @@
         $scope.publish = $scope.$parent.publish;
         $scope.remove = $scope.$parent.remove;
         $scope.statuses = [];
+        $scope.highlight_ufmg_visible = $scope.$parent.highlight_ufmg_visible;
 
         $scope.saveDraft = function ($event) {
           $event.stopPropagation();
