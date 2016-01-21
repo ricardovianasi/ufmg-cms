@@ -1,6 +1,6 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()">&times;</button>
-    <h4 class="modal-title">Upload de imagens</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()"><i class="fa fa-times"></i></button>
+    <h4 class="modal-title"><i class="fa fa-picture-o"></i> Inserir Imagem</h4>
 </div>
 
 <div class="modal-body">
@@ -31,8 +31,8 @@
         <!-- Biblioteca de Midia -->
         <div class="tab-pane text-center pictureLib" id="home"
              ng-class="{active: vm.tabs.home}">
-            <a ng-click="vm.openMidia()">
-                <span class="fa fa-desktop fa-4x"></span>
+            <a class="btn btn-secondary" ng-click="vm.openMidia()">
+                <span class="fa fa-desktop fa-3x"></span>
                 <h3>Biblioteca de Mídia</h3>
                 <span>(fonte de armezanamento de gerenciador de conteúdo)</span>
             </a>
@@ -43,7 +43,7 @@
              ng-class="{active: vm.tabs.midia}">
             <form class="midia__form">
                 <div class="form-group">
-                    <input type="text" placeholder="procure as fotos na biblioteca"
+                    <input type="text" placeholder="Procurar..."
                            ng-model="vm.search">
                     <span class="fa fa-search fa-4x"></span>
                 </div>
@@ -86,9 +86,9 @@
                         </div>
 
                         <div class="panel-footer text-right margin-top-footer">
-                            <button type="button" class="btn" ng-click="vm.cancelUpdateMidia()">Cancelar</button>
+                            <button type="button" class="btn btn-danger" ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
                             <button type="button" class="btn btn-secondary"
-                                    ng-click="vm.updateMidia()">Salvar
+                                    ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Inserir
                             </button>
                         </div>
                     </div>
@@ -96,30 +96,33 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2 imageGroup text-center">
-                    <a href="#" class="btn btn-xs btn-primary"
+                <div class="col-md-12">
+                    <a href="#" class="btn btn-xs btn-secondary imageGroup" style="position:relative; top:11px"
                        ngf-select
                        ngf-accept="'image/*'"
                        ng-model="vm.add_photos"
                        ngf-multiple="false">
-                        Enviar Arquivo
+                        <div class="row flex-center" style="height:120px">
+                            <div class="col-md-12">
+                                <i class="fa fa-plus"></i><br/>Enviar
+                            </div>
+                        </div>
                     </a>
-                </div>
+                    <div class="imageGroup border-dashed text-center"
+                         ng-repeat="midia in vm.midia.items|filter: vm.search"
+                         ng-click="vm.selectMidia(midia)"
+                         ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
 
-                <div class="col-md-2 imageGroup border-dashed text-center"
-                     ng-repeat="midia in vm.midia.items|filter: vm.search"
-                     ng-click="vm.selectMidia(midia)"
-                     ng-class="{'dashed-red': midia.id == vm.currentFile.id}">
-
-                    <img alt="" class="img-responsive"
-                         ng-src="{{ midia.url }}"
-                         ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                        <img alt="" class=""
+                             ng-src="{{ midia.url }}"
+                             ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                    </div>
                 </div>
             </div>
 
             <div class="row"
                  ng-show="vm.midia.total > 30">
-                <div class="col-xs-12 text-right">
+                <div class="col-md-12 flex-center">
                     <uib-pagination class="pagination-sm"
                                     boundary-links="true"
                                     total-items="vm.midia.total"
@@ -157,12 +160,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal-footer">
-    <button type="button" class="btn btn-white" data-dismiss="modal"
-            ng-click="vm.cancel()">Close</button>
-    <button type="button" class="btn btn-info"
-            ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1"
-            ng-click="vm.save()">Save changes</button>
 </div>
