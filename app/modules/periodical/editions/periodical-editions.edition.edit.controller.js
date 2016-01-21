@@ -150,6 +150,7 @@
             obj.publish_date = data.publish_date;
             obj.theme = data.theme;
             obj.status = data.status;
+            obj.articles.tags = _.map(obj.articles.tags, 'text');
 
             if (obj.status == 'scheduled') {
                 obj.scheduled_at = data.scheduled_date+' '+data.scheduled_time;
