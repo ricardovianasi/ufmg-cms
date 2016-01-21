@@ -1,8 +1,17 @@
 <div class="page-title">
     <div class="title-env">
         <h1 class="title">
-            <span ng-if="periodical.name">{{ periodical.name }}</span>
-            <span ng-if="!periodical.name">Novo Periódico</span>
+            <!--<span ng-if="periodical.name">{{ periodical.name }}</span>-->
+            <!--<span ng-if="!periodical.name">Novo Periódico</span>-->
+
+            <span ng-if="periodical.id">
+                <span ng-if="periodical.name">Editar Periódico - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Editar Periódico</span>
+            </span>
+            <span ng-if="!periodical.id">
+                <span ng-if="periodical.name">Novo Periódico - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Novo Periódico</span>
+            </span>
         </h1>
     </div>
 
@@ -49,11 +58,7 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label>
-                            Logo
-                            <small>(A logomarca deve ser branca em PNG com fundo transparente com altura máxima de
-                                60px)
-                            </small>
-                            :
+                            Logo <small>(A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 60px)</small>:
                         </label>
 
                         <input type="file" class="form-control"
@@ -64,14 +69,14 @@
 
                         <div class="clearfix form-control"
                              ng-show="periodical.url">
-                            <div class="pull-left">{{ news.thumb_name }}</div>
+                            <div class="pull-left">{{ periodical.url }}</div>
 
                             <div class="pull-right">
-                                                <span class="label label-danger remove-image-news"
-                                                      ng-show="periodical.url"
-                                                      ng-click="removeImage()">
-                                                    <span class="fa fa-remove"></span> REMOVER
-                                                </span>
+                                <span class="label label-danger remove-image-periodical"
+                                      ng-show="periodical.url"
+                                      ng-click="removeImage()">
+                                    <i class="fa fa-remove"></i> REMOVER
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -81,9 +86,9 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label>Identificador
-                            <small>(slogan)</small>
-                            :</label>
+                        <label>
+                            Identificador <small>(slogan)</small>:
+                        </label>
                         <input type="text" ng-model="periodical.identifier" class="form-control">
                     </div>
                 </div>
