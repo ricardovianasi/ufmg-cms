@@ -100,7 +100,7 @@
           page_number: article.page_number,
           cover: article.cover,
           thumb: article.thumb,
-          tags: article.tags,
+          tags: _.map(article.tags, 'text'),
           content: article.content,
         });
       });
