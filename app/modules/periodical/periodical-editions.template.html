@@ -52,7 +52,7 @@
                     <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus }"
                         class=odd>
                         <td>
-                            <a href="{{ item.periodical_url }}">
+                            <a href="{{ item.edition_url }}">
                                 <strong>{{ item.number }}</strong> {{ item.theme }}
                             </a>
                         </td>

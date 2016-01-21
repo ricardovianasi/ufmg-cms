@@ -161,7 +161,7 @@
                 if (!preview) {
                   $location.path('/periodicals/'+$routeParams.id+'/editions');
                 } else {
-                  $window.open(data.data.periodicals_url);
+                  $window.open(data.data.edition_url);
                 }
             });
         };
