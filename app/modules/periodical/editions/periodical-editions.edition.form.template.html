@@ -1,0 +1,165 @@
+<header class="view-header clearfix">
+    <div class=pull-left>
+        <h2>
+            <span ng-if=edition.theme>{{ edition.theme }}</span><span ng-if=!edition.theme>Nova Galeria</span>
+        </h2>
+
+        <ol class=breadcrumb>
+            <li>
+                <a ng-href="#/periodicals">Periódicos Jornalísticos</a>
+            </li>
+
+            <li>
+                <a ng-href="#/periodicals/{{ periodical.id }}/editions">{{ periodical.name }}</a>
+            </li>
+
+            <li ng-if=!edition.theme class=active>Nova Edição</li>
+            <li ng-if=edition.theme class=active>{{ edition.theme }}</li>
+        </ol>
+    </div>
+</header>
+
+<div class="row">
+    <div class="col-xs-8 panel-default">
+        <div class="row">
+            <div class=col-xs-12>
+                <div class=form-group>
+                    <label>Tema:</label>
+                    <input type=text ng-model=edition.theme class=form-control>
+                </div>
+            </div>
+        </div>
+
+        <div class=row>
+            <div class=col-xs-3>
+                <div class=form-group>
+                    <label>Número:</label>
+                    <input type="text" ng-model="edition.number" class=form-control>
+                </div>
+            </div>
+
+            <div class=col-xs-3>
+                <div class=form-group>
+                    <label>Data de Publicação:</label>
+                    <input type=text ng-model=edition.publish_date class=form-control ui-mask="99/99/9999">
+                </div>
+            </div>
+
+            <div class=col-xs-6>
+                <div class=form-group>
+                    <label>Arquivo PDF:</label>
+
+                    <input ng-show=!edition.file type=file ngf-accept="'pdf'" ngf-select ng-model=edition_file
+                           ngf-multiple=false class=form-control>
+
+                    <div ng-show=edition.file class="clearfix form-control">
+                        <div class=pull-left>{{ edition.file_name }}</div>
+
+                        <div class=pull-right>
+                            <span ng-show=edition.file ng-click="removeImage('pdf')"
+                                  class="label label-danger remove-image">
+                                <i class="fa fa-remove"></i> REMOVER
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=row>
+            <div class=col-xs-12>
+                <div class="pages-module edition-bg-thumb">
+                    <div class="add-module"
+                         ng-show="!edition.background"
+                         ng-click="uploadImage('background')">+ Adicionar Imagem de Fundo
+                    </div>
+
+                    <div ng-show=edition.background>
+                        <div class="chosen-cover">
+                            <span class="label label-danger remove-image"
+                                  ng-click="removeImage('background')">
+                                <i class="fa fa-remove"></i> REMOVER IMAGEM
+                            </span>
+                        </div>
+
+                        <div class=uploaded-image>
+                            <img ng-src="{{ edition.background_url }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=row>
+            <div as-sortable=sortableOptions ng-model=edition.articles class=col-xs-8>
+                <div ng-repeat="article in edition.articles" as-sortable-item class=pages-module>
+                    <div class=clearfix>
+                        <div class=pull-right>
+                            <span ng-click="editArticle($index, article)" class="label label-default">
+                                <i class="fa fa-pencil"></i> EDITAR
+                            </span>
+
+                            <span ng-click="removeArticle($index, article)" class="label label-danger">
+                                <i class="fa fa-remove"></i> REMOVER
+                            </span>
+
+                            <span as-sortable-item-handle class="label label-primary">
+                                <i class="fa fa-arrows-v"></i> MOVER
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="article-summary clearfix">
+                        <div class="pull-left article-summary-left">
+                            <div class=wide-arrow></div>
+                            <div class=article-summary-title>{{ article.title }}</div>
+                        </div>
+                        <div class="pull-right article-summary-number">{{ article.page_number }}</div>
+                    </div>
+                </div>
+
+                <div class=pages-module>
+                    <div ng-click=addArticle() class=add-module>+ Adicionar Artigo</div>
+                </div>
+            </div>
+
+            <div class=col-xs-4>
+                <div class=edition-cover-container>
+                    <div class="pages-module edition-cover-thumb">
+                        <div class="add-module"
+                             ng-show="!edition.cover"
+                             ng-click="uploadImage('cover')">+
+                            <br>Capa Digitalizada
+                        </div>
+
+                        <div ng-show=edition.cover>
+                            <div class=chosen-cover>
+                                <span ng-click="removeImage('cover')" class="label label-danger remove-image">
+                                    <i class="fa fa-remove"></i> REMOVER IMAGEM
+                                </span>
+                            </div>
+
+                            <div class="uploaded-image edition-cover-image">
+                                <img ng-src="{{ edition.cover_url }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=col-xs-4>
+        <br>
+        <publishment-options route-model=edition></publishment-options>
+    </div>
+</div>
+
+<div class=row>
+    <div class=col-xs-12>
+        <hr>
+        <div class=pull-right>
+            <button ng-click=publish(edition) class="btn btn-success pull-left">Salvar</button>
+        </div>
+    </div>
+</div>

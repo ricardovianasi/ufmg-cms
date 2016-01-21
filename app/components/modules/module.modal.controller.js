@@ -34,8 +34,6 @@
       $scope.widget.selected.type = module.type;
 
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
-
-      clog('$scope.widget >>>', $scope.widget);
     }
 
     $scope.redactorOptions = {
@@ -85,8 +83,6 @@
         title: $scope.widget.title || null,
         type: $scope.widget.type
       };
-
-      clog('widtget', $scope.widget);
 
       angular.extend(_obj, $scope.widget);
 

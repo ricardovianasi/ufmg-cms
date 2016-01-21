@@ -22,6 +22,8 @@
     console.log('... PeriodicalNewController');
 
     $scope.status = [];
+    $scope.periodical = {};
+    $scope.highlight_ufmg_visible = false;
 
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;

@@ -10,7 +10,7 @@ var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 
-gulp.task('js', ['copy-xenon'], function () {
+gulp.task('js', function () {
   return gulp.src([
       'app/**/*.js',
       '!app/assets/**/*.js'

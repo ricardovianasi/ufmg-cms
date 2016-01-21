@@ -67,8 +67,6 @@
         $scope.course.scheduled_date = scheduled_at.date ? scheduled_at.date : '';
         $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
       }
-
-      clog('$scope.course >>>', $scope.course);
     });
 
 

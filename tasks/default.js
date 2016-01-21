@@ -13,6 +13,7 @@ gulp.task('build', [
   'copyimage',
   'css',
   'js',
+  'copy-xenon',
   'build-vendors'
 ]);
 

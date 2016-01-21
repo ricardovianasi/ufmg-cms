@@ -5,6 +5,12 @@ gulp.task('watch', function () {
     'js',
     'refresh'
   ]);
-  gulp.watch('app/assets/styles/**/*.{scss,sass}', ['css', 'refresh']);
-  gulp.watch('app/**/*.html', ['html', 'refresh']);
+  gulp.watch('app/assets/styles/**/*.{scss,sass}', [
+    'css',
+    'refresh'
+  ]);
+  gulp.watch('app/**/*.html', [
+    'html',
+    'refresh'
+  ]);
 });

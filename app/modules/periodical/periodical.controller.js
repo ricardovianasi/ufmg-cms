@@ -11,7 +11,8 @@
     'DateTimeHelper',
     '$uibModal',
     'NotificationService',
-    'dataTableConfigService'
+    'dataTableConfigService',
+    '$route'
   ];
 
   function PeriodicalController($scope,
@@ -19,7 +20,8 @@
                                 PeriodicalService,
                                 DateTimeHelper,
                                 $modal,
-                                NotificationService) {
+                                NotificationService,
+                                $route) {
     console.log('... PeriodicalController');
 
     $scope.periodicals = [];
@@ -50,7 +52,7 @@
       removeConfirmationModal.result.then(function (data) {
         PeriodicalService.removePeriodical(id).then(function (data) {
           NotificationService.success('Periódico removida com sucesso.');
-          loadPeriodicals();
+          $route.reload();
         });
       });
     };
@@ -59,7 +61,7 @@
 
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $modal.open({
-        templateUrl: '/views/confirmation.modal.template.html',
+        templateUrl: '/components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
         size: size,
