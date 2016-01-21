@@ -78,7 +78,7 @@
         NotificationService.success('Edição criada com sucesso.');
 
         if (!preview) {
-          $location.path('/periodicals/'+$routeParams.id+'/editions');
+          $location.path('/periodicals/' + $routeParams.id + '/editions');
         } else {
           $window.open(data.data.edition_url);
         }
@@ -169,48 +169,51 @@
     // var ModuleModalCtrl = ModuleModalController;
 
     // Upload
-    // Cover Image - Upload
+    // PDF
+    $scope.edition_file = null;
 
-    var watchCover = $scope.$watch('edition_cover', function () {
-      if ($scope.edition_cover) {
-        $scope.upload([$scope.edition_cover], 'cover');
-      }
-    });
-
-    var watchBackground = $scope.$watch('edition_background', function () {
-      if ($scope.edition_background) {
-        $scope.upload([$scope.edition_background], 'background');
-      }
-    });
-
-    var watchFile = $scope.$watch('edition_file', function () {
+    $scope.$watch('edition_file', function () {
       if ($scope.edition_file) {
-        $scope.upload([$scope.edition_file], 'pdf');
+        $scope.uploadFile($scope.edition_file);
       }
     });
 
-    $scope.upload = function (files, type) {
-      angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
-        MediaService.newFile(file).then(function (data) {
-          if (type == 'cover') {
-            $scope.edition.cover = data.id;
-            $scope.edition.cover_url = data.url;
+    /**
+     * Upload files like pdf, txt, doc, etc. Not for images
+     *
+     * @param file
+     */
+    $scope.uploadFile = function (file) {
+      MediaService.newFile(file).then(function (data) {
+        $scope.edition.pdf = data.id;
+        $scope.edition.pdf_url = data.url;
+      });
+    };
+
+    /**
+     * @param type
+     */
+    $scope.uploadImage = function (type) {
+      var moduleModal = $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl',
+        resolve: {
+          formats: function () {
+            var formats = {
+              background: 'pageCover',
+              cover: 'digitalizedCover'
+            };
+
+            return [formats[type]];
           }
-          else if (type == 'background') {
-            $scope.edition.background = data.id;
-            $scope.edition.background_url = data.url;
-          }
-          else if (type == 'pdf') {
-            $scope.edition.file = data.id;
-            $scope.edition.file_name = data.title;
-          }
-        });
+        }
+      });
+
+      moduleModal.result.then(function (data) {
+        $scope.edition[type] = data.id;
+        $scope.edition[type+'_url'] = data.url;
       });
     };
 

@@ -60,6 +60,11 @@
         name: 'Capa da Página',
         width: 1920,
         height: 444
+      },
+      digitalizedCover: {
+        name: 'Capa Digitalizada',
+        width: 350,
+        height: 498
       }
     };
 
