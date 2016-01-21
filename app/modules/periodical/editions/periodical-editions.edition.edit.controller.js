@@ -130,43 +130,7 @@
       });
     };
 
-    $scope.addArticle = function () {
-      var articleModal = $uibModal.open({
-        templateUrl: 'components/modal/article.modal.template.html',
-        controller: 'ArticleModalController',
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          article: function () {
-            return false;
-          }
-        }
-      });
-
-      articleModal.result.then(function (data) {
-        $scope.edition.articles.push(data);
-      });
-    };
-
-    var editArticleModal;
-
-    $scope.editArticle = function (idx, article) {
-      editArticleModal = $uibModal.open({
-        templateUrl: 'components/modal/article.modal.template.html',
-        controller: 'ArticleModalController',
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          article: function () {
-            return article;
-          }
-        }
-      });
-
-      editArticleModal.result.then(function (data) {
-        $scope.edition.articles[idx] = data;
-      });
-    };
+    $scope.handleArticle = PeriodicalService.handleArticle;
 
     $scope.sortableOptions = {
       accept: function (sourceItemHandleScope, destSortableScope) {
@@ -258,14 +222,14 @@
 
       moduleModal.result.then(function (data) {
         $scope.edition[type] = data.id;
-        $scope.edition[type+'_url'] = data.url;
+        $scope.edition[type + '_url'] = data.url;
       });
     };
 
     $scope.removeImage = function (type) {
       $timeout(function () {
         $scope.edition[type] = '';
-        $scope.edition[type+'_url'] = '';
+        $scope.edition[type + '_url'] = '';
 
         $scope.$apply();
       });
