@@ -9,7 +9,7 @@
     '$uibModal',
     '$location',
     '$timeout',
-    'MediaService',
+    '$window',
     'NotificationService',
     'PagesService',
     'WidgetsService',
@@ -17,11 +17,25 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModal
+   * @param $location
+   * @param $timeout
+   * @param $window
+   * @param NotificationService
+   * @param PagesService
+   * @param WidgetsService
+   * @param StatusService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function PagesNewController($scope,
                               $uibModal,
                               $location,
                               $timeout,
-                              MediaService,
+                              $window,
                               NotificationService,
                               PagesService,
                               WidgetsService,
@@ -71,11 +85,17 @@
      * Publish
      *
      * @param page
+     * @param preview
      */
-    $scope.publish = function (page) {
-      PagesService.addPage(page).then(function () {
+    $scope.publish = function (page, preview) {
+      PagesService.addPage(page).then(function (page) {
         NotificationService.success('Página criada com sucesso.');
-        $location.path('/pages');
+
+        if (!preview) {
+          $location.path('/pages');
+        } else {
+          $window.open(page.data.page_url);
+        }
       });
     };
 

@@ -11,6 +11,7 @@
     '$routeParams',
     '$timeout',
     '$filter',
+    '$window',
     'NotificationService',
     'PagesService',
     'WidgetsService',
@@ -24,6 +25,7 @@
                                $routeParams,
                                $timeout,
                                $filter,
+                               $window,
                                NotificationService,
                                PagesService,
                                WidgetsService,
@@ -67,11 +69,19 @@
       });
     };
 
-    // Publish
-    $scope.publish = function (page) {
-      PagesService.updatePage($routeParams.id, page).then(function () {
+    /**
+     * @param page
+     * @param preview
+     */
+    $scope.publish = function (page, preview) {
+      PagesService.updatePage($routeParams.id, page).then(function (page) {
         NotificationService.success('Página atualizada com sucesso.');
-        $location.path('/pages');
+
+        if (!preview) {
+          $location.path('/pages');
+        } else {
+          $window.open(page.data.page_url);
+        }
       });
     };
 
