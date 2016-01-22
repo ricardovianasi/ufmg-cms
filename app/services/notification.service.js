@@ -18,6 +18,9 @@
       },
       warning: function (title, msg) {
         toastr.warning(title, msg);
+      },
+      info: function (title, msg) {
+        toastr.info(title, msg);
       }
     };
   }

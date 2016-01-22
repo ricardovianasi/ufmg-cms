@@ -10,7 +10,8 @@
     'MediaService',
     'tabsService',
     'formats',
-    '$timeout'
+    '$timeout',
+    'NotificationService'
   ];
 
   /**
@@ -22,7 +23,7 @@
    *
    * @constructor
    */
-  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats, $timeout) {
+  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats, $timeout, NotificationService) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -168,6 +169,11 @@
      * @private
      */
     function _updateMidia() {
+     if(_validate(vm.currentFile.legend)) {
+      NotificationService.info('Legenda deve ser inserida obrigatóriamente.');
+      return false;
+     }
+
       var obj = {
         title: vm.currentFile.title,
         description: vm.currentFile.description,
@@ -226,6 +232,10 @@
           author: vm.currentFile.author.name
         });
       });
+    }
+
+    function _validate(variable){
+      return _.isEmpty(variable);
     }
   }
 })();
