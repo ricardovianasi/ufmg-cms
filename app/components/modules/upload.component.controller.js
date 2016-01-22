@@ -20,6 +20,7 @@
    * @param MediaService
    * @param tabsService
    * @param formats
+   * @param $timeout
    *
    * @constructor
    */

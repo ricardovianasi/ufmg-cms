@@ -964,6 +964,9 @@
               },
               columns: function () {
                 return $scope.page.columns;
+              },
+              column: function () {
+                return column;
               }
             }
           });
