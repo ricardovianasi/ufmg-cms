@@ -7,7 +7,7 @@
           'description': 'Insert files'
         },
         pt_br: {
-          'modalTitle': 'OPS.. Ainda estamos Trabalhando nesse componente...',
+          'modalTitle': 'Ainda estamos trabalhando nesse componente.',
           'description': 'upload de arquivos'
         }
       },
