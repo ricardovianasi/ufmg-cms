@@ -31,6 +31,7 @@
           $event.stopPropagation();
 
           $scope.obj.status = StatusService.STATUS_DRAFT;
+          $scope.obj.saveDraftClicked = true;
 
           $timeout(function () {
             angular.element('#publish-button').trigger('click');

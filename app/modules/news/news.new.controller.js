@@ -29,6 +29,7 @@
     $scope.breadcrumb = 'Nova Notícia';
 
     $scope.news = {};
+    $scope.news.status = StatusService.STATUS_PUBLISHED;
     $scope.news.tags = [];
 
     $scope.categories = [];
