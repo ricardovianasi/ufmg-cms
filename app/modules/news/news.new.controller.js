@@ -69,9 +69,9 @@
     });
 
     $scope.publish = function (data, preview) {
-
-      if(typeof data.highlight_ufmg == 'undefined')
+      if (typeof data.highlight_ufmg == 'undefined') {
         data.highlight_ufmg = false;
+      }
 
       var _obj = {
         title: data.title,
