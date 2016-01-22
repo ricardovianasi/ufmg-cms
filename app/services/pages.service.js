@@ -67,7 +67,7 @@
         cleanPage.scheduled_at = page.scheduled_date + ' ' + page.scheduled_time;
       }
 
-      cleanPage.tags = page.tags;
+      cleanPage.tags = _.map(page.tags, 'text');
       cleanPage.title = page.title;
       //@todo: change this to editable slug
       // cleanPage.slug = page.title;
