@@ -20,7 +20,7 @@
   function redactor($timeout, _, RedactorPluginService) {
     var _options = {
       lang: 'pt_br',
-      plugins: ['video', 'soundcloud', 'uploadFiles'],
+      plugins: ['video','soundcloud', 'uploadfiles'],
       buttons: [
         'html',
         'format',
