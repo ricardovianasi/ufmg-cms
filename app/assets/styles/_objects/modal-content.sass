@@ -1,5 +1,8 @@
 // Hugo - Inicio //
 
+#modal-image .mr-image
+    margin: 0px
+
 .modal-content
     padding: 0px !important
      
@@ -18,7 +21,13 @@
     padding-top: 20px
     border: none
     display: flex
-    align-items: flex-end
+    color: black
+        
+#modal-image .panel-body, #modal-audio .panel-body
+    display: flex
+        
+.panel-edit
+    padding: 0px
         
 .panel-edit .btn
     margin: 0px
@@ -44,10 +53,11 @@
         
 // Flex
 
-.flex-justify
+.flex
     display: flex
-    flex-wrap: wrap
-    justify-content: space-between
+
+.flex-self-end
+    align-self: flex-end
 
 .flex-center
     display: flex
