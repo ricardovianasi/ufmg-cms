@@ -235,43 +235,83 @@
                         </div>
 
                         <div ng-show="release.files[idx].opened">
-                            <div class="or-group">
+                            <div class="form-group">
                                 <div class="form-group">
-                                    <label>URL</label>
-                                    <input type="text" ng-model="release.files[idx].external_url" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Arquivo</label>
-
-                                    <div class="pages-module pages-module-cover">
-                                        <div class="chosen-cover">
-                                            <a class="label label-danger remove-image"
-                                               ng-click=fileHandler.removeFile(idx)
-                                               ng-show=release.files[idx].file>
-                                                <i class="fa fa-remove"></i> Remover Arquivo
-                                            </a>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input  type="checkbox"
+                                                    name="inputType"
+                                                    ng-model="inputType"
+                                                    ng-change="inputType = 'doc'; release.files[idx].isFile = true"
+                                                    ng-checked="inputType == 'doc';"> Documento
                                         </div>
-
-                                        <div class="add-module"
-                                             ngf-select
-                                             ngf-accept="'*'"
-                                             ngf-multiple="false"
-                                             ng-model="release.files[idx].file"
-                                             ng-show="!release.files[idx].file">+ Adicionar Arquivo
+                                        <div class="col-md-3">
+                                            <input  type="checkbox"
+                                                    name="inputType"
+                                                    ng-model="inputType"
+                                                    ng-change="inputType = 'img'; release.files[idx].isFile = true"
+                                                    ng-checked="inputType == 'img'"> Imagem
                                         </div>
-
-                                        <div ng-show="release.files[idx].file" class="uploaded-image">
-                                            {{ release.files[idx].file }}
+                                        <div class="col-md-3">
+                                            <input  type="checkbox"
+                                                    name="inputType"
+                                                    ng-model="inputType"
+                                                    ng-change="inputType = 'vid'; release.files[idx].isFile = false"
+                                                    ng-checked="inputType == 'vid'; release.files[idx].isFile == false"> Vídeo
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input  type="checkbox"
+                                                    name="inputType"
+                                                    ng-model="inputType"
+                                                    ng-change="inputType = 'aud'; release.files[idx].isFile = true"
+                                                    ng-checked="inputType == 'aud'"> Áudio
                                         </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <input  type="text"
+                                                    placeholder="Url do vídeo (youtube ou vimeo)"
+                                                    ng-model="release.files[idx].external_url"
+                                                    class="form-control"
+                                                    ng-show="release.files[idx].isFile == false">
+
+                                            <div class="form-group"  ng-show="release.files[idx].isFile">
+                                                <input  type="file"
+                                                        class="form-control"
+                                                        ngf-select
+                                                        ngf-accept="'*'"
+                                                        ngf-multiple="false"
+                                                        ng-model="release.files[idx].file"
+                                                        ng-show="!release.files[idx].file">
+
+                                                <div class="clearfix form-control"
+                                                     ng-show="release.files[idx].file" style="height:auto">
+                                                    <div class="pull-left">{{ release.files[idx].file }}</div>
+
+                                                    <div class="pull-right">
+                                                        <span class="label label-danger remove-image"
+                                                              ng-show="release.files[idx].file"
+                                                              ng-click="removeReleasesFiles(idx)">
+                                                            <span class="fa fa-remove"></span> REMOVER
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="clearfix">
                                 <div class="pull-right">
                                     <button class="btn btn-sm btn-primary"
-                                            ng-click="fileHandler.saveItem(idx)">Salvar</button>
+                                            ng-click="fileHandler.saveItem(idx)"
+                                            ng-if="inputType">Salvar</button>
                                 </div>
                             </div>
                         </div>
