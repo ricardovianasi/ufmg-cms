@@ -25,12 +25,12 @@
                 .withDisplayLength(30)
                 .withLanguage({
                     "sEmptyTable":     "Nenhum dado foi encontrado. :(",
-                    "sInfo":           "Mostrando de _START_ a _END_ de _TOTAL_ resultados",
-                    "sInfoEmpty":      "Mostrando de 0 a 0 de 0 resultados",
+                    "sInfo":           "Exibindo de _START_ a _END_ de _TOTAL_ resultados",
+                    "sInfoEmpty":      "Exibindo de 0 a 0 de 0 resultados",
                     "sInfoFiltered":   "(Filtrado de _MAX_ resultados)",
                     "sInfoPostFix":    "",
                     "sInfoThousands":  ",",
-                    "sLengthMenu":     "Mostrar _MENU_ resultados",
+                    "sLengthMenu":     "Exibir _MENU_ resultados",
                     "sLoadingRecords": "Carregando...",
                     "sProcessing":     "Processando...",
                     "sSearch":         "Pesquisar: ",

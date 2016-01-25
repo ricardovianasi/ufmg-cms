@@ -1,106 +1,109 @@
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" ng-click="vm.cancel()" aria-hidden="true"><i class="fa fa-times"></i></button>
-    <h4 class="modal-title"><i class="fa fa-file-audio-o"></i> Upload de áudio</h4>
-</div>
+<div id="modal-audio">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="vm.cancel()" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title"><i class="fa fa-file-audio-o"></i> Upload de áudio</h4>
+    </div>
 
-<div class="modal-body">
-    <ul class="nav nav-tabs nav-tabs-justified">
+    <div class="modal-body">
+        <ul class="nav nav-tabs nav-tabs-justified">
 
-        <li ng-class="{active: vm.tabs.midia}">
-            <a href="javascript:void(0)">
-                <span class="visible-xs"><i class="fa-user"></i></span>
-                <span class="hidden-xs">Envie um áudio ou selecione da Biblioteca</span>
-            </a>
-        </li>
-    </ul>
+            <li ng-class="{active: vm.tabs.midia}">
+                <a href="javascript:void(0)">
+                    <span class="visible-xs"><i class="fa-user"></i></span>
+                    <span class="hidden-xs">Envie um áudio ou selecione da Biblioteca</span>
+                </a>
+            </li>
+        </ul>
 
-    <div class="tab-content">
+        <div class="tab-content">
 
-        <!-- Lista de Imagens -->
-        <div class="tab-pane midia" id="midia"
-             ng-class="{active: vm.tabs.midia}">
-            <div class="row">
-                <div class="col-md-12">
-                    <form class="midia__form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Procurar..."
-                                   ng-model="vm.search">
-                            <span class="fa fa-search fa-4x"></span>
-                        </div>
-                    </form>
+            <!-- Lista de Imagens -->
+            <div class="tab-pane midia" id="midia"
+                 ng-class="{active: vm.tabs.midia}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+                                    <input type="text" class="form-control" ng-model="vm.search" placeholder="Procurar..." aria-describedby="sizing-addon1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="row animated zoomIn"
-                 ng-if="vm.currentFile.url">
-                <div class="col-md-12">
-                    <div class="panel panel-border panel-edit" style="padding:0px">
-                        <div class="panel-body">
-                            <div class="col-md-5">
-                                <form action="" class="form-horizontal">
-                                    <h4>Título do Áudio</h4>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" id="field-1" placeholder="Digite um título para o áudio"
-                                                   value="{{ vm.currentFile.author.name }}"
-                                                   ng-model="vm.currentFile.author.name">
+                <div class="row"
+                     ng-if="vm.currentFile.url">
+                    <div class="col-md-12">
+                        <div class="panel panel-border panel-edit">
+                            <div class="panel-body">
+                                <div class="col-md-2">
+                                    <h4>Pré-visualização</h4>
+                                    <div audio audio-url="vm.currentFile.url"></div>
+                                </div>
+                                <div class="col-md-8">
+                                    <form action="" class="form-horizontal">
+                                        <h4>Título do Áudio</h4>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="field-1" placeholder="Digite um título para o áudio"
+                                                       value="{{ vm.currentFile.author.name }}"
+                                                       ng-model="vm.currentFile.author.name">
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-5">
-                                <h4>Pré-visualização</h4>
-                                <div audio audio-url="vm.currentFile.url"></div>
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar</button>
-                                <button type="button" class="btn btn-secondary"
-                                        ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Inserir
-                                </button>
+                                    </form>
+                                </div>
+                                <div class="col-md-2 text-right flex-self-end">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                            ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Inserir
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="#" class="btn btn-xs btn-secondary imageGroup"
-                       ngf-select
-                       ngf-accept="'audio/mp3'"
-                       ng-model="vm.add_audio"
-                       ngf-multiple="false">
-                        <div class="row flex-center" style="height:120px">
-                            <div class="col-md-12">
-                                <i class="fa fa-plus"></i><br/>Enviar
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="#" class="btn btn-xs btn-secondary imageGroup"
+                           ngf-select
+                           ngf-accept="'audio/mp3'"
+                           ng-model="vm.add_audio"
+                           ngf-multiple="false">
+                            <div class="row flex-center" style="height:120px">
+                                <div class="col-md-12">
+                                    <i class="fa fa-plus"></i><br/>Enviar
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <div class="imageGroup border-dashed text-center"
-                         ng-repeat="midia in vm.midia.items|filter: vm.search"
-                         ng-click="vm.selectMidia(midia)"
-                         ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
-                        <div audio audio-url="midia.url"></div>
+                        </a>
+                        <div class="imageGroup border-dashed text-center"
+                             ng-repeat="midia in vm.midia.items|filter: vm.search"
+                             ng-click="vm.selectMidia(midia)"
+                             ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
+                            <div audio audio-url="midia.url"></div>
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row"
+                     ng-show="vm.midia.total > 30">
+                    <div class="col-md-12 flex-center">
+                        <uib-pagination class="pagination-sm"
+                                        boundary-links="true"
+                                        total-items="vm.midia.total"
+                                        items-per-page="vm.midia.page_size"
+                                        ng-model="vm.currentPage"
+                                        previous-text="‹"
+                                        next-text="›"
+                                        first-text="«"
+                                        last-text="»"
+                                        ng-change="vm.changePage()"></uib-pagination>
                     </div>
                 </div>
             </div>
 
-            <div class="row"
-                 ng-show="vm.midia.total > 30">
-                <div class="col-md-12 flex-center">
-                    <uib-pagination class="pagination-sm"
-                                    boundary-links="true"
-                                    total-items="vm.midia.total"
-                                    items-per-page="vm.midia.page_size"
-                                    ng-model="vm.currentPage"
-                                    previous-text="‹"
-                                    next-text="›"
-                                    first-text="«"
-                                    last-text="»"
-                                    ng-change="vm.changePage()"></uib-pagination>
-                </div>
-            </div>
         </div>
-
     </div>
 </div>
