@@ -31,6 +31,7 @@
           $event.stopPropagation();
 
           $scope.obj.status = StatusService.STATUS_DRAFT;
+          $scope.obj.saveDraftClicked = true;
 
           $timeout(function () {
             angular.element('#publish-button').trigger('click');
@@ -49,7 +50,13 @@
         };
 
         $scope.back = function () {
-          $location.path($filter('format')('/{0}', inflection.pluralize(attrs.routeModel)));
+          var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
+
+          if (typeof attrs.back !== 'undefined') {
+            back = attrs.back;
+          }
+
+          $location.path(back);
         };
 
         // Statuses

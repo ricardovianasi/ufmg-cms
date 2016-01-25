@@ -1,18 +1,18 @@
 (function ($) {
-  $.Redactor.prototype.uploadFiles = function () {
+  $.Redactor.prototype.uploadfiles = function () {
     return {
       langs: {
         en: {
-          'modalTitle': 'Upload files',
+          'modalTitleFiles': 'Upload files',
           'description': 'Insert files'
         },
         pt_br: {
-          'modalTitle': 'OPS.. Ainda estamos Trabalhando nesse componente...',
+          'modalTitleFiles': 'Upload files',
           'description': 'upload de arquivos'
         }
       },
       getTemplate: function () {
-        return '<div class="modal-section" id="redactor-modal-uploadFiles-insert">'
+        return '<div class="modal-section" id="redactor-modal-uploadfiles-insert">'
             + '<section>'
               + '<label>OPS.. Ainda estamos Trabalhando nesse componente.</label>'
             + '</section>'
@@ -22,13 +22,13 @@
           + '</div>';
       },
       init: function () {
-        var button = this.button.add('uploadFiles', this.lang.get('modalTitle'));
+        var button = this.button.add('uploadfiles', this.lang.get('modalTitleFiles'));
         this.button.setIcon(button, '<i class="fa-file-code-o"></i>');
-        this.button.addCallback(button, this.uploadFiles.show);
+        this.button.addCallback(button, this.uploadfiles.show);
       },
       show: function () {
-        this.modal.addTemplate('uploadFiles', this.uploadFiles.getTemplate());
-        this.modal.load('uploadFiles', this.lang.get('modalTitle'), 700);
+        this.modal.addTemplate('uploadfiles', this.uploadfiles.getTemplate());
+        this.modal.load('uploadfiles', this.lang.get('modalTitleFiles'), 700);
         // // action button
         this.modal.show();
 

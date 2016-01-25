@@ -21,7 +21,7 @@
                                   DateTimeHelper) {
     console.log('... ClippingsNewController');
 
-    $scope.title = 'Novo Clipping';
+    $scope.title = 'Nova Matéria';
     $scope.breadcrumb = $scope.title;
     $scope.clipping = {
       title: '',

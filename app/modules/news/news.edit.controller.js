@@ -1,4 +1,4 @@
-;(function () {
+  ;(function () {
   'use strict';
 
   angular.module('newsModule')
@@ -172,6 +172,9 @@
       if(typeof data.highlight_ufmg == 'undefined')
         data.highlight_ufmg = false;
 
+      if(!data.saveDraftClicked && data.status != 'scheduled')
+        data.status = 'publish';
+
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -184,6 +187,8 @@
         thumb: data.thumb,
         highlight_ufmg: data.highlight_ufmg
       };
+
+      console.log('obj publish >>>>>>>>>>', _obj);
 
       _obj.tags = _.map(_obj.tags, 'text');
 
@@ -210,7 +215,7 @@
     });
 
     $scope.redactorOptions = {
-      plugins: ['imagencrop']
+      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop']
     };
 
     $scope.imagencropOptions = {

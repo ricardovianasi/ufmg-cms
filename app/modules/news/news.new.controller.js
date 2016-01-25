@@ -29,6 +29,7 @@
     $scope.breadcrumb = 'Nova Notícia';
 
     $scope.news = {};
+    $scope.news.status = StatusService.STATUS_PUBLISHED;
     $scope.news.tags = [];
 
     $scope.categories = [];
@@ -69,9 +70,9 @@
     });
 
     $scope.publish = function (data, preview) {
-
-      if(typeof data.highlight_ufmg == 'undefined')
+      if (typeof data.highlight_ufmg == 'undefined') {
         data.highlight_ufmg = false;
+      }
 
       var _obj = {
         title: data.title,
@@ -107,7 +108,7 @@
     });
 
     $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
+      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload']
     };
 
     $scope.imagencropOptions = {

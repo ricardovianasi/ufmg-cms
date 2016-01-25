@@ -177,10 +177,11 @@
         return deferred.promise;
       },
       /**
+       * @param $scope
        * @param idx
        * @param article
        */
-      handleArticle: function (idx, article) {
+      handleArticle: function ($scope, idx, article) {
         var articleModal = $uibModal.open({
           templateUrl: 'components/modal/article.modal.template.html',
           controller: 'ArticleModalController',

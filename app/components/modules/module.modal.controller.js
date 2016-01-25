@@ -10,7 +10,8 @@
                                  PagesService,
                                  module,
                                  widgets,
-                                 columns) {
+                                 columns,
+                                 column) {
     console.log('... ModuleModalController');
 
     var _ = lodash;
@@ -37,7 +38,7 @@
     }
 
     $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
+      plugins: column == 'side' ? false : ['imagencrop', 'audioUpload']
     };
 
     $scope.imagencropOptions = {

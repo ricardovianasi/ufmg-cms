@@ -7,22 +7,33 @@
   UploadComponentController.$inject = [
     '$scope',
     '$uibModalInstance',
+    '$timeout',
     'MediaService',
     'tabsService',
     'formats',
-    '$timeout'
+    'NotificationService'
   ];
 
   /**
    * @param $scope
    * @param $uibModalInstance
+   * @param $timeout
    * @param MediaService
    * @param tabsService
    * @param formats
+   * @param NotificationService
    *
    * @constructor
    */
-  function UploadComponentController($scope, $uibModalInstance, MediaService, tabsService, formats, $timeout) {
+  function UploadComponentController($scope,
+                                     $uibModalInstance,
+                                     $timeout,
+                                     MediaService,
+                                     tabsService,
+                                     formats,
+                                     NotificationService) {
+    console.log('... UploadComponentController');
+
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
@@ -83,9 +94,6 @@
     vm.save = _save;
     vm.setFormat = _setFormat;
 
-    // Set default format
-    _setFormat(formats[0], false);
-
     /**
      * @param format
      * @param setCrop
@@ -103,6 +111,7 @@
           y2: obj.height
         });
       }
+
       vm.activeFormat = format;
       vm.aspectRatio = 1 / (obj.height / obj.width);
     }
@@ -123,6 +132,8 @@
     /**
      *  _openMidia Function
      * open tab media, and call _loadMidia function
+     *
+     * @private
      */
     function _openMidia() {
       tabsService.selectTab('midia');
@@ -135,9 +146,11 @@
     /**
      *  _loadMidia Function
      * get all media
+     *
+     * @private
      */
     function _loadMidia(page) {
-      MediaService.getMedia(page, 27).then(function (result) {
+      MediaService.getMedia(page, 35).then(function (result) {
         vm.midia = result.data;
       });
     }
@@ -154,12 +167,17 @@
      * _selectMidia Function
      *
      * @param data
+     *
      * @private
      */
     function _selectMidia(data) {
       vm.zoomOut = false;
       vm.currentFile = data;
 
+      // Set default format
+      $timeout(function () {
+        _setFormat(formats[0]);
+      });
     }
 
     /**
@@ -168,6 +186,12 @@
      * @private
      */
     function _updateMidia() {
+      if (_validate(vm.currentFile.legend)) {
+        NotificationService.info('Legenda deve ser inserida obrigatoriamente.');
+
+        return false;
+      }
+
       var obj = {
         title: vm.currentFile.title,
         description: vm.currentFile.description,
@@ -180,15 +204,16 @@
         vm.tabs = tabsService.getTabs();
         vm.image = $('img', '#mrImageContainer')[0];
 
-        $timeout(function(){
+        $timeout(function () {
           $('.btn-click').trigger('click');
         });
       });
     }
 
-    function _cancelUpdateMidia(){
+    function _cancelUpdateMidia() {
       vm.zoomOut = true;
     }
+
     /**
      * @private
      */
@@ -226,6 +251,17 @@
           author: vm.currentFile.author.name
         });
       });
+    }
+
+    /**
+     * @param variable
+     *
+     * @returns {boolean}
+     *
+     * @private
+     */
+    function _validate(variable) {
+      return _.isEmpty(variable);
     }
   }
 })();
