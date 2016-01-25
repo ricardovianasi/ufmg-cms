@@ -1,7 +1,14 @@
 <header class="view-header clearfix">
     <div class=pull-left>
         <h2>
-            <span ng-if=edition.theme>{{ edition.theme }}</span><span ng-if=!edition.theme>Nova Galeria</span>
+            <span ng-if="edition.id">
+                <span ng-if="edition.theme">Editar Edição - {{ edition.theme }}</span>
+                <span ng-if="!edition.theme">Editar Edição</span>
+            </span>
+            <span ng-if="!edition.id">
+                <span ng-if="edition.theme">Nova Edição - {{ edition.theme }}</span>
+                <span ng-if="!edition.theme">Nova Edição</span>
+            </span>
         </h2>
 
         <ol class=breadcrumb>
