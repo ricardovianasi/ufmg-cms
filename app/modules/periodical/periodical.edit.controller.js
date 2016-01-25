@@ -8,6 +8,7 @@
     '$scope',
     '$routeParams',
     '$location',
+    '$filter',
     'PeriodicalService',
     'StatusService',
     'NotificationService',
@@ -18,6 +19,7 @@
   /**
    * @param $scope
    * @param $routeParams
+   * @param $filter
    * @param PeriodicalService
    * @param StatusService
    * @param NotificationService
@@ -30,6 +32,7 @@
   function PeriodicalEditController($scope,
                                     $routeParams,
                                     $location,
+                                    $filter,
                                     PeriodicalService,
                                     StatusService,
                                     NotificationService,
@@ -73,10 +76,26 @@
       });
     });
 
+    var date = new Date();
+
     $scope.date_formats = [
-      {id: 'Y'},
-      {id: 'm/Y'},
-      {id: 'd/m/Y'}
+      {
+        label: $filter('format')('ano ({0})', date.getFullYear()),
+        format: 'Y'
+      },
+      {
+        label: $filter('format')('mês/ano ({0}/{1})', date.getMonth() + 1, date.getFullYear()),
+        format: 'm/Y'
+      },
+      {
+        label: $filter('format')(
+          'dia/mês/ano ({0}/{1}/{2})',
+          date.getDate(),
+          date.getMonth() + 1,
+          date.getFullYear()
+        ),
+        format: 'd/m/Y'
+      }
     ];
 
     $scope.removeImage = function () {

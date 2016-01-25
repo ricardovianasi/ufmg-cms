@@ -1,9 +1,6 @@
 <div class="page-title">
     <div class="title-env">
         <h1 class="title">
-            <!--<span ng-if="periodical.name">{{ periodical.name }}</span>-->
-            <!--<span ng-if="!periodical.name">Novo Periódico</span>-->
-
             <span ng-if="periodical.id">
                 <span ng-if="periodical.name">Editar Periódico - {{ periodical.name }}</span>
                 <span ng-if="!periodical.name">Editar Periódico</span>
@@ -109,7 +106,7 @@
                         <label>Formato de Data:</label>
                         <select class="form-control"
                                 ng-model="periodical.date_format"
-                                ng-options="date_format.id as date_format.id for date_format in date_formats"></select>
+                                ng-options="item.format as item.label for item in date_formats track by item.format"></select>
                     </div>
                 </div>
             </div>

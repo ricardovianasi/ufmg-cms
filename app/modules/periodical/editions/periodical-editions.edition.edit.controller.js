@@ -53,6 +53,7 @@
 
     PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
       $scope.periodical = data.data.periodical;
+      $scope.edition.id = data.data.id;
       $scope.edition.theme = data.data.theme;
       $scope.edition.number = data.data.number;
       $scope.edition.publish_date = DateTimeHelper.dateToStr(data.data.publish_date);
@@ -61,6 +62,7 @@
       $scope.edition.background = data.data.background ? data.data.background.id : '';
       $scope.edition.status = data.data.status;
       $scope.edition.articles = [];
+
       angular.forEach(data.data.articles, function (article) {
         var obj = {
           title: article.title,
@@ -73,12 +75,16 @@
           thumb_url: article.thumb ? article.thumb.url : '',
           content: article.content
         };
+
         obj.tags = [];
+
         angular.forEach(article.tags, function (tag) {
           obj.tags.push(tag.name);
         });
+
         $scope.edition.articles.push(obj);
       });
+
       $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
       $scope.edition.background_url = data.data.background ? data.data.background.url : '';
       $scope.edition.file_name = data.data.file ? data.data.file.title : '';
