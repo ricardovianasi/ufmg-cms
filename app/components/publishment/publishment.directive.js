@@ -50,7 +50,13 @@
         };
 
         $scope.back = function () {
-          $location.path($filter('format')('/{0}', inflection.pluralize(attrs.routeModel)));
+          var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
+
+          if (typeof attrs.back !== 'undefined') {
+            back = attrs.back;
+          }
+
+          $location.path(back);
         };
 
         // Statuses
