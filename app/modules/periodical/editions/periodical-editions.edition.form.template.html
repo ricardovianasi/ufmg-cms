@@ -49,14 +49,18 @@
                 <div class=form-group>
                     <label>Arquivo PDF:</label>
 
-                    <input ng-show=!edition.file type=file ngf-accept="'pdf'" ngf-select ng-model=edition_file
-                           ngf-multiple=false class=form-control>
+                    <input type="file" class="form-control"
+                           ngf-select
+                           ng-show="!edition.pdf"
+                           ngf-accept="'application/pdf'"
+                           ng-model="edition_file"
+                           ngf-multiple="false">
 
-                    <div ng-show=edition.file class="clearfix form-control">
-                        <div class=pull-left>{{ edition.file_name }}</div>
+                    <div ng-show="edition.pdf" class="clearfix form-control">
+                        <div class=pull-left>{{ edition.pdf_url }}</div>
 
                         <div class=pull-right>
-                            <span ng-show=edition.file ng-click="removeImage('pdf')"
+                            <span ng-show="edition.pdf" ng-click="removeImage('pdf')"
                                   class="label label-danger remove-image">
                                 <i class="fa fa-remove"></i> REMOVER
                             </span>
