@@ -1,22 +1,22 @@
 <div class="page-title">
-
     <div class="title-env">
         <h1 class="title">Mídia</h1>
     </div>
 
     <div class="breadcrumb-env">
-
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
+                <a href="#/">
+                    <i class="fa-home"></i>Home
+                </a>
             </li>
+
             <li class="active">
                 <a href="#/media">
                     <strong>Mídia</strong>
                 </a>
             </li>
         </ol>
-
     </div>
 </div>
 
@@ -25,11 +25,12 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a ng-click="itemStatus = ''" class="btn" ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
+                    <a class="btn"
+                       ng-click="itemStatus = ''"
+                       ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
                         <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
                         <span class=small>({{ media.total }})</span>
                     </a>
-
 
                     <a ng-click="itemStatus = 'publish'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'publish'}">
                         <span ng-class="{ 'strong': itemStatus == 'published'}">Publicados</span>
@@ -42,14 +43,12 @@
                     </a>
                 </div>
 
-
                 <div class="pull-right">
                     <a ng-href=#/media/new class="btn btn-secondary btn-lg pull-left">NOVA MÍDIA</a>
                 </div>
             </div>
 
             <div class="panel-body">
-
                 <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
                     <colgroup>
                         <col>
@@ -59,50 +58,53 @@
                     </colgroup>
 
                     <thead>
-                        <tr>
-                            <th>Título</th>
-                            <th>Autor</th>
-                            <th>Data da Criação</th>
-                            <th>Ações</th>
-                        </tr>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Data da Criação</th>
+                        <th>Ações</th>
+                    </tr>
                     </thead>
+
                     <tbody>
-                        <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus}">
-                            <td>
-                                <div>
-                                    <div class="pull-left spacer-right">
-                                        <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'" style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
-
-                                        <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
-                                    </div>
-                                    <div class="pull-left">
-                                        {{ item.title }}<small>{{ item.subtitle }}</small>
-                                    </div>
+                    <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus}">
+                        <td>
+                            <div>
+                                <div class="pull-left spacer-right">
+                                    <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'"
+                                         style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
+                                    <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
                                 </div>
-                            </td>
 
-                            <td>{{ item.author.name }}</td>
+                                <div class="pull-left">
+                                    {{ item.title }}
+                                    <small>{{ item.subtitle }}</small>
+                                </div>
+                            </div>
+                        </td>
 
-                            <td>
-                                <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
-                                <br>
-                                <small>{{ item.status }}</small>
-                            </td>
+                        <td>{{ item.author.name }}</td>
 
-                            <td>
-                                <a target="_blank" ng-href="{{item.url}}" class="btn btn-primary">
-                                    <i class="fa fa-eye"></i>
-                                </a>
+                        <td>
+                            <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
+                            <br>
+                            <small>{{ item.status }}</small>
+                        </td>
 
-                                <a ng-href="#/media/edit/{{item.id}}" class="btn btn-warning">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
+                        <td>
+                            <a target="_blank" ng-href="{{item.url}}" class="btn btn-primary">
+                                <i class="fa fa-eye"></i>
+                            </a>
 
-                                <a ng-click="removeMedia(item.id, item.title)" class="btn btn-danger">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            <a ng-href="#/media/edit/{{item.id}}" class="btn btn-warning">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a ng-click="removeMedia(item.id, item.title)" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
