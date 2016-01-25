@@ -215,7 +215,7 @@
     });
 
     $scope.redactorOptions = {
-      plugins: ['imagencrop']
+      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop']
     };
 
     $scope.imagencropOptions = {

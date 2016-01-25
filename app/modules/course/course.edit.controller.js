@@ -109,7 +109,7 @@
     $scope.redactorConfig = {
       lang: 'pt_br',
       replaceDivs: false,
-      plugins: ['imagencrop'],
+      plugins: ['video','soundcloud', 'uploadfiles','imagencrop'],
       buttons: [
         'html',
         'formatting',
