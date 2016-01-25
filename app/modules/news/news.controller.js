@@ -57,14 +57,15 @@
      * @param description
      */
     $scope.removeNews = function (id, description) {
-      var removeConfirmationModal = ModalService.confirm('Você deseja excluir a notícia "' + description + '"?', 'md');
-
-      removeConfirmationModal.result.then(function () {
-        NewsService.removeNews(id).then(function () {
-          NotificationService.success('Notícia removida com sucesso.');
-          loadNews();
+      ModalService
+        .confirm('Você deseja excluir a notícia "' + description + '"?', 'md')
+        .result
+        .then(function () {
+          NewsService.removeNews(id).then(function () {
+            NotificationService.success('Notícia removida com sucesso.');
+            loadNews();
+          });
         });
-      });
     };
   }
 })();

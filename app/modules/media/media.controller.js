@@ -96,17 +96,17 @@
      * @param id
      */
     $scope.removeMedia = function (id) {
-      var confirmModal = ModalService.confirm('Você deseja excluir a mídia selecionada?');
+      ModalService
+        .confirm('Você deseja excluir a mídia selecionada?')
+        .result.then(function () {
+          MediaService.removeMedia(id).then(function () {
+            NotificationService.success('Mídia removida com sucesso.');
 
-      confirmModal.result.then(function () {
-        MediaService.removeMedia(id).then(function () {
-          NotificationService.success('Mídia removida com sucesso.');
-
-          $route.reload();
-        }, function () {
-          NotificationService.error('A imagem está vinculada a alguma postagem, por este motivo não é possível exclui-la.');
+            $route.reload();
+          }, function () {
+            NotificationService.error('A imagem está vinculada a alguma postagem, por este motivo não é possível exclui-la.');
+          });
         });
-      });
     };
   }
 })();
