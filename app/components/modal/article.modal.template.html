@@ -1,20 +1,22 @@
 <div class="modal-header">
-    <h3 class="modal-title">Widget</h3>
+    <h3 class="modal-title">Adicionar Artigo</h3>
 </div>
 
 <div class=modal-body>
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
             <div class="form-group">
                 <label>T&iacute;tulo</label>
                 <input class="form-control" type="text"
                        ng-model="article.title">
             </div>
         </div>
+    </div>
 
-        <div class="col-xs-6">
+    <div class="row">
+        <div class="col-xs-12">
             <div class="form-group">
-                <label>Subt&iacute;tulo</label>
+                <label>Bigode</label>
                 <input class="form-control" type="text"
                        ng-model="article.subtitle">
             </div>
@@ -30,11 +32,91 @@
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-2">
             <div class="form-group">
                 <label>N&uacute;mero da P&aacute;gina</label>
                 <input type="text" class="form-control"
                        ng-model="article.page_number">
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Thumb</label>
+
+                <input type="file" class="form-control"
+                       ngf-select
+                       ng-model="article_thumb"
+                       ngf-multiple="false"
+                       ng-show="!article.thumb" style="height:auto">
+
+                <div class="clearfix form-control"
+                     ng-show="article.thumb">
+                    <div class="pull-left">{{ article.thumb_url }}</div>
+
+                    <div class="pull-right">
+                        <span class="label label-danger remove-image-news"
+                              ng-show="article.thumb"
+                              ng-click="removeImage('thumb')">
+                            <span class="fa fa-remove"></span> REMOVER
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label>Capa</label>
+
+                <div class="pages-module edition-bg-thumb">
+                    <div class="add-module"
+                         ng-show="!article.cover"
+                         ng-click="uploadImage('cover')">+ Carregar Imagem
+                    </div>
+
+                    <div ng-show=article.cover>
+                        <div class="chosen-cover">
+                            <span class="label label-danger remove-image"
+                                  ng-click="removeImage('cover')">
+                                <i class="fa fa-remove"></i> REMOVER IMAGEM
+                            </span>
+                        </div>
+
+                        <div class=uploaded-image>
+                            <img ng-src="{{ article.cover_url }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="pages-module article-cover-thumb">-->
+                    <!--<div class="add-module"-->
+                         <!--ng-show="!article.cover">-->
+                        <!--<div class="tac">-->
+                            <!--<button class="btn btn-primary"-->
+                                    <!--ngf-select-->
+                                    <!--ngf-accept="'image/*'"-->
+                                    <!--ng-model="article_cover"-->
+                                    <!--ngf-multiple="false">-->
+                                <!--Carregar Imagem-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div ng-show="article.cover">-->
+                        <!--<div class="chosen-cover">-->
+                            <!--<span ng-click="removeImage('cover')" class="label label-danger remove-image">-->
+                                <!--<i class="fa fa-remove"></i>REMOVER IMAGEM-->
+                            <!--</span>-->
+                        <!--</div>-->
+
+                        <!--<div class="uploaded-image">-->
+                            <!--<img ng-src="{{ article.cover_url }}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -44,75 +126,6 @@
             <div class="form-group">
                 <label>Tags:</label>
                 <tags-input ng-model="article.tags"></tags-input>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="form-group">
-                <label>Capa</label>
-
-                <div class="pages-module article-cover-thumb">
-                    <div class="add-module"
-                         ng-show="!article.cover">
-                        <div class="tac">
-                            <button class="btn btn-primary"
-                                    ngf-select
-                                    ngf-accept="'image/*'"
-                                    ng-model="article_cover"
-                                    ngf-multiple="false">
-                                Carregar Imagem
-                            </button>
-                        </div>
-                    </div>
-
-                    <div ng-show="article.cover">
-                        <div class="chosen-cover">
-                            <span ng-click="removeImage('cover')" class="label label-danger remove-image">
-                                <i class="fa fa-remove"></i>REMOVER IMAGEM
-                            </span>
-                        </div>
-
-                        <div class="uploaded-image">
-                            <img ng-src="{{ article.cover_url }}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-6">
-            <div class="form-group">
-                <label>Thumb</label>
-
-                <div class="pages-module article-cover-thumb">
-                    <div class="add-module"
-                         ng-show="!article.thumb">
-                        <div class="tac">
-                            <button class="btn btn-primary"
-                                    ngf-select
-                                    ngf-accept="'image/*'"
-                                    ng-model="article_thumb"
-                                    ngf-multiple="false">
-                                Carregar Imagem
-                            </button>
-                        </div>
-                    </div>
-
-                    <div ng-show="article.thumb">
-                        <div class="chosen-cover">
-                            <span class="label label-danger remove-image"
-                                  ng-click="removeImage('thumb')">
-                                <i class="fa fa-remove"></i> REMOVER IMAGEM
-                            </span>
-                        </div>
-
-                        <div class="uploaded-image">
-                            <img ng-src="{{ article.thumb_url }}">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
