@@ -8,39 +8,39 @@
     '$scope',
     '$uibModal',
     '$routeParams',
+    '$location',
+    '$timeout',
     'PeriodicalService',
     'StatusService',
     'NotificationService',
     'MediaService',
     'DateTimeHelper',
-    '$location',
-    '$timeout'
   ];
 
   /**
    * @param $scope
    * @param $uibModal
    * @param $routeParams
+   * @param $location
+   * @param $timeout
    * @param PeriodicalService
    * @param StatusService
    * @param NotificationService
    * @param MediaService
    * @param DateTimeHelper
-   * @param $location
-   * @param $timeout
    *
    * @constructor
    */
   function PeriodicalEditionEditController($scope,
                                            $uibModal,
                                            $routeParams,
+                                           $location,
+                                           $timeout,
                                            PeriodicalService,
                                            StatusService,
                                            NotificationService,
                                            MediaService,
-                                           DateTimeHelper,
-                                           $location,
-                                           $timeout) {
+                                           DateTimeHelper) {
     console.log('... PeriodicalEditionEditController');
 
     $scope.edition = {};
@@ -95,6 +95,10 @@
       $scope.edition.scheduled_time = scheduled_at.time;
     });
 
+    /**
+     * @param data
+     * @param preview
+     */
     $scope.publish = function (data, preview) {
       var obj = {};
       obj.articles = [];
@@ -145,6 +149,9 @@
       containment: '#sort-main'
     };
 
+    /**
+     * @param idx
+     */
     $scope.removeArticle = function (idx) {
       $scope.confirmationModal('md', 'Você deseja excluir este artigo?');
       removeConfirmationModal.result.then(function (data) {
@@ -158,6 +165,10 @@
 
     var removeConfirmationModal;
 
+    /**
+     * @param size
+     * @param title
+     */
     $scope.confirmationModal = function (size, title) {
       removeConfirmationModal = $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
@@ -172,6 +183,13 @@
       });
     };
 
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param title
+     *
+     * @constructor
+     */
     var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
@@ -232,6 +250,9 @@
       });
     };
 
+    /**
+     * @param type
+     */
     $scope.removeImage = function (type) {
       $timeout(function () {
         $scope.edition[type] = '';
