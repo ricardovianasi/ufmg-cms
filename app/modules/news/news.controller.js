@@ -58,7 +58,7 @@
      */
     $scope.removeNews = function (id, description) {
       ModalService
-        .confirm('Você deseja excluir a notícia "' + description + '"?', 'md')
+        .confirm('Você deseja excluir a notícia "' + description + '"?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           NewsService.removeNews(id).then(function () {
