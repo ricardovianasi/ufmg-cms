@@ -17,6 +17,20 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $timeout
+   * @param $location
+   * @param $routeParams
+   * @param CourseService
+   * @param EventsService
+   * @param MediaService
+   * @param NotificationService
+   * @param StatusService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function EventsEditController($scope,
                                 $timeout,
                                 $location,
@@ -207,7 +221,7 @@
     });
 
     // Undergraduate Courses
-    CourseService.getCourses().then(function (data) {
+    CourseService.getCourses('graduation').then(function (data) {
       $scope.courses = data.data;
     });
 

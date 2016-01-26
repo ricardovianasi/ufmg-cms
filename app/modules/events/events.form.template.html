@@ -124,20 +124,20 @@
 
             <div class="col-xs-12">
                 <div class=form-group>
-                    <label>Cursos de Interesse</label>
+                    <label class="">Cursos de Interesse</label>
 
-                    <ul class="clearfix events-courses-list">
-                        <li ng-repeat="course in courses.items">
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="course in courses.items">
                             <div class="checkbox">
                                 <label for="course-{{ course.id }}">
                                     <input type="checkbox" value="{{ course.id }}" name="courses[]"
                                            id="course-{{ course.id }}"
                                            ng-checked="event.courses.indexOf(course.id) &gt; -1"
-                                           ng-click="toggleSelection(course.id)"> {{ course.name }}
+                                           ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
                                 </label>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 

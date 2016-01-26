@@ -130,7 +130,7 @@
         size: 'xl',
         resolve: {
           formats: function () {
-            return ['pageCover'];
+            return ['bigPageCover'];
           }
         }
       });

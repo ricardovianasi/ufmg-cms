@@ -76,6 +76,11 @@
         name: 'Capa Digitalizada',
         width: 350,
         height: 498
+      },
+      bigPageCover: {
+        name: 'Capa de periódicos',
+        width: 1920,
+        height: 720
       }
     };
 
