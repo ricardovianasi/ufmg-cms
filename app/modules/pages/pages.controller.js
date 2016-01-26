@@ -6,21 +6,33 @@
 
   PagesController.$inject = [
     '$scope',
-    '$timeout',
-    '$uibModal',
     'dataTableConfigService',
     'PagesService',
     'NotificationService',
-    'StatusService'
+    'StatusService',
+    'ModalService',
+    'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModal
+   * @param dataTableConfigService
+   * @param PagesService
+   * @param NotificationService
+   * @param StatusService
+   * @param ModalService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function PagesController($scope,
-                          $timeout,
-                          $uibModal,
-                          dataTableConfigService,
-                          PagesService,
-                          NotificationService,
-                          StatusService) {
+                           dataTableConfigService,
+                           PagesService,
+                           NotificationService,
+                           StatusService,
+                           ModalService,
+                           DateTimeHelper) {
     console.log('... PagesController');
 
     $scope.status = [];
@@ -43,50 +55,29 @@
 
     loadPages();
 
+    /**
+     *
+     */
     $scope.changePage = function () {
       loadPages($scope.currentPage);
     };
 
-    $scope.convertDate = function (date) {
-      return new Date(date);
-    };
+    $scope.convertDate = DateTimeHelper.convertDate;
 
-    $scope.removePage = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir a página ' + description + '?');
-      removeConfirmationModal.result.then(function (data) {
-        PagesService.removePage(id).then(function (data) {
-          NotificationService.success('Página removida com sucesso.');
-          loadPages();
+    /**
+     * @param id
+     * @param title
+     */
+    $scope.remove = function (id, title) {
+      ModalService
+        .confirm('Você deseja excluir a página <b>' + title + '</b>?', 'md')
+        .result
+        .then(function () {
+          PagesService.removePage(id).then(function () {
+            NotificationService.success('Página removida com sucesso.');
+            loadPages();
+          });
         });
-      });
-    };
-
-    var removeConfirmationModal;
-
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $uibModal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
-
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
     };
   }
 })();

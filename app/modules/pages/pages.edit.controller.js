@@ -16,9 +16,27 @@
     'PagesService',
     'WidgetsService',
     'StatusService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    'ModalService',
   ];
 
+  /**
+   * @param $scope
+   * @param $uibModal
+   * @param $location
+   * @param $routeParams
+   * @param $timeout
+   * @param $filter
+   * @param $window
+   * @param NotificationService
+   * @param PagesService
+   * @param WidgetsService
+   * @param StatusService
+   * @param DateTimeHelper
+   * @param ModalService
+   *
+   * @constructor
+   */
   function PagesEditController($scope,
                                $uibModal,
                                $location,
@@ -30,7 +48,8 @@
                                PagesService,
                                WidgetsService,
                                StatusService,
-                               DateTimeHelper) {
+                               DateTimeHelper,
+                               ModalService) {
     console.log('... PaginasEditarController');
 
     $scope.widgets = [];
@@ -51,7 +70,7 @@
 
     $scope.time_days = DateTimeHelper.getDays();
     $scope.time_months = DateTimeHelper.getMonths();
-    $scope.time_years = ['2015', '2016', '2017'];
+    $scope.time_years = DateTimeHelper.yearRange();
     $scope.time_hours = DateTimeHelper.getHours();
     $scope.time_minutes = DateTimeHelper.getMinutes();
 
@@ -62,11 +81,19 @@
       containment: '#sort-main'
     };
 
+    /**
+     *
+     */
     $scope.remove = function () {
-      PagesService.removePage($routeParams.id).then(function () {
-        NotificationService.success('Página removida com sucesso.');
-        $location.path('/pages');
-      });
+      ModalService
+        .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?', 'md')
+        .result
+        .then(function () {
+          PagesService.removePage($routeParams.id).then(function () {
+            NotificationService.success('Página removida com sucesso.');
+            $location.path('/pages');
+          });
+        });
     };
 
     /**
@@ -86,6 +113,8 @@
     };
 
     // Cover Image - Upload
+    $scope.page_image = null;
+
     $scope.$watch('page_image', function () {
       if ($scope.page_image) {
         $scope.upload([$scope.page_image]);
