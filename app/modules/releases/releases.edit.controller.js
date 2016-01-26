@@ -62,6 +62,24 @@
     };
 
     /**
+     * _addWatcher function
+     * @param {int} idx
+     */
+    var _addWatcher = function(idx){
+
+     var watchee = $filter('format')('release.files[{0}].file', idx);
+
+      $scope.$watch(watchee, function () {
+      if ($scope.release.files[idx].file && $scope.release.files[idx].file instanceof File) {
+        $scope.release.files[idx].external_url = '';
+        $scope.fileHandler.uploadFile(idx, [
+          $scope.release.files[idx].file
+        ]);
+      }
+      });
+    };
+
+    /**
      * Handle img upload
      */
     $scope.imgHandler = {
@@ -121,19 +139,12 @@
         var idx = $scope.release.files.push({
           url: '',
           file: '',
-          opened: true
+          opened: true,
+          isFile: true
         });
         idx = idx - 1;
 
-        var watchee = $filter('format')('release.files[{0}].file', idx);
-
-        $scope.$watch(watchee, function () {
-          if ($scope.release.files[idx].file && $scope.release.files[idx].file instanceof File) {
-            $scope.fileHandler.uploadFile(idx, [
-              $scope.release.files[idx].file
-            ]);
-          }
-        });
+        _addWatcher(idx);
       },
       /**
        * @param {number} idx
@@ -288,6 +299,10 @@
       $scope.release = release;
       $scope.title = $scope.title + release.name;
       $scope.breadcrumb = $scope.title;
+
+      angular.forEach('$scope.release.files', function(value, key){
+        _addWatcher(key);
+      });
 
     });
   }
