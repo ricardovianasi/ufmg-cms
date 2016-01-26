@@ -8,13 +8,24 @@
     '$scope',
     'dataTableConfigService',
     'EventsService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    'ModalService',
   ];
 
+  /**
+   * @param $scope
+   * @param dataTableConfigService
+   * @param EventsService
+   * @param DateTimeHelper
+   * @param ModalService
+   *
+   * @constructor
+   */
   function EventsController($scope,
                             dataTableConfigService,
                             EventsService,
-                            DateTimeHelper) {
+                            DateTimeHelper,
+                            ModalService) {
     console.log('... EventsController');
 
     $scope.title = 'Eventos';
@@ -34,8 +45,22 @@
       loadEvents($scope.currentPage);
     };
 
-    $scope.convertDate = function (date) {
-      return DateTimeHelper.dateToStr(date);
+    $scope.convertDate = DateTimeHelper.convertDate;
+
+    /**
+     * @param id
+     * @param title
+     */
+    $scope.remove = function (id, title) {
+      ModalService
+        .confirm('Deseja remover o evento <b>'+title+'</b>', ModalService.MODAL_MEDIUM)
+        .result
+        .then(function () {
+          EventsService.destroy(id).then(function () {
+            NotificationService.success('Evento removido com sucesso!');
+            loadEvents();
+          });
+        });
     };
   }
 })();
