@@ -354,27 +354,23 @@
          * @param widget
          */
         internalmenu: function (widget) {
-
           var widgetLinks = [];
           var page;
           var external_url;
 
           angular.forEach(widget.links, function (links) {
-
-
-            if(!links.isExternal){
+            if (!links.isExternal) {
               external_url = null;
               page = links.page ? links.page.id : null;
-            }
-            else {
+            } else {
               external_url = links.external_url ? links.external_url : null;
               page = null;
             }
 
             widgetLinks.push({
-                "page": page,
-                "label": links.label,
-                "external_url": external_url
+              page: page,
+              label: links.label,
+              external_url: external_url,
             });
           });
 
@@ -416,7 +412,6 @@
             _obj.specialists.push(specialist);
           });
         },
-
         /**
          * Last Tv Programs
          *
@@ -434,7 +429,17 @@
         comevents: function (widget) {
           _obj.type = widget.type;
           _obj.event = widget.content.event.id;
-        }
+        },
+        /**
+         * @param widget
+         */
+        comhighlightnews: function (widget) {
+          _obj.type = widget.type;
+          _obj.news = [
+            widget.content.news[0].id,
+            widget.content.news[1].id,
+          ];
+        },
       };
 
       // Parse widget object from webservice data
@@ -615,12 +620,12 @@
           var widgetlinks = [];
 
           angular.forEach(widget.content.links, function (links) {
-              if(links.external_url){
-                links.isExternal = true;
-                widgetlinks.push(links);
-              } else {
-                widgetlinks.push(links);
-              }
+            if (links.external_url) {
+              links.isExternal = true;
+              widgetlinks.push(links);
+            } else {
+              widgetlinks.push(links);
+            }
           });
 
           _obj.links = widgetlinks;
@@ -661,7 +666,7 @@
           _obj.type = widget.type;
         },
         /**
-         * Communicaton Events
+         * Communication Events
          *
          * @param widget
          */
@@ -670,7 +675,23 @@
           _obj.event = {
             selected: widget.content.event
           };
-        }
+        },
+        /**
+         * Communication Highlighted News
+         *
+         * @param widget
+         */
+        comhighlightnews: function (widget) {
+          _obj.content = widget.content;
+          _obj.news = [
+            {
+              selected: widget.content.news[0]
+            },
+            {
+              selected: widget.content.news[1]
+            },
+          ];
+        },
       };
 
       /**
@@ -678,7 +699,7 @@
        *
        * @private
        */
-      var _preparingItems = function ($scope) {
+      var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
 
           if ($scope.widget[type]) {
@@ -738,7 +759,7 @@
           $scope.galleries = data.data;
         });
 
-        _preparingItems($scope);
+        _prepareItems($scope);
       };
 
       /**
@@ -850,7 +871,6 @@
          * @param $scope
          */
         internalmenu: function ($scope) {
-
           $scope.pages = [];
 
           _prepareItems($scope);
@@ -858,32 +878,28 @@
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
-
         },
         /**
          * @param $scope
          */
         highlightedradionews: function ($scope) {
           _preparingNews($scope);
-          _preparingItems($scope);
+          _prepareItems($scope);
         },
         /**
          * @param $scope
          */
         highlightednewsvideo: function ($scope) {
           _preparingNews($scope);
-          _preparingItems($scope);
+          _prepareItems($scope);
         },
         /**
          * @param $scope
          */
         lasttvprograms: function ($scope) {
           _preparingNews($scope);
-          _preparingItems($scope);
+          _prepareItems($scope);
         },
-        /**
-         * @param $scope
-         */
         highlightednews: _preparingNews,
         highlightedgalleries: _preparingGalleries,
         highlightedgallery: _preparingGalleries,
@@ -900,7 +916,17 @@
           $scope.widget.content = $scope.widget.content || {};
 
           _preparingEvents($scope);
-        }
+        },
+        /**
+         * @param $scope
+         */
+        comhighlightnews: function ($scope) {
+          $scope.news = [];
+          $scope.widget.content = $scope.widget.content || {};
+          $scope.widget.content.news = $scope.widget.content.news || [];
+
+          _preparingNews($scope);
+        },
       };
 
       return {

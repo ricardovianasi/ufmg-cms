@@ -15,7 +15,7 @@
           },
           {
             icon: 'fa fa-book',
-            name: 'Periódicos Jornalísticos',
+            name: 'Publicações Jornalísticas',
             location: 'periodicals',
             enabled: true
           },
