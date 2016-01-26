@@ -26,36 +26,24 @@
   function ArticleModalController($scope, $uibModalInstance, $uibModal, $timeout, article, MediaService) {
     console.log('... ArticleModalController');
 
+    $scope.article = {};
+    $scope.article.tags = [];
+
     if (article) {
-      $scope.article = {
-        title: article.title,
-        subtitle: article.subtitle,
-        author_name: article.author_name,
-        page_number: article.page_number,
-        tags: [],
-        cover: article.cover,
-        thumb: article.thumb,
-        content: article.content,
-        cover_url: article.cover_url,
-        thumb_url: article.thumb_url
-      };
+      $scope.article.id = article.id;
+      $scope.article.title = article.title;
+      $scope.article.subtitle = article.subtitle;
+      $scope.article.author_name = article.author_name;
+      $scope.article.page_number = article.page_number;
+      $scope.article.cover = article.cover;
+      $scope.article.thumb = article.thumb;
+      $scope.article.content = article.content;
+      $scope.article.cover_url = article.cover_url;
+      $scope.article.thumb_url = article.thumb_url;
 
       angular.forEach(article.tags, function (tag) {
         $scope.article.tags.push(tag);
       });
-    } else {
-      $scope.article = {
-        title: '',
-        subtitle: '',
-        author_name: '',
-        page_number: '',
-        tags: [],
-        cover: '',
-        thumb: '',
-        content: '',
-        cover_url: '',
-        thumb_url: ''
-      };
     }
 
     $scope.redactorOptions = {
@@ -70,8 +58,6 @@
       callback: function (redactor, data) {
         var cropped = function (size, data) {
           var html = _.template($('#figure-' + size).html());
-
-          clog('redactor >>>', redactor);
 
           redactor.selection.restore();
           redactor.insert.raw(html(data));
@@ -100,6 +86,8 @@
         redactor.insert.raw(html(data));
       }
     };
+
+    $scope.article_thumb = null;
 
     // Upload
     // Cover Image - Upload
