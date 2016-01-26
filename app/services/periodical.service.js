@@ -88,10 +88,7 @@
           url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
         }
 
-        clog('url >>>', url);
-
         return $http.get(url);
-        //return $http.get(APIUrl + '/periodical?page=' + page);
       },
       /**
        * @param data
