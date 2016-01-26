@@ -59,9 +59,10 @@
                        datatable="ng" dt-options="dtOptions">
                     <thead>
                     <tr>
-                        <th style="width: 50%">Título</th>
-                        <th style="width: 20%" class="tac">Autor</th>
-                        <th style="width: 13%;" class="tac">Data da Publicação</th>
+                        <th>Título</th>
+                        <th class="tac">Autor</th>
+                        <th class="tac">Data da Publicação</th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
 
@@ -69,18 +70,7 @@
                     <tr role="row" class="odd"
                         ng-repeat="item in pages.items | filter: search | filter: {status: itemStatus}">
                         <td>
-                            <div class="clearfix">
-                                <div class="listing-actions pull-left">
-                                    <a href="#" class="btn btn-warning"
-                                       ng-href="#/pages/edit/{{ item.id }}">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                </div>
-
-                                <div class="pull-left">
-                                    <a target="_blank" ng-href="{{ item.page_url }}">{{ item.title }}</a>
-                                </div>
-                            </div>
+                            <a target="_blank" ng-href="{{ item.page_url }}">{{ item.title }}</a>
                         </td>
 
                         <td>{{ item.author.name }}</td>
@@ -89,6 +79,16 @@
                             <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
                             <br>
                             <small>{{ item.status }}</small>
+                        </td>
+
+                        <td>
+                            <a ng-href="#/pages/edit/{{ item.id }}" class="btn btn-warning">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a ng-click="remove(item.id, item.title)" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     </tbody>

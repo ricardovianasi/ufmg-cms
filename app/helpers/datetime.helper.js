@@ -236,6 +236,8 @@
            * @returns {Array}
            */
           yearRange: function (amount) {
+            amount = amount || 5;
+
             var currentYear = (new Date()).getFullYear();
 
             return _makeRange(currentYear - amount, currentYear + amount);
