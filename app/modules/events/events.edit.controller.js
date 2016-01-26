@@ -14,7 +14,8 @@
     'MediaService',
     'NotificationService',
     'StatusService',
-    'DateTimeHelper'
+    'ModalService',
+    'DateTimeHelper',
   ];
 
   /**
@@ -27,6 +28,7 @@
    * @param MediaService
    * @param NotificationService
    * @param StatusService
+   * @param ModalService
    * @param DateTimeHelper
    *
    * @constructor
@@ -40,6 +42,7 @@
                                 MediaService,
                                 NotificationService,
                                 StatusService,
+                                ModalService,
                                 DateTimeHelper) {
     console.log('... EventsEditController');
 
@@ -182,6 +185,21 @@
         NotificationService.success('Evento atualizado com sucesso.');
         $location.path('/events');
       });
+    };
+
+    /**
+     *
+     */
+    $scope.remove = function () {
+      ModalService
+        .confirm('Você deseja excluir o evento <b>' + $scope.event.name + '</b>?', ModalService.MODAL_MEDIUM)
+        .result
+        .then(function () {
+          EventsService.destroy($routeParams.id).then(function () {
+            NotificationService.success('Evento removido com sucesso.');
+            $location.path('/events');
+          });
+        });
     };
 
     EventsService.getEvent($routeParams.id).then(function (data) {

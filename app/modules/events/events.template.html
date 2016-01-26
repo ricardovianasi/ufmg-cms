@@ -58,25 +58,18 @@
                        dt-options="dtOptions">
                     <thead>
                     <tr>
-                        <th style="width: 60%">Título</th>
-                        <th style="width: 20%">Autor</th>
-                        <th style="width: 20%">Data da Publicação</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Data da Publicação</th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <tr role=row
-                        ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus}"
-                        class="odd">
+                    <tr class="odd" role="row"
+                        ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus}">
                         <td>
-                            <div class="listing-actions pull-left">
-                                <a class="btn btn-warning"
-                                   ng-href="#/events/edit/{{ item.id }}">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                            </div>
-
-                            <div class=pull-left>{{ item.name }}</div>
+                            {{ item.name }}
                         </td>
 
                         <td>{{ item.author.name }}</td>
@@ -85,6 +78,16 @@
                             <strong>{{ item.created_at|date:'dd/MM/yyyy' }}</strong>
                             <br>
                             <small>{{ item.status }}</small>
+                        </td>
+
+                        <td>
+                            <a ng-href="#/events/edit/{{ item.id }}" class="btn btn-warning">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a ng-click="remove(item.id, item.name)" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     </tbody>

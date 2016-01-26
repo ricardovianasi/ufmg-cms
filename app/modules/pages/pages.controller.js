@@ -16,7 +16,6 @@
 
   /**
    * @param $scope
-   * @param $uibModal
    * @param dataTableConfigService
    * @param PagesService
    * @param NotificationService
@@ -70,7 +69,7 @@
      */
     $scope.remove = function (id, title) {
       ModalService
-        .confirm('Você deseja excluir a página <b>' + title + '</b>?', 'md')
+        .confirm('Você deseja excluir a página <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           PagesService.removePage(id).then(function () {

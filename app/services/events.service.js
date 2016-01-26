@@ -6,13 +6,22 @@
 
   EventsService.$inject = [
     '$http',
-    '$q',
     '$filter',
     'DateTimeHelper',
     'apiUrl'
   ];
 
-  function EventsService($http, $q, $filter, DateTimeHelper, apiUrl) {
+  /**
+   * @param $http
+   * @param $filter
+   * @param DateTimeHelper
+   * @param apiUrl
+   *
+   * @returns {{getEvents: getEvents, getEventsCategories: getEventsCategories, store: store, update: update, destroy: destroy, getEvent: getEvent}}
+   *
+   * @constructor
+   */
+  function EventsService($http, $filter, DateTimeHelper, apiUrl) {
     console.log('... EventsService');
 
     var EVENT_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'event');
