@@ -86,7 +86,7 @@
      */
     $scope.remove = function () {
       ModalService
-        .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?', 'md')
+        .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           PagesService.removePage($routeParams.id).then(function () {

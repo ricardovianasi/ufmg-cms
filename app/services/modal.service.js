@@ -16,9 +16,13 @@
    * @constructor
    */
   function ModalService($uibModal) {
-    var vm = this;
+    var _this = this;
 
-    vm.confirm = _confirm;
+    this.MODAL_SMALL = 'sm';
+    this.MODAL_MEDIUM = 'md';
+    this.MODAL_LARGE = 'lg';
+
+    this.confirm = _confirm;
 
     /**
      * @param title
@@ -29,7 +33,7 @@
      * @private
      */
     function _confirm(title, size) {
-      size = size || 'sm';
+      size = size || _this.MODAL_SMALL;
 
       /**
        * @param $scope
@@ -63,6 +67,6 @@
       });
     }
 
-    return vm;
+    return this;
   }
 })();
