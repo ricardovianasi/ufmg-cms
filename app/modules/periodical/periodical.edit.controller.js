@@ -113,7 +113,7 @@
       delete _data.scheduled_time;
 
       PeriodicalService.updatePeriodical($routeParams.id, _data).then(function (data) {
-        NotificationService.success('Periódico atualizado com sucesso.');
+        NotificationService.success('Publicação atualizada com sucesso.');
         $location.path('/periodicals');
       });
     };

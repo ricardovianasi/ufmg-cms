@@ -71,10 +71,10 @@
             <div class="form-group">
                 <label>Capa</label>
 
-                <div class="pages-module edition-bg-thumb">
-                    <div class="add-module"
+                <div class="pages-module add-module edition-bg-thumb">
+                    <div class="add-title"
                          ng-show="!article.cover"
-                         ng-click="uploadImage('cover')">+ Carregar Imagem
+                         ng-click="uploadImage('cover')">+ Adicionar Capa
                     </div>
 
                     <div ng-show=article.cover>
@@ -120,11 +120,11 @@
 
 <div class="modal-footer">
     <button class="btn btn-danger"
-            ng-click="cancel()">Cancelar
+            ng-click="cancel()"><i class="fa fa-times"></i> Cancelar
     </button>
 
     <button class="btn btn-success"
-            ng-click="ok()">Salvar
+            ng-click="ok()"><i class="fa fa-check"></i> Inserir
     </button>
 </div>
 

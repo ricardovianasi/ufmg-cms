@@ -2,12 +2,12 @@
     <div class="title-env">
         <h1 class="title">
             <span ng-if="periodical.id">
-                <span ng-if="periodical.name">Editar Periódico - {{ periodical.name }}</span>
-                <span ng-if="!periodical.name">Editar Periódico</span>
+                <span ng-if="periodical.name">Editar Publicação - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Editar Publicação</span>
             </span>
             <span ng-if="!periodical.id">
-                <span ng-if="periodical.name">Novo Periódico - {{ periodical.name }}</span>
-                <span ng-if="!periodical.name">Novo Periódico</span>
+                <span ng-if="periodical.name">Nova Publicação - {{ periodical.name }}</span>
+                <span ng-if="!periodical.name">Nova Publicação</span>
             </span>
         </h1>
     </div>
@@ -20,13 +20,13 @@
 
             <li>
                 <a href="#/periodicals">
-                    <strong>Periódicos Jornalistas</strong>
+                    <strong>Publicações Jornalísticas</strong>
                 </a>
             </li>
 
             <li class="active" ng-if="!periodical.name">
                 <a href="#/periodicals/new">
-                    <strong>Novo Periódico</strong>
+                    <strong>Nova Publicação</strong>
                 </a>
             </li>
 
