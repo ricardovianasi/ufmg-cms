@@ -16,6 +16,19 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $timeout
+   * @param $location
+   * @param CourseService
+   * @param EventsService
+   * @param MediaService
+   * @param NotificationService
+   * @param StatusService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function EventsNewController($scope,
                                $timeout,
                                $location,
@@ -125,6 +138,7 @@
         ]);
       }
     });
+
     $scope.$watch('event.photo', function () {
       if ($scope.event.photo && $scope.event.photo instanceof File) {
         $scope.imgHandler.upload('photo', [
@@ -162,6 +176,7 @@
      */
     $scope.publish = function (data) {
       data.tags = _.map(data.tags, 'text');
+
       EventsService.store(data).then(function () {
         NotificationService.success('Evento criado com sucesso.');
         $location.path('/events');
@@ -169,7 +184,7 @@
     };
 
     // Undergraduate Courses
-    CourseService.getCourses().then(function (data) {
+    CourseService.getCourses('graduation').then(function (data) {
       $scope.courses = data.data;
     });
 

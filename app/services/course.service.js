@@ -2,61 +2,73 @@
   'use strict';
 
   angular.module('serviceModule')
-    .factory('CourseService', [
-      '$q',
-      '$http',
-      'apiUrl',
-      function ($q, $http, apiUrl) {
-        console.log('... CourseService');
+    .factory('CourseService', CourseService);
 
-        return {
-          getCourseRoutes: function () {
-            var deferred = $q.defer();
+  CourseService.$inject = [
+    '$http',
+    '$filter',
+    'apiUrl',
+  ];
 
-            $http.get(apiUrl + '/route').then(function (data) {
-              deferred.resolve(data);
-            });
+  /**
+   * @param $http
+   * @param $filter
+   * @param apiUrl
+   *
+   * @returns {{getCourseRoutes: getCourseRoutes, getCourse: getCourse, updateCourse: updateCourse, getCourses: getCourses}}
+   *
+   * @constructor
+   */
+  function CourseService($http, $filter, apiUrl) {
+    console.log('... CourseService');
 
-            return deferred.promise;
-          },
-          getCourse: function (id) {
-            var deferred = $q.defer();
-
-            $http.get(apiUrl + '/route/' + id).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          },
-          updateCourse: function (id, course) {
-            var deferred = $q.defer();
-
-            var obj = {};
-            obj.tags = course.tags;
-            obj.cover = course.cover;
-            obj.status = course.status;
-            obj.description = course.description;
-
-            if (obj.status == 'scheduled') {
-              obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
-            }
-
-            $http.put(apiUrl + '/route/' + id, obj).then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          },
-          getCourses: function () {
-            var deferred = $q.defer();
-
-            $http.get(apiUrl + '/course').then(function (data) {
-              deferred.resolve(data);
-            });
-
-            return deferred.promise;
-          }
+    return {
+      /**
+       * @returns {HttpPromise}
+       */
+      getCourseRoutes: function () {
+        return $http.get(apiUrl + '/route');
+      },
+      /**
+       * @param id
+       *
+       * @returns {HttpPromise}
+       */
+      getCourse: function (id) {
+        return $http.get(apiUrl + '/route/' + id);
+      },
+      /**
+       * @param id
+       * @param course
+       *
+       * @returns {HttpPromise}
+       */
+      updateCourse: function (id, course) {
+        var obj = {
+          tags: course.tags,
+          cover: course.cover,
+          status: course.status,
+          description: course.description,
         };
+
+        if (obj.status == 'scheduled') {
+          obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
+        }
+
+        return $http.put(apiUrl + '/route/' + id, obj);
+      },
+      /**
+       * @param type graduation, specialization, ...
+       *
+       * @returns {HttpPromise}
+       */
+      getCourses: function (type) {
+        type = type || '';
+
+        var url = $filter('format')('{0}/course/{1}', apiUrl, type);
+
+        return $http.get(url);
       }
-    ]);
+    };
+  }
 })();

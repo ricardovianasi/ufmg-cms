@@ -5,8 +5,9 @@ gulp.task('watch', function () {
     'js',
     'refresh'
   ]);
-  gulp.watch('app/assets/styles/**/*.{scss,sass}', [
+  gulp.watch(['app/assets/styles/**/*.{scss,sass}', 'app/assets/xenon/css/**/*.css'], [
     'css',
+    'copy-xenon',
     'refresh'
   ]);
   gulp.watch('app/**/*.html', [
