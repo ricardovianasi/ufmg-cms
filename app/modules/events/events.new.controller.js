@@ -80,10 +80,6 @@
       endTime: DateTimeHelper.getTimepickerOpt()
     };
 
-    $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
-    };
-
     $scope.imagencropOptions = {
       /**
        * @param redactor

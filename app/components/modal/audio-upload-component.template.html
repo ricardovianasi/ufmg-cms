@@ -1,7 +1,7 @@
 <div id="modal-audio">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" ng-click="vm.cancel()" aria-hidden="true"><i class="fa fa-times"></i></button>
-        <h4 class="modal-title"><i class="fa fa-file-audio-o"></i> Upload de áudio</h4>
+        <span class="close-modal" type="button" data-dismiss="modal" ng-click="vm.cancel()" aria-hidden="true"><i class="fa fa-times fa-4x"></i></span>
+        <h4 class="modal-title"><i class="fa fa-file-audio-o"></i> Inserir áudio</h4>
     </div>
 
     <div class="modal-body">
@@ -10,7 +10,7 @@
             <li ng-class="{active: vm.tabs.midia}">
                 <a href="javascript:void(0)">
                     <span class="visible-xs"><i class="fa-user"></i></span>
-                    <span class="hidden-xs">Envie um áudio ou selecione da Biblioteca</span>
+                    <span class="hidden-xs">Selecionar Áudio</span>
                 </a>
             </li>
         </ul>
@@ -64,31 +64,28 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="#" class="btn btn-xs btn-secondary imageGroup"
+                <div class="row lib-row">
+                        <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
                            ngf-select
                            ngf-accept="'audio/mp3'"
                            ng-model="vm.add_audio"
                            ngf-multiple="false">
-                            <div class="row flex-center" style="height:120px">
-                                <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12 btn-lg">
                                     <i class="fa fa-plus"></i><br/>Enviar
                                 </div>
                             </div>
                         </a>
-                        <div class="imageGroup border-dashed text-center"
+                        <div class="col-md-1 img-lib flex-center aud-hover"
                              ng-repeat="midia in vm.midia.items|filter: vm.search"
                              ng-click="vm.selectMidia(midia)"
                              ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
                             <div audio audio-url="midia.url"></div>
-
                         </div>
-                    </div>
                 </div>
 
                 <div class="row"
-                     ng-show="vm.midia.total > 30">
+                     ng-show="vm.midia.total > 36">
                     <div class="col-md-12 flex-center">
                         <uib-pagination class="pagination-sm"
                                         boundary-links="true"

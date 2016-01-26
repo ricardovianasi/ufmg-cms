@@ -76,6 +76,11 @@
         name: 'Capa Digitalizada',
         width: 350,
         height: 498
+      },
+      bigPageCover: {
+        name: 'Capa de periódicos',
+        width: 1920,
+        height: 720
       }
     };
 
@@ -150,7 +155,7 @@
      * @private
      */
     function _loadMidia(page) {
-      MediaService.getMedia(page, 27).then(function (result) {
+      MediaService.getMedia(page, 35).then(function (result) {
         vm.midia = result.data;
       });
     }

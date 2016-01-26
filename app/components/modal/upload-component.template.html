@@ -1,40 +1,31 @@
 <div id="modal-image">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()"><i class="fa fa-times"></i></button>
+        <span class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()"><i class="fa fa-times"></i></span>
         <h4 class="modal-title"><i class="fa fa-picture-o"></i> Inserir Imagem</h4>
     </div>
     <div class="modal-body">
         <ul class="nav nav-tabs nav-tabs-justified">
             <li ng-class="{active: vm.tabs.home}">
-                <a href="javascript:void(0)">
-                    <span class="visible-xs"><i class="fa-home"></i></span>
-                    <span class="hidden-xs">Biblioteca de Fotos</span>
-                </a>
+                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                    <span class="hidden-xs">Bibliotecas Disponíveis</span>
             </li>
-
-            <li ng-class="{active: vm.tabs.midia}" ng-click="vm.openMidia()">
-                <a href="javascript:void(0)">
-                    <span class="visible-xs"><i class="fa-user"></i></span>
-                    <span class="hidden-xs">Selecione ou faça upload</span>
-                </a>
+            <li ng-class="{active: vm.tabs.midia}">
+                    <span class="visible-xs"><i class="fa fa-upload"></i></span>
+                    <span class="hidden-xs">Selecionar Imagem</span>
             </li>
-
             <li ng-class="{active: vm.tabs.crop}">
-                <a href="javascript:void(0)">
-                    <span class="visible-xs"><i class="fa-envelope-o"></i></span>
-                    <span class="hidden-xs">Edição de imagem</span>
-                </a>
+                    <span class="visible-xs"><i class="fa fa-crop"></i></span>
+                    <span class="hidden-xs">Editar e Inserir</span>
             </li>
         </ul>
 
         <div class="tab-content">
             <!-- Biblioteca de Midia -->
-            <div class="tab-pane text-center pictureLib" id="home"
+            <div class="tab-pane text-center" id="home"
                  ng-class="{active: vm.tabs.home}">
                 <a class="btn btn-secondary btn-lg btn-library" ng-click="vm.openMidia()">
-                    <span class="fa fa-desktop fa-3x"></span>
+                    <i class="fa fa-desktop"></i>
                     <h3>Biblioteca de Mídia</h3>
-                    <span>(fonte de armezanamento de gerenciador de conteúdo)</span>
                 </a>
             </div>
 
@@ -80,7 +71,8 @@
                                     </form>
                                     <div class="row text-right">
                                         <div class="col-md-12" style="margin-top:20px">
-                                            <button type="button" class="btn btn-danger btn-lg" ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
+                                            <button type="button" class="btn btn-danger btn-lg"
+                                                    ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
                                             <button type="button" class="btn btn-secondary btn-lg"
                                                     ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Confirmar
                                             </button>
@@ -91,32 +83,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="#" class="btn btn-xs btn-secondary imageGroup" style="position:relative; top:11px"
+                <div class="row lib-row">
+                        <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
                            ngf-select
                            ngf-accept="'image/*'"
                            ng-model="vm.add_photos"
                            ngf-multiple="false">
-                            <div class="row flex-center" style="height:120px">
+                            <div class="row">
                                 <div class="col-md-12 btn-lg">
                                     <i class="fa fa-plus"></i><br/>Enviar
                                 </div>
                             </div>
                         </a>
-                        <div class="imageGroup border-dashed text-center"
-                             ng-repeat="midia in vm.midia.items|filter: vm.search"
-                             ng-click="vm.selectMidia(midia)"
-                             ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
-
-                            <img alt="" class=""
-                                 ng-src="{{ midia.url }}"
-                                 ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
-                        </div>
+                    <div class="col-md-1 img-lib"
+                         ng-repeat="midia in vm.midia.items|filter: vm.search"
+                         ng-click="vm.selectMidia(midia)"
+                         ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
+                        <img alt="" class="img-stretch"
+                             ng-src="{{ midia.url }}"
+                             ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                     </div>
                 </div>
                 <div class="row"
-                     ng-show="vm.midia.total > 30">
+                     ng-show="vm.midia.total > 36">
                     <div class="col-md-12 flex-center">
                         <uib-pagination class="pagination-sm"
                                         boundary-links="true"
@@ -135,7 +124,7 @@
             <!-- Crop -->
             <div class="tab-pane" id="crop" ng-class="{active: vm.tabs.crop}">
                 <div class="row flex">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <h4>Selecionar formato</h4>
                         <div class=""
                              ng-repeat="(key, format) in vm.formats">
@@ -150,15 +139,20 @@
                         <div id="mrImageContainer"
                              mr-image
                              mr-src="vm.currentFile.url"
-                             mr-max-width="960"
+                             mr-max-width="1024"
                              mr-selector="vm.selector"
                              mr-aspect-ratio="vm.aspectRatio"></div>
                     </div>
                     <div class="col-md-2 text-right flex-self-end panel-edit">
-                        <button type="button" class="btn btn-lg btn-secondary"
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-lg"
+                        ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
+                    <button type="button" class="btn btn-lg btn-secondary"
                         ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1"
                         ng-click="vm.save()"><i class="fa fa-check"></i> Inserir</button>
-                    </div>
                 </div>
             </div>
         </div>

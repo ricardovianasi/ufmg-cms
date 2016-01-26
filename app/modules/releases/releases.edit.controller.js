@@ -57,6 +57,10 @@
       }
     });
 
+    $scope.removeReleasesFiles = function(idx){
+      $scope.release.files[idx].file = '';
+    };
+
     /**
      * Handle img upload
      */
@@ -247,7 +251,6 @@
 
     ReleasesService.getRelease($routeParams.id).then(function (data) {
       var release = data.data;
-
       release.authorName = release.author_name;
 
       var date = new Date(release.service.when);
@@ -263,11 +266,15 @@
       angular.forEach(release.files, function (file) {
         var fl = {
           external_url: file.external_url,
-          file: ''
+          file: '',
+          isFile: false,
+          type: 'video'
         };
 
         if (file.file !== null) {
           fl.file = file.file.url;
+          fl.isFile = true;
+          fl.type = file.file.type;
         }
 
         files.push(fl);
@@ -281,6 +288,8 @@
       $scope.release = release;
       $scope.title = $scope.title + release.name;
       $scope.breadcrumb = $scope.title;
+
     });
   }
+
 })();
