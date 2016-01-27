@@ -18,7 +18,7 @@
       .when('/menu', {
         templateUrl: 'modules/menu/menu.template.html',
         controller: 'MenuController',
-        controllerAs: 'ctrl'
+        controllerAs: 'vm'
       });
   }
 })();
