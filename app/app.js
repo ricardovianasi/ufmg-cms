@@ -29,16 +29,17 @@
       'componentsModule',
       'courseModule',
       'eventsModule',
-      'galleryModule',
+      'featuredModule',
       'filterModule',
+      'galleryModule',
       'helperModule',
       'indexModule',
       'mediaModule',
+      'menuModule',
       'newsModule',
       'pagesModule',
       'periodicalModule',
       'releasesModule',
       'serviceModule',
-      'featuredModule'
     ]);
 })();

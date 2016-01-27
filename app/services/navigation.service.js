@@ -72,7 +72,12 @@
             name: 'Mídia',
             location: 'media',
             enabled: true
-          }
+          },{
+            icon: 'fa fa-film',
+            name: 'Menu',
+            location: 'menu',
+            enabled: true
+          },
         ];
 
         return {
