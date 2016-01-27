@@ -59,10 +59,10 @@
                 <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th style="width: 40%">Título</th>
-                        <th style="width: 25%">Autor</th>
-                        <th style="width: 20%;">Data da criação</th>
-                        <th style="width: 15%">Ações</th>
+                        <th >Título</th>
+                        <th>Autor</th>
+                        <th>Data da criação</th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
 
@@ -80,7 +80,7 @@
                             <small>({{ clipping.status }})</small>
                         </td>
 
-                        <td>
+                        <td class="table-fit">
                             <a ng-href="#/clippings/edit/{{ clipping.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
