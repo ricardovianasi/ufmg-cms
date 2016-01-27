@@ -9,6 +9,7 @@
     'NotificationService',
     'DateTimeHelper',
     'ModalService',
+    'PagesService',
   ];
 
   /**
@@ -16,15 +17,24 @@
    * @param NotificationService
    * @param DateTimeHelper
    * @param ModalService
+   * @param PagesService
    *
    * @constructor
    */
   function MenuController($scope,
                           NotificationService,
                           DateTimeHelper,
-                          ModalService) {
+                          ModalService,
+                          PagesService) {
     console.log('... NoticiasController');
 
-    $scope.menu = [];
+    var vm = this;
+
+    vm.menu = [];
+    vm.pages = {};
+
+    PagesService.getPages().then(function (data) {
+      vm.pages = data.data;
+    });
   }
 })();

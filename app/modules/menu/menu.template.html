@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-xs-5">
-         <label>Páginas</label> Adicione as páginas arrastando para a esquerda
+        <label>Páginas</label> Adicione as páginas arrastando para a esquerda
         <div class="panel panel-default menu-pane col-md-12">
             <div class="">
                 <form>
@@ -44,8 +44,8 @@
                 </form>
 
                 <ul class="list-group list-group-minimal">
-                    <li class="list-group-item">ahdsuadas</li>
-                    <li class="list-group-item">adassdsa</li>
+                    <li class="list-group-item"
+                        ng-repeat="item in vm.pages.items">{{ item.title }}</li>
                 </ul>
             </div>
         </div>
