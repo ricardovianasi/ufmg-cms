@@ -33,9 +33,9 @@
 // .body
 //   width: 900px
 
-// .media-img
-//   width: 100%
-//   height: 200px
+.media-img
+  width: 100%
+  height: 200px
 
 // .cms-container
 //   width: 1100px
@@ -212,40 +212,45 @@
 //   position: relative
 //   z-index: 2
 
-// .gallery-list
-//   position: relative
-//   padding-left: 0
-//   list-style: none
-//   margin-left: -24px
+.gallery-list
+  position: relative
+  padding-left: 0
+  list-style: none
+  margin-left: -24px
 
-//   .as-sortable-item, .as-sortable-placeholder
-//     display: block
+  .as-sortable-item, .as-sortable-placeholder
+    display: block
+    width: 500px
+    height: 200px
 
-//   .as-sortable-item
-//     -ms-touch-action: none
-//     touch-action: none
+    img
+      width: 100%
 
-//   .as-sortable-item-handle
-//     cursor: move
+  .as-sortable-item
+    -ms-touch-action: none
+    touch-action: none
 
-//   .as-sortable-placeholder
+  .as-sortable-item-handle
+    cursor: move
 
-//   .as-sortable-drag
-//     position: absolute
-//     pointer-events: none
-//     z-index: 9999
-//     margin: -268px 0 0 -268px
+  .as-sortable-placeholder
 
-//   .as-sortable-hidden
-//     display: none !important
+  .as-sortable-drag
+    position: absolute
+    pointer-events: none
+    z-index: 9999
+    margin: -268px 0 0 -268px
 
-//   .as-sortable-un-selectable
-//     -webkit-touch-callout: none
-//     -webkit-user-select: none
-//     -khtml-user-select: none
-//     -moz-user-select: none
-//     -ms-user-select: none
-//     user-select: none
+  .as-sortable-hidden
+    display: none !important
+
+  .as-sortable-un-selectable
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
 
 // .gallery-item.upload-photos,
 // .gallery-list .as-sortable-item,
@@ -298,25 +303,27 @@
 //   list-style: none
 //   margin: 0 auto
 //   padding: 0
+//   max-width: 500px
 //   > li
 //     border: 2px dashed #ccc
 //     padding: 6px
 //     margin-bottom: 10px
-//   .gallery-thumb
-//     width: 80px
-//     border: 1px solid #ccc
-//     padding: 2px
-//     overflow: hidden
-//     img
-//       max-width: 100%
-//       max-height: 52px
-//       width: auto
-//       height: 100%
-//   .gallery-title
-//     width: 320px
-//     font-weight: bold
-//     margin-left: 10px
-//     line-height: 2
+
+// .gallery-thumb
+//   width: 80px
+//   border: 1px solid #ccc
+//   padding: 2px
+//   overflow: hidden
+//   img
+//     max-width: 100%
+//     max-height: 52px
+//     width: auto
+//     height: 100%
+// .gallery-title
+//   width: 320px
+//   font-weight: bold
+//   margin-left: 10px
+//   line-height: 2
 
 // .gal-list-select-container
 //   width: 394px
@@ -628,3 +635,5 @@
 // .modal__scroll--default
 //   height: 500px
 //   overflow: scroll
+//
+//

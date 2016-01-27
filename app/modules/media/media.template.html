@@ -44,19 +44,12 @@
                 </div>
 
                 <div class="pull-right">
-                    <a ng-href=#/media/new class="btn btn-secondary btn-lg pull-left">NOVA MÍDIA</a>
+                    <a ng-href=#/media/new class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA MÍDIA</a>
                 </div>
             </div>
 
             <div class="panel-body">
                 <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
-                    <colgroup>
-                        <col>
-                        <col width="100px">
-                        <col width="100px">
-                        <col width="200px">
-                    </colgroup>
-
                     <thead>
                     <tr>
                         <th>Título</th>
@@ -91,7 +84,7 @@
                             <small>{{ item.status }}</small>
                         </td>
 
-                        <td>
+                        <td class="table-fit">
                             <a target="_blank" ng-href="{{item.url}}" class="btn btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
