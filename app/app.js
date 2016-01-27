@@ -21,6 +21,7 @@
       'ngLodash',
       'ngInflection',
       'ngTagsInput',
+      'ui.sortable',
 
       // App Modules
       'calendarModule',
