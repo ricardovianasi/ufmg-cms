@@ -1,0 +1,19 @@
+@mixin setHeight($height)
+  min-height: $height
+  max-height: $height
+
+.sortable-list
+  padding: 5px
+  overflow: scroll
+
+  &.main
+    border: 2px dashed #ddd
+    @include setHeight(350px)
+
+  &.selectable
+    border: 1px solid #ddd
+    @include setHeight(300px)
+
+.list-group-item
+  &.placeholder
+    border: 2px dotted black
