@@ -32,18 +32,28 @@
                         ng-model="vm.menu">
                         <li class="list-group-item"
                             ng-repeat="item in vm.menu">
-                            <input ng-show="vm.menu[$index].editTitle" type="text" ng-model="vm.menu[$index].title" value="{{ item.title }}">
-                            <span ng-show="!vm.menu[$index].editTitle">{{ item.title }}</span>
+                            <input type="text" value="{{ item.newTitle }}"
+                                   ng-show="item.editTitle"
+                                   ng-model="item.newTitle">
+                            <span ng-show="!item.editTitle">{{ item.newTitle || item.title }}</span>
+                            <small ng-show="item.newTitle && !item.editTitle">({{ item.title }})</small>
 
-                             <a class="label label-sm label-warning"
-                                ng-click="vm.menu[$index].editTitle = true">
+                            <a class="label label-sm label-warning"
+                               ng-click="vm.editTitle($index)"
+                               ng-show="!item.editTitle">
                                 <i class="fa fa-edit"></i>
                             </a>
 
-
                             <a class="label label-sm label-danger pull-right"
-                                                ng-click="vm.removeItem($index)">
+                               ng-click="vm.removeItem($index)"
+                               ng-show="!item.editTitle">
                                 <i class="fa fa-close"></i> Apagar
+                            </a>
+
+                            <a class="label label-sm label-secondary pull-right"
+                               ng-click="item.editTitle = false"
+                               ng-show="item.editTitle">
+                                <i class="fa fa-check"></i> Salvar
                             </a>
                         </li>
                     </ul>
@@ -75,6 +85,3 @@
         </div>
     </div>
 </div>
-
-<pre>{{ vm.menu|json }}</pre>
-<pre>{{ vm.pages|json }}</pre>

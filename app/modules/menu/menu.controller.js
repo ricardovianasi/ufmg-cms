@@ -35,19 +35,7 @@
     vm.menu = [];
 
     vm.sortableOptions = {
-      placeholder: 'list-group-item'/*{
-        element: function (currentItem) {
-          var item = angular.copy(currentItem);
-          var $item = jQuery(item);
-
-          $item.addClass('placeholder');
-
-          return $item[0];
-        },
-        update: function (container, p) {
-          return;
-        }
-      }*/,
+      placeholder: 'list-group-item',
       connectWith: '.main',
       /**
        * @param e
@@ -69,7 +57,7 @@
        * @param ui
        */
       update: function(event, ui) {
-        // on cross list sortings recieved is not true
+        // on cross list sortings received is not true
         // during the first update
         // which is fired on the source sortable
         if (!ui.item.sortable.received) {
@@ -95,6 +83,7 @@
     };
 
     vm.removeItem = _removeItem;
+    vm.editTitle = _editTitle;
 
     /**
      * @param idx
@@ -105,8 +94,27 @@
       vm.menu.splice(idx, 1);
     }
 
+    /**
+     * @param idx
+     *
+     * @private
+     */
+    function _editTitle(idx) {
+      if (typeof vm.menu[idx].newTitle === 'undefined') {
+        vm.menu[idx].newTitle = vm.menu[idx].title;
+      }
+
+      vm.menu[idx].editTitle = true;
+    }
+
     PagesService.getPages().then(function (data) {
-      pages = data.data.items;
+      angular.forEach(data.data.items, function (page) {
+        pages.push({
+          id: page.id,
+          title: page.title,
+        });
+      });
+
       vm.pages = pages.slice();
     });
   }
