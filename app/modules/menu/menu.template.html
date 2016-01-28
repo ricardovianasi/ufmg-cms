@@ -32,7 +32,16 @@
                         ng-model="vm.menu">
                         <li class="list-group-item"
                             ng-repeat="item in vm.menu">
-                            {{ item.title }} <a class="label label-sm label-danger pull-right"
+                            <input ng-show="vm.menu[$index].editTitle" type="text" ng-model="vm.menu[$index].title" value="{{ item.title }}">
+                            <span ng-show="!vm.menu[$index].editTitle">{{ item.title }}</span>
+
+                             <a class="label label-sm label-warning"
+                                ng-click="vm.menu[$index].editTitle = true">
+                                <i class="fa fa-edit"></i>
+                            </a>
+
+
+                            <a class="label label-sm label-danger pull-right"
                                                 ng-click="vm.removeItem($index)">
                                 <i class="fa fa-close"></i> Apagar
                             </a>
@@ -40,7 +49,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-xs-1 text-center">
                 <div class="triangle-left"></div>
             </div>
@@ -69,3 +77,4 @@
 </div>
 
 <pre>{{ vm.menu|json }}</pre>
+<pre>{{ vm.pages|json }}</pre>
