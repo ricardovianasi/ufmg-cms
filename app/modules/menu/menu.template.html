@@ -32,29 +32,35 @@
                         ng-model="vm.menu">
                         <li class="list-group-item"
                             ng-repeat="item in vm.menu">
-                            <input type="text" value="{{ item.newTitle }}"
-                                   ng-show="item.editTitle"
-                                   ng-model="item.newTitle">
-                            <span ng-show="!item.editTitle">{{ item.newTitle || item.title }}</span>
-                            <small ng-show="item.newTitle && !item.editTitle">({{ item.title }})</small>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="text" value="{{ item.newTitle }}" class="form-control"
+                                           ng-show="item.editTitle"
+                                           ng-model="item.newTitle">
+                                    <span ng-show="!item.editTitle">{{ item.newTitle || item.title }}</span>
+                                    <small ng-show="item.newTitle && !item.editTitle">({{ item.title }})</small>
 
-                            <a class="label label-sm label-warning"
-                               ng-click="vm.editTitle($index)"
-                               ng-show="!item.editTitle">
-                                <i class="fa fa-edit"></i>
-                            </a>
+                                    <a class="label label-sm label-warning"
+                                       ng-click="vm.editTitle($index)"
+                                       ng-show="!item.editTitle">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                </div>
 
-                            <a class="label label-sm label-danger pull-right"
-                               ng-click="vm.removeItem($index)"
-                               ng-show="!item.editTitle">
-                                <i class="fa fa-close"></i> Apagar
-                            </a>
+                                <div class="col-md-2">
+                                    <a class="label label-sm label-danger pull-right"
+                                       ng-click="vm.removeItem($index)"
+                                       ng-show="!item.editTitle">
+                                        <i class="fa fa-close"></i> Apagar
+                                    </a>
 
-                            <a class="label label-sm label-secondary pull-right"
-                               ng-click="item.editTitle = false"
-                               ng-show="item.editTitle">
-                                <i class="fa fa-check"></i> Salvar
-                            </a>
+                                    <a class="label label-sm label-secondary pull-right"
+                                       ng-click="item.editTitle = false"
+                                       ng-show="item.editTitle">
+                                        <i class="fa fa-check"></i> Salvar
+                                    </a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
