@@ -96,8 +96,6 @@
       $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.preparePartial = function () {
-      PagesService.module().preparePartial($scope);
-    };
+    $scope.preparePartial = PagesService.module().preparePartial;
   }
 })();
