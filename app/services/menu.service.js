@@ -32,6 +32,9 @@
         var menu = [];
 
         angular.forEach(items, function (item) {
+          if(item.page !== null)
+            item.page = item.page.id;
+
           var menuItem = {
             page: item.page,
             label: item.newTitle || item.label,
@@ -51,6 +54,7 @@
       };
 
       obj.items = buildMenuItems(data);
+      console.log(obj);
       return obj;
     };
 
