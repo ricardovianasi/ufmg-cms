@@ -121,6 +121,7 @@
       vm.menus[menu][idx].editTitle = true;
     }
 
+
     /**
      * @param menu
      *

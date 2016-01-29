@@ -51,7 +51,6 @@
       };
 
       obj.items = buildMenuItems(data);
-
       return obj;
     };
 
