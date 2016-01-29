@@ -27,19 +27,79 @@
         </div>
 
         <div class="panel-body">
-            <div class="col-xs-6"></div>
+            <div class="col-xs-6">
+                <a class="btn btn-secondary" ng-click="vm.newGroup('mainMenu')">+ Criar grupo</a>
+                <div>
+                    <ul class="list-group list-group-minimal sortable-list main"
+                        ui-sortable="vm.sortableOptions"
+                        ng-model="vm.menus.mainMenu">
+                        <li class="list-group-item"
+                            ng-repeat="item in vm.menus.mainMenu">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="text" value="{{ item.newTitle }}" class="form-control"
+                                           ng-show="item.editTitle"
+                                           ng-model="item.newTitle">
+                                    <span ng-show="!item.editTitle">{{ item.newTitle || item.label }}</span>
+                                    <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
+
+                                    <a class="label label-sm label-warning pull-right"
+                                       ng-click="vm.editTitle('mainMenu', $index)"
+                                       ng-show="!item.editTitle">
+                                        <i class="fa fa-edit"></i> Editar
+                                    </a>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <a class="label label-sm label-danger pull-right"
+                                       ng-click="vm.removeItem('mainMenu', $index)"
+                                       ng-show="!item.editTitle">
+                                        <i class="fa fa-close"></i> Apagar
+                                    </a>
+
+                                    <a class="label label-sm label-secondary pull-right"
+                                       ng-click="item.editTitle = false"
+                                       ng-show="item.editTitle">
+                                        <i class="fa fa-check"></i> Salvar
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div ng-include="'modules/menu/submenu.template.html'"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
             <div class="col-xs-1 text-center">
                 <div class="triangle-left"></div>
             </div>
 
-            <div class="col-xs-5"></div>
+            <div class="col-xs-5">
+                <label>Páginas</label> Adicione as páginas arrastando para a esquerda
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Pesquisar página"
+                                   ng-model="pageFilter">
+                        </div>
+                    </form>
+
+                    <ul class="list-group list-group-minimal sortable-list selectable"
+                        ui-sortable="vm.sortableOptions"
+                        ng-model="vm.pages">
+                        <li class="list-group-item"
+                            ng-repeat="item in vm.pages | filter:pageFilter">{{ item.label }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-secondary pull-right">Salvar</button>
+                    <button class="btn btn-secondary pull-right" ng-click="vm.save('mainMenu')">Salvar</button>
                 </div>
             </div>
         </div>

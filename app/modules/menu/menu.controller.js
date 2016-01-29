@@ -87,6 +87,11 @@
       },
     };
 
+    vm.removeItem = _removeItem;
+    vm.editTitle = _editTitle;
+    vm.save = _save;
+    vm.newGroup = _newGroup;
+
     /**
      * @param menu
      * @param idx
@@ -156,10 +161,23 @@
             label: item.label,
             target_blank: null,
             external_url: null,
-            children: [],
+            children: item.children || false,
           });
         });
       });
     });
+
+    /**
+     * @param  {string} menuType
+     */
+    function _newGroup(menuType){
+      vm.menus[menuType].push({
+        page: null,
+        label: 'Novo grupo',
+        target_blank: null,
+        external_url: null,
+        children: [],
+      });
+    }
   }
 })();
