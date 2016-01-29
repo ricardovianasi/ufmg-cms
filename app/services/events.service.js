@@ -59,6 +59,7 @@
 
       // If we are updating the Event
       if (data.id) {
+        delete data.author;
         delete data.slug;
         delete data.created_at;
         delete data.updated_at;
