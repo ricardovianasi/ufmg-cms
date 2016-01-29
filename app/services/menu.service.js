@@ -23,15 +23,13 @@
      * @private
      */
     var _parseData = function (data) {
-      var obj = {
-        items: []
-      };
+      var obj = {};
 
       /**
        * @param items
        */
       var buildMenuItems = function (items) {
-        console.log(items);
+        var menu = [];
 
         angular.forEach(items, function (item) {
           var menuItem = {
@@ -43,14 +41,16 @@
           };
 
           if (item.children.length) {
-            menuItem.children = buildMenuItems(menuItem.children);
+            menuItem.children = buildMenuItems(item.children);
           }
 
-          obj.items.push(menuItem);
+          menu.push(menuItem);
         });
+
+        return menu;
       };
 
-      buildMenuItems(data);
+      obj.items = buildMenuItems(data);
 
       return obj;
     };
