@@ -27,30 +27,30 @@
         items: []
       };
 
-      //var buildMenuItem = function (items) {};
+      /**
+       * @param items
+       */
+      var buildMenuItems = function (items) {
+        console.log(items);
 
-      angular.forEach(data, function (item) {
-        var menuItem = {
-          page: item.page,
-          label: item.newTitle || item.label,
-          target_blank: item.target_blank,
-          external_url: item.external_url,
-          children: [],
-        };
-
-        angular.forEach(item.children, function (item) {
-          var child = {
+        angular.forEach(items, function (item) {
+          var menuItem = {
             page: item.page,
             label: item.newTitle || item.label,
             target_blank: item.target_blank,
             external_url: item.external_url,
+            children: [],
           };
 
-          menuItem.items.push(child);
-        });
+          if (item.children.length) {
+            menuItem.children = buildMenuItems(menuItem.children);
+          }
 
-        obj.items.push(menuItem);
-      });
+          obj.items.push(menuItem);
+        });
+      };
+
+      buildMenuItems(data);
 
       return obj;
     };

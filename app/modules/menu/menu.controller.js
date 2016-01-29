@@ -31,14 +31,14 @@
     var vm = this;
     var pages = [];
     var menus = MenuService.MENUS;
-    //var menus = {
-    //  mainMenu: [],
-    //  quickAccess: [],
-    //};
+
+    //Public functions
+    vm.removeItem = _removeItem;
+    vm.editTitle = _editTitle;
+    vm.save = _save;
 
     vm.pages = [];
     vm.menus = {};
-
     vm.sortableOptions = {
       placeholder: 'list-group-item',
       connectWith: '.main',
@@ -72,11 +72,11 @@
           // check that its an actual moving
           // between the two lists
           if (
-            originNgModel == vm.pages &&
-            ui.item.sortable.droptargetModel == vm.quickAccess
+            originNgModel == vm.pages ||
+            ui.item.sortable.droptargetModel == vm.menus.quickAccess
           ) {
-            var exists = !!vm.quickAccess.filter(function (x) {
-              return x.title === itemModel.title;
+            var exists = !!vm.menus.quickAccess.filter(function (x) {
+              return x.label === itemModel.label;
             }).length;
 
             if (exists) {
@@ -86,10 +86,6 @@
         }
       },
     };
-
-    vm.removeItem = _removeItem;
-    vm.editTitle = _editTitle;
-    vm.save = _save;
 
     /**
      * @param menu
@@ -131,6 +127,9 @@
       });
     }
 
+    /*
+     * SERVICES
+     */
     PagesService.getPages().then(function (data) {
       angular.forEach(data.data.items, function (page) {
         pages.push({
