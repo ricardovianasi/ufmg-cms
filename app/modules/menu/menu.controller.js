@@ -5,34 +5,39 @@
     .controller('MenuController', MenuController);
 
   MenuController.$inject = [
-    '$scope',
+    //'$route',
     'NotificationService',
-    'DateTimeHelper',
     'ModalService',
+    'MenuService',
     'PagesService',
   ];
 
   /**
-   * @param $scope
+   * @param $route
    * @param NotificationService
-   * @param DateTimeHelper
    * @param ModalService
+   * @param MenuService
    * @param PagesService
    *
    * @constructor
    */
-  function MenuController($scope,
+  function MenuController(/*$route,*/
                           NotificationService,
-                          DateTimeHelper,
                           ModalService,
+                          MenuService,
                           PagesService) {
     console.log('... NoticiasController');
 
     var vm = this;
-
     var pages = [];
+    var menus = MenuService.MENUS;
+    //var menus = {
+    //  mainMenu: [],
+    //  quickAccess: [],
+    //};
+
     vm.pages = [];
-    vm.menu = [];
+    vm.menus = {};
 
     vm.sortableOptions = {
       placeholder: 'list-group-item',
@@ -56,7 +61,7 @@
        * @param event
        * @param ui
        */
-      update: function(event, ui) {
+      update: function (event, ui) {
         // on cross list sortings received is not true
         // during the first update
         // which is fired on the source sortable
@@ -68,9 +73,9 @@
           // between the two lists
           if (
             originNgModel == vm.pages &&
-            ui.item.sortable.droptargetModel == vm.menu
+            ui.item.sortable.droptargetModel == vm.quickAccess
           ) {
-            var exists = !!vm.menu.filter(function(x) {
+            var exists = !!vm.quickAccess.filter(function (x) {
               return x.title === itemModel.title;
             }).length;
 
@@ -84,38 +89,78 @@
 
     vm.removeItem = _removeItem;
     vm.editTitle = _editTitle;
+    vm.save = _save;
 
     /**
+     * @param menu
      * @param idx
      *
      * @private
      */
-    function _removeItem(idx) {
-      vm.menu.splice(idx, 1);
+    function _removeItem(menu, idx) {
+      ModalService
+        .confirm('Deseja remover o item?')
+        .result
+        .then(function () {
+          vm.menus[menu].splice(idx, 1);
+        });
     }
 
     /**
+     * @param menu
      * @param idx
      *
      * @private
      */
-    function _editTitle(idx) {
-      if (typeof vm.menu[idx].newTitle === 'undefined') {
-        vm.menu[idx].newTitle = vm.menu[idx].title;
+    function _editTitle(menu, idx) {
+      if (typeof vm.menus[menu][idx].newTitle === 'undefined') {
+        vm.menus[menu][idx].newTitle = vm.menus[menu][idx].label;
       }
 
-      vm.menu[idx].editTitle = true;
+      vm.menus[menu][idx].editTitle = true;
+    }
+
+    /**
+     * @param menu
+     *
+     * @private
+     */
+    function _save(menu) {
+      MenuService.update(inflection.underscore(menu), vm.menus[menu]).then(function () {
+        NotificationService.success('Menu salvo com sucesso!');
+      });
     }
 
     PagesService.getPages().then(function (data) {
       angular.forEach(data.data.items, function (page) {
         pages.push({
-          id: page.id,
-          title: page.title,
+          page: page.id,
+          label: page.title,
+          target_blank: null,
+          external_url: null,
+          children: [],
         });
       });
 
       vm.pages = pages.slice();
+    });
+
+    //Populate menus
+    angular.forEach(menus, function (value, menu) {
+      MenuService.get(menu).then(function (data) {
+        menus[menu] = data.data.items;
+        vm.menus[menu] = [];
+
+        angular.forEach(menus[menu], function (item) {
+          vm.menus[menu].push({
+            page: item.page ? item.page.id : null,
+            label: item.label,
+            target_blank: null,
+            external_url: null,
+            children: [],
+          });
+        });
+      });
     });
   }
 })();
