@@ -6,6 +6,7 @@ var expect = require('gulp-expect-file');
 
 var files = [
   'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/jquery-ui/jquery-ui.min.js',
   'bower_components/datatables/media/js/jquery.dataTables.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'app/assets/scripts/redactor-2/redactor.js',
@@ -35,6 +36,7 @@ var files = [
   'bower_components/inflection/inflection.min.js',
   'bower_components/ngInflection/dist/ngInflection.min.js',
   'bower_components/ng-tags-input/ng-tags-input.min.js',
+  'bower_components/angular-ui-sortable/sortable.min.js',
 ];
 
 var styles = [
