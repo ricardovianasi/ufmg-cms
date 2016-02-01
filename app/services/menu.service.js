@@ -32,11 +32,8 @@
         var menu = [];
 
         angular.forEach(items, function (item) {
-          if(item.page !== null)
-            item.page = item.page.id;
-
           var menuItem = {
-            page: item.page,
+            page: item.page ? item.page.id : null,
             label: item.newTitle || item.label,
             target_blank: item.target_blank,
             external_url: item.external_url,
