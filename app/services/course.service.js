@@ -23,19 +23,25 @@
     console.log('... CourseService');
 
     return {
-      /**
-       * @returns {HttpPromise}
-       */
-      getCourseRoutes: function () {
-        return $http.get(apiUrl + '/route');
-      },
+
       /**
        * @param id
        *
        * @returns {HttpPromise}
        */
-      getCourse: function (type, id) {
+      getCourseRoutes: function (type, id) {
         var url = $filter('format')('{0}/course/{1}/{2}/routes', apiUrl, type, id);
+
+        return $http.get(url);
+      },
+      /**
+       *
+       * @param type
+       * @param courseId
+       * @param id
+       */
+      getCourse: function(type, courseId, id) {
+        var url = $filter('format')('{0}/course/{1}/{2}/routes/{3}', apiUrl, type, courseId, id);
 
         return $http.get(url);
       },

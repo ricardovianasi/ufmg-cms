@@ -16,7 +16,7 @@
           controllerAs: 'vm'
         })
         .when('/course/list/:type/:courseId', {
-          templateUrl: 'modules/course/course.template.html',
+          templateUrl: 'modules/course/routes.template.html',
           controller: 'CourseController',
           controllerAs: 'vm'
         })
@@ -25,7 +25,7 @@
           controller: 'CourseNewController',
           controllerAs: 'ctrl'
         })
-        .when('/course/edit/:id', {
+        .when('/course/edit/:type/:courseId/:id', {
           templateUrl: 'modules/course/course.form.template.html',
           controller: 'CourseEditController',
           controllerAs: 'ctrl'

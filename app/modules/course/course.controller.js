@@ -23,20 +23,22 @@
     console.log('... CourseController');
     var vm = this;
         vm.type = $routeParams.type;
+        vm.courseId = $routeParams.courseId;
 
-    if($routeParams.courseId) {
-      CourseService.getCourse(vm.type, $routeParams.courseId).then(function (data) {
-        //vm.courses = data.data;
-        //vm.dtOptions = dataTableConfigService.init();
-        console.log(data.data);
+    if(vm.courseId) {
+      CourseService.getCourseRoutes(vm.type, vm.courseId).then(function (data) {
+        vm.courses = data.data;
+        vm.dtOptions = dataTableConfigService.init();
       });
     } else {
       CourseService.getCourses(vm.type).then(function (data) {
         vm.courses = data.data;
         vm.dtOptions = dataTableConfigService.init();
-        console.log(data.data);
       });
     }
+
+
+
 
   }
 })();

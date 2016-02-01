@@ -43,30 +43,35 @@
      */
     $scope.course = {};
     $scope.course.tags = [];
-    CourseService.getCourse($routeParams.id).then(function (data) {
+    CourseService.getCourse($routeParams.type, $routeParams.courseId, $routeParams.id).then(function (data) {
 
-      if (!_.isEmpty(data.data.detail) && !_.isEmpty(data.data.detail.cover)) {
+      console.log(data.data);
+      if (!_.isEmpty(data.data.detail)) {
         $scope.course = data.data;
-        $scope.course.cover = data.data.cover;
-        $scope.course.cover_url = data.data.cover_url;
-        $scope.course.description = data.data.description;
+
+        if (!_.isEmpty(data.data.detail.cover)) {
+          $scope.course.cover = data.data.detail.cover;
+          $scope.course.cover_url = data.data.detail.cover.url;
+        }
+
+        $scope.course.description = data.data.detail.description;
         $scope.course.status = data.data.detail.status;
       }
 
-      $scope.course.tags = [];
+      //$scope.course.tags = [];
+      //
+      //if (!_.isEmpty($scope.course.detail.tags)) {
+      //  angular.forEach($scope.course.detail.tags, function (tag) {
+      //    $scope.course.tags.push(tag.name);
+      //  });
+      //}
 
-      if (!_.isEmpty($scope.course.detail.tags)) {
-        angular.forEach($scope.course.detail.tags, function (tag) {
-          $scope.course.tags.push(tag.name);
-        });
-      }
-
-      var scheduled_at = DateTimeHelper.toBrStandard(data.data.detail.scheduled_at, true, true);
-
-      if (scheduled_at) {
-        $scope.course.scheduled_date = scheduled_at.date ? scheduled_at.date : '';
-        $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
-      }
+    //  var scheduled_at = DateTimeHelper.toBrStandard(data.data.detail.scheduled_at, true, true);
+    //
+    //  if (scheduled_at) {
+    //    $scope.course.scheduled_date = scheduled_at.date ? scheduled_at.date : '';
+    //    $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
+    //  }
     });
 
 
