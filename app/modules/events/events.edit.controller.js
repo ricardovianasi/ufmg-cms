@@ -9,6 +9,7 @@
     '$timeout',
     '$location',
     '$routeParams',
+    '$window',
     'CourseService',
     'EventsService',
     'MediaService',
@@ -23,6 +24,7 @@
    * @param $timeout
    * @param $location
    * @param $routeParams
+   * @param $window
    * @param CourseService
    * @param EventsService
    * @param MediaService
@@ -37,6 +39,7 @@
                                 $timeout,
                                 $location,
                                 $routeParams,
+                                $window,
                                 CourseService,
                                 EventsService,
                                 MediaService,
@@ -177,13 +180,19 @@
      * Post to Event Endpoint
      *
      * @param data
+     * @param preview
      */
-    $scope.publish = function (data) {
+    $scope.publish = function (data, preview) {
       data.tags = _.map(data.tags, 'text');
-      console.log(data.tags);
-      EventsService.update(data, $routeParams.id).then(function () {
+
+      EventsService.update(data, $routeParams.id).then(function (event) {
         NotificationService.success('Evento atualizado com sucesso.');
-        $location.path('/events');
+
+        if (!preview) {
+          $location.path('/events');
+        } else {
+          $window.open(event.data.event_url);
+        }
       });
     };
 

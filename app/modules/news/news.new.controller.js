@@ -15,6 +15,18 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $location
+   * @param $window
+   * @param MediaService
+   * @param NewsService
+   * @param NotificationService
+   * @param StatusService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function NewsNewController($scope,
                              $location,
                              $window,
