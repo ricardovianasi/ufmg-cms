@@ -10,11 +10,11 @@
         .when('/course', {
           templateUrl: 'modules/course/course-types.template.html',
         })
-        // .when('/course', {
-        //   templateUrl: 'modules/course/course.template.html',
-        //   controller: 'CourseController',
-        //   controllerAs: 'ctrl'
-        // })
+        .when('/course/list', {
+          templateUrl: 'modules/course/course.template.html',
+          controller: 'CourseController',
+          controllerAs: 'ctrl'
+        })
         .when('/course/new', {
           templateUrl: 'modules/course/course.form.template.html',
           controller: 'CourseNewController',
