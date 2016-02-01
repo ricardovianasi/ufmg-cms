@@ -48,10 +48,10 @@
     };
 
     $scope.removePeriodical = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir o periódico "' + description + '"?');
+      $scope.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
       removeConfirmationModal.result.then(function (data) {
         PeriodicalService.removePeriodical(id).then(function (data) {
-          NotificationService.success('Periódico removida com sucesso.');
+          NotificationService.success('Publicação removida com sucesso.');
           $route.reload();
         });
       });

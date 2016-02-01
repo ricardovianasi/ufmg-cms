@@ -84,7 +84,7 @@
       delete _data.url;
 
       PeriodicalService.newPeriodical(_data).then(function (data) {
-        NotificationService.success('Periódico criado com sucesso.');
+        NotificationService.success('Publicação criada com sucesso.');
         $location.path('/periodicals');
       });
     };

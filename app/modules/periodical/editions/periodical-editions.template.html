@@ -14,7 +14,7 @@
 
             <li class="">
                 <a href="#/periodicals">
-                    <strong>Periódicos Jornalísticos</strong>
+                    Publicações Jornalísticas
                 </a>
             </li>
 
@@ -33,7 +33,7 @@
             <div class="btn-toolbar">
                 <div class=pull-right>
                     <a ng-href="#/periodicals/{{ periodical.id }}/edition/new"
-                       class="btn btn-secondary btn-lg pull-left">NOVA EDIÇÃO</a>
+                       class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA EDIÇÃO</a>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                             <small>{{ item.status }}</small>
                         </td>
 
-                        <td>
+                        <td class="table-fit">
                             <a class="btn btn-warning"
                                ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
                                 <i class="fa fa-pencil"></i>

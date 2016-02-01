@@ -78,7 +78,7 @@
         height: 498
       },
       bigPageCover: {
-        name: 'Capa de periódicos',
+        name: 'Capa da publicação',
         width: 1920,
         height: 720
       }
