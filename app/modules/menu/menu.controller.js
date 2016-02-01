@@ -5,7 +5,7 @@
     .controller('MenuController', MenuController);
 
   MenuController.$inject = [
-    //'$route',
+    '$scope',
     'NotificationService',
     'ModalService',
     'MenuService',
@@ -13,7 +13,7 @@
   ];
 
   /**
-   * @param $route
+   * @param $scope
    * @param NotificationService
    * @param ModalService
    * @param MenuService
@@ -21,7 +21,7 @@
    *
    * @constructor
    */
-  function MenuController(/*$route,*/
+  function MenuController($scope,
                           NotificationService,
                           ModalService,
                           MenuService,
@@ -36,9 +36,14 @@
     vm.removeItem = _removeItem;
     vm.editTitle = _editTitle;
     vm.save = _save;
+    vm.removeItem = _removeItem;
+    vm.editTitle = _editTitle;
+    vm.save = _save;
+    vm.newGroup = _newGroup;
 
+    //Public models
     vm.pages = [];
-    vm.menus = {};
+    $scope.menus = {};
     vm.sortableOptions = {
       placeholder: 'list-group-item',
       connectWith: '.main',
@@ -73,9 +78,9 @@
           // between the two lists
           if (
             originNgModel == vm.pages ||
-            ui.item.sortable.droptargetModel == vm.menus.quickAccess
+            ui.item.sortable.droptargetModel == $scope.menus.quickAccess
           ) {
-            var exists = !!vm.menus.quickAccess.filter(function (x) {
+            var exists = !!$scope.menus.quickAccess.filter(function (x) {
               return x.label === itemModel.label;
             }).length;
 
@@ -87,49 +92,104 @@
       },
     };
 
-    vm.removeItem = _removeItem;
-    vm.editTitle = _editTitle;
-    vm.save = _save;
-    vm.newGroup = _newGroup;
-
     /**
      * @param menu
      * @param idx
      *
      * @private
      */
-    function _removeItem(menu, idx) {
+    function _removeItem() {
+      var args = Array.prototype.slice.call(arguments);
+
       ModalService
         .confirm('Deseja remover o item?')
         .result
         .then(function () {
-          vm.menus[menu].splice(idx, 1);
+          var menu = args.splice(0, 1)[0];
+          var idx = args.splice(0, 1)[0];
+          var menuName = 'menus.'+menu;
+
+          /*
+           menus.mainMenu[0]
+           menus.mainMenu[0].children[0]
+           menus.mainMenu[0].children[0].children[0]
+           */
+          angular.forEach(args, function (i) {
+            menuName += '['+i+'].children';
+          });
+
+          var item = $scope.$eval(menuName);
+
+          item.splice(idx, 1);
         });
     }
 
     /**
-     * @param menu
      * @param idx
      *
      * @private
      */
-    function _editTitle(menu, idx) {
-      if (typeof vm.menus[menu][idx].newTitle === 'undefined') {
-        vm.menus[menu][idx].newTitle = vm.menus[menu][idx].label;
+    function _editTitle(idx) {
+      if (typeof idx.newTitle === 'undefined') {
+        idx.newTitle = idx.label;
       }
 
-      vm.menus[menu][idx].editTitle = true;
+      idx.editTitle = true;
     }
 
 
     /**
-     * @param menu
+     * @param type
      *
      * @private
      */
-    function _save(menu) {
-      MenuService.update(inflection.underscore(menu), vm.menus[menu]).then(function () {
+    function _save(type) {
+      MenuService.update(inflection.underscore(type), $scope.menus[type]).then(function () {
         NotificationService.success('Menu salvo com sucesso!');
+      });
+    }
+
+    /**
+     * @param {string} type
+     */
+    function _newGroup(type) {
+      $scope.menus[type].push({
+        page: null,
+        label: 'Novo grupo',
+        target_blank: null,
+        external_url: null,
+        children: [],
+      });
+    }
+
+    /**
+     * @private
+     */
+    function _populateMenus() {
+      angular.forEach(menus, function (value, type) {
+        MenuService.get(type).then(function (data) {
+          menus[type] = data.data.items;
+          $scope.menus[type] = [];
+
+          _populateMenusChildren(type);
+        });
+      });
+    }
+
+    /**
+     * @param type
+     *
+     * @private
+     */
+    function _populateMenusChildren(type) {
+      angular.forEach(menus[type], function (item) {
+        $scope.menus[type].push({
+          page: item.page ? item.page.id : null,
+          label: item.label,
+          target_blank: null,
+          external_url: null,
+          children: item.children || false,
+        });
       });
     }
 
@@ -150,35 +210,7 @@
       vm.pages = pages.slice();
     });
 
-    //Populate menus
-    angular.forEach(menus, function (value, menu) {
-      MenuService.get(menu).then(function (data) {
-        menus[menu] = data.data.items;
-        vm.menus[menu] = [];
-
-        angular.forEach(menus[menu], function (item) {
-          vm.menus[menu].push({
-            page: item.page ? item.page.id : null,
-            label: item.label,
-            target_blank: null,
-            external_url: null,
-            children: item.children || false,
-          });
-        });
-      });
-    });
-
-    /**
-     * @param  {string} menuType
-     */
-    function _newGroup(menuType){
-      vm.menus[menuType].push({
-        page: null,
-        label: 'Novo grupo',
-        target_blank: null,
-        external_url: null,
-        children: [],
-      });
-    }
+    //Populate menus (type: quick_access, main_menu)
+    _populateMenus();
   }
 })();

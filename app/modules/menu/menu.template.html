@@ -32,9 +32,13 @@
                 <div>
                     <ul class="list-group list-group-minimal sortable-list main"
                         ui-sortable="vm.sortableOptions"
-                        ng-model="vm.menus.mainMenu">
+                        ng-model="menus.mainMenu">
+                        <!--<li class="list-group-item"
+                            ng-repeat="item in menus.mainMenu"
+                            ng-include="'modules/menu/items.template.html'">
+                        </li>-->
                         <li class="list-group-item"
-                            ng-repeat="item in vm.menus.mainMenu">
+                            ng-repeat="item in menus.mainMenu">
                             <div class="row">
                                 <div class="col-md-10">
                                     <input type="text" value="{{ item.newTitle }}" class="form-control"
@@ -44,7 +48,7 @@
                                     <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
 
                                     <a class="label label-sm label-warning pull-right"
-                                       ng-click="vm.editTitle('mainMenu', $index)"
+                                       ng-click="vm.editTitle(item)"
                                        ng-show="!item.editTitle">
                                         <i class="fa fa-edit"></i> Editar
                                     </a>
@@ -106,6 +110,8 @@
     </div>
 </div>
 
+<pre>{{ menus.mainMenu|json }}</pre>
+
 <div class="row">
     <div class="panel panel-default menu-pane text-center">
         <div class="panel-heading">
@@ -119,9 +125,9 @@
                 <div>
                     <ul class="list-group list-group-minimal sortable-list main"
                         ui-sortable="vm.sortableOptions"
-                        ng-model="vm.menus.quickAccess">
+                        ng-model="menus.quickAccess">
                         <li class="list-group-item"
-                            ng-repeat="item in vm.menus.quickAccess">
+                            ng-repeat="item in menus.quickAccess">
                             <div class="row">
                                 <div class="col-md-10">
                                     <input type="text" value="{{ item.newTitle }}" class="form-control"
@@ -131,7 +137,7 @@
                                     <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
 
                                     <a class="label label-sm label-warning pull-right"
-                                       ng-click="vm.editTitle('quickAccess', $index)"
+                                       ng-click="vm.editTitle(item)"
                                        ng-show="!item.editTitle">
                                         <i class="fa fa-edit"></i> Editar
                                     </a>
@@ -139,7 +145,7 @@
 
                                 <div class="col-md-2">
                                     <a class="label label-sm label-danger pull-right"
-                                       ng-click="vm.removeItem('quickAccess', $index)"
+                                       ng-click="vm.removeItem('quickAccess', item)"
                                        ng-show="!item.editTitle">
                                         <i class="fa fa-close"></i> Apagar
                                     </a>
@@ -188,15 +194,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <pre>{{ vm.menus.quickAccess|json }}</pre>
-    </div>
-
-    <div class="col-md-6">
-        <pre>{{ vm.pages|json }}</pre>
     </div>
 </div>
