@@ -34,8 +34,10 @@
        *
        * @returns {HttpPromise}
        */
-      getCourse: function (id) {
-        return $http.get(apiUrl + '/route/' + id);
+      getCourse: function (type, id) {
+        var url = $filter('format')('{0}/course/{1}/{2}/routes', apiUrl, type, id);
+
+        return $http.get(url);
       },
       /**
        * @param id
@@ -66,7 +68,6 @@
         type = type || '';
 
         var url = $filter('format')('{0}/course/{1}', apiUrl, type);
-
         return $http.get(url);
       }
     };
