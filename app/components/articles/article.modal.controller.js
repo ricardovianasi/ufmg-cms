@@ -71,7 +71,6 @@
 
         cropped(data.type, croppedObj);
       },
-      formats: ['vertical', 'medium']
     };
 
     $scope.audioUploadOptions = {
