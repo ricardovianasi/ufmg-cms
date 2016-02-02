@@ -1,33 +1,19 @@
-<ul class="list-group list-group-minimal sortable-list main sortable-sublist"
-    ui-sortable="vm.sortableOptions"
-    ng-model="item.children">
-    <li class="list-group-item"
-      ng-repeat="item in item.children">
+<ul class="menu-sub-chi main" ui-sortable="vm.sortableOptions" ng-model="item.children">
+    <li class="list-group-item" ng-repeat="item in item.children">
         <div class="row">
-            <div class="col-md-10">
-                <input type="text" value="{{ item.newTitle }}" class="form-control"
-                       ng-show="item.editTitle"
-                       ng-model="item.newTitle">
+            <div class="col-md-8 text-left">
+                <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
                 <span ng-show="!item.editTitle">{{ item.newTitle || item.label }}</span>
                 <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
-
-                <a class="label label-sm label-warning pull-right"
-                   ng-click="vm.editTitle(item)"
-                   ng-show="!item.editTitle">
-                    <i class="fa fa-edit"></i> Editar
-                </a>
             </div>
-
-            <div class="col-md-2">
-                <a class="label label-sm label-danger pull-right"
-                   ng-click="vm.removeItem('mainMenu', $index, $parent.$index, $parent.$parent.$index)"
-                   ng-show="!item.editTitle">
+            <div class="col-md-4 text-right">
+                <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
+                    <i class="fa fa-pencil"></i> Editar
+                </a>
+                <a class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index, $parent.$index, $parent.$parent.$index)" ng-show="!item.editTitle">
                     <i class="fa fa-close"></i> Apagar
                 </a>
-
-                <a class="label label-sm label-secondary pull-right"
-                   ng-click="item.editTitle = false"
-                   ng-show="item.editTitle">
+                <a class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
                     <i class="fa fa-check"></i> Salvar
                 </a>
             </div>
