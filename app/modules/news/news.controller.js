@@ -29,12 +29,14 @@
                           NotificationService,
                           DateTimeHelper,
                           ModalService) {
-
     console.log('... NoticiasController');
 
     $scope.news = [];
     $scope.currentPage = 1;
 
+    /**
+     * @param page
+     */
     var loadNews = function (page) {
       NewsService.getNews(null, page).then(function (data) {
         $scope.news = data.data;
@@ -48,9 +50,7 @@
       loadNews($scope.currentPage);
     };
 
-    $scope.convertDate = function (date) {
-      return DateTimeHelper.dateToStr(date);
-    };
+    $scope.convertDate = DateTimeHelper.dateToStr;
 
     /**
      * @param id
