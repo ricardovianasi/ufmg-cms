@@ -43,9 +43,13 @@
      */
     $scope.course = {};
     $scope.course.tags = [];
+    $scope.courseId = $routeParams.courseId;
+    $scope.type = $routeParams.type;
+
     CourseService.getCourse($routeParams.type, $routeParams.courseId, $routeParams.id).then(function (data) {
 
-      console.log(data.data);
+      $scope.course.subdivision_name = data.data.subdivision_name + ' - ' + data.data.modality;
+
       if (!_.isEmpty(data.data.detail)) {
         $scope.course = data.data;
 
@@ -56,22 +60,15 @@
 
         $scope.course.description = data.data.detail.description;
         $scope.course.status = data.data.detail.status;
+
+        $scope.course.tags = [];
+
+        if (!_.isEmpty($scope.course.detail.tags)) {
+          angular.forEach($scope.course.detail.tags, function (tag) {
+            $scope.course.tags.push(tag.name);
+          });
+        }
       }
-
-      //$scope.course.tags = [];
-      //
-      //if (!_.isEmpty($scope.course.detail.tags)) {
-      //  angular.forEach($scope.course.detail.tags, function (tag) {
-      //    $scope.course.tags.push(tag.name);
-      //  });
-      //}
-
-    //  var scheduled_at = DateTimeHelper.toBrStandard(data.data.detail.scheduled_at, true, true);
-    //
-    //  if (scheduled_at) {
-    //    $scope.course.scheduled_date = scheduled_at.date ? scheduled_at.date : '';
-    //    $scope.course.scheduled_time = scheduled_at.time ? scheduled_at.time : '';
-    //  }
     });
 
 
@@ -105,9 +102,11 @@
     };
 
     $scope.publish = function (data) {
+      data.tags = _.map(data.tags, 'text');
+      console.log(data.tags);
       CourseService.updateCourse($routeParams.id, data).then(function (data) {
         NotificationService.success('Course com sucesso.');
-        $location.path('/course');
+        $location.path('/course/list/' + $scope.type + '/' + $scope.courseId);
       });
     };
 

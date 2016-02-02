@@ -33,9 +33,20 @@
                 </div>
             </div>
 
-            <div class="" ng-if="vm.showCover">
-                adicionar capa
+            <div class="pages-module pages-module-cover" ng-if="vm.showCover">
+                <div class="chosen-cover">
+                            <span  ng-click="removeImage()" class="label label-danger remove-image">
+                                <span class="fa fa-remove"></span> REMOVER IMAGEM
+                            </span>
+                </div>
+
+                <div  ngf-accept="'image/*'" ngf-select ng-model="course_cover" ngf-multiple="false" class='add-module'>+ Adicionar Capa</div>
+
+                <div  class="uploaded-image">
+                    <img ng-src="{{course.cover_url}}">
+                </div>
             </div>
+
             <div class="panel-body">
                 <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
                     <thead>
