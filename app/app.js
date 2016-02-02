@@ -1,8 +1,7 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('app', [
+  angular.module('app', [
       // Dependencies
       'as.sortable',
       'env',
@@ -22,6 +21,7 @@
       'ngInflection',
       'ngTagsInput',
       'ui.sortable',
+      'pascalprecht.translate',
 
       // App Modules
       'calendarModule',

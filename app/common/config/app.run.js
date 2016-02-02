@@ -1,14 +1,15 @@
-;(function(){
+;(function () {
   'use strict';
 
-  angular
-    .module('app')
-    .run(run);
+  angular.module('app')
+    .run(Run);
 
+  Run.$inject = [
+    '$rootScope',
+    'dataTableConfigService',
+  ];
 
-    run.$inject = ['$rootScope', 'dataTableConfigService'];
-
-    function run($rootScope, dataTableConfigService){
-      $rootScope.dtOptions = dataTableConfigService.init();
-    }
+  function Run($rootScope, dataTableConfigService) {
+    $rootScope.dtOptions = dataTableConfigService.init();
+  }
 })();
