@@ -28,22 +28,33 @@
             <div class="btn-toolbar">
 
                 <div class="pull-right">
-                    <a ng-click="vm.showCover = true" class="btn btn-secondary btn-lg pull-left">Selecionar Capa principal</a>
-                    <a ng-href="#/course/new" class="btn btn-secondary btn-lg pull-left">Personalizar Sidebar</a>
+                    <a ng-click="vm.showCover = true"
+                       class="btn btn-secondary btn-lg pull-left"
+                       ng-if="!vm.course.cover_url">Selecionar Capa principal</a>
+
+                    <a ng-href="#/course/new"
+                       class="btn btn-secondary btn-lg pull-left">Personalizar Sidebar</a>
                 </div>
             </div>
 
             <div class="pages-module pages-module-cover" ng-if="vm.showCover">
                 <div class="chosen-cover">
-                            <span  ng-click="removeImage()" class="label label-danger remove-image">
-                                <span class="fa fa-remove"></span> REMOVER IMAGEM
-                            </span>
+                    <span  ng-click="vm.removeImage()"
+                           class="label label-danger remove-image"
+                           ng-if="vm.course.cover_url">
+                        <span class="fa fa-remove"></span> REMOVER IMAGEM
+                    </span>
                 </div>
 
-                <div  ngf-accept="'image/*'" ngf-select ng-model="course_cover" ngf-multiple="false" class='add-module'>+ Adicionar Capa</div>
+                <div  ngf-accept="'image/*'"
+                      ngf-select
+                      ng-model="vm.course_cover"
+                      ngf-multiple="false"
+                      ng-if="!vm.course.cover_url"
+                      class='add-module'>+ Adicionar Capa</div>
 
-                <div  class="uploaded-image">
-                    <img ng-src="{{course.cover_url}}">
+                <div  class="uploaded-image" ng-if="vm.course.cover_url">
+                    <img ng-src="{{ vm.course.cover_url }}">
                 </div>
             </div>
 

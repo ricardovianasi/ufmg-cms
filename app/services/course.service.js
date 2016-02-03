@@ -40,8 +40,8 @@
        * @param courseId
        * @param id
        */
-      getCourse: function(type, courseId, id) {
-        var url = $filter('format')('{0}/course/{1}/{2}/routes/{3}', apiUrl, type, courseId, id);
+      getCourse: function(type, courseId) {
+        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, courseId);
 
         return $http.get(url);
       },
@@ -75,6 +75,21 @@
 
         var url = $filter('format')('{0}/course/{1}', apiUrl, type);
         return $http.get(url);
+      },
+      /**
+       *
+       * @param type
+       * @param course_id
+       * @param cover_id
+       * @returns {HttpPromise}
+       */
+      uploadCourseCover: function(type, course_id, cover_id) {
+        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
+        var data = {
+          cover: cover_id
+        };
+
+        return $http.put(url, data);
       }
     };
   }
