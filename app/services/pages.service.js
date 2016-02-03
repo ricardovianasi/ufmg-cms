@@ -6,7 +6,6 @@
 
   PagesService.$inject = [
     '$http',
-    '$q',
     '$filter',
     '$uibModal',
     'apiUrl',
@@ -20,7 +19,6 @@
 
   /**
    * @param $http
-   * @param $q
    * @param $filter
    * @param $uibModal
    * @param apiUrl
@@ -36,7 +34,6 @@
    * @constructor
    */
   function PagesService($http,
-                        $q,
                         $filter,
                         $uibModal,
                         apiUrl,
@@ -988,12 +985,6 @@
               widgets: function () {
                 return $scope.widgets;
               },
-              columns: function () {
-                return $scope.page.columns;
-              },
-              column: function () {
-                return column;
-              }
             }
           });
 
@@ -1030,15 +1021,9 @@
        * @returns {*}
        */
       addPage: function (page) {
-        var deferred = $q.defer();
-
         page = _parseData(page);
 
-        $http.post(apiUrl + '/page', page).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.post(apiUrl + '/page', page);
       },
       /**
        * @param {Number} id
@@ -1046,13 +1031,7 @@
        * @returns {*}
        */
       getPage: function (id) {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + '/page/' + id).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.get(apiUrl + '/page/' + id);
       },
       /**
        * @param {Number} id
@@ -1061,15 +1040,9 @@
        * @returns {*}
        */
       updatePage: function (id, page) {
-        var deferred = $q.defer();
-
         page = _parseData(page);
 
-        $http.put(apiUrl + '/page/' + id, page).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.put(apiUrl + '/page/' + id, page);
       },
       /**
        * @param {Number} id
@@ -1077,13 +1050,7 @@
        * @returns {*}
        */
       removePage: function (id) {
-        var deferred = $q.defer();
-
-        $http.delete(apiUrl + '/page/' + id).then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
+        return $http.delete(apiUrl + '/page/' + id);
       },
       /**
        * @returns {*}
