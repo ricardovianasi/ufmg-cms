@@ -1,0 +1,72 @@
+<div class="page-title">
+
+    <div class="title-env">
+        <h1 class="title">Cursos</h1>
+    </div>
+
+    <div class="breadcrumb-env">
+
+        <ol class="breadcrumb bc-1">
+            <li>
+                <a href="#/"><i class="fa-home"></i>Home</a>
+            </li>
+            <li>
+                <a href="#/course">
+                    <strong>Cursos</strong>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#/course/sidebar/{{ vm.type }}">
+                    <strong>Sidebar</strong>
+                </a>
+            </li>
+        </ol>
+
+    </div><!--breadcrumb-env-->
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <label for="">Editar sidebar:</label>
+            <div class="row">
+                <div id="sort-side" class="col-xs-6"  as-sortable="sortableOptions" ng-model="page.widgets.side" ng-class="{ 'col-xs-4': page.columns == 2, 'hidden': page.columns == 1 }">
+                    <div class="pages-module"  as-sortable-item>
+                        <div class="row flex-center">
+                            <div class="col-md-8">
+                                <h4>
+                                    <strong>oi</strong>
+                                </h4>
+                                <h5 class="text-capitalize">haudhsaiudh</h5>
+                            </div>
+                            <div class="col-md-4">
+                                    <span class="label label-warning" ng-click="handleModule('side', $index)">
+                                        <span class="fa fa-pencil"></span> EDITAR
+                                    </span>
+                                    <span class="label label-danger" ng-click="removeModule('side', $index)">
+                                        <span class="fa fa-remove"></span> REMOVER
+                                    </span>
+                                    <span class="label label-primary" as-sortable-item-handle>
+                                        <span class="fa fa-arrows-v"></span> MOVER
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="pages-module add-module" ng-click="handleModule('main')"><span class="add-title">+ Adicionar Módulo</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="pull-right">
+                        <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ type }}/{{ courseId }}">Cancelar</a>
+                        <a ng-click="publish(course)" class="btn btn-success pull-left">Salvar</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--panel-->
+    </div><!--col-xs-12-->
+</div><!--row-->

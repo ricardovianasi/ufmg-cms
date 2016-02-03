@@ -29,6 +29,11 @@
           templateUrl: 'modules/course/course.form.template.html',
           controller: 'CourseEditController',
           controllerAs: 'ctrl'
+        })
+        .when('/course/sidebar/:type', {
+          templateUrl: 'modules/course/course.sibebar.template.html',
+          controller: 'CourseSidebarController',
+          controllerAs: 'vm'
         });
     }]);
 

@@ -109,35 +109,6 @@
         $location.path('/course/list/' + $scope.type + '/' + $scope.courseId);
       });
     };
-
-    $scope.redactorConfig = {
-      lang: 'pt_br',
-      replaceDivs: false,
-      plugins: ['video','soundcloud', 'uploadfiles','imagencrop'],
-      buttons: [
-        'html',
-        'formatting',
-        'bold',
-        'italic',
-        'deleted',
-        'unorderedlist',
-        'orderedlist',
-        'outdent',
-        'indent',
-        'image',
-        'file',
-        'link',
-        'alignment',
-        'horizontalrule',
-        'imagencrop'
-      ],
-      allowedAttr: [
-        ['section', 'class'],
-        ['div', 'class'],
-        ['img', ['src', 'alt']],
-        ['figure', 'class'],
-        ['a', ['href', 'title']]
-      ]
-    };
+    
   }
 })();
