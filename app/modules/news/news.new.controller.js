@@ -119,10 +119,6 @@
       }
     });
 
-    $scope.redactorOptions = {
-      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload']
-    };
-
     $scope.imagencropOptions = {
       /**
        * @param redactor

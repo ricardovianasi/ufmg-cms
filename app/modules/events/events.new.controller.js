@@ -93,6 +93,10 @@
       endTime: DateTimeHelper.getTimepickerOpt()
     };
 
+    $scope.redactorOptions = {
+      plugins: false,
+    };
+
     $scope.imagencropOptions = {
       /**
        * @param redactor

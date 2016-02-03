@@ -4,14 +4,22 @@
   angular.module('componentsModule')
     .controller('ModuleModalController', ModuleModalController);
 
+  /**
+   * @param $scope
+   * @param $uibModalInstance
+   * @param lodash
+   * @param PagesService
+   * @param module
+   * @param widgets
+   *
+   * @constructor
+   */
   function ModuleModalController($scope,
                                  $uibModalInstance,
                                  lodash,
                                  PagesService,
                                  module,
-                                 widgets,
-                                 columns,
-                                 column) {
+                                 widgets) {
     console.log('... ModuleModalController');
 
     var _ = lodash;
@@ -37,10 +45,6 @@
       angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
     }
 
-    $scope.redactorOptions = {
-      plugins: column == 'side' ? false : ['imagencrop', 'audioUpload']
-    };
-
     $scope.imagencropOptions = {
       /**
        * @param redactor
@@ -62,7 +66,6 @@
 
         cropped(data.type, croppedObj);
       },
-      formats: columns == 2 ? ['vertical', 'medium'] : null
     };
 
     $scope.audioUploadOptions = {
