@@ -87,7 +87,7 @@
                         <td>
                             <strong>{{ DateTimeHelper.convertDate(release.created_at)|date:'dd/MM/yyyy' }}</strong>
                             <br>
-                            <small>({{ release.status }})</small>
+                            <small>{{ release.status|translate|titleize }}</small>
                         </td>
 
                         <td class="table-fit">

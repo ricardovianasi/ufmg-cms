@@ -78,31 +78,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" class="odd" ng-repeat="item in calendar.items | filter: search | filter: { regional: { id: regional.id } } | filter: { period: active_period_filter } | filter: {status: itemStatus}">
+                        <tr role="row" class="odd"
+                            ng-repeat="item in calendar.items | filter: search | filter: {
+                                regional: {
+                                    id: regional.id
+                                }
+                            } | filter: {
+                                period: active_period_filter
+                            } | filter: {
+                                status: itemStatus
+                            }">
                             <td>
                                 <a ng-click="editEvent('lg', item)">
                                     {{ item.description }}
                                 </a>
                             </td>
+
                             <td>
                                 <strong>{{ convertDate(item.init_date) | date: 'dd' }} {{ item.end_date ? 'à '+(convertDate(item.end_date) | date: 'dd') : '' }}</strong>
                                 <br>
                                 <small>{{ getWeekDay(item.init_date) }} {{ item.end_date ? 'à '+getWeekDay(item.end_date) : '' }}</small>
                             </td>
-                            <td>{{ item.author.name }}</td>
 
+                            <td>{{ item.author.name }}</td>
                             <td>{{ item.regional.name }}</td>
 
                             <td>
                                 <strong>{{ item.published_at }}</strong>
                                 <br>
-                                <small>{{ item.status }}</small>
+                                <small>{{ item.status|translate|titleize }}</small>
                             </td>
 
                             <td class="table-fit">
                                 <a ng-click="editEvent('lg', item)" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
+
                                 <a ng-click="remove(item.id, item.name)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>

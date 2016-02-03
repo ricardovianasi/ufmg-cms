@@ -38,7 +38,7 @@
                         <tr>
                             <th>Título</th>
                             <th>Usuário</th>
-                            <th >Data da criação</th>
+                            <th>Data da criação</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -55,7 +55,7 @@
                             <td>
                                 <strong>{{ vm.DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
                                 <br>
-                                <small>({{ featured.status }})</small>
+                                <small>{{ featured.status|translate|titleize }}</small>
                             </td>
 
                             <td class="table-fit">

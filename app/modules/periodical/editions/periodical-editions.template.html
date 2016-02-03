@@ -42,8 +42,8 @@
                     <thead>
                     <tr>
                         <th>Título</th>
-                        <th class="tac">Autor</th>
-                        <th class="tac">Data da Publicação</th>
+                        <th>Usuário</th>
+                        <th>Data da Publicação</th>
                         <th>Ações</th>
                     </tr>
                     </thead>
@@ -61,7 +61,7 @@
 
                         <td>
                             <strong>{{ convertDate(item.post_date) }}</strong><br>
-                            <small>{{ item.status }}</small>
+                            <small>{{ item.status|translate|titleize }}</small>
                         </td>
 
                         <td class="table-fit">

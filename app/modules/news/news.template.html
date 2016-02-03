@@ -55,6 +55,7 @@
                     <thead>
                     <tr>
                         <th>Título</th>
+                        <th>Autor</th>
                         <th>Data da Publicação</th>
                         <th>Ações</th>
                     </tr>
@@ -66,6 +67,8 @@
                         <td>
                             <a target="_blank" ng-href="{{ item.news_url }}">{{ item.title }}</a>
                         </td>
+
+                        <td>{{ item.author.name }}</td>
 
                         <td>
                             <strong>{{ convertDate(item.post_date) }}</strong>
