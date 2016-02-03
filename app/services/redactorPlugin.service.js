@@ -8,6 +8,13 @@
     '$uibModal',
   ];
 
+  /**
+   * @param $uibModal
+   *
+   * @returns {{setPlugin: setPlugin}}
+   *
+   * @constructor
+   */
   function RedactorPluginService($uibModal) {
     console.log('... RedactorPluginService');
 
@@ -51,7 +58,12 @@
           }
         };
       },
-      audioUpload: function(options){
+      /**
+       * @param options
+       *
+       * @returns {{init: init, show: show}}
+       */
+      audioUpload: function (options) {
         return {
           init: function () {
             var button = this.button.add('imagencrop', 'Image-N-Crop');

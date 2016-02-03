@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('componentsModule')
-    .directive('redactor', redactor);
+    .directive('redactor', Redactor);
 
-  redactor.$inject = [
+  Redactor.$inject = [
     '$timeout',
     'lodash',
     'RedactorPluginService',
@@ -16,11 +16,15 @@
    * @param RedactorPluginService
    *
    * @returns {{restrict: string, require: string, link: link}}
+   *
+   * @constructor
    */
-  function redactor($timeout, _, RedactorPluginService) {
+  function Redactor($timeout, _, RedactorPluginService) {
+    console.log('... RedactorDirective');
+
     var _options = {
       lang: 'pt_br',
-      plugins: [],
+      plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
       buttons: [
         'html',
         'format',
@@ -36,7 +40,7 @@
       maxHeight: 500,
       formatting: ['p', 'blockquote'],
       formattingAdd: {
-        "red-p-add": {
+        'red-p-add': {
           title: '<i class="fa fa-text-height"></i> Subtítulo',
           args: ['h3', 'class', 'news__subtitle', 'toggle']
         }
@@ -75,8 +79,6 @@
        * @param ngModel
        */
       link: function ($scope, elem, attrs, ngModel) {
-        console.log('... RedactorDirective');
-
         //redactor callbacks
         _options.callbacks = {
           change: function updateModel(value) {
