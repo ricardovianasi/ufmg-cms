@@ -37,14 +37,18 @@
                     <thead>
                         <tr>
                             <th>Título</th>
-                            <th>Autor</th>
+                            <th>Usuário</th>
                             <th >Data da criação</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search}" class="odd">
-                            <td>{{ featured.title }}</td>
+                            <td>
+                                <a ng-href="#/featured/edit/{{ featured.id }}">
+                                    {{ featured.title }}
+                                </a>
+                            </td>
 
                             <td>{{ featured.author.name }}</td>
 

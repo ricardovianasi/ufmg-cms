@@ -61,7 +61,7 @@
                     <tbody>
                     <tr role="row" ng-repeat="item in news.items | filter: search | filter: {status: itemStatus}" class="odd">
                             <td>
-                                <a target="_blank" ng-href="{{ item.news_url }}">{{ item.title }}</a>
+                                <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>
                             </td>
 
                             <td>{{ item.status }}</td>
@@ -71,8 +71,14 @@
                             </td>
                             <td class="table-fit">
                                 <div class="listing-actions pull-left">
+                                    <a target="_blank" ng-href="{{ item.news_url }}" class="btn btn-primary">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                     <a ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
                                         <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a ng-click="removeNews(item.id, item.theme)" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
                                     </a>
                                 </div>
                             </td>

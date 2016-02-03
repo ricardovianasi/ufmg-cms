@@ -54,11 +54,11 @@
 
     /**
      * @param id
-     * @param description
+     * @param title
      */
-    $scope.removeNews = function (id, description) {
+    $scope.removeNews = function (id, title) {
       ModalService
-        .confirm('Você deseja excluir a notícia "' + description + '"?', ModalService.MODAL_MEDIUM)
+        .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           NewsService.removeNews(id).then(function () {

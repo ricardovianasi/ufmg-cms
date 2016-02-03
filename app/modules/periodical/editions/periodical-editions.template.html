@@ -52,7 +52,7 @@
                     <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus }"
                         class=odd>
                         <td>
-                            <a href="{{ item.edition_url }}" target="_blank">
+                            <a ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
                                 <strong>{{ item.number }}</strong> {{ item.theme }}
                             </a>
                         </td>
@@ -65,11 +65,14 @@
                         </td>
 
                         <td class="table-fit">
+                            <a class="btn btn-primary"
+                               href="{{ item.edition_url }}" target="_blank">
+                                <i class="fa fa-eye"></i>
+                            </a>
                             <a class="btn btn-warning"
                                ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
                                 <i class="fa fa-pencil"></i>
                             </a>
-
                             <a ng-click="removeEdition(item.id, item.theme)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
