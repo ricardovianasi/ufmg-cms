@@ -90,6 +90,15 @@
         };
 
         return $http.put(url, data);
+      },
+      updateCourses: function(type, obj) {
+        var url = $filter('format')('{0}/course/{1}', apiUrl, type);
+        var data = {
+          sidebar: obj
+        };
+
+        console.log(data);
+        return $http.put(url, data);
       }
     };
   }

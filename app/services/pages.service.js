@@ -980,7 +980,10 @@
             resolve: {
               module: function () {
                 if (typeof idx !== 'undefined') {
-                  return $scope.page.widgets[column][idx];
+                  if($scope.page)
+                    return $scope.page.widgets[column][idx];
+                  else
+                    return $scope.course.widgets[column][idx];
                 }
 
                 return false;
@@ -989,7 +992,7 @@
                 return $scope.widgets;
               },
               columns: function () {
-                return $scope.page.columns;
+                return $scope.page ? $scope.page.columns : 1;
               },
               column: function () {
                 return column;
@@ -999,9 +1002,16 @@
 
           moduleModal.result.then(function (data) {
             if (typeof idx !== 'undefined') {
-              $scope.page.widgets[column][idx] = data;
+              if($scope.page)
+                $scope.page.widgets[column][idx] = data;
+              else
+                $scope.course.widgets[column][idx] = data;
             } else {
-              $scope.page.widgets[column].push(data);
+              if($scope.page)
+                $scope.page.widgets[column].push(data);
+              else{
+                $scope.course.widgets[column].push(data);
+              }
             }
           });
         }
