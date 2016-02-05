@@ -14,7 +14,8 @@ gulp.task('build', [
   'css',
   'js',
   'copy-xenon',
-  'build-vendors'
+  'build-vendors',
+  'lang'
 ]);
 
 //task for developer

@@ -24,6 +24,7 @@ var SCRIPTS = [
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
   'bower_components/angular-translate/angular-translate.min.js',
+  'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
   'bower_components/ui-select/dist/select.min.js',
   'bower_components/ng-sortable/dist/ng-sortable.min.js',
   'bower_components/ng-file-upload/ng-file-upload-all.min.js',

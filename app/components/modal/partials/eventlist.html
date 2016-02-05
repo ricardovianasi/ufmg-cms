@@ -1,13 +1,14 @@
 <div class=form-group>
     <label>N&uacute;mero de not&iacute;cias:</label>
 
-    <input type=text title="Número de notícias" ng-model=widget.limit class=form-control>
+    <input type="number" title="Número de notícias" class="form-control"
+           ng-model="widget.limit">
 </div>
 
 <div class=form-group>
     <label>Tag:</label>
 
-    <select title=Tag class=form-control
-            ng-model=widget.tag
+    <select title="Tag" class="form-control"
+            ng-model="widget.tag"
             ng-options="tag.id as tag.name for tag in tags"></select>
 </div>
