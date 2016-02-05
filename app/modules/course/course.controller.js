@@ -7,66 +7,97 @@
   CourseController.$inject = [
     '$scope',
     '$uibModal',
+    '$routeParams',
     'CourseService',
     'dataTableConfigService',
     'NotificationService',
-    'StatusService'
+    'MediaService'
   ];
 
   function CourseController($scope,
                             $modal,
+                            $routeParams,
                             CourseService,
                             dataTableConfigService,
                             NotificationService,
-                            StatusService) {
+                            MediaService) {
     console.log('... CourseController');
+    var vm = this;
+        vm.type = $routeParams.type;
+        vm.courseId = $routeParams.courseId;
+        vm.course = {};
+        vm.removeImage = _removeImage;
 
-    $scope.status = [];
-    $scope.courses = [];
+    if(vm.courseId) {
+      CourseService.getCourseRoutes(vm.type, vm.courseId).then(function (data) {
+        vm.courses = data.data;
+        vm.dtOptions = dataTableConfigService.init();
+      });
 
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
-
-    CourseService.getCourseRoutes().then(function (data) {
-      $scope.courses = data.data;
-      $scope.dtOptions = dataTableConfigService.init();
-    });
-
-
-    var removeConfirmationModal;
-
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
+      CourseService.getCourse(vm.type, vm.courseId).then(function (data) {
+        if(data.data.cover) {
+          vm.course.cover_url = data.data.cover.url;
+          vm.course.cover = data.data.cover.id;
         }
+
+        if(vm.course.cover)
+          vm.showCover = true;
       });
-    };
-
-    $scope.removeCourse = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir o curso "' + description + '"?');
-      removeConfirmationModal.result.then(function (data) {
-        NotificationService.success('Curso removido com sucesso.');
+    } else {
+      CourseService.getCourses(vm.type).then(function (data) {
+        vm.courses = data.data;
+        vm.dtOptions = dataTableConfigService.init();
       });
-    };
+    }
 
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
 
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
+    $scope.$watch('vm.course_cover', function () {
+      if (vm.course_cover) {
+        _upload([vm.course_cover]);
+      }
+    });
 
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
-    };
+    /**
+     *
+     * @param files
+     * @private
+     */
+    function _upload(files) {
+      angular.forEach(files, function (file) {
+        var obj = {
+          title: file.title ? file.title : '',
+          description: file.description ? file.description : '',
+          altText: file.alt_text ? file.alt_text : '',
+          legend: file.legend ? file.legend : ''
+        };
+
+        MediaService.newFile(file).then(function (data) {
+          vm.course.cover = data.id;
+          vm.course.cover_url = data.url;
+          _uploadCourseCover();
+        });
+      });
+    }
+
+      /**
+       *
+       * @private
+       */
+    function _removeImage() {
+      vm.course.cover = '';
+      vm.course.cover_url = '';
+      vm.showCover = false;
+      _uploadCourseCover();
+    }
+
+      /**
+       *
+       * @private
+       */
+    function _uploadCourseCover(){
+      CourseService.uploadCourseCover(vm.type, vm.courseId, vm.course.cover).then(function(data){
+        NotificationService.success('Capa atualizada com sucesso!');
+      });
+    }
   }
 })();
