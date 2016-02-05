@@ -1,4 +1,4 @@
-  ;(function () {
+;(function () {
   'use strict';
 
   angular.module('newsModule')
@@ -9,13 +9,13 @@
     '$routeParams',
     '$location',
     '$timeout',
-    '$uibModal',
     '$window',
     'NewsService',
     'NotificationService',
     'StatusService',
     'MediaService',
     'DateTimeHelper',
+    'ModalService',
   ];
 
   /**
@@ -23,13 +23,13 @@
    * @param $routeParams
    * @param $location
    * @param $timeout
-   * @param $uibModal
    * @param $window
    * @param NewsService
    * @param NotificationService
    * @param StatusService
    * @param MediaService
    * @param DateTimeHelper
+   * @param ModalService
    *
    * @constructor
    */
@@ -37,13 +37,13 @@
                               $routeParams,
                               $location,
                               $timeout,
-                              $uibModal,
                               $window,
                               NewsService,
                               NotificationService,
                               StatusService,
                               MediaService,
-                              DateTimeHelper) {
+                              DateTimeHelper,
+                              ModalService) {
     console.log('... NoticiasEditController');
 
     $scope.news = {};
@@ -115,53 +115,19 @@
       $scope.breadcrumb_active = $scope.news.title;
     });
 
-    var removeConfirmationModal;
-
     /**
-     * @param size
-     * @param title
+     *
      */
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $uibModal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-
-      removeConfirmationModal.result.then(function () {
+    $scope.remove = function () {
+      ModalService
+        .confirm('Você deseja excluir esta notícia?')
+        .result
+        .then(function () {
           NewsService.removeNews($routeParams.id).then(function () {
             NotificationService.success('Notícia removida com sucesso.');
             $location.path('/news');
           });
-      });
-    };
-
-    /**
-     * @param $scope
-     * @param $uibModalInstance
-     * @param title
-     *
-     * @constructor
-     */
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
-    };
-
-    $scope.remove = function () {
-      $scope.confirmationModal('md', 'Você deseja excluir esta notícia?');
+        });
     };
 
     /**
@@ -169,10 +135,10 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
-      if(typeof data.highlight_ufmg == 'undefined')
+      if (typeof data.highlight_ufmg == 'undefined')
         data.highlight_ufmg = false;
 
-      if(!data.saveDraftClicked && data.status != 'scheduled')
+      if (!data.saveDraftClicked && data.status != 'scheduled')
         data.status = 'publish';
 
       var _obj = {
@@ -187,8 +153,6 @@
         thumb: data.thumb,
         highlight_ufmg: data.highlight_ufmg
       };
-
-      console.log('obj publish >>>>>>>>>>', _obj);
 
       _obj.tags = _.map(_obj.tags, 'text');
 
@@ -208,49 +172,21 @@
     };
 
     // Cover Image - Upload
+    $scope.news_thumb = null;
+
     $scope.$watch('news_thumb', function () {
       if ($scope.news_thumb) {
-        $scope.upload([$scope.news_thumb]);
+        $scope.upload($scope.news_thumb);
       }
     });
 
-    $scope.redactorOptions = {
-      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop']
-    };
-
-    $scope.imagencropOptions = {
-      /**
-       * @param redactor
-       * @param data
-       */
-      callback: function (redactor, data) {
-        var cropped = function (size, data) {
-          var html = _.template($('#figure-' + size).html());
-
-          redactor.selection.restore();
-          redactor.insert.raw(html(data));
-        };
-
-        var croppedObj = {
-          url: data.url,
-          legend: data.legend ? data.legend : '',
-          author: data.author ? data.author : ''
-        };
-
-        cropped(data.type, croppedObj);
-      },
-      formats: ['vertical', 'medium']
-    };
-
     /**
-     * @param files
+     * @param file
      */
-    $scope.upload = function (files) {
-      angular.forEach(files, function (file) {
-        MediaService.newFile(file).then(function (data) {
-          $scope.news.thumb = data.id;
-          $scope.news.thumb_name = data.title;
-        });
+    $scope.upload = function (file) {
+      MediaService.newFile(file).then(function (data) {
+        $scope.news.thumb = data.id;
+        $scope.news.thumb_name = data.title;
       });
     };
 
@@ -260,10 +196,6 @@
         $scope.news.thumb_name = '';
         $scope.$apply();
       });
-    };
-
-    $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
     };
 
     $scope.imagencropOptions = {
@@ -296,7 +228,6 @@
        * @param data
        */
       callback: function (redactor, data) {
-
         var html = _.template($('#audio').html());
 
         redactor.selection.restore();

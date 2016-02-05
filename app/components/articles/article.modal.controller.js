@@ -46,10 +46,6 @@
       });
     }
 
-    $scope.redactorOptions = {
-      plugins: ['imagencrop', 'audioUpload']
-    };
-
     $scope.imagencropOptions = {
       /**
        * @param redactor
@@ -71,7 +67,6 @@
 
         cropped(data.type, croppedObj);
       },
-      formats: ['vertical', 'medium']
     };
 
     $scope.audioUploadOptions = {

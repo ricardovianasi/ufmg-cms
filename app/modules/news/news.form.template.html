@@ -92,7 +92,7 @@
                         <label>
                             Tags <small>(Digite a tag e pressione ENTER para inserir)</small>
                         </label>
-                        <tags-input ng-model="news.tags"></tags-input>
+                        <tags-input add-on-comma="false" ng-model="news.tags"></tags-input>
                     </div>
                 </div>
             </div><!--row-->
@@ -128,7 +128,7 @@
                 <div class="col-xs-12">
                     <textarea cols="30" rows="30"
                               ng-model="news.text"
-                              redactor="redactorOptions"
+                              redactor
                               imagencrop-options="imagencropOptions"
                               audioUpload-options="audioUploadOptions"></textarea>
                 </div>

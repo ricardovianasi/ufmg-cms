@@ -29,12 +29,14 @@
                           NotificationService,
                           DateTimeHelper,
                           ModalService) {
-
     console.log('... NoticiasController');
 
     $scope.news = [];
     $scope.currentPage = 1;
 
+    /**
+     * @param page
+     */
     var loadNews = function (page) {
       NewsService.getNews(null, page).then(function (data) {
         $scope.news = data.data;
@@ -48,17 +50,15 @@
       loadNews($scope.currentPage);
     };
 
-    $scope.convertDate = function (date) {
-      return DateTimeHelper.dateToStr(date);
-    };
+    $scope.convertDate = DateTimeHelper.dateToStr;
 
     /**
      * @param id
-     * @param description
+     * @param title
      */
-    $scope.removeNews = function (id, description) {
+    $scope.removeNews = function (id, title) {
       ModalService
-        .confirm('Você deseja excluir a notícia "' + description + '"?', ModalService.MODAL_MEDIUM)
+        .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           NewsService.removeNews(id).then(function () {

@@ -1,10 +1,8 @@
 ;(function () {
   'use strict';
 
-  angular
-    .module('app', [
+  angular.module('app', [
       // Dependencies
-      //'angular-redactor',
       'as.sortable',
       'env',
       'ngAnimate',
@@ -22,6 +20,8 @@
       'ngLodash',
       'ngInflection',
       'ngTagsInput',
+      'ui.sortable',
+      'pascalprecht.translate',
 
       // App Modules
       'calendarModule',
@@ -29,16 +29,17 @@
       'componentsModule',
       'courseModule',
       'eventsModule',
-      'galleryModule',
+      'featuredModule',
       'filterModule',
+      'galleryModule',
       'helperModule',
       'indexModule',
       'mediaModule',
+      'menuModule',
       'newsModule',
       'pagesModule',
       'periodicalModule',
       'releasesModule',
       'serviceModule',
-      'featuredModule'
     ]);
 })();

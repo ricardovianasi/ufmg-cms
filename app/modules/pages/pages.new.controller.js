@@ -14,6 +14,7 @@
     'PagesService',
     'WidgetsService',
     'StatusService',
+    'ModalService',
     'DateTimeHelper'
   ];
 
@@ -27,6 +28,7 @@
    * @param PagesService
    * @param WidgetsService
    * @param StatusService
+   * @param ModalService
    * @param DateTimeHelper
    *
    * @constructor
@@ -40,6 +42,7 @@
                               PagesService,
                               WidgetsService,
                               StatusService,
+                              ModalService,
                               DateTimeHelper) {
     console.log('... PagesNewController');
 
@@ -151,48 +154,12 @@
      * @param idx
      */
     $scope.removeModule = function (column, idx) {
-      $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
-      removeConfirmationModal.result.then(function () {
-        $scope.page.widgets[column].splice(idx, 1);
-      });
-    };
-
-    var removeConfirmationModal;
-
-    /**
-     * @param size
-     * @param title
-     */
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $uibModal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
-
-    /**
-     * @param $scope
-     * @param $uibModalInstance
-     * @param title
-     *
-     * @constructor
-     */
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
+      ModalService
+        .confirm('Você deseja excluir este módulo?')
+        .result
+        .then(function () {
+          $scope.page.widgets[column].splice(idx, 1);
+        });
     };
   }
 })();

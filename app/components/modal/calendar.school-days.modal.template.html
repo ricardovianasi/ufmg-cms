@@ -10,8 +10,9 @@
                     <label>M&ecirc;s</label>
                     <select class="form-control"
                             ng-model="period.month"
-                            ng-change="periodUpdate(period.month, period.year, period.regional)"
-                            ng-options="convertMonthStr(month) for month in time_months">
+                            ng-change="periodUpdate(period.month, period.year, period.regional)">
+                        <option value="{{ $index }}"
+                                ng-repeat="month in time_months">{{ month|titleize }}</option>
                     </select>
                 </div>
             </div>

@@ -11,19 +11,11 @@
   /**
    * @param $uibModal
    *
-   * @returns {ModalService}
+   * @returns {{MODAL_SMALL: string, MODAL_MEDIUM: string, MODAL_LARGE: string, confirm: _confirm}}
    *
    * @constructor
    */
   function ModalService($uibModal) {
-    var _this = this;
-
-    this.MODAL_SMALL = 'sm';
-    this.MODAL_MEDIUM = 'md';
-    this.MODAL_LARGE = 'lg';
-
-    this.confirm = _confirm;
-
     /**
      * @param title
      * @param size
@@ -33,7 +25,7 @@
      * @private
      */
     function _confirm(title, size) {
-      size = size || _this.MODAL_SMALL;
+      size = size || ModalService.MODAL_MEDIUM;
 
       /**
        * @param $scope
@@ -67,6 +59,11 @@
       });
     }
 
-    return this;
+    return {
+      MODAL_SMALL: 'sm',
+      MODAL_MEDIUM: 'md',
+      MODAL_LARGE: 'lg',
+      confirm: _confirm
+    };
   }
 })();

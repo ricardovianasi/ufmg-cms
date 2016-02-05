@@ -15,6 +15,18 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $location
+   * @param $window
+   * @param MediaService
+   * @param NewsService
+   * @param NotificationService
+   * @param StatusService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function NewsNewController($scope,
                              $location,
                              $window,
@@ -106,10 +118,6 @@
         $scope.upload([$scope.news_thumb]);
       }
     });
-
-    $scope.redactorOptions = {
-      plugins: ['video','soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload']
-    };
 
     $scope.imagencropOptions = {
       /**

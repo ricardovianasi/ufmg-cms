@@ -4,8 +4,9 @@ var rename = require('gulp-rename');
 var gulpif = require('gulp-if');
 var expect = require('gulp-expect-file');
 
-var files = [
+var SCRIPTS = [
   'bower_components/jquery/dist/jquery.min.js',
+  'bower_components/jquery-ui/jquery-ui.min.js',
   'bower_components/datatables/media/js/jquery.dataTables.js',
   'bower_components/bootstrap/dist/js/bootstrap.min.js',
   'app/assets/scripts/redactor-2/redactor.js',
@@ -13,14 +14,16 @@ var files = [
   'app/assets/scripts/redactor-plugins/video.js',
   'app/assets/scripts/redactor-plugins/audio.js',
   'app/assets/scripts/redactor-plugins/arquivo.js',
-  'bower_components/lodash/lodash.min.js',
+  'bower_components/lodash/dist/lodash.min.js',
   'bower_components/angular/angular.min.js',
   'bower_components/angular-route/angular-route.min.js',
   'bower_components/angular-resource/angular-resource.min.js',
   'bower_components/angular-sanitize/angular-sanitize.min.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  'bower_components/angular-i18n/angular-locale_pt-br.js',
   'bower_components/angular-filter/dist/angular-filter.min.js',
   'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
+  'bower_components/angular-translate/angular-translate.min.js',
   'bower_components/ui-select/dist/select.min.js',
   'bower_components/ng-sortable/dist/ng-sortable.min.js',
   'bower_components/ng-file-upload/ng-file-upload-all.min.js',
@@ -35,9 +38,10 @@ var files = [
   'bower_components/inflection/inflection.min.js',
   'bower_components/ngInflection/dist/ngInflection.min.js',
   'bower_components/ng-tags-input/ng-tags-input.min.js',
+  'bower_components/angular-ui-sortable/sortable.min.js',
 ];
 
-var styles = [
+var STYLES = [
   'bower_components/angular-toastr/dist/angular-toastr.min.css',
   'bower_components/font-awesome/css/font-awesome.min.css',
   'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
@@ -59,15 +63,25 @@ var styles = [
   'app/assets/xenon/css/xenon-skins.css',
 ];
 
-var EXTERNAL_FONTS = [
+var FONTS = [
   'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
   'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
   'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}',
 ];
 
-gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], function () {
-  gulp.src(files)
-    .pipe(expect({ errorOnFailure: true }, files))
+var BOOTSTRAP_FONTS = [
+  'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+];
+
+gulp.task('build-vendors', [
+  'build-vendors-css',
+  'build-vendors-fonts',
+  'build-vendors-bootstrap-fonts',
+], function () {
+  gulp.src(SCRIPTS)
+    .pipe(expect({
+      errorOnFailure: true
+    }, SCRIPTS))
     .pipe(gulpif(/[.]js$/, concat('vendors.js')))
     .pipe(rename({
       suffix: '.min'
@@ -75,9 +89,11 @@ gulp.task('build-vendors', ['build-vendors-css', 'build-vendors-fonts'], functio
     .pipe(gulp.dest('./build/scripts/'));
 });
 
-gulp.task('build-vendors-css', function(){
-  gulp.src(styles)
-    .pipe(expect({ errorOnFailure: true }, styles))
+gulp.task('build-vendors-css', function () {
+  gulp.src(STYLES)
+    .pipe(expect({
+      errorOnFailure: true
+    }, STYLES))
     .pipe(gulpif(/[.]css$/, concat('vendors.css')))
     .pipe(rename({
       suffix: '.min'
@@ -85,8 +101,18 @@ gulp.task('build-vendors-css', function(){
     .pipe(gulp.dest('./build/assets/css/'));
 });
 
-gulp.task('build-vendors-fonts', function(){
-  gulp.src(EXTERNAL_FONTS)
-    .pipe(expect({ errorOnFailure: true }, EXTERNAL_FONTS))
+gulp.task('build-vendors-bootstrap-fonts', function () {
+  gulp.src(BOOTSTRAP_FONTS)
+    .pipe(expect({
+      errorOnFailure: true
+    }, BOOTSTRAP_FONTS))
+    .pipe(gulp.dest('./build/assets/css/fonts/glyphicons/'));
+});
+
+gulp.task('build-vendors-fonts', function () {
+  gulp.src(FONTS)
+    .pipe(expect({
+      errorOnFailure: true
+    }, FONTS))
     .pipe(gulp.dest('./build/assets/fonts/'));
 });

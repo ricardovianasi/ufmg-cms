@@ -59,7 +59,7 @@
                     <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Autor</th>
+                        <th>Usuário</th>
                         <th>Data da Publicação</th>
                         <th>Ações</th>
                     </tr>
@@ -77,10 +77,14 @@
                         <td>
                             <strong>{{ item.created_at|date:'dd/MM/yyyy' }}</strong>
                             <br>
-                            <small>{{ item.status }}</small>
+                            <small>{{ item.status|translate|titleize }}</small>
                         </td>
 
                         <td class="table-fit">
+                            <a target="_blank" ng-href="{{ item.event_url }}" class="btn btn-primary">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
                             <a ng-href="#/events/edit/{{ item.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>

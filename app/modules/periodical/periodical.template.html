@@ -52,7 +52,7 @@
                     <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Autor</th>
+                        <th>Usuário</th>
                         <th>Data da Publicação</th>
                         <th>Ações</th>
                     </tr>
@@ -70,7 +70,7 @@
                         <td>
                             <strong>{{ convertDate(item.created_at) }}</strong>
                             <br>
-                            <small>{{ item.status }}</small>
+                            <small>{{ item.status|translate|titleize }}</small>
                         </td>
 
                         <td class="table-fit">

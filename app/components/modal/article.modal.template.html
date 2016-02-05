@@ -1,7 +1,11 @@
 <div class="modal-header">
-    <span class="close-modal" type="button" ng-click="cancel()" aria-hidden="true"><i class="fa fa-times fa-4x"></i></span>
+    <span class="close-modal" type="button" ng-click="cancel()" aria-hidden="true">
+        <i class="fa fa-times fa-4x"></i>
+    </span>
+
     <h4 class="modal-title"><i class="fa fa-file-text-o"></i> Adicionar Artigo</h4>
 </div>
+
 <div class=modal-body>
     <div class="row">
         <div class="col-xs-12">
@@ -11,6 +15,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
@@ -19,6 +24,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-8">
             <div class="form-group">
@@ -26,40 +32,51 @@
                 <input type="text" class="form-control" ng-model="article.author_name">
             </div>
         </div>
+
         <div class="col-xs-4">
             <div class="form-group">
                 <label>N&uacute;mero da P&aacute;gina</label>
                 <input type="text" class="form-control" ng-model="article.page_number">
             </div>
         </div>
+
         <div class="col-xs-12">
             <div class="form-group">
                 <label>Thumb</label>
-                <input type="file" class="form-control" ngf-select ng-model="article_thumb" ngf-multiple="false" ng-show="!article.thumb" style="height:auto">
+                <input type="file" class="form-control" ngf-select ng-model="article_thumb" ngf-multiple="false"
+                       ng-show="!article.thumb" style="height:auto">
+
                 <div class="clearfix form-control" ng-show="article.thumb">
                     <div class="pull-left">{{ article.thumb_url }}</div>
+
                     <div class="pull-right">
-                        <span class="label label-danger remove-image-news" ng-show="article.thumb" ng-click="removeImage('thumb')">
-                            <span class="fa fa-remove"></span> REMOVER
+                        <span class="label label-danger remove-image-news"
+                              ng-show="article.thumb"
+                              ng-click="removeImage('thumb')">
+                            <i class="fa fa-remove"></i> REMOVER
                         </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
                 <label>Capa</label>
                 <div class="pages-module add-module edition-bg-thumb">
-                    <div class="add-title" ng-show="!article.cover" ng-click="uploadImage('cover')">+ Adicionar Capa
+                    <div class="add-title" ng-show="!article.cover"
+                         ng-click="uploadImage('cover')">+ Adicionar Capa
                     </div>
+
                     <div ng-show=article.cover>
                         <div class="chosen-cover">
                             <span class="label label-danger remove-image" ng-click="removeImage('cover')">
                                 <i class="fa fa-remove"></i> REMOVER IMAGEM
                             </span>
                         </div>
+
                         <div class=uploaded-image>
                             <img class="img-responsive" ng-src="{{ article.cover_url }}">
                         </div>
@@ -68,27 +85,40 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
                 <label>Tags:</label>
-                <tags-input ng-model="article.tags"></tags-input>
+                <tags-input add-on-comma="false" ng-model="article.tags"></tags-input>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
                 <label>Conte&uacute;do</label>
-                <textarea cols="30" rows="10" ng-model="article.content" redactor="redactorOptions" imagencrop-options="imagencropOptions" audioUpload-options="audioUploadOptions"></textarea>
+                <textarea cols="30" rows="10"
+                          ng-model="article.content"
+                          redactor
+                          imagencrop-options="imagencropOptions"
+                          audioUpload-options="audioUploadOptions"></textarea>
             </div>
         </div>
     </div>
 </div>
+
 <div class="modal-footer">
-    <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times"></i> Cancelar
+    <button class="btn btn-danger"
+            ng-click="cancel()">
+        <i class="fa fa-times"></i> Cancelar
     </button>
-    <button class="btn btn-success" ng-click="ok()"><i class="fa fa-check"></i> Inserir
+
+    <button class="btn btn-success"
+            ng-click="ok()">
+        <i class="fa fa-check"></i> Inserir
     </button>
 </div>
+
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
