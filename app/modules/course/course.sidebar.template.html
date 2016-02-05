@@ -28,8 +28,11 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-body">
-            <label ng-if="!vm.courseId">Editar sidebar:</label>
-            <label ng-if="vm.courseId">Editar Sidebar do Curso::</label>
+            <label ng-if="!vm.courseId">
+                Editar sidebar:
+                <i>Esta sidebar será aplicada automaticamente para todos os cursos mas poderá ser personalizada se necessário</i>
+            </label>
+            <label ng-if="vm.courseId">Editar Sidebar do Curso:</label>
                 <div class="row">
                 <div id="sort-side"
                      class="col-xs-6"

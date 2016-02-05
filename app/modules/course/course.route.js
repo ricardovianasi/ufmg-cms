@@ -31,12 +31,12 @@
           controllerAs: 'ctrl'
         })
         .when('/course/sidebar/:type', {
-          templateUrl: 'modules/course/course.sibebar.template.html',
+          templateUrl: 'modules/course/course.sidebar.template.html',
           controller: 'CourseSidebarController',
           controllerAs: 'vm'
         })
         .when('/course/sidebar/:type/:courseId', {
-          templateUrl: 'modules/course/course.sibebar.template.html',
+          templateUrl: 'modules/course/course.sidebar.template.html',
           controller: 'CourseSidebarController',
           controllerAs: 'vm'
         });
