@@ -67,13 +67,18 @@
       },
       /**
        * @param type graduation, specialization, ...
-       *
+       * @param {bolean} slug true or false
        * @returns {HttpPromise}
        */
-      getCourses: function (type) {
+      getCourses: function (type, slug) {
         type = type || '';
+        var url = '';
 
-        var url = $filter('format')('{0}/course/{1}', apiUrl, type);
+        if(slug)
+          url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);
+        else
+          url = $filter('format')('{0}/course/{1}', apiUrl, type);
+
         return $http.get(url);
       },
       /**
@@ -97,7 +102,6 @@
           sidebar: obj
         };
 
-        console.log(data);
         return $http.put(url, data);
       }
     };

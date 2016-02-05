@@ -26,8 +26,11 @@
     };
 
     WidgetsService.getWidgets().then(function (data) {
-      console.log(data.data);
       $scope.widgets = data.data;
+    });
+
+    CourseService.getCourses(vm.type, true).then(function(data){
+      $scope.course.widgets.sidebar = data.data.items[0].sidebar;
     });
 
     /**
@@ -58,6 +61,11 @@
      * @private
      */
     function _save(){
+      angular.forEach($scope.course.widgets.sidebar, function(value, key){
+        clog('child >>>>>>>>>', $scope.course.widgets.sidebar[key]);
+        clog('return tosave >>>>>>>>>>', PagesService.module().parseWidgetToSave($scope.course.widgets.sidebar[key]));
+      });
+
       CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function(data){
         NotificationService.success('sidebar salva com sucesso!');
       });
