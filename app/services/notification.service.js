@@ -11,7 +11,7 @@
 
     return {
       success: function (title, msg) {
-        toastr.success(title, msg, {autodismiss: false, timeOut: 0, extendedTimeOut: 0});
+        toastr.success(title, msg);
 
       },
       error: function (title, msg) {
