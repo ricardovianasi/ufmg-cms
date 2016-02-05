@@ -34,6 +34,11 @@
           templateUrl: 'modules/course/course.sibebar.template.html',
           controller: 'CourseSidebarController',
           controllerAs: 'vm'
+        })
+        .when('/course/sidebar/:type/:courseId', {
+          templateUrl: 'modules/course/course.sibebar.template.html',
+          controller: 'CourseSidebarController',
+          controllerAs: 'vm'
         });
     }]);
 

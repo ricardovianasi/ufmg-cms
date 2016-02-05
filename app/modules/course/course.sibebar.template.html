@@ -28,8 +28,9 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-body">
-            <label for="">Editar sidebar:</label>
-            <div class="row">
+            <label ng-if="!vm.courseId">Editar sidebar:</label>
+            <label ng-if="vm.courseId">Editar Sidebar do Curso::</label>
+                <div class="row">
                 <div id="sort-side"
                      class="col-xs-6"
                      ng-model="course.widgets.sidebar"

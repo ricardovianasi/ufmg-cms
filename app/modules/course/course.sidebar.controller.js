@@ -33,20 +33,52 @@
     var vm = this;
 
     vm.type = $routeParams.type;
+    vm.courseId = $routeParams.courseId;
     vm.save = _save;
+
     $scope.course = {
       widgets: {
         sidebar: []
       }
     };
 
+
+    if(typeof vm.courseId !== 'undefined') {
+      _getCoursesRoutes();
+    } else {
+      _getCourses();
+    }
+
+
+
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
 
-    CourseService.getCourses(vm.type, true).then(function (data) {
-      $scope.course.widgets.sidebar = data.data.items[0].sidebar;
-    });
+
+
+    /**
+      *
+      * @private
+      */
+    function _getCourses(){
+      CourseService.getCourses(vm.type, true).then(function (data) {
+        $scope.course.widgets.sidebar = data.data.items[0].sidebar;
+      });
+    }
+
+      /**
+       *
+       * @private
+       */
+    function _getCoursesRoutes(){
+      CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
+        if(data.data.sidebar.length > 0)
+          $scope.course.widgets.sidebar = data.data.sidebar;
+        else
+          _getCourses();
+      });
+    }
 
     /**
      *
@@ -76,9 +108,16 @@
      * @private
      */
     function _save() {
-      CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function () {
-        NotificationService.success('sidebar salva com sucesso!');
-      });
+      if(typeof vm.courseId !== 'undefined') {
+        CourseService.updateRoutesSidebar(vm.type, vm.courseId, $scope.course.widgets.sidebar).then(function () {
+          NotificationService.success('sidebar do percurso salva com sucesso!');
+        });
+      } else {
+        CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function () {
+          NotificationService.success('sidebar salva com sucesso!');
+        });
+      }
     }
+
   }
 })();

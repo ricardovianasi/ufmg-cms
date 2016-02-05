@@ -58,6 +58,16 @@
       /**
        *
        * @param type
+       * @param id
+       */
+      getCourseRoute: function(type, id){
+        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, id);
+
+        return $http.get(url);
+      },
+      /**
+       *
+       * @param type
        * @param courseId
        */
       getCourse: function (type, courseId) {
@@ -128,6 +138,22 @@
         var url = $filter('format')('{0}/course/{1}', apiUrl, type);
 
         var data = _parseData(obj);
+
+        return $http.put(url, data);
+      },
+      /**
+       *
+       * @param type
+       * @param course_id
+       * @param obj
+       * @returns {*}
+       */
+      updateRoutesSidebar: function (type, course_id, obj) {
+        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
+
+
+        var data = _parseData(obj);
+
 
         return $http.put(url, data);
       }
