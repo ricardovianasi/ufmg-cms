@@ -1,20 +1,35 @@
-;(function(){
+;(function () {
   'use strict';
 
   angular.module('courseModule')
     .controller('CourseSidebarController', CourseSidebarController);
 
-
   CourseSidebarController.$inject = ['$scope',
-                                      '$routeParams',
-                                      '$filter',
-                                      'PagesService',
-                                      'WidgetsService',
-                                      'ModalService',
-                                      'CourseService',
-                                      'NotificationService'];
+    '$routeParams',
+    'PagesService',
+    'WidgetsService',
+    'ModalService',
+    'CourseService',
+    'NotificationService'];
 
-  function CourseSidebarController($scope, $routeParams, $filter, PagesService, WidgetsService, ModalService, CourseService, NotificationService) {
+  /**
+   * @param $scope
+   * @param $routeParams
+   * @param PagesService
+   * @param WidgetsService
+   * @param ModalService
+   * @param CourseService
+   * @param NotificationService
+   *
+   * @constructor
+   */
+  function CourseSidebarController($scope,
+                                   $routeParams,
+                                   PagesService,
+                                   WidgetsService,
+                                   ModalService,
+                                   CourseService,
+                                   NotificationService) {
     var vm = this;
 
     vm.type = $routeParams.type;
@@ -29,7 +44,7 @@
       $scope.widgets = data.data;
     });
 
-    CourseService.getCourses(vm.type, true).then(function(data){
+    CourseService.getCourses(vm.type, true).then(function (data) {
       $scope.course.widgets.sidebar = data.data.items[0].sidebar;
     });
 
@@ -60,16 +75,10 @@
      *
      * @private
      */
-    function _save(){
-      angular.forEach($scope.course.widgets.sidebar, function(value, key){
-        clog('child >>>>>>>>>', $scope.course.widgets.sidebar[key]);
-        clog('return tosave >>>>>>>>>>', PagesService.module().parseWidgetToSave($scope.course.widgets.sidebar[key]));
-      });
-
-      CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function(data){
+    function _save() {
+      CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function () {
         NotificationService.success('sidebar salva com sucesso!');
       });
     }
-
   }
 })();
