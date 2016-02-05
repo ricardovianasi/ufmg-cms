@@ -8,23 +8,36 @@
     '$scope',
     'CalendarService',
     '$uibModal',
-    '$http',
     '$timeout',
     'dataTableConfigService',
-    'SerializeService',
     'NotificationService',
-    'StatusService'
+    'StatusService',
+    'ModalService',
+    'DateTimeHelper',
   ];
 
+  /**
+   * @param $scope
+   * @param CalendarService
+   * @param $uibModal
+   * @param $timeout
+   * @param dataTableConfigService
+   * @param NotificationService
+   * @param StatusService
+   * @param ModalService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function CalendarController($scope,
                               CalendarService,
-                              $modal,
-                              $http,
+                              $uibModal,
                               $timeout,
                               dataTableConfigService,
-                              SerializeService,
                               NotificationService,
-                              StatusService) {
+                              StatusService,
+                              ModalService,
+                              DateTimeHelper) {
     console.log('... CalendarController');
 
     $scope.calendar = [];
@@ -80,9 +93,9 @@
     });
 
     $scope.diasLetivos = function (size) {
-      var modalCalendarSchoolDays = $modal.open({
+      var modalCalendarSchoolDays = $uibModal.open({
         templateUrl: 'components/modal/calendar.school-days.modal.template.html',
-        controller: modalCalendarSchoolDaysCtrl,
+        controller: ModalCalendarSchoolDaysCtrl,
         backdrop: 'static',
         size: size,
         resolve: {
@@ -103,7 +116,7 @@
     };
 
     $scope.addEvent = function (size) {
-      var modalCalendarioNovo = $modal.open({
+      var modalCalendarioNovo = $uibModal.open({
         templateUrl: 'components/modal/calendario.novo.modal.template.html',
         controller: ModalCalendarioNovoCtrl,
         backdrop: 'static',
@@ -122,7 +135,7 @@
     var removeConfirmationModal;
 
     $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
+      removeConfirmationModal = $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
         controller: ConfirmationModalCtrl,
         backdrop: 'static',
@@ -135,6 +148,13 @@
       });
     };
 
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param title
+     *
+     * @constructor
+     */
     var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
       $scope.modal_title = title;
 
@@ -148,7 +168,7 @@
     };
 
     $scope.editEvent = function (size, event) {
-      var modalCalendarEditEvent = $modal.open({
+      var modalCalendarEditEvent = $uibModal.open({
         templateUrl: 'components/modal/calendario.novo.modal.template.html',
         controller: ModalEditEventCtrl,
         backdrop: 'static',
@@ -183,7 +203,19 @@
       });
     };
 
+    /**
+     * @param $scope
+     * @param $http
+     * @param $uibModalInstance
+     * @param regional
+     * @param event
+     * @param type
+     *
+     * @constructor
+     */
     var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type) {
+      console.log('... ModalEditEventCtrl');
+
       $scope.type = type;
 
       var new_init_date = CalendarService.convertDate(event.init_date);
@@ -213,18 +245,20 @@
       };
     };
 
-    var modalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional) {
-      $scope.convertMonthStr = function (period) {
-        var months = [
-          'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto',
-          'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
+    /**
+     * @param $scope
+     * @param $http
+     * @param $uibModalInstance
+     * @param schoolDays
+     * @param regional
+     *
+     * @constructor
+     */
+    var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional) {
+      console.log('... ModalCalendarSchoolDaysCtrl');
 
-        return months[parseInt(period) - 1];
-      };
-
-      $scope.time_months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-      $scope.time_years = ['2015', '2016', '2017'];
+      $scope.time_months = DateTimeHelper.getMonths(true);
+      $scope.time_years = DateTimeHelper.yearRange();
       $scope.regional = regional;
       $scope.schoolDays = schoolDays;
       $scope.months = [];
@@ -234,6 +268,12 @@
       });
 
       $scope.months = _.uniq($scope.months);
+
+      /**
+       * @param date
+       *
+       * @returns {*}
+       */
       $scope.convertPeriodStr = function (date) {
         return CalendarService.convertPeriodStr(date);
       };
@@ -247,6 +287,11 @@
         school_saturdays: ''
       };
 
+      /**
+       * @param month
+       * @param year
+       * @param regional_id
+       */
       $scope.periodUpdate = function (month, year, regional_id) {
         if (month && year && regional_id) {
           var filtered_month = _.filter($scope.schoolDays.items, function (b) {
@@ -278,7 +323,17 @@
       };
     };
 
+    /**
+     * @param $scope
+     * @param $uibModalInstance
+     * @param regional
+     * @param type
+     *
+     * @constructor
+     */
     var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type) {
+      console.log('... ModalCalendarioNovoCtrl');
+
       $scope.type = type;
       $scope.regional = regional;
       $scope.newRegister = {

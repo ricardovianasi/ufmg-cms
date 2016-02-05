@@ -60,7 +60,7 @@
                     <thead>
                     <tr>
                         <th>Título</th>
-                        <th>Autor</th>
+                        <th>Usuário</th>
                         <th>Data da criação</th>
                         <th>Ações</th>
                     </tr>
@@ -71,9 +71,7 @@
                         ng-repeat="clipping in clippings.items | filter: {description: search} | filter: {status: itemStatus}"
                         class="odd">
                         <td>
-                            <a ng-href="#/clippings/edit/{{ clipping.id }}">
-                                {{ clipping.title }}
-                            </a>
+                            {{ clipping.title }}
                         </td>
 
                         <td>{{ clipping.author.name }}</td>
