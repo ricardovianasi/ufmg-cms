@@ -18,6 +18,21 @@
     'DateTimeHelper'
   ];
 
+  /**
+   * @param $scope
+   * @param $timeout
+   * @param $location
+   * @param $routeParams
+   * @param $filter
+   * @param $uibModal
+   * @param $window
+   * @param ReleasesService
+   * @param MediaService
+   * @param NotificationService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function ReleasesEditController($scope,
                                   $timeout,
                                   $location,
@@ -57,7 +72,7 @@
       }
     });
 
-    $scope.removeReleasesFiles = function(idx){
+    $scope.removeReleasesFiles = function (idx) {
       $scope.release.files[idx].file = '';
     };
 
@@ -65,17 +80,16 @@
      * _addWatcher function
      * @param {int} idx
      */
-    var _addWatcher = function(idx){
-
-     var watchee = $filter('format')('release.files[{0}].file', idx);
+    var _addWatcher = function (idx) {
+      var watchee = $filter('format')('release.files[{0}].file', idx);
 
       $scope.$watch(watchee, function () {
-      if ($scope.release.files[idx].file && $scope.release.files[idx].file instanceof File) {
-        $scope.release.files[idx].external_url = '';
-        $scope.fileHandler.uploadFile(idx, [
-          $scope.release.files[idx].file
-        ]);
-      }
+        if ($scope.release.files[idx] && $scope.release.files[idx].file instanceof File) {
+          $scope.release.files[idx].external_url = '';
+          $scope.fileHandler.uploadFile(idx, [
+            $scope.release.files[idx].file
+          ]);
+        }
       });
     };
 
@@ -300,7 +314,7 @@
       $scope.title = $scope.title + release.name;
       $scope.breadcrumb = $scope.title;
 
-      angular.forEach('$scope.release.files', function(value, key){
+      angular.forEach('$scope.release.files', function (value, key) {
         _addWatcher(key);
       });
 
