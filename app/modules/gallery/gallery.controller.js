@@ -6,24 +6,38 @@
 
   GalleryController.$inject = [
     '$scope',
-    '$uibModal',
     'dataTableConfigService',
     'GalleryService',
     'StatusService',
-    'NotificationService'
+    'NotificationService',
+    'ModalService',
+    'DateTimeHelper',
   ];
 
+  /**
+   * @param $scope
+   * @param dataTableConfigService
+   * @param GalleryService
+   * @param StatusService
+   * @param NotificationService
+   * @param ModalService
+   * @param DateTimeHelper
+   *
+   * @constructor
+   */
   function GalleryController($scope,
-                            $uibModal,
-                            dataTableConfigService,
-                            GalleryService,
-                            StatusService,
-                            NotificationService) {
+                             dataTableConfigService,
+                             GalleryService,
+                             StatusService,
+                             NotificationService,
+                             ModalService,
+                             DateTimeHelper) {
     console.log('... GaleriasController');
 
     $scope.galleries = [];
     $scope.status = [];
     $scope.currentPage = 1;
+    $scope.DateTimeHelper = DateTimeHelper;
 
     var loadGalleries = function (page) {
       GalleryService.getGalleries(page).then(function (data) {
@@ -42,42 +56,20 @@
       $scope.status = data.data;
     });
 
-    $scope.removeGallery = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir a galeria "' + description + '"?');
-      removeConfirmationModal.result.then(function (data) {
-        GalleryService.removeGallery(id).then(function (data) {
-          NotificationService.success('Galeria removida com sucesso.');
-          loadGalleries();
+    /**
+     * @param id
+     * @param name
+     */
+    $scope.removeGallery = function (id, name) {
+      ModalService
+        .confirm('Você deseja excluir a galeria "' + name + '"?')
+        .result
+        .then(function () {
+          GalleryService.removeGallery(id).then(function () {
+            NotificationService.success('Galeria removida com sucesso.');
+            $route.reload();
+          });
         });
-      });
-    };
-
-    var removeConfirmationModal;
-
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $uibModal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
-
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
     };
   }
 })();

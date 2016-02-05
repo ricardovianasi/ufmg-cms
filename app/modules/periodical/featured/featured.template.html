@@ -27,7 +27,7 @@
             <div class="btn-toolbar">
                 <div class="pull-right">
                     <a ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
-                        <span class="fa fa-plus"></span> INSERIR NOVO DESTAQUE
+                        <span class="fa fa-plus"></span> NOVO DESTAQUE
                     </a>
                 </div>
             </div>
@@ -37,21 +37,25 @@
                     <thead>
                         <tr>
                             <th>Título</th>
-                            <th>Autor</th>
-                            <th >Data da criação</th>
+                            <th>Usuário</th>
+                            <th>Data da criação</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search}" class="odd">
-                            <td>{{ featured.title }}</td>
+                            <td>
+                                <a ng-href="#/featured/edit/{{ featured.id }}">
+                                    {{ featured.title }}
+                                </a>
+                            </td>
 
                             <td>{{ featured.author.name }}</td>
 
                             <td>
                                 <strong>{{ vm.DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
                                 <br>
-                                <small>({{ featured.status }})</small>
+                                <small>{{ featured.status|translate|titleize }}</small>
                             </td>
 
                             <td class="table-fit">

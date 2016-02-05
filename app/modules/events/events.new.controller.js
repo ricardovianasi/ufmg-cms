@@ -93,6 +93,10 @@
       endTime: DateTimeHelper.getTimepickerOpt()
     };
 
+    $scope.redactorOptions = {
+      plugins: false,
+    };
+
     $scope.imagencropOptions = {
       /**
        * @param redactor
@@ -173,13 +177,19 @@
      * Post to Event Endpoint
      *
      * @param data
+     * @param preview
      */
-    $scope.publish = function (data) {
+    $scope.publish = function (data, preview) {
       data.tags = _.map(data.tags, 'text');
 
-      EventsService.store(data).then(function () {
+      EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');
-        $location.path('/events');
+
+        if (!preview) {
+          $location.path('/events');
+        } else {
+          $window.open(event.data.event_url);
+        }
       });
     };
 
