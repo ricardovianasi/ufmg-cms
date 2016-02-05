@@ -38,41 +38,50 @@
 
 #menu-panel .panel-heading
   background-color: #2c2e2f
-  padding: 20px
+  padding: 10px
   color: white
   font-weight: bolder
 
-.menu-main li
-  list-style: none
-  padding: 15px
-  margin-top: 10px
-  background-color: whitesmoke
+.menu-main .row
+  background-color:  whitesmoke
+  margin: 0px
 
 .menu-sub li
   list-style: none
-  background-color: white
-  padding: 15px
-  margin-top: 10px
+  margin-right: -30px
+  margin-left: 50px
+  padding: 0px
+  border: none
 
-.menu-main , .menu-sub , .menu-sub-chi
-  padding: 10px
-  min-height: 10px
+.menu-sub .row
+  background-color: whitesmoke
+  margin: 0px
 
 .menu-sub-chi li
-  list-style: none
+
+  margin-right: -30px
+  margin-left: 30px
+
+.menu-sub-chi li:active
+  border: none
+
+.menu-sub-chi .row
   background-color: whitesmoke
-  padding: 15px
-  margin-top: 5px
+  margin: 0px
+
+.menu-sub-chi .row:active
+  opacity: 0.5
 
 .menu-side li
   list-style: none
-  padding: 10px
-  background-color: whitesmoke
-  cursor: pointer
+  padding: 10px 10px !important;
+  border: none !important;
+  background-color: whitesmoke !important;
   text-align: left !important;
+  margin: 0px !important;
 
 .menu-side li:hover
-  background-color: lightgray
+  background-color: lightgray !important;
 
 .menu-side li:active
   background-color: lightgray
@@ -82,8 +91,23 @@
   max-height: 60vh
   overflow-x: hidden
   overflow-y: auto
+  position: relative
+  top: -5px
+
+#menu-panel .row
+  min-height: 30px
+
+#menu-panel li
+  background-color: transparent
+  border: none
+  border-top: 15px solid whitesmoke;
+  padding: 0px
+  padding-bottom: 5px
+  cursor: pointer
 
 #menu-panel ul
-  padding: 0px;
+  padding-bottom: 5px
+  margin-top: 5px
+  padding-left: 0px
 
   // Hugo - Fim
