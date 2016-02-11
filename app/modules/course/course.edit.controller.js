@@ -109,6 +109,9 @@
         $location.path('/course/list/' + $scope.type + '/' + $scope.courseId);
       });
     };
-    
+
+    $scope.redactorConfig = {
+      plugins: false
+    };
   }
 })();
