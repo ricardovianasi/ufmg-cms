@@ -40,44 +40,52 @@
                        class="btn btn-secondary btn-lg pull-left">Personalizar Sidebar</a>
                 </div>
             </div>
-
-            <div class="pages-module pages-module-cover" ng-if="vm.showCover">
-                <div class="chosen-cover">
-                    <span  ng-click="vm.removeImage()"
-                           class="label label-danger remove-image"
-                           ng-if="vm.course.cover_url">
-                        <span class="fa fa-remove"></span> REMOVER IMAGEM
-                    </span>
-                </div>
-
-                <div  ngf-accept="'image/*'"
-                      ngf-select
-                      ng-model="vm.course_cover"
-                      ngf-multiple="false"
-                      ng-if="!vm.course.cover_url"
-                      class='add-module'>+ Adicionar Capa</div>
-
-                <div  class="uploaded-image" ng-if="vm.course.cover_url">
-                    <img ng-src="{{ vm.course.cover_url }}">
+            
+            <div class=row>
+                <div class=col-xs-12>
+                    <div class="pages-module add-module edition-bg-thumb" ng-if="vm.showCover">
+                        <div class="add-title" 
+                             ngf-accept="'image/*'"
+                             ngf-select
+                             ng-model="vm.course_cover"
+                             ngf-multiple="false"
+                             ng-if="!vm.course.cover_url"
+                             class='add-module'>+ Adicionar Capa
+                        </div>
+                        <div>
+                            <div class="chosen-cover">
+                                <span  ng-click="vm.removeImage()"
+                                      class="label label-danger remove-image"
+                                      ng-if="vm.course.cover_url">
+                                    <i class="fa fa-remove"></i> REMOVER IMAGEM
+                                </span>
+                            </div>
+                            <div  class="uploaded-image" ng-if="vm.course.cover_url">
+                                <img class="img-responsive" ng-src="{{ vm.course.cover_url }}">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            
             <div class="panel-body">
                 <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Nome do curso</th>
-                        <th>Açoes</th>
+                        <th>Nome do Curso</th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr role="row" ng-repeat="item in vm.courses.items | orderBy: item.modality | filter: search" class="odd">
                         <td>
                             <div class="clearfix">
-                               {{ item.subdivision_name }} - {{ item.modality }}
+                                <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}">
+                                    {{ item.subdivision_name }} - {{ item.modality }}
+                                </a>
                             </div>
                         </td>
-                        <td>
+                        <td class="table-fit-single">
                             <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}" class="btn btn-warning" href="#/pages/edit/416">
                                 <i class="fa fa-pencil"></i>
                             </a>
