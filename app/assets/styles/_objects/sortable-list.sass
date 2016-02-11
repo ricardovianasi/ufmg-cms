@@ -62,15 +62,9 @@
   margin-right: -40px
   margin-left: 40px
 
-.menu-sub-chi li:active
-  border: none
-
 .menu-sub-chi .row
   background-color: whitesmoke
   margin: 0px
-
-.menu-sub-chi .row:active
-  opacity: 0.5
 
 .menu-side li
   list-style: none
@@ -79,6 +73,7 @@
   background-color: whitesmoke !important;
   text-align: left !important;
   margin: 0px !important;
+  cursor: pointer
 
 .menu-side li:hover
   background-color: lightgray !important;
@@ -93,18 +88,30 @@
   overflow-y: auto
   margin: 0px !important;
 
-
-
 #menu-panel .row
   min-height: 30px
 
-#menu-panel li
+#menu-panel .menu-main li
   background-color: transparent
   border: none
   border-top: 15px solid whitesmoke;
   padding: 0px
   padding-bottom: 5px
   cursor: pointer
+
+#menu-panel .menu-sub li
+  border-top: 15px solid lightgrey;
+
+.menu-sub .row
+  background-color: lightgrey
+  color: white
+
+#menu-panel .menu-sub-chi li
+  border-top: 15px solid grey;
+
+.menu-sub-chi .row
+  background-color: grey
+  color: white
 
 #menu-panel ul
   padding-bottom: 5px
