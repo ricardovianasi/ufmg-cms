@@ -73,7 +73,7 @@
             location: 'media',
             enabled: true
           },{
-            icon: 'fa fa-film',
+            icon: 'fa fa-bars',
             name: 'Menu',
             location: 'menu',
             enabled: true

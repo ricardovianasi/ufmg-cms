@@ -28,16 +28,11 @@
    * @constructor
    */
   function Translator($translateProvider) {
-    $translateProvider.translations('en', {
-      published: 'publicado',
-      publish: 'publicado',
-      draft: 'rascunho',
-      auto_draft: 'auto publicado',
-      trash: 'excluído',
-      pending_review: 'revisão pendente',
-      scheduled: 'agendado',
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'lang/',
+      suffix: '.json',
     });
 
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('pt-br');
   }
 })();

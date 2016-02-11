@@ -73,34 +73,13 @@
         side: []
       };
 
-      /**
-       * @param {string} column
-       * @param {*} widget
-       */
-      var makeWidget = function (column, widget) {
-        var obj = {};
-
-        if (widget) {
-          if (widget.id) {
-            obj.id = widget.id;
-          }
-
-          obj.type = widget.type;
-          obj.title = widget.title;
-
-          angular.extend(obj, _module.parseWidgetToSave(widget));
-
-          cleanPage.widgets[column].push(obj);
-        }
-      };
-
       // Insert each widget into main and side columns
       angular.forEach(page.widgets.main, function (widget) {
-        makeWidget('main', widget);
+        cleanPage.widgets.main.push(_module.makeWidget(widget));
       });
 
       angular.forEach(page.widgets.side, function (widget) {
-        makeWidget('side', widget);
+        cleanPage.widgets.side.push(_module.makeWidget(widget));
       });
 
       // If we are updating the Page
@@ -691,87 +670,6 @@
         },
       };
 
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _prepareItems = function ($scope) {
-        $scope.addItem = function (item, type) {
-
-          if ($scope.widget[type]) {
-            $scope.widget[type].push(item);
-          } else {
-            $scope.widget[type] = [];
-            $scope.widget[type].push(item);
-          }
-        };
-
-        $scope.removeItem = function (idx, type) {
-          if ($scope.widget[type][idx]) {
-            $scope.widget[type].splice(idx, 1);
-          }
-        };
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingNewsTypes = function ($scope) {
-        $scope.news_types = [];
-
-        NewsService.getNewsTypes().then(function (data) {
-          $scope.news_types = data.data;
-        });
-
-        _getTags($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingNews = function ($scope) {
-        $scope.news = [];
-
-        NewsService.getNews().then(function (data) {
-          $scope.news = data.data;
-        });
-
-        _getTags($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingGalleries = function ($scope) {
-        $scope.galleries = [];
-
-        GalleryService.getGalleries().then(function (data) {
-          $scope.galleries = data.data;
-        });
-
-        _prepareItems($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingEvents = function ($scope) {
-        $scope.events = [];
-
-        EventsService.getEvents().then(function (data) {
-          $scope.events = data.data;
-        });
-      };
-
       // Partial preparing
       var _preparing = {
         /**
@@ -926,6 +824,87 @@
         },
       };
 
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _prepareItems = function ($scope) {
+        $scope.addItem = function (item, type) {
+
+          if ($scope.widget[type]) {
+            $scope.widget[type].push(item);
+          } else {
+            $scope.widget[type] = [];
+            $scope.widget[type].push(item);
+          }
+        };
+
+        $scope.removeItem = function (idx, type) {
+          if ($scope.widget[type][idx]) {
+            $scope.widget[type].splice(idx, 1);
+          }
+        };
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingNewsTypes = function ($scope) {
+        $scope.news_types = [];
+
+        NewsService.getNewsTypes().then(function (data) {
+          $scope.news_types = data.data;
+        });
+
+        _getTags($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingNews = function ($scope) {
+        $scope.news = [];
+
+        NewsService.getNews().then(function (data) {
+          $scope.news = data.data;
+        });
+
+        _getTags($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingGalleries = function ($scope) {
+        $scope.galleries = [];
+
+        GalleryService.getGalleries().then(function (data) {
+          $scope.galleries = data.data;
+        });
+
+        _prepareItems($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingEvents = function ($scope) {
+        $scope.events = [];
+
+        EventsService.getEvents().then(function (data) {
+          $scope.events = data.data;
+        });
+      };
+
       return {
         /**
          * @param {object} widget
@@ -977,7 +956,10 @@
             resolve: {
               module: function () {
                 if (typeof idx !== 'undefined') {
-                  return $scope.page.widgets[column][idx];
+                  if ($scope.page)
+                    return $scope.page.widgets[column][idx];
+                  else
+                    return $scope.course.widgets[column][idx];
                 }
 
                 return false;
@@ -990,11 +972,39 @@
 
           moduleModal.result.then(function (data) {
             if (typeof idx !== 'undefined') {
-              $scope.page.widgets[column][idx] = data;
+              if ($scope.page)
+                $scope.page.widgets[column][idx] = data;
+              else
+                $scope.course.widgets[column][idx] = data;
             } else {
-              $scope.page.widgets[column].push(data);
+              if ($scope.page)
+                $scope.page.widgets[column].push(data);
+              else {
+                $scope.course.widgets[column].push(data);
+              }
             }
           });
+        },
+        /**
+         * @param widget
+         *
+         * @returns {{}}
+         */
+        makeWidget: function (widget) {
+          var obj = {};
+
+          if (widget) {
+            if (widget.id) {
+              obj.id = widget.id;
+            }
+
+            obj.type = widget.type;
+            obj.title = widget.title;
+
+            angular.extend(obj, this.parseWidgetToSave(widget));
+          }
+
+          return obj;
         }
       };
     })(_getPages, $uibModal);

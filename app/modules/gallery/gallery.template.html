@@ -1,23 +1,28 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">Galerias</h1>
-    </div>
+   <div class="row flex-center">
+       <div class="col-md-6">
+           <div class="title-env">
+               <h1 class="title">Galerias</h1>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="breadcrumb-env">
+               <ol class="breadcrumb bc-1">
+                   <li>
+                       <a href="#/">
+                           <i class="fa-home"></i>Home
+                       </a>
+                   </li>
 
-    <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/">
-                    <i class="fa-home"></i>Home
-                </a>
-            </li>
-
-            <li class="active">
-                <a href="#/galleries">
-                    <strong>Galerias</strong>
-                </a>
-            </li>
-        </ol>
-    </div><!--breadcrumb-env-->
+                   <li class="active">
+                       <a href="#/galleries">
+                           <strong>Galerias</strong>
+                       </a>
+                   </li>
+               </ol>
+           </div><!--breadcrumb-env-->
+       </div>
+   </div>
 </div>
 
 <div class="row">
@@ -73,7 +78,7 @@
                             <small>{{ gallery.status|translate|titleize }}</small>
                         </td>
 
-                        <td>
+                        <td class="table-fit">
                             <a ng-href="#/gallery/edit/{{ gallery.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>

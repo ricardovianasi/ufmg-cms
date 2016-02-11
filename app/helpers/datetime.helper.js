@@ -195,10 +195,28 @@
             return _makeRange(1, 31, true);
           },
           /**
+           * @param str
+           *
            * @returns {Array}
            */
-          getMonths: function () {
-            return _makeRange(1, 12, true);
+          getMonths: function (str) {
+            var monthsNumbers = _makeRange(1, 12, true);
+
+            if (str) {
+              var months = [];
+
+              angular.forEach(monthsNumbers, function (value, key) {
+                var date = new Date((new Date()).getFullYear(), key);
+
+                months.push(date.toLocaleString('pt-br', {month: 'long'}));
+              });
+
+              console.log(months);
+
+              return months;
+            }
+
+            return monthsNumbers;
           },
           /**
            * @returns {Array}

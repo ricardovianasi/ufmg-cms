@@ -125,6 +125,10 @@
        * @param data
        */
       callback: function (redactor, data) {
+        /**
+         * @param size
+         * @param data
+         */
         var cropped = function (size, data) {
           var html = _.template($('#figure-' + size).html());
 

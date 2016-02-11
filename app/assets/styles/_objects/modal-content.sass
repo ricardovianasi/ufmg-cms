@@ -85,9 +85,6 @@
 
 // Flex
 
-.flex
-    display: flex
-
 .flex-self-end
     align-self: flex-end
 
@@ -95,6 +92,16 @@
     display: flex
     align-items: center
     justify-content: center
+
+.flex-center-start
+  display: flex
+  align-items: center
+  justify-content: flex-start
+
+.flex-center-end
+  display: flex
+  align-items: center
+  justify-content: flex-end
 
 // Img
 
@@ -136,5 +143,34 @@
 
 .tab-content #home a
     padding: 50px
+
+
+// Navbar
+
+.navbar .navbar-inner
+  background-color: #ef3f4a
+
+.navbar .navbar-inner a
+  color: white
+  font-weight: bold
+
+.navbar a:hover
+  background-color: transparent !important;
+  color: #2c2e2f
+
+.navbar-brand img
+  height: 100%
+  padding: 25px 0px 25px 0px
+
+// Breadcrumb
+
+.breadcrumb-env .breadcrumb
+  margin: 0px !important;
+
+// Title
+
+.title-env .title
+  font-weight: bold
+
 
 // Hugo - Fim //

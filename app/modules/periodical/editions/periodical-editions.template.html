@@ -1,30 +1,35 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">{{ periodical.name }}</h1>
-    </div>
+   <div class="row flex-center">
+       <div class="col-md-6">
+           <div class="title-env">
+               <h1 class="title">{{ periodical.name }}</h1>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="breadcrumb-env">
 
-    <div class="breadcrumb-env">
+               <ol class="breadcrumb bc-1">
+                   <li>
+                       <a href="#/">
+                           <i class="fa-home"></i>Home
+                       </a>
+                   </li>
 
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/">
-                    <i class="fa-home"></i>Home
-                </a>
-            </li>
+                   <li class="">
+                       <a href="#/periodicals">
+                           Publicações Jornalísticas
+                       </a>
+                   </li>
 
-            <li class="">
-                <a href="#/periodicals">
-                    Publicações Jornalísticas
-                </a>
-            </li>
-
-            <li class="active">
-                <a href="#/periodicals/{{ periodical.id }}/editions">
-                    <strong>{{ periodical.name }}</strong>
-                </a>
-            </li>
-        </ol>
-    </div>
+                   <li class="active">
+                       <a href="#/periodicals/{{ periodical.id }}/editions">
+                           <strong>{{ periodical.name }}</strong>
+                       </a>
+                   </li>
+               </ol>
+           </div>
+       </div>
+   </div>
 </div>
 
 <div class=row>

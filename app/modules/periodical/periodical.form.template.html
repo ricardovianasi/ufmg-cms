@@ -1,42 +1,47 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">
-            <span ng-if="periodical.id">
-                <span ng-if="periodical.name">Editar Publicação - {{ periodical.name }}</span>
-                <span ng-if="!periodical.name">Editar Publicação</span>
-            </span>
-            <span ng-if="!periodical.id">
-                <span ng-if="periodical.name">Nova Publicação - {{ periodical.name }}</span>
-                <span ng-if="!periodical.name">Nova Publicação</span>
-            </span>
-        </h1>
-    </div>
+   <div class="row flex-center">
+       <div class="col-md-6">
+           <div class="title-env">
+               <h1 class="title">
+                   <span ng-if="periodical.id">
+                       <span ng-if="periodical.name">Editar Publicação - {{ periodical.name }}</span>
+                       <span ng-if="!periodical.name">Editar Publicação</span>
+                   </span>
+                   <span ng-if="!periodical.id">
+                       <span ng-if="periodical.name">Nova Publicação - {{ periodical.name }}</span>
+                       <span ng-if="!periodical.name">Nova Publicação</span>
+                   </span>
+               </h1>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="breadcrumb-env">
+               <ol class="breadcrumb bc-1">
+                   <li>
+                       <a href="#/"><i class="fa-home"></i>Home</a>
+                   </li>
 
-    <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
-            </li>
+                   <li>
+                       <a href="#/periodicals">
+                           <strong>Publicações Jornalísticas</strong>
+                       </a>
+                   </li>
 
-            <li>
-                <a href="#/periodicals">
-                    <strong>Publicações Jornalísticas</strong>
-                </a>
-            </li>
+                   <li class="active" ng-if="!periodical.name">
+                       <a href="#/periodicals/new">
+                           <strong>Nova Publicação</strong>
+                       </a>
+                   </li>
 
-            <li class="active" ng-if="!periodical.name">
-                <a href="#/periodicals/new">
-                    <strong>Nova Publicação</strong>
-                </a>
-            </li>
-
-            <li class="active" ng-if="periodical.name">
-                <a href="#periodicals/edit/{{ periodical.id }}">
-                    <strong>{{ periodical.name }}</strong>
-                </a>
-            </li>
-        </ol>
-    </div>
+                   <li class="active" ng-if="periodical.name">
+                       <a href="#periodicals/edit/{{ periodical.id }}">
+                           <strong>{{ periodical.name }}</strong>
+                       </a>
+                   </li>
+               </ol>
+           </div>
+       </div>
+   </div>
 </div>
 
 <div class=row>

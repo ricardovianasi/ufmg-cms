@@ -1,21 +1,27 @@
 <div id="modal-image">
     <div class="modal-header">
-        <span class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()"><i class="fa fa-times"></i></span>
+        <span class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()">
+            <i class="fa fa-times"></i>
+        </span>
+
         <h4 class="modal-title"><i class="fa fa-picture-o"></i> Inserir Imagem</h4>
     </div>
+
     <div class="modal-body">
         <ul class="nav nav-tabs nav-tabs-justified">
             <li ng-class="{active: vm.tabs.home}">
-                    <span class="visible-xs"><i class="fa fa-home"></i></span>
-                    <span class="hidden-xs">Bibliotecas Disponíveis</span>
+                <span class="visible-xs"><i class="fa fa-home"></i></span>
+                <span class="hidden-xs">Bibliotecas Disponíveis</span>
             </li>
+
             <li ng-class="{active: vm.tabs.midia}">
-                    <span class="visible-xs"><i class="fa fa-upload"></i></span>
-                    <span class="hidden-xs">Selecionar Imagem</span>
+                <span class="visible-xs"><i class="fa fa-upload"></i></span>
+                <span class="hidden-xs">Selecionar Imagem</span>
             </li>
+
             <li ng-class="{active: vm.tabs.crop}">
-                    <span class="visible-xs"><i class="fa fa-crop"></i></span>
-                    <span class="hidden-xs">Editar e Inserir</span>
+                <span class="visible-xs"><i class="fa fa-crop"></i></span>
+                <span class="hidden-xs">Editar e Inserir</span>
             </li>
         </ul>
 
@@ -36,10 +42,13 @@
                     <div class="form-group">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                            <input type="text" class="form-control" ng-model="vm.search" placeholder="Procurar..." aria-describedby="sizing-addon1">
+                            <input type="text" class="form-control" placeholder="Procurar..."
+                                   aria-describedby="sizing-addon1"
+                                   ng-model="vm.search">
                         </div>
                     </div>
                 </form>
+
                 <div class="row"
                      ng-if="vm.currentFile.url && !vm.zoomOut">
                     <div class="col-md-12">
@@ -50,12 +59,14 @@
                                     <img alt="" class="img-responsive"
                                          ng-src="{{ vm.currentFile.url }}">
                                 </div>
+
                                 <div class="col-md-9">
                                     <form action="" class="form-horizontal">
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <h4>Autor</h4>
-                                                <input type="text" class="form-control" id="field-1" placeholder="Autor:"
+                                                <input type="text" class="form-control" id="field-1"
+                                                       placeholder="Autor:"
                                                        value="{{ vm.currentFile.author.name }}"
                                                        ng-model="vm.currentFile.author.name">
                                             </div>
@@ -69,12 +80,17 @@
                                             </div>
                                         </div>
                                     </form>
+
                                     <div class="row text-right">
                                         <div class="col-md-12" style="margin-top:20px">
                                             <button type="button" class="btn btn-danger btn-lg"
-                                                    ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
+                                                    ng-click="vm.cancelUpdateMidia()">
+                                                <i class="fa fa-times"></i> Cancelar
+                                            </button>
+
                                             <button type="button" class="btn btn-secondary btn-lg"
-                                                    ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Confirmar
+                                                    ng-click="vm.updateMidia()">
+                                                <i class="fa fa-check"></i> Confirmar
                                             </button>
                                         </div>
                                     </div>
@@ -83,18 +99,20 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row lib-row">
-                        <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
-                           ngf-select
-                           ngf-accept="'image/*'"
-                           ng-model="vm.add_photos"
-                           ngf-multiple="false">
-                            <div class="row">
-                                <div class="col-md-12 btn-lg">
-                                    <i class="fa fa-plus"></i><br/>Enviar
-                                </div>
+                    <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
+                       ngf-select
+                       ngf-accept="'image/*'"
+                       ng-model="vm.add_photos"
+                       ngf-multiple="false">
+                        <div class="row">
+                            <div class="col-md-12 btn-lg">
+                                <i class="fa fa-plus"></i><br/>Enviar
                             </div>
-                        </a>
+                        </div>
+                    </a>
+
                     <div class="col-md-1 img-lib"
                          ng-repeat="midia in vm.midia.items|filter: vm.search"
                          ng-click="vm.selectMidia(midia)"
@@ -104,6 +122,7 @@
                              ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                     </div>
                 </div>
+
                 <div class="row"
                      ng-show="vm.midia.total > 36">
                     <div class="col-md-12 flex-center">
@@ -126,11 +145,12 @@
                 <div class="row flex">
                     <div class="col-md-3">
                         <h4>Selecionar formato</h4>
-                        <div class=""
-                             ng-repeat="(key, format) in vm.formats">
+                        <div ng-repeat="(key, format) in vm.formats">
                             <a href="javascript:void(0);" class="btn btn-primary btn-lg"
                                ng-class="{'btn-secondary': vm.activeFormat == key, 'btn-click': format.name == 'Vertical'}"
-                               ng-click="vm.setFormat(key)">{{ format.name }} ({{ format.width }}x{{ format.height }})</a>
+                               ng-click="vm.setFormat(key)">
+                                {{ format.name }} ({{ format.width }}x{{ format.height }})
+                            </a>
                         </div>
                     </div>
 
@@ -143,16 +163,21 @@
                              mr-selector="vm.selector"
                              mr-aspect-ratio="vm.aspectRatio"></div>
                     </div>
-                    <div class="col-md-2 text-right flex-self-end panel-edit">
 
-                    </div>
+                    <div class="col-md-2 text-right flex-self-end panel-edit"></div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-lg"
-                        ng-click="vm.cancelUpdateMidia()"><i class="fa fa-times"></i> Cancelar</button>
+                            ng-click="vm.cancelUpdateMidia()">
+                        <i class="fa fa-times"></i> Cancelar
+                    </button>
+
                     <button type="button" class="btn btn-lg btn-secondary"
-                        ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1"
-                        ng-click="vm.save()"><i class="fa fa-check"></i> Inserir</button>
+                            ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1"
+                            ng-click="vm.save()">
+                        <i class="fa fa-check"></i> Inserir
+                    </button>
                 </div>
             </div>
         </div>

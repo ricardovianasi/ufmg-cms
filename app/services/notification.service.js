@@ -12,6 +12,7 @@
     return {
       success: function (title, msg) {
         toastr.success(title, msg);
+
       },
       error: function (title, msg) {
         toastr.error(title, msg);

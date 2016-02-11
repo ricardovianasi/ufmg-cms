@@ -1,22 +1,27 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">Eventos</h1>
-    </div>
+   <div class="row flexcenter">
+       <div class="col-md-6">
+           <div class="title-env">
+               <h1 class="title">Eventos</h1>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="breadcrumb-env">
 
-    <div class="breadcrumb-env">
+               <ol class="breadcrumb bc-1">
+                   <li>
+                       <a href="#/"><i class="fa-home"></i>Home</a>
+                   </li>
 
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
-            </li>
-
-            <li class="active">
-                <a href="#/eventes">
-                    <strong>Eventos</strong>
-                </a>
-            </li>
-        </ol>
-    </div><!--breadcrumb-env-->
+                   <li class="active">
+                       <a href="#/eventes">
+                           <strong>Eventos</strong>
+                       </a>
+                   </li>
+               </ol>
+           </div><!--breadcrumb-env-->
+       </div>
+   </div>
 </div>
 
 <div class="row">
@@ -69,9 +74,7 @@
                     <tr class="odd" role="row"
                         ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus}">
                         <td>
-                            <a ng-href="#/events/edit/{{ item.id }}">
-                                {{ item.name }}
-                            </a>
+                            {{ item.name }}
                         </td>
 
                         <td>{{ item.author.name }}</td>
@@ -83,6 +86,10 @@
                         </td>
 
                         <td class="table-fit">
+                            <a target="_blank" ng-href="{{ item.event_url }}" class="btn btn-primary">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
                             <a ng-href="#/events/edit/{{ item.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>

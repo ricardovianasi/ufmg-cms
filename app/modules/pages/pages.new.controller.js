@@ -10,6 +10,7 @@
     '$location',
     '$timeout',
     '$window',
+    '$filter',
     'NotificationService',
     'PagesService',
     'WidgetsService',
@@ -24,6 +25,7 @@
    * @param $location
    * @param $timeout
    * @param $window
+   * @param $filter
    * @param NotificationService
    * @param PagesService
    * @param WidgetsService
@@ -38,6 +40,7 @@
                               $location,
                               $timeout,
                               $window,
+                              $filter,
                               NotificationService,
                               PagesService,
                               WidgetsService,
@@ -98,6 +101,7 @@
           $location.path('/pages');
         } else {
           $window.open(page.data.page_url);
+          $location.path($filter('format')('/pages/{0}', page.data.id));
         }
       });
     };
