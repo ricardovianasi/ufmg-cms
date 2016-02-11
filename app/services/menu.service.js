@@ -33,7 +33,7 @@
 
         angular.forEach(items, function (item) {
           var menuItem = {
-            page: item.page ? item.page.id : null,
+            page: item.page,
             label: item.newTitle || item.label,
             target_blank: item.target_blank,
             external_url: item.external_url,
@@ -51,7 +51,7 @@
       };
 
       obj.items = buildMenuItems(data);
-      console.log(obj);
+
       return obj;
     };
 
