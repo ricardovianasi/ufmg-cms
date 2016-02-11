@@ -1,37 +1,42 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">
-            <span ng-if="edition.id">
-                <span ng-if="edition.theme">Editar Edição - {{ edition.theme }}</span>
-                <span ng-if="!edition.theme">Editar Edição</span>
-            </span>
-            <span ng-if="!edition.id">
-                <span ng-if="edition.theme">Nova Edição - {{ edition.theme }}</span>
-                <span ng-if="!edition.theme">Nova Edição</span>
-            </span>
-        </h1>
-    </div>
+   <div class="row flex-center">
+       <div class="col-md-6">
+           <div class="title-env">
+               <h1 class="title">
+                   <span ng-if="edition.id">
+                       <span ng-if="edition.theme">Editar Edição - {{ edition.theme }}</span>
+                       <span ng-if="!edition.theme">Editar Edição</span>
+                   </span>
+                   <span ng-if="!edition.id">
+                       <span ng-if="edition.theme">Nova Edição - {{ edition.theme }}</span>
+                       <span ng-if="!edition.theme">Nova Edição</span>
+                   </span>
+               </h1>
+           </div>
+       </div>
+       <div class="col-md-6">
+           <div class="breadcrumb-env">
+               <ol class="breadcrumb bc-1">
+                   <li>
+                       <a href="#/">
+                           <i class="fa-home"></i>Home
+                       </a>
+                   </li>
 
-    <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/">
-                    <i class="fa-home"></i>Home
-                </a>
-            </li>
+                   <li>
+                       <a ng-href="#/periodicals">Publicações Jornalísticas</a>
+                   </li>
 
-            <li>
-                <a ng-href="#/periodicals">Publicações Jornalísticas</a>
-            </li>
+                   <li>
+                       <a ng-href="#/periodicals/{{ periodical.id }}/editions">{{ periodical.name }}</a>
+                   </li>
 
-            <li>
-                <a ng-href="#/periodicals/{{ periodical.id }}/editions">{{ periodical.name }}</a>
-            </li>
-
-            <li ng-if=!edition.theme class=active><strong>Nova Edição</strong></li>
-            <li ng-if=edition.theme class=active><strong>{{ edition.theme }}</strong></li>
-        </ol>
-    </div>
+                   <li ng-if=!edition.theme class=active><strong>Nova Edição</strong></li>
+                   <li ng-if=edition.theme class=active><strong>{{ edition.theme }}</strong></li>
+               </ol>
+           </div>
+       </div>
+   </div>
 </div>
 <div class="row">
     <div class="col-xs-8 panel panel-default">

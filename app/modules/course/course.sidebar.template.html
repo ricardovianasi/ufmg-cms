@@ -1,28 +1,32 @@
 <div class="page-title">
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">Sidebar</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
 
-    <div class="title-env">
-        <h1 class="title">Cursos</h1>
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="#/course">
+                            <strong>Cursos</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/course/sidebar/{{ vm.type }}">
+                            <strong>Sidebar</strong>
+                        </a>
+                    </li>
+                </ol>
+
+            </div><!--breadcrumb-env-->
+        </div>
     </div>
-
-    <div class="breadcrumb-env">
-
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/"><i class="fa-home"></i>Home</a>
-            </li>
-            <li>
-                <a href="#/course">
-                    <strong>Cursos</strong>
-                </a>
-            </li>
-            <li class="active">
-                <a href="#/course/sidebar/{{ vm.type }}">
-                    <strong>Sidebar</strong>
-                </a>
-            </li>
-        </ol>
-
-    </div><!--breadcrumb-env-->
 </div>
 
 <div class="row">

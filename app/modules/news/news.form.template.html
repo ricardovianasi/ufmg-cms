@@ -1,37 +1,42 @@
 <div class="page-title">
-    <div class="title-env">
-        <h1 class="title">
-            <span ng-if="news.id">
-                <span ng-if="news.title">Editar Notícia - {{ news.title }}</span>
-                <span ng-if="!news.title">Editar Notícia</span>
-            </span>
-            <span ng-if="!news.id">
-                <span ng-if="news.title">Nova Notícia - {{ news.title }}</span>
-                <span ng-if="!news.title">Nova Notícia</span>
-            </span>
-        </h1>
-    </div>
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">
+                    <span ng-if="news.id">
+                        <span ng-if="news.title">Editar Notícia - {{ news.title }}</span>
+                        <span ng-if="!news.title">Editar Notícia</span>
+                    </span>
+                    <span ng-if="!news.id">
+                        <span ng-if="news.title">Nova Notícia - {{ news.title }}</span>
+                        <span ng-if="!news.title">Nova Notícia</span>
+                    </span>
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
+                    </li>
 
-    <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1">
-            <li>
-                <a href="#/">
-                    <i class="fa-home"></i>Home
-                </a>
-            </li>
+                    <li>
+                        <a href="#/news">
+                            <strong>Notícias</strong>
+                        </a>
+                    </li>
 
-            <li>
-                <a href="#/news">
-                    <strong>Notícias</strong>
-                </a>
-            </li>
-
-            <li class="active">
-                <a href="#/news/new">
-                    <strong>Nova Notícia</strong>
-                </a>
-            </li>
-        </ol>
+                    <li class="active">
+                        <a href="#/news/new">
+                            <strong>Nova Notícia</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
     </div>
 </div>
 
