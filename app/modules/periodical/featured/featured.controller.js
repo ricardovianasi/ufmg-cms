@@ -28,7 +28,10 @@
         featuredService.get().then(function(res){
           vm.highlights = res.data || {};
           vm.dtOptions = dataTableConfigService.init();
+        }, function(err) {
+          vm.dtOptions = dataTableConfigService.init();
         });
+
       }
 
 
