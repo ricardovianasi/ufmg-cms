@@ -44,5 +44,11 @@
   "search": "Busca",
   "sidebarbutton": "Botão Sidebar",
   "tagcloud": "Nuvem de Tags",
-  "text": "Texto"
+  "text": "Texto",
+
+  //courses
+  "graduation": "Graduação",
+  "master": "Mestrado",
+  "doctorate": "Doutorado",
+  "specialization": "Especializaçao"
 }

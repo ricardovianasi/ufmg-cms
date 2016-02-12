@@ -35,6 +35,11 @@
       });
 
       CourseService.getCourse(vm.type, vm.courseId).then(function (data) {
+        vm.course = {
+          id: data.data.id,
+          name:data.data.name
+        };
+
         if(data.data.cover) {
           vm.course.cover_url = data.data.cover.url;
           vm.course.cover = data.data.cover.id;

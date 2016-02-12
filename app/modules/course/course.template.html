@@ -12,9 +12,14 @@
                     <li>
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#/course">
                             <strong>Cursos</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/course/list/{{ vm.type }}">
+                            <strong>{{ vm.type|translate }}</strong>
                         </a>
                     </li>
                 </ol>
@@ -33,7 +38,7 @@
 
                 <div class="pull-right">
                     <a ng-href="#/course/sidebar/{{ vm.type }}"
-                       class="btn btn-secondary btn-lg pull-left">Editar Sidebar Graduação</a>
+                       class="btn btn-secondary btn-lg pull-left">Editar Sidebar {{ vm.type|translate }}</a>
                 </div>
             </div>
 
