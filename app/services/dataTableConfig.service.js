@@ -38,7 +38,7 @@
           'sLengthMenu': 'Exibir _MENU_ resultados',
           'sLoadingRecords': 'Carregando...',
           'sProcessing': 'Processando...',
-          'sSearch': 'Pesquisar: ',
+        'sSearch': '<i class="fa fa-search"></i>',
           'sZeroRecords': 'Não foram encontrados resultados',
           'oPaginate': {
             'sFirst': '<i class="fa fa-angle-double-left"></i>',
