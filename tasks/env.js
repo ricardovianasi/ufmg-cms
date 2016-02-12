@@ -10,7 +10,7 @@ var knownOptions = {
   string: 'env',
   default: {
     // Default environment is production
-    env: process.env.APP_ENV || 'production'
+    env: process.env.APPLICATION_ENV || 'production'
   }
 };
 var options = minimist(process.argv.slice(2), knownOptions);
