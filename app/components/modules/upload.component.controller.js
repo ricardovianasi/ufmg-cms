@@ -182,7 +182,7 @@
       // Set default format
       $timeout(function () {
         _setFormat(formats[0]);
-      });
+      }, 500);
     }
 
     /**
