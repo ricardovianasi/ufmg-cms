@@ -32,10 +32,7 @@
 
           $scope.obj.status = StatusService.STATUS_DRAFT;
           $scope.obj.saveDraftClicked = true;
-
-          $timeout(function () {
-            angular.element('#publish-button').trigger('click');
-          }, 100);
+          $scope.publish($scope.obj);
         };
 
         $scope.status = function (status) {

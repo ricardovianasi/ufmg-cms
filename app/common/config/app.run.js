@@ -6,7 +6,7 @@
 
   Run.$inject = [
     '$rootScope',
-    'dataTableConfigService',
+    'dataTableConfigService'
   ];
 
   function Run($rootScope, dataTableConfigService) {
