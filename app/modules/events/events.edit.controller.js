@@ -214,6 +214,7 @@
     EventsService.getEvent($routeParams.id).then(function (data) {
       var event = data.data;
       var tags = event.tags;
+      var courses = event.courses;
 
       event.courses = [];
       event.tags = [];
@@ -226,11 +227,11 @@
       delete event.init_date;
       delete event.end_date;
 
-      angular.forEach(event.undergraduate_courses, function (course) {
+      angular.forEach(courses, function (course) {
         event.courses.push(course.id);
       });
 
-      delete event.undergraduate_courses;
+      // delete event.undergraduate_courses;
 
       event.type = event.type.id;
 
