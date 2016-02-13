@@ -96,7 +96,7 @@
         return $http.put(apiUrl + '/route/' + id, obj);
       },
       /**
-       * @param type graduation, specialization, ...
+       * @param {string} type graduation, specialization, ...
        * @param {boolean} slug true or false
        *
        * @returns {HttpPromise}

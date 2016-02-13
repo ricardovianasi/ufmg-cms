@@ -27,7 +27,7 @@
       imagencrop: function (options) {
         return {
           init: function () {
-            var button = this.button.add('imagencrop', 'Image-N-Crop');
+            var button = this.button.add('imagencrop', 'Inserir Imagem');
 
             this.button.addCallback(button, this.imagencrop.show);
             this.button.setIcon(button, '<i class="fa-picture-o"></i>');
@@ -66,7 +66,7 @@
       audioUpload: function (options) {
         return {
           init: function () {
-            var button = this.button.add('imagencrop', 'Image-N-Crop');
+            var button = this.button.add('audioUpload', 'Inserir Áudio');
 
             this.button.addCallback(button, this.audioUpload.show);
             this.button.setIcon(button, '<i class="fa-file-audio-o"></i>');
