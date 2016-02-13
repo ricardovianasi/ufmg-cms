@@ -1,41 +1,43 @@
 <div class="page-title">
-   <div class="row flex-center">
-       <div class="col-md-6">
-           <div class="title-env">
-               <h1>
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1>
                    <span ng-if="event.id">
                        <span ng-if="event.name">Editar Evento - {{ event.name }}</span>
                        <span ng-if="!event.name">Editar Evento</span>
                    </span>
+
                    <span ng-if="!event.id">
                        <span ng-if="event.name">Novo Evento - {{ event.name }}</span>
                        <span ng-if="!event.name">Novo Evento</span>
                    </span>
-               </h1>
-           </div>
-       </div>
-       <div class="col-md-6">
-           <div class="breadcrumb-env">
-               <ol class="breadcrumb bc-1">
-                   <li>
-                       <a href="#/"><i class="fa-home"></i>Home</a>
-                   </li>
+                </h1>
+            </div>
+        </div>
 
-                   <li>
-                       <a href="#/events">
-                           <strong>Eventos</strong>
-                       </a>
-                   </li>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
 
-                   <li class="active">
-                       <a href="#/events/new">
-                           <strong>Novo Evento</strong>
-                       </a>
-                   </li>
-               </ol>
-           </div>
-       </div>
-   </div>
+                    <li>
+                        <a href="#/events">
+                            <strong>Eventos</strong>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#/events/new">
+                            <strong>Novo Evento</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -58,7 +60,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tags">Tags</label>
+                        <label>Tags</label>
 
                         <tags-input add-on-comma="false" ng-model="event.tags"></tags-input>
                     </div>
@@ -89,7 +91,6 @@
                     </div>
                 </div>
             </div><!--row-->
-
 
             <div class="row">
                 <div class="col-xs-12">
@@ -129,7 +130,7 @@
                                 <label for="course-{{ course.id }}">
                                     <input type="checkbox" value="{{ course.id }}" name="courses[]"
                                            id="course-{{ course.id }}"
-                                           ng-checked="event.courses.indexOf(course.id) &gt; -1"
+                                           ng-checked="event.courses.indexOf(course.id) !== -1"
                                            ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
                                 </label>
                             </div>
@@ -316,7 +317,8 @@
                         <div class="checkbox">
                             <div class="well well-sm">
                                 <label for="free">
-                                    <input id="free" type="checkbox" name="free" ng-model="event.free"> Evento Gratuito</label>
+                                    <input id="free" type="checkbox" name="free" ng-model="event.free"> Evento Gratuito
+                                </label>
                             </div>
                         </div>
                     </div>
