@@ -42,38 +42,33 @@
       }
     };
 
-
-    if(typeof vm.courseId !== 'undefined') {
+    if (typeof vm.courseId !== 'undefined') {
       _getCoursesRoutes();
     } else {
       _getCourses();
     }
 
-
-
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
 
-
-
     /**
-      *
-      * @private
-      */
-    function _getCourses(){
+     *
+     * @private
+     */
+    function _getCourses() {
       CourseService.getCourses(vm.type, true).then(function (data) {
         $scope.course.widgets.sidebar = data.data.items[0].sidebar;
       });
     }
 
-      /**
-       *
-       * @private
-       */
-    function _getCoursesRoutes(){
+    /**
+     *
+     * @private
+     */
+    function _getCoursesRoutes() {
       CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
-        if(data.data.sidebar.length > 0)
+        if (data.data.sidebar.length > 0)
           $scope.course.widgets.sidebar = data.data.sidebar;
         else
           _getCourses();
@@ -108,7 +103,7 @@
      * @private
      */
     function _save() {
-      if(typeof vm.courseId !== 'undefined') {
+      if (typeof vm.courseId !== 'undefined') {
         CourseService.updateRoutesSidebar(vm.type, vm.courseId, $scope.course.widgets.sidebar).then(function () {
           NotificationService.success('sidebar do percurso salva com sucesso!');
         });
@@ -118,6 +113,5 @@
         });
       }
     }
-
   }
 })();
