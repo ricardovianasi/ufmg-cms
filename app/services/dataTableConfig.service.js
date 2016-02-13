@@ -27,7 +27,7 @@
       return DTOptionsBuilder
         .newOptions()
         .withPaginationType('full_numbers')
-        .withDisplayLength(30)
+        .withDisplayLength(25)
         .withLanguage({
           'sEmptyTable': 'Nenhum dado foi encontrado. :(',
           'sInfo': 'Exibindo de _START_ a _END_ de _TOTAL_ resultados',
