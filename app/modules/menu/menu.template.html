@@ -112,7 +112,7 @@ ng-include="'modules/menu/items.template.html'">
                                         <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
                                             <i class="fa fa-pencil"></i> Editar
                                         </a>
-                                        <a class="label label-sm label-danger" ng-click="vm.removeItem('quickAccess', item)" ng-show="!item.editTitle">
+                                        <a class="label label-sm label-danger" ng-click="vm.removeQuickAccessItem($index)" ng-show="!item.editTitle">
                                             <i class="fa fa-close"></i> Apagar
                                         </a>
                                         <a class="label label-sm label-secondary pull-right" ng-click="item.editTitle = false" ng-show="item.editTitle">

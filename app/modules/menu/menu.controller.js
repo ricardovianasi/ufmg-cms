@@ -36,10 +36,8 @@
     vm.removeItem = _removeItem;
     vm.editTitle = _editTitle;
     vm.save = _save;
-    vm.removeItem = _removeItem;
-    vm.editTitle = _editTitle;
-    vm.save = _save;
     vm.newGroup = _newGroup;
+    vm.removeQuickAccessItem = _removeQuickAccessItem;
 
     //Public models
     vm.pages = [];
@@ -121,6 +119,20 @@
           var item = $scope.$eval(menuName);
 
           item.splice(idx, 1);
+        });
+    }
+
+      /**
+       *
+       * @param idx
+       * @private
+       */
+    function _removeQuickAccessItem(idx){
+      ModalService
+        .confirm('Deseja remover o item?')
+        .result
+        .then(function () {
+          $scope.menus.quickAccess.splice(idx, 1);
         });
     }
 
