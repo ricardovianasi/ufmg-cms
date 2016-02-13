@@ -5,25 +5,26 @@
                 <h1 class="title">Sidebar</h1>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="breadcrumb-env">
-
                 <ol class="breadcrumb bc-1">
                     <li>
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
+
                     <li>
                         <a href="#/course">
                             <strong>Cursos</strong>
                         </a>
                     </li>
+
                     <li class="active">
                         <a href="#/course/sidebar/{{ vm.type }}">
                             <strong>Sidebar</strong>
                         </a>
                     </li>
                 </ol>
-
             </div><!--breadcrumb-env-->
         </div>
     </div>
@@ -34,10 +35,12 @@
         <div class="panel-body">
             <label ng-if="!vm.courseId">
                 Editar sidebar:
-                <i>Esta sidebar será aplicada automaticamente para todos os cursos mas poderá ser personalizada se necessário</i>
+                <i>Esta sidebar será aplicada automaticamente para todos os cursos mas poderá ser personalizada se
+                    necessário</i>
             </label>
+
             <label ng-if="vm.courseId">Editar Sidebar do Curso:</label>
-                <div class="row">
+            <div class="row">
                 <div id="sort-side"
                      class="col-xs-6"
                      ng-model="course.widgets.sidebar"
@@ -49,15 +52,19 @@
                                 <h4>
                                     <strong>{{ item.title }}</strong>
                                 </h4>
+
                                 <h5 class="text-capitalize">{{ item.type }}</h5>
                             </div>
+
                             <div class="col-md-4">
                                     <span class="label label-warning" ng-click="vm.handleModule('sidebar', $index)">
                                         <span class="fa fa-pencil"></span> EDITAR
                                     </span>
+
                                     <span class="label label-danger" ng-click="removeModule('sidebar', $index)">
                                         <span class="fa fa-remove"></span> REMOVER
                                     </span>
+
                                     <span class="label label-primary" as-sortable-item-handle>
                                         <span class="fa fa-arrows-v"></span> MOVER
                                     </span>
@@ -66,6 +73,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xs-6">
                     <div class="pages-module add-module" ng-click="vm.handleModule('sidebar')">
@@ -73,11 +81,17 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xs-6">
                     <div class="pull-right">
-                        <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ type }}/{{ courseId }}"><i class="fa fa-remove"></i> Cancelar</a>
-                        <a ng-click="vm.save()" class="btn btn-success pull-left"><i class="fa fa-check"></i> Salvar</a>
+                        <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ vm.type }}/{{ vm.courseId }}">
+                            <i class="fa fa-remove"></i> Cancelar
+                        </a>
+
+                        <a ng-click="vm.save()" class="btn btn-success pull-left">
+                            <i class="fa fa-check"></i> Salvar
+                        </a>
                     </div>
                 </div>
             </div>
