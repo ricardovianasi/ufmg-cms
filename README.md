@@ -8,5 +8,4 @@
 ```
 
 # UFMG CMS
-This is the UFMG 3.0 Portal CMS
- 
+This is the UFMG 3.0 CMS
