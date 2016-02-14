@@ -10,7 +10,7 @@ var knownOptions = {
   string: 'env',
   default: {
     // Default environment is production
-    env: process.env.APP_ENV || 'test'
+    env: process.env.APPLICATION_ENV || 'test'
   }
 };
 
@@ -20,6 +20,8 @@ var env = options.env;
 
 gulp.task('env', function () {
   var file = 'env-'+env+'.json';
+
+  console.log(options);
 
   fs.stat('app/env-local.json', function (err) {
     // Default env file is local
