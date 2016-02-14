@@ -51,14 +51,14 @@
        */
       stop: function (e, ui) {
         // if the element is removed from the first container
-        if (
-          $(e.target).hasClass('selectable') &&
-          ui.item.sortable.droptarget &&
-          e.target != ui.item.sortable.droptarget[0]
-        ) {
-          // clone the original model to restore the removed item
-          //vm.pages = pages.slice();
-        }
+        //if (
+        //  $(e.target).hasClass('selectable') &&
+        //  ui.item.sortable.droptarget &&
+        //  e.target != ui.item.sortable.droptarget[0]
+        //) {
+        //  // clone the original model to restore the removed item
+        //  //vm.pages = pages.slice();
+        //}
       },
       /**
        * @param event
