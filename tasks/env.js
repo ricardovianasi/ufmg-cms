@@ -14,9 +14,10 @@ var knownOptions = {
   }
 };
 
-console.log(colors.black.bgGreen(process.env));
+
 var options = minimist(process.argv.slice(2), knownOptions);
 var env = options.env;
+console.log(colors.black.bgGreen(env));
 
 gulp.task('env', function () {
   var file = 'env-'+env+'.json';
