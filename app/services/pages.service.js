@@ -95,6 +95,7 @@
         cleanPage.widgets.side = [];
       }
 
+      console.log('clenapag >>>>>>>>>>>>>>>>>>>e', cleanPage);
       return cleanPage;
     };
 
@@ -273,6 +274,7 @@
          * @param widget
          */
         highlightedradionews: function (widget) {
+          console.log('1');
           _obj.news = widget.news;
 
           if (widget.news) {
@@ -795,7 +797,10 @@
           _preparingNews($scope);
           _prepareItems($scope);
         },
-        highlightednews: _preparingNews,
+        highlightednews: function ($scope) {
+          _preparingNews($scope);
+          _prepareItems($scope);
+        },
         highlightedgalleries: _preparingGalleries,
         highlightedgallery: _preparingGalleries,
         highlightedevents: _preparingEvents,
@@ -1001,6 +1006,8 @@
             obj.type = widget.type;
             obj.title = widget.title;
 
+
+            console.log(obj, this.parseWidgetToSave(widget));
             angular.extend(obj, this.parseWidgetToSave(widget));
           }
 
@@ -1050,7 +1057,11 @@
        * @returns {*}
        */
       updatePage: function (id, page) {
+        console.log('page >>>>>>>>>', page);
         page = _parseData(page);
+
+        console.log('page depois de clean page>>>>>>>>>', page);
+
 
         return $http.put(apiUrl + '/page/' + id, page);
       },

@@ -118,6 +118,7 @@
 
           var item = $scope.$eval(menuName);
 
+          vm.pages.push(item[idx]);
           item.splice(idx, 1);
         });
     }
@@ -132,6 +133,7 @@
         .confirm('Deseja remover o item?')
         .result
         .then(function () {
+          vm.pages.push($scope.menus.quickAccess[idx]);
           $scope.menus.quickAccess.splice(idx, 1);
         });
     }
