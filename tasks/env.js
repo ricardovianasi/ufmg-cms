@@ -13,6 +13,8 @@ var knownOptions = {
     env: process.env.APPLICATION_ENV || 'test'
   }
 };
+
+console.log(colors.black.bgGreen(knownOptions.default.env));
 var options = minimist(process.argv.slice(2), knownOptions);
 var env = options.env;
 
