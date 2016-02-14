@@ -57,7 +57,7 @@
           e.target != ui.item.sortable.droptarget[0]
         ) {
           // clone the original model to restore the removed item
-          vm.pages = pages.slice();
+          //vm.pages = pages.slice();
         }
       },
       /**
