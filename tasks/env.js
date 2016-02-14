@@ -26,7 +26,6 @@ gulp.task('env', function () {
     }
 
     console.log(colors.black.bgGreen(file));
-    console.log(env, env, env);
 
     gulp.src('./app/'+file)
       .pipe(gulpNgConfig('env'))
