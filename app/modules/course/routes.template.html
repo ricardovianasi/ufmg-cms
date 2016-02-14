@@ -91,7 +91,11 @@
                         <td>
                             <div class="clearfix">
                                 <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}">
-                                    {{ item.subdivision_name }} - {{ item.modality }}
+                                    {{ item.subdivision_name ? item.subdivision_name : item.name  }}
+                                    <span ng-if="item.subdivison_name">
+                                        -
+                                    </span>
+                                    {{ item.modality  }}
                                 </a>
                             </div>
                         </td>
