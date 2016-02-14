@@ -17,7 +17,6 @@ var knownOptions = {
 
 var options = minimist(process.argv.slice(2), knownOptions);
 var env = options.env;
-console.log(process);
 
 gulp.task('env', function () {
   var file = 'env-'+env+'.json';
@@ -28,7 +27,9 @@ gulp.task('env', function () {
       file = 'env-local.json';
     }
 
+    console.log(env);
     console.log(colors.black.bgGreen(file));
+
 
     gulp.src('./app/'+file)
       .pipe(gulpNgConfig('env'))
