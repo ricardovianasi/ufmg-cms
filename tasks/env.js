@@ -13,6 +13,8 @@ var knownOptions = {
     env: process.env.APPLICATION_ENV || 'test'
   }
 };
+
+console.log(process.env.APPLICATION_ENV);
 var options = minimist(process.argv.slice(2), knownOptions);
 var env = options.env;
 
