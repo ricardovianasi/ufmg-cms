@@ -13,7 +13,6 @@ var knownOptions = {
     env: process.env.APPLICATION_ENV || 'test'
   }
 };
-alert(knownOptions.default.env);
 var options = minimist(process.argv.slice(2), knownOptions);
 var env = options.env;
 
@@ -27,6 +26,7 @@ gulp.task('env', function () {
     }
 
     console.log(colors.black.bgGreen(file));
+    console.log(env, env, env);
 
     gulp.src('./app/'+file)
       .pipe(gulpNgConfig('env'))
