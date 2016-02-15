@@ -5,15 +5,24 @@
       reUrlVimeo: /https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/,
       langs: {
         en: {
-          "video": "Video",
-          "video-html-code": "Video Embed Code or Youtube/Vimeo Link"
+          modalTitleVideo: 'Video',
+          descriptionVideo: 'Video Embed Code or Youtube/Vimeo Link'
+        },
+        pt_br: {
+          modalTitleVideo: 'Inserir Vídeo',
+          descriptionVideo: 'Código de incorporação do Vídeo ou Link do Youtube/Vimeo'
         }
       },
+      /**
+       * this function return video modal html structure
+       *
+       * @returns {string} modal html structure
+       */
       getTemplate: function () {
         return String()
           + '<div class="modal-section" id="redactor-modal-video-insert">'
             + '<section>'
-              + '<label>' + this.lang.get('video-html-code') + '</label>'
+              + '<label>' + this.lang.get('descriptionVideo') + '</label>'
               + '<textarea id="redactor-insert-video-area" style="height: 160px;"></textarea>'
             + '</section>'
 
@@ -24,26 +33,20 @@
           + '</div>';
       },
       init: function () {
-        var button = this.button.addAfter('image', 'video', this.lang.get('video'));
+        var button = this.button.addAfter('image', 'video', this.lang.get('modalTitleVideo'));
+
         this.button.addCallback(button, this.video.show);
         this.button.setIcon(button, '<i class="fa-video-camera"></i>');
       },
       show: function () {
+        console.log(this.lang.get('insert'));
+
         this.modal.addTemplate('video', this.video.getTemplate());
-        this.modal.load('video', this.lang.get('video'), 700);
+        this.modal.load('video', this.lang.get('modalTitleVideo'), 700);
         // action button
         this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.video.insert);
+        this.modal.getCancelButton().text(this.lang.get('cancel'));
         this.modal.show();
-
-        // // focus
-        // if (this.detect.isDesktop())
-        // {
-        // 	setTimeout(function()
-        // 	{
-        // 		$('#redactor-insert-video-area').focus();
-
-        // 	}, 1);
-        // }
       },
       insert: function () {
         var data = $('#redactor-insert-video-area').val();
