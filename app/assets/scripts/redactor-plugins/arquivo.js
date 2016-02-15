@@ -3,19 +3,26 @@
     return {
       langs: {
         en: {
-          'modalTitleFiles': 'Upload files',
-          'description': 'Insert files'
+          modalTitleFiles: 'Upload files',
+          descriptionFiles: 'Insert files'
         },
         pt_br: {
-          'modalTitleFiles': 'Upload files',
-          'description': 'upload de arquivos'
+          modalTitleFiles: 'Upload files',
+          descriptionFiles: 'upload de arquivos'
         }
       },
+      /**
+       * this function return files modal html structure
+       *
+       * @returns {string} modal html structure
+       */
       getTemplate: function () {
-        return '<div class="modal-section" id="redactor-modal-uploadfiles-insert">'
+        return String()
+          + '<div class="modal-section" id="redactor-modal-uploadfiles-insert">'
             + '<section>'
               + '<label>OPS.. Ainda estamos Trabalhando nesse componente.</label>'
             + '</section>'
+
             + '<section>'
               + '<button id="redactor-modal-button-cancel">OK</button>'
             + '</section>'
@@ -23,24 +30,14 @@
       },
       init: function () {
         var button = this.button.add('uploadfiles', this.lang.get('modalTitleFiles'));
+
         this.button.setIcon(button, '<i class="fa-file-code-o"></i>');
         this.button.addCallback(button, this.uploadfiles.show);
       },
       show: function () {
         this.modal.addTemplate('uploadfiles', this.uploadfiles.getTemplate());
         this.modal.load('uploadfiles', this.lang.get('modalTitleFiles'), 700);
-        // // action button
         this.modal.show();
-
-        // // focus
-        // if (this.detect.isDesktop())
-        // {
-        //  setTimeout(function()
-        //  {
-        //    $('#redactor-insert-video-area').focus();
-
-        //  }, 1);
-        // }
       },
       insert: function () {
         var data = $('#redactor-insert-video-area').val();

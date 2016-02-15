@@ -1,8 +1,12 @@
 var gulp = require('gulp');
 
 gulp.task('watch', function () {
-  gulp.watch('app/**/*.js', [
+  gulp.watch(['app/**/*.js', '!app/assets/**/*.js'], [
     'js',
+    'refresh'
+  ]);
+  gulp.watch(['app/assets/**/*.js'], [
+    'build-vendors-js',
     'refresh'
   ]);
   gulp.watch('app/lang/**.*', [

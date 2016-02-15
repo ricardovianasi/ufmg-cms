@@ -42,7 +42,7 @@
     'indent': 'Recuar',
     'horizontalrule': 'Linha',
     'upload-label': 'Solte o arquivo aqui ou ',
-    'accessibility-help-label': 'Editor de Rich Text',
+    'accessibility-help-label': 'Editor de Texto Rico',
     'caption': 'Caption'
   };
 })(jQuery);
