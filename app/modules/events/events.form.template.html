@@ -45,6 +45,7 @@
         <form class="form">
             <div class="row">
                 <div class="col-xs-8">
+                    <!-- CATEGORY -->
                     <div class="form-group">
                         <label for="category">Categoria / Tipo do Evento</label>
 
@@ -53,19 +54,26 @@
                                 ng-options="category.id as category.name for category in categories.items"></select>
                     </div>
 
+                    <!-- NAME -->
                     <div class="form-group">
                         <label for="name">Nome do Evento</label>
                         <input id="name" type="text" name="name" class="form-control"
                                ng-model="event.name">
                     </div>
 
+                    <!-- HIGHLIGHT -->
                     <div class="form-group">
-                        <label>Tags</label>
-
-                        <tags-input add-on-comma="false" ng-model="event.tags"></tags-input>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="event.highlight"
+                                       ng-checked="event.highlight"> Evento Destaque
+                            </label>
+                        </div>
                     </div>
                 </div>
 
+                <!-- POSTER -->
                 <div class="col-xs-4">
                     <div style="margin-top: 20px" class="pages-module pages-module-cover add-module">
                         <div class="chosen-cover">
@@ -90,8 +98,20 @@
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- TAGS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Tags</label>
+
+                        <tags-input add-on-comma="false" ng-model="event.tags"></tags-input>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHOTO -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -118,21 +138,24 @@
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
-            <div class="col-xs-12">
-                <div class=form-group>
-                    <label class="">Cursos de Interesse</label>
+            <!-- COURSES -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class=form-group>
+                        <label class="">Cursos de Interesse</label>
 
-                    <div class="row">
-                        <div class="col-md-4" ng-repeat="course in courses.items">
-                            <div class="checkbox">
-                                <label for="course-{{ course.id }}">
-                                    <input type="checkbox" value="{{ course.id }}" name="courses[]"
-                                           id="course-{{ course.id }}"
-                                           ng-checked="event.courses.indexOf(course.id) !== -1"
-                                           ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
-                                </label>
+                        <div class="row">
+                            <div class="col-md-4" ng-repeat="course in courses.items">
+                                <div class="checkbox">
+                                    <label for="course-{{ course.id }}">
+                                        <input type="checkbox" value="{{ course.id }}" name="courses[]"
+                                               id="course-{{ course.id }}"
+                                               ng-checked="event.courses.indexOf(course.id) !== -1"
+                                               ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -140,6 +163,7 @@
             </div>
 
             <div class="row">
+                <!-- AUDIO -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="audio">Áudio</label>
@@ -152,6 +176,7 @@
                     </div>
                 </div>
 
+                <!-- VIDEO -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="video">Vídeo</label>
@@ -163,19 +188,21 @@
                                placeholder="Inserir URL">
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- DESCRIPTION -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="description">Descrição</label>
                         <textarea id="description" name="description" cols="30" rows="5" class="form-control"
-                                  ng-model="event.description"
-                        ></textarea>
+                                  redactor
+                                  ng-model="event.description"></textarea>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- DATASHEET -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -187,11 +214,12 @@
                                   audioUpload-options="audioUploadOptions"></textarea>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
             <div class="row">
                 <div class="col-xs-6">
                     <div class="well well-sm">
+                        <!-- START DATE -->
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
@@ -227,6 +255,7 @@
                             </div>
                         </div>
 
+                        <!-- END DATE -->
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
@@ -265,6 +294,7 @@
                     </div>
                 </div>
 
+                <!-- DURATION -->
                 <div class="col-xs-3">
                     <div class="well well-sm">
                         <div class="row">
@@ -282,15 +312,17 @@
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
             <div class="row">
                 <div class="col-xs-6">
+                    <!-- LOCAL -->
                     <div class="form-group">
                         <label for="local">Local</label>
                         <input id="local" type="text" name="local" ng-model="event.local" class="form-control">
                     </div>
 
+                    <!-- INVESTMENT -->
                     <div class="form-group">
                         <label for="investment">Investimento</label>
                         <input id="investment" type="text" name="investment" ng-model="event.investment"
@@ -299,19 +331,22 @@
                 </div>
 
                 <div class="col-xs-6">
+                    <!-- ADDRESS -->
                     <div class="form-group">
                         <label for="address">Endereço</label>
                         <input id="address" type="text" name="address" ng-model="event.address" class="form-control">
                     </div>
 
+                    <!-- REGISTRATION -->
                     <div class="form-group">
                         <label for="enrollment">Inscrição</label>
                         <input id="enrollment" type="text" name="enrollment" ng-model="event.registration"
                                class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- FREE -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -324,9 +359,10 @@
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
             <div class="row">
+                <!-- PHONE -->
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="phone">Telefone</label>
@@ -334,6 +370,7 @@
                     </div>
                 </div>
 
+                <!-- EMAIL -->
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="email">E-mail de contato</label>
@@ -341,13 +378,14 @@
                     </div>
                 </div>
 
+                <!-- SITE -->
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="site">Site</label>
                         <input id="site" type="text" name="site" ng-model="event.site" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
         </form>
     </div>
 
