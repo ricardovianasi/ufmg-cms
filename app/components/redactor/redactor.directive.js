@@ -93,11 +93,11 @@
 
         var additionalOptions = $scope.$eval(attrs.redactor) || {};
 
+        angular.extend(_options, additionalOptions);
+
         if (additionalOptions.plugins !== false) {
           //as of angular.extend does not know how to treat array attributes
           var defaultPlugins = _options.plugins;
-
-          angular.extend(_options, additionalOptions);
 
           if (typeof additionalOptions.plugins !== 'undefined') {
             _options.plugins = defaultPlugins.concat(additionalOptions.plugins);
