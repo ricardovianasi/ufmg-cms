@@ -6,26 +6,32 @@
 
   EventsController.$inject = [
     '$scope',
+    '$route',
     'dataTableConfigService',
     'EventsService',
     'DateTimeHelper',
     'ModalService',
+    'NotificationService',
   ];
 
   /**
    * @param $scope
+   * @param $route
    * @param dataTableConfigService
    * @param EventsService
    * @param DateTimeHelper
    * @param ModalService
+   * @param NotificationService
    *
    * @constructor
    */
   function EventsController($scope,
+                            $route,
                             dataTableConfigService,
                             EventsService,
                             DateTimeHelper,
-                            ModalService) {
+                            ModalService,
+                            NotificationService) {
     console.log('... EventsController');
 
     $scope.title = 'Eventos';
@@ -58,7 +64,7 @@
         .then(function () {
           EventsService.destroy(id).then(function () {
             NotificationService.success('Evento removido com sucesso!');
-            loadEvents();
+            $route.reload();
           });
         });
     };
