@@ -26,7 +26,6 @@ gulp.task('env', function () {
       file = 'env-local.json';
     }
 
-    console.log(env);
     console.log(colors.black.bgGreen(file));
 
     gulp.src('./app/'+file)
