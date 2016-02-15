@@ -95,7 +95,6 @@
         cleanPage.widgets.side = [];
       }
 
-      console.log('clenapag >>>>>>>>>>>>>>>>>>>e', cleanPage);
       return cleanPage;
     };
 
@@ -128,39 +127,49 @@
     };
 
     /**
-     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial, handle}}
+     * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial, handle, makeWidget}}
      *
      * @private
      */
     var _module = (function (_getPages, $uibModal) {
-      var _obj = {};
-
       // Parse widget object to send its data to webservice
       var _parseToSave = {
         /**
          * Text
          *
          * @param widget
+         *
+         * @returns {{text: (*|null)}}
          */
         text: function (widget) {
-          _obj.text = widget.text || (widget.content ? widget.content.text : null);
+          return {
+            text: widget.text || (widget.content ? widget.content.text : null),
+          };
         },
         /**
          * Highlighted Event
          *
          * @param widget
+         *
+         * @returns {{event: (*|null)}}
          */
         highlightedevent: function (widget) {
-          _obj.event = widget.event_id || (widget.content ? widget.content.event.id : null);
+          return {
+            event: widget.event_id || (widget.content ? widget.content.event.id : null),
+          };
         },
         /**
          * Highlighted Events
          *
          * @param widget
+         *
+         * @returns {*}
          */
         highlightedevents: function (widget) {
           if (widget.events) {
-            _obj.events = widget.events;
+            return {
+              events: widget.events,
+            };
           } else {
             if (widget.content.events) {
               var eventsToSelect = [];
@@ -169,7 +178,9 @@
                 eventsToSelect.push(event.id);
               });
 
-              _obj.events = eventsToSelect;
+              return {
+                events: eventsToSelect,
+              };
             }
           }
         },
@@ -177,22 +188,32 @@
          * Gallery
          *
          * @param widget
+         *
+         * @returns {{gallery: (*|null)}}
          */
         gallery: function (widget) {
-          _obj.gallery = widget.gallery_id || (widget.content ? widget.content.gallery.id : null);
+          return {
+            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+          };
         },
         /**
          * Highlighted Gallery
          *
          * @param widget
+         *
+         * @returns {{gallery: (*|null)}}
          */
         highlightedgallery: function (widget) {
-          _obj.gallery = widget.gallery_id || (widget.content ? widget.content.gallery.id : null);
+          return {
+            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+          };
         },
         /**
          * Highlighted Galleries
          *
          * @param widget
+         *
+         * @returns {{galleries: (*|Array)}}
          */
         highlightedgalleries: function (widget) {
           // var galleriesToSelect = [];
@@ -201,61 +222,87 @@
           //     });
           //     _obj.galleries = galleriesToSelect;
 
-          _obj.galleries = widget.galleries ? widget.galleries : widget.content.galleries;
+          return {
+            galleries: widget.galleries ? widget.galleries : widget.content.galleries,
+          };
         },
         /**
          * Last Image Sidebar
          *
          * @param widget
+         *
+         * @returns {{category: (*|Document.category|string|string|null)}}
          */
         lastimagessidebar: function (widget) {
-          _obj.category = widget.category || (widget.content ? widget.content.category.id : null);
+          return {
+            category: widget.category || (widget.content ? widget.content.category.id : null),
+          };
         },
         /**
          * List News
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.typeNews = widget.typeNews || (widget.content ? widget.content.typeNews : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Event List
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), tag: (*|null)}}
          */
         eventlist: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Release List
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null)}}
          */
         releaselist: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+          };
         },
         /**
          * Related News
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.typeNews = widget.typeNews || (widget.content ? widget.content.typeNews : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Highlighted News
          *
          * @param widget
+         *
+         * @returns {{news: (*|null)}}
          */
         highlightednews: function (widget) {
           if (widget.news) {
-            _obj.news = widget.news;
+            return {
+              news: widget.news,
+            };
           } else {
             if (widget.content.news) {
               var newsToSelect = [];
@@ -264,7 +311,9 @@
                 newsToSelect.push(news.id);
               });
 
-              _obj.news = newsToSelect;
+              return {
+                news: newsToSelect,
+              };
             }
           }
         },
@@ -272,11 +321,10 @@
          * Highlighted Radio News
          *
          * @param widget
+         *
+         * @returns {{news: (*|null)}
          */
         highlightedradionews: function (widget) {
-          console.log('1');
-          _obj.news = widget.news;
-
           if (widget.news) {
             var newsToSelect = [];
 
@@ -284,17 +332,23 @@
               newsToSelect.push(news.id);
             });
 
-            _obj.news = newsToSelect;
+            return {
+              news: newsToSelect,
+            };
           }
+
+          return {
+            news: widget.news,
+          };
         },
         /**
          * Highlighted News Video
          *
          * @param widget
+         *
+         * @returns {{news: (*|null)}}
          */
         highlightednewsvideo: function (widget) {
-          _obj.news = widget.news;
-
           if (widget.news) {
             var newsToSelect = [];
 
@@ -302,19 +356,29 @@
               newsToSelect.push(news.id);
             });
 
-            _obj.news = newsToSelect;
+            return {
+              news: newsToSelect,
+            };
           }
+
+          return {
+            news: widget.news,
+          };
         },
         /**
          * Editorial News
          *
          * @param widget
+         *
+         * @returns {{tag: (*|null)}}
          */
         editorialnews: function (widget) {
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          var obj = {
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
 
           if (widget.news) {
-            _obj.news = widget.news;
+            obj.news = widget.news;
           } else {
             if (widget.content.news) {
               var newsToSelect = [];
@@ -322,14 +386,19 @@
               angular.forEach(widget.content.news, function (news) {
                 newsToSelect.push(news.id);
               });
-              _obj.news = newsToSelect;
+
+              obj.news = newsToSelect;
             }
           }
+
+          return obj;
         },
         /**
          * Internal Menu
          *
          * @param widget
+         *
+         * @returns {{links: Array}}
          */
         internalmenu: function (widget) {
           var widgetLinks = [];
@@ -352,71 +421,101 @@
             });
           });
 
-          _obj.links = widgetLinks;
+          return {
+            links: widgetLinks,
+          };
         },
         /**
          * Hub Links
          *
          * @param widget
+         *
+         * @returns {{links: null}}
          */
         hublinks: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+          return {
+            links: widget.content ? widget.content.links : null,
+          };
         },
         /**
          * Sidebar Button
          *
          * @param widget
+         *
+         * @returns {{label: (*|null), url: (*|null), icon: (*|null)}}
          */
         sidebarbutton: function (widget) {
-          _obj.label = widget.label || (widget.content ? widget.content.label : null);
-          _obj.url = widget.url || (widget.content ? widget.content.external_url : null);
-          _obj.icon = widget.icon || (widget.content ? widget.content.icon.id : null);
+          return {
+            label: widget.label || (widget.content ? widget.content.label : null),
+            url: widget.url || (widget.content ? widget.content.external_url : null),
+            icon: widget.icon || (widget.content ? widget.content.icon.id : null),
+          };
         },
         /**
          * Highlighted Release
          *
          * @param widget
+         *
+         * @returns {{title: *, description: *, release: (*|release|Cropper.release|Date|null), specialists: Array, image: *}}
          */
         highlightedrelease: function (widget) {
-          _obj.title = widget.title;
-          _obj.description = widget.content.description;
-          _obj.release = widget.content.release;
-          _obj.specialists = [];
-          _obj.image = widget.content.image.id;
+          var obj = {
+            title: widget.title,
+            description: widget.content.description,
+            release: widget.content.release,
+            specialists: [],
+            image: widget.content.image.id,
+          };
 
           angular.forEach(widget.content.specialists, function (specialist) {
             delete specialist.opened;
 
-            _obj.specialists.push(specialist);
+            obj.specialists.push(specialist);
           });
+
+          return obj;
         },
         /**
          * Last Tv Programs
          *
          * @param widget
+         *
+         * @returns {{type: *, title: *}}
          */
         lasttvprograms: function (widget) {
-          _obj.type = widget.type;
-          _obj.title = widget.title;
+          return {
+            type: widget.type,
+            title: widget.title,
+          };
         },
         /**
          * Communication Events
          *
          * @param widget
+         *
+         * @returns {{type: *, event: *}}
          */
         comevents: function (widget) {
-          _obj.type = widget.type;
-          _obj.event = widget.content.event.id;
+          return {
+            type: widget.type,
+            event: widget.content.event.id,
+          };
         },
         /**
+         * Communication Highlight News
+         *
          * @param widget
+         *
+         * @returns {{type: *, news: *[]}}
          */
         comhighlightnews: function (widget) {
-          _obj.type = widget.type;
-          _obj.news = [
-            widget.content.news[0].id,
-            widget.content.news[1].id,
-          ];
+          return {
+            type: widget.type,
+            news: [
+              widget.content.news[0].id,
+              widget.content.news[1].id,
+            ]
+          };
         },
       };
 
@@ -426,26 +525,38 @@
          * Text
          *
          * @param widget
+         *
+         * @returns {{text: (*|null)}}
          */
         text: function (widget) {
-          _obj.text = widget.text || (widget.content ? widget.content.text : null);
+          return {
+            text: widget.text || (widget.content ? widget.content.text : null),
+          };
         },
         /**
          * Highlighted Event
          *
          * @param widget
+         *
+         * @returns {{event: (*|null)}}
          */
         highlightedevent: function (widget) {
-          _obj.event = widget.event_id || (widget.content ? widget.content.event.id : null);
+          return {
+            event: widget.event_id || (widget.content ? widget.content.event.id : null),
+          };
         },
         /**
          * Highlighted Events
          *
          * @param widget
+         *
+         * @returns {{events: (*|null)}}
          */
         highlightedevents: function (widget) {
           if (widget.events) {
-            _obj.events = widget.events;
+            return {
+              events: widget.events,
+            };
           } else {
             if (widget.content.events) {
               var eventsToSelect = [];
@@ -454,44 +565,62 @@
                 eventsToSelect.push(event.id);
               });
 
-              _obj.events = eventsToSelect;
+              return {
+                events: eventsToSelect,
+              };
             }
           }
         },
         /**
+         * Highlight News Video
+         *
          * @param widget
+         *
+         * @returns {{text: *}}
          */
         highlightednewsvideo: function (widget) {
-          _obj.text = widget.text;
+          var obj = {
+            text: widget.text,
+          };
 
           if ('content' in widget) {
-            _obj.news = widget.content.news;
-          }
-          else {
-            _obj.news = widget.news;
+            obj.news = widget.content.news;
+          } else {
+            obj.news = widget.news;
           }
 
+          return obj;
         },
         /**
          * Gallery
          *
          * @param widget
+         *
+         * @returns {{gallery: (*|null)}}
          */
         gallery: function (widget) {
-          _obj.gallery = widget.gallery_id || (widget.content ? widget.content.gallery.id : null);
+          return {
+            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+          };
         },
         /**
          * Highlighted Gallery
          *
          * @param widget
+         *
+         * @returns {{gallery: (*|null)}}
          */
         highlightedgallery: function (widget) {
-          _obj.gallery = widget.gallery_id || (widget.content ? widget.content.gallery.id : null);
+          return {
+            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+          };
         },
         /**
          * Highlighted Galleries
          *
          * @param widget
+         *
+         * @returns {{galleries: (*|Array)}}
          */
         highlightedgalleries: function (widget) {
           // var galleriesToSelect = [];
@@ -500,61 +629,87 @@
           //     });
           //     _obj.galleries = galleriesToSelect;
 
-          _obj.galleries = widget.galleries ? widget.galleries : widget.content.galleries;
+          return {
+            galleries: widget.galleries ? widget.galleries : widget.content.galleries,
+          };
         },
         /**
          * Last Image Sidebar
          *
          * @param widget
+         *
+         * @returns {{category: (*|Document.category|string|string|null)}}
          */
         lastimagessidebar: function (widget) {
-          _obj.category = widget.category || (widget.content ? widget.content.category.id : null);
+          return {
+            category: widget.category || (widget.content ? widget.content.category.id : null),
+          };
         },
         /**
          * List News
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.typeNews = widget.typeNews || (widget.content ? widget.content.typeNews : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Event List
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), tag: (*|null)}}
          */
         eventlist: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Release List
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null)}}
          */
         releaselist: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+          };
         },
         /**
          * Related News
          *
          * @param widget
+         *
+         * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
-          _obj.limit = widget.limit || (widget.content ? widget.content.limit : null);
-          _obj.typeNews = widget.typeNews || (widget.content ? widget.content.typeNews : null);
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          return {
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
         },
         /**
          * Highlighted News
          *
          * @param widget
+         *
+         * @returns {{news: (*|null)}}
          */
         highlightednews: function (widget) {
           if (widget.news) {
-            _obj.news = widget.news;
+            return {
+              news: widget.news,
+            };
           } else {
             if (widget.content.news) {
               var newsToSelect = [];
@@ -563,7 +718,9 @@
                 newsToSelect.push(news.id);
               });
 
-              _obj.news = newsToSelect;
+              return {
+                news: newsToSelect,
+              };
             }
           }
         },
@@ -571,12 +728,16 @@
          * Editorial News
          *
          * @param widget
+         *
+         * @returns {{tag: (*|null), news: (*|null)}}
          */
         editorialnews: function (widget) {
-          _obj.tag = widget.tag || (widget.content ? widget.content.tag : null);
+          var obj = {
+            tag: widget.tag || (widget.content ? widget.content.tag : null),
+          };
 
           if (widget.news) {
-            _obj.news = widget.news;
+            obj.news = widget.news;
           } else {
             if (widget.content.news) {
               var newsToSelect = [];
@@ -584,92 +745,203 @@
               angular.forEach(widget.content.news, function (news) {
                 newsToSelect.push(news.id);
               });
-              _obj.news = newsToSelect;
+
+              obj.news = newsToSelect;
             }
           }
+
+          return obj;
         },
         /**
          * Internal Menu
          *
          * @param widget
+         *
+         * @returns {{links: Array}}
          */
         internalmenu: function (widget) {
-
-          var widgetlinks = [];
+          var widgetLinks = [];
 
           angular.forEach(widget.content.links, function (links) {
             if (links.external_url) {
               links.isExternal = true;
-              widgetlinks.push(links);
+              widgetLinks.push(links);
             } else {
-              widgetlinks.push(links);
+              widgetLinks.push(links);
             }
           });
 
-          _obj.links = widgetlinks;
+          return {
+            links: widgetLinks,
+          };
         },
         /**
          * Hub Links
          *
          * @param widget
+         *
+         * @returns {{links: null}}
          */
         hublinks: function (widget) {
-          _obj.links = widget.content ? widget.content.links : null;
+          return {
+            links: widget.content ? widget.content.links : null,
+          };
         },
         /**
          * Sidebar Button
          *
          * @param widget
+         *
+         * @returns {{label: (*|null), url: (*|null), icon: (*|null)}}
          */
         sidebarbutton: function (widget) {
-          _obj.label = widget.label || (widget.content ? widget.content.label : null);
-          _obj.url = widget.url || (widget.content ? widget.content.external_url : null);
-          _obj.icon = widget.icon || (widget.content ? widget.content.icon.id : null);
+          return {
+            label: widget.label || (widget.content ? widget.content.label : null),
+            url: widget.url || (widget.content ? widget.content.external_url : null),
+            icon: widget.icon || (widget.content ? widget.content.icon.id : null),
+          };
         },
         /**
          * Highlighted Release
          *
          * @param widget
+         *
+         * @returns {{title: *, content: *}}
          */
         highlightedrelease: function (widget) {
-          _obj.title = widget.title;
-          _obj.content = widget.content;
+          return {
+            title: widget.title,
+            content: widget.content,
+          };
         },
         /**
          * Last Tv Programs
          *
          * @param widget
+         *
+         * @returns {{type: *}}
          */
         lasttvprograms: function (widget) {
-          _obj.type = widget.type;
+          return {
+            type: widget.type,
+          };
         },
         /**
          * Communication Events
          *
          * @param widget
+         *
+         * @returns {{content: *, event: {selected: *}}}
          */
         comevents: function (widget) {
-          _obj.content = widget.content;
-          _obj.event = {
-            selected: widget.content.event
+          return {
+            content: widget.content,
+            event: {
+              selected: widget.content.event
+            },
           };
         },
         /**
          * Communication Highlighted News
          *
          * @param widget
+         *
+         * @returns {{content: *, news: *[]}}
          */
         comhighlightnews: function (widget) {
-          _obj.content = widget.content;
-          _obj.news = [
-            {
-              selected: widget.content.news[0]
-            },
-            {
-              selected: widget.content.news[1]
-            },
-          ];
+          return {
+            content: widget.content,
+            news: [
+              {
+                selected: widget.content.news[0]
+              },
+              {
+                selected: widget.content.news[1]
+              },
+            ],
+          };
         },
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _prepareItems = function ($scope) {
+        $scope.addItem = function (item, type) {
+
+          if ($scope.widget[type]) {
+            $scope.widget[type].push(item);
+          } else {
+            $scope.widget[type] = [];
+            $scope.widget[type].push(item);
+          }
+        };
+
+        $scope.removeItem = function (idx, type) {
+          if ($scope.widget[type][idx]) {
+            $scope.widget[type].splice(idx, 1);
+          }
+        };
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingNewsTypes = function ($scope) {
+        $scope.news_types = [];
+
+        NewsService.getNewsTypes().then(function (data) {
+          $scope.news_types = data.data;
+        });
+
+        _getTags($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingNews = function ($scope) {
+        $scope.news = [];
+
+        NewsService.getNews().then(function (data) {
+          $scope.news = data.data;
+        });
+
+        _getTags($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingGalleries = function ($scope) {
+        $scope.galleries = [];
+
+        GalleryService.getGalleries().then(function (data) {
+          $scope.galleries = data.data;
+        });
+
+        _prepareItems($scope);
+      };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+      var _preparingEvents = function ($scope) {
+        $scope.events = [];
+
+        EventsService.getEvents().then(function (data) {
+          $scope.events = data.data;
+        });
       };
 
       // Partial preparing
@@ -829,87 +1101,6 @@
         },
       };
 
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _prepareItems = function ($scope) {
-        $scope.addItem = function (item, type) {
-
-          if ($scope.widget[type]) {
-            $scope.widget[type].push(item);
-          } else {
-            $scope.widget[type] = [];
-            $scope.widget[type].push(item);
-          }
-        };
-
-        $scope.removeItem = function (idx, type) {
-          if ($scope.widget[type][idx]) {
-            $scope.widget[type].splice(idx, 1);
-          }
-        };
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingNewsTypes = function ($scope) {
-        $scope.news_types = [];
-
-        NewsService.getNewsTypes().then(function (data) {
-          $scope.news_types = data.data;
-        });
-
-        _getTags($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingNews = function ($scope) {
-        $scope.news = [];
-
-        NewsService.getNews().then(function (data) {
-          $scope.news = data.data;
-        });
-
-        _getTags($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingGalleries = function ($scope) {
-        $scope.galleries = [];
-
-        GalleryService.getGalleries().then(function (data) {
-          $scope.galleries = data.data;
-        });
-
-        _prepareItems($scope);
-      };
-
-      /**
-       * @param $scope
-       *
-       * @private
-       */
-      var _preparingEvents = function ($scope) {
-        $scope.events = [];
-
-        EventsService.getEvents().then(function (data) {
-          $scope.events = data.data;
-        });
-      };
-
       return {
         /**
          * @param {object} widget
@@ -920,10 +1111,8 @@
           clog('parseWidgetToSave >>>', widget);
 
           if (typeof _parseToSave[widget.type] !== 'undefined') {
-            _parseToSave[widget.type](widget);
+            return _parseToSave[widget.type](widget);
           }
-
-          return _obj;
         },
         /**
          * @param {object} widget
@@ -934,10 +1123,8 @@
           clog('parseWidgetToLoad >>>', widget);
 
           if (typeof _parseToLoad[widget.type] !== 'undefined') {
-            _parseToLoad[widget.type](widget);
+            return _parseToLoad[widget.type](widget);
           }
-
-          return _obj;
         },
         /**
          * @param $scope
@@ -977,14 +1164,15 @@
 
           moduleModal.result.then(function (data) {
             if (typeof idx !== 'undefined') {
-              if ($scope.page)
+              if ($scope.page) {
                 $scope.page.widgets[column][idx] = data;
-              else
+              } else {
                 $scope.course.widgets[column][idx] = data;
+              }
             } else {
-              if ($scope.page)
+              if ($scope.page) {
                 $scope.page.widgets[column].push(data);
-              else {
+              } else {
                 $scope.course.widgets[column].push(data);
               }
             }
@@ -1006,8 +1194,6 @@
             obj.type = widget.type;
             obj.title = widget.title;
 
-
-            clog('log >>>>>>>>>>', this.parseWidgetToSave(widget), widget);
             angular.extend(obj, this.parseWidgetToSave(widget));
           }
 
@@ -1057,11 +1243,7 @@
        * @returns {*}
        */
       updatePage: function (id, page) {
-        console.log('page >>>>>>>>>', page);
         page = _parseData(page);
-
-        console.log('page depois de clean page>>>>>>>>>', page);
-
 
         return $http.put(apiUrl + '/page/' + id, page);
       },
