@@ -1007,7 +1007,7 @@
             obj.title = widget.title;
 
 
-            console.log(obj, this.parseWidgetToSave(widget));
+            clog('log >>>>>>>>>>', this.parseWidgetToSave(widget), widget);
             angular.extend(obj, this.parseWidgetToSave(widget));
           }
 
