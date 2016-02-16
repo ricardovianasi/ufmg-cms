@@ -22,32 +22,6 @@
   function Redactor($timeout, _, RedactorPluginService) {
     console.log('... RedactorDirective');
 
-    var _options = {
-      lang: 'pt_br',
-      plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
-      buttons: [
-        'html',
-        'format',
-        'bold',
-        'italic',
-        'link',
-        'file'
-      ],
-      tabKey: false,
-      pastePlainText: true,
-      pasteImages: false,
-      pasteLinks: false,
-      maxHeight: 500,
-      formatting: ['p', 'blockquote'],
-      formattingAdd: {
-        'red-p-add': {
-          title: '<i class="fa fa-text-height"></i> Subtítulo',
-          args: ['h3', 'class', 'news__subtitle', 'toggle']
-        }
-      },
-      linkTooltip: true
-    };
-
     /**
      * Apply plugins on Redactor according to directive attribute
      *
@@ -71,10 +45,10 @@
 
     return {
       restrict: 'A',
-      require: 'ngModel',
       scope: {
         redactor: '=?'
       },
+      require: 'ngModel',
       /**
        * @param $scope
        * @param elem
@@ -82,15 +56,42 @@
        * @param ngModel
        */
       link: function ($scope, elem, attrs, ngModel) {
-        //redactor callbacks
-        _options.callbacks = {
-          change: function updateModel(value) {
-            //$timeout to avoid $digest collision
-            $timeout(function () {
-              $scope.$apply(function () {
-                ngModel.$setViewValue(value);
+        var _options = {
+          lang: 'pt_br',
+          plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
+          buttons: [
+            'html',
+            'format',
+            'bold',
+            'italic',
+            'link',
+            'file'
+          ],
+          tabKey: false,
+          pastePlainText: true,
+          pasteImages: false,
+          pasteLinks: false,
+          maxHeight: 500,
+          formatting: ['p', 'blockquote'],
+          formattingAdd: {
+            'red-p-add': {
+              title: '<i class="fa fa-text-height"></i> Subtítulo',
+              args: ['h3', 'class', 'news__subtitle', 'toggle']
+            }
+          },
+          linkTooltip: true,
+          callbacks: {
+            /**
+             * @param value
+             */
+            change: function updateModel(value) {
+              //$timeout to avoid $digest collision
+              $timeout(function () {
+                $scope.$apply(function () {
+                  ngModel.$setViewValue(value);
+                });
               });
-            });
+            }
           }
         };
 
@@ -126,7 +127,7 @@
             elem.off('remove');
             elem.redactor('core.destroy');
           });
-        });
+        }, 500);
 
         ngModel.$render = function render() {
           if (angular.isDefined(editor)) {
@@ -134,7 +135,7 @@
               elem.redactor('code.set', ngModel.$viewValue || '');
 
               $scope.redactorLoaded = true;
-            });
+            }, 500);
           }
         };
       }
