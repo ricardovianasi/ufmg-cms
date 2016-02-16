@@ -2,7 +2,7 @@
     <div class="row flexcenter">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Cursos</h1>
+                <h1 class="title">Percursos</h1>
             </div>
         </div>
         <div class="col-md-6">
@@ -14,12 +14,17 @@
                     </li>
                     <li>
                         <a href="#/course">
-                            <strong>Cursos</strong>
+                            Cursos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/course">
+                            Nível Acadêmico
                         </a>
                     </li>
                     <li>
                         <a href="#/course/list/{{ vm.type }}">
-                            <strong>{{ vm.type|translate }}</strong>
+                           {{ vm.type|translate }}
                         </a>
                     </li>
                     <li class="active">
@@ -40,7 +45,7 @@
 
 
             <div class="btn-toolbar">
-
+                <a ng-href="#/course/list/{{ vm.type }}" class="btn btn-gray"><i class="fa fa-angle-left"></i> &nbsp;Voltar para Cursos</a>
                 <div class="pull-right">
                     <a ng-click="vm.showCover = true"
                        class="btn btn-secondary btn-lg pull-left"
@@ -82,7 +87,7 @@
                 <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th>Nome do Curso</th>
+                        <th>Nome do Percurso</th>
                         <th>Ações</th>
                     </tr>
                     </thead>
