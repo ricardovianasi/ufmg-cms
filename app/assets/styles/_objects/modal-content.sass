@@ -1,22 +1,28 @@
 // Modal
 
-.modal-content .chosen-cover .remove-image
-  top: 30px
-  right:30px
+.modal-content
+  padding: 0px !important;
+  border: none
+  .chosen-cover
+    .remove-image
+      top: 30px
+      right:30px
 
 .modal-footer
   background-color: whitesmoke
   padding: 15px 30px 15px 30px !important;
 
-.tab-content .modal-footer
-  margin: 30px -30px -30px -30px
+.tab-content
+  .modal-footer
+    margin: 30px -30px -30px -30px
 
-#modal-image .mr-image
-  margin: 0px
-
-.modal-content
-  padding: 0px !important;
-  border: none
+#modal-image
+  .mr-image
+    margin: 0px
+  .panel-body
+    &#modal-audio
+      .panel-body
+        display: flex
 
 .modal-header
   background-color: #2c2e2f
@@ -27,23 +33,19 @@
 .modal-body
   padding: 30px !important;
 
-.panel-edit .panel-body
-  background-color: whitesmoke
-  margin: 0px
-  padding-bottom: 20px
-  padding-top: 20px
-  border: none
-  display: flex
-  color: black
-
-#modal-image .panel-body, #modal-audio .panel-body
-  display: flex
-
 .panel-edit
   padding: 0px
+  .panel-body
+    background-color: whitesmoke
+    margin: 0px
+    padding-bottom: 20px
+    padding-top: 20px
+    border: none
+    display: flex
+    color: black
+  .btn
+    margin: 0px
 
-.panel-edit .btn
-  margin: 0px
 
 // Lib items
 
@@ -60,27 +62,6 @@
   height: 8vw
   overflow: hidden;
   padding: 15px
-
-
-// Tabs
-
-.nav-tabs
-  background-color: whitesmoke
-
-.nav-tabs li
-  padding: 10px
-
-.nav-tabs .active
-  border: 1px solid lightgray
-  border-bottom: none
-  background-color: white
-  position: relative
-  bottom: -1px
-
-.tab-content
-  padding: 30px !important
-  margin-bottom: 0px !important
-  border: 1px solid lightgray
 
 // Img
 
@@ -107,30 +88,29 @@
   float: right
   cursor: pointer
   font-size: 30px
-  position: relative
+  position: relativeL
   top: -10px
 
 .close-modal:hover
     color: lightgrey
 
-// Icons
-
-.tab-content #home i
-  font-size: 100px
-
 // Btn
 
-.tab-content #home a
-  padding: 50px
+.tab-content
+  #home
+    a
+      padding: 50px
 
 // Title
 
-.title-env .title
-  font-weight: bold
+.title-env
+  .title
+    font-weight: bold
 
 // Crop
 
-#crop a
-  margin-left: 20px
-  margin-right: 20px
-  margin-bottom: 20px
+#crop
+  a
+    margin-left: 20px
+    margin-right: 20px
+    margin-bottom: 20px
