@@ -40,35 +40,37 @@
                                DateTimeHelper) {
     console.log('... EventsNewController');
 
-    $scope.title = 'Novo Evento';
-    $scope.breadcrumb = $scope.title;
-    $scope.event = {
+    var vm = this;
+
+    vm.title = 'Novo Evento';
+    vm.breadcrumb = vm.title;
+    vm.event = {
       status: StatusService.STATUS_PUBLISHED,
       courses: [],
       tags: []
     };
-    $scope.categories = [];
-    $scope.courses = [];
+    vm.categories = [];
+    vm.courses = [];
 
     /**
      * Controls event.courses array
      *
      * @param {number} courseId
      */
-    $scope.toggleSelection = function toggleSelection(courseId) {
-      var idx = $scope.event.courses.indexOf(courseId);
+    vm.toggleSelection = function toggleSelection(courseId) {
+      var idx = vm.event.courses.indexOf(courseId);
 
       if (idx > -1) {
-        $scope.event.courses.splice(idx, 1);
+        vm.event.courses.splice(idx, 1);
       } else {
-        $scope.event.courses.push(courseId);
+        vm.event.courses.push(courseId);
       }
     };
 
     /**
      * Datepicker options
      */
-    $scope.datepickerOpt = {
+    vm.datepickerOpt = {
       initDate: DateTimeHelper.getDatepickerOpt(),
       endDate: DateTimeHelper.getDatepickerOpt()
     };
@@ -78,75 +80,38 @@
      *
      * @type {{opened: boolean}}
      */
-    $scope.datepickerOpt.initDate.status = {
+    vm.datepickerOpt.initDate.status = {
       opened: false
     };
-    $scope.datepickerOpt.endDate.status = {
+    vm.datepickerOpt.endDate.status = {
       opened: false
     };
 
     /**
      * Timepicker options
      */
-    $scope.timepickerOpt = {
+    vm.timepickerOpt = {
       initTime: DateTimeHelper.getTimepickerOpt(),
       endTime: DateTimeHelper.getTimepickerOpt()
     };
 
-    $scope.redactorOptions = {
+    vm.redactorOptions = {
       plugins: false,
     };
 
-    $scope.imagencropOptions = {
-      /**
-       * @param redactor
-       * @param data
-       */
-      callback: function (redactor, data) {
-        var cropped = function (size, data) {
-          var html = _.template($('#figure-' + size).html());
-
-          redactor.selection.restore();
-          redactor.insert.raw(html(data));
-        };
-
-        var croppedObj = {
-          url: data.url,
-          legend: data.legend ? data.legend : '',
-          author: data.author ? data.author : ''
-        };
-
-        cropped(data.type, croppedObj);
-      },
-      formats: ['vertical', 'medium']
-    };
-
-    $scope.audioUploadOptions = {
-      /**
-       * @param redactor
-       * @param data
-       */
-      callback: function (redactor, data) {
-        var html = _.template($('#audio').html());
-
-        redactor.selection.restore();
-        redactor.insert.raw(html(data));
-      }
-    };
-
     // Watch IMG elements to upload
-    $scope.$watch('event.poster', function () {
-      if ($scope.event.poster && $scope.event.poster instanceof File) {
-        $scope.imgHandler.upload('poster', [
-          $scope.event.poster
+    $scope.$watch('vm.event.poster', function () {
+      if (vm.event.poster && vm.event.poster instanceof File) {
+        vm.imgHandler.upload('poster', [
+          vm.event.poster
         ]);
       }
     });
 
-    $scope.$watch('event.photo', function () {
-      if ($scope.event.photo && $scope.event.photo instanceof File) {
-        $scope.imgHandler.upload('photo', [
-          $scope.event.photo
+    $scope.$watch('vm.event.photo', function () {
+      if (vm.event.photo && vm.event.photo instanceof File) {
+        vm.imgHandler.upload('photo', [
+          vm.event.photo
         ]);
       }
     });
@@ -154,11 +119,11 @@
     /**
      * Handle img upload
      */
-    $scope.imgHandler = {
+    vm.imgHandler = {
       upload: function (elem, files) {
         angular.forEach(files, function (file) {
           MediaService.newFile(file).then(function (data) {
-            $scope.event[elem] = {
+            vm.event[elem] = {
               url: data.url,
               id: data.id
             };
@@ -167,7 +132,7 @@
       },
       removeImage: function (elem) {
         $timeout(function () {
-          $scope.event[elem] = '';
+          vm.event[elem] = '';
           $scope.$apply();
         });
       }
@@ -179,9 +144,7 @@
      * @param data
      * @param preview
      */
-    $scope.publish = function (data, preview) {
-      data.tags = _.map(data.tags, 'text');
-
+    vm.publish = function (data, preview) {
       EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');
 
@@ -195,17 +158,17 @@
 
     // Undergraduate Courses
     CourseService.getCourses('graduation').then(function (data) {
-      $scope.courses = data.data;
+      vm.courses = data.data;
     });
 
     // Events Categories
     EventsService.getEventsCategories().then(function (data) {
-      $scope.categories = data.data;
+      vm.categories = data.data;
     });
 
     // Statuses
     StatusService.getStatus().then(function (data) {
-      $scope.statuses = data.data;
+      vm.statuses = data.data;
     });
   }
 })();
