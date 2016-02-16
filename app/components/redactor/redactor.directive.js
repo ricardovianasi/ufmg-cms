@@ -72,6 +72,9 @@
     return {
       restrict: 'A',
       require: 'ngModel',
+      scope: {
+        redactor: '=?'
+      },
       /**
        * @param $scope
        * @param elem
@@ -91,7 +94,7 @@
           }
         };
 
-        var additionalOptions = $scope.$eval(attrs.redactor) || {};
+        var additionalOptions = $scope.redactor || {};
 
         angular.extend(_options, additionalOptions);
 
@@ -114,21 +117,22 @@
 
         //$timeout to avoid $digest collision
         //call $render() to set the initial value
-        $timeout(function () {
+        $timeout(function timeout() {
           editor = elem.redactor(_options);
 
           ngModel.$render();
 
-          elem.on('remove', function () {
+          elem.on('remove', function on() {
             elem.off('remove');
             elem.redactor('core.destroy');
           });
         });
 
-        ngModel.$render = function () {
+        ngModel.$render = function render() {
           if (angular.isDefined(editor)) {
-            $timeout(function () {
+            $timeout(function timeoutRender() {
               elem.redactor('code.set', ngModel.$viewValue || '');
+
               $scope.redactorLoaded = true;
             });
           }
