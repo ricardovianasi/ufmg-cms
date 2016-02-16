@@ -51,14 +51,14 @@
        */
       stop: function (e, ui) {
         // if the element is removed from the first container
-        if (
-          $(e.target).hasClass('selectable') &&
-          ui.item.sortable.droptarget &&
-          e.target != ui.item.sortable.droptarget[0]
-        ) {
-          // clone the original model to restore the removed item
-          vm.pages = pages.slice();
-        }
+        //if (
+        //  $(e.target).hasClass('selectable') &&
+        //  ui.item.sortable.droptarget &&
+        //  e.target != ui.item.sortable.droptarget[0]
+        //) {
+        //  // clone the original model to restore the removed item
+        //  //vm.pages = pages.slice();
+        //}
       },
       /**
        * @param event
@@ -118,6 +118,7 @@
 
           var item = $scope.$eval(menuName);
 
+          vm.pages.push(item[idx]);
           item.splice(idx, 1);
         });
     }
@@ -132,6 +133,7 @@
         .confirm('Deseja remover o item?')
         .result
         .then(function () {
+          vm.pages.push($scope.menus.quickAccess[idx]);
           $scope.menus.quickAccess.splice(idx, 1);
         });
     }

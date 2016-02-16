@@ -3,6 +3,7 @@
     return {
       /**
        * settings object
+       *
        * @type {Object}
        */
       settings: {
@@ -13,54 +14,61 @@
       /**
        * lang object
        * default is en
+       *
        * @type {Object}
        */
       langs: {
         en: {
-          'modalTitle': 'SoundCloud',
-          'description': 'insert SoundCloud track link'
+          modalTitleAudio: 'SoundCloud',
+          descriptionAudio: 'Insert SoundCloud track link'
         },
         pt_br: {
-          'modalTitle': 'SoundCloud',
-          'description': 'inserir link de faixa do SoundCloud'
+          modalTitleAudio: 'Inserir SoundCloud',
+          descriptionAudio: 'Inserir link de faixa do SoundCloud'
         }
       },
 
       /**
        * this function return soundcloud modal html structure
-       * @return {string} modal html structure
+       *
+       * @returns {string} modal html structure
        */
       getTemplate: function () {
-        return '<div class="modal-section" id="redactor-modal-audio-insert">' +
-                  '<section>' +
-                    '<label>' + this.lang.get('description') + '</label>' +
-                    '<input class="soundCloudLink" style="width: 100%;">' +
-                 '</section>' +
-                 '<section>' +
-                    '<button id="redactor-modal-button-action">Insert</button>' +
-                    '<button id="redactor-modal-button-cancel">Cancel</button>' +
-                  '</section>' +
-               '</div>';
+        return String()
+          + '<div class="modal-section" id="redactor-modal-audio-insert">'
+            + '<section>'
+              + '<label>' + this.lang.get('descriptionAudio') + '</label>'
+              + '<input class="soundCloudLink" style="width: 100%;">'
+            + '</section>'
+
+            + '<section>'
+                + '<button id="redactor-modal-button-action">Insert</button>'
+                + '<button id="redactor-modal-button-cancel">Cancel</button>'
+            + '</section>'
+          + '</div>';
       },
 
       /**
        * this function
-       * @param  {string} uri api track url
-       * @return {string}     soundcloud iframe html structure
+       *
+       * @param {string} uri api track url
+       *
+       * @returns {string} soundcloud iframe html structure
        */
       getPlayer: function (uri) {
-        return '<iframe  width="100%"' +
-                        'height="166"'  +
-                        'scrolling="no"'  +
-                        'frameborder="no"' +
-                        'src="https://w.soundcloud.com/player/?url=' + uri + '&amp;' +
-                              'color=ff5500&amp;' +
-                              'auto_play=false&amp;' +
-                              'hide_related=false&amp;' +
-                              'show_comments=true&amp;' +
-                              'show_user=true&amp;' +
-                              'show_reposts=false">' +
-                '</iframe>';
+        return String() +
+          '<iframe width="100%"' +
+                  'height="166"'  +
+                  'scrolling="no"'  +
+                  'frameborder="no"' +
+                  'src="https://w.soundcloud.com/player/?url=' + uri + '&amp;' +
+                        'color=ff5500&amp;' +
+                        'auto_play=false&amp;' +
+                        'hide_related=false&amp;' +
+                        'show_comments=true&amp;' +
+                        'show_user=true&amp;' +
+                        'show_reposts=false">' +
+          '</iframe>';
       },
 
       /**
@@ -68,7 +76,7 @@
        * and set your callback action
        */
       init: function () {
-        var button = this.button.add('soundcloud', this.lang.get('modalTitle'));
+        var button = this.button.add('soundcloud', this.lang.get('modalTitleAudio'));
         this.button.setIcon(button, '<i class="fa fa-soundcloud"></i>');
         this.button.addCallback(button, this.soundcloud.show);
       },
@@ -78,10 +86,10 @@
        */
       show: function () {
         this.modal.addTemplate('audio', this.soundcloud.getTemplate());
-        this.modal.load('audio', this.lang.get('modalTitle'), 700);
+        this.modal.load('audio', this.lang.get('modalTitleAudio'), 700);
         this.modal.getActionButton().text(this.lang.get('insert')).on('click', this.soundcloud.insert);
+        this.modal.getCancelButton().text(this.lang.get('cancel'));
         this.modal.show();
-
       },
 
       /**

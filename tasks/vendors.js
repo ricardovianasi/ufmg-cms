@@ -75,10 +75,13 @@ var BOOTSTRAP_FONTS = [
 ];
 
 gulp.task('build-vendors', [
+  'build-vendors-js',
   'build-vendors-css',
   'build-vendors-fonts',
   'build-vendors-bootstrap-fonts',
-], function () {
+]);
+
+gulp.task('build-vendors-js', function () {
   gulp.src(SCRIPTS)
     .pipe(expect({
       errorOnFailure: true

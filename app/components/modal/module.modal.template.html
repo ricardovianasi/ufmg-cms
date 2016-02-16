@@ -12,10 +12,10 @@
             </div>
 
             <div ng-if="!module" class="form-group">
-                <label>M&oacute;dulo:</label>
+                <label>Selecionar Widget:</label>
 
                 <ui-select ng-model="widget.selected" theme="bootstrap" class="ui-select">
-                    <ui-select-match placeholder="Buscar Widget">{{ $select.selected.label }}</ui-select-match>
+                    <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
                     <ui-select-choices repeat="widget in widgets.items|filter: $select.search" group-by="'group'">
                         <div ng-bind-html="widget.label|highlight: $select.search"></div>
                     </ui-select-choices>
