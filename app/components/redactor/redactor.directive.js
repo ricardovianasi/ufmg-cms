@@ -46,9 +46,6 @@
 
     return {
       restrict: 'A',
-      scope: {
-        redactor: '=?'
-      },
       require: 'ngModel',
       /**
        * @param $scope
@@ -96,7 +93,7 @@
           }
         };
 
-        var additionalOptions = $scope.redactor || {};
+        var additionalOptions = $scope.$eval(attrs.redactor) || {};
 
         angular.extend(_options, additionalOptions);
 

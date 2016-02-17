@@ -18,6 +18,25 @@
   function RedactorPluginService($uibModal) {
     console.log('... RedactorPluginService');
 
+    /**
+     * @param redactor
+     * @param {string} template
+     * @param {object} obj
+     *
+     * @private
+     */
+    var _insertItemOnEditor = function (redactor, template, obj) {
+      var html = _.template($(template).html());
+
+      redactor.selection.restore();
+      redactor.insert.raw(html(obj));
+    };
+
+    /**
+     * @type {{imagencrop: _plugins.imagencrop, audioUpload: _plugins.audioUpload}}
+     *
+     * @private
+     */
     var _plugins = {
       /**
        * @param {Object} options
@@ -99,6 +118,38 @@
       }
     };
 
+    /**
+     * @type {{imagencrop: {callback: _options.imagencrop.callback}, audioUpload: {callback: _options.audioUpload.callback}}}
+     *
+     * @private
+     */
+    var _options = {
+      imagencrop: {
+        /**
+         * @param redactor
+         * @param data
+         */
+        callback: function (redactor, data) {
+          var imgObj = {
+            url: data.url,
+            legend: data.legend ? data.legend : '',
+            author: data.author ? data.author : ''
+          };
+
+          _insertItemOnEditor(redactor, '#redactor-template-figure-' + data.type, imgObj);
+        }
+      },
+      audioUpload: {
+        /**
+         * @param redactor
+         * @param data
+         */
+        callback: function (redactor, data) {
+          _insertItemOnEditor(redactor, '#redactor-template-audio', data);
+        }
+      }
+    };
+
     return {
       /**
        * @param {string} plugin
@@ -108,6 +159,14 @@
        */
       setPlugin: function (plugin, options) {
         return _plugins[plugin] ? _plugins[plugin](options) : null;
+      },
+      /**
+       * @param {string} plugin
+       *
+       * @returns {*|{}}
+       */
+      getOptions: function (plugin) {
+        return _options[plugin] || {};
       }
     };
   }
