@@ -26,12 +26,13 @@
      * Apply plugins on Redactor according to directive attribute
      *
      * @param $scope
+     * @param plugins
      * @param attrs
      *
      * @private
      */
-    var _applyPlugins = function ($scope, attrs) {
-      angular.forEach(_options.plugins, function (plugin) {
+    var _applyPlugins = function ($scope, plugins, attrs) {
+      angular.forEach(plugins, function (plugin) {
         var pluginOptions = $scope[attrs[plugin.toLowerCase() + 'Options']] || {};
         var pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
 
@@ -109,7 +110,7 @@
 
           _options.plugins = _.uniq(_options.plugins);
 
-          _applyPlugins($scope, attrs);
+          _applyPlugins($scope, _options.plugins, attrs);
         } else {
           delete _options.plugins;
         }
