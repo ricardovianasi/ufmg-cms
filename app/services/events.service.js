@@ -34,44 +34,64 @@
      * @private
      */
     var _parseData = function (data) {
+      var event = {
+        address: data.address,
+        audio: data.audio,
+        courses: data.courses,
+        datasheet: data.datasheet,
+        description: data.description,
+        duration: data.duration,
+        email: data.email,
+        free: data.free,
+        highlight: data.highlight,
+        investment: data.investment,
+        local: data.local,
+        name: data.name,
+        phone: data.phone,
+        registration: data.registration,
+        site: data.site,
+        status: data.status,
+        type: data.type,
+        video: data.video,
+      };
+
       if (data.photo) {
-        data.photo = data.photo.id;
+        event.photo = data.photo.id;
       }
 
       if (data.poster) {
-        data.poster = data.poster.id;
+        event.poster = data.poster.id;
       }
 
       var initTime = new Date(data.initTime);
       var endTime = new Date(data.endTime);
 
-      data.initDate = new Date(data.initDate);
-      data.initDate.setHours(initTime.getHours(), initTime.getMinutes());
+      event.initDate = new Date(data.initDate);
+      event.initDate.setHours(initTime.getHours(), initTime.getMinutes());
+      event.initDate = DateTimeHelper.toBrStandard(event.initDate, true);
 
-      data.endDate = new Date(data.endDate);
-      data.endDate.setHours(endTime.getHours(), endTime.getMinutes());
+      event.endDate = new Date(data.endDate);
+      event.endDate.setHours(endTime.getHours(), endTime.getMinutes());
+      event.endDate = DateTimeHelper.toBrStandard(event.endDate, true);
 
-      data.initDate = DateTimeHelper.toBrStandard(data.initDate, true);
-      data.endDate = DateTimeHelper.toBrStandard(data.endDate, true);
-
-      delete data.initTime;
-      delete data.endTime;
+      event.tags = _.map(data.tags, 'text');
 
       // If we are updating the Event
       if (data.id) {
-        delete data.author;
-        delete data.slug;
-        delete data.created_at;
-        delete data.updated_at;
+        event.id = data.id;
+        // delete data.author;
+        // delete data.slug;
+        // delete data.created_at;
+        // delete data.updated_at;
       }
 
       if (data.status == 'scheduled') {
-        data.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
-        delete data.scheduled_date;
-        delete data.scheduled_time;
+        event.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
+        // delete data.scheduled_date;
+        // delete data.scheduled_time;
       }
 
-      return data;
+      return event;
     };
 
     return {

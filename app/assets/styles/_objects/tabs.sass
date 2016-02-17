@@ -1,12 +1,27 @@
 // Tabs
 
-.nav-tabs li
-  cursor: pointer
+.nav-tabs
+  background-color: whitesmoke
+  li
+    cursor: pointer
+    &:hover
+      text-decoration: underline
+      font-weight: bolder
+  .active
+    border: 1px solid lightgray
+    border-bottom: none
+    background-color: white
+    position: relative
+    bottom: -1px
+    &:hover
+      text-decoration: none
+      font-weight: normal
+      padding: 10px
 
-.nav-tabs li:hover
-  text-decoration: underline
-  font-weight: bolder
-
-.nav-tabs .active:hover
-  text-decoration: none
-  font-weight: normal
+.tab-content
+  padding: 30px !important;
+  margin-bottom: 0px !important;
+  border: 1px solid lightgray
+  #home
+    i
+      font-size: 100px

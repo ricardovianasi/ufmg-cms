@@ -5,24 +5,33 @@
     .directive('publishmentOptions', PublishmentOptions);
 
   PublishmentOptions.$inject = [
-    '$timeout',
     '$location',
     '$filter',
     'StatusService',
   ];
 
-  function PublishmentOptions($timeout, $location, $filter, StatusService) {
+  /**
+   * @param $location
+   * @param $filter
+   * @param StatusService
+   *
+   * @returns {{restrict: string, templateUrl: string, scope: {obj: string}, link: link}}
+   *
+   * @constructor
+   */
+  function PublishmentOptions($location, $filter, StatusService) {
     return {
       restrict: 'E',
       templateUrl: 'components/publishment/publishment.template.html',
       scope: {
-        obj: '=routeModel'
+        obj: '=routeModel',
+        publishMethod: '=?publishMethod'
       },
       link: function ($scope, element, attrs) {
         console.log('... PublishmentDirective');
 
         $scope.obj = $scope.$parent.$eval(attrs.routeModel);
-        $scope.publish = $scope.$parent.publish;
+        $scope.publish = $scope.$parent.publish || $scope.publishMethod;
         $scope.remove = $scope.$parent.remove;
         $scope.statuses = [];
         $scope.highlight_ufmg_visible = $scope.$parent.highlight_ufmg_visible;

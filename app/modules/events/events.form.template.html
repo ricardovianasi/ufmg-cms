@@ -3,14 +3,14 @@
         <div class="col-md-6">
             <div class="title-env">
                 <h1>
-                   <span ng-if="event.id">
-                       <span ng-if="event.name">Editar Evento - {{ event.name }}</span>
-                       <span ng-if="!event.name">Editar Evento</span>
+                   <span ng-if="vm.event.id">
+                       <span ng-if="vm.event.name">Editar Evento - {{ event.name }}</span>
+                       <span ng-if="!vm.event.name">Editar Evento</span>
                    </span>
 
-                   <span ng-if="!event.id">
-                       <span ng-if="event.name">Novo Evento - {{ event.name }}</span>
-                       <span ng-if="!event.name">Novo Evento</span>
+                   <span ng-if="!vm.event.id">
+                       <span ng-if="vm.event.name">Novo Evento - {{ event.name }}</span>
+                       <span ng-if="!vm.event.name">Novo Evento</span>
                    </span>
                 </h1>
             </div>
@@ -49,27 +49,27 @@
                     <div class="form-group">
                         <label for="category">Categoria / Tipo do Evento</label>
 
-                        <select id="category" name="category" class="form-control"
-                                ng-model="event.type"
-                                ng-options="category.id as category.name for category in categories.items"></select>
+                        <select id="category" name="category" class="form-control" ng-model="vm.event.type" ng-options="category.id as category.name for category in vm.categories.items"></select>
                     </div>
 
                     <!-- NAME -->
                     <div class="form-group">
                         <label for="name">Nome do Evento</label>
-                        <input id="name" type="text" name="name" class="form-control"
-                               ng-model="event.name">
+                        <input id="name" type="text" name="name" class="form-control" ng-model="vm.event.name">
                     </div>
 
                     <!-- HIGHLIGHT -->
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"
-                                       ng-model="event.highlight"
-                                       ng-checked="event.highlight"> Evento Destaque
+                                <input type="checkbox" ng-model="vm.event.highlight" ng-checked="vm.event.highlight"> Evento Destaque
                             </label>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <tags-input add-on-comma="false" ng-model="vm.event.tags"></tags-input>
                     </div>
                 </div>
 
@@ -77,36 +77,17 @@
                 <div class="col-xs-4">
                     <div style="margin-top: 20px" class="pages-module pages-module-cover add-module">
                         <div class="chosen-cover">
-                            <span class="label label-danger remove-image"
-                                  ng-click="imgHandler.removeImage('poster')"
-                                  ng-show="event.poster">
+                            <span class="label label-danger remove-image" ng-click="vm.imgHandler.removeImage('poster')" ng-show="vm.event.poster">
                                 <span class="fa fa-remove"></span> Remover Cartaz
                             </span>
                         </div>
 
-                        <div class="add-title"
-                             ngf-select
-                             ngf-accept="'image/*'"
-                             ngf-multiple="false"
-                             ng-model="event.poster"
-                             ng-show="!event.poster">+ Adicionar Capa
+                        <div class="add-title" ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="vm.event.poster" ng-show="!vm.event.poster">+ Adicionar Capa
                         </div>
 
-                        <div class="uploaded-image"
-                             ng-show="event.poster">
-                            <img class="img-responsive" ng-src="{{ event.poster.url }}">
+                        <div class="uploaded-image" ng-show="vm.event.poster">
+                            <img class="img-responsive" ng-src="{{ vm.event.poster.url }}">
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAGS -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label>Tags</label>
-
-                        <tags-input add-on-comma="false" ng-model="event.tags"></tags-input>
                     </div>
                 </div>
             </div>
@@ -117,21 +98,13 @@
                     <div class="form-group">
                         <label>Foto</label>
 
-                        <input type="file" class="form-control"
-                               ngf-select
-                               ngf-accept="'image/*'"
-                               ng-model="event.photo"
-                               ngf-multiple="false"
-                               ng-show="!event.photo" style="height:auto">
+                        <input type="file" class="form-control" ngf-select ngf-accept="'image/*'" ng-model="vm.event.photo" ngf-multiple="false" ng-show="!vm.event.photo" style="height:auto">
 
-                        <div class="clearfix form-control"
-                             ng-show="event.photo">
+                        <div class="clearfix form-control" ng-show="vm.event.photo">
                             <div class="pull-left">{{ event.photo.url }}</div>
 
                             <div class="pull-right">
-                                <span class="label label-danger remove-image-news"
-                                      ng-show="event.photo"
-                                      ng-click="imgHandler.removeImage('photo')">
+                                <span class="label label-danger remove-image-news" ng-show="vm.event.photo" ng-click="vm.imgHandler.removeImage('photo')">
                                     <span class="fa fa-remove"></span> REMOVER
                                 </span>
                             </div>
@@ -146,14 +119,11 @@
                     <div class=form-group>
                         <label class="">Cursos de Interesse</label>
 
-                        <div class="row">
-                            <div class="col-md-4" ng-repeat="course in courses.items">
+                        <div id="event-courses" class="row">
+                            <div class="col-md-4" ng-repeat="course in vm.courses.items">
                                 <div class="checkbox">
                                     <label for="course-{{ course.id }}">
-                                        <input type="checkbox" value="{{ course.id }}" name="courses[]"
-                                               id="course-{{ course.id }}"
-                                               ng-checked="event.courses.indexOf(course.id) !== -1"
-                                               ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
+                                        <input type="checkbox" value="{{ course.id }}" name="courses[]" id="course-{{ course.id }}" ng-checked="vm.event.courses.indexOf(course.id) !== -1" ng-click="vm.toggleSelection(course.id)"> {{ course.name|titleize }}
                                     </label>
                                 </div>
                             </div>
@@ -167,12 +137,7 @@
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="audio">Áudio</label>
-                        <input id="audio"
-                               type="text"
-                               name="audio"
-                               ng-model="event.audio"
-                               class="form-control"
-                               placeholder="Inserir URL">
+                        <input id="audio" type="text" name="audio" ng-model="vm.event.audio" class="form-control" placeholder="Inserir URL">
                     </div>
                 </div>
 
@@ -180,12 +145,7 @@
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="video">Vídeo</label>
-                        <input id="video"
-                               type="text"
-                               name="video"
-                               ng-model="event.video"
-                               class="form-control"
-                               placeholder="Inserir URL">
+                        <input id="video" type="text" name="video" ng-model="vm.event.video" class="form-control" placeholder="Inserir URL">
                     </div>
                 </div>
             </div>
@@ -195,9 +155,7 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="description">Descrição</label>
-                        <textarea id="description" name="description" cols="30" rows="5" class="form-control"
-                                  redactor
-                                  ng-model="event.description"></textarea>
+                        <textarea id="description" name="description" cols="30" rows="5" class="form-control" redactor="vm.redactorOptions" ng-model="vm.event.description"></textarea>
                     </div>
                 </div>
             </div>
@@ -207,108 +165,56 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="datasheet">Ficha Técnica</label>
-                        <textarea id="datasheet" name="datasheet" cols="30" rows="5"
-                                  ng-model="event.datasheet"
-                                  redactor="redactorOptions"
-                                  imagencrop-options="imagencropOptions"
-                                  audioUpload-options="audioUploadOptions"></textarea>
+                        <textarea id="datasheet" name="datasheet" cols="30" rows="5" redactor="vm.redactorOptions" ng-model="vm.event.datasheet"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-4">
                     <div class="well well-sm">
                         <!-- START DATE -->
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label for="initDate">
-                                        <span class="fa fa-calendar"></span> Data de início</label>
+                        <div class="form-group">
+                            <label for="initDate">
+                                <span class="fa fa-calendar"></span> Data de início</label>
 
-                                    <input id="initDate" type="text" name="initDate"
-                                           class="form-control ng-pristine ng-untouched ng-valid"
-                                           ng-model="event.initDate"
-                                           ng-focus="datepickerOpt.initDate.open(this, $event)"
-                                           uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
-                                           datepicker-options="datepickerOpt.initDate.dateOptions"
-                                           is-open="datepickerOpt.initDate.status.opened"
-                                           min-date="datepickerOpt.initDate.minDate"
-                                           max-date="datepickerOpt.initDate.maxDate"
-                                           clear-text="Limpar"
-                                           close-text="Fechar"
-                                           current-text="Hoje">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label>
-                                        <i class="fa fa-clock-o"></i> Horário de início
-                                    </label>
-
-                                    <uib-timepicker ng-model="event.initTime"
-                                                    hour-step="1"
-                                                    minute-step="1"
-                                                    show-meridian="timepickerOpt.initTime.isMeridian"></uib-timepicker>
-                                </div>
-                            </div>
+                            <input id="initDate" type="text" name="initDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.initDate" ng-focus="vm.datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ vm.datepickerOpt.initDate.format }}" datepicker-options="vm.datepickerOpt.initDate.dateOptions" is-open="vm.datepickerOpt.initDate.status.opened" min-date="vm.datepickerOpt.initDate.minDate" max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar" close-text="Fechar" current-text="Hoje">
                         </div>
+                        <div class="form-group">
+                            <label>
+                                <i class="fa fa-clock-o"></i> Horário de início
+                            </label>
 
-                        <!-- END DATE -->
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label for="endDate">
-                                        <span class="fa fa-calendar"></span> Data de fim
-                                    </label>
-
-                                    <input id="endDate" type="text" name="endDate"
-                                           class="form-control ng-pristine ng-untouched ng-valid"
-                                           ng-model="event.endDate"
-                                           ng-focus="datepickerOpt.endDate.open(this, $event, 'initDate')"
-                                           uib-datepicker-popup="{{ datepickerOpt.endDate.format }}"
-                                           datepicker-options="datepickerOpt.endDate.dateOptions"
-                                           is-open="datepickerOpt.endDate.status.opened"
-                                           min-date="datepickerOpt.endDate.minDate"
-                                           max-date="datepickerOpt.endDate.maxDate"
-                                           clear-text="Limpar"
-                                           close-text="Fechar"
-                                           current-text="Hoje">
-                                </div>
-                            </div>
-
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label>
-                                        <i class="fa fa-clock-o"></i> Horário de fim
-                                    </label>
-
-                                    <uib-timepicker ng-model="event.endTime"
-                                                    hour-step="1"
-                                                    minute-step="1"
-                                                    show-meridian="timepickerOpt.endTime.isMeridian"></uib-timepicker>
-                                </div>
-                            </div>
+                            <uib-timepicker ng-model="vm.event.initTime" hour-step="1" minute-step="1" show-meridian="vm.timepickerOpt.initTime.isMeridian"></uib-timepicker>
                         </div>
                     </div>
                 </div>
-
-                <!-- DURATION -->
-                <div class="col-xs-3">
+                <div class="col-md-4">
                     <div class="well well-sm">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label for="duration">
-                                        <i class="fa fa-history"></i> Duração
-                                    </label>
+                        <div class="form-group">
+                            <label for="endDate">
+                                <span class="fa fa-calendar"></span> Data de término
+                            </label>
 
-                                    <input id="duration" type="text" name="duration" class="form-control"
-                                           ng-model="event.duration"
-                                           ui-mask="99:99">
-                                </div>
-                            </div>
+                            <input id="endDate" type="text" name="endDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.endDate" ng-focus="vm.datepickerOpt.endDate.open(vm, $event, 'initDate')" uib-datepicker-popup="{{ vm.datepickerOpt.endDate.format }}" datepicker-options="vm.datepickerOpt.endDate.dateOptions" is-open="vm.datepickerOpt.endDate.status.opened" min-date="vm.datepickerOpt.endDate.minDate" max-date="vm.datepickerOpt.endDate.maxDate" clear-text="Limpar" close-text="Fechar" current-text="Hoje">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <i class="fa fa-clock-o"></i> Horário de término
+                            </label>
+
+                            <uib-timepicker ng-model="vm.event.endTime" hour-step="1" minute-step="1" show-meridian="vm.timepickerOpt.endTime.isMeridian"></uib-timepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="well well-sm">
+                        <div class="form-group">
+                            <label for="duration">
+                                <i class="fa fa-history"></i> Duração
+                            </label>
+
+                            <input id="duration" type="text" name="duration" class="form-control" ng-model="vm.event.duration" ui-mask="99:99">
                         </div>
                     </div>
                 </div>
@@ -319,14 +225,13 @@
                     <!-- LOCAL -->
                     <div class="form-group">
                         <label for="local">Local</label>
-                        <input id="local" type="text" name="local" ng-model="event.local" class="form-control">
+                        <input id="local" type="text" name="local" class="form-control" ng-model="vm.event.local">
                     </div>
 
                     <!-- INVESTMENT -->
                     <div class="form-group">
                         <label for="investment">Investimento</label>
-                        <input id="investment" type="text" name="investment" ng-model="event.investment"
-                               class="form-control">
+                        <input id="investment" type="text" name="investment" class="form-control" ng-model="vm.event.investment">
                     </div>
                 </div>
 
@@ -334,14 +239,13 @@
                     <!-- ADDRESS -->
                     <div class="form-group">
                         <label for="address">Endereço</label>
-                        <input id="address" type="text" name="address" ng-model="event.address" class="form-control">
+                        <input id="address" type="text" name="address" class="form-control" ng-model="vm.event.address">
                     </div>
 
                     <!-- REGISTRATION -->
                     <div class="form-group">
                         <label for="enrollment">Inscrição</label>
-                        <input id="enrollment" type="text" name="enrollment" ng-model="event.registration"
-                               class="form-control">
+                        <input id="enrollment" type="text" name="enrollment" class="form-control" ng-model="vm.event.registration">
                     </div>
                 </div>
             </div>
@@ -353,7 +257,7 @@
                         <div class="checkbox">
                             <div class="well well-sm">
                                 <label for="free">
-                                    <input id="free" type="checkbox" name="free" ng-model="event.free"> Evento Gratuito
+                                    <input id="free" type="checkbox" name="free" ng-model="vm.event.free"> Evento Gratuito
                                 </label>
                             </div>
                         </div>
@@ -366,7 +270,7 @@
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="phone">Telefone</label>
-                        <input id="phone" type="text" name="phone" ng-model="event.phone" class="form-control">
+                        <input id="phone" type="text" name="phone" class="form-control" ng-model="vm.event.phone">
                     </div>
                 </div>
 
@@ -374,7 +278,7 @@
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="email">E-mail de contato</label>
-                        <input id="email" type="text" name="email" ng-model="event.email" class="form-control">
+                        <input id="email" type="text" name="email" class="form-control" ng-model="vm.event.email">
                     </div>
                 </div>
 
@@ -382,14 +286,18 @@
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label for="site">Site</label>
-                        <input id="site" type="text" name="site" ng-model="event.site" class="form-control">
+                        <input id="site" type="text" name="site" class="form-control" ng-model="vm.event.site">
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
 
     <div class="col-xs-4">
-        <publishment-options route-model="event"></publishment-options>
+        <publishment-options route-model="vm.event" publish-method="vm.publish"></publishment-options>
     </div>
 </div>
+
+<br/>
+<br/>
