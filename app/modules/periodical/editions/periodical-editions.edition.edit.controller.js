@@ -100,36 +100,7 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
-      var obj = {};
-      obj.articles = [];
-
-      angular.forEach(data.articles, function (article) {
-        obj.articles.push({
-          title: article.title,
-          subtitle: article.subtitle,
-          author_name: article.author_name,
-          page_number: article.page_number,
-          cover: article.cover,
-          thumb: article.thumb,
-          tags: _.map(article.tags, 'text'),
-          content: article.content,
-        });
-      });
-
-      obj.background = data.background;
-      obj.cover = data.cover;
-      obj.number = data.number;
-      obj.file = data.file;
-      obj.publish_date = data.publish_date;
-      obj.theme = data.theme;
-      obj.status = data.status;
-      obj.articles.tags = _.map(obj.articles.tags, 'text');
-
-      if (obj.status == 'scheduled') {
-        obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
-      }
-
-      PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, obj).then(function (data) {
+      PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
 
         if (!preview) {
