@@ -1,59 +1,46 @@
 // Data Tables
 
-.dataTables_filter .form-control
-  display: block
-  width: 100%
-  margin-left: 0px !important;
-
-.dataTables_filter label
-  display: block
-  width: 75%
-
-.dataTables_filter input
-  height: 36px
-  padding-left: 50px !important;
-
-.dataTables_filter label i
-  font-size: 20px
-  position: absolute
-  background-color: #eee
-  color: #555
-  padding: 7px 10px 7px 10px
-  border: 1px solid #e4e4e4
-
-.table a:hover
-  text-decoration: underline
-  font-weight: bolder
-
-.table .table-fit
-  width: 1%
-  white-space: nowrap
-  min-width: 1%
-
-.table .table-fit-single
-  width: 1%
-  white-space: nowrap
-  min-width: 100px
-  text-align: center
-
-.table thead
-  background-color: #2c2e2f
-
-.table thead th
-  color: #979898 !important;
-  border: 1px solid gray !important;
-
-.table thead th:after
-  display: none !important;
-
-.table thead tr .sorting:before
-  opacity: 1 !important;
+.dataTables_filter
+  .form-control
+    display: block
+    width: 100%
+    margin-left: 0px !important;
+  label
+    display: block
+    width: 75%
+  input
+    height: 36px
+    padding-left: 50px !important;
+  label i
+    font-size: 20px
+    position: absolute
+    background-color: #eee
+    color: #555
+    padding: 7px 10px 7px 10px
+    border: 1px solid #e4e4e4
 
 .table
   margin-top: 10px
-
-.table td
+  a:hover
+    text-decoration: underline
+    font-weight: bolder
+  .table-fit
+    width: 1%
+    white-space: nowrap
+    min-width: 1%
+  .table-fit-single
+    width: 1%
+    white-space: nowrap
+    min-width: 100px
+    text-align: center
+  thead
+    background-color: #2c2e2f
+    th
+      color: #979898 !important;
+      border: 1px solid gray !important;
+      &:after
+        display: none !important;
+    tr .sorting:before
+      opacity: 1 !important;
+  td
   min-width: 200px
-
-.img-responsive
-  width: 100% !important;
