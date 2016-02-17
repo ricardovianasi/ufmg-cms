@@ -20,13 +20,17 @@ var env = options.env;
 gulp.task('env', function () {
   var file = 'env-'+env+'.json';
 
+  console.log(options);
+
   fs.stat('app/env-local.json', function (err) {
     // Default env file is local
     if (err == null) {
       file = 'env-local.json';
     }
 
+    console.log(env);
     console.log(colors.black.bgGreen(file));
+
 
     gulp.src('./app/'+file)
       .pipe(gulpNgConfig('env'))
