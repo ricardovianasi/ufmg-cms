@@ -13,7 +13,8 @@
     'PeriodicalService',
     'StatusService',
     'NotificationService',
-    'MediaService'
+    'MediaService',
+    'ModalService',
   ];
 
   /**
@@ -26,6 +27,7 @@
    * @param StatusService
    * @param NotificationService
    * @param MediaService
+   * @param ModalService
    *
    * @constructor
    */
@@ -37,7 +39,8 @@
                                           PeriodicalService,
                                           StatusService,
                                           NotificationService,
-                                          MediaService) {
+                                          MediaService,
+                                          ModalService) {
     console.log('... PeriodicalEditionNewController');
 
     $scope.edition = {};
@@ -61,31 +64,7 @@
     $scope.edition.articles = [];
 
     $scope.publish = function (data, preview) {
-      var obj = {};
-      obj.articles = [];
-
-      angular.forEach(data.articles, function (article) {
-        obj.articles.push({
-          title: article.title,
-          subtitle: article.subtitle,
-          author_name: article.author_name,
-          page_number: article.page_number,
-          cover: article.cover,
-          thumb: article.thumb,
-          tags: _.map(article.tags, 'text'),
-          content: article.content,
-        });
-      });
-
-      obj.background = data.background;
-      obj.cover = data.cover;
-      obj.number = data.number;
-      obj.file = data.file;
-      obj.publish_date = data.publish_date;
-      obj.theme = data.theme;
-      obj.status = data.status;
-
-      PeriodicalService.newEdition($routeParams.id, obj).then(function (data) {
+      PeriodicalService.newEdition($routeParams.id, data).then(function (data) {
         NotificationService.success('Edição criada com sucesso.');
 
         if (!preview) {
@@ -105,42 +84,20 @@
       containment: '#sort-main'
     };
 
+    /**
+     * @param idx
+     */
     $scope.removeArticle = function (idx) {
-      $scope.confirmationModal('md', 'Você deseja excluir este artigo?');
-      removeConfirmationModal.result.then(function (data) {
-        $scope.edition.articles.splice(idx, 1);
+      ModalService
+        .confirm('Você deseja excluir este artigo?')
+        .result
+        .then(function () {
+          $scope.edition.articles.splice(idx, 1);
 
-        $timeout(function () {
-          $scope.$apply();
+          $timeout(function () {
+            $scope.$apply();
+          });
         });
-      });
-    };
-
-    var removeConfirmationModal;
-
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $uibModal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
-
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
     };
 
     // Upload
@@ -188,14 +145,14 @@
 
       moduleModal.result.then(function (data) {
         $scope.edition[type] = data.id;
-        $scope.edition[type+'_url'] = data.url;
+        $scope.edition[type + '_url'] = data.url;
       });
     };
 
     $scope.removeImage = function (type) {
       $timeout(function () {
         $scope.edition[type] = '';
-        $scope.edition[type+'_url'] = '';
+        $scope.edition[type + '_url'] = '';
 
         $scope.$apply();
       });

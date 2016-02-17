@@ -27,6 +27,46 @@
     var APIUrl = apiUrl;
     var PERIODICAL_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'periodical');
 
+    /**
+     * @param data
+     *
+     * @returns {{articles: Array}}
+     *
+     * @private
+     */
+    var _parseEditionData = function (data) {
+      var obj = {
+        articles: []
+      };
+
+      angular.forEach(data.articles, function (article) {
+        obj.articles.push({
+          title: article.title,
+          subtitle: article.subtitle,
+          author_name: article.author_name,
+          page_number: article.page_number,
+          cover: article.cover,
+          thumb: article.thumb,
+          tags: _.map(article.tags, 'text'),
+          content: article.content,
+        });
+      });
+
+      obj.background = data.background;
+      obj.cover = data.cover;
+      obj.number = data.number;
+      obj.file = data.file;
+      obj.publish_date = data.publish_date;
+      obj.theme = data.theme;
+      obj.status = data.status;
+
+      if (obj.status == 'scheduled') {
+        obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
+      }
+
+      return obj;
+    };
+
     return {
       /**
        * @param id
@@ -52,7 +92,7 @@
        * @returns {*}
        */
       newEdition: function (id, data) {
-        return $http.post(APIUrl + '/periodical/' + id + '/edition', data);
+        return $http.post(APIUrl + '/periodical/' + id + '/edition', _parseEditionData(data));
       },
       /**
        * @param id
@@ -62,7 +102,7 @@
        * @returns {*}
        */
       updateEdition: function (id, edition, data) {
-        return $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, data);
+        return $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, _parseEditionData(data));
       },
       /**
        * @param id
