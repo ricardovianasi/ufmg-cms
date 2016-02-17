@@ -29,24 +29,8 @@
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="btn-toolbar">
-                <div class="btn-group focus-btn-group">
-                    <a class="btn"
-                       ng-click="itemStatus = ''"
-                       ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
-                        <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
-                        <span class=small>({{ media.total }})</span>
-                    </a>
 
-                    <a ng-click="itemStatus = 'publish'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'publish'}">
-                        <span ng-class="{ 'strong': itemStatus == 'published'}">Publicados</span>
-                        <span class=small>({{ (media.items | filter: {status: 'published'}).length }})</span>
-                    </a>
 
-                    <a ng-click="itemStatus = 'draft'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'draft'}">
-                        <span ng-class="{ 'strong': itemStatus == 'draft'}">Rascunho</span>
-                        <span class=small>({{ (media.items | filter: {status: 'draft'}).length }})</span>
-                    </a>
-                </div>
 
                 <div class="pull-right">
                     <a ng-href=#/media/new class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA MÍDIA</a>
