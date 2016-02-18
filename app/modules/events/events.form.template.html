@@ -4,12 +4,12 @@
             <div class="title-env">
                 <h1>
                    <span ng-if="vm.event.id">
-                       <span ng-if="vm.event.name">Editar Evento - {{ event.name }}</span>
+                       <span ng-if="vm.event.name">Editar Evento - {{ vm.event.name }}</span>
                        <span ng-if="!vm.event.name">Editar Evento</span>
                    </span>
 
                    <span ng-if="!vm.event.id">
-                       <span ng-if="vm.event.name">Novo Evento - {{ event.name }}</span>
+                       <span ng-if="vm.event.name">Novo Evento - {{ vm.event.name }}</span>
                        <span ng-if="!vm.event.name">Novo Evento</span>
                    </span>
                 </h1>
@@ -292,7 +292,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 
@@ -300,6 +299,3 @@
         <publishment-options route-model="vm.event" publish-method="vm.publish"></publishment-options>
     </div>
 </div>
-
-<br/>
-<br/>
