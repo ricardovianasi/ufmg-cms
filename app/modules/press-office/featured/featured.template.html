@@ -64,11 +64,11 @@
 
                             <td class="table-fit">
 
-                                <a ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <a ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
+                                <a uib-tooltip="Excluir" ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

@@ -96,15 +96,15 @@
                         </td>
 
                         <td class="table-fit">
-                            <a target="_blank" ng-href="{{ release.release_url }}" class="btn btn-primary">
+                            <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ release.release_url }}" class="btn btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
 
-                            <a ng-href="#/releases/edit/{{ release.id }}" class="btn btn-warning">
+                            <a uib-tooltip="Editar" ng-href="#/releases/edit/{{ release.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
-                            <a ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>
