@@ -31,7 +31,7 @@
      *
      * @private
      */
-    var _parseData = function (widgets) {
+    var _parseCoursesData = function (widgets) {
       var cleanData = {
         sidebar: [],
       };
@@ -41,6 +41,28 @@
       });
 
       return cleanData;
+    };
+
+    /**
+     * @param course
+     *
+     * @returns {*}
+     *
+     * @private
+     */
+    var _parseCourseData = function (course) {
+      var obj = {
+        tags: _.map(course.tags, 'text'),
+        cover: course.cover,
+        status: course.status,
+        description: course.description,
+      };
+
+      if (obj.status == 'scheduled') {
+        obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
+      }
+
+      return obj;
     };
 
     return {
@@ -60,7 +82,7 @@
        * @param type
        * @param id
        */
-      getCourseRoute: function(type, id){
+      getCourseRoute: function (type, id) {
         var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, id);
 
         return $http.get(url);
@@ -69,9 +91,10 @@
        *
        * @param type
        * @param courseId
+       * @param id
        */
-      getCourse: function (type, courseId) {
-        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, courseId);
+      getCourse: function (type, courseId, id) {
+        var url = $filter('format')('{0}/course/{1}/{2}/routes/{3}', apiUrl, type, courseId, id);
 
         return $http.get(url);
       },
@@ -82,16 +105,7 @@
        * @returns {HttpPromise}
        */
       updateCourse: function (id, course) {
-        var obj = {
-          tags: course.tags,
-          cover: course.cover,
-          status: course.status,
-          description: course.description,
-        };
-
-        if (obj.status == 'scheduled') {
-          obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
-        }
+        var obj = _parseCourseData(course);
 
         return $http.put(apiUrl + '/route/' + id, obj);
       },
@@ -103,12 +117,12 @@
        */
       getCourses: function (type, slug) {
         type = type || '';
-        var url = '';
 
-        if (slug)
+        var url = $filter('format')('{0}/course/{1}', apiUrl, type);
+
+        if (slug) {
           url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);
-        else
-          url = $filter('format')('{0}/course/{1}', apiUrl, type);
+        }
 
         return $http.get(url);
       },
@@ -136,8 +150,7 @@
        */
       updateCourses: function (type, obj) {
         var url = $filter('format')('{0}/course/{1}', apiUrl, type);
-
-        var data = _parseData(obj);
+        var data = _parseCoursesData(obj);
 
         return $http.put(url, data);
       },
@@ -150,10 +163,7 @@
        */
       updateRoutesSidebar: function (type, course_id, obj) {
         var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
-
-
-        var data = _parseData(obj);
-
+        var data = _parseCoursesData(obj);
 
         return $http.put(url, data);
       }
