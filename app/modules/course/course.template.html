@@ -66,7 +66,7 @@
                     <tr role="row" ng-repeat="item in vm.courses.items | filter: search" class="odd">
                         <td>
                             <div class="clearfix">
-                                <a href="#/course/list/{{ vm.type }}/{{ item.id }}">{{ item.name }}</a>
+                                <a href="#/course/list/{{ vm.type }}/{{ item.id }}">{{ item.name|titleize }}</a>
                             </div>
                         </td>
                     </tr>

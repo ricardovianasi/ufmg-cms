@@ -40,10 +40,15 @@
     if (vm.courseId) {
       CourseService.getCourseRoutes(vm.type, vm.courseId).then(function (data) {
         vm.courses = data.data;
+
+        angular.forEach(vm.courses.items, function (value, key) {
+          this[key].name = value.subdivision_name ? value.subdivision_name : value.name;
+        }, vm.courses.items);
+
         vm.dtOptions = dataTableConfigService.init();
       });
 
-      CourseService.getCourse(vm.type, vm.courseId).then(function (data) {
+      CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
         vm.course = {
           id: data.data.id,
           name: data.data.name
