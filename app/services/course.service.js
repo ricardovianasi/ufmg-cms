@@ -91,9 +91,10 @@
        *
        * @param type
        * @param courseId
+       * @param id
        */
-      getCourse: function (type, courseId) {
-        var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, courseId);
+      getCourse: function (type, courseId, id) {
+        var url = $filter('format')('{0}/course/{1}/{2}/routes/{3}', apiUrl, type, courseId, id);
 
         return $http.get(url);
       },
