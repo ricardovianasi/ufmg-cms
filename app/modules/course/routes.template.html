@@ -5,35 +5,41 @@
                 <h1 class="title">Percursos</h1>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="breadcrumb-env">
 
                 <ol class="breadcrumb bc-1">
                     <li>
-                        <a href="#/"><i class="fa-home"></i>Home</a>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
                     </li>
+
                     <li>
                         <a href="#/course">
                             Cursos
                         </a>
                     </li>
+
                     <li>
                         <a href="#/course">
                             Nível Acadêmico
                         </a>
                     </li>
+
                     <li>
                         <a href="#/course/list/{{ vm.type }}">
-                           {{ vm.type|translate }}
+                            {{ vm.type|translate }}
                         </a>
                     </li>
+
                     <li class="active">
                         <a href="#/course/list/{{ vm.type }}/{{ vm.course.id }}">
                             <strong>{{ vm.course.name }}</strong>
                         </a>
                     </li>
                 </ol>
-
             </div><!--breadcrumb-env-->
         </div>
     </div>
@@ -42,40 +48,44 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
-
-
             <div class="btn-toolbar">
-                <a ng-href="#/course/list/{{ vm.type }}" class="btn btn-gray"><i class="fa fa-angle-left"></i> &nbsp;Voltar para Cursos</a>
+                <a ng-href="#/course/list/{{ vm.type }}" class="btn btn-gray">
+                    <i class="fa fa-angle-left"></i> &nbsp;Voltar para Cursos
+                </a>
+
                 <div class="pull-right">
-                    <a ng-click="vm.showCover = true"
-                       class="btn btn-secondary btn-lg pull-left"
-                       ng-if="!vm.course.cover_url">Selecionar Capa principal</a>
+                    <a class="btn btn-secondary btn-lg pull-left"
+                       ng-click="vm.showCover = true"
+                       ng-if="!vm.course.cover_url">
+                        Selecionar Capa principal
+                    </a>
 
                     <a ng-href="#/course/sidebar/{{ vm.type }}/{{ vm.courseId }}"
-                       class="btn btn-secondary btn-lg pull-left">Personalizar Sidebar</a>
+                       class="btn btn-secondary btn-lg pull-left">
+                        Personalizar Sidebar
+                    </a>
                 </div>
             </div>
 
             <div class=row>
                 <div class=col-xs-12>
                     <div class="pages-module add-module edition-bg-thumb" ng-if="vm.showCover">
-                        <div class="add-title"
-                             ngf-accept="'image/*'"
-                             ngf-select
+                        <div class="add-title add-module"
                              ng-model="vm.course_cover"
-                             ngf-multiple="false"
-                             ng-if="!vm.course.cover_url"
-                             class='add-module'>+ Adicionar Capa
+                             ng-click="vm.uploadCover()"
+                             ng-if="!vm.course.cover_url">+ Adicionar Capa
                         </div>
+
                         <div>
                             <div class="chosen-cover">
-                                <span  ng-click="vm.removeImage()"
+                                <span ng-click="vm.removeImage()"
                                       class="label label-danger remove-image"
                                       ng-if="vm.course.cover_url">
                                     <i class="fa fa-remove"></i> REMOVER IMAGEM
                                 </span>
                             </div>
-                            <div  class="uploaded-image" ng-if="vm.course.cover_url">
+
+                            <div class="uploaded-image" ng-if="vm.course.cover_url">
                                 <img class="img-responsive" ng-src="{{ vm.course.cover_url }}">
                             </div>
                         </div>
@@ -91,21 +101,21 @@
                         <th>Ações</th>
                     </tr>
                     </thead>
+
                     <tbody>
-                    <tr role="row" ng-repeat="item in vm.courses.items | orderBy: item.modality | filter: search" class="odd">
+                    <tr role="row" ng-repeat="item in vm.courses.items | orderBy: item.modality | filter: search"
+                        class="odd">
                         <td>
                             <div class="clearfix">
                                 <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}">
-                                    {{ item.subdivision_name ? item.subdivision_name : item.name  }}
-                                    <span ng-if="item.subdivison_name">
-                                        -
-                                    </span>
-                                    {{ item.modality  }}
-                                </a>
+                                    {{ item.name|titleize }}
+                                </a> <span ng-if="item.subdivision_name">-</span> {{ item.modality }}
                             </div>
                         </td>
+
                         <td class="table-fit-single">
-                            <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}" class="btn btn-warning" href="#/pages/edit/416">
+                            <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}"
+                               class="btn btn-warning" href="#/pages/edit/416">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         </td>
@@ -113,7 +123,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div><!--panel-->
     </div><!--col-xs-12-->
 </div><!--row-->

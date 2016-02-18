@@ -34,7 +34,7 @@
        *
        * @constructor
        */
-      var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+      var ConfirmationModalController = function ($scope, $uibModalInstance, title) {
         $scope.modal_title = title;
 
         $scope.ok = function () {
@@ -48,7 +48,7 @@
 
       return $uibModal.open({
         templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
+        controller: ConfirmationModalController,
         backdrop: 'static',
         size: size,
         resolve: {
@@ -59,11 +59,29 @@
       });
     }
 
+    /**
+     * @param {object} resolve
+     *
+     * @returns {*}
+     *
+     * @private
+     */
+    var _uploadImage = function (resolve) {
+      return $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl',
+        resolve: resolve
+      });
+    };
+
     return {
       MODAL_SMALL: 'sm',
       MODAL_MEDIUM: 'md',
       MODAL_LARGE: 'lg',
-      confirm: _confirm
+      confirm: _confirm,
+      uploadImage: _uploadImage
     };
   }
 })();
