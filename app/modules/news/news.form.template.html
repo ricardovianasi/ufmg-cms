@@ -43,6 +43,7 @@
 <div class="row">
     <div class="col-xs-8 panel panel-default">
         <form class="form">
+            <!-- TITLE -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -51,10 +52,11 @@
                                ng-model="news.title">
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
             <div class="row">
-                <div class="col-xs-8">
+                <!-- SUBTITLE -->
+                <div class="col-xs-6">
                     <div class="form-group">
                         <label>Bigode</label>
                         <input type="text" class="form-control"
@@ -62,17 +64,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-4">
-                    <div class="form-group">
-                        <label>Tipo</label>
-                        <select class="form-control pull-left"
-                                ng-model="news.type"
-                                ng-options="type.id as type.name for type in types.items"></select>
-                    </div>
-                </div>
-            </div><!--row-->
-
-            <div class="row">
+                <!-- AUTHOR -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label>Autor</label>
@@ -80,28 +72,74 @@
                                ng-model="news.author">
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- HIGHLIGHT -->
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <div class="well well-sm">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="news.highlight"
+                                           ng-checked="news.highlight"> Notícia Destaque
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HIGHLIGHT UFMG -->
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <div class="well well-sm">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="news.highlight_ufmg"
+                                           ng-checked="news.highlight_ufmg"> Notícia UFMG
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- CATEGORY -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label>Categoria</label>
-                        <select class="form-control pull-left"
+                        <select class="form-control"
                                 ng-model="news.category"
                                 ng-options="category.id as category.name for category in categories.items"></select>
                     </div>
                 </div>
-            </div><!--row-->
 
+                <!-- TYPE -->
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Origem</label>
+                        <select class="form-control"
+                                ng-model="news.type"
+                                ng-options="type.id as type.name for type in types.items"></select>
+                    </div>
+                </div>
+            </div>
+
+            <!--TAGS -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label>
-                            Tags <small>(Digite a tag e pressione ENTER para inserir)</small>
+                            Tags
+                            <small>(Digite a tag e pressione ENTER para inserir)</small>
                         </label>
                         <tags-input add-on-comma="false" ng-model="news.tags"></tags-input>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- THUMB-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -127,18 +165,19 @@
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <!-- TEXT -->
             <div class="row">
                 <div class="col-xs-12">
-                   <label>Conteúdo</label>
-                    <textarea cols="30" rows="30"
+                    <label>Conteúdo</label>
+                    <textarea cols="30" rows="30" class="form-control"
                               ng-model="news.text"
                               redactor
                               imagencrop-options="imagencropOptions"
                               audioUpload-options="audioUploadOptions"></textarea>
                 </div>
-            </div><!--row-->
+            </div>
         </form>
     </div>
 
