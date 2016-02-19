@@ -9,8 +9,7 @@
     '$uibModalInstance',
     'lodash',
     'MediaService',
-    'tabsService',
-    'formats'
+    'tabsService'
   ];
 
   /**
@@ -19,24 +18,22 @@
    * @param _
    * @param MediaService
    * @param tabsService
-   * @param formats
    *
    * @constructor
    */
-  function AudioUploadComponentController($scope, $uibModalInstance, _, MediaService, tabsService, formats) {
+  function AudioUploadComponentController($scope, $uibModalInstance, _, MediaService, tabsService) {
     var vm = this;
 
     vm.tabs = tabsService.getTabs();
+    vm.activeFormat = '';
 
     tabsService.selectTab('midia');
-
 
     vm.openMidia = _openMidia;
     vm.changePage = _changePage;
     vm.selectMidia = _selectMidia;
     vm.updateMidia = _updateMidia;
     vm.cancel = _cancel;
-    vm.activeFormat = '';
 
     _loadMidia();
     /**
@@ -121,6 +118,5 @@
     function _cancel() {
       $uibModalInstance.dismiss('cancel');
     }
-
   }
 })();

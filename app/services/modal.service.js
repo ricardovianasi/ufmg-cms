@@ -11,7 +11,7 @@
   /**
    * @param $uibModal
    *
-   * @returns {{MODAL_SMALL: string, MODAL_MEDIUM: string, MODAL_LARGE: string, confirm: _confirm}}
+   * @returns {{MODAL_SMALL: string, MODAL_MEDIUM: string, MODAL_LARGE: string, confirm: _confirm, uploadImage: _uploadImage, uploadAudio: _uploadAudio}}
    *
    * @constructor
    */
@@ -67,6 +67,12 @@
      * @private
      */
     var _uploadImage = function (resolve) {
+      resolve = angular.extend({
+        formats: function () {
+          return null;
+        }
+      }, resolve);
+
       return $uibModal.open({
         templateUrl: 'components/modal/upload-component.template.html',
         controller: 'UploadComponentController as vm',
@@ -76,12 +82,27 @@
       });
     };
 
+    /**
+     * @returns {*}
+     *
+     * @private
+     */
+    var _uploadAudio = function () {
+      return $uibModal.open({
+        templateUrl: 'components/modal/audio-upload-component.template.html',
+        controller: 'AudioUploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl'
+      });
+    };
+
     return {
       MODAL_SMALL: 'sm',
       MODAL_MEDIUM: 'md',
       MODAL_LARGE: 'lg',
       confirm: _confirm,
-      uploadImage: _uploadImage
+      uploadImage: _uploadImage,
+      uploadAudio: _uploadAudio
     };
   }
 })();
