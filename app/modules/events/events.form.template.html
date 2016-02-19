@@ -101,22 +101,20 @@
             <!-- PHOTO -->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
-                        <label>Foto</label>
-
-                        <button class="pull-right" style="height:auto;"
+                    <label>Foto</label>
+                    <div class="form-group form-img">
+                        <button
                                 ng-click="vm.imgHandler.uploadPhoto()"
                                 ng-show="!vm.event.photo">
-                            Adicionar
+                            Inserir...
                         </button>
 
                         <div class="clearfix form-control" ng-show="vm.event.photo">
-                            <div class="pull-left">{{ vm.event.photo.url }}</div>
-
-                            <div class="pull-right">
+                            {{ vm.event.photo.url }}
+                            <div class="form-img-label">
                                 <span class="label label-danger remove-image-news" ng-show="vm.event.photo"
                                       ng-click="vm.imgHandler.removeImage('photo')">
-                                    <span class="fa fa-remove"></span> REMOVER
+                                    <i class="fa fa-remove"></i> REMOVER
                                 </span>
                             </div>
                         </div>
