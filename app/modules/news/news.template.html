@@ -5,9 +5,9 @@
                 <h1 class="title">Notícias</h1>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="breadcrumb-env">
-
                 <ol class="breadcrumb bc-1">
                     <li>
                         <a href="#/">
@@ -70,7 +70,11 @@
                     <tr role="row" class="odd"
                         ng-repeat="item in news.items | filter: search | filter: {status: itemStatus}">
                         <td>
-                            <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>
+                            <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
+                            <span class="label label-default"
+                                  ng-if="item.highlight">Destaque</span>
+                            <span class="label label-info"
+                                  ng-if="item.highlight_ufmg">UFMG</span>
                         </td>
 
                         <td>{{ item.author.name }}</td>
@@ -82,15 +86,16 @@
                         </td>
 
                         <td class="table-fit">
-                            <a target="_blank" ng-href="{{ item.news_url }}" class="btn btn-primary">
+                            <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.news_url }}"
+                               class="btn btn-primary">
                                 <i class="fa fa-eye"></i>
                             </a>
 
-                            <a ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
+                            <a uib-tooltip="Editar" ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
-                            <a ng-click="removeNews(item.id, item.title)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-click="removeNews(item.id, item.title)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

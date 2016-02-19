@@ -1,0 +1,29 @@
+<div class="btn-toolbar">
+    <div class="btn-group focus-btn-group">
+        <a class="btn"
+           ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}"
+           ng-click="itemStatus = ''">
+            <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
+            <span class=small>({{ pages.total }})</span>
+        </a>
+
+        <a class="btn"
+           ng-class="{ 'btn-gray': itemStatus == StatusService.STATUS_PUBLISHED}"
+           ng-click="itemStatus = StatusService.STATUS_PUBLISHED">
+            <span ng-class="{ 'strong': itemStatus == StatusService.STATUS_PUBLISHED}">Publicados</span>
+            <span class=small>({{ (pages.items | filter: {status: StatusService.STATUS_PUBLISHED}).length }})</span>
+        </a>
+
+        <a class="btn"
+           ng-class="{ 'btn-gray': itemStatus == StatusService.STATUS_DRAFT}"
+           ng-click="itemStatus = StatusService.STATUS_DRAFT">
+            <span ng-class="{ 'strong': itemStatus == StatusService.STATUS_DRAFT}">Rascunho</span>
+            <span class=small>({{ (pages.items | filter: {status: StatusService.STATUS_DRAFT}).length }})</span>
+        </a>
+    </div>
+
+    <div class="pull-right">
+        <a class="btn btn-secondary btn-lg pull-left"
+           ng-href="#/pages/new"><i class="fa fa-plus"></i> NOVA PÁGINA</a>
+    </div>
+</div>

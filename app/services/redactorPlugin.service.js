@@ -5,17 +5,17 @@
     .factory('RedactorPluginService', RedactorPluginService);
 
   RedactorPluginService.$inject = [
-    '$uibModal',
+    'ModalService',
   ];
 
   /**
-   * @param $uibModal
+   * @param ModalService
    *
-   * @returns {{setPlugin: setPlugin}}
+   * @returns {{setPlugin: setPlugin, getOptions: getOptions}}
    *
    * @constructor
    */
-  function RedactorPluginService($uibModal) {
+  function RedactorPluginService(ModalService) {
     console.log('... RedactorPluginService');
 
     /**
@@ -56,24 +56,19 @@
 
             _this.selection.save();
 
-            var moduleModal = $uibModal.open({
-              templateUrl: 'components/modal/upload-component.template.html',
-              controller: 'UploadComponentController as vm',
-              backdrop: 'static',
-              size: 'xl',
-              resolve: {
+            ModalService
+              .uploadImage({
                 formats: function () {
                   return options.formats || null;
                 }
-              }
-            });
-
-            // Insert into textarea
-            moduleModal.result.then(function (data) {
-              if (options.callback) {
-                options.callback.call(null, _this, data);
-              }
-            });
+              })
+              .result
+              .then(function (data) {
+                // Insert into textarea
+                if (options.callback) {
+                  options.callback.call(null, _this, data);
+                }
+              });
           }
         };
       },
@@ -95,24 +90,14 @@
 
             _this.selection.save();
 
-            var moduleModal = $uibModal.open({
-              templateUrl: 'components/modal/audio-upload-component.template.html',
-              controller: 'AudioUploadComponentController as vm',
-              backdrop: 'static',
-              size: 'xl',
-              resolve: {
-                formats: function () {
-                  return options.formats || null;
+            ModalService
+              .uploadAudio()
+              .result
+              .then(function (data) {
+                if (options.callback) {
+                  options.callback.call(null, _this, data);
                 }
-              }
-            });
-
-            // Insert into textarea
-            moduleModal.result.then(function (data) {
-              if (options.callback) {
-                options.callback.call(null, _this, data);
-              }
-            });
+              });
           }
         };
       }

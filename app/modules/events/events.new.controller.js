@@ -13,7 +13,8 @@
     'MediaService',
     'NotificationService',
     'StatusService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    'ModalService',
   ];
 
   /**
@@ -26,6 +27,7 @@
    * @param NotificationService
    * @param StatusService
    * @param DateTimeHelper
+   * @param ModalService
    *
    * @constructor
    */
@@ -37,7 +39,8 @@
                                MediaService,
                                NotificationService,
                                StatusService,
-                               DateTimeHelper) {
+                               DateTimeHelper,
+                               ModalService) {
     console.log('... EventsNewController');
 
     var vm = this;
@@ -108,18 +111,14 @@
       }
     });
 
-    $scope.$watch('vm.event.photo', function () {
-      if (vm.event.photo && vm.event.photo instanceof File) {
-        vm.imgHandler.upload('photo', [
-          vm.event.photo
-        ]);
-      }
-    });
-
     /**
      * Handle img upload
      */
     vm.imgHandler = {
+      /**
+       * @param elem
+       * @param files
+       */
       upload: function (elem, files) {
         angular.forEach(files, function (file) {
           MediaService.newFile(file).then(function (data) {
@@ -130,6 +129,29 @@
           });
         });
       },
+      /**
+       *
+       */
+      uploadPhoto: function () {
+        var resolve = {
+          formats: function () {
+            return ['medium'];
+          }
+        };
+
+        ModalService
+          .uploadImage(resolve)
+          .result
+          .then(function (data) {
+            vm.event.photo = {
+              url: data.url,
+              id: data.id
+            };
+          });
+      },
+      /**
+       * @param elem
+       */
       removeImage: function (elem) {
         $timeout(function () {
           vm.event[elem] = '';

@@ -107,14 +107,6 @@
       plugins: false,
     };
 
-    // Watch IMG elements to upload
-    $scope.$watch('event.poster', function () {
-      if (vm.event.poster && vm.event.poster instanceof File) {
-        vm.imgHandler.upload('poster', [
-          vm.event.poster
-        ]);
-      }
-    });
     $scope.$watch('event.photo', function () {
       if (vm.event.photo && vm.event.photo instanceof File) {
         vm.imgHandler.upload('photo', [
@@ -127,6 +119,10 @@
      * Handle img upload
      */
     vm.imgHandler = {
+      /**
+       * @param elem
+       * @param files
+       */
       upload: function (elem, files) {
         angular.forEach(files, function (file) {
           MediaService.newFile(file).then(function (data) {
@@ -136,6 +132,26 @@
             };
           });
         });
+      },
+      /**
+       *
+       */
+      uploadPhoto: function () {
+        var resolve = {
+          formats: function () {
+            return ['medium'];
+          }
+        };
+
+        ModalService
+          .uploadImage(resolve)
+          .result
+          .then(function (data) {
+            vm.event.photo = {
+              url: data.url,
+              id: data.id
+            };
+          });
       },
       removeImage: function (elem) {
         $timeout(function () {

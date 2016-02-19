@@ -85,8 +85,12 @@
     function clog() {
         var args = Array.prototype.slice.call(arguments);
 
+        if (!args.length) {
+            return;
+        }
+
         //in case logging without title
-        if (args.length > 1 && typeof args[0] !== 'string') {
+        if (typeof args[0] !== 'string') {
             log(args);
         }
 
