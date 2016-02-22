@@ -74,7 +74,7 @@
                     <tr class="odd" role="row"
                         ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus}">
                         <td>
-                            {{ item.name }}&nbsp;
+                            <a ng-href="#/events/edit/{{ item.id }}">{{ item.name }}</a>&nbsp;
                             <span class="label label-secondary"
                                   ng-if="item.highlight">Destaque</span>
                         </td>

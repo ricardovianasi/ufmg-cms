@@ -76,7 +76,7 @@
                         ng-repeat="clipping in clippings.items | filter: {description: search} | filter: {status: itemStatus}"
                         class="odd">
                         <td>
-                            {{ clipping.title }}
+                            <a ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>
                         </td>
 
                         <td>{{ clipping.author.name }}</td>
