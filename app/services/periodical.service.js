@@ -60,6 +60,7 @@
       obj.theme = data.theme;
       obj.status = data.status;
       obj.resume = data.resume;
+      obj.year = data.year;
 
       if (obj.status == 'scheduled') {
         obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
