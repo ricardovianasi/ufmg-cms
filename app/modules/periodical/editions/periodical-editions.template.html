@@ -55,7 +55,7 @@
                     </thead>
 
                     <tbody>
-                    <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus }"
+                    <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus } | orderBy: '-number'"
                         class=odd>
                         <td>
                             <a ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
