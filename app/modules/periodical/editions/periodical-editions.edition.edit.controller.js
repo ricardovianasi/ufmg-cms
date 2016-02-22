@@ -52,9 +52,11 @@
     });
 
     PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
+      console.log(data);
       $scope.periodical = data.data.periodical;
       $scope.edition.id = data.data.id;
       $scope.edition.theme = data.data.theme;
+      $scope.edition.resume = data.data.resume;
       $scope.edition.number = data.data.number;
       $scope.edition.publish_date = DateTimeHelper.dateToStr(data.data.publish_date);
       $scope.edition.file = data.data.file ? data.data.file.id : '';
