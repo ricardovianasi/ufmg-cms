@@ -52,7 +52,6 @@
     });
 
     PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
-      console.log(data);
       $scope.periodical = data.data.periodical;
       $scope.edition.id = data.data.id;
       $scope.edition.theme = data.data.theme;
