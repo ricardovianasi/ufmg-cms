@@ -38,8 +38,21 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label>Nome</label>
+                        <label>Título Original</label>
                         <input type="text" class="form-control" value="{{ course.subdivision_name|titleize }}" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>
+                            Título de exibição <small><em>Digite um novo título para substituir o original ou deixe em
+                            branco</em></small>
+                        </label>
+                        <input type="text" class="form-control" placeholder="{{ course.subdivision_name|titleize }}"
+                               ng-model="course.name">
                     </div>
                 </div>
             </div>

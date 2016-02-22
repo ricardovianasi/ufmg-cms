@@ -57,18 +57,21 @@
     $scope.type = $routeParams.type;
 
     CourseService.getCourse($routeParams.type, $routeParams.courseId, $routeParams.id).then(function (data) {
-      $scope.course.subdivision_name = data.data.subdivision_name + ' - ' + data.data.modality;
+      var courseData = data.data;
 
-      if (!_.isEmpty(data.data.detail)) {
-        $scope.course = data.data;
+      $scope.course.subdivision_name = courseData.subdivision_name + ' - ' + courseData.modality;
 
-        if (!_.isEmpty(data.data.detail.cover)) {
-          $scope.course.cover = data.data.detail.cover;
-          $scope.course.cover_url = data.data.detail.cover.url;
+      if (!_.isEmpty(courseData.detail)) {
+        $scope.course = courseData;
+
+        if (!_.isEmpty(courseData.detail.cover)) {
+          $scope.course.cover = courseData.detail.cover;
+          $scope.course.cover_url = courseData.detail.cover.url;
         }
 
-        $scope.course.description = data.data.detail.description;
-        $scope.course.status = data.data.detail.status;
+        $scope.course.description = courseData.detail.description;
+        $scope.course.status = courseData.detail.status;
+        $scope.course.name = courseData.detail.name;
 
         $scope.course.tags = [];
 

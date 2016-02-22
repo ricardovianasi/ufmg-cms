@@ -56,6 +56,7 @@
         cover: course.cover,
         status: course.status,
         description: course.description,
+        name: course.name,
       };
 
       if (obj.status == 'scheduled') {
