@@ -54,7 +54,7 @@
                     <a ng-click="itemStatus = 'scheduled'" class="btn"
                        ng-class="{ 'btn-gray': itemStatus == 'scheduled'}">
                         <span ng-class="{ 'strong': itemStatus == 'scheduled'}">Agendado</span>
-                        <span class=small>({{ (clippings.items|filter: {status: 'scheduled'}).length }})</span>
+                        <span class=small>({{ (pages.items|filter: {status: 'scheduled'}).length }})</span>
                     </a>
                 </div>
 
