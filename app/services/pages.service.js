@@ -667,7 +667,7 @@
         eventlist: function (widget) {
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            tag: widget.content ? widget.content.tag.id : null,
           };
         },
         /**
