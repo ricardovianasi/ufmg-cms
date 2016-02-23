@@ -300,22 +300,20 @@
          */
         highlightednews: function (widget) {
           if (widget.news) {
+            var newsToSelect = [];
+
+            angular.forEach(widget.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
             return {
-              news: widget.news,
+              news: newsToSelect,
             };
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
-
-              angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
-              });
-
-              return {
-                news: newsToSelect,
-              };
-            }
           }
+
+          return {
+            news: widget.news,
+          };
         },
         /**
          * Highlighted Radio News
@@ -715,7 +713,10 @@
               var newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
               });
 
               return {
