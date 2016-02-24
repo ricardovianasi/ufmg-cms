@@ -871,7 +871,6 @@
        */
       var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
-
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
           } else {
@@ -1042,12 +1041,20 @@
          */
         internalmenu: function ($scope) {
           $scope.pages = [];
+          $scope.widget.links = $scope.widget.links || [];
 
-          _prepareItems($scope);
+          $scope.addItem = function () {
+            $scope.widget.links.push({
+              title: '',
+              url: '',
+            });
+          };
 
-          _getPages().then(function (data) {
-            $scope.pages = data.data;
-          });
+          $scope.removeItem = function (idx) {
+            if ($scope.widget.links[idx]) {
+              $scope.widget.links.splice(idx, 1);
+            }
+          };
         },
         /**
          * @param $scope
@@ -1100,6 +1107,30 @@
 
           _preparingNews($scope);
         },
+        /**
+         * @param $scope
+         */
+        hublinks: function ($scope) {
+          $scope.pages = [];
+          $scope.widget.links = $scope.widget.links || [];
+
+          $scope.addItem = function () {
+            $scope.widget.links.push({
+              title: '',
+              url: '',
+            });
+          };
+
+          $scope.removeItem = function (idx) {
+            if ($scope.widget.links[idx]) {
+              $scope.widget.links.splice(idx, 1);
+            }
+          };
+
+          _getPages().then(function (data) {
+            $scope.pages = data.data;
+          });
+        }
       };
 
       return {
