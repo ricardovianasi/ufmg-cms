@@ -197,6 +197,10 @@
         return false;
       }
 
+
+      if(vm.currentFile.author_name)
+        vm.currentFile.author.name = vm.currentFile.author_name;
+
       var obj = {
         title: vm.currentFile.title,
         description: vm.currentFile.description,
