@@ -197,11 +197,16 @@
         return false;
       }
 
+
+      if(vm.currentFile.author_name)
+        vm.currentFile.author.name = vm.currentFile.author_name;
+
       var obj = {
         title: vm.currentFile.title,
         description: vm.currentFile.description,
         altText: vm.currentFile.alt_text,
-        legend: vm.currentFile.legend
+        legend: vm.currentFile.legend,
+        author_name: vm.currentFile.author.name
       };
 
       MediaService.updateFile(vm.currentFile.id, obj).then(function () {
