@@ -9,7 +9,6 @@
             </button>
         </div>
     </div>
-
     <div ng-repeat="link in widget.links" class="well well-sm">
         <div class="clearfix">
             <div class=pull-left>Link {{ $index + 1 }}</div>
@@ -37,14 +36,15 @@
                     <label>Destino do link:</label>
 
                     <select title="Destino do link" class="form-control"
-                            ng-model="link.link_type">
+                            ng-model="link.link_type"
+                            ng-change="changeType($index)">
                         <option value="page"
-                                ng-selected="link.link_type == 'page'">
+                                ng-selected="link.link_type == 'page';">
                             P&aacute;ginas internas
                         </option>
 
                         <option value="link"
-                                ng-selected="link.link_type == 'link'">
+                                ng-selected="link.link_type == 'link';">
                             Url externa
                         </option>
                     </select>

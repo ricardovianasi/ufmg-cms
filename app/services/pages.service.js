@@ -432,7 +432,7 @@
          */
         hublinks: function (widget) {
           return {
-            links: widget.content ? widget.content.links : null,
+            links: widget.content ? widget.content.links : widget.links,
           };
         },
         /**
@@ -784,6 +784,15 @@
          * @returns {{links: null}}
          */
         hublinks: function (widget) {
+          angular.forEach(widget.content.links, function(v, k){
+            if(widget.content.links[k].external_url)
+              widget.content.links[k].link_type = 'link';
+            else {
+              widget.content.links[k].link_type = 'page';
+              widget.content.links[k].page = widget.content.links[k].page.id;
+            }
+          });
+
           return {
             links: widget.content ? widget.content.links : null,
           };
@@ -1130,6 +1139,14 @@
           _getPages().then(function (data) {
             $scope.pages = data.data;
           });
+
+          $scope.changeType = function(idx){
+             if($scope.widget.links[idx].link_type == 'page')
+               $scope.widget.links[idx].external_url = null;
+             else
+               $scope.widget.links[idx].page = null;
+          };
+
         }
       };
 
