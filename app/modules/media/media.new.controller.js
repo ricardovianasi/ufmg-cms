@@ -8,6 +8,7 @@
     '$scope',
     '$uibModal',
     '$location',
+    '$timeout',
     'StatusService',
     'MediaService'
   ];
@@ -15,6 +16,7 @@
   function MediaNewController($scope,
                               $modal,
                               $location,
+                              $timeout,
                               StatusService,
                               MediaService) {
     console.log('... GalleryEditController');
@@ -37,11 +39,10 @@
 
     $scope.publish = function (file) {
       var obj = {
-        title: file.title ? file.title : '',
-        description: file.description ? file.description : '',
-        altText: file.alt_text ? file.alt_text : '',
-        legend: file.legend ? file.legend : ''
+        legend: file.legend ? file.legend : '',
+        author_name: file.author_name ? file.author_name: ''
       };
+
       MediaService.updateFile(file.id, obj).then(function (data) {
         $location.path('/media');
       });
@@ -130,6 +131,14 @@
       $scope.cancel = function () {
         $uibModalInstance.dismiss();
       };
+    };
+
+    $scope.removeMidia = function () {
+      $timeout(function () {
+        $scope.file.url = '';
+        $scope.file.type = '';
+        $scope.$apply();
+      });
     };
   }
 })();
