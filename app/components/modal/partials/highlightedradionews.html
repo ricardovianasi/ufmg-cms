@@ -22,13 +22,7 @@
                             {{ $select.selected.title }}
                         </ui-select-match>
 
-                        <ui-select-choices repeat="item in news.items | filter: {
-                            type: {
-                                id: 3,
-                                name: 'Audio',
-                                icon_class: 'fa-volume-up'
-                            }
-                        } | filter: $select.search">
+                        <ui-select-choices repeat="item in news.items | filter: $select.search">
                             <div ng-bind-html="item.title | highlight: $select.search">
                             </div>
                         </ui-select-choices>

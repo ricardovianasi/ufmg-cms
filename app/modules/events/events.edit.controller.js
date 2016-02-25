@@ -201,8 +201,8 @@
 
       event.courses = [];
       event.tags = [];
-      event.initDate = event.init_date;
-      event.endDate = event.end_date;
+      event.initDate = new Date(event.init_date);
+      event.endDate = new Date(event.end_date);
 
       event.initTime = event.initDate;
       event.endTime = event.endDate;

@@ -50,6 +50,12 @@
                         <span ng-class="{ 'strong': itemStatus == 'draft'}">Rascunho</span>
                         <span class=small>({{ (pages.items | filter: {status: 'draft'}).length }})</span>
                     </a>
+
+                    <a ng-click="itemStatus = 'scheduled'" class="btn"
+                       ng-class="{ 'btn-gray': itemStatus == 'scheduled'}">
+                        <span ng-class="{ 'strong': itemStatus == 'scheduled'}">Agendado</span>
+                        <span class=small>({{ (pages.items|filter: {status: 'scheduled'}).length }})</span>
+                    </a>
                 </div>
 
 
