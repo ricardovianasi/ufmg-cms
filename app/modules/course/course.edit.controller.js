@@ -12,10 +12,21 @@
     'CourseService',
     'NotificationService',
     'StatusService',
-    'DateTimeHelper',
-    'MediaService'
+    'ModalService'
   ];
 
+  /**
+   * @param $timeout
+   * @param $location
+   * @param $scope
+   * @param $routeParams
+   * @param CourseService
+   * @param NotificationService
+   * @param StatusService
+   * @param ModalService
+   *
+   * @constructor
+   */
   function CourseEditController($timeout,
                                 $location,
                                 $scope,
@@ -23,8 +34,7 @@
                                 CourseService,
                                 NotificationService,
                                 StatusService,
-                                DateTimeHelper,
-                                MediaService) {
+                                ModalService) {
     console.log('... CourseController');
 
     /**
@@ -47,50 +57,43 @@
     $scope.type = $routeParams.type;
 
     CourseService.getCourse($routeParams.type, $routeParams.courseId, $routeParams.id).then(function (data) {
+      var courseData = data.data;
 
-      $scope.course.subdivision_name = data.data.subdivision_name + ' - ' + data.data.modality;
+      $scope.course.subdivision_name = courseData.subdivision_name + ' - ' + courseData.modality;
 
-      if (!_.isEmpty(data.data.detail)) {
-        $scope.course = data.data;
+      if (!_.isEmpty(courseData.detail)) {
+        $scope.course = courseData;
 
-        if (!_.isEmpty(data.data.detail.cover)) {
-          $scope.course.cover = data.data.detail.cover;
-          $scope.course.cover_url = data.data.detail.cover.url;
+        if (!_.isEmpty(courseData.detail.cover)) {
+          $scope.course.cover = courseData.detail.cover;
+          $scope.course.cover_url = courseData.detail.cover.url;
         }
 
-        $scope.course.description = data.data.detail.description;
-        $scope.course.status = data.data.detail.status;
+        $scope.course.description = courseData.detail.description;
+        $scope.course.status = courseData.detail.status;
+        $scope.course.name = courseData.detail.name;
 
         $scope.course.tags = [];
 
-        if (!_.isEmpty($scope.course.detail.tags)) {
-          angular.forEach($scope.course.detail.tags, function (tag) {
-            $scope.course.tags.push(tag.name);
-          });
+        angular.forEach($scope.course.detail.tags, function (tag) {
+          $scope.course.tags.push(tag.name);
+        });
+      }
+    });
+
+    $scope.uploadImage = function () {
+      var resolve = {
+        formats: function () {
+          return ['pageCover'];
         }
-      }
-    });
+      };
 
-
-    $scope.$watch('course_cover', function () {
-      if ($scope.course_cover) {
-        $scope.upload([$scope.course_cover]);
-      }
-    });
-
-    $scope.upload = function (files) {
-      angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
-        MediaService.newFile(file).then(function (data) {
+      ModalService.uploadImage(resolve)
+        .result
+        .then(function (data) {
           $scope.course.cover = data.id;
           $scope.course.cover_url = data.url;
         });
-      });
     };
 
     $scope.removeImage = function () {
@@ -102,9 +105,7 @@
     };
 
     $scope.publish = function (data) {
-      data.tags = _.map(data.tags, 'text');
-      console.log(data.tags);
-      CourseService.updateCourse($routeParams.id, data).then(function (data) {
+      CourseService.updateCourse($routeParams.id, data).then(function () {
         NotificationService.success('Course com sucesso.');
         $location.path('/course/list/' + $scope.type + '/' + $scope.courseId);
       });

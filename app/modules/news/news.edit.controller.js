@@ -99,6 +99,7 @@
         type: data.data.type ? data.data.type.id : '',
         thumb: data.data.thumb ? data.data.thumb.id : '',
         thumb_name: data.data.thumb ? data.data.thumb.title : '',
+        highlight: data.data.highlight,
         highlight_ufmg: data.data.highlight_ufmg,
         news_url: data.data.news_url
       };
@@ -138,11 +139,9 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
-      if (typeof data.highlight_ufmg == 'undefined')
-        data.highlight_ufmg = false;
-
-      if (!data.saveDraftClicked && data.status != 'scheduled')
+      if (!data.saveDraftClicked && data.status != 'scheduled') {
         data.status = 'publish';
+      }
 
       var _obj = {
         title: data.title,
@@ -154,7 +153,8 @@
         type: data.type,
         tags: data.tags,
         thumb: data.thumb,
-        highlight_ufmg: data.highlight_ufmg
+        highlight: data.highlight,
+        highlight_ufmg: data.highlight_ufmg || false
       };
 
       _obj.tags = _.map(_obj.tags, 'text');

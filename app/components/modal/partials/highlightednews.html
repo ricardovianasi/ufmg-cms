@@ -13,7 +13,6 @@
 
 <div class=form-group>
     <label>Selecione as not&iacute;cias:</label>
-
     <ul class=dashed-list>
         <li ng-repeat="news in widget.news track by $index" class="as-sortable-item clearfix">
             <div class="gal-list-left pull-left">
@@ -35,13 +34,7 @@
                             {{ $select.selected.title }}
                         </ui-select-match>
 
-                        <ui-select-choices repeat="item in news.items | filter: {
-                            type: {
-                                id: 3,
-                                name: 'Audio',
-                                icon_class: 'fa-volume-up'
-                            }
-                        } | filter: $select.search">
+                        <ui-select-choices repeat="item in news.items | filter: $select.search">
                             <div ng-bind-html="item.title | highlight: $select.search">
                             </div>
                         </ui-select-choices>

@@ -55,7 +55,7 @@
     });
 
     $scope.edition.theme = '';
-    $scope.edition.number = '';
+    $scope.edition.resume = '';
     $scope.edition.publish_date = '';
     $scope.edition.file = '';
     $scope.edition.cover = '';

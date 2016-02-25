@@ -5,47 +5,61 @@
     .controller('CourseController', CourseController);
 
   CourseController.$inject = [
-    '$scope',
-    '$uibModal',
     '$routeParams',
     'CourseService',
     'dataTableConfigService',
     'NotificationService',
-    'MediaService'
+    'ModalService'
   ];
 
-  function CourseController($scope,
-                            $modal,
-                            $routeParams,
+  /**
+   * @param $routeParams
+   * @param CourseService
+   * @param dataTableConfigService
+   * @param NotificationService
+   * @param ModalService
+   *
+   * @constructor
+   */
+  function CourseController($routeParams,
                             CourseService,
                             dataTableConfigService,
                             NotificationService,
-                            MediaService) {
+                            ModalService) {
     console.log('... CourseController');
-    var vm = this;
-        vm.type = $routeParams.type;
-        vm.courseId = $routeParams.courseId;
-        vm.course = {};
-        vm.removeImage = _removeImage;
 
-    if(vm.courseId) {
+    var vm = this;
+
+    vm.type = $routeParams.type;
+    vm.courseId = $routeParams.courseId;
+    vm.course = {};
+
+    vm.removeImage = _removeImage;
+    vm.uploadCover = _uploadCover;
+
+    if (vm.courseId) {
       CourseService.getCourseRoutes(vm.type, vm.courseId).then(function (data) {
         vm.courses = data.data;
+
+        angular.forEach(vm.courses.items, function (value, key) {
+          this[key].name = value.subdivision_name ? value.subdivision_name : value.name;
+        }, vm.courses.items);
+
         vm.dtOptions = dataTableConfigService.init();
       });
 
-      CourseService.getCourse(vm.type, vm.courseId).then(function (data) {
+      CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
         vm.course = {
           id: data.data.id,
-          name:data.data.name
+          name: data.data.name
         };
 
-        if(data.data.cover) {
+        if (data.data.cover) {
           vm.course.cover_url = data.data.cover.url;
           vm.course.cover = data.data.cover.id;
         }
 
-        if(vm.course.cover)
+        if (vm.course.cover)
           vm.showCover = true;
       });
     } else {
@@ -55,52 +69,42 @@
       });
     }
 
-
-    $scope.$watch('vm.course_cover', function () {
-      if (vm.course_cover) {
-        _upload([vm.course_cover]);
-      }
-    });
-
     /**
-     *
-     * @param files
      * @private
      */
-    function _upload(files) {
-      angular.forEach(files, function (file) {
-        var obj = {
-          title: file.title ? file.title : '',
-          description: file.description ? file.description : '',
-          altText: file.alt_text ? file.alt_text : '',
-          legend: file.legend ? file.legend : ''
-        };
+    function _uploadCover() {
+      var resolve = {
+        formats: function () {
+          return ['pageCover'];
+        }
+      };
 
-        MediaService.newFile(file).then(function (data) {
+      ModalService.uploadImage(resolve)
+        .result
+        .then(function (data) {
           vm.course.cover = data.id;
           vm.course.cover_url = data.url;
+
           _uploadCourseCover();
         });
-      });
     }
 
-      /**
-       *
-       * @private
-       */
+    /**
+     * @private
+     */
     function _removeImage() {
       vm.course.cover = '';
       vm.course.cover_url = '';
       vm.showCover = false;
+
       _uploadCourseCover();
     }
 
-      /**
-       *
-       * @private
-       */
-    function _uploadCourseCover(){
-      CourseService.uploadCourseCover(vm.type, vm.courseId, vm.course.cover).then(function(data){
+    /**
+     * @private
+     */
+    function _uploadCourseCover() {
+      CourseService.uploadCourseCover(vm.type, vm.courseId, vm.course.cover).then(function () {
         NotificationService.success('Capa atualizada com sucesso!');
       });
     }

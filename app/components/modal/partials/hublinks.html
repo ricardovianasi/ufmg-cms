@@ -1,62 +1,72 @@
-<div class=form-group>
-    <div class=clearfix>
+<div class="form-group">
+    <div class="clearfix">
         <label>Links:</label>
 
-        <div class=pull-right>
-            <button type=button style="margin-bottom: 3px" ng-click=addLink() class="btn btn-primary btn-sm">
+        <div class="pull-right">
+            <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm"
+                    ng-click="addItem()">
                 <i class="fa fa-plus"></i>
             </button>
         </div>
     </div>
-
     <div ng-repeat="link in widget.links" class="well well-sm">
-        <div class=clearfix>
+        <div class="clearfix">
             <div class=pull-left>Link {{ $index + 1 }}</div>
 
-            <div class=pull-right>
-                <button type=button ng-click=removeLink($index) class="btn btn-danger btn-sm">
+            <div class="pull-right">
+                <button type="button" class="btn btn-danger btn-sm"
+                        ng-click="removeItem($index)">
                     <i class="fa fa-trash"></i>
                 </button>
             </div>
         </div>
 
         <div class=row>
-            <div class=col-xs-4>
-                <div class=form-group>
+            <div class="col-xs-4">
+                <div class="form-group">
                     <label>Label do link:</label>
 
-                    <input type=text title="Label do link" ng-model=link.label class=form-control>
+                    <input type="text" title="Label do link" class="form-control"
+                           ng-model="link.label">
                 </div>
             </div>
 
-            <div class=col-xs-4>
-                <div class=form-group>
+            <div class="col-xs-4">
+                <div class="form-group">
                     <label>Destino do link:</label>
 
-                    <select title="Destino do link" ng-model=link.link_type class=form-control>
-                        <option value=page ng-selected="link.link_type == 'page'">
+                    <select title="Destino do link" class="form-control"
+                            ng-model="link.link_type"
+                            ng-change="changeType($index)">
+                        <option value="page"
+                                ng-selected="link.link_type == 'page';">
                             P&aacute;ginas internas
                         </option>
 
-                        <option value=link ng-selected="link.link_type == 'link'">
+                        <option value="link"
+                                ng-selected="link.link_type == 'link';">
                             Url externa
                         </option>
                     </select>
                 </div>
             </div>
 
-            <div class=col-xs-4>
-                <div ng-show="link.link_type == 'page'" class=form-group>
+            <div class="col-xs-4">
+                <div class="form-group"
+                     ng-show="link.link_type == 'page'">
                     <label>P&aacute;gina:</label>
 
-                    <select title=Página ng-model=link.page ng-options="page.id as page.title for page in pages.items"
-                            class=form-control></select>
+                    <select title="Página" class="form-control"
+                            ng-model="link.page"
+                            ng-options="page.id as page.title for page in pages.items"></select>
                 </div>
 
-                <div ng-show="link.link_type == 'link'" class=form-group>
+                <div class="form-group"
+                     ng-show="link.link_type == 'link'">
                     <label>Url do link:</label>
 
-                    <input type=text title="Url do link" ng-model=link.external_url class=form-control>
+                    <input type="text" title="Url do link" class="form-control"
+                           ng-model="link.external_url">
                 </div>
             </div>
         </div>

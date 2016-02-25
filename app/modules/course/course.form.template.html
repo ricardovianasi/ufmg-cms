@@ -5,30 +5,32 @@
                 <h1 class="title">Editar Percurso</h1>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="breadcrumb-env">
-
                 <ol class="breadcrumb bc-1">
                     <li>
-                        <a href="#/"><i class="fa-home"></i>Home</a>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
                     </li>
+
                     <li>
                         <a href="#/course">
                             Cursos
                         </a>
                     </li>
+
                     <li class="active">
                         <a href="#/course/new">
                             <strong>Editar Curso</strong>
                         </a>
                     </li>
                 </ol>
-
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
@@ -36,12 +38,24 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label>Nome</label>
-                        <input type="text" ng-model="course.subdivision_name" ng-disabled="true" class="form-control">
+                        <label>Título Original</label>
+                        <input type="text" class="form-control" value="{{ course.subdivision_name|titleize }}" disabled>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>
+                            Título de exibição <small><em>Digite um novo título para substituir o original ou deixe em
+                            branco</em></small>
+                        </label>
+                        <input type="text" class="form-control" placeholder="{{ course.subdivision_name|titleize }}"
+                               ng-model="course.name">
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xs-12">
@@ -50,45 +64,54 @@
                         <tags-input ng-model="course.tags"></tags-input>
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
 
             <div class="row">
                 <div class="col-xs-12">
                     <div class="pages-module pages-module-cover add-module">
                         <div class="chosen-cover">
-                            <span ng-show="course.cover_url" ng-click="removeImage()" class="label label-danger remove-image">
+                            <span ng-show="course.cover_url" ng-click="removeImage()"
+                                  class="label label-danger remove-image">
                                 <span class="fa fa-remove"></span> REMOVER IMAGEM
                             </span>
                         </div>
 
-                        <div class="add-title" ng-show="!course.cover_url" ngf-accept="'image/*'" ngf-select ng-model="course_cover" ngf-multiple="false" class='add-module'>+ Adicionar Capa</div>
+                        <div class="add-title add-module"
+                             ng-click="uploadImage()"
+                             ng-show="!course.cover_url"
+                             ng-model="course_cover">+ Adicionar Capa
+                        </div>
 
                         <div ng-show="course.cover_url" class="uploaded-image">
-                            <img ng-src="{{course.cover_url}}">
+                            <img ng-src="{{ course.cover_url }}">
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
 
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label>Descrição</label>
-                        <textarea ng-model="course.description" redactor="redactorConfig" cols="50" rows="10"></textarea>
+                        <textarea cols="50" rows="10"
+                                  ng-model="course.description"
+                                  redactor="redactorConfig"></textarea>
                     </div>
 
                 </div>
-            </div><!--row-->
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="pull-right">
-                        <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ type }}/{{ courseId }}"><i class="fa fa-remove"></i> Cancelar</a>
-                        <a ng-click="publish(course)" class="btn btn-success pull-left"><i class="fa fa-check"></i> Salvar</a>
+                        <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ type }}/{{ courseId }}"><i
+                            class="fa fa-remove"></i> Cancelar</a>
+                        <a ng-click="publish(course)" class="btn btn-success pull-left">
+                            <i class="fa fa-check"></i> Salvar
+                        </a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
 </div>

@@ -2,7 +2,7 @@
     <label>Links:</label>
 
     <div class="pull-right">
-        <button type="button" style="margin-bottom: 3px" ng-click="addItem(widget.links[widget.links.length], 'links')" class="btn btn-primary btn-sm">
+        <button type="button" style="margin-bottom: 3px" ng-click="addItem()" class="btn btn-primary btn-sm">
             <i class="fa fa-plus"></i>
         </button>
     </div>
@@ -13,7 +13,7 @@
         <div class="pull-left">Link {{ $index + 1 }}</div>
 
         <div class="pull-right">
-            <button type="button" ng-click="removeItem($index, 'links')" class="btn btn-danger btn-sm">
+            <button type="button" ng-click="removeItem()" class="btn btn-danger btn-sm">
                 <i class="fa fa-trash"></i>
             </button>
         </div>

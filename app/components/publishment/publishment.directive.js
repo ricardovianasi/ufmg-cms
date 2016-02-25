@@ -27,6 +27,11 @@
         obj: '=routeModel',
         publishMethod: '=?publishMethod'
       },
+      /**
+       * @param $scope
+       * @param element
+       * @param attrs
+       */
       link: function ($scope, element, attrs) {
         console.log('... PublishmentDirective');
 
@@ -34,8 +39,10 @@
         $scope.publish = $scope.$parent.publish || $scope.publishMethod;
         $scope.remove = $scope.$parent.remove;
         $scope.statuses = [];
-        $scope.highlight_ufmg_visible = $scope.$parent.highlight_ufmg_visible;
 
+        /**
+         * @param $event
+         */
         $scope.saveDraft = function ($event) {
           $event.stopPropagation();
 
@@ -44,17 +51,20 @@
           $scope.publish($scope.obj);
         };
 
+        /**
+         * @param status
+         */
         $scope.status = function (status) {
-          if ($scope.obj.status == status)
+          $scope.obj.status = status;
+
+          if ($scope.obj.status == status) {
             $scope.obj.status = '';
-          else
-            $scope.obj.status = status;
+          }
         };
 
-        $scope.checkHighlightedUfmg = function () {
-          $scope.obj.highlight_ufmg = !$scope.obj.highlight_ufmg;
-        };
-
+        /**
+         *
+         */
         $scope.back = function () {
           var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
 

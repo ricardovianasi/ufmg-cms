@@ -7,21 +7,27 @@
 
   CourseNewController.$inject = [
     '$scope',
-    '$uibModal',
     'CourseService',
-    'NotificationService',
     'StatusService'
   ];
 
-  function CourseNewController($scope, $modal, CourseService, NotificationService, StatusService) {
+  /**
+   * @param $scope
+   * @param CourseService
+   * @param StatusService
+   *
+   * @constructor
+   */
+  function CourseNewController($scope, CourseService, StatusService) {
     console.log('... CourseController');
 
     $scope.courses = [];
+    $scope.status = [];
+
     CourseService.getCourses().then(function (data) {
       $scope.courses = data.data;
     });
 
-    $scope.status = [];
     StatusService.getStatus().then(function (data) {
       $scope.status = data.data;
     });

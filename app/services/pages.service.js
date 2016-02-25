@@ -300,22 +300,20 @@
          */
         highlightednews: function (widget) {
           if (widget.news) {
+            var newsToSelect = [];
+
+            angular.forEach(widget.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
             return {
-              news: widget.news,
+              news: newsToSelect,
             };
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
-
-              angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
-              });
-
-              return {
-                news: newsToSelect,
-              };
-            }
           }
+
+          return {
+            news: widget.news,
+          };
         },
         /**
          * Highlighted Radio News
@@ -434,7 +432,7 @@
          */
         hublinks: function (widget) {
           return {
-            links: widget.content ? widget.content.links : null,
+            links: widget.content ? widget.content.links : widget.links,
           };
         },
         /**
@@ -669,7 +667,7 @@
         eventlist: function (widget) {
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            tag: widget.content ? widget.content.tag.id : null,
           };
         },
         /**
@@ -715,7 +713,10 @@
               var newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
               });
 
               return {
@@ -783,6 +784,15 @@
          * @returns {{links: null}}
          */
         hublinks: function (widget) {
+          angular.forEach(widget.content.links, function(v, k){
+            if(widget.content.links[k].external_url)
+              widget.content.links[k].link_type = 'link';
+            else {
+              widget.content.links[k].link_type = 'page';
+              widget.content.links[k].page = widget.content.links[k].page.id;
+            }
+          });
+
           return {
             links: widget.content ? widget.content.links : null,
           };
@@ -870,7 +880,6 @@
        */
       var _prepareItems = function ($scope) {
         $scope.addItem = function (item, type) {
-
           if ($scope.widget[type]) {
             $scope.widget[type].push(item);
           } else {
@@ -1041,12 +1050,20 @@
          */
         internalmenu: function ($scope) {
           $scope.pages = [];
+          $scope.widget.links = $scope.widget.links || [];
 
-          _prepareItems($scope);
+          $scope.addItem = function () {
+            $scope.widget.links.push({
+              title: '',
+              url: '',
+            });
+          };
 
-          _getPages().then(function (data) {
-            $scope.pages = data.data;
-          });
+          $scope.removeItem = function (idx) {
+            if ($scope.widget.links[idx]) {
+              $scope.widget.links.splice(idx, 1);
+            }
+          };
         },
         /**
          * @param $scope
@@ -1099,6 +1116,38 @@
 
           _preparingNews($scope);
         },
+        /**
+         * @param $scope
+         */
+        hublinks: function ($scope) {
+          $scope.pages = [];
+          $scope.widget.links = $scope.widget.links || [];
+
+          $scope.addItem = function () {
+            $scope.widget.links.push({
+              title: '',
+              url: '',
+            });
+          };
+
+          $scope.removeItem = function (idx) {
+            if ($scope.widget.links[idx]) {
+              $scope.widget.links.splice(idx, 1);
+            }
+          };
+
+          _getPages().then(function (data) {
+            $scope.pages = data.data;
+          });
+
+          $scope.changeType = function(idx){
+             if($scope.widget.links[idx].link_type == 'page')
+               $scope.widget.links[idx].external_url = null;
+             else
+               $scope.widget.links[idx].page = null;
+          };
+
+        }
       };
 
       return {
