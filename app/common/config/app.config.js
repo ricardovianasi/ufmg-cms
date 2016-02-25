@@ -3,7 +3,8 @@
 
   angular.module('app')
     .config(Router)
-    .config(Translator);
+    .config(Translator)
+    .config(Tags);
 
   //Routing
   Router.$inject = ['$routeProvider'];
@@ -34,5 +35,18 @@
     });
 
     $translateProvider.preferredLanguage('pt-br');
+  }
+
+  //Tags
+  /**
+   * @param tagsInputConfigProvider
+   *
+   * @constructor
+   */
+  function Tags(tagsInputConfigProvider) {
+    tagsInputConfigProvider
+      .setDefaults('tagsInput', {
+        placeholder: 'Adicionar tag'
+      });
   }
 })();
