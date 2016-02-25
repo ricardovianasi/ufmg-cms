@@ -33,26 +33,19 @@
         <div class="panel panel-default">
 
             <form class="form">
-
-
-                <!-- <div class=row>
-                    <div class=col-xs-12>
-                        <div class="pages-module pages-module-cover">
-                            <div class=chosen-cover><span ng-click=removeImage() ng-show=page.image class="label label-danger remove-image"><span class="fa fa-remove"></span> REMOVER IMAGEM</span>
-                            </div>
-                            <div ngf-accept="'image/*'" ngf-select ng-model=page_image ngf-multiple=false ng-show=!page.image class=add-module>+ Adicionar Capa</div>
-                            <div ng-show=page.image class=uploaded-image><img ng-src="{{ page.image.url }}"></div>
-                        </div>
-                    </div>
-                </div> -->
-
-
-
                 <div class="row">
                     <div class="col-xs-6">
 
 
                         <div class="pages-module pages-module-cover">
+                            <div class="chosen-cover">
+                                <span ng-click="removeMidia()"
+                                      class="label label-danger remove-image"
+                                      ng-if="file.url">
+                                    <i class="fa fa-remove"></i> REMOVER MIDIA
+                                </span>
+                            </div>
+
                             <img ng-show="file.url && file.type != 'mp3'" ng-src="{{file.url}}" style="max-width: 100%; height: auto;">
 
                              <div ng-show="file.url && file.type === 'mp3'" audio audio-url="file.url"></div>
@@ -72,20 +65,18 @@
 
                     <div class="col-xs-6">
                         <div class="form-group">
-                            <label>Título</label>
-                            <input type="text" ng-model="file.title" class="form-control">
+                            <label>Autor</label>
+                            <input type="text" ng-model="file.author_name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Legenda</label>
-                            <input type="text" ng-model="file.legend" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Descrição</label>
-                            <input type="text" ng-model="file.description" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Texto Alternativo</label>
-                            <input type="text" ng-model="file.alt_text" class="form-control">
+                            <textarea cols="30"
+                                      rows="6"
+                                      ng-model="file.legend"
+                                      class="form-control">
+                                {{ file.legend }}
+                            </textarea>
+
                         </div>
                     </div>
                 </div>
