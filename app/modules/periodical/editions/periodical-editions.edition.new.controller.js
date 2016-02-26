@@ -118,6 +118,7 @@
     $scope.uploadFile = function (file) {
       MediaService.newFile(file).then(function (data) {
         $scope.edition.pdf = data.id;
+        $scope.edition.file = data.id;
         $scope.edition.pdf_url = data.url;
       });
     };

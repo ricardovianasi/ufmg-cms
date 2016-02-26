@@ -52,6 +52,7 @@
     });
 
     PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
+      console.log('get >>>>>>', data);
       $scope.periodical = data.data.periodical;
       $scope.edition.id = data.data.id;
       $scope.edition.theme = data.data.theme;
@@ -91,6 +92,10 @@
       $scope.edition.background_url = data.data.background ? data.data.background.url : '';
       $scope.edition.file_name = data.data.file ? data.data.file.title : '';
 
+      $scope.edition.pdf = data.data.file ? data.data.file: '';
+      $scope.edition.pdf_url = data.data.file ? data.data.file.url: '';
+
+
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
 
       $scope.edition.scheduled_date = scheduled_at.date;
@@ -102,6 +107,7 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
+      console.log('save >>>>>>', data);
       PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
 
@@ -192,6 +198,7 @@
     $scope.uploadFile = function (file) {
       MediaService.newFile(file).then(function (data) {
         $scope.edition.pdf = data.id;
+        $scope.edition.file = data.id;
         $scope.edition.pdf_url = data.url;
       });
     };

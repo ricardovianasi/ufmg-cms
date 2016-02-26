@@ -89,8 +89,8 @@
 
                         <input type="file" class="form-control" ngf-select ng-show="!edition.pdf" ngf-accept="'application/pdf'" ng-model="edition_file" ngf-multiple="false">
 
-                        <div ng-show="edition.pdf" class="clearfix form-control">
-                            <div class=pull-left>{{ edition.pdf_url }}</div>
+                        <div ng-show="edition.pdf" class="clearfix form-control over-scroll">
+                            <div class="pull-left">{{ edition.pdf_url }}</div>
 
                             <div class=pull-right>
                                 <span ng-show="edition.pdf" ng-click="removeImage('pdf')" class="label label-danger remove-image">
