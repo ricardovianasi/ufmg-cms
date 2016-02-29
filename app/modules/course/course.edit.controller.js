@@ -125,6 +125,6 @@
     function _parseData(data) {
       if(typeof data.cover == 'object')
         data.cover = data.cover.id;
-    };
+    }
   }
 })();
