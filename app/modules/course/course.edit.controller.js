@@ -105,6 +105,8 @@
     };
 
     $scope.publish = function (data) {
+      _parseData(data);
+
       CourseService.updateCourse($routeParams.id, data).then(function () {
         NotificationService.success('Course com sucesso.');
         $location.path('/course/list/' + $scope.type + '/' + $scope.courseId);
@@ -113,6 +115,16 @@
 
     $scope.redactorConfig = {
       plugins: false
+    };
+
+      /**
+       *
+       * @param data
+       * @private
+       */
+    function _parseData(data) {
+      if(typeof data.cover == 'object')
+        data.cover = data.cover.id;
     };
   }
 })();
