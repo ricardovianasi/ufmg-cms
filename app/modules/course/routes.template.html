@@ -108,7 +108,7 @@
                         <td>
                             <div class="clearfix">
                                 <a ng-href="#/course/edit/{{ vm.type }}/{{ vm.courseId }}/{{ item.id }}">
-                                    {{ item.name|titleize }}
+                                    {{ item.name|titleize }} ( {{ item.shift }} )
                                 </a> <span ng-if="item.subdivision_name">-</span> {{ item.modality }}
                             </div>
                         </td>
