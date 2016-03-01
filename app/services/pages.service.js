@@ -761,7 +761,14 @@
          * @returns {{links: Array}}
          */
         internalmenu: function (widget) {
+          console.log(widget);
           var widgetLinks = [];
+
+          if(!widget.content) {
+            widget.content = {
+              links: widget.links
+            };
+          }
 
           angular.forEach(widget.content.links, function (links) {
             if (links.external_url) {
@@ -1064,6 +1071,10 @@
               $scope.widget.links.splice(idx, 1);
             }
           };
+
+          _getPages().then(function (data) {
+            $scope.pages = data.data;
+          });
         },
         /**
          * @param $scope
