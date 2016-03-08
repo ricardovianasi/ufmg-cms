@@ -168,6 +168,10 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
+      _parseTime(data);
+
+      console.log(data);
+
       EventsService.update(data, $routeParams.id).then(function (event) {
         NotificationService.success('Evento atualizado com sucesso.');
 
@@ -195,6 +199,8 @@
     };
 
     EventsService.getEvent($routeParams.id).then(function (data) {
+      console.log(data);
+
       var event = data.data;
       var tags = event.tags;
       var courses = event.courses;
@@ -204,8 +210,9 @@
       event.initDate = new Date(event.init_date);
       event.endDate = new Date(event.end_date);
 
-      event.initTime = event.initDate;
-      event.endTime = event.endDate;
+      event.init_hour = new Date("October 13, 2014 " + event.init_hour);
+      event.end_hour = new Date("October 13, 2014 " + event.end_hour);
+
 
       delete event.init_date;
       delete event.end_date;
@@ -245,5 +252,16 @@
     StatusService.getStatus().then(function (data) {
       vm.statuses = data.data;
     });
+
+
+    /**
+     *
+     * @param data
+     * @private
+     */
+    function _parseTime(data){
+      data.end_hour = moment(data.end_hour).format('HH:mm');
+      data.init_hour = moment(data.init_hour).format('HH:mm');
+    }
   }
 })();

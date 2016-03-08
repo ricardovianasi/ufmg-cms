@@ -167,6 +167,8 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
+      _parseTime(data);
+
       EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');
 
@@ -192,5 +194,16 @@
     StatusService.getStatus().then(function (data) {
       vm.statuses = data.data;
     });
+
+
+    /**
+     *
+     * @param data
+     * @private
+     */
+    function _parseTime(data){
+      data.end_hour = moment(data.end_hour).format('HH:mm');
+      data.init_hour = moment(data.init_hour).format('HH:mm');
+    }
   }
 })();

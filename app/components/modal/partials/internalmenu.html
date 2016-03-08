@@ -13,7 +13,7 @@
         <div class="pull-left">Link {{ $index + 1 }}</div>
 
         <div class="pull-right">
-            <button type="button" ng-click="removeItem()" class="btn btn-danger btn-sm">
+            <button type="button" ng-click="removeItem($index)" class="btn btn-danger btn-sm">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -31,6 +31,7 @@
         <div class="col-xs-6">
             <div class="form-group">
                 <label>P&aacute;gina:</label>
+
                 <input type="checkbox" ng-model="widget.links[$index].isExternal"> link externo
                     {{ linkExterno | json }}
 

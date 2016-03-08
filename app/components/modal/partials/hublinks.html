@@ -9,7 +9,10 @@
             </button>
         </div>
     </div>
-    <div ng-repeat="link in widget.links" class="well well-sm">
+    <div id="sort-main"
+         as-sortable="sortableOptions"
+        ng-model="widget.links">
+    <div ng-repeat="link in widget.links" class="well well-sm" as-sortable-item>
         <div class="clearfix">
             <div class=pull-left>Link {{ $index + 1 }}</div>
 
@@ -17,6 +20,10 @@
                 <button type="button" class="btn btn-danger btn-sm"
                         ng-click="removeItem($index)">
                     <i class="fa fa-trash"></i>
+                </button>
+
+                <button type="button" as-sortable-item-handle class="btn btn-primary btn-sm">
+                    <i class="fa fa-arrows-v"></i>
                 </button>
             </div>
         </div>
@@ -70,5 +77,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
