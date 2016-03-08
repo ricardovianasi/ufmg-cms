@@ -431,6 +431,25 @@
          * @returns {{links: null}}
          */
         hublinks: function (widget) {
+          if(widget.content) {
+            angular.forEach(widget.content.links, function(v, k){
+              if(typeof widget.content.links[k].page ===  "object" &&
+                typeof widget.content.links[k].page !==  "number" &&
+                 widget.content.links[k].page !==  null) {
+                widget.content.links[k].page = widget.content.links[k].page.id ? widget.content.links[k].page.id : widget.content.links[k].page;
+              }
+            });
+          } else {
+            angular.forEach(widget.links, function(v, k){
+              if(typeof widget.links[k].page ===  "object" &&
+                typeof widget.links[k].page !==  "number" &&
+                widget.links[k].page !==  "null" &&
+                widget.links[k].external_url === null) {
+                widget.links[k].page = widget.links[k].page.id ? widget.links[k].page.id : widget.links[k].page;
+              }
+            });
+          }
+
           return {
             links: widget.content ? widget.content.links : widget.links,
           };
