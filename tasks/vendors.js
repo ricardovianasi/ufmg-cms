@@ -40,6 +40,7 @@ var SCRIPTS = [
   'bower_components/ngInflection/dist/ngInflection.min.js',
   'bower_components/ng-tags-input/ng-tags-input.min.js',
   'bower_components/angular-ui-sortable/sortable.min.js',
+  'bower_components/moment/min/moment.min.js'
 ];
 
 var STYLES = [

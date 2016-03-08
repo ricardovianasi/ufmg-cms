@@ -67,12 +67,12 @@
       var endTime = new Date(data.endTime);
 
       event.initDate = new Date(data.initDate);
-      event.initDate.setHours(initTime.getHours(), initTime.getMinutes());
       event.initDate = DateTimeHelper.toBrStandard(event.initDate, true);
 
       event.endDate = new Date(data.endDate);
-      event.endDate.setHours(endTime.getHours(), endTime.getMinutes());
       event.endDate = DateTimeHelper.toBrStandard(event.endDate, true);
+      event.init_hour = data.init_hour;
+      event.end_hour = data.end_hour;
 
       event.tags = _.map(data.tags, 'text');
 
@@ -133,6 +133,8 @@
         var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
         data = _parseData(data);
+
+        console.log('update data >>>>>>', data);
 
         return $http.put(url, data);
       },
