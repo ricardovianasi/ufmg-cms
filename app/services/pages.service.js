@@ -1158,6 +1158,12 @@
                $scope.widget.links[idx].page = null;
           };
 
+          $scope.sortableOptions = {
+            accept: function (sourceItemHandleScope, destSortableScope) {
+              return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+            },
+            containment: '#sort-main'
+          };
         }
       };
 
