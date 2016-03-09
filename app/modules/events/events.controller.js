@@ -12,6 +12,7 @@
     'DateTimeHelper',
     'ModalService',
     'NotificationService',
+    '$rootScope'
   ];
 
   /**
@@ -31,7 +32,9 @@
                             EventsService,
                             DateTimeHelper,
                             ModalService,
-                            NotificationService) {
+                            NotificationService,
+                            $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... EventsController');
 
     $scope.title = 'Eventos';

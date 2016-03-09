@@ -11,7 +11,8 @@
     'StatusService',
     'GalleryService',
     'MediaService',
-    'NotificationService'
+    'NotificationService',
+    '$rootScope'
   ];
 
   function GalleryNewController($scope,
@@ -20,7 +21,9 @@
                                 StatusService,
                                 GalleryService,
                                 MediaService,
-                                NotificationService) {
+                                NotificationService,
+                                $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... GaleriasNovoController');
 
     $scope.status = [];

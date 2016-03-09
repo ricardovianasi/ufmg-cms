@@ -11,6 +11,7 @@
     'NotificationService',
     'DateTimeHelper',
     'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -28,7 +29,9 @@
                           NewsService,
                           NotificationService,
                           DateTimeHelper,
-                          ModalService) {
+                          ModalService,
+                          $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... NoticiasController');
 
     $scope.news = [];

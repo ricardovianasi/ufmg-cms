@@ -10,7 +10,8 @@
     'WidgetsService',
     'ModalService',
     'CourseService',
-    'NotificationService'];
+    'NotificationService',
+    '$rootScope'];
 
   /**
    * @param $scope
@@ -29,7 +30,9 @@
                                    WidgetsService,
                                    ModalService,
                                    CourseService,
-                                   NotificationService) {
+                                   NotificationService,
+                                   $rootScope) {
+    $rootScope.shownavbar = true;
     var vm = this;
 
     vm.type = $routeParams.type;

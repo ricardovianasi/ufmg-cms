@@ -15,6 +15,7 @@
     'NotificationService',
     'MediaService',
     'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -40,7 +41,9 @@
                                           StatusService,
                                           NotificationService,
                                           MediaService,
-                                          ModalService) {
+                                          ModalService,
+                                          $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionNewController');
 
     $scope.edition = {};

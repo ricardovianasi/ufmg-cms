@@ -11,7 +11,8 @@
     'dataTableConfigService',
     'NotificationService',
     'ReleasesService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   function ReleasesController($scope,
@@ -20,7 +21,10 @@
                               dataTableConfigService,
                               NotificationService,
                               ReleasesService,
-                              DateTimeHelper) {
+                              DateTimeHelper,
+                              $rootScope) {
+
+    $rootScope.shownavbar = true;
     console.log('... ReleasesController');
 
     $scope.title = 'Releases';

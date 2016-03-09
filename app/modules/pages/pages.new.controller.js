@@ -16,7 +16,8 @@
     'WidgetsService',
     'StatusService',
     'ModalService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -46,7 +47,9 @@
                               WidgetsService,
                               StatusService,
                               ModalService,
-                              DateTimeHelper) {
+                              DateTimeHelper,
+                              $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PagesNewController');
 
     WidgetsService.getWidgets().then(function (data) {

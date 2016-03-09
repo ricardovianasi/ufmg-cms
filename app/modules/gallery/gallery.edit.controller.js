@@ -12,7 +12,8 @@
     'StatusService',
     'GalleryService',
     'MediaService',
-    'NotificationService'
+    'NotificationService',
+    '$rootScope'
   ];
 
   function GalleryEditController($scope,
@@ -22,7 +23,9 @@
                                  StatusService,
                                  GalleryService,
                                  MediaService,
-                                 NotificationService) {
+                                 NotificationService,
+                                 $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... GalleryEditController');
 
     $scope.status = [];

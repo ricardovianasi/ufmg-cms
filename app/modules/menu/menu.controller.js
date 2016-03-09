@@ -10,6 +10,7 @@
     'ModalService',
     'MenuService',
     'PagesService',
+    '$rootScope'
   ];
 
   /**
@@ -25,7 +26,10 @@
                           NotificationService,
                           ModalService,
                           MenuService,
-                          PagesService) {
+                          PagesService,
+                          $rootScope) {
+
+    $rootScope.shownavbar = true;
     console.log('... NoticiasController');
 
     var vm = this;

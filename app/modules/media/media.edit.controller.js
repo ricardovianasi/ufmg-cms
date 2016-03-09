@@ -12,7 +12,8 @@
     '$routeParams',
     '$timeout',
     'StatusService',
-    'MediaService'
+    'MediaService',
+    '$rootScope'
   ];
 
   function MediaEditController($scope,
@@ -22,7 +23,9 @@
                                $routeParams,
                                $timeout,
                                StatusService,
-                               MediaService) {
+                               MediaService,
+                               $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... GalleryEditController');
 
     $scope.status = [];

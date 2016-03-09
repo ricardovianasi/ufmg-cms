@@ -15,7 +15,8 @@
     'ReleasesService',
     'MediaService',
     'NotificationService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -43,7 +44,9 @@
                                   ReleasesService,
                                   MediaService,
                                   NotificationService,
-                                  DateTimeHelper) {
+                                  DateTimeHelper,
+                                  $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... ReleasesEditController');
 
     $scope.title = 'Editar Release: ';

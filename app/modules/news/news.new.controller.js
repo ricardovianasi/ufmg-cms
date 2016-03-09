@@ -14,6 +14,7 @@
     'StatusService',
     'DateTimeHelper',
     'RedactorPluginService',
+    '$rootScope'
   ];
 
   /**
@@ -37,7 +38,9 @@
                              NotificationService,
                              StatusService,
                              DateTimeHelper,
-                             RedactorPluginService) {
+                             RedactorPluginService,
+                             $rootScope) {
+     $rootScope.shownavbar = true;
     console.log('... NoticiasNovoController');
 
     $scope.title = 'Nova Notícia';

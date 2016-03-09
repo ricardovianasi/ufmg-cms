@@ -10,7 +10,8 @@
     '$location',
     '$timeout',
     'StatusService',
-    'MediaService'
+    'MediaService',
+    '$rootScope'
   ];
 
   function MediaNewController($scope,
@@ -18,7 +19,9 @@
                               $location,
                               $timeout,
                               StatusService,
-                              MediaService) {
+                              MediaService,
+                              $rootScope) {
+      $rootScope.shownavbar = true;
     console.log('... GalleryEditController');
 
     $scope.status = [];
