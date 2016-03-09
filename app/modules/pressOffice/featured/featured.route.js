@@ -7,17 +7,17 @@
 
       $routeProvider
         .when('/featured', {
-          templateUrl: 'modules/press-office/featured/featured.template.html',
+          templateUrl: 'modules/pressOffice/featured/featured.template.html',
           controller: 'featuredController',
           controllerAs: 'vm'
         })
         .when('/featured/new', {
-          templateUrl: 'modules/press-office/featured/featured.form.template.html',
+          templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
           controller: 'featuredNewController',
           controllerAs: 'vm'
         })
         .when('/featured/edit/:id', {
-          templateUrl: 'modules/press-office/featured/featured.form.template.html',
+          templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
           controller: 'featuredEditController',
           controllerAs: 'vm'
         });
