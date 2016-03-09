@@ -8,7 +8,8 @@
   CourseNewController.$inject = [
     '$scope',
     'CourseService',
-    'StatusService'
+    'StatusService',
+    '$rootScope'
   ];
 
   /**
@@ -18,7 +19,8 @@
    *
    * @constructor
    */
-  function CourseNewController($scope, CourseService, StatusService) {
+  function CourseNewController($scope, CourseService, StatusService, $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... CourseController');
 
     $scope.courses = [];

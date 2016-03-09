@@ -12,7 +12,8 @@
     'ClippingsService',
     'dataTableConfigService',
     'DateTimeHelper',
-    'NotificationService'
+    'NotificationService',
+    '$rootScope'
   ];
 
   function ClippingsController($scope,
@@ -22,7 +23,9 @@
                                ClippingsService,
                                dataTableConfigService,
                                DateTimeHelper,
-                               NotificationService) {
+                               NotificationService,
+                               $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... ClippingsController');
 
     $scope.title = 'Clippings';

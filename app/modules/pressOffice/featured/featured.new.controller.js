@@ -12,9 +12,11 @@
                                     'featuredService',
                                     '$timeout',
                                     'NotificationService',
-                                    '$location'];
+                                    '$location',
+                                    '$rootScope'];
 
-    function featuredNewController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location) {
+    function featuredNewController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $rootScope) {
+      $rootScope.shownavbar = true;
 
       var vm = this; // jshint ignore:line
           vm.removeImage = _removeImage;

@@ -17,6 +17,7 @@
     'DateTimeHelper',
     'ModalService',
     'RedactorPluginService',
+    '$rootScope'
   ];
 
   /**
@@ -46,7 +47,9 @@
                               MediaService,
                               DateTimeHelper,
                               ModalService,
-                              RedactorPluginService) {
+                              RedactorPluginService,
+                              $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... NoticiasEditController');
 
     $scope.news = {};

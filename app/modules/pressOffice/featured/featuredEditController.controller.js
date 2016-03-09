@@ -13,10 +13,12 @@
                                     '$timeout',
                                     'NotificationService',
                                     '$location',
-                                    '$routeParams'];
+                                    '$routeParams',
+                                    '$rootScope'];
 
-    function featuredEditController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $routeParams) {
+    function featuredEditController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $routeParams, $rootScope) {
 
+      $rootScope.shownavbar = true;
       var vm = this; // jshint ignore:line
           vm.removeImage = _removeImage;
           vm.addSpecialist = _addSpecialist;

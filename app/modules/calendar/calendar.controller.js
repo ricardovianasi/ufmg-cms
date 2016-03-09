@@ -14,6 +14,7 @@
     'StatusService',
     'ModalService',
     'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -37,7 +38,10 @@
                               NotificationService,
                               StatusService,
                               ModalService,
-                              DateTimeHelper) {
+                              DateTimeHelper,
+                              $rootScope) {
+
+    $rootScope.shownavbar = true;
     console.log('... CalendarController');
 
     $scope.calendar = [];

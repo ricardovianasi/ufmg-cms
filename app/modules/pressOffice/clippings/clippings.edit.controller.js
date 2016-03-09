@@ -12,7 +12,8 @@
     '$filter',
     'ClippingsService',
     'NotificationService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   function ClippingsEditController($scope,
@@ -21,7 +22,9 @@
                                    $filter,
                                    ClippingsService,
                                    NotificationService,
-                                   DateTimeHelper) {
+                                   DateTimeHelper,
+                                   $rootScope) {
+     $rootScope.shownavbar = true;
     console.log('... ClippingsEditController');
 
     $scope.title = 'Editar Clipping: ';

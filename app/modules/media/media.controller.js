@@ -14,6 +14,7 @@
     'NotificationService',
     'DateTimeHelper',
     'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -37,7 +38,9 @@
                            StatusService,
                            NotificationService,
                            DateTimeHelper,
-                           ModalService) {
+                           ModalService,
+                           $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... MediaController');
 
     $scope.media = [];

@@ -14,6 +14,7 @@
     'NotificationService',
     'MediaService',
     'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -37,7 +38,9 @@
                                     StatusService,
                                     NotificationService,
                                     MediaService,
-                                    DateTimeHelper) {
+                                    DateTimeHelper,
+                                    $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PeriodicalEditController');
 
     $scope.status = [];

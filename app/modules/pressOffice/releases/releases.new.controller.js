@@ -15,7 +15,8 @@
     'MediaService',
     'NotificationService',
     'StatusService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   function ReleasesNewController($scope,
@@ -28,7 +29,9 @@
                                  MediaService,
                                  NotificationService,
                                  StatusService,
-                                 DateTimeHelper) {
+                                 DateTimeHelper,
+                                 $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... ReleasesNewController');
 
     $scope.title = 'Novo Release';

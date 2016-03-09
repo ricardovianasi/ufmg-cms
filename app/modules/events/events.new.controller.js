@@ -15,6 +15,7 @@
     'StatusService',
     'DateTimeHelper',
     'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -40,7 +41,9 @@
                                NotificationService,
                                StatusService,
                                DateTimeHelper,
-                               ModalService) {
+                               ModalService,
+                               $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... EventsNewController');
 
     var vm = this;
