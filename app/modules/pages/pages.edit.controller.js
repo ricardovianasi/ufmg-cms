@@ -18,6 +18,7 @@
     'StatusService',
     'DateTimeHelper',
     'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -49,7 +50,9 @@
                                WidgetsService,
                                StatusService,
                                DateTimeHelper,
-                               ModalService) {
+                               ModalService,
+                               $rootScope) {
+     $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
 
     $scope.widgets = [];

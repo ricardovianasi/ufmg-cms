@@ -14,9 +14,12 @@
                                       '$scope',
                                       'NotificationService',
                                       '$location',
-                                      '$route'];
+                                      '$route',
+                                      '$rootScope'];
 
-    function featuredNewController(featuredService, DateTimeHelper, dataTableConfigService, $filter, $uibModal, $scope, NotificationService, $location, $route) {
+    function featuredNewController(featuredService, DateTimeHelper, dataTableConfigService, $filter, $uibModal, $scope, NotificationService, $location, $route,$rootScope) {
+    $rootScope.shownavbar = true;
+
       var vm = this; // jshint ignore:line
           vm.DateTimeHelper = DateTimeHelper;
           vm.remove = _remove;

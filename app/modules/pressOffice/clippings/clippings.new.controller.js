@@ -10,7 +10,8 @@
     'ClippingsService',
     'NotificationService',
     'StatusService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   function ClippingsNewController($scope,
@@ -18,7 +19,9 @@
                                   ClippingsService,
                                   NotificationService,
                                   StatusService,
-                                  DateTimeHelper) {
+                                  DateTimeHelper,
+                                  $rootScope) {
+     $rootScope.shownavbar = true;
     console.log('... ClippingsNewController');
 
     $scope.title = 'Nova Matéria';

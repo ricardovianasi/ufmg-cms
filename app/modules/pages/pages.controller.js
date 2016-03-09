@@ -11,7 +11,8 @@
     'NotificationService',
     'StatusService',
     'ModalService',
-    'DateTimeHelper'
+    'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -31,7 +32,9 @@
                            NotificationService,
                            StatusService,
                            ModalService,
-                           DateTimeHelper) {
+                           DateTimeHelper,
+                           $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PagesController');
 
     $scope.status = [];

@@ -5,7 +5,10 @@
     .module('indexModule')
     .controller('IndexController', IndexController);
 
-  function IndexController() {
+  IndexController.$inject = ['$rootScope'];
+
+  function IndexController($rootScope) {
     console.log('... IndexController');
+    $rootScope.shownavbar = true;
   }
 })();

@@ -12,7 +12,8 @@
     'CourseService',
     'NotificationService',
     'StatusService',
-    'ModalService'
+    'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -34,7 +35,10 @@
                                 CourseService,
                                 NotificationService,
                                 StatusService,
-                                ModalService) {
+                                ModalService,
+                                $rootScope) {
+
+    $rootScope.shownavbar = true;
     console.log('... CourseController');
 
     /**

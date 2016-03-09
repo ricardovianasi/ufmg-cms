@@ -16,67 +16,67 @@
 </head>
 
 <body class="page-body">
-<nav class="navbar horizontal-menu navbar-fixed-top"><!-- set fixed position by adding class "navbar-fixed-top" -->
-    <div class="navbar-inner">
-        <!-- Navbar Brand -->
-        <div class="navbar-brand ufmg">
-            <a href="#/" class="logo">
-                <img src="assets/img/ufmg-logo.svg" alt="UFMG">
-            </a>
-        </div>
-
-        <div class="navbar-brand post">
-            <a href="#/" class="logo">
-                <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
-            </a>
-        </div>
-
-        <!-- Mobile Toggles Links -->
-        <div class="nav navbar-mobile">
-            <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
-            <div class="mobile-menu-toggle">
-                <!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
-                <a href="#" data-toggle="settings-pane" data-animate="true">
-                    <i class="linecons-cog"></i>
-                </a>
-
-                <a href="#" data-toggle="user-info-menu-horizontal">
-                    <i class="fa-bell-o"></i>
-                    <span class="badge badge-success">7</span>
-                </a>
-
-                <!-- data-toggle="mobile-menu-horizontal" will show horizontal menu links only -->
-                <!-- data-toggle="mobile-menu" will show sidebar menu links only -->
-                <!-- data-toggle="mobile-menu-both" will show sidebar and horizontal menu links -->
-                <a href="#" data-toggle="mobile-menu-horizontal">
-                    <i class="fa-bars"></i>
+    <nav class="navbar horizontal-menu navbar-fixed-top"><!-- set fixed position by adding class "navbar-fixed-top" -->
+        <div class="navbar-inner">
+            <!-- Navbar Brand -->
+            <div class="navbar-brand ufmg">
+                <a href="#/" class="logo">
+                    <img src="assets/img/ufmg-logo.svg" alt="UFMG">
                 </a>
             </div>
+
+            <div class="navbar-brand post">
+                <a href="#/" class="logo">
+                    <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
+                </a>
+            </div>
+
+            <!-- Mobile Toggles Links -->
+            <div class="nav navbar-mobile">
+                <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
+                <div class="mobile-menu-toggle">
+                    <!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
+                    <a href="#" data-toggle="settings-pane" data-animate="true">
+                        <i class="linecons-cog"></i>
+                    </a>
+
+                    <a href="#" data-toggle="user-info-menu-horizontal">
+                        <i class="fa-bell-o"></i>
+                        <span class="badge badge-success">7</span>
+                    </a>
+
+                    <!-- data-toggle="mobile-menu-horizontal" will show horizontal menu links only -->
+                    <!-- data-toggle="mobile-menu" will show sidebar menu links only -->
+                    <!-- data-toggle="mobile-menu-both" will show sidebar and horizontal menu links -->
+                    <a href="#" data-toggle="mobile-menu-horizontal">
+                        <i class="fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbar-mobile-clear"></div>
+
+            <!-- notifications and other links -->
+            <ul class="nav nav-userinfo navbar-right">
+                <li class="dropdown user-profile">
+                    <a href="#" data-toggle="dropdown">
+                        <!--<img src="assets/images/user-1.png" alt="user-image" class="img-circle img-inline userpic-32" width="28"/>-->
+                        <span>Arlind Nushi</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar">
+            <!--<ufmg-sidebar></ufmg-sidebar>-->
         </div>
 
-        <div class="navbar-mobile-clear"></div>
-
-        <!-- notifications and other links -->
-        <ul class="nav nav-userinfo navbar-right">
-            <li class="dropdown user-profile">
-                <a href="#" data-toggle="dropdown">
-                    <!--<img src="assets/images/user-1.png" alt="user-image" class="img-circle img-inline userpic-32" width="28"/>-->
-                    <span>Arlind Nushi</span>
-                </a>
-            </li>
-        </ul>
+        <div class="main-content">
+            <ng-view></ng-view>
+        </div>
     </div>
-</nav>
-
-<div class="page-container">
-    <div class="sidebar-menu toggle-others fixed" ufmg-sidebar>
-        <!--<ufmg-sidebar></ufmg-sidebar>-->
-    </div>
-
-    <div class="main-content">
-        <ng-view></ng-view>
-    </div>
-</div>
 
 <script src="assets/js/TweenMax.min.js"></script>
 <script src="scripts/vendors.min.js"></script>

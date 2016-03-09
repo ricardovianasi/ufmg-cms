@@ -12,7 +12,8 @@
     '$uibModal',
     'NotificationService',
     'dataTableConfigService',
-    '$route'
+    '$route',
+    '$rootScope'
   ];
 
   function PeriodicalController($scope,
@@ -21,7 +22,9 @@
                                 DateTimeHelper,
                                 $modal,
                                 NotificationService,
-                                $route) {
+                                $route,
+                                $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PeriodicalController');
 
     $scope.periodicals = [];

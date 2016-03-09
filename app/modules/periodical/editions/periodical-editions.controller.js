@@ -12,7 +12,8 @@
     'NotificationService',
     'DateTimeHelper',
     'dataTableConfigService',
-    '$route'
+    '$route',
+    '$rootScope'
   ];
 
   function PeriodicalEditionsController($scope,
@@ -22,7 +23,9 @@
                                         NotificationService,
                                         DateTimeHelper,
                                         dataTableConfigService,
-                                        $route) {
+                                        $route,
+                                        $rootScope) {
+      $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionsController');
 
     $scope.periodical = {

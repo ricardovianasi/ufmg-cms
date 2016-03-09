@@ -12,6 +12,7 @@
     'StatusService',
     'NotificationService',
     'MediaService',
+    '$rootScope'
   ];
 
   /**
@@ -31,7 +32,9 @@
                                    PeriodicalService,
                                    StatusService,
                                    NotificationService,
-                                   MediaService) {
+                                   MediaService,
+                                   $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... PeriodicalNewController');
 
     $scope.status = [];

@@ -12,6 +12,7 @@
     'NotificationService',
     'ModalService',
     'DateTimeHelper',
+    '$rootScope'
   ];
 
   /**
@@ -31,8 +32,10 @@
                              StatusService,
                              NotificationService,
                              ModalService,
-                             DateTimeHelper) {
+                             DateTimeHelper,
+                             $rootScope) {
     console.log('... GaleriasController');
+    $rootScope.shownavbar = true;
 
     $scope.galleries = [];
     $scope.status = [];

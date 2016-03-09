@@ -9,7 +9,8 @@
     'CourseService',
     'dataTableConfigService',
     'NotificationService',
-    'ModalService'
+    'ModalService',
+    '$rootScope'
   ];
 
   /**
@@ -25,7 +26,9 @@
                             CourseService,
                             dataTableConfigService,
                             NotificationService,
-                            ModalService) {
+                            ModalService,
+                            $rootScope) {
+    $rootScope.shownavbar = true;
     console.log('... CourseController');
 
     var vm = this;
