@@ -95,7 +95,7 @@
         cleanPage.widgets.side = [];
       }
 
-      cleanPage.parent = page.parent.id;
+      cleanPage.parent = page.parent ? page.parent.id : undefined;
 
       return cleanPage;
     };
