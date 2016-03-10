@@ -55,6 +55,11 @@
      $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
 
+    PagesService.getPages().then(function(data){
+      $scope.pagesParent = data.data.items;
+      console.log($scope.pagesParent);
+    });
+
     $scope.widgets = [];
     $scope.status = [];
     $scope.columns = PagesService.COLUMNS;
@@ -215,6 +220,7 @@
 
     // Get Page
     PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
+console.log(data.data);
       var page = data.data;
       var tags = page.tags;
 
