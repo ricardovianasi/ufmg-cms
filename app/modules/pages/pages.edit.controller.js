@@ -52,12 +52,11 @@
                                DateTimeHelper,
                                ModalService,
                                $rootScope) {
-     $rootScope.shownavbar = true;
+    $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
 
     PagesService.getPages().then(function(data){
       $scope.pagesParent = data.data.items;
-      console.log($scope.pagesParent);
     });
 
     $scope.widgets = [];
