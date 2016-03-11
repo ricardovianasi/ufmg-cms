@@ -52,6 +52,10 @@
     $rootScope.shownavbar = true;
     console.log('... PagesNewController');
 
+    PagesService.getPages().then(function(data){
+      $scope.pagesParent = data.data.items;
+    });
+
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });

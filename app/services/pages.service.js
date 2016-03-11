@@ -95,6 +95,8 @@
         cleanPage.widgets.side = [];
       }
 
+      cleanPage.parent = page.parent ? page.parent.id : undefined;
+
       return cleanPage;
     };
 
@@ -711,8 +713,8 @@
         relatednews: function (widget) {
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            typeNews: (widget.typeNews ? widget.typeNews.id : false) || (widget.content ? widget.content.typeNews.id : null),
+            tag: (widget.tag ? widget.tag.id : false )|| (widget.content ? widget.content.tag.id : null),
           };
         },
         /**
