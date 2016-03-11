@@ -52,8 +52,12 @@
                                DateTimeHelper,
                                ModalService,
                                $rootScope) {
-     $rootScope.shownavbar = true;
+    $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
+
+    PagesService.getPages().then(function(data){
+      $scope.pagesParent = data.data.items;
+    });
 
     $scope.widgets = [];
     $scope.status = [];
@@ -215,6 +219,7 @@
 
     // Get Page
     PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
+console.log(data.data);
       var page = data.data;
       var tags = page.tags;
 
