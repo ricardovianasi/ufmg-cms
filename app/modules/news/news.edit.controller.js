@@ -143,7 +143,7 @@
      */
     $scope.publish = function (data, preview) {
       if (!data.saveDraftClicked && data.status != 'scheduled') {
-        data.status = 'publish';
+        data.status = 'published';
       }
 
       var _obj = {
