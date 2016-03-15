@@ -233,6 +233,7 @@ console.log(data.data);
       page.scheduled_date = scheduledAt.date;
       page.scheduled_time = scheduledAt.time;
 
+
       angular.forEach(tags, function (tag) {
         page.tags.push(tag.name);
       });
