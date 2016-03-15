@@ -56,6 +56,7 @@
     var loadCalendar = function () {
       CalendarService.getCalendar().then(function (data) {
         $scope.calendar = data.data;
+        console.log($scope.calendar);
         $scope.dtOptions = dataTableConfigService.init();
 
         angular.forEach(data.data.items, function (calendar_item) {
@@ -93,7 +94,7 @@
     });
 
     CalendarService.getRegional().then(function (data) {
-      $scope.regional = data.data;
+      $scope.regional = data.data.items;
     });
 
     $scope.diasLetivos = function (size) {
