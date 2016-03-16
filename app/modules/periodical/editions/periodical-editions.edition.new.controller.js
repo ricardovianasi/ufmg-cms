@@ -15,7 +15,8 @@
     'NotificationService',
     'MediaService',
     'ModalService',
-    '$rootScope'
+    '$rootScope',
+    '$window'
   ];
 
   /**
@@ -42,7 +43,8 @@
                                           NotificationService,
                                           MediaService,
                                           ModalService,
-                                          $rootScope) {
+                                          $rootScope,
+                                          $window) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionNewController');
 
@@ -74,6 +76,7 @@
           $location.path('/periodicals/' + $routeParams.id + '/editions');
         } else {
           $window.open(data.data.edition_url);
+          $location.path('/periodicals/' + $routeParams.id + '/edition/edit/' + data.data.id );
         }
       });
     };

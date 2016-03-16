@@ -15,7 +15,8 @@
     'NotificationService',
     'MediaService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    '$window'
   ];
 
   /**
@@ -42,7 +43,8 @@
                                            NotificationService,
                                            MediaService,
                                            DateTimeHelper,
-                                           $rootScope) {
+                                           $rootScope,
+                                           $window) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionEditController');
 
