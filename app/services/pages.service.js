@@ -96,6 +96,7 @@
       }
 
       cleanPage.parent = page.parent ? page.parent.id : undefined;
+      cleanPage.page_type = page.page_type;
 
       return cleanPage;
     };
