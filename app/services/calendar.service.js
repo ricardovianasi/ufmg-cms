@@ -125,6 +125,7 @@
             return deferred.promise;
           },
           updatePeriod: function (period) {
+
             var new_period = {
               month: period.month,
               school_days: period.school_days,
@@ -132,14 +133,11 @@
               year: period.year,
               regional: parseInt(period.regional)
             };
-            var serializeObject = new SerializeService(new_period);
+            //var serializeObject = new SerializeService(new_period);
             var deferred = $q.defer();
 
-            $http.post(apiUrl+'/period/', serializeObject, {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            }).then(function (data) {
+            //console.log('updatePeriod >>>>>>', serializeObject);
+            $http.post(apiUrl+'/period/', new_period).then(function (data) {
               deferred.resolve(data);
             });
 

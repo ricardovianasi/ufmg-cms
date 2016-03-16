@@ -108,7 +108,7 @@
           $location.path('/pages');
         } else {
           $window.open(page.data.page_url);
-          $location.path($filter('format')('/pages/{0}', page.data.id));
+          $location.path('/pages/edit/'+ page.data.id);
         }
       });
     };

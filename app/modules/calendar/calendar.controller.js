@@ -93,7 +93,7 @@
     });
 
     CalendarService.getRegional().then(function (data) {
-      $scope.regional = data.data;
+      $scope.regional = data.data.items;
     });
 
     $scope.diasLetivos = function (size) {
