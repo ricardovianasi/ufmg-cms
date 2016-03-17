@@ -50,13 +50,10 @@
               highlight: calendar.highlight
             };
 
-            var serializeObject = new SerializeService(new_calendar),
-              deferred = $q.defer();
-            $http.put(apiUrl+'/calendar/'+calendar.id, serializeObject, {
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                }
-              })
+            var deferred = $q.defer();
+
+            console.log('updated >>>>>', new_calendar);
+            $http.put(apiUrl+'/calendar/'+calendar.id, new_calendar)
               .then(function (data) {
                 deferred.resolve(data);
               });

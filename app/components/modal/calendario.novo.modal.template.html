@@ -38,7 +38,9 @@
                             <div class="form-group">
                                 <label><span class="fa fa-calendar"></span>Data de In&iacute;cio</label>
                                 <input type="text" class="form-control"
-                                       ng-model="newRegister.init_date">
+                                       ng-model="newRegister.init_date"
+                                        ui-mask="99/99/9999"
+                                       model-view-value="true">
                             </div>
 
                             <div class="checkbox">
@@ -55,7 +57,9 @@
                             <div class="form-group">
                                 <label><span class="fa fa-calendar"></span>Data de fim</label>
                                 <input type="text" class="form-control"
-                                       ng-model="newRegister.end_date">
+                                       ng-model="newRegister.end_date"
+                                       ui-mask="99/99/9999"
+                                       model-view-value="true">
                             </div>
                         </div>
                     </div>

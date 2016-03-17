@@ -14,7 +14,8 @@
     'StatusService',
     'ModalService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    '$route'
   ];
 
   /**
@@ -39,7 +40,8 @@
                               StatusService,
                               ModalService,
                               DateTimeHelper,
-                              $rootScope) {
+                              $rootScope,
+                              $route) {
 
     $rootScope.shownavbar = true;
     console.log('... CalendarController');
@@ -217,7 +219,7 @@
      *
      * @constructor
      */
-    var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type) {
+    var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type, $route) {
       console.log('... ModalEditEventCtrl');
 
       $scope.type = type;
@@ -234,10 +236,13 @@
       $scope.newRegister.end_date = event.end_date ? CalendarService.dateToStr(new_end_date) : '';
       $scope.newRegister.highlight = event.highlight;
 
+
+
       $scope.ok = function () {
         CalendarService.updateCalendar($scope.newRegister).then(function (data) {
           if (data.status == '200') {
             NotificationService.success('Evento atualizado com sucesso.');
+            $route.reload();
           }
 
           $uibModalInstance.close();
@@ -335,7 +340,7 @@
      *
      * @constructor
      */
-    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type) {
+    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route) {
       console.log('... ModalCalendarioNovoCtrl');
 
       $scope.type = type;
@@ -349,6 +354,7 @@
 
       $scope.ok = function () {
         CalendarService.postCalendar($scope.newRegister).then(function (data) {
+          $route.reload();
           $uibModalInstance.close();
         });
       };
