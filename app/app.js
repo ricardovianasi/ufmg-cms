@@ -41,6 +41,7 @@
       'periodicalModule',
       'releasesModule',
       'serviceModule',
-      'loginModule'
+      'loginModule',
+      'faqModule'
     ]);
 })();

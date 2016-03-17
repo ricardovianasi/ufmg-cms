@@ -1,0 +1,87 @@
+<div class="page-title">
+    <div class="row flexcenter">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">FAQ</h1>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+
+                    <li class="">
+                        <a href="#/faq">
+                            <strong>FAQ</strong>
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#/faq/new">
+                            <strong>novo Faq</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div><!--breadcrumb-env-->
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-10">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 panel panel-default">
+                        <form class="form">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="title">Título</label>
+                                        <input id="title" type="text" name="title" class="form-control"
+                                               ng-model="page.title">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row col-xs-12">
+                                        <label>Selecione o tipo de Faq:</label>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="checkbox">
+                                            <div class="well well-sm">
+                                                <label>
+                                                    <input type="checkbox" ng-model="news.highlight_ufmg" ng-checked="news.highlight_ufmg">
+                                                    Perguntas e respostas
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <div class="checkbox">
+                                            <div class="well well-sm">
+                                                <label>
+                                                    <input type="checkbox" ng-model="news.highlight_ufmg" ng-checked="news.highlight_ufmg">
+                                                   Categorias + Perguntas e respostas
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

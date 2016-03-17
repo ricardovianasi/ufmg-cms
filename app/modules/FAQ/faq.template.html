@@ -1,0 +1,85 @@
+<div class="page-title">
+    <div class="row flexcenter">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">FAQ</h1>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#/faq">
+                            <strong>FAQ</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div><!--breadcrumb-env-->
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="btn-toolbar">
+
+                <div class="pull-right">
+                    <a class="btn btn-secondary btn-lg pull-left"
+                       ng-href="#/faq/new"><i class="fa fa-plus"></i> NOVO <FAQ></FAQ></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered"
+                       datatable="ng" dt-options="dtOptions">
+                    <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Usuário</th>
+                        <th>Data da Publicação</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr role="row" class="odd"
+                        ng-repeat="item in pages.items | filter: search | filter: {status: itemStatus}">
+                        <td>
+                            <a ng-href="#/pages/edit/{{ item.id }}">{{ item.title }}</a>
+                        </td>
+
+                        <td>{{ item.author.name }}</td>
+
+                        <td>
+                            <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
+                            <br>
+                            <small>{{ item.status|translate|titleize }}</small>
+                        </td>
+
+                        <td class="table-fit">
+                            <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.page_url }}" class="btn btn-primary">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
+                            <a uib-tooltip="Editar" ng-href="#/pages/edit/{{ item.id }}" class="btn btn-warning">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a uib-tooltip="Excluir" ng-click="remove(item.id, item.title)" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
