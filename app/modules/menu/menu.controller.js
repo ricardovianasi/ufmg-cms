@@ -190,6 +190,7 @@
           $scope.menus[type] = [];
 
           _populateMenusChildren(type);
+          _removePagesIndexed(data.data.items);
         });
       });
     }
@@ -214,7 +215,9 @@
     /*
      * SERVICES
      */
+
     PagesService.getPages().then(function (data) {
+
       angular.forEach(data.data.items, function (page) {
         pages.push({
           page: page.id,
@@ -226,9 +229,24 @@
       });
 
       vm.pages = pages.slice();
+
+      //Populate menus (type: quick_access, main_menu)
+      _populateMenus();
     });
 
-    //Populate menus (type: quick_access, main_menu)
-    _populateMenus();
+    function _removePagesIndexed(menuItems) {
+
+      angular.forEach(menuItems, function(value, key){
+        angular.forEach(vm.pages, function(v, k){
+          if(menuItems[key].page.id == vm.pages[k].page)
+            vm.pages.splice(k, 1);
+        });
+
+        if(menuItems[key].children.length > 0);
+          _removePagesIndexed(menuItems[key].children);
+      });
+    }
+
+
   }
 })();

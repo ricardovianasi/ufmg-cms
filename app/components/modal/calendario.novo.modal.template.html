@@ -14,8 +14,9 @@
                         <div class="form-group">
                             <label>Local</label>
                             <select class="form-control"
-                                    ng-model="newRegister.regional"
-                                    ng-options="regional_item.id as regional_item.name for regional_item in regional">
+                                    ng-model="newRegister.regional">
+                                <option value="0">Todos os campus</option>
+                                <option ng-repeat="regional_item in regional" value="{{ regional_item.id }}">{{ regional_item.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -38,7 +39,9 @@
                             <div class="form-group">
                                 <label><span class="fa fa-calendar"></span>Data de In&iacute;cio</label>
                                 <input type="text" class="form-control"
-                                       ng-model="newRegister.init_date">
+                                       ng-model="newRegister.init_date"
+                                        ui-mask="99/99/9999"
+                                       model-view-value="true">
                             </div>
 
                             <div class="checkbox">
@@ -55,7 +58,9 @@
                             <div class="form-group">
                                 <label><span class="fa fa-calendar"></span>Data de fim</label>
                                 <input type="text" class="form-control"
-                                       ng-model="newRegister.end_date">
+                                       ng-model="newRegister.end_date"
+                                       ui-mask="99/99/9999"
+                                       model-view-value="true">
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,8 @@
     'StatusService',
     'ModalService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    '$route'
   ];
 
   /**
@@ -39,7 +40,8 @@
                               StatusService,
                               ModalService,
                               DateTimeHelper,
-                              $rootScope) {
+                              $rootScope,
+                              $route) {
 
     $rootScope.shownavbar = true;
     console.log('... CalendarController');
@@ -217,7 +219,7 @@
      *
      * @constructor
      */
-    var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type) {
+    var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type, $route) {
       console.log('... ModalEditEventCtrl');
 
       $scope.type = type;
@@ -228,16 +230,31 @@
       $scope.regional = regional;
       $scope.newRegister = {};
       $scope.newRegister.id = event.id;
-      $scope.newRegister.regional = event.regional ? event.regional.id : '';
+      $scope.newRegister.regional = event.regional.length == 2 ? '0': String(event.regional[0].id);
       $scope.newRegister.description = event.description;
       $scope.newRegister.init_date = event.init_date ? CalendarService.dateToStr(new_init_date) : '';
       $scope.newRegister.end_date = event.end_date ? CalendarService.dateToStr(new_end_date) : '';
       $scope.newRegister.highlight = event.highlight;
 
+
+
+
       $scope.ok = function () {
+
+        var newRegional = [];
+
+        if($scope.newRegister.regional === "0") {
+          angular.forEach(regional, function(v, k){
+            newRegional.push(regional[k].id);
+          });
+
+          $scope.newRegister.regional = newRegional;
+        }
+
         CalendarService.updateCalendar($scope.newRegister).then(function (data) {
           if (data.status == '200') {
             NotificationService.success('Evento atualizado com sucesso.');
+            $route.reload();
           }
 
           $uibModalInstance.close();
@@ -335,7 +352,7 @@
      *
      * @constructor
      */
-    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type) {
+    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route) {
       console.log('... ModalCalendarioNovoCtrl');
 
       $scope.type = type;
@@ -348,7 +365,19 @@
       };
 
       $scope.ok = function () {
+
+        var newRegional = [];
+
+        if($scope.newRegister.regional === "0") {
+          angular.forEach(regional, function(v, k){
+            newRegional.push(regional[k].id);
+          });
+
+          $scope.newRegister.regional = newRegional;
+        }
+
         CalendarService.postCalendar($scope.newRegister).then(function (data) {
+          $route.reload();
           $uibModalInstance.close();
         });
       };
