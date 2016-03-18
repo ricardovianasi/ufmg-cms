@@ -5,21 +5,14 @@
     .controller('faqNewController', faqNewController);
 
   faqNewController.$inject = [
-    '$rootScope'
+    '$rootScope',
+    'faqService',
+    'NotificationService',
+    '$location',
+    '$routeParams'
   ];
 
-  /**
-   * @param $scope
-   * @param $route
-   * @param dataTableConfigService
-   * @param EventsService
-   * @param DateTimeHelper
-   * @param ModalService
-   * @param NotificationService
-   *
-   * @constructor
-   */
-  function faqNewController($rootScope) {
+  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -28,7 +21,7 @@
     $rootScope.shownavbar = true;
     console.log('... faNewController');
 
-
+    var id = $routeParams.faqId;
     vm.showCategoryAsk = false;
     vm.showAsk = false;
     vm.faq = {
@@ -38,7 +31,16 @@
     vm.showType = _showType;
     vm.addAsk = _addAsk;
     vm.controlFormView = _controlFormView;
+    vm.save = _save;
+    vm.removeAsk = _removeAsk;
 
+
+    if(id) {
+      faqService.get(id).then(function(data){
+        vm.faq = data.data;
+        _showType('ask');
+      });
+    }
 
     /**
      *
@@ -46,7 +48,6 @@
      * @private
        */
     function _showType(type) {
-      console.log(type);
       if(type == 'ask') {
         vm.showCategoryAsk = false;
         vm.showAsk = true;
@@ -93,6 +94,36 @@
         question: '',
         answer: ''
       };
+    }
+
+    /**
+     *
+     * @private
+       */
+    function _save() {
+      var faq = {};
+
+      if(id) {
+        faqService.update(vm.faq).then(function (data) {
+          $location.path('/faq/edit/' + data.data.id);
+          NotificationService.success('Faq Alterado com sucesso!');
+        });
+      } else {
+        faqService.save(vm.faq).then(function (data) {
+          $location.path('/faq/edit/' + data.data.id);
+          NotificationService.success('Faq salvo com sucesso!');
+        });
+      }
+
+    }
+
+      /**
+       *
+       * @param idx
+       * @private
+       */
+    function _removeAsk(idx) {
+      vm.faq.items.splice(idx);
     }
   }
 })();

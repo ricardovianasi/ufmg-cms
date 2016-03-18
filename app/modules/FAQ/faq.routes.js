@@ -15,6 +15,11 @@
             templateUrl: 'modules/faq/faq-new.template.html',
             controller: 'faqNewController as vm',
             controllerAs: 'ctrl'
+          })
+          .when('/faq/edit/:faqId', {
+            templateUrl: 'modules/faq/faq-new.template.html',
+            controller: 'faqNewController as vm',
+            controllerAs: 'ctrl'
           });
       }
     ]);

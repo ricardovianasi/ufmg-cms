@@ -5,24 +5,43 @@
     .controller('faqController', faqController);
 
   faqController.$inject = [
-    '$rootScope'
+    '$rootScope',
+    'faqService',
+    'ModalService',
+    'NotificationService'
   ];
 
-  /**
-   * @param $scope
-   * @param $route
-   * @param dataTableConfigService
-   * @param EventsService
-   * @param DateTimeHelper
-   * @param ModalService
-   * @param NotificationService
-   *
-   * @constructor
-   */
-  function faqController($rootScope) {
+  function faqController($rootScope, faqService, ModalService, NotificationService) {
     $rootScope.shownavbar = true;
     console.log('... faController');
 
+    /* jshint ignore:start */
+    var vm = this;
+    /* jshint ignore:end */
 
+      /**
+       *
+       * @private
+       */
+    function _loadFaqs() {
+      faqService.get().then(function (data) {
+        vm.faqs = data.data.items;
+      });
+    }
+
+    _loadFaqs();
+
+
+    vm.removeFaq = function (id, title) {
+      ModalService
+        .confirm('Você deseja excluir o faq <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+        .result
+        .then(function () {
+          faqService.remove(id).then(function () {
+            NotificationService.success('Faq removido com sucesso.');
+            _loadFaqs();
+          });
+        });
+    };
   }
 })();
