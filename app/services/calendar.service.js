@@ -44,7 +44,7 @@
             // put
             var new_calendar = {
               description: calendar.description,
-              regional: parseInt(calendar.regional),
+              regional: calendar.regional,
               init_date: calendar.init_date,
               end_date: calendar.end_date,
               highlight: calendar.highlight

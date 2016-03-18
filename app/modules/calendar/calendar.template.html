@@ -88,7 +88,7 @@
                             </td>
 
                             <td>{{ item.author.name }}</td>
-                            <td>{{ item.regional.name }}</td>
+                            <td>{{ item.regional.length == 2 ? 'Todos os Campus' : item.regional[0].name }}</td>
 
                             <td>
                                 <strong>{{ item.post_date }}</strong>
