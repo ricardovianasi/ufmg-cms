@@ -28,11 +28,17 @@
       items: []
     };
 
+    vm.currentNewCategoryAsk = {
+      title: '',
+      items: []
+    };
+
     vm.showType = _showType;
     vm.addAsk = _addAsk;
     vm.controlFormView = _controlFormView;
     vm.save = _save;
     vm.removeAsk = _removeAsk;
+    vm.addCategoryAsk = _addCategoryAsk;
 
 
     if(id) {
@@ -61,12 +67,18 @@
 
     /**
      *
+     * @param type
      * @param ask
-     * @private
-     */
-    function _addAsk(ask) {
-      vm.faq.items.push(ask);
-      _controlFormView(true);
+       * @private
+       */
+    function _addAsk(type, ask) {
+      if(type === 'ask') {
+        vm.faq.items.push(ask);
+        _controlFormView(true);
+      } else {
+        vm.currentNewCategoryAsk.items.push(ask);
+      }
+
       _cleanNewAsk();
     }
 
@@ -101,7 +113,10 @@
      * @private
        */
     function _save() {
-      var faq = {};
+      if(vm.showCategoryAsk) {
+        vm.faq.items = [];
+        console.log('deletedddd >>>>>>>>>', vm.faq);
+      }
 
       if(id) {
         faqService.update(vm.faq).then(function (data) {
@@ -122,8 +137,35 @@
        * @param idx
        * @private
        */
-    function _removeAsk(idx) {
-      vm.faq.items.splice(idx);
+    function _removeAsk(type, idx) {
+      if(type === 'ask') {
+        vm.faq.items.splice(idx, 1);
+      }
+      else {
+        vm.currentNewCategoryAsk.items.splice(idx, 1);
+      }
+    }
+
+      /**
+       *
+       * @private
+       */
+    function _addCategoryAsk(){
+      vm.faq.categories.push(vm.currentNewCategoryAsk);
+      _cleanCurrentNewCategoryAsk();
+      _controlFormView(true);
+    }
+
+    /**
+     *
+     * @private
+     */
+    function _cleanCurrentNewCategoryAsk() {
+      vm.currentNewCategoryAsk = {
+        title: '',
+        items: []
+      };
     }
   }
+
 })();

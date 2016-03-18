@@ -1,5 +1,5 @@
 <div class="well" ng-repeat="ask in vm.faq.items">
-    <a uib-tooltip="Excluir" ng-click="vm.removeAsk($index)" class="btn btn-danger btn-small pull-right">
+    <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class="btn btn-danger btn-small pull-right">
         <i class="fa fa-trash"></i>
     </a>
     <label for="">{{ ask.question }}</label>
