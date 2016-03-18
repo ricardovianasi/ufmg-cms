@@ -13,7 +13,7 @@
           })
           .when('/faq/new', {
             templateUrl: 'modules/faq/faq-new.template.html',
-            controller: 'faqController as vm',
+            controller: 'faqNewController as vm',
             controllerAs: 'ctrl'
           });
       }

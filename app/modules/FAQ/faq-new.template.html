@@ -43,7 +43,7 @@
                                     <div class="form-group">
                                         <label for="title">Título</label>
                                         <input id="title" type="text" name="title" class="form-control"
-                                               ng-model="page.title">
+                                               ng-model="vm.faq.title">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                         <div class="checkbox">
                                             <div class="well well-sm">
                                                 <label>
-                                                    <input type="checkbox" ng-model="news.highlight_ufmg" ng-checked="news.highlight_ufmg">
+                                                    <input type="checkbox" ng-model="vm.ask" name="ask" ng-click="vm.showType('ask')" ng-checked="vm.showAsk">
                                                     Perguntas e respostas
                                                 </label>
                                             </div>
@@ -68,7 +68,7 @@
                                         <div class="checkbox">
                                             <div class="well well-sm">
                                                 <label>
-                                                    <input type="checkbox" ng-model="news.highlight_ufmg" ng-checked="news.highlight_ufmg">
+                                                    <input type="checkbox" ng-model="vm.categoryAsk" name="categoryAsk" ng-click="vm.showType('category')" ng-checked="vm.showCategoryAsk">
                                                    Categorias + Perguntas e respostas
                                                 </label>
                                             </div>
@@ -79,7 +79,8 @@
                             </div>
                         </form>
 
-                        <div ng-include="'modules/faq/faq-ask.template.html'"></div>
+                        <div ng-include="'modules/faq/partials/faq-list.template.html'"></div>
+                        <div ng-show="vm.showAsk" ng-include="'modules/faq/partials/faq-ask.template.html'"></div>
                     </div> <!--end panel body-->
                 </div>
             </div>
