@@ -14,7 +14,8 @@
     'MediaService',
     'NewsService',
     'ReleasesService',
-    'TagsService'
+    'TagsService',
+    'faqService'
   ];
 
   /**
@@ -42,7 +43,8 @@
                         MediaService,
                         NewsService,
                         ReleasesService,
-                        TagsService) {
+                        TagsService,
+                        faqService) {
     console.log('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
@@ -128,6 +130,7 @@
         $scope.tags = data.data.items[0];
       });
     };
+
 
     /**
      * @type {{parseWidgetToSave, parseWidgetToLoad, preparePartial, handle, makeWidget}}
@@ -537,6 +540,12 @@
             ]
           };
         },
+        faq: function(widget) {
+          return {
+            type: widget.type,
+            faq: parseInt(widget.content.faq)
+          };
+        }
       };
 
       // Parse widget object from webservice data
@@ -900,6 +909,17 @@
             ],
           };
         },
+        faq: function(widget) {
+          console.log('faq >>>>>>', widget);
+
+          widget.content.faq = widget.content.faq.id;
+
+          console.log(widget.content);
+          return {
+            title: widget.title,
+            content: widget.content,
+          };
+        }
       };
 
       /**
@@ -1186,6 +1206,11 @@
             },
             containment: '#sort-main'
           };
+        },
+        faq: function($scope) {
+          faqService.get().then(function(data){
+            $scope.faqs = data.data.items;
+          });
         }
       };
 
