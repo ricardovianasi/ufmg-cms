@@ -1,7 +1,17 @@
 <div class="well" ng-repeat="category in vm.faq.categories">
-    <h4>{{ category.title }}</h4>
+    <a uib-tooltip="Excluir categoria" ng-click="vm.removeAsk('category', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
+        <i class="fa fa-trash"></i>
+    </a>
+    <a uib-tooltip="Editar categoria" ng-click="vm.editCategory($index)" class="btn btn-warning btn-small pull-right">
+        <i class="fa fa-pencil"></i>
+    </a>
+
+    <h4>{{ category.name }}</h4>
     <br>
-    <div class="form-group" ng-repeat="item in category.items">
+    <div class="panel form-group" ng-repeat="item in category.items">
+        <a uib-tooltip="Excluir pergunta" ng-click="vm.removeFaqCategoryAsk($parent.$index, $index)" class="btn btn-danger btn-small pull-right">
+            <i class="fa fa-trash"></i>
+        </a>
         <label for="">{{ item.question }}</label>
         <p ng-bind-html="item.answer"></p>
     </div>
@@ -10,7 +20,7 @@
 <div class="form-ask" ng-show="vm.showNewAskForm">
     <div class="form-group">
         <label for="">Título da categoria: </label>
-        <input type="text" class="form-control" ng-model="vm.currentNewCategoryAsk.title">
+        <input type="text" class="form-control" ng-model="vm.currentNewCategoryAsk.name">
     </div>
 
     <div class="well" ng-repeat="ask in vm.currentNewCategoryAsk.items">
