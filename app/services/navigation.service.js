@@ -77,7 +77,12 @@
             name: 'Menu',
             location: 'menu',
             enabled: true
-          },
+          },{
+            icon: 'fa fa-question-circle',
+            name: 'FAQ',
+            location: 'faq',
+            enabled: true
+          }
         ];
 
         return {

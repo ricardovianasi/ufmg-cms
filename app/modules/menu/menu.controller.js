@@ -234,6 +234,11 @@
       _populateMenus();
     });
 
+      /**
+       *
+       * @param menuItems
+       * @private
+       */
     function _removePagesIndexed(menuItems) {
 
       angular.forEach(menuItems, function(value, key){
