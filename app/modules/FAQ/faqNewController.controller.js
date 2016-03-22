@@ -135,12 +135,12 @@
       if(id) {
         faqService.update(vm.faq).then(function (data) {
           $location.path('/faq/edit/' + data.data.id);
-          NotificationService.success('Faq Alterado com sucesso!');
+          NotificationService.success('FAQ alterado com sucesso!');
         });
       } else {
         faqService.save(vm.faq).then(function (data) {
           $location.path('/faq/edit/' + data.data.id);
-          NotificationService.success('Faq salvo com sucesso!');
+          NotificationService.success('FAQ salvo com sucesso!');
         });
       }
 
