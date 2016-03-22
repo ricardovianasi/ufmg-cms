@@ -5,35 +5,31 @@
                 <h1 class="title">FAQ</h1>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
                     <li>
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
-
                     <li class="">
                         <a href="#/faq">
-                            <strong>FAQ</strong>
+                            <strong>FAQ </strong>
                         </a>
                     </li>
-
                     <li class="active">
                         <a href="#/faq/new">
-                            <strong>novo Faq</strong>
+                            <strong>Novo FAQ</strong>
                         </a>
                     </li>
                 </ol>
-            </div><!--breadcrumb-env-->
+            </div>
+            <!--breadcrumb-env-->
         </div>
     </div>
 </div>
-
-
 <div class="row">
-    <div class="col-xs-10">
-        <div class="panel panel-default">
+    <div class="col-xs-12">
+        <div class="panel-default">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 panel panel-default">
@@ -42,56 +38,51 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="title">Título</label>
-                                        <input id="title" type="text" name="title" class="form-control"
-                                               ng-model="vm.faq.title">
+                                        <input id="title" type="text" name="title" class="form-control" ng-model="vm.faq.title">
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="row col-xs-12">
-                                        <label>Selecione o tipo de Faq:</label>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <div class="checkbox">
-                                            <div class="well well-sm">
-                                                <label>
-                                                    <input type="checkbox" ng-model="vm.ask" name="ask" ng-click="vm.showType('ask')" ng-checked="vm.showAsk">
-                                                    Perguntas e respostas
-                                                </label>
+                                    <label>Selecione o tipo de Faq:</label>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <div class="checkbox">
+                                                <div class="well well-sm">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="vm.ask" name="ask" ng-click="vm.showType('ask')" ng-checked="vm.showAsk"> Perguntas e respostas
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <div class="checkbox">
+                                                <div class="well well-sm">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="vm.categoryAsk" name="categoryAsk" ng-click="vm.showType('category')" ng-checked="vm.showCategoryAsk"> Categorias + Perguntas e respostas
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="form-group col-md-6">
-                                        <div class="checkbox">
-                                            <div class="well well-sm">
-                                                <label>
-                                                    <input type="checkbox" ng-model="vm.categoryAsk" name="categoryAsk" ng-click="vm.showType('category')" ng-checked="vm.showCategoryAsk">
-                                                   Categorias + Perguntas e respostas
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </form>
-
                         <div ng-show="vm.showAsk" ng-include="'modules/faq/partials/faq-list.template.html'"></div>
                         <div ng-show="vm.showAsk" ng-include="'modules/faq/partials/faq-ask.template.html'"></div>
-
                         <div ng-show="vm.showCategoryAsk" ng-include="'modules/faq/partials/faq-categoryAsk.template.html'"></div>
-                    </div> <!--end panel body-->
-                    <div class="panel-footer text-right">
-                        <a href="" class="btn btn-secondary" ng-click="vm.save()">
-                            Salvar
-                        </a>
-                    </div> <!-- end panel-footer -->
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                              <br/>
+                               <hr/>
+                                <a href="" class="btn btn-secondary btn-lg" ng-click="vm.save()">
+                                    <i class="fa fa-check"></i> Salvar FAQ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

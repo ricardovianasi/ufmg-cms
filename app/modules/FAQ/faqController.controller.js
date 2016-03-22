@@ -13,7 +13,7 @@
 
   function faqController($rootScope, faqService, ModalService, NotificationService) {
     $rootScope.shownavbar = true;
-    console.log('... faController');
+    console.log('... faqController');
 
     /* jshint ignore:start */
     var vm = this;
@@ -34,11 +34,11 @@
 
     vm.removeFaq = function (id, title) {
       ModalService
-        .confirm('Você deseja excluir o faq <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+        .confirm('Você deseja excluir o FAQ <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
         .result
         .then(function () {
           faqService.remove(id).then(function () {
-            NotificationService.success('Faq removido com sucesso.');
+            NotificationService.success('FAQ removido com sucesso.');
             _loadFaqs();
           });
         });

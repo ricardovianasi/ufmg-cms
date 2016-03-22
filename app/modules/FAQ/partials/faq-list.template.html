@@ -1,11 +1,16 @@
-<div class="well" ng-repeat="ask in vm.faq.items">
-    <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
-        <i class="fa fa-trash"></i>
-    </a>
-
-    <a uib-tooltip="Editar pergunta" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
-        <i class="fa fa-pencil"></i>
-    </a>
-    <label for="">{{ ask.question }}</label>
-    <p ng-bind-html="ask.answer"></p>
+<div class="pages-module" ng-repeat="ask in vm.faq.items">
+    <div class="row">
+        <div class="col-md-10 text-end">
+            <label for="">{{ ask.question }}</label>
+            <p ng-bind-html="ask.answer"></p>
+        </div>
+        <div class="col-md-2">
+            <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
+                <i class="fa fa-trash"></i>
+            </a>
+            <a uib-tooltip="Editar" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
+                <i class="fa fa-pencil"></i>
+            </a>
+        </div>
+    </div>
 </div>
