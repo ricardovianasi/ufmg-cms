@@ -157,28 +157,23 @@
             </div><!--row-->
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-xs-4">
-                                <label for="" class="">Dia:</label>
-                                <input type="text" ng-model="release.service.when.day" class="form-control">
+                            <div class="col-xs-6">
+                                <label for="" class="">Data:</label>
+                                <input type="text" ng-model="release.service.when" class="form-control">
                             </div>
 
-                            <div class="col-xs-4">
-                                <label for="" class="">Mês:</label>
-                                 <input type="text" ng-model="release.service.when.month" class="form-control">
-                            </div>
-
-                            <div class="col-xs-4">
-                                <label for="" class="">Ano:</label>
-                                <input type="text" ng-model="release.service.when.year" class="form-control">
+                            <div class="col-xs-6">
+                                <label for="" class="">Horário:</label>
+                                 <input type="text" ng-model="release.service.time" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label for="where">Onde</label>
                         <input id="where" type="text" name="where" ng-model="release.service.where"
@@ -226,16 +221,26 @@
                                     </ul>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane text-center"  ng-class="{ active: release.files[idx].isFile }" id="upload">
-                                            <input  type="file"
-                                                class="form-control"
-                                                ngf-select
-                                                ngf-accept="'*'"
-                                                ngf-multiple="false"
-                                                ng-model="release.files[idx].file"
-                                                ng-show="!release.files[idx].file">
+                                        <div class="tab-pane"  ng-class="{ active: release.files[idx].isFile }" id="upload">
 
-                                            <div class="clearfix form-control"
+                                                <input  type="file"
+                                                    class="form-control"
+                                                    ngf-select
+                                                    ngf-accept="'*'"
+                                                    ngf-multiple="false"
+                                                    ng-model="release.files[idx].file"
+                                                    ng-show="!release.files[idx].file">
+
+                                                <br>
+
+                                                <label class="text-left" ng-show="release.files[idx].file">Breve descrição</label>
+                                                <input  type="text"
+                                                        class="form-control"
+                                                        ng-model="release.files[idx].title"
+                                                        ng-show="release.files[idx].file">
+
+                                            <br><br>
+                                            <div class="clearfix"
                                                  ng-show="release.files[idx].file" style="height:auto">
                                                 <div class="pull-left">{{ release.files[idx].file }}</div>
 
@@ -249,12 +254,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane text-center" ng-class="{ active: !release.files[idx].isFile }" id="video">
+                                        <div class="tab-pane
+                                        " ng-class="{ active: !release.files[idx].isFile }" id="video">
                                                 <input  type="text"
                                                     placeholder="Inserir URL do Vídeo (Youtube ou Vimeo)..."
                                                     ng-model="release.files[idx].external_url"
                                                     class="form-control"
                                                     ng-show="release.files[idx].isFile == false">
+
+                                            <br>
+
+                                            <label class="text-left">Breve descrição</label>
+                                            <input  type="text"
+                                                    class="form-control"
+                                                    ng-model="release.files[idx].title"
+                                                    ng-show="release.files[idx].isFile == false"
+                                                    >
                                         </div>
                                     </div>
 

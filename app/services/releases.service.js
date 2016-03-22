@@ -49,13 +49,6 @@
         authorName: data.authorName
       };
 
-      var when = new Date(
-        data.service.when.year,
-        data.service.when.month - 1,
-        data.service.when.day
-      );
-
-      obj.service.when = DateTimeHelper.toBrStandard(when);
 
       angular.forEach(data.files, function (value) {
         var file = value;

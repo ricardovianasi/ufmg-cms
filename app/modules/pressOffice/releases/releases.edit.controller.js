@@ -281,14 +281,6 @@
       var release = data.data;
       release.authorName = release.author_name;
 
-      var date = new Date(release.service.when);
-
-      release.service.when = {
-        day: $filter('date')(date, 'dd'),
-        month: $filter('date')(date, 'MM'),
-        year: $filter('date')(date, 'yyyy')
-      };
-
       var files = [];
 
       angular.forEach(release.files, function (file) {
@@ -296,7 +288,8 @@
           external_url: file.external_url,
           file: '',
           isFile: false,
-          type: 'video'
+          type: 'video',
+          title: file.title
         };
 
         if (file.file !== null) {

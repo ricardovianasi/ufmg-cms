@@ -39,9 +39,7 @@
     $scope.release = {
       status: StatusService.STATUS_PUBLISHED,
       source: {},
-      service: {
-        when: {}
-      },
+      service:{},
       files: []
     };
 
@@ -253,6 +251,10 @@
           $window.open(release.data.release_url);
         }
       });
+    };
+
+    $scope.removeReleasesFiles = function (idx) {
+      $scope.release.files[idx].file = '';
     };
   }
 })();
