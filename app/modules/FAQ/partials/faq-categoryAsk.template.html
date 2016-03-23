@@ -4,7 +4,7 @@
         <a uib-tooltip="Excluir categoria" ng-click="vm.removeAsk('category', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
             <i class="fa fa-trash"></i>
         </a>
-        <a uib-tooltip="Editar categoria" ng-click="vm.editCategory($index)" class="btn btn-warning btn-small pull-right">
+        <a uib-tooltip="Editar categoria" ng-show="vm.idCurrentCategoryEdit == ''" ng-click="vm.editCategory($index)" class="btn btn-warning btn-small pull-right">
             <i class="fa fa-pencil"></i>
         </a>
         <h4>{{ category.name }}</h4>

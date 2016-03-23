@@ -8,7 +8,7 @@
             <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
                 <i class="fa fa-trash"></i>
             </a>
-            <a uib-tooltip="Editar" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
+            <a uib-tooltip="Editar" ng-show="vm.idCurrentAskEdit == ''" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
                 <i class="fa fa-pencil"></i>
             </a>
         </div>

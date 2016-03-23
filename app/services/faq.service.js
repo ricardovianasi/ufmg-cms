@@ -12,6 +12,24 @@
   function faqService($http, apiUrl) {
     console.log('... CourseService');
 
+    var _parseData = function(faq) {
+      var obj = faq;
+
+      if(obj.categories.length > 0) {
+        angular.forEach(obj.categories, function(v, k) {
+          obj.items.push({
+            question: obj.categories[k].name,
+            children: obj.categories[k].items
+          });
+        });
+
+        delete obj.categories;
+      }
+
+      return obj;
+    };
+
+
     return {
       save: _save,
       get: _get,
@@ -27,7 +45,9 @@
        * @private
        */
     function _save(data) {
-     return $http.post(apiUrl + '/faq', data);
+        console.log('oiiiiii');
+      var obj = _parseData(data);
+     return $http.post(apiUrl + '/faq', obj);
     }
 
     /**
@@ -64,7 +84,8 @@
        */
     function _update(data){
       var id = data.id;
-      return $http.put(apiUrl + '/faq/' + id, data);
+      var obj = _parseData(data);
+      return $http.put(apiUrl + '/faq/' + id, obj);
     }
   }
 })();

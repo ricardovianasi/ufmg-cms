@@ -9,10 +9,11 @@
     'faqService',
     'NotificationService',
     '$location',
-    '$routeParams'
+    '$routeParams',
+    '$route'
   ];
 
-  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams) {
+  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams, $route) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -22,13 +23,14 @@
     console.log('... faNewController');
 
     var id = $routeParams.faqId;
-    var idCurrentCategoryEdit  = '';
-    var idCurrentAskEdit  = '';
 
+    vm.idCurrentAskEdit  = '';
+    vm.idCurrentCategoryEdit  = '';
     vm.showCategoryAsk = false;
     vm.showAsk = false;
     vm.faq = {
-      items: []
+      items: [],
+      categories: []
     };
 
     vm.currentNewCategoryAsk = {
@@ -46,16 +48,49 @@
     vm.editCategory = _editCategory;
     vm.editAsk = _editAsk;
 
-    if(id) {
-      faqService.get(id).then(function(data){
-        vm.faq = data.data;
+    /**
+     *
+     * @private
+       */
+    function _getFaq() {
+      if(id) {
+        faqService.get(id).then(function(data){
+          vm.faq = data.data;
+          vm.faq.categories = [];
 
-        if(vm.faq.items.length > 0)
-          _showType('ask');
-        else
-          _showType('');
-      });
+          var ids = [];
+
+          angular.forEach(data.data.items, function(v, k) {
+            if(data.data.items[k].children.length > 0) {
+              vm.faq.categories.push({
+                name: data.data.items[k].question,
+                items: data.data.items[k].children
+              });
+
+              ids.push(k);
+
+            }
+          });
+
+          angular.forEach(ids, function(v, k){
+            if(ids[k] === 0) {
+              data.data.items.splice(ids[k]);
+            } else {
+              data.data.items.splice(ids[k], 1);
+            }
+          });
+
+         console.log('data >>>>>>>>>>>>', data.data.items);
+
+          if(vm.faq.categories.length < 1)
+            _showType('ask');
+          else
+            _showType('');
+        });
+      }
     }
+
+    _getFaq();
 
     /**
      *
@@ -82,15 +117,10 @@
        */
     function _addAsk(type, ask) {
       if(type === 'ask') {
+        vm.idCurrentAskEdit = '';
+        vm.faq.items.push(ask);
 
-        if(idCurrentAskEdit !== ''){
-          vm.faq.items[idCurrentAskEdit] = (JSON.parse(JSON.stringify(vm.newAsk)));
-          idCurrentAskEdit = '';
-        }
-        else
-          vm.faq.items.push(ask);
-
-        _controlFormView(true);
+        _controlFormView(false);
 
       } else {
         vm.currentNewCategoryAsk.items.push(ask);
@@ -134,7 +164,8 @@
 
       if(id) {
         faqService.update(vm.faq).then(function (data) {
-          $location.path('/faq/edit/' + data.data.id);
+          $route.reload();
+          _getFaq();
           NotificationService.success('FAQ alterado com sucesso!');
         });
       } else {
@@ -165,14 +196,8 @@
        * @private
        */
     function _addCategoryAsk(){
-
-      if(idCurrentCategoryEdit !== '') {
-        vm.faq.categories[idCurrentCategoryEdit] = (JSON.parse(JSON.stringify(vm.currentNewCategoryAsk)));
-        idCurrentCategoryEdit = '';
-      }
-      else
-        vm.faq.categories.push(vm.currentNewCategoryAsk);
-
+      vm.idCurrentCategoryEdit = '';
+      vm.faq.categories.push(vm.currentNewCategoryAsk);
       _cleanCurrentNewCategoryAsk();
       _controlFormView(true);
     }
@@ -200,24 +225,43 @@
       }
     }
 
-      /**
-       *
-       * @param parentIdx
-       * @param idx
-       * @private
-       */
+    /**
+     *
+     * @param parentIdx
+     * @param idx
+     * @private
+     */
     function _removeFaqCategoryAsk(parentIdx, idx) {
       vm.faq.categories[parentIdx].items.splice(idx, 1);
     }
 
-      /**
-       *
-       * @param id
-       * @private
+    /**
+     *
+     * @param id
+     * @private
+     */
+    function _removeFaqCategory(id) {
+      vm.faq.categories.splice(id, 1);
+    }
+
+    /**
+     *
+     * @param id
+     * @private
        */
+    function _removeforEditAsk(id) {
+      vm.faq.items.splice(id, 1);
+    }
+
+    /**
+     *
+     * @param id
+     * @private
+     */
     function _editCategory(id) {
-      idCurrentCategoryEdit = id;
+      vm.idCurrentCategoryEdit = id;
       vm.currentNewCategoryAsk =  (JSON.parse(JSON.stringify(vm.faq.categories[id])));
+      _removeFaqCategory(id);
       _controlFormView(false);
     }
 
@@ -227,8 +271,9 @@
      * @private
      */
     function _editAsk(id) {
-      idCurrentAskEdit = id;
+      vm.idCurrentAskEdit = id;
       vm.newAsk = (JSON.parse(JSON.stringify(vm.faq.items[id])));
+      _removeforEditAsk(id);
       _controlFormView(false);
     }
   }
