@@ -117,9 +117,14 @@
        */
     function _addAsk(type, ask) {
       if(type === 'ask') {
-        vm.idCurrentAskEdit = '';
-        vm.faq.items.push(ask);
 
+        if(vm.idCurrentAskEdit === '') {
+          vm.faq.items.push(ask);
+        } else {
+          vm.faq.items.splice(vm.idCurrentAskEdit, 0,  ask);
+        }
+
+        vm.idCurrentAskEdit = '';
         _controlFormView(false);
 
       } else {
@@ -196,8 +201,14 @@
        * @private
        */
     function _addCategoryAsk(){
+
+      if(vm.idCurrentCategoryEdit === '') {
+        vm.faq.categories.push(vm.currentNewCategoryAsk);
+      } else {
+        vm.faq.categories.splice(vm.idCurrentCategoryEdit, 0,  vm.currentNewCategoryAsk);
+      }
+
       vm.idCurrentCategoryEdit = '';
-      vm.faq.categories.push(vm.currentNewCategoryAsk);
       _cleanCurrentNewCategoryAsk();
       _controlFormView(true);
     }
