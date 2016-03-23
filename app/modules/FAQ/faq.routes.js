@@ -7,17 +7,17 @@
       function ($routeProvider) {
         $routeProvider
           .when('/faq', {
-            templateUrl: 'modules/faq/faq.template.html',
+            templateUrl: 'modules/FAQ/faq.template.html',
             controller: 'faqController as vm',
             controllerAs: 'vm'
           })
           .when('/faq/new', {
-            templateUrl: 'modules/faq/faq-new.template.html',
+            templateUrl: 'modules/FAQ/faq-new.template.html',
             controller: 'faqNewController as vm',
             controllerAs: 'ctrl'
           })
           .when('/faq/edit/:faqId', {
-            templateUrl: 'modules/faq/faq-new.template.html',
+            templateUrl: 'modules/FAQ/faq-new.template.html',
             controller: 'faqNewController as vm',
             controllerAs: 'ctrl'
           });
