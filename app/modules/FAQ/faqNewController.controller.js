@@ -10,10 +10,11 @@
     'NotificationService',
     '$location',
     '$routeParams',
-    '$route'
+    '$route',
+    '$scope'
   ];
 
-  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams, $route) {
+  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams, $route, $scope) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -36,6 +37,13 @@
     vm.currentNewCategoryAsk = {
       title: '',
       items: []
+    };
+
+    $scope.sortableOptions = {
+      accept: function (sourceItemHandleScope, destSortableScope) {
+        return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+      },
+      containment: '#sort-main'
     };
 
     vm.showType = _showType;

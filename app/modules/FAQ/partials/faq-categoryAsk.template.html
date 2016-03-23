@@ -1,4 +1,5 @@
-<div class="pages-module faq-category" ng-repeat="category in vm.faq.categories">
+<div id="sort-main" as-sortable="sortableOptions"   ng-model="vm.faq.categories">
+    <div class="pages-module faq-category" ng-repeat="category in vm.faq.categories" as-sortable-item>
 <div class="row">
     <div class="col-md-12">
         <a uib-tooltip="Excluir categoria" ng-click="vm.removeAsk('category', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
@@ -7,6 +8,11 @@
         <a uib-tooltip="Editar categoria" ng-show="vm.idCurrentCategoryEdit == ''" ng-click="vm.editCategory($index)" class="btn btn-warning btn-small pull-right">
             <i class="fa fa-pencil"></i>
         </a>
+
+        <span class="label label-primary pull-right"
+              as-sortable-item-handle>
+            <i class="fa fa-arrows-v"></i> MOVER
+        </span>
         <h4>{{ category.name }}</h4>
     </div>
 </div>
@@ -23,6 +29,7 @@
     </div>
 </div>
     </div>
+</div>
 </div>
 <div class="pages-module faq-ask" ng-show="vm.showNewAskForm">
     <div class="form-group">
