@@ -10,10 +10,11 @@
     'NotificationService',
     '$location',
     '$routeParams',
-    '$route'
+    '$route',
+    '$scope'
   ];
 
-  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams, $route) {
+  function faqNewController($rootScope, faqService, NotificationService, $location, $routeParams, $route, $scope) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -36,6 +37,13 @@
     vm.currentNewCategoryAsk = {
       title: '',
       items: []
+    };
+
+    $scope.sortableOptions = {
+      accept: function (sourceItemHandleScope, destSortableScope) {
+        return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+      },
+      containment: '#sort-main'
     };
 
     vm.showType = _showType;
@@ -117,9 +125,14 @@
        */
     function _addAsk(type, ask) {
       if(type === 'ask') {
-        vm.idCurrentAskEdit = '';
-        vm.faq.items.push(ask);
 
+        if(vm.idCurrentAskEdit === '') {
+          vm.faq.items.push(ask);
+        } else {
+          vm.faq.items.splice(vm.idCurrentAskEdit, 0,  ask);
+        }
+
+        vm.idCurrentAskEdit = '';
         _controlFormView(false);
 
       } else {
@@ -196,8 +209,14 @@
        * @private
        */
     function _addCategoryAsk(){
+
+      if(vm.idCurrentCategoryEdit === '') {
+        vm.faq.categories.push(vm.currentNewCategoryAsk);
+      } else {
+        vm.faq.categories.splice(vm.idCurrentCategoryEdit, 0,  vm.currentNewCategoryAsk);
+      }
+
       vm.idCurrentCategoryEdit = '';
-      vm.faq.categories.push(vm.currentNewCategoryAsk);
       _cleanCurrentNewCategoryAsk();
       _controlFormView(true);
     }
