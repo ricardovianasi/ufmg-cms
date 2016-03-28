@@ -291,9 +291,11 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
+
+          console.log('save fdp');
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            type: widget.typeNews || (widget.content ? widget.content.typeNews : null),
             tag: widget.tag || (widget.content ? widget.content.tag : null),
           };
         },
@@ -541,9 +543,16 @@
           };
         },
         faq: function(widget) {
+          var id;
+
+          if(typeof widget.content.faq === 'object')
+            id = widget.content.faq.id;
+          else
+            id = widget.content.faq;
+
           return {
             type: widget.type,
-            faq: parseInt(widget.content.faq)
+            faq: parseInt(id)
           };
         }
       };
@@ -721,6 +730,8 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
+          console.log('load fdp');
+
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
             typeNews: (widget.typeNews ? widget.typeNews.id : false) || (widget.content ? widget.content.typeNews.id : null),
@@ -954,6 +965,11 @@
 
         NewsService.getNewsTypes().then(function (data) {
           $scope.news_types = data.data;
+          $scope.news_types.items.push({
+            id: '',
+            name: "Todas"
+          });
+
         });
 
         _getTags($scope);
