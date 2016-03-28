@@ -15,7 +15,8 @@
     'NewsService',
     'ReleasesService',
     'TagsService',
-    'faqService'
+    'faqService',
+    '$q'
   ];
 
   /**
@@ -44,7 +45,8 @@
                         NewsService,
                         ReleasesService,
                         TagsService,
-                        faqService) {
+                        faqService,
+                        $q) {
     console.log('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
@@ -129,6 +131,23 @@
       TagsService.getTags().then(function (data) {
         $scope.tags = data.data.items[0];
       });
+
+      $scope.findTags = function($query) {
+        console.log($scope.tags);
+        return _tagsForTagsInput($scope.tags);
+      };
+
+      function  _tagsForTagsInput(tags) {
+        var tagsForTagsInput = [];
+
+        angular.forEach(tags, function(v, k) {
+          tagsForTagsInput.push({
+            text: tags[k].name
+          });
+        });
+
+        return tagsForTagsInput;
+      }
     };
 
 
@@ -1096,7 +1115,9 @@
             $scope.icons = data.data;
           });
         },
-        relatednews: _preparingNewsTypes,
+        relatednews: function($scope) {
+          _preparingNewsTypes($scope);
+        },
         listnews: _preparingNewsTypes,
         /**
          * Last Images Sidebar

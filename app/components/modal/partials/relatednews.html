@@ -20,7 +20,11 @@
 <div class="form-group">
     <label>Tag:</label>
 
-    <select title="Tag" class="form-control"
-            ng-model="widget.tag"
-            ng-options="tag.id as tag.name for tag in tags"></select>
+    <!--<select title="Tag" class="form-control"-->
+            <!--ng-model="widget.tag"-->
+            <!--ng-options="tag.id as tag.name for tag in tags"></select>-->
+
+    <tags-input ng-model="widget.tag">
+        <auto-complete source="findTags($query)"></auto-complete>
+    </tags-input>
 </div>
