@@ -133,7 +133,8 @@
       });
 
       $scope.findTags = function($query) {
-        return _tagsForTagsInput($scope.tags);
+        var allTags = _tagsForTagsInput($scope.tags);
+        return $filter('filter')(allTags, $query);
       };
 
       function  _tagsForTagsInput(tags) {

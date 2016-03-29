@@ -25,6 +25,8 @@
             <!--ng-options="tag.id as tag.name for tag in tags"></select>-->
 
     <tags-input ng-model="widget.tags">
-        <auto-complete source="findTags($query)" max-results-to-show="1000"></auto-complete>
+        <auto-complete source="findTags($query)"
+                       max-results-to-show="1000"
+                       minLength="1"></auto-complete>
     </tags-input>
 </div>
