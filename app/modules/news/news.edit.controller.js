@@ -104,7 +104,9 @@
         thumb_name: data.data.thumb ? data.data.thumb.title : '',
         highlight: data.data.highlight,
         highlight_ufmg: data.data.highlight_ufmg,
-        news_url: data.data.news_url
+        news_url: data.data.news_url,
+        has_video: data.data.has_video,
+        tv_program: data.data.tv_program
       };
 
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
@@ -120,6 +122,11 @@
 
       $scope.title = 'Editar "' + $scope.news.title + '"';
       $scope.breadcrumb_active = $scope.news.title;
+    });
+
+
+    NewsService.getTvProgram().then(function(data) {
+      $scope.tvPrograms = data.data.items;
     });
 
     /**
@@ -157,7 +164,9 @@
         tags: data.tags,
         thumb: data.thumb,
         highlight: data.highlight,
-        highlight_ufmg: data.highlight_ufmg || false
+        highlight_ufmg: data.highlight_ufmg || false,
+        has_video: data.has_video,
+        tv_program: data.tv_program
       };
 
       _obj.tags = _.map(_obj.tags, 'text');

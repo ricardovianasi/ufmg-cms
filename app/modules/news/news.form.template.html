@@ -133,19 +133,19 @@
                         <div class="well well-sm">
                             <label>
                                 <input type="checkbox"
-                                       ng-model="news.tvVideo"
+                                       ng-model="news.has_video"
                                        ng-checked=""> Notícia TV com video
                             </label>
                         </div>
                     </div>
                 </div>
                 <!-- TYPE -->
-                <div class="col-xs-6" ng-show="news.tvVideo">
+                <div class="col-xs-6" ng-show="news.has_video">
                     <div class="form-group">
                         <label>Editoria</label>
                         <select class="form-control"
-                                ng-model="news.type"
-                                ng-options="type.id as type.name for type in types.items"></select>
+                                ng-model="news.tv_program"
+                                ng-options="program.id as program.name for program in tvPrograms track by $index"></select>
                     </div>
                 </div>
             </div>
