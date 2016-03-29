@@ -71,6 +71,13 @@
        */
       removeNews: function (id) {
         return $http.delete(apiUrl+'/news/'+id);
+      },
+      /**
+       *
+       * @returns {*}
+         */
+      getTvProgram:  function() {
+        return $http.get(apiUrl+'/news/tv-program');
       }
     };
   }

@@ -55,6 +55,10 @@
     $scope.types = [];
     $scope.highlight_ufmg_visible = true;
 
+    NewsService.getTvProgram().then(function(data) {
+      $scope.tvPrograms = data.data.items;
+    });
+
     /**
      * Datepicker options
      */
@@ -99,7 +103,9 @@
         tags: data.tags,
         thumb: data.thumb,
         highlight: data.highlight,
-        highlight_ufmg: data.highlight_ufmg || false
+        highlight_ufmg: data.highlight_ufmg || false,
+        has_video: data.has_video,
+        tv_program: data.tv_program
       };
 
       _obj.tags = _.map(_obj.tags, 'text');

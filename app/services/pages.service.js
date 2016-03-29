@@ -15,7 +15,8 @@
     'NewsService',
     'ReleasesService',
     'TagsService',
-    'faqService'
+    'faqService',
+    '$q'
   ];
 
   /**
@@ -44,7 +45,8 @@
                         NewsService,
                         ReleasesService,
                         TagsService,
-                        faqService) {
+                        faqService,
+                        $q) {
     console.log('... PagesService');
 
     var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
@@ -129,6 +131,22 @@
       TagsService.getTags().then(function (data) {
         $scope.tags = data.data.items[0];
       });
+
+      $scope.findTags = function($query) {
+        return _tagsForTagsInput($scope.tags);
+      };
+
+      function  _tagsForTagsInput(tags) {
+        var tagsForTagsInput = [];
+
+        angular.forEach(tags, function(v, k) {
+          tagsForTagsInput.push({
+            text: tags[k].name
+          });
+        });
+
+        return tagsForTagsInput;
+      }
     };
 
 
@@ -291,12 +309,20 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
+          var tags = [];
 
-          console.log('save fdp');
+          if(widget.content) {
+            if(typeof widget.content.tags[0].text !== 'undefined')
+              widget.content.tags = _.map(widget.content.tags, 'text');
+          } else {
+            if(typeof widget.tags[0].text !== 'undefined')
+              widget.tags = _.map(widget.tags, 'text');
+          }
+
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            type: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            tags: widget.tags || (widget.content ? widget.content.tags : null),
           };
         },
         /**
@@ -730,12 +756,35 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         relatednews: function (widget) {
-          console.log('load fdp');
+
+          var typeNews = '';
+          var tagsForTagsInput = [];
+
+          if(widget.content) {
+            if(widget.content.typeNews !== null)
+              typeNews = widget.content.typeNews.id;
+
+            parseTags(widget.content.tags);
+          } else {
+            if(widget.typeNews !== null)
+              typeNews = widget.typeNews.id;
+
+            parseTags(widget.tags);
+          }
+
+
+          function parseTags(tags) {
+            angular.forEach(tags, function (v, k) {
+              tagsForTagsInput.push({
+                text: tags[k].name
+              });
+            });
+          }
 
           return {
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: (widget.typeNews ? widget.typeNews.id : false) || (widget.content ? widget.content.typeNews.id : null),
-            tag: (widget.tag ? widget.tag.id : false )|| (widget.content ? widget.content.tag.id : null),
+            typeNews: typeNews,
+            tags: tagsForTagsInput,
           };
         },
         /**
@@ -1096,7 +1145,9 @@
             $scope.icons = data.data;
           });
         },
-        relatednews: _preparingNewsTypes,
+        relatednews: function($scope) {
+          _preparingNewsTypes($scope);
+        },
         listnews: _preparingNewsTypes,
         /**
          * Last Images Sidebar

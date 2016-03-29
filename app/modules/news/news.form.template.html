@@ -106,7 +106,7 @@
 
             <div class="row">
                 <!-- CATEGORY -->
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label>Categoria</label>
                         <select class="form-control"
@@ -114,14 +114,38 @@
                                 ng-options="category.id as category.name for category in categories.items"></select>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <!-- TYPE -->
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label>Origem</label>
                         <select class="form-control"
                                 ng-model="news.type"
                                 ng-options="type.id as type.name for type in types.items"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="news.type == 4">
+                <div class="col-md-6 form-group">
+                    <div class="checkbox">
+                        <div class="well well-sm">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="news.has_video"
+                                       ng-checked=""> Notícia TV com video
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- TYPE -->
+                <div class="col-xs-6" ng-show="news.has_video">
+                    <div class="form-group">
+                        <label>Editoria</label>
+                        <select class="form-control"
+                                ng-model="news.tv_program"
+                                ng-options="program.id as program.name for program in tvPrograms track by $index"></select>
                     </div>
                 </div>
             </div>
