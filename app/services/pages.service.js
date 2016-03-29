@@ -312,11 +312,15 @@
           var tags = [];
 
           if(widget.content) {
-            if(typeof widget.content.tags[0].text !== 'undefined')
-              widget.content.tags = _.map(widget.content.tags, 'text');
+            if(widget.content.tags.length > 0) {
+              if (typeof widget.content.tags[0].text !== 'undefined')
+                widget.content.tags = _.map(widget.content.tags, 'text');
+            }
           } else {
-            if(typeof widget.tags[0].text !== 'undefined')
-              widget.tags = _.map(widget.tags, 'text');
+            if(widget.tags.length > 0) {
+              if (typeof widget.tags[0].text !== 'undefined')
+                widget.tags = _.map(widget.tags, 'text');
+            }
           }
 
           return {
