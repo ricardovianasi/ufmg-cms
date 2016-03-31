@@ -110,7 +110,7 @@
         highlight_ufmg: data.data.highlight_ufmg,
         news_url: data.data.news_url,
         has_video: data.data.has_video,
-        tv_program: data.data.tv_program
+        tv_program: data.data.tv_program.id
       };
 
       var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
@@ -173,7 +173,7 @@
         highlight: data.highlight,
         highlight_ufmg: data.highlight_ufmg || false,
         has_video: data.has_video,
-        tv_program: data.tv_program
+        tv_program: typeof data.tv_program === 'object' ? data.tv_program.id : data.tv_program
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
@@ -181,6 +181,8 @@
       if (_obj.status == 'scheduled') {
         _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
       }
+
+      console.log('tv program >>>>>>>>>>>>>>>>>', data.tv_program);
 
       NewsService.updateNews(data.id, _obj).then(function (news) {
         NotificationService.success('Notícia atualizada com sucesso.');
