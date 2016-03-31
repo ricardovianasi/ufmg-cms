@@ -102,13 +102,23 @@
      */
     function _removeItem() {
       var args = Array.prototype.slice.call(arguments);
+      var allArgs = Array.prototype.slice.call(arguments);
 
       ModalService
         .confirm('Deseja remover o item?')
         .result
         .then(function () {
+          var base = 0;
+          angular.forEach(allArgs, function (i) { base++; });
+
+          var spliceAux = allArgs.splice(0, 1)[0];
+
           var menu = args.splice(0, 1)[0];
-          var idx = args.splice(0, 1)[0];
+          var idx = base > 3 ? args.splice(2, 1)[0] : args.splice(1, 1)[0];
+
+          if(idx === undefined)
+            idx =  args.splice(0, 1)[0];
+
           var menuName = 'menus.'+menu;
 
           /*
@@ -116,8 +126,18 @@
            menus.mainMenu[0].children[0]
            menus.mainMenu[0].children[0].children[0]
            */
-          angular.forEach(args, function (i) {
-            menuName += '['+i+'].children';
+          var auxInterator = 0;
+
+          angular.forEach(allArgs, function (i) {
+
+            if(auxInterator !== 2 && allArgs.length === 3)
+              menuName += '['+i+'].children';
+            else if(auxInterator !== 1 && allArgs.length === 2)
+              menuName += '['+i+'].children';
+            else
+              console.log('ready');
+
+            auxInterator++;
           });
 
           var item = $scope.$eval(menuName);
@@ -148,6 +168,7 @@
      * @private
      */
     function _editTitle(idx) {
+
       if (typeof idx.newTitle === 'undefined') {
         idx.newTitle = idx.label;
       }
