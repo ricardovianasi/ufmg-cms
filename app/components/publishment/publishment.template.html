@@ -16,6 +16,7 @@
             <div class="form-group">
                 <input type="checkbox"
                        ng-click="status('scheduled')"
+                       ng-model="isScheduled"
                        ng-checked="obj.status == 'scheduled'"> Publicação Agendada
             </div>
             <!--     <div class="form-group">
@@ -34,14 +35,16 @@
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                             <input type=text title=Data class="form-control"
                                    ng-model=obj.scheduled_date
-                                   ui-mask="99/99/9999">
+                                   ui-mask="99/99/9999"
+                                   model-view-value="true">
                         </div>
 
                         <div style="width: 48%" class="pull-right input-group input-group-sm">
                             <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                             <input type=text title=Hora class="form-control"
                                    ng-model=obj.scheduled_time
-                                   ui-mask="99:99:99">
+                                   ui-mask="99:99"
+                                   model-view-value="true">
                         </div>
                     </div>
                 </div>
@@ -64,8 +67,12 @@
         </div>
 
         <div class=pull-right>
-            <button id=publish-button type=button class="btn btn-sm btn-secondary"
-                    ng-click="obj.status = 'published';publish(obj)">
+            <button ng-if="!isScheduled" id=publish-button type=button class="btn btn-sm btn-secondary"
+                    ng-click="status('published');publish(obj)">
+                <i class="fa fa-check"></i> Publicar
+            </button>
+            <button ng-if="isScheduled" id=publish-button type=button class="btn btn-sm btn-secondary"
+                    ng-click="status('scheduled');publish(obj)">
                 <i class="fa fa-check"></i> Publicar
             </button>
         </div>

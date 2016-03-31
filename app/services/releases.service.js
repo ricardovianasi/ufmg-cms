@@ -61,15 +61,7 @@
       });
 
       if (data.status === StatusService.STATUS_SCHEDULED) {
-        var scheduled = new Date(
-          data.scheduled_at.year,
-          data.scheduled_at.month,
-          data.scheduled_at.day,
-          data.scheduled_at.hour,
-          data.scheduled_at.minute
-        );
-
-        obj.scheduled_at = DateTimeHelper.toBrStandard(scheduled, true);
+        obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
       }
 
       return obj;

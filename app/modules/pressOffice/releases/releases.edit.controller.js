@@ -306,6 +306,9 @@
       delete release.author;
       delete release.author_name;
 
+      release.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
+      release.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
+
       $scope.release = release;
       $scope.title = $scope.title + release.name;
       $scope.breadcrumb = $scope.title;

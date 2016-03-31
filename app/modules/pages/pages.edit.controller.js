@@ -219,7 +219,8 @@
 
     // Get Page
     PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
-console.log(data.data);
+
+      console.log(data.data);
       var page = data.data;
       var tags = page.tags;
 
@@ -230,9 +231,6 @@ console.log(data.data);
 
       var scheduledAt = DateTimeHelper.toBrStandard(page.scheduled_at, true, true);
 
-      page.scheduled_date = scheduledAt.date;
-      page.scheduled_time = scheduledAt.time;
-
 
       angular.forEach(tags, function (tag) {
         page.tags.push(tag.name);
@@ -241,6 +239,9 @@ console.log(data.data);
       if (!page.widgets.side.length) {
         page.columns = 1;
       }
+
+      page.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
+      page.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
 
       angular.extend($scope.page, page);
     });

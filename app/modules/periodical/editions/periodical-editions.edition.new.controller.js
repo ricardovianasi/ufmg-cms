@@ -69,6 +69,11 @@
     $scope.edition.articles = [];
 
     $scope.publish = function (data, preview) {
+
+      if (data.status == 'scheduled') {
+        data.post_date = data.scheduled_date + ' ' + data.scheduled_time;
+      }
+
       PeriodicalService.newEdition($routeParams.id, data).then(function (data) {
         NotificationService.success('Edição criada com sucesso.');
 

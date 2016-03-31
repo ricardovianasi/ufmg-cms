@@ -234,9 +234,9 @@
         event.tags.push(tag.name);
       });
 
-      var scheduled_at = DateTimeHelper.toBrStandard(event.scheduled_at, true, true);
-      event.scheduled_date = scheduled_at.date;
-      event.scheduled_time = scheduled_at.time;
+
+      event.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
+      event.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
 
       vm.event = event;
     });

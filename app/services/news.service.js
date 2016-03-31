@@ -62,6 +62,7 @@
        * @returns {*}
        */
       updateNews: function (id, data) {
+        console.log('post >>>>>>>>>>>>>', data);
         return $http.put(apiUrl+'/news/'+id, data);
       },
       /**
