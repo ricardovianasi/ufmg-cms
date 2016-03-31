@@ -65,7 +65,7 @@
       cleanPage.status = page.status;
 
       if (page.status == 'scheduled') {
-        cleanPage.scheduled_at = page.scheduled_date + ' ' + page.scheduled_time;
+        cleanPage.post_date = page.scheduled_date + ' ' + page.scheduled_time;
       }
 
       cleanPage.tags = _.map(page.tags, 'text');

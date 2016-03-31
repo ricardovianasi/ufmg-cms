@@ -86,7 +86,7 @@
       }
 
       if (data.status == 'scheduled') {
-        event.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
+        event.post_date = data.scheduled_date + ' ' + data.scheduled_time;
         // delete data.scheduled_date;
         // delete data.scheduled_time;
       }

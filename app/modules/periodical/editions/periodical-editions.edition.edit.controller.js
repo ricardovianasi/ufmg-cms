@@ -101,10 +101,10 @@
       $scope.edition.pdf_url = data.data.file ? data.data.file.url: '';
 
 
-      var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
+      console.log('post date >>>>>', data.data.post_date);
 
-      $scope.edition.scheduled_date = scheduled_at.date;
-      $scope.edition.scheduled_time = scheduled_at.time;
+      $scope.edition.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
+      $scope.edition.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
     });
 
     /**
@@ -113,6 +113,7 @@
      */
     $scope.publish = function (data, preview) {
       console.log('save >>>>>>', data);
+
       PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
 

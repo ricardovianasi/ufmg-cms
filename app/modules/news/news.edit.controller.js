@@ -91,6 +91,10 @@
     });
 
     NewsService.getNews($routeParams.id).then(function (data) {
+
+
+      $scope.obj = {};
+
       $scope.news = {
         id: data.data.id,
         title: data.data.title || '',
@@ -122,6 +126,9 @@
 
       $scope.title = 'Editar "' + $scope.news.title + '"';
       $scope.breadcrumb_active = $scope.news.title;
+
+      $scope.news.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
+      $scope.news.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
     });
 
 
@@ -172,7 +179,7 @@
       _obj.tags = _.map(_obj.tags, 'text');
 
       if (_obj.status == 'scheduled') {
-        _obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
+        _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
       }
 
       NewsService.updateNews(data.id, _obj).then(function (news) {

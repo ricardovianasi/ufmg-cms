@@ -63,7 +63,7 @@
       obj.year = data.year;
 
       if (obj.status == 'scheduled') {
-        obj.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
+        obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
       }
 
       return obj;

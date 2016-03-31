@@ -92,6 +92,7 @@
     });
 
     $scope.publish = function (data, preview) {
+
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -109,6 +110,11 @@
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
+
+
+      if (_obj.status == 'scheduled') {
+        _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
+      }
 
       NewsService.postNews(_obj).then(function (news) {
         NotificationService.success('Notícia criada com sucesso.');

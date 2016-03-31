@@ -40,6 +40,8 @@
         $scope.remove = $scope.$parent.remove;
         $scope.statuses = [];
 
+
+
         /**
          * @param $event
          */
@@ -54,12 +56,27 @@
         /**
          * @param status
          */
-        $scope.status = function (status) {
-          $scope.obj.status = status;
 
-          if ($scope.obj.status == status) {
-            $scope.obj.status = '';
+
+        $scope.status = function (status) {
+
+          if(status !== StatusService.STATUS_PUBLISHED) {
+
+            if(!$scope.isScheduled && status === StatusService.STATUS_SCHEDULED) {
+              $scope.obj.status = '';
+              $scope.obj.scheduled_date = '';
+              $scope.obj.scheduled_time = '';
+            } else if ($scope.isScheduled) {
+              $scope.obj.status = StatusService.STATUS_SCHEDULED;
+            } else {
+              $scope.obj.status = status;
+            }
+
+          } else {
+            if($scope.obj.scheduled_date === '' && $scope.obj.scheduled_time === '')
+              $scope.obj.status = StatusService.STATUS_PUBLISHED;
           }
+
         };
 
         /**
