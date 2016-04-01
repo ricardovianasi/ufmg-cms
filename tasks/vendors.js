@@ -40,7 +40,8 @@ var SCRIPTS = [
   'bower_components/ngInflection/dist/ngInflection.min.js',
   'bower_components/ng-tags-input/ng-tags-input.min.js',
   'bower_components/angular-ui-sortable/sortable.min.js',
-  'bower_components/moment/min/moment.min.js'
+  'bower_components/moment/min/moment.min.js',
+  'bower_components/angular-loading-bar/build/loading-bar.min.js'
 ];
 
 var STYLES = [
@@ -55,6 +56,7 @@ var STYLES = [
   'bower_components/mr-image/dist/css/mr-image.min.css',
   'app/assets/scripts/redactor-2/redactor.css',
   'bower_components/ng-tags-input/ng-tags-input.min.css',
+  'bower_components/angular-loading-bar/build/loading-bar.min.css',
 
   // God Damn Xenon
   'app/assets/xenon/css/bootstrap.css',

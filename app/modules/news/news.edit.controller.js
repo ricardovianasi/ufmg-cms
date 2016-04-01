@@ -110,7 +110,9 @@
         highlight_ufmg: data.data.highlight_ufmg,
         news_url: data.data.news_url,
         has_video: data.data.has_video,
+        /* jshint ignore:start */
         tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id
+        /* jshint ignore:end */
       };
 
 

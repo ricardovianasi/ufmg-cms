@@ -22,6 +22,7 @@
       'ngTagsInput',
       'ui.sortable',
       'pascalprecht.translate',
+      'angular-loading-bar',
 
       // App Modules
       'calendarModule',
@@ -42,6 +43,6 @@
       'releasesModule',
       'serviceModule',
       'loginModule',
-      'faqModule'
+      'faqModule',
     ]);
 })();

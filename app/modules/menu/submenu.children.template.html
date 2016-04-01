@@ -1,5 +1,5 @@
 <ul class="menu-sub-chi main" ui-sortable="vm.sortableOptions" ng-model="item.children">
-    <li class="list-group-item" ng-repeat="item in item.children">
+    <li class="list-group-item" ng-repeat="item in item.children track by $index">
         <div class="row">
             <div class="col-md-8 text-left">
                 <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
@@ -10,7 +10,7 @@
                 <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
                     <i class="fa fa-pencil"></i> Editar
                 </a>
-                <a class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index, $parent.$index, $parent.$parent.$index)" ng-show="!item.editTitle">
+                <a class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', menuIndex, $parent.$index, $index)" ng-show="!item.editTitle">
                     <i class="fa fa-close"></i> Apagar
                 </a>
                 <a class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">

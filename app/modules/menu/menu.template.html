@@ -38,7 +38,7 @@
 ng-repeat="item in menus.mainMenu"
 ng-include="'modules/menu/items.template.html'">
 </li>-->
-                            <li class="list-group-item" ng-repeat="item in menus.mainMenu">
+                            <li class="list-group-item" ng-repeat="item in menus.mainMenu track by $index" ng-init="menuIndex=$index">
                                 <div class="row">
                                     <div class="col-md-8 text-left">
                                         <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
@@ -136,8 +136,8 @@ ng-include="'modules/menu/items.template.html'">
                                 <input type="text" class="form-control" placeholder="Procurar..." ng-model="filter">
                             </div>
                         </form>
-                        <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
-                            <li class="list-group-item" ng-repeat="item in vm.pages | filter:filter">{{ item.label }}
+                        <ul class="menu-side selectable" ui-sortable="vm.quickSortableOptions" ng-model="vm.quickPages">
+                            <li class="list-group-item list-group-item-quickaccess" ng-repeat="item in vm.quickPages | filter:filter">{{ item.label }}
                             </li>
                         </ul>
                     </div>
