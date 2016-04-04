@@ -59,6 +59,7 @@
 
 
         $scope.status = function (status) {
+          console.log('ahduhsaduhsudshdusahdusahdsaudas >>>>>>>>>>>>>>>>>>>>>>>>', status);
 
           if(status !== StatusService.STATUS_PUBLISHED) {
 
@@ -72,9 +73,17 @@
               $scope.obj.status = status;
             }
 
+            console.log('objeto status <<<<<<<<<<<<<<<<<<<<<<<<<<',$scope.obj.status);
+
           } else {
             if($scope.obj.scheduled_date === '' && $scope.obj.scheduled_time === '')
               $scope.obj.status = StatusService.STATUS_PUBLISHED;
+            else {
+              $scope.obj.scheduled_date = '';
+              $scope.obj.scheduled_time = '';
+              $scope.obj.status = StatusService.STATUS_PUBLISHED;
+            }
+
           }
 
         };

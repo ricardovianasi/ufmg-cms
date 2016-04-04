@@ -67,11 +67,11 @@
         </div>
 
         <div class=pull-right>
-            <button ng-if="!isScheduled" id=publish-button type=button class="btn btn-sm btn-secondary"
+            <button ng-show="!isScheduled" id="publish-button" type="button" class="btn btn-sm btn-secondary"
                     ng-click="status('published');publish(obj)">
                 <i class="fa fa-check"></i> Publicar
             </button>
-            <button ng-if="isScheduled" id=publish-button type=button class="btn btn-sm btn-secondary"
+            <button ng-show="isScheduled" id="publish-button" type="button" class="btn btn-sm btn-secondary"
                     ng-click="status('scheduled');publish(obj)">
                 <i class="fa fa-check"></i> Publicar
             </button>
