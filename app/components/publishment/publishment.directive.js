@@ -86,6 +86,8 @@
 
           }
 
+          console.log('objeto status salvo <<<<<<<<<<<<<<<<<<<<<<<<<<',$scope.obj.status);
+
         };
 
         /**
