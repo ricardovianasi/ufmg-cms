@@ -64,7 +64,7 @@
           if(status !== StatusService.STATUS_PUBLISHED) {
 
             if(!$scope.isScheduled && status === StatusService.STATUS_SCHEDULED) {
-              $scope.obj.status = '';
+              $scope.obj.status = StatusService.STATUS_PUBLISHED;
               $scope.obj.scheduled_date = '';
               $scope.obj.scheduled_time = '';
             } else if ($scope.isScheduled) {
