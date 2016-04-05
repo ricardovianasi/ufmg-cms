@@ -323,9 +323,12 @@
 
           $timeout(function () {
             if (filtered_month[0]) {
+              $scope.hasPeriod = true;
               $scope.period.school_days = filtered_month[0].school_days;
               $scope.period.school_saturdays = filtered_month[0].school_saturdays;
+              $scope.period.id =  filtered_month[0].id;
             } else {
+              $scope.hasPeriod = false;
               $scope.period.school_days = '';
               $scope.period.school_saturdays = '';
             }
@@ -334,9 +337,17 @@
       };
 
       $scope.ok = function () {
-        CalendarService.updatePeriod($scope.period).then(function (data) {
-          $uibModalInstance.close();
-        });
+        console.log('hasperiodo >>>>>>>>>>>',$scope.hasPeriod);
+        if($scope.hasPeriod === true) {
+          CalendarService.updatePeriod($scope.period).then(function (data) {
+            $uibModalInstance.close();
+          });
+        } else {
+          CalendarService.newPeriod($scope.period).then(function (data) {
+            $uibModalInstance.close();
+          });
+        }
+
       };
 
       $scope.cancel = function () {

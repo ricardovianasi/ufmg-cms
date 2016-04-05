@@ -47,6 +47,7 @@
     vm.pages = [];
     $scope.menus = {};
     vm.sortableOptions = {
+      disabled: false,
       placeholder: 'list-group-item',
       connectWith: '.main',
       /**

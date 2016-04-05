@@ -122,6 +122,26 @@
             return deferred.promise;
           },
           updatePeriod: function (period) {
+            console.log('>>>>>>>>>>',period);
+
+            var new_period = {
+              month: period.month,
+              school_days: period.school_days,
+              school_saturdays: period.school_saturdays,
+              year: period.year,
+              regional: parseInt(period.regional)
+            };
+            //var serializeObject = new SerializeService(new_period);
+            var deferred = $q.defer();
+
+            //console.log('updatePeriod >>>>>>', serializeObject);
+            $http.put(apiUrl+'/period/'+ period.id, new_period).then(function (data) {
+              deferred.resolve(data);
+            });
+
+            return deferred.promise;
+          },
+          newPeriod: function (period) {
 
             var new_period = {
               month: period.month,
