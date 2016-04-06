@@ -71,11 +71,12 @@ ng-include="'modules/menu/items.template.html'">
                         <form>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                                <input type="text" class="form-control" placeholder="Procurar..." ng-model="pageFilter">
+                                <!--<input type="text" class="form-control" placeholder="Procurar..." ng-change="vm.teste" ng-model="pageFilter">-->
+                                <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false" ng-change="vm.filterPages('mainMenu', pageFilter)" ng-model="pageFilter">
                             </div>
                         </form>
                         <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
-                            <li class="list-group-item" ng-repeat="item in vm.pages | filter:pageFilter">{{ item.label }}
+                            <li class="list-group-item" ng-repeat="item in vm.pages">{{ item.label }}
                             </li>
                         </ul>
                     </div>
@@ -133,11 +134,11 @@ ng-include="'modules/menu/items.template.html'">
                         <form>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                                <input type="text" class="form-control" placeholder="Procurar..." ng-model="filter">
+                                <input type="text" class="form-control" placeholder="Procurar..." ng-model="pageQuickFilter" ng-trim="false" ng-change="vm.filterPages('quickAccess', pageQuickFilter)">
                             </div>
                         </form>
                         <ul class="menu-side selectable" ui-sortable="vm.quickSortableOptions" ng-model="vm.quickPages">
-                            <li class="list-group-item list-group-item-quickaccess" ng-repeat="item in vm.quickPages | filter:filter">{{ item.label }}
+                            <li class="list-group-item list-group-item-quickaccess" ng-repeat="item in vm.quickPages">{{ item.label }}
                             </li>
                         </ul>
                     </div>

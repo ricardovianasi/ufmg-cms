@@ -10,7 +10,8 @@
     'ModalService',
     'MenuService',
     'PagesService',
-    '$rootScope'
+    '$rootScope',
+    '$filter'
   ];
 
   /**
@@ -27,7 +28,8 @@
                           ModalService,
                           MenuService,
                           PagesService,
-                          $rootScope) {
+                          $rootScope,
+                          $filter) {
 
     $rootScope.shownavbar = true;
     console.log('... NoticiasController');
@@ -43,11 +45,31 @@
     vm.newGroup = _newGroup;
     vm.removeQuickAccessItem = _removeQuickAccessItem;
 
+    vm.filterPages = function(menuType, val) {
+      if(menuType == 'mainMenu') {
+        vm.pages =  $filter('filter')(vm.pages, val);
+        if(vm.pages.length <= 0) {
+            vm.pages = pages;
+
+          _removePagesIndexed(menuType, $scope.menus[menuType], true);
+        }
+      } else {
+
+        vm.quickPages =  $filter('filter')(vm.quickPages, val);
+
+        if(vm.quickPages.length <= 0) {
+          vm.quickPages = pages;
+
+          _removePagesIndexed(menuType, $scope.menus[menuType], true);
+        }
+
+      }
+    };
+
     //Public models
     vm.pages = [];
     $scope.menus = {};
     vm.sortableOptions = {
-      disabled: false,
       placeholder: 'list-group-item',
       connectWith: '.main',
       /**
@@ -70,6 +92,7 @@
        * @param ui
        */
       update: function (event, ui) {
+        console.log(event, ui);
         // on cross list sortings received is not true
         // during the first update
         // which is fired on the source sortable
@@ -263,7 +286,7 @@
           $scope.menus[type] = [];
 
           _populateMenusChildren(type);
-          _removePagesIndexed(type, data.data.items);
+          _removePagesIndexed(type, data.data.items, false);
         });
       });
     }
@@ -313,24 +336,38 @@
        * @param menuItems
        * @private
        */
-    function _removePagesIndexed(menuType, menuItems) {
+    function _removePagesIndexed(menuType, menuItems, onFilter) {
 
       angular.forEach(menuItems, function(value, key){
 
-        if(menuType == 'mainMenu') {
-          angular.forEach(vm.pages, function (v, k) {
-            if (menuItems[key].page.id == vm.pages[k].page)
-              vm.pages.splice(k, 1);
-          });
+        if(onFilter) {
+          if(menuType == 'mainMenu') {
+            angular.forEach(vm.pages, function (v, k) {
+              if (menuItems[key].page == vm.pages[k].page)
+                vm.pages.splice(k, 1);
+            });
+          } else {
+            angular.forEach(vm.quickPages, function (v, k) {
+              if (menuItems[key].page == vm.quickPages[k].page)
+                vm.quickPages.splice(k, 1);
+            });
+          }
         } else {
-          angular.forEach(vm.quickPages, function (v, k) {
-            if (menuItems[key].page.id == vm.quickPages[k].page)
-              vm.quickPages.splice(k, 1);
-          });
+          if(menuType == 'mainMenu') {
+            angular.forEach(vm.pages, function (v, k) {
+              if (menuItems[key].page.id == vm.pages[k].page)
+                vm.pages.splice(k, 1);
+            });
+          } else {
+            angular.forEach(vm.quickPages, function (v, k) {
+              if (menuItems[key].page.id == vm.quickPages[k].page)
+                vm.quickPages.splice(k, 1);
+            });
+          }
         }
 
         if(menuItems[key].children.length > 0);
-          _removePagesIndexed(menuType, menuItems[key].children);
+          _removePagesIndexed(menuType, menuItems[key].children, onFilter);
       });
     }
 
