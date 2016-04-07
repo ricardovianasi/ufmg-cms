@@ -94,6 +94,32 @@
               .uploadAudio()
               .result
               .then(function (data) {
+                console.log('>>>>>>>>>>>>', options);
+                if (options.callback) {
+                  options.callback.call(null, _this, data);
+                }
+              });
+          }
+        };
+      },
+      uploadfiles: function (options) {
+        return {
+          init: function () {
+            var button = this.button.add('uploadfiles', 'Inserir Arquivos');
+
+            this.button.setIcon(button, '<i class="fa-file-code-o"></i>');
+            this.button.addCallback(button, this.uploadfiles.show);
+          },
+          show: function () {
+            var _this = this;
+
+            _this.selection.save();
+
+            ModalService
+              .uploadFiles()
+              .result
+              .then(function (data) {
+                console.log('>>>>>>>>>>>>', options);
                 if (options.callback) {
                   options.callback.call(null, _this, data);
                 }
@@ -131,6 +157,15 @@
          */
         callback: function (redactor, data) {
           _insertItemOnEditor(redactor, '#redactor-template-audio', data);
+        }
+      },
+      uploadfiles: {
+        /**
+         * @param redactor
+         * @param data
+         */
+        callback: function (redactor, data) {
+          _insertItemOnEditor(redactor, '#redactor-template-files', data);
         }
       }
     };

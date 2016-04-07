@@ -96,13 +96,23 @@
       });
     };
 
+    var _uploadFiles = function () {
+      return $uibModal.open({
+        templateUrl: 'components/modal/file-upload-component.template.html',
+        controller: 'FileUploadComponentController as vm',
+        backdrop: 'static',
+        size: 'xl'
+      });
+    };
+
     return {
       MODAL_SMALL: 'sm',
       MODAL_MEDIUM: 'md',
       MODAL_LARGE: 'lg',
       confirm: _confirm,
       uploadImage: _uploadImage,
-      uploadAudio: _uploadAudio
+      uploadAudio: _uploadAudio,
+      uploadFiles: _uploadFiles
     };
   }
 })();

@@ -1,0 +1,107 @@
+<div id="modal-audio">
+    <div class="modal-header">
+        <span class="close-modal" type="button" data-dismiss="modal" ng-click="vm.cancel()" aria-hidden="true"><i class="fa fa-times fa-4x"></i></span>
+        <h4 class="modal-title"><i class="fa fa-file-audio-o"></i> Inserir Arquivos</h4>
+    </div>
+
+    <div class="modal-body">
+        <ul class="nav nav-tabs nav-tabs-justified">
+
+            <li ng-class="{active: vm.tabs.midia}">
+                <a href="javascript:void(0)">
+                    <span class="visible-xs"><i class="fa-user"></i></span>
+                    <span class="hidden-xs">Selecionar Arquivo</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- Lista de Imagens -->
+            <div class="tab-pane midia" id="midia"
+                 ng-class="{active: vm.tabs.midia}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+                                    <input type="text" class="form-control" ng-model="vm.search" placeholder="Procurar..." aria-describedby="sizing-addon1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row"
+                     ng-if="vm.currentFile.url">
+                    <div class="col-md-12">
+                        <div class="panel panel-border panel-edit">
+                            <div class="panel-body">
+                                <div class="col-md-2">
+                                    <h4>link:</h4>
+                                    <div></div>
+                                    <a href="{{ vm.currentFile.url }}"> {{  vm.currentFile.title }}</a>
+                                </div>
+                                <div class="col-md-8">
+                                    <form action="" class="form-horizontal">
+                                        <h4>Título do Arquivo</h4>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="field-1" placeholder="Digite um título para o áudio"
+                                                       value="{{ vm.currentFile.title }}"
+                                                       ng-model="vm.currentFile.title">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2 text-right flex-self-end">
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-secondary"
+                                            ng-click="vm.updateMidia()"><i class="fa fa-check"></i> Inserir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row lib-row">
+                        <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
+                           ngf-select
+                           ngf-accept="'.pdf,.doc,.docx,.csv,.xls'"
+                           ng-model="vm.add_audio"
+                           ngf-multiple="false">
+                            <div class="row">
+                                <div class="col-md-12 btn-lg">
+                                    <i class="fa fa-plus"></i><br/>Enviar
+                                </div>
+                            </div>
+                        </a>
+                        <div class="col-md-1 img-lib flex-center aud-hover"
+                             ng-repeat="midia in vm.midia.items|filter: vm.search"
+                             ng-click="vm.selectMidia(midia)"
+                             ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
+                            <span> {{  midia.title }}</span>
+                        </div>
+                </div>
+
+                <div class="row"
+                     ng-show="vm.midia.total > 36">
+                    <div class="col-md-12 flex-center">
+                        <uib-pagination class="pagination-sm"
+                                        boundary-links="true"
+                                        total-items="vm.midia.total"
+                                        items-per-page="vm.midia.page_size"
+                                        ng-model="vm.currentPage"
+                                        previous-text="‹"
+                                        next-text="›"
+                                        first-text="«"
+                                        last-text="»"
+                                        ng-change="vm.changePage()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

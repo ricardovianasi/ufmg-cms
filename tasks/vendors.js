@@ -13,7 +13,6 @@ var SCRIPTS = [
   'app/assets/scripts/redactor-2/pt_br.js',
   'app/assets/scripts/redactor-plugins/video.js',
   'app/assets/scripts/redactor-plugins/audio.js',
-  'app/assets/scripts/redactor-plugins/arquivo.js',
   'bower_components/lodash/dist/lodash.min.js',
   'bower_components/angular/angular.min.js',
   'bower_components/angular-route/angular-route.min.js',
