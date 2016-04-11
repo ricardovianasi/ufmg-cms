@@ -46,6 +46,7 @@
     $scope.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
 
     $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+    $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
 
     $scope.ok = function () {
       var _obj = {
