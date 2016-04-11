@@ -139,6 +139,7 @@
     }, RedactorPluginService.getOptions('imagencrop'));
 
     $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+    $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
 
     $scope.upload = function (files) {
       angular.forEach(files, function (file) {
