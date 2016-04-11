@@ -29,7 +29,9 @@
       var html = _.template($(template).html());
 
       redactor.selection.restore();
-      redactor.insert.raw(html(obj));
+      redactor.buffer.set();
+      redactor.air.collapsed();
+      redactor.insert.html(html(obj));
     };
 
     /**
