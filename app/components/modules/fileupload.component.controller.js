@@ -66,7 +66,8 @@
      * get all media
      */
     function _loadMidia(page) {
-      MediaService.getMedia(page, 35).then(function (result) {
+      var types = "types=doc,docx,xls,xlsx,ppt,pptx,pps,ppsx,ai,psd,zip,rar,7z,pdf";
+      MediaService.getMedia(page, 35, types).then(function (result) {
         vm.midia = result.data;
       });
     }

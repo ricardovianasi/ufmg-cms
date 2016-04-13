@@ -67,6 +67,7 @@
         var queryString = $filter('queryString')(obj);
         var url = $filter('format')('{0}?{1}', MEDIA_ENDPOINT, queryString);
 
+        console.log('url >>>>>>>>>>>>>>>>>>', url);
         return $http.get(url);
       },
       /**

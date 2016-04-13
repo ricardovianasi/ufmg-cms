@@ -66,8 +66,12 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-files">
-    <div>
+    <div style="border:dashed 1px #aaa">
         <p><br></p>
+        <p><br></p>
+        <div title="<%= title %>" class="re-button-into-redactor">
+            <i class="fa fa-file file-redactor-icon"></i>
+        </div>
         <div class="file">
             <div class="file__icon"><span class="icon  icon--<%= type %>"></span><span class="icon-value"></span></div>
             <p class="file__title"><%= title %></p>

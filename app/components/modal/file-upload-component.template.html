@@ -68,7 +68,7 @@
                 <div class="row lib-row">
                         <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
                            ngf-select
-                           ngf-accept="'.pdf,.doc,.docx,.csv,.xls'"
+                           ngf-accept="'.pdf,.doc,.docx,.csv,.xls,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.pps,.ppsx,.ai,.psd,.zip,.rar,.7z'"
                            ng-model="vm.add_audio"
                            ngf-multiple="false">
                             <div class="row">
@@ -82,6 +82,7 @@
                              ng-click="vm.selectMidia(midia)"
                              ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
                             <span> {{  midia.title }}</span>
+                            <span class="label label-primary label-file">{{ midia.type|uppercase }}</span>
                         </div>
                 </div>
 
