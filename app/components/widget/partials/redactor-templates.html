@@ -68,14 +68,24 @@
 <script type="text/x-lodash-template" id="redactor-template-files">
 
     <% if (isList == true)  { %>
-             <a href="<%= url %>">
-                <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">
-             </a>
+         <a href="<%= url %>">
+             <figure>
+                 <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
+                 <figcaption>
+                     <%= title %>
+                 </figcaption>
+             </figure>
+         </a>
     <% } %>
 
     <% if (isIcon == true)   { %>
         <a href="<%= url %>">
-            <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">
+            <figure>
+                <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
+                <figcaption>
+                    <%= title %>
+                </figcaption>
+            </figure>
         </a>
     <% }%>
 
