@@ -121,7 +121,6 @@
               .uploadFiles()
               .result
               .then(function (data) {
-                console.log('>>>>>>>>>>>>', options);
                 if (options.callback) {
                   options.callback.call(null, _this, data);
                 }
@@ -167,6 +166,8 @@
          * @param data
          */
         callback: function (redactor, data) {
+
+          console.log('data >>>>>>>>>>>', data);
           _insertItemOnEditor(redactor, '#redactor-template-files', data);
         }
       }

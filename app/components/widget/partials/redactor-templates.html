@@ -66,6 +66,17 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-files">
-    <a href="<%= url %>">
-        <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">   </a>
+
+    <% if (isList == true)  { %>
+             <a href="<%= url %>">
+                <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">
+             </a>
+    <% } %>
+
+    <% if (isIcon == true)   { %>
+        <a href="<%= url %>">
+            <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">
+        </a>
+    <% }%>
+
 </script>

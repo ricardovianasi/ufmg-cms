@@ -110,7 +110,9 @@
           url: data.data.url,
           legend: vm.currentFile.legend,
           author: vm.currentFile.author.name,
-          title: data.data.title
+          title: data.data.title,
+          isList: vm.currentFile.isList,
+          isIcon: vm.currentFile.isIcon
         });
       });
     }
