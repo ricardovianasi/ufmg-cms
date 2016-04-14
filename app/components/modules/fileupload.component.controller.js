@@ -35,6 +35,8 @@
     vm.updateMidia = _updateMidia;
     vm.cancel = _cancel;
 
+
+
     _loadMidia();
     /**
      *  watch for vm.add_photos model
@@ -44,6 +46,7 @@
       if (vm.add_audio) {
         MediaService.newFile(vm.add_audio).then(function (data) {
           vm.currentFile = data;
+          vm.currentFile.isIcon = true;
           _loadMidia();
         });
       }
@@ -88,6 +91,7 @@
      */
     function _selectMidia(data) {
       vm.currentFile = data;
+      vm.currentFile.isIcon = true;
     }
 
     /**
