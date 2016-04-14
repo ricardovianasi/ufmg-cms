@@ -66,17 +66,6 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-files">
-    <div>
-        <p><br></p>
-        <p><br></p>
-        <div title="<%= title %>" class="re-button-into-redactor file__wrapper">
-            <i class="fa fa-file file-redactor-icon"></i>
-        </div>
-        <div class="file">
-            <div class="file__icon" aria-hidden="true"><span class="sprite  sprite-file_<%= type %> va ha"></span></div>
-            <p class="file__title"><%= title %></p>
-        </div>
-        <p><br></p>
-        <p><br></p>
-    </div>
+    <a href="<%= url %>">
+        <img src="assets/img/icon-icon.png" data-file="<%=title %>|<%=type %>" title="<%=title %>" alt="<%=title %>" class="re-button-into-redactor">   </a>
 </script>
