@@ -6742,7 +6742,7 @@
 				convertVideoLinks: function(html)
 				{
 					var iframeStart = '<div class="' + this.opts.videoContainerClass + ' redactor-linkify-object"><iframe class="redactor-linkify-object" width="500" height="281" src="';
-					var iframeEnd = '" frameborder="0" allowfullscreen></iframe></div>';
+                  var iframeEnd = '" frameborder="0" allowfullscreen></iframe></div>';
 
 					if (html.match(this.opts.regexps.linkyoutube))
 					{

@@ -60,7 +60,8 @@
 
           // parse if it is link on youtube & vimeo
           var iframeStart = String()
-            +'<div class="' + this.opts.videoContainerClass + '">'
+            +'<div contenteditable="false" class="' + this.opts.videoContainerClass + '">'
+              + '<span class="btn btn-danger fig-delete">x Remover Vídeo</span>'
               +'<iframe src="';
           var iframeEnd = String()
                 +'" frameborder="0" allowfullscreen>'
