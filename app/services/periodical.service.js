@@ -39,7 +39,9 @@
         articles: []
       };
 
+
       angular.forEach(data.articles, function (article) {
+
         obj.articles.push({
           title: article.title,
           subtitle: article.subtitle,
@@ -47,7 +49,7 @@
           page_number: article.page_number,
           cover: article.cover,
           thumb: article.thumb,
-          tags: _.map(article.tags, 'text'),
+          tags: article.tags,
           content: article.content,
         });
       });

@@ -93,6 +93,7 @@
         $scope.edition.articles.push(obj);
       });
 
+      console.log('articles quando entra >>>>>>', $scope.edition.articles);
       $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
       $scope.edition.background_url = data.data.background ? data.data.background.url : '';
       $scope.edition.file_name = data.data.file ? data.data.file.title : '';
@@ -112,7 +113,22 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
-      console.log('save >>>>>>', data);
+      console.log('save >>>>>>', data.articles);
+
+      var tags = [];
+
+      angular.forEach(data.articles, function(v, k) {
+          angular.forEach(data.articles[k].tags, function(val, key){
+            if(data.articles[k].tags[key].hasOwnProperty('text')) {
+                tags.push(data.articles[k].tags[key].text);
+            }
+          });
+
+        if(tags.length > 0)
+          data.articles[k].tags = tags;
+
+        tags = [];
+      });
 
       PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
