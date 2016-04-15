@@ -1,32 +1,27 @@
 <!-- Figure Templates -->
 <script type="text/x-lodash-template" id="redactor-template-figure-vertical">
-    <p><br></p>
     <figure class="vertical">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
             <small><%= author %></small>
         </figcaption>
+        <span class="label label-danger fig-delete">x Remover</span>
     </figure>
-    <p><br></p>
-    <p><br></p>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-medium">
-    <p><br></p>
     <figure class="medium">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
             <small><%= author %></small>
         </figcaption>
+        <span class="label label-danger fig-delete">x Remover</span>
     </figure>
-    <p><br></p>
-    <p><br></p>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-big">
-    <p><br></p>
     <section class="widget widget--big">
         <figure class="big">
             <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
@@ -34,14 +29,12 @@
                 <%= legend %>
                 <small><%= author %></small>
             </figcaption>
+            <span class="label label-danger fig-delete">x Remover</span>
         </figure>
     </section>
-    <p><br></p>
-    <p><br></p>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-wide">
-    <p><br></p>
     <section class="widget widget--full">
         <figure class="wide">
             <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
@@ -49,46 +42,41 @@
                 <%= legend %>
                 <small><%= author %></small>
             </figcaption>
+            <span class="label label-danger fig-delete">x Remover</span>
         </figure>
     </section>
-    <p><br></p>
-    <p><br></p>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-audio">
-    <p><br></p>
+     <figure>
     <audio controls>
         <source src="<%= url %>" type="audio/mpeg">
     </audio>
     <label> <%= author %> </label>
-    <p><br></p>
-    <p><br></p>
+    <span class="label label-danger fig-delete">x Remover</span>
+    </figure>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-files">
 
     <% if (isList == true)  { %>
-         <a href="<%= url %>">
-             <figure>
+             <figure contenteditable="false">
                  <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
                  <figcaption class="file-list-caption">
                      <%= title %> - <%= type %>
                  </figcaption>
+                 <span class="label label-danger fig-delete">x Remover</span>
              </figure>
-         </a>
-         <p></p>
     <% } %>
 
     <% if (isIcon == true)   { %>
-        <a href="<%= url %>">
-            <figure>
+            <figure contenteditable="false">
                 <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
                 <figcaption class="file-icon-caption">
                     <%= title %> - <%= type %>
                 </figcaption>
+                <span class="label label-danger fig-delete">x Remover</span>
             </figure>
-        </a>
-        <p></p>
     <% }%>
 
 </script>
