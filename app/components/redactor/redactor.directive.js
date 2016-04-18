@@ -56,7 +56,7 @@
       link: function ($scope, elem, attrs, ngModel) {
         var _options = {
           lang: 'pt_br',
-          plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload', 'table'],
+          plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
           buttons: [
             'html',
             'format',

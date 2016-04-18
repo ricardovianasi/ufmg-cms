@@ -46,7 +46,8 @@
       if (vm.add_audio) {
         MediaService.newFile(vm.add_audio).then(function (data) {
           vm.currentFile = data;
-          vm.currentFile.isIcon = true;
+          vm.currentFile.isIcon = false;
+          vm.currentFile.isList = true;
           _loadMidia();
         });
       }
@@ -91,7 +92,9 @@
      */
     function _selectMidia(data) {
       vm.currentFile = data;
-      vm.currentFile.isIcon = true;
+      vm.currentFile.isIcon = false;
+      vm.currentFile.isList = true;
+
     }
 
     /**
