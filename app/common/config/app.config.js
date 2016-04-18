@@ -46,7 +46,8 @@
   function Tags(tagsInputConfigProvider) {
     tagsInputConfigProvider
       .setDefaults('tagsInput', {
-        placeholder: 'Adicionar tag'
+        placeholder: 'Adicionar tag',
+        replaceSpacesWithDashes: false
       });
   }
 })();
