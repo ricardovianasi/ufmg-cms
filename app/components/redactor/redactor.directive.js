@@ -56,7 +56,7 @@
       link: function ($scope, elem, attrs, ngModel) {
         var _options = {
           lang: 'pt_br',
-          plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
+          plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload', 'table'],
           buttons: [
             'html',
             'format',
@@ -89,6 +89,17 @@
                   ngModel.$setViewValue(value);
                 });
               });
+            },
+            init: function() {
+              console.log('loaddddddssss');
+              console.log(this.code.get());
+              setTimeout(function(){
+                $(".fig-delete").on('click', function(event) {
+                  console.log('adsdaas');
+                  event.preventDefault();
+                  $(this).parent('figure').remove();
+                });
+              }, 2000);
             }
           }
         };
