@@ -60,25 +60,35 @@
 <script type="text/x-lodash-template" id="redactor-template-files">
 
     <% if (isList == true)  { %>
-
-             <figure contenteditable="false">
-                 <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
-                 <figcaption class="file-list-caption">
-                     <%= title %> - <%= type %>
-                 </figcaption>
-                 <!--span class="label label-danger fig-delete">x Remover</span-->
-             </figure>
+            <table class="file-table" contenteditable="false">
+                <tr>
+                    <td>
+                     <figure>
+                         <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
+                         <figcaption class="file-list-caption">
+                             <%= title %> - <%= type %>
+                         </figcaption>
+                         <!--span class="label label-danger fig-delete">x Remover</span-->
+                     </figure>
+                     </td>
+                 </tr>
+             </table>
     <% } %>
 
     <% if (isIcon == true)   { %>
-            <figure contenteditable="false">
-                <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
-                <figcaption class="file-icon-caption">
-                    <%= title %> - <%= type %>
-                </figcaption>
-                <!--span class="label label-danger fig-delete">x Remover</span-->
-            </figure>
-            <p contentEditable="true"></p>
+            <table class="file-table" contenteditable="false">
+                <tr>
+                    <td>
+                     <figure>
+                        <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
+                        <figcaption class="file-icon-caption">
+                            <%= title %> - <%= type %>
+                        </figcaption>
+                        <!--span class="label label-danger fig-delete">x Remover</span-->
+                    </figure>
+                </td>
+            </tr>
+        </table>
     <% }%>
 
 </script>

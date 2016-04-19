@@ -1,4 +1,5 @@
-;(function () {
+;
+(function () {
   'use strict';
 
   angular.module('newsModule')
@@ -32,17 +33,17 @@
    * @constructor
    */
   function NewsNewController($scope,
-                             $location,
-                             $window,
-                             MediaService,
-                             NewsService,
-                             NotificationService,
-                             StatusService,
-                             DateTimeHelper,
-                             RedactorPluginService,
-                             $rootScope,
-                             TagsService) {
-     $rootScope.shownavbar = true;
+    $location,
+    $window,
+    MediaService,
+    NewsService,
+    NotificationService,
+    StatusService,
+    DateTimeHelper,
+    RedactorPluginService,
+    $rootScope,
+    TagsService) {
+    $rootScope.shownavbar = true;
     console.log('... NoticiasNovoController');
 
     var allTags = [];
@@ -59,7 +60,7 @@
     $scope.types = [];
     $scope.highlight_ufmg_visible = true;
 
-    NewsService.getTvProgram().then(function(data) {
+    NewsService.getTvProgram().then(function (data) {
       $scope.tvPrograms = data.data.items;
     });
 
@@ -162,12 +163,20 @@
       });
     };
 
-    TagsService.getTags().then(function(data){
+    TagsService.getTags().then(function (data) {
       allTags = data.data.items[0];
     });
 
-    $scope.findTags = function($query) {
+    $scope.findTags = function ($query) {
       return TagsService.findTags($query, allTags);
     };
   }
 })();
+
+
+// Prevent Backspace Navigation
+
+history.pushState(null, null, $(location).attr('href'));
+window.addEventListener('popstate', function () {
+  history.pushState(null, null, $(location).attr('href'));
+});
