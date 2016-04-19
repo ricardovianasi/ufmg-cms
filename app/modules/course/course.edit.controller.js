@@ -13,7 +13,8 @@
     'NotificationService',
     'StatusService',
     'ModalService',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -36,10 +37,13 @@
                                 NotificationService,
                                 StatusService,
                                 ModalService,
-                                $rootScope) {
+                                $rootScope,
+                                TagsService) {
 
     $rootScope.shownavbar = true;
     console.log('... CourseController');
+
+    var allTags = [];
 
     /**
      * get status
@@ -130,5 +134,13 @@
       if(typeof data.cover == 'object')
         data.cover = data.cover.id;
     }
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
+    });
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
+    };
   }
 })();

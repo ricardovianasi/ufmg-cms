@@ -1,3 +1,5 @@
+/* jshint -W100 */
+
 ;(function () {
   'use strict';
 
@@ -12,6 +14,7 @@
     'article',
     'MediaService',
     'RedactorPluginService',
+    'TagsService'
   ];
 
   /**
@@ -31,8 +34,20 @@
                                   $timeout,
                                   article,
                                   MediaService,
-                                  RedactorPluginService) {
+                                  RedactorPluginService,
+                                  TagsService) {
     console.log('... ArticleModalController');
+
+
+    var allTags = [];
+
+       TagsService.getTags().then(function(data){ 
+         allTags = data.data.items[0];
+     });
+
+    $scope.findTags = function($query) { 
+      return TagsService.findTags($query, allTags);
+     };
 
     $scope.article = {};
     $scope.article.tags = [];

@@ -49,7 +49,11 @@
                     <div class="form-group">
                         <label>Tags</label>
                         <tags-input add-on-comma="false"
-                                    ng-model="page.tags"></tags-input>
+                                    ng-model="page.tags">
+                            <auto-complete source="findTags($query)"
+                                           max-results-to-show="1000"
+                                           minLength="1"></auto-complete>
+                        </tags-input>
                     </div>
                 </div>
 

@@ -51,6 +51,7 @@
                               $rootScope) {
     $rootScope.shownavbar = true;
     console.log('... PagesNewController');
+    var allTags = [];
 
     PagesService.getPages().then(function(data){
       $scope.pagesParent = data.data.items;
@@ -171,6 +172,15 @@
         .then(function () {
           $scope.page.widgets[column].splice(idx, 1);
         });
+    };
+
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
+    });
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
     };
   }
 })();

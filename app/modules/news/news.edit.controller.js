@@ -17,7 +17,8 @@
     'DateTimeHelper',
     'ModalService',
     'RedactorPluginService',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -48,9 +49,12 @@
                               DateTimeHelper,
                               ModalService,
                               RedactorPluginService,
-                              $rootScope) {
+                              $rootScope,
+                              TagsService) {
     $rootScope.shownavbar = true;
     console.log('... NoticiasEditController');
+
+    var allTags = [];
 
     $scope.news = {};
     $scope.categories = [];
@@ -235,5 +239,13 @@
 
     $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
     $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
+    });
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
+    };
   }
 })();

@@ -15,7 +15,8 @@
     'StatusService',
     'DateTimeHelper',
     'ModalService',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -42,9 +43,13 @@
                                StatusService,
                                DateTimeHelper,
                                ModalService,
-                               $rootScope) {
+                               $rootScope,
+                               TagsService) {
     $rootScope.shownavbar = true;
     console.log('... EventsNewController');
+
+
+    var allTags = [];
 
     var vm = this;
 
@@ -208,5 +213,13 @@
       data.end_hour = moment(data.end_hour).format('HH:mm');
       data.init_hour = moment(data.init_hour).format('HH:mm');
     }
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
+    });
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
+    };
   }
 })();

@@ -14,7 +14,8 @@
     'StatusService',
     'DateTimeHelper',
     'RedactorPluginService',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -39,9 +40,12 @@
                              StatusService,
                              DateTimeHelper,
                              RedactorPluginService,
-                             $rootScope) {
+                             $rootScope,
+                             TagsService) {
      $rootScope.shownavbar = true;
     console.log('... NoticiasNovoController');
+
+    var allTags = [];
 
     $scope.title = 'Nova Notícia';
     $scope.breadcrumb = 'Nova Notícia';
@@ -156,6 +160,14 @@
         $scope.news.thumb_name = '';
         $scope.$apply();
       });
+    };
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
+    });
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
     };
   }
 })();

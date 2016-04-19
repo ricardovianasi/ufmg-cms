@@ -18,7 +18,8 @@
     'StatusService',
     'DateTimeHelper',
     'ModalService',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -35,6 +36,7 @@
    * @param StatusService
    * @param DateTimeHelper
    * @param ModalService
+   * @param TagsService
    *
    * @constructor
    */
@@ -51,12 +53,18 @@
                                StatusService,
                                DateTimeHelper,
                                ModalService,
-                               $rootScope) {
+                               $rootScope,
+                               TagsService) {
     $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
+    var allTags = [];
 
     PagesService.getPages().then(function(data){
       $scope.pagesParent = data.data.items;
+    });
+
+    TagsService.getTags().then(function(data){
+      allTags = data.data.items[0];
     });
 
     $scope.widgets = [];
@@ -249,5 +257,10 @@
     WidgetsService.getWidgets().then(function (data) {
       $scope.widgets = data.data;
     });
+
+
+    $scope.findTags = function($query) {
+      return TagsService.findTags($query, allTags);
+    };
   }
 })();
