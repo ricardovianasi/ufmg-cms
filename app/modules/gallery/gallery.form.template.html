@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <ul id="gallery-list" as-sortable="sortableOptions" ng-model="gallery.photos" class="sortable-row gallery-list clearfix">
+                    <!-- <ul id="gallery-list" as-sortable="sortableOptions" ng-model="gallery.photos" class="sortable-row gallery-list clearfix">
                         <li ng-if="gallery.photos.length &gt; 0"
                             ng-repeat="photo in gallery.photos"
                             as-sortable-item ng-class="{ 'selected': photo.selected }"
@@ -94,7 +94,34 @@
                                 <img class="img-responsive" ng-src="{{ photo.url }}" alt="{{ photo.title }}">
                             </div>
                         </li>
-                    </ul>
+                    </ul> -->
+
+                    <div id="gallery-list" class="row sortable-row gallery-list gallery-list__img-gallery clearfix" as-sortable="sortableOptions" ng-model="gallery.photos">
+                      <div ng-if="gallery.photos.length &gt; 0"
+                          ng-repeat="photo in gallery.photos"
+                          as-sortable-item ng-class="{ 'selected': photo.selected }"
+                          class="dashed gallery-item as-sortable-item as-sortable-dragging col-xs-3">
+
+                          <div class="gallery-photo-control">
+                              <div class="pull-right">
+                                  <span as-sortable-item-handle class="label label-primary">
+                                      <span class="fa fa-arrows"></span>
+                                  </span>
+
+                                  <span ng-click="editPhotos($index)" class="label label-warning">
+                                      <span class="fa fa-pencil"></span>
+                                      </span><span ng-click="removePhoto(photo.file.id)" class="label label-danger">
+                                      <span class="fa fa-remove"></span>
+                                  </span>
+                              </div>
+                          </div>
+
+                          <div class="gallery-thumb">
+                              <img class="img-responsive" ng-src="{{ photo.url }}" alt="{{ photo.title }}">
+                          </div>
+
+                      </div>
+                    </div>
 
                     <div id="sortable-container">
                         <div as-sortable=sortableOptions ng-model=itemsList.items1 class=sortable-row>
