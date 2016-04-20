@@ -1056,7 +1056,6 @@
           $scope.galleries = data.data;
         });
 
-        _prepareItems($scope);
       };
 
       /**
