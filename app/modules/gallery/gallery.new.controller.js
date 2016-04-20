@@ -26,13 +26,9 @@
     $rootScope.shownavbar = true;
     console.log('... GaleriasNovoController');
 
-    $scope.status = [];
     $scope.categories = [];
     $scope.gallery = {};
 
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
 
     GalleryService.getCategories().then(function (data) {
       $scope.categories = data.data.items;
@@ -173,7 +169,7 @@
       var _photos = [];
 
       angular.forEach($scope.gallery.photos, function (photo) {
-        _photos.push(photo.id);
+        _photos.push(photo.file.id);
       });
 
       var obj = {
@@ -205,7 +201,14 @@
 
       // Insert into textarea
       uploadImageModal.result.then(function (data) {
-        $scope.gallery.photos.push(data);
+
+        data.author = { name: data.author };
+
+        var obj = {
+          file: data
+        };
+
+        $scope.gallery.photos.push(obj);
       });
     };
 
