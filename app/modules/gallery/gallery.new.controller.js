@@ -35,7 +35,7 @@
     });
 
     GalleryService.getCategories().then(function (data) {
-      $scope.categories = data.data;
+      $scope.categories = data.data.items;
     });
 
     $scope.gallery.title = '';
@@ -168,17 +168,18 @@
     $scope.publish = function (gallery) {
       var _photos = [];
 
-      angular.forEach(gallery.photos, function (photo) {
+      angular.forEach($scope.gallery.photos, function (photo) {
         _photos.push({id: photo.id});
       });
 
       var obj = {
-        title: gallery.title,
-        category: parseInt(gallery.category),
+        title: $scope.gallery.title,
+        category: parseInt($scope.gallery.category),
         photos: _photos,
-        status: gallery.status
+        status: $scope.gallery.status
       };
 
+      console.log('obj salvo >>>>>', obj);
       GalleryService.newGallery(obj).then(function (data) {
         $location.path('/galleries');
       });
@@ -187,8 +188,8 @@
     /**
      * Cover Image - Upload
      */
-    $scope.uploadCover = function () {
-      var moduleModal = $uibModal.open({
+    $scope.uploadImage = function () {
+      var uploadImageModal = $uibModal.open({
         templateUrl: 'components/modal/upload-component.template.html',
         controller: 'UploadComponentController as vm',
         backdrop: 'static',
@@ -201,11 +202,8 @@
       });
 
       // Insert into textarea
-      moduleModal.result.then(function (data) {
-        $scope.page.image = {
-          url: data.url,
-          id: data.id
-        };
+      uploadImageModal.result.then(function (data) {
+        $scope.gallery.photos.push(data);
       });
     };
 

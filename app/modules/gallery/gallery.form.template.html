@@ -30,7 +30,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-8 panel panel-default">
+    <div class="col-xs-10 panel panel-default">
         <form class="form">
             <div class="row">
                 <div class="col-xs-8">
@@ -64,7 +64,7 @@
                 <div class="col-xs-12">
                     <div class="dashed gallery-item upload-photos upload-gallery">
 
-                        <div ng-click="openMediaLibrary()" class="pages-module add-module">
+                        <div ng-click="uploadImage()" class="pages-module add-module">
                             <span class="fa fa-file-image-o"></span>
                             <br>Biblioteca de Mídia
                         </div>
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="gallery-thumb">
-                                <img ng-src="{{ photo.file.url }}" alt="{{ photo.file.altText }}">
+                                <img ng-src="{{ photo.url }}" alt="{{ photo.title }}">
                             </div>
                         </li>
                     </ul>
@@ -119,9 +119,5 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="col-xs-4">
-        <publishment-options route-model="page"></publishment-options>
     </div>
 </div>
