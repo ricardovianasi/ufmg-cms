@@ -17,7 +17,8 @@
     'StatusService',
     'ModalService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    'TagsService'
   ];
 
   /**
@@ -48,7 +49,8 @@
                               StatusService,
                               ModalService,
                               DateTimeHelper,
-                              $rootScope) {
+                              $rootScope,
+                              TagsService) {
     $rootScope.shownavbar = true;
     console.log('... PagesNewController');
     var allTags = [];
