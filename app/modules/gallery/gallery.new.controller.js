@@ -184,48 +184,30 @@
       });
     };
 
-    var MediaLibraryModal;
-
-    $scope.openMediaLibrary = function () {
-      MediaLibraryModal = $uibModal.open({
-        templateUrl: 'components/modal/media-library.modal.template.html',
-        controller: MediaLibraryModalCtrl,
+    /**
+     * Cover Image - Upload
+     */
+    $scope.uploadCover = function () {
+      var moduleModal = $uibModal.open({
+        templateUrl: 'components/modal/upload-component.template.html',
+        controller: 'UploadComponentController as vm',
         backdrop: 'static',
-        size: 'lg'
+        size: 'xl',
+        resolve: {
+          formats: function () {
+            return ['pageCover'];
+          }
+        }
       });
 
-      MediaLibraryModal.result.then(function (data) {
-        angular.forEach(data, function (file) {
-          var _file = {
-            url: file.url,
-            id: file.id
-          };
-
-          $scope.gallery.photos.push(_file);
-        });
+      // Insert into textarea
+      moduleModal.result.then(function (data) {
+        $scope.page.image = {
+          url: data.url,
+          id: data.id
+        };
       });
     };
 
-    var MediaLibraryModalCtrl = function ($scope, $uibModalInstance, MediaService) {
-      $scope.media = [];
-      MediaService.getMedia().then(function (data) {
-        $scope.media = data.data;
-      });
-
-      $scope.ok = function () {
-        var selectedPhotos = _.filter($scope.media, function (file) {
-          return file.selected === true;
-        });
-
-        $uibModalInstance.close(selectedPhotos);
-      };
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss();
-      };
-    };
-
-    $scope.sortableOptions = {
-      containment: '#gallery-list'//optional param.
-    };
   }
 })();
