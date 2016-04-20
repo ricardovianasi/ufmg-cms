@@ -165,28 +165,30 @@
       };
     };
 
+    /**
+     *
+     * @param gallery
+     */
     $scope.publish = function (gallery) {
       var _photos = [];
 
       angular.forEach($scope.gallery.photos, function (photo) {
-        _photos.push({id: photo.id});
+        _photos.push(photo.id);
       });
 
       var obj = {
         title: $scope.gallery.title,
         category: parseInt($scope.gallery.category),
-        photos: _photos,
-        status: $scope.gallery.status
+        photos: _photos
       };
 
-      console.log('obj salvo >>>>>', obj);
       GalleryService.newGallery(obj).then(function (data) {
         $location.path('/galleries');
       });
     };
 
     /**
-     * Cover Image - Upload
+       *
      */
     $scope.uploadImage = function () {
       var uploadImageModal = $uibModal.open({
@@ -196,7 +198,7 @@
         size: 'xl',
         resolve: {
           formats: function () {
-            return ['pageCover'];
+            return ['galleryImage'];
           }
         }
       });

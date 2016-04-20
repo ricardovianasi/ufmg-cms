@@ -81,6 +81,11 @@
         name: 'Capa da publicação',
         width: 1920,
         height: 720
+      },
+      galleryImage: {
+        name: 'Imagem de galeria',
+        width: 952,
+        height: 600
       }
     };
 
