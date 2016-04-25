@@ -11,6 +11,8 @@
     'NotificationService'
   ];
 
+
+
   function faqController($rootScope, faqService, ModalService, NotificationService) {
     $rootScope.shownavbar = true;
     console.log('... faqController');
