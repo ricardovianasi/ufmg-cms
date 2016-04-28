@@ -9,17 +9,32 @@
           .when('/pages', {
             templateUrl: 'modules/pages/pages.template.html',
             controller: 'PagesController',
-            controllerAs: 'ctrl'
+            controllerAs: 'ctrl',
+            resolve: {
+              isLogged: ['sessionService', function(sessionService) {
+                return sessionService.getIsLogged();
+              }]
+            }
           })
           .when('/pages/new', {
             templateUrl: 'modules/pages/pages.form.template.html',
             controller: 'PagesNewController',
-            controllerAs: 'ctrl'
+            controllerAs: 'ctrl',
+            resolve: {
+              isLogged: ['sessionService', function(sessionService) {
+                return sessionService.getIsLogged();
+              }]
+            }
           })
           .when('/pages/edit/:id', {
             templateUrl: 'modules/pages/pages.form.template.html',
             controller: 'PagesEditController',
-            controllerAs: 'ctrl'
+            controllerAs: 'ctrl',
+            resolve: {
+              isLogged: ['sessionService', function(sessionService) {
+                return sessionService.getIsLogged();
+              }]
+            }
           });
       }
     ]);

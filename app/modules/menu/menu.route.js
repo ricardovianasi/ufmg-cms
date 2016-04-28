@@ -18,7 +18,12 @@
       .when('/menu', {
         templateUrl: 'modules/menu/menu.template.html',
         controller: 'MenuController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          isLogged: ['sessionService', function(sessionService) {
+            return sessionService.getIsLogged();
+          }]
+        }
       });
   }
 })();

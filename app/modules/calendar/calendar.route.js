@@ -8,7 +8,12 @@
         .when('/calendar', {
           templateUrl: 'modules/calendar/calendar.template.html',
           controller: 'CalendarController',
-          controllerAs: 'ctrl'
+          controllerAs: 'ctrl',
+          resolve: {
+            isLogged: ['sessionService', function(sessionService) {
+              return sessionService.getIsLogged();
+            }]
+          }
         });
     }]);
 

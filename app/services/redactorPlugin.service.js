@@ -32,6 +32,7 @@
       redactor.buffer.set();
       redactor.air.collapsed();
       redactor.insert.html(html(obj));
+
     };
 
     /**
