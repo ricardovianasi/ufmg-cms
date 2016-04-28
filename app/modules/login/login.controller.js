@@ -13,7 +13,7 @@
     '$location'
   ];
 
-  function loginController($rootScope, authService, NotificationServicem, sessionService, $location) {
+  function loginController($rootScope, authService, NotificationService, sessionService, $location) {
     $rootScope.shownavbar = false;
     console.log('... loginController');
 
@@ -23,6 +23,10 @@
 
     vm.login = _login;
 
+      /**
+       *
+       * @private
+       */
     function _login() {
       authService.autenticate(vm.credentials).then(function(data){
         sessionService.setToken(data.data.access_token);
