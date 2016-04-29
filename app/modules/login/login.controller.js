@@ -29,7 +29,7 @@
        */
     function _login() {
       authService.autenticate(vm.credentials).then(function(data){
-        sessionService.setToken(data.data.access_token);
+        sessionService.saveData(data.data);
         sessionService.setIsLogged();
         $location.path('dashboard');
       }, function(error){

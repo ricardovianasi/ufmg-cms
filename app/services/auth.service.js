@@ -8,10 +8,11 @@
     '$http',
     'apiUrl',
     'grant_type_auth',
-    'client_id_auth'
+    'client_id_auth',
+    'sessionService'
   ];
 
-  function authService($http, apiUrl, grant_type_auth, client_id_auth) {
+  function authService($http, apiUrl, grant_type_auth, client_id_auth, sessionService) {
 
 
     return {
@@ -28,5 +29,6 @@
 
       return $http.post(apiUrl + '/authenticate', data);
     }
+
   }
 })();
