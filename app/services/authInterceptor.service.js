@@ -39,7 +39,6 @@
           url: apiUrl + '/authenticate',
           data: data,
         }).done(function(res) {
-          console.log(res);
           sessionService.saveData(res);
         });
       }
