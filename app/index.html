@@ -31,37 +31,12 @@
                 </a>
             </div>
 
-            <!-- Mobile Toggles Links -->
-            <div class="nav navbar-mobile">
-                <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
-                <div class="mobile-menu-toggle">
-                    <!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
-                    <a href="#" data-toggle="settings-pane" data-animate="true">
-                        <i class="linecons-cog"></i>
-                    </a>
-
-                    <a href="#" data-toggle="user-info-menu-horizontal">
-                        <i class="fa-bell-o"></i>
-                        <span class="badge badge-success">7</span>
-                    </a>
-
-                    <!-- data-toggle="mobile-menu-horizontal" will show horizontal menu links only -->
-                    <!-- data-toggle="mobile-menu" will show sidebar menu links only -->
-                    <!-- data-toggle="mobile-menu-both" will show sidebar and horizontal menu links -->
-                    <a href="#" data-toggle="mobile-menu-horizontal">
-                        <i class="fa-bars"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="navbar-mobile-clear"></div>
-
             <!-- notifications and other links -->
             <ul class="nav nav-userinfo navbar-right">
                 <li class="dropdown user-profile">
-                    <a data-toggle="dropdown" ng-click="logout()">
+                    <a class="btn-exit" aria-label="Encerrar sessão" ng-click="logout()">
                         <!--<img src="assets/images/user-1.png" alt="user-image" class="img-circle img-inline userpic-32" width="28"/>-->
-                        <span>Sair</span>
+                        <span><i class="fa fa-power-off"></i></span>
                     </a>
                 </li>
             </ul>
