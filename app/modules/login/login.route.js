@@ -7,8 +7,7 @@
       $routeProvider
         .when('/login', {
           templateUrl: 'modules/login/login.template.html',
-          controller: 'loginController',
-          controllerAs: 'vm'
+          controller: 'loginController as vm',
         });
     }]);
 })();

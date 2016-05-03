@@ -10,14 +10,14 @@
         </div>
         <div class="row panel">
             <div class="col-sm-12">
-                <form method="post" role="form" id="login" class="login-form fade-in-effect">
+                <form method="post" role="form" id="login" class="login-form fade-in-effect" ng-submit="vm.login()">
                     <div class="form-group">
                         <label class="control-label" for="username">Usuário</label>
-                        <input type="text" class="form-control" name="username" id="username" autocomplete="off" />
+                        <input type="email" requeired class="form-control" ng-model="vm.credentials.username" name="username" id="username" autocomplete="off" />
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="passwd">Senha</label>
-                        <input type="password" class="form-control" name="passwd" id="passwd" autocomplete="off" />
+                        <input type="password"  required class="form-control" name="passwd" ng-model="vm.credentials.password" id="passwd" autocomplete="off" />
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success  btn-block btn-lg">

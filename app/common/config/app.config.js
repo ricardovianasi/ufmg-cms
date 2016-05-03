@@ -4,7 +4,20 @@
   angular.module('app')
     .config(Router)
     .config(Translator)
-    .config(Tags);
+    .config(Tags)
+    .config(http);
+
+  http.$inject = ['$httpProvider'];
+
+  /**
+   *
+   * @param $httpProvider
+   */
+  function http($httpProvider) {
+    $httpProvider
+      .interceptors
+      .push('authInterceptorService');
+  }
 
   //Routing
   Router.$inject = ['$routeProvider'];

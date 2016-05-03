@@ -8,7 +8,12 @@
         .when('/', {
           templateUrl: 'modules/index/index.template.html',
           controller: 'IndexController',
-          controllerAs: 'ctrl'
+          controllerAs: 'ctrl',
+          resolve: {
+            isLogged: ['sessionService', function(sessionService) {
+              return sessionService.getIsLogged();
+            }]
+          }
         });
     }]);
 })();

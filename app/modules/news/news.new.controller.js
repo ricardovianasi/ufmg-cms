@@ -172,10 +172,10 @@
   }
 })();
 
-
+/* jshint ignore:start */
 // Prevent Backspace Navigation
-
-//history.pushState(null, null, $(location).attr('href'));
-//window.addEventListener('popstate', function () {
-//  history.pushState(null, null, $(location).attr('href'));
-//});
+history.pushState(null, null, $(location).attr('href'));
+window.addEventListener('popstate', function () {
+  history.pushState(null, null, $(location).attr('href'));
+});
+/* jshint ignore:end */

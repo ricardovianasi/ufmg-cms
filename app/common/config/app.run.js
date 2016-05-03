@@ -6,10 +6,23 @@
 
   Run.$inject = [
     '$rootScope',
-    'dataTableConfigService'
+    'dataTableConfigService',
+    'sessionService',
+    '$route'
   ];
 
-  function Run($rootScope, dataTableConfigService) {
+  function Run($rootScope, dataTableConfigService, sessionService, $route) {
     $rootScope.dtOptions = dataTableConfigService.init();
+
+
+    /**
+     *
+     * @private
+     */
+    $rootScope.logout = function (){
+      sessionService.removeToken();
+      sessionService.removeIsLogged();
+      $route.reload();
+    };
   }
 })();
