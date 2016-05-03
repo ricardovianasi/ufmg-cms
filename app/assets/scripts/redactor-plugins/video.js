@@ -60,18 +60,12 @@
 
           // parse if it is link on youtube & vimeo
           var iframeStart = String()
-          +'<table contenteditable="false" class="file-table">'
-          +'<tr>'
-          +'<td>'
           +'<div class="' + this.opts.videoContainerClass + '">'
           +'<iframe src="';
           var iframeEnd = String()
           +'" frameborder="0" allowfullscreen>'
           +'</iframe>'
           +'</div>';
-          +'</td>'
-          +'</tr>'
-          +'</table>'
 
           if (data.match(this.video.reUrlYoutube)) {
             data = data.replace(this.video.reUrlYoutube, iframeStart + '//www.youtube.com/embed/$1' + iframeEnd);
