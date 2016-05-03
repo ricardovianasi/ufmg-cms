@@ -64,6 +64,7 @@
           +'<tr>'
           +'<td>'
           +'<div class="' + this.opts.videoContainerClass + '">'
+          + '<span class="btn btn-danger fig-delete">x Remover Vídeo</span>'
           +'<iframe src="';
           var iframeEnd = String()
           +'" frameborder="0" allowfullscreen>'
