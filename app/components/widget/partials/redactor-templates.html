@@ -1,6 +1,6 @@
 <!-- Figure Templates -->
 <script type="text/x-lodash-template" id="redactor-template-figure-vertical">
-    <table class="file-table" contenteditable="false">
+    <table class="file-table">
         <tr>
             <td>
                 <figure class="vertical">
@@ -9,7 +9,6 @@
                         <%= legend %>
                             <small><%= author %></small>
                     </figcaption>
-                    <span class="label label-danger fig-delete">x Remover</span>
                 </figure>
             </td>
         </tr>
@@ -17,7 +16,7 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-medium">
-    <table class="file-table" contenteditable="false">
+    <table class="file-table">
         <tr>
             <td>
                 <figure class="medium">
@@ -26,7 +25,6 @@
                         <%= legend %>
                             <small><%= author %></small>
                     </figcaption>
-                    <span class="label label-danger fig-delete">x Remover</span>
                 </figure>
             </td>
         </tr>
@@ -34,7 +32,7 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-big">
-    <table class="file-table" contenteditable="false">
+    <table class="file-table">
         <tr>
             <td>
                 <section class="widget widget--big">
@@ -44,7 +42,6 @@
                             <%= legend %>
                                 <small><%= author %></small>
                         </figcaption>
-                        <span class="label label-danger fig-delete">x Remover</span>
                     </figure>
                 </section>
             </td>
@@ -53,7 +50,7 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-wide">
-    <table class="file-table" contenteditable="false">
+    <table class="file-table">
         <tr>
             <td>
                 <section class="widget widget--full">
@@ -63,7 +60,6 @@
                             <%= legend %>
                                 <small><%= author %></small>
                         </figcaption>
-                        <span class="label label-danger fig-delete">x Remover</span>
                     </figure>
                 </section>
             </td>
@@ -82,7 +78,6 @@
                     <label>
                         <%= author %>
                     </label>
-                    <span class="label label-danger fig-delete">x Remover</span>
                 </figure>
             </td>
         </tr>
@@ -101,28 +96,26 @@
                             <%= title %> -
                                 <%= type %>
                         </figcaption>
-                        <span class="label label-danger fig-delete">x Remover</span>
                     </figure>
                 </td>
             </tr>
         </table>
         <% } %>
 
-            <% if (isIcon == true)   { %>
-                <table class="file-table" contenteditable="false">
-                    <tr>
-                        <td>
-                            <figure>
-                                <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
-                                <figcaption class="file-icon-caption">
-                                    <%= title %> -
-                                        <%= type %>
-                                </figcaption>
-                                <span class="label label-danger fig-delete">x Remover</span>
-                            </figure>
-                        </td>
-                    </tr>
-                </table>
-                <% }%>
+    <% if (isIcon == true)   { %>
+        <table class="file-table" contenteditable="false">
+            <tr>
+                <td>
+                    <figure>
+                        <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
+                        <figcaption class="file-icon-caption">
+                            <%= title %> -
+                                <%= type %>
+                        </figcaption>
+                    </figure>
+                </td>
+            </tr>
+        </table>
+        <% }%>
 
 </script>
