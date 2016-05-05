@@ -1,121 +1,93 @@
 <!-- Figure Templates -->
 <script type="text/x-lodash-template" id="redactor-template-figure-vertical">
-    <table class="file-table">
-        <tr>
-            <td>
-                <figure class="vertical">
-                    <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
-                    <figcaption>
-                        <%= legend %>
-                            <small><%= author %></small>
-                    </figcaption>
-                </figure>
-            </td>
-        </tr>
-    </table>
+    <p><br/><p/>
+    <figure class="vertical">
+        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+        <figcaption>
+            <%= legend %>
+                <small><%= author %></small>
+        </figcaption>
+    </figure>
+    <p><br/><p/>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-medium">
-    <table class="file-table">
-        <tr>
-            <td>
-                <figure class="medium">
-                    <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
-                    <figcaption>
-                        <%= legend %>
-                            <small><%= author %></small>
-                    </figcaption>
-                </figure>
-            </td>
-        </tr>
-    </table>
+    <p><br/><p/>
+    <figure class="medium">
+        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+        <figcaption>
+            <%= legend %>
+                <small><%= author %></small>
+        </figcaption>
+    </figure>
+    <p><br/><p/>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-big">
-    <table class="file-table">
-        <tr>
-            <td>
-                <section class="widget widget--big">
-                    <figure class="big">
-                        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
-                        <figcaption>
-                            <%= legend %>
-                                <small><%= author %></small>
-                        </figcaption>
-                    </figure>
-                </section>
-            </td>
-        </tr>
-    </table>
+    <section class="widget widget--big">
+        <p><br/><p/>
+        <figure class="big">
+            <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+            <figcaption>
+                <%= legend %>
+                    <small><%= author %></small>
+            </figcaption>
+        </figure>
+        <p><br/><p/>
+    </section>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-wide">
-    <table class="file-table">
-        <tr>
-            <td>
-                <section class="widget widget--full">
-                    <figure class="wide">
-                        <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
-                        <figcaption>
-                            <%= legend %>
-                                <small><%= author %></small>
-                        </figcaption>
-                    </figure>
-                </section>
-            </td>
-        </tr>
-    </table>
+    <section class="widget widget--full">
+        <p><br/><p/>
+        <figure class="wide">
+            <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
+            <figcaption>
+                <%= legend %>
+                    <small><%= author %></small>
+            </figcaption>
+        </figure>
+        <p><br/><p/>
+    </section>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-audio">
-    <table class="file-table" contenteditable="false">
-        <tr>
-            <td>
-                <figure>
-                    <audio controls>
-                        <source src="<%= url %>" type="audio/mpeg">
-                    </audio>
-                    <label>
-                        <%= author %>
-                    </label>
-                </figure>
-            </td>
-        </tr>
-    </table>
+    <p><br/><p/>
+    <figure>
+        <audio controls>
+            <source src="<%= url %>" type="audio/mpeg">
+        </audio>
+        <label>
+            <%= author %>
+        </label>
+    </figure>
+    <p><br/><p/>
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-files">
 
     <% if (isList == true)  { %>
-        <table class="file-table" contenteditable="false">
-            <tr>
-                <td>
-                    <figure>
-                        <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
-                        <figcaption class="file-list-caption">
-                            <%= title %> -
-                                <%= type %>
-                        </figcaption>
-                    </figure>
-                </td>
-            </tr>
-        </table>
-        <% } %>
+        <p><br/><p/>
+        <figure>
+            <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
+            <figcaption class="file-list-caption">
+                <%= title %> -
+                    <%= type %>
+            </figcaption>
+        </figure>
+        <p><br/><p/>
+    <% } %>
 
     <% if (isIcon == true)   { %>
-        <table class="file-table" contenteditable="false">
-            <tr>
-                <td>
-                    <figure>
-                        <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
-                        <figcaption class="file-icon-caption">
-                            <%= title %> -
-                                <%= type %>
-                        </figcaption>
-                    </figure>
-                </td>
-            </tr>
-        </table>
-        <% }%>
+        <p><br/><p/>
+        <figure>
+            <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
+            <figcaption class="file-icon-caption">
+                <%= title %> -
+                    <%= type %>
+            </figcaption>
+        </figure>
+        <p><br/><p/>
+    <% }%>
 
 </script>

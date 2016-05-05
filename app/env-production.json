@@ -1,5 +1,5 @@
 {
-  "apiUrl": "http://150.164.80.212:8085",
+  "apiUrl": "http://cajuri.bu.ufmg.br:8085",
   "grant_type_auth": "password",
   "client_id_auth": "cms"
 }
