@@ -71,7 +71,7 @@
                         <tr role="row" class="odd"
                             ng-repeat="item in calendar.items | filter: search | filter: {
                                 status: itemStatus
-                            }">
+                            } | orderBy: '-created_at'">
                             <td>
                                 <a ng-click="editEvent('lg', item)">
                                     {{ item.description }}

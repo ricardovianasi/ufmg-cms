@@ -47,7 +47,7 @@
 
                     <tbody>
                     <tr role="row" class="odd"
-                        ng-repeat="item in vm.faqs | filter: search">
+                        ng-repeat="item in vm.faqs | filter: search | orderBy: '-created_at'">
                         <td>
                             <a ng-href="#/faq/edit/{{ item.id }}">{{ item.title }}</a>
                         </td>

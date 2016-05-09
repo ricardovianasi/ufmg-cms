@@ -49,7 +49,7 @@
                     </thead>
 
                     <tbody>
-                    <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus}">
+                    <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
                         <td>
                             <div>
                                 <div class="pull-left spacer-right">
