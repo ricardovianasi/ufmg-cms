@@ -54,12 +54,13 @@
     vm.addCategoryAsk = _addCategoryAsk;
     vm.removeFaqCategoryAsk = _removeFaqCategoryAsk;
     vm.editCategory = _editCategory;
+    vm.editCategoryAsk = _editCategoryAsk;
     vm.editAsk = _editAsk;
 
     /**
      *
      * @private
-       */
+     */
     function _getFaq() {
       if(id) {
         faqService.get(id).then(function(data){
@@ -88,7 +89,7 @@
             }
           });
 
-         console.log('data >>>>>>>>>>>>', data.data.items);
+          console.log('data >>>>>>>>>>>>', data.data.items);
 
           if(vm.faq.categories.length < 1)
             _showType('ask');
@@ -104,7 +105,7 @@
      *
      * @param type
      * @private
-       */
+     */
     function _showType(type) {
       if(type == 'ask') {
         vm.showCategoryAsk = false;
@@ -121,8 +122,8 @@
      *
      * @param type
      * @param ask
-       * @private
-       */
+     * @private
+     */
     function _addAsk(type, ask) {
       if(type === 'ask') {
 
@@ -135,8 +136,10 @@
         vm.idCurrentAskEdit = '';
         _controlFormView(false);
 
-      } else {
+      } else if (type === '' && vm.idCurrentAskEdit === '') {
         vm.currentNewCategoryAsk.items.push(ask);
+      } else {
+        vm.currentNewCategoryAsk.items.splice(vm.idCurrentAskEdit, 0, ask);
       }
 
       _cleanNewAsk();
@@ -171,7 +174,7 @@
     /**
      *
      * @private
-       */
+     */
     function _save() {
       _verifyType();
 
@@ -190,11 +193,11 @@
 
     }
 
-      /**
-       *
-       * @param idx
-       * @private
-       */
+    /**
+     *
+     * @param idx
+     * @private
+     */
     function _removeAsk(type, idx) {
       if(type === 'ask')
         vm.faq.items.splice(idx, 1);
@@ -204,10 +207,10 @@
         vm.currentNewCategoryAsk.items.splice(idx, 1);
     }
 
-      /**
-       *
-       * @private
-       */
+    /**
+     *
+     * @private
+     */
     function _addCategoryAsk(){
 
       if(vm.idCurrentCategoryEdit === '') {
@@ -235,7 +238,7 @@
     /**
      *
      * @private
-       */
+     */
     function _verifyType() {
       if(vm.showCategoryAsk) {
         vm.faq.items = [];
@@ -263,11 +266,15 @@
       vm.faq.categories.splice(id, 1);
     }
 
+    function _removeFaqCategoryAskEdit(id) {
+      vm.currentNewCategoryAsk.items.splice(id, 1)
+    }
+
     /**
      *
      * @param id
      * @private
-       */
+     */
     function _removeforEditAsk(id) {
       vm.faq.items.splice(id, 1);
     }
@@ -282,6 +289,18 @@
       vm.currentNewCategoryAsk =  (JSON.parse(JSON.stringify(vm.faq.categories[id])));
       _removeFaqCategory(id);
       _controlFormView(false);
+    }
+
+    /**
+     *
+     * @param id
+     * @private
+     */
+
+    function _editCategoryAsk(id) {
+      vm.idCurrentAskEdit = id;
+      vm.newAsk = vm.currentNewCategoryAsk.items[id];
+      _removeFaqCategoryAskEdit(id);
     }
 
     /**
