@@ -272,6 +272,7 @@
          */
         listnews: function (widget) {
           return {
+            category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
             typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
             tag: widget.tag || (widget.content ? widget.content.tag : null),
@@ -723,6 +724,7 @@
          */
         listnews: function (widget) {
           return {
+            category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
             typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
             tag: widget.tag || (widget.content ? widget.content.tag : null),
@@ -1152,7 +1154,9 @@
         relatednews: function($scope) {
           _preparingNewsTypes($scope);
         },
-        listnews: _preparingNewsTypes,
+        listnews: function($scope) {
+          _preparingNewsTypes($scope);
+        },
         /**
          * Last Images Sidebar
          *
