@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search}" class="odd">
+                        <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search} | orderBy: '-created_at'" class="odd">
                             <td>
                                 <a ng-href="#/featured/edit/{{ featured.id }}">
                                     {{ featured.title }}

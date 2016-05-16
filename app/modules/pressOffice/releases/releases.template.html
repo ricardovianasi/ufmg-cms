@@ -80,7 +80,7 @@
 
                     <tbody>
                     <tr class="odd" role="row"
-                        ng-repeat="release in releases.items | filter: {description: search} | filter: {status: itemStatus}">
+                        ng-repeat="release in releases.items | filter: {description: search} | filter: {status: itemStatus} | orderBy: '-created_at'">
                         <td>
                             <a ng-href="#/releases/edit/{{ release.id }}">
                                 {{ release.title }}

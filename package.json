@@ -48,5 +48,8 @@
     "require-dir": "~0.1.0",
     "wiredep": "^2.2.2",
     "yargs": "^3.31.0"
+  },
+  "dependencies": {
+    "stream-browserify": "^2.0.1"
   }
 }

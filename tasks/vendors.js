@@ -41,6 +41,7 @@ var SCRIPTS = [
   'bower_components/angular-ui-sortable/sortable.min.js',
   'bower_components/moment/min/moment.min.js',
   'bower_components/angular-loading-bar/build/loading-bar.min.js',
+  'app/assets/scripts/remove-button.js',
 ];
 
 var STYLES = [

@@ -73,7 +73,7 @@
 
                     <tbody>
                     <tr role="row"
-                        ng-repeat="clipping in clippings.items | filter: {description: search} | filter: {status: itemStatus}"
+                        ng-repeat="clipping in clippings.items | filter: {description: search} | filter: {status: itemStatus} | orderBy: '-created_at'"
                         class="odd">
                         <td>
                             <a ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>

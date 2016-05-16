@@ -1,7 +1,6 @@
-<!-- Figure Templates -->
 <script type="text/x-lodash-template" id="redactor-template-figure-vertical">
     <p><br/><p/>
-    <figure class="vertical">
+    <figure class="figure-removable  vertical">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
@@ -13,7 +12,7 @@
 
 <script type="text/x-lodash-template" id="redactor-template-figure-medium">
     <p><br/><p/>
-    <figure class="medium">
+    <figure class="figure-removable medium">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
@@ -26,7 +25,7 @@
 <script type="text/x-lodash-template" id="redactor-template-figure-big">
     <section class="widget widget--big">
         <p><br/><p/>
-        <figure class="big">
+        <figure class="figure-removable big">
             <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
             <figcaption>
                 <%= legend %>
@@ -40,7 +39,7 @@
 <script type="text/x-lodash-template" id="redactor-template-figure-wide">
     <section class="widget widget--full">
         <p><br/><p/>
-        <figure class="wide">
+        <figure class="figure-removable wide">
             <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
             <figcaption>
                 <%= legend %>
@@ -53,7 +52,7 @@
 
 <script type="text/x-lodash-template" id="redactor-template-audio">
     <p><br/><p/>
-    <figure>
+    <figure class="figure-removable">
         <audio controls>
             <source src="<%= url %>" type="audio/mpeg">
         </audio>
@@ -68,8 +67,8 @@
 
     <% if (isList == true)  { %>
         <p><br/><p/>
-        <figure>
-            <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%=title %>|<%=type %>|list" title="<%=title %>" alt="<%=title %>">
+        <figure class="figure-removable">
+            <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%= url %>|<%= type %>|list" title="<%=title %>" alt="<%=title %>">
             <figcaption class="file-list-caption">
                 <%= title %> -
                     <%= type %>
@@ -80,7 +79,7 @@
 
     <% if (isIcon == true)   { %>
         <p><br/><p/>
-        <figure>
+        <figure class="figure-removable">
             <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
             <figcaption class="file-icon-caption">
                 <%= title %> -

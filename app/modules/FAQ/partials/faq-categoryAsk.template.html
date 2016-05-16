@@ -18,14 +18,9 @@
 </div>
     <div class="pages-module faq-ask form-group" ng-repeat="item in category.items">
 <div class="row">
-    <div class="col-md-10 text-end">
+    <div class="col-md-12 text-end">
         <label for="">{{ item.question }}</label>
         <p ng-bind-html="item.answer"></p>
-    </div>
-    <div class="col-md-2">
-        <a uib-tooltip="Excluir pergunta" ng-click="vm.removeFaqCategoryAsk($parent.$index, $index)" class="btn btn-danger btn-small pull-right">
-            <i class="fa fa-trash"></i>
-        </a>
     </div>
 </div>
     </div>
@@ -36,18 +31,28 @@
         <label for="">Título da categoria: </label>
         <input type="text" class="form-control" ng-model="vm.currentNewCategoryAsk.name">
     </div>
-    <div class="pages-module" ng-repeat="ask in vm.currentNewCategoryAsk.items">
-       <div class="row">
-           <div class="col-md-10 text-end">
-               <label for="">{{ ask.question }}</label>
-               <p ng-bind-html="ask.answer"></p>
+    <div as-sortable="sortableOptions" ng-model="vm.currentNewCategoryAsk.items">
+        <div class="pages-module" ng-repeat="ask in vm.currentNewCategoryAsk.items" as-sortable-item>
+           <div class="row">
+               <div class="col-md-10 text-end">
+                   <label for="">{{ ask.question }}</label>
+                   <p ng-bind-html="ask.answer"></p>
+               </div>
+               <div class="col-md-2">
+                   <a uib-tooltip="Editar" ng-click="vm.editCategoryAsk($index)" class="btn btn-warning btn-small">
+                       <i class="fa fa-pencil"></i>
+                   </a>
+                   <a uib-tooltip="Excluir" ng-click="vm.removeAsk('', $index)" class="btn btn-danger btn-small">
+                       <i class="fa fa-trash"></i>
+                   </a>
+
+                    <span class="label label-primary"
+                     as-sortable-item-handle>
+                    <i class="fa fa-arrows-v"></i> MOVER
+                    </span>
+               </div>
            </div>
-           <div class="col-md-2">
-               <a uib-tooltip="Excluir" ng-click="vm.removeAsk('', $index)" class="btn btn-danger btn-small pull-right">
-                   <i class="fa fa-trash"></i>
-               </a>
-           </div>
-       </div>
+        </div>
     </div>
     <div class="pages-module faq-category">
         <div class="form-group">

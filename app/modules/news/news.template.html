@@ -68,7 +68,7 @@
 
                     <tbody>
                     <tr role="row" class="odd"
-                        ng-repeat="item in news.items | filter: search | filter: {status: itemStatus}">
+                        ng-repeat="item in news.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
                         <td>
                             <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
                             <span class="label label-primary"

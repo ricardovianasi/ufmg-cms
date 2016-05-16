@@ -64,7 +64,7 @@
                     </thead>
 
                     <tbody>
-                    <tr role=row ng-repeat="gallery in galleries.items | filter: search | filter: {status: itemStatus}"
+                    <tr role=row ng-repeat="gallery in galleries.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'"
                         class="odd">
                         <td>
                             {{ gallery.title }}

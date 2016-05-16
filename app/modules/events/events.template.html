@@ -72,7 +72,7 @@
 
                     <tbody>
                     <tr class="odd" role="row"
-                        ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus}">
+                        ng-repeat="item in events.items | filter: {description: search} | filter: {status: itemStatus} | orderBy: '-created_at'">
                         <td>
                             <a ng-href="#/events/edit/{{ item.id }}">{{ item.name }}</a>&nbsp;
                             <span class="label label-primary"
