@@ -293,6 +293,7 @@
         };
 
         if (file.file !== null) {
+          fl.id = file.file.id;
           fl.file = file.file.url;
           fl.isFile = true;
           fl.type = file.file.type;
