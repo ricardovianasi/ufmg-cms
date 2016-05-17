@@ -343,7 +343,10 @@
             var newsToSelect = [];
 
             angular.forEach(widget.news, function (news) {
-              newsToSelect.push(news.id);
+              newsToSelect.push({
+                id: news.id,
+                title: news.title
+              });
             });
 
             return {
@@ -422,7 +425,10 @@
               var newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
               });
 
               obj.news = newsToSelect;
@@ -842,7 +848,10 @@
               var newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
               });
 
               obj.news = newsToSelect;
@@ -1224,7 +1233,10 @@
         highlightedevent: _preparingEvents,
         gallery: _preparingGalleries,
         eventlist: _getTags,
-        editorialnews: _preparingNews,
+        editorialnews: function ($scope) {
+          _preparingNews($scope);
+          _prepareItems($scope);
+        },
         /**
          * @param $scope
          */
