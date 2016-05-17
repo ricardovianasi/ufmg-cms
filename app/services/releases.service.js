@@ -51,6 +51,7 @@
 
 
       angular.forEach(data.files, function (value) {
+        // TODO DELETE COMMENT
         var file = value;
 
         if (value.file !== '') {

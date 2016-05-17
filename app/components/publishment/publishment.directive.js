@@ -7,7 +7,7 @@
   PublishmentOptions.$inject = [
     '$location',
     '$filter',
-    'StatusService',
+    'StatusService'
   ];
 
   /**
