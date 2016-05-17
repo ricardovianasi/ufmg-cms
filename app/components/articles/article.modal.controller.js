@@ -73,11 +73,13 @@
 
     $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
 
+    $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+
     $scope.article_thumb = null;
 
     // Upload
     // Cover Image - Upload
-    $scope.$watch('article_thumb', function () {
+    $scope.$watch('article_thumb', function () { 
       if ($scope.article_thumb) {
         $scope.upload($scope.article_thumb);
       }
