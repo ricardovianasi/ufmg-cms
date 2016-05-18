@@ -339,24 +339,28 @@
          * @returns {{news: (*|null)}}
          */
         highlightednews: function (widget) {
+
           if (widget.news) {
             var newsToSelect = [];
 
             angular.forEach(widget.news, function (news) {
-              newsToSelect.push({
-                id: news.id,
-                title: news.title
-              });
+              newsToSelect.push(news.id);
+            });
+
+            return {
+              news: newsToSelect,
+            };
+          } else if (widget.content.news) {
+            newsToSelect = [];
+
+            angular.forEach(widget.content.news, function (news) {
+              newsToSelect.push(news.id);
             });
 
             return {
               news: newsToSelect,
             };
           }
-
-          return {
-            news: widget.news,
-          };
         },
         /**
          * Highlighted Radio News
@@ -415,24 +419,18 @@
          */
         editorialnews: function (widget) {
           var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+            origin: widget.origin || (widget.content ? widget.content.origin : null),
           };
 
           if (widget.news) {
-            obj.news = widget.news;
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
+            var newsToSelect = [];
 
-              angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push({
-                  id: news.id,
-                  title: news.title
-                });
-              });
+            angular.forEach(widget.news, function (news) {
+              newsToSelect.push(news.id);
+            });
 
-              obj.news = newsToSelect;
-            }
+            obj.news = newsToSelect;
           }
 
           return obj;
@@ -838,24 +836,23 @@
          */
         editorialnews: function (widget) {
           var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+            origin: widget.origin || (widget.content ? widget.content.origin : null),
           };
 
-          if (widget.news) {
-            obj.news = widget.news;
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
+          if (widget.content.news) {
+            var newsToSelect = [];
 
-              angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push({
-                  id: news.id,
-                  title: news.title
-                });
+            angular.forEach(widget.content.news, function (news) {
+              newsToSelect.push({
+                id: news.id,
+                title: news.title
               });
+            });
 
-              obj.news = newsToSelect;
-            }
+            obj.news = newsToSelect;
+          } else {
+            obj.news = widget.news;
           }
 
           return obj;
