@@ -9,7 +9,7 @@
 <div class=form-group>
     <label>Tipo de editoria:</label>
 
-    <select title="Tipo de editoria" ng-model=widget.editorial_type class=form-control>
+    <select title="Tipo de editoria" ng-model=widget.origin class=form-control>
         <option value=0>
             Ordem cronol&oacute;gica
         </option>
@@ -20,7 +20,7 @@
     </select>
 </div>
 
-<div ng-show="widget.editorial_type == '1'" class=form-group>
+<div ng-show="widget.origin == '1'" class=form-group>
     <label>Selecione as not&iacute;cias:</label>
     <ul class=dashed-list>
         <li ng-repeat="news in widget.news track by $index" class="as-sortable-item clearfix">
