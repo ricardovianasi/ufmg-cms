@@ -340,9 +340,9 @@
          */
         highlightednews: function (widget) {
 
-          if (widget.news) {
-            var newsToSelect = [];
+          var newsToSelect = [];
 
+          if (widget.news) {
             angular.forEach(widget.news, function (news) {
               newsToSelect.push(news.id);
             });
@@ -362,6 +362,7 @@
             };
           }
         },
+
         /**
          * Highlighted Radio News
          *
