@@ -419,23 +419,36 @@
          * @returns {{tag: (*|null)}}
          */
         editorialnews: function (widget) {
-          var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag.id : null),
-            origin: widget.origin || (widget.content ? widget.content.origin : null),
-          };
+
+          var newsToSelect = [];
 
           if (widget.news) {
-            var newsToSelect = [];
+            newsToSelect = [];
 
             angular.forEach(widget.news, function (news) {
               newsToSelect.push(news.id);
             });
 
-            obj.news = newsToSelect;
-          }
+            return {
+              news: newsToSelect,
+              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+              origin: widget.origin || (widget.content ? widget.content.origin : null),
+            };
+          } else if (widget.content.news) {
+            newsToSelect = [];
 
-          return obj;
+            angular.forEach(widget.content.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
+            return {
+              news: newsToSelect,
+              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+              origin: widget.origin || (widget.content ? widget.content.origin : null),
+            };
+          }
         },
+
         /**
          * Internal Menu
          *
@@ -836,28 +849,34 @@
          * @returns {{tag: (*|null), news: (*|null)}}
          */
         editorialnews: function (widget) {
-          var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag.id : null),
-            origin: widget.origin || (widget.content ? widget.content.origin : null),
-          };
 
-          if (widget.content.news) {
-            var newsToSelect = [];
-
-            angular.forEach(widget.content.news, function (news) {
-              newsToSelect.push({
-                id: news.id,
-                title: news.title
-              });
-            });
-
-            obj.news = newsToSelect;
+          if (widget.news) {
+            return {
+              news: widget.news,
+              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+              origin: widget.origin || (widget.content ? widget.content.origin : null),
+            };
           } else {
-            obj.news = widget.news;
-          }
+            if (widget.content.news) {
+              var newsToSelect = [];
 
-          return obj;
+              angular.forEach(widget.content.news, function (news) {
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
+              });
+
+              return {
+                news: newsToSelect,
+                tag: widget.tag || (widget.content ? widget.content.tag.id : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+
+              };
+            }
+          }
         },
+
         /**
          * Internal Menu
          *
