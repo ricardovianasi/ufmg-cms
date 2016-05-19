@@ -274,7 +274,7 @@
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews.id : null),
             tag: widget.tag || (widget.content ? widget.content.tag : null),
           };
         },
@@ -748,11 +748,19 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
+          var typeNews = '';
+
+          if (widget.typeNews) {
+            typeNews = widget.typeNews;
+          } else if (widget.content.typeNews) {
+            typeNews = widget.content.typeNews.id;
+          }
+
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            typeNews: typeNews,
+            tag: widget.tag || (widget.content ? widget.content.tags.id : null),
           };
         },
         /**
