@@ -604,6 +604,13 @@
             type: widget.type,
             faq: parseInt(id)
           };
+        },
+
+        tagcloud: function(widget) {
+          return {
+            type: widget.type,
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+          };
         }
       };
 
@@ -1011,6 +1018,14 @@
           return {
             title: widget.title,
             content: widget.content,
+          };
+        },
+
+        tagcloud: function(widget) {
+          return {
+            title: widget.title,
+            type: widget.type,
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
           };
         }
       };
