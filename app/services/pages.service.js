@@ -271,11 +271,27 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
+          var tags = [];
+
+          if(widget.content) {
+            if(widget.content.tags.length > 0) {
+              if (typeof widget.content.tags[0].text !== 'undefined')
+                widget.content.tags = _.map(widget.content.tags, 'text');
+                tags = widget.content.tags;
+            }
+          } else {
+            if(widget.tags.length > 0) {
+              if (typeof widget.tags[0].text !== 'undefined')
+                widget.tags = _.map(widget.tags, 'text');
+                tags = widget.tags;
+            }
+          }
+
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
             typeNews: widget.typeNews || (widget.content ? widget.content.typeNews.id : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            tags: tags,
           };
         },
         /**
@@ -749,18 +765,38 @@
          */
         listnews: function (widget) {
           var typeNews = '';
+          var tagsForTagsInput = [];
 
           if (widget.typeNews) {
             typeNews = widget.typeNews;
+            parseTags(widget.tags);
+
           } else if (widget.content.typeNews) {
             typeNews = widget.content.typeNews.id;
+            parseTags(widget.content.tags);
+          }
+
+          function parseTags(tags) {
+            if (widget.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].text
+                });
+              });
+            } else if (widget.content.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].name
+                });
+              });
+            }
           }
 
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
             typeNews: typeNews,
-            tag: widget.tag || (widget.content ? widget.content.tags.id : null),
+            tags: tagsForTagsInput
           };
         },
         /**
