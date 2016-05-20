@@ -438,30 +438,42 @@
 
           var newsToSelect = [];
 
-          if (widget.news) {
-            newsToSelect = [];
+          if (widget.origin) {
+            if (widget.origin == "1" && widget.news) {
+              newsToSelect = [];
 
-            angular.forEach(widget.news, function (news) {
-              newsToSelect.push(news.id);
-            });
+              angular.forEach(widget.news, function (news) {
+                newsToSelect.push(news.id);
+              });
 
-            return {
-              news: newsToSelect,
-              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
-              origin: widget.origin || (widget.content ? widget.content.origin : null),
-            };
-          } else if (widget.content.news) {
-            newsToSelect = [];
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.origin == "0") {
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            }
+          } else if (widget.content.origin !== null) {
+            if (widget.content.origin == "1" && widget.content.news) {
+              newsToSelect = [];
 
-            angular.forEach(widget.content.news, function (news) {
-              newsToSelect.push(news.id);
-            });
+              angular.forEach(widget.content.news, function (news) {
+                newsToSelect.push(news.id);
+              });
 
-            return {
-              news: newsToSelect,
-              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
-              origin: widget.origin || (widget.content ? widget.content.origin : null),
-            };
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.content.origin == "0") {
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            }
           }
         },
 
@@ -901,14 +913,20 @@
          */
         editorialnews: function (widget) {
 
-          if (widget.news) {
-            return {
-              news: widget.news,
-              tag: widget.tag || (widget.content ? widget.content.tag.id : null),
-              origin: widget.origin || (widget.content ? widget.content.origin : null),
-            };
-          } else {
-            if (widget.content.news) {
+          if (widget.origin) {
+            if (widget.origin == "1" && widget.news) {
+              return {
+                news: widget.news,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.origin == "0"){
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            }
+          } else if (widget.content.origin !== null) {
+            if (widget.content.origin == "1" && widget.content.news) {
               var newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
@@ -920,9 +938,13 @@
 
               return {
                 news: newsToSelect,
-                tag: widget.tag || (widget.content ? widget.content.tag.id : null),
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
 
+              };
+            } else if (widget.content.origin == "0") {
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
           }
