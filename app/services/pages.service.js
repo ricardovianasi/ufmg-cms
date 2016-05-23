@@ -920,6 +920,7 @@
          * @returns {{tag: (*|null), news: (*|null)}}
          */
         editorialnews: function (widget) {
+          var newsToSelect = [];
 
           if (widget.origin) {
             if (widget.origin == "1" && widget.news) {
@@ -928,7 +929,7 @@
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             } else if (widget.origin == "0"){
-              newsToSelect = []
+              newsToSelect = [];
 
               return {
                 news: newsToSelect,
@@ -937,8 +938,7 @@
             }
           } else if (widget.content.origin !== null) {
             if (widget.content.origin == "1" && widget.content.news) {
-              var newsToSelect = [];
-
+              
               angular.forEach(widget.content.news, function (news) {
                 newsToSelect.push({
                   id: news.id,
@@ -952,7 +952,7 @@
 
               };
             } else if (widget.content.origin == "0") {
-              newsToSelect = []
+              newsToSelect = [];
 
               return {
                 news: newsToSelect,
