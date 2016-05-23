@@ -785,21 +785,25 @@
 
           if (widget.typeNews) {
             typeNews = widget.typeNews;
-            parseTags(widget.tags);
+            if (widget.tags) {
+              parseTags(widget.tags);
+            }
 
           } else if (widget.content.typeNews) {
             typeNews = widget.content.typeNews.id;
-            parseTags(widget.content.tags);
+            if (widget.content.tags) {
+              parseTags(widget.content.tags);
+            }
           }
 
           function parseTags(tags) {
-            if ('tags' in widget && widget.tags) {
+            if (widget.tags) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].text
                 });
               });
-            } else if ('tags' in widget.content && widget.content.tags) {
+            } else if (widget.content.tags) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].name
