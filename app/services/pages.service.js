@@ -274,16 +274,20 @@
           var tags = [];
 
           if(widget.content) {
-            if(widget.content.tags.length > 0) {
+            if('tags' in widget.content && widget.content.tags.length > 0) {
               if (typeof widget.content.tags[0].text !== 'undefined')
                 widget.content.tags = _.map(widget.content.tags, 'text');
                 tags = widget.content.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
             }
           } else {
-            if(widget.tags.length > 0) {
+            if('tags' in widget && widget.tags.length > 0) {
               if (typeof widget.tags[0].text !== 'undefined')
                 widget.tags = _.map(widget.tags, 'text');
                 tags = widget.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
             }
           }
 
@@ -789,13 +793,13 @@
           }
 
           function parseTags(tags) {
-            if (widget.tags) {
+            if ('tags' in widget && widget.tags) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].text
                 });
               });
-            } else if (widget.content.tags) {
+            } else if ('tags' in widget.content && widget.content.tags) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].name
