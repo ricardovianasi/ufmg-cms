@@ -928,8 +928,10 @@
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             } else if (widget.origin == "0"){
+              newsToSelect = []
+
               return {
-                news: widget.news || (widget.content ? widget.content.news : null),
+                news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
@@ -950,8 +952,10 @@
 
               };
             } else if (widget.content.origin == "0") {
+              newsToSelect = []
+
               return {
-                news: widget.news || (widget.content ? widget.content.news : null),
+                news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
@@ -1101,7 +1105,15 @@
             type: widget.type,
             limit: widget.limit || (widget.content ? widget.content.limit : null),
           };
+        },
+
+        search: function(widget) {
+          return {
+            title: widget.title,
+            type: widget.type,
+          };
         }
+
       };
 
       /**
