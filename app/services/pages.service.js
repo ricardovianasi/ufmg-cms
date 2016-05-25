@@ -16,6 +16,7 @@
     'ReleasesService',
     'TagsService',
     'faqService',
+    'PostTypeService',
     '$q'
   ];
 
@@ -46,6 +47,7 @@
                         ReleasesService,
                         TagsService,
                         faqService,
+                        PostTypeService,
                         $q) {
     console.log('... PagesService');
 
@@ -643,6 +645,14 @@
             type: widget.type,
             limit: widget.limit || (widget.content ? widget.content.limit : null),
           };
+        },
+
+        search: function(widget) {
+          return {
+            id: widget.id,
+            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
+          };
         }
       };
 
@@ -938,7 +948,7 @@
             }
           } else if (widget.content.origin !== null) {
             if (widget.content.origin == "1" && widget.content.news) {
-              
+
               angular.forEach(widget.content.news, function (news) {
                 newsToSelect.push({
                   id: news.id,
@@ -1109,8 +1119,9 @@
 
         search: function(widget) {
           return {
-            title: widget.title,
-            type: widget.type,
+            id: widget.id,
+            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
           };
         }
 
@@ -1199,6 +1210,21 @@
           $scope.events = data.data;
         });
       };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+
+      var _preparingPostTypes = function ($scope) {
+        $scope.post_types = [];
+
+        PostTypeService.getPostTypes().then(function (data) {
+          $scope.post_types = data.data;
+        });
+      };
+
 
       // Partial preparing
       var _preparing = {
@@ -1416,6 +1442,35 @@
           faqService.get().then(function(data){
             $scope.faqs = data.data.items;
           });
+        },
+
+        search: function ($scope) {
+          _preparingPostTypes($scope);
+
+          $scope.typeChanged = function() {
+
+            $scope.options = [];
+
+            for (var i = 0; i < $scope.post_types.items.length; ++i) {
+              if ($scope.post_types.items[i].post_type == $scope.widget.post_type) {
+                $scope.options = $scope.post_types.items[i].options || [];
+              }
+            }
+          };
+
+          // $scope.checkO = function (id) {
+          //   var hasOptions;
+          //
+          //   console.log(id);
+          //
+          //   if (id.options) {
+          //     hasOptions = true;
+          //   } else {
+          //     hasOptions = false;
+          //   }
+          //
+          //   return hasOptions;
+          // };
         }
       };
 
