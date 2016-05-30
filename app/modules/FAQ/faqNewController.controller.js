@@ -267,7 +267,7 @@
     }
 
     function _removeFaqCategoryAskEdit(id) {
-      vm.currentNewCategoryAsk.items.splice(id, 1)
+      vm.currentNewCategoryAsk.items.splice(id, 1);
     }
 
     /**
@@ -316,4 +316,4 @@
     }
   }
 
-})();
+})(); 

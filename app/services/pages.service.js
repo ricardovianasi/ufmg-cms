@@ -16,6 +16,7 @@
     'ReleasesService',
     'TagsService',
     'faqService',
+    'PostTypeService',
     '$q'
   ];
 
@@ -46,6 +47,7 @@
                         ReleasesService,
                         TagsService,
                         faqService,
+                        PostTypeService,
                         $q) {
     console.log('... PagesService');
 
@@ -271,11 +273,31 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
+          var tags = [];
+
+          if(widget.content) {
+            if('tags' in widget.content && widget.content.tags.length > 0) {
+              if (typeof widget.content.tags[0].text !== 'undefined')
+                widget.content.tags = _.map(widget.content.tags, 'text');
+                tags = widget.content.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+            }
+          } else {
+            if('tags' in widget && widget.tags.length > 0) {
+              if (typeof widget.tags[0].text !== 'undefined')
+                widget.tags = _.map(widget.tags, 'text');
+                tags = widget.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+            }
+          }
+
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews.id : null),
+            tags: tags,
           };
         },
         /**
@@ -339,9 +361,10 @@
          * @returns {{news: (*|null)}}
          */
         highlightednews: function (widget) {
-          if (widget.news) {
-            var newsToSelect = [];
 
+          var newsToSelect = [];
+
+          if (widget.news) {
             angular.forEach(widget.news, function (news) {
               newsToSelect.push(news.id);
             });
@@ -349,12 +372,19 @@
             return {
               news: newsToSelect,
             };
-          }
+          } else if (widget.content.news) {
+            newsToSelect = [];
 
-          return {
-            news: widget.news,
-          };
+            angular.forEach(widget.content.news, function (news) {
+              newsToSelect.push(news.id);
+            });
+
+            return {
+              news: newsToSelect,
+            };
+          }
         },
+
         /**
          * Highlighted Radio News
          *
@@ -411,26 +441,48 @@
          * @returns {{tag: (*|null)}}
          */
         editorialnews: function (widget) {
-          var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
-          };
 
-          if (widget.news) {
-            obj.news = widget.news;
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
+          var newsToSelect = [];
+
+          if (widget.origin) {
+            if (widget.origin == "1" && widget.news) {
+              newsToSelect = [];
+
+              angular.forEach(widget.news, function (news) {
+                newsToSelect.push(news.id);
+              });
+
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.origin == "0") {
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            }
+          } else if (widget.content.origin !== null) {
+            if (widget.content.origin == "1" && widget.content.news) {
+              newsToSelect = [];
 
               angular.forEach(widget.content.news, function (news) {
                 newsToSelect.push(news.id);
               });
 
-              obj.news = newsToSelect;
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.content.origin == "0") {
+              return {
+                news: widget.news || (widget.content ? widget.content.news : null),
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
             }
           }
-
-          return obj;
         },
+
         /**
          * Internal Menu
          *
@@ -586,6 +638,21 @@
             type: widget.type,
             faq: parseInt(id)
           };
+        },
+
+        tagcloud: function(widget) {
+          return {
+            type: widget.type,
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+          };
+        },
+
+        search: function(widget) {
+          return {
+            id: widget.id,
+            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
+          };
         }
       };
 
@@ -723,11 +790,43 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
+          var typeNews = '';
+          var tagsForTagsInput = [];
+
+          if (widget.typeNews) {
+            typeNews = widget.typeNews;
+            if (widget.tags) {
+              parseTags(widget.tags);
+            }
+
+          } else if (widget.content.typeNews) {
+            typeNews = widget.content.typeNews.id;
+            if (widget.content.tags) {
+              parseTags(widget.content.tags);
+            }
+          }
+
+          function parseTags(tags) {
+            if (widget.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].text
+                });
+              });
+            } else if (widget.content.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].name
+                });
+              });
+            }
+          }
+
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
+            typeNews: typeNews,
+            tags: tagsForTagsInput
           };
         },
         /**
@@ -831,26 +930,48 @@
          * @returns {{tag: (*|null), news: (*|null)}}
          */
         editorialnews: function (widget) {
-          var obj = {
-            tag: widget.tag || (widget.content ? widget.content.tag : null),
-          };
+          var newsToSelect = [];
 
-          if (widget.news) {
-            obj.news = widget.news;
-          } else {
-            if (widget.content.news) {
-              var newsToSelect = [];
+          if (widget.origin) {
+            if (widget.origin == "1" && widget.news) {
+              return {
+                news: widget.news,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            } else if (widget.origin == "0"){
+              newsToSelect = [];
+
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
+            }
+          } else if (widget.content.origin !== null) {
+            if (widget.content.origin == "1" && widget.content.news) {
 
               angular.forEach(widget.content.news, function (news) {
-                newsToSelect.push(news.id);
+                newsToSelect.push({
+                  id: news.id,
+                  title: news.title
+                });
               });
 
-              obj.news = newsToSelect;
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+
+              };
+            } else if (widget.content.origin == "0") {
+              newsToSelect = [];
+
+              return {
+                news: newsToSelect,
+                origin: widget.origin || (widget.content ? widget.content.origin : null),
+              };
             }
           }
-
-          return obj;
         },
+
         /**
          * Internal Menu
          *
@@ -986,7 +1107,24 @@
             title: widget.title,
             content: widget.content,
           };
+        },
+
+        tagcloud: function(widget) {
+          return {
+            title: widget.title,
+            type: widget.type,
+            limit: widget.limit || (widget.content ? widget.content.limit : null),
+          };
+        },
+
+        search: function(widget) {
+          return {
+            id: widget.id,
+            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
+          };
         }
+
       };
 
       /**
@@ -1072,6 +1210,34 @@
           $scope.events = data.data;
         });
       };
+
+      /**
+       * @param $scope
+       *
+       * @private
+       */
+
+      var _preparingPostTypes = function ($scope) {
+        $scope.post_types = [];
+
+        PostTypeService.getPostTypes().then(function (data) {
+          $scope.post_types = data.data;
+
+          $scope.typeChanged = function() {
+
+            $scope.options = [];
+
+            for (var i = 0; i < $scope.post_types.items.length; ++i) {
+              if ($scope.post_types.items[i].post_type == $scope.widget.post_type) {
+                $scope.options = $scope.post_types.items[i].options || [];
+              }
+            }
+          };
+
+          $scope.typeChanged();
+        });
+      };
+
 
       // Partial preparing
       var _preparing = {
@@ -1224,7 +1390,10 @@
         highlightedevent: _preparingEvents,
         gallery: _preparingGalleries,
         eventlist: _getTags,
-        editorialnews: _preparingNews,
+        editorialnews: function ($scope) {
+          _preparingNews($scope);
+          _prepareItems($scope);
+        },
         /**
          * @param $scope
          */
@@ -1286,6 +1455,10 @@
           faqService.get().then(function(data){
             $scope.faqs = data.data.items;
           });
+        },
+
+        search: function ($scope) {
+          _preparingPostTypes($scope);
         }
       };
 

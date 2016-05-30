@@ -1,0 +1,17 @@
+<div class=form-group>
+    <label>Pesquisar em:</label>
+
+    <select title="Pesquisar em:" class="form-control select-post-type"
+            ng-model="widget.post_type"
+            ng-change="typeChanged()"
+            ng-options="item.post_type as item.label for item in post_types.items"></select>
+</div>
+
+
+<div class=form-group ng-show="options != false">
+    <label>Selecionar filtro/item:</label>
+
+    <select title="Selecionar:" class="form-control"
+            ng-model="widget.post_filter_id"
+            ng-options="option.id as option.name for option in options">
+</div>
