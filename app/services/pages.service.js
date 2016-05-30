@@ -1457,20 +1457,6 @@
               }
             }
           };
-
-          // $scope.checkO = function (id) {
-          //   var hasOptions;
-          //
-          //   console.log(id);
-          //
-          //   if (id.options) {
-          //     hasOptions = true;
-          //   } else {
-          //     hasOptions = false;
-          //   }
-          //
-          //   return hasOptions;
-          // };
         }
       };
 
