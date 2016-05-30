@@ -1222,6 +1222,19 @@
 
         PostTypeService.getPostTypes().then(function (data) {
           $scope.post_types = data.data;
+
+          $scope.typeChanged = function() {
+
+            $scope.options = [];
+
+            for (var i = 0; i < $scope.post_types.items.length; ++i) {
+              if ($scope.post_types.items[i].post_type == $scope.widget.post_type) {
+                $scope.options = $scope.post_types.items[i].options || [];
+              }
+            }
+          };
+
+          $scope.typeChanged();
         });
       };
 
@@ -1446,17 +1459,6 @@
 
         search: function ($scope) {
           _preparingPostTypes($scope);
-
-          $scope.typeChanged = function() {
-
-            $scope.options = [];
-
-            for (var i = 0; i < $scope.post_types.items.length; ++i) {
-              if ($scope.post_types.items[i].post_type == $scope.widget.post_type) {
-                $scope.options = $scope.post_types.items[i].options || [];
-              }
-            }
-          };
         }
       };
 
