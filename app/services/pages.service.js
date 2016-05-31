@@ -1121,7 +1121,7 @@
           return {
             id: widget.id,
             post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
+            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
           };
         }
 
