@@ -82,6 +82,11 @@
             name: 'FAQ',
             location: 'faq',
             enabled: true
+          },{
+            icon: 'fa fa-users',
+            name: 'Usuários',
+            location: 'users',
+            enabled: true
           }
         ];
 
