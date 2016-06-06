@@ -749,7 +749,7 @@
          */
         highlightedgallery: function (widget) {
           return {
-            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+            gallery_id: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
           };
         },
         /**
