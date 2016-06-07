@@ -19,14 +19,14 @@
     $rootScope.shownavbar = true;
     console.log('... usersNewController');
 
-    this.tab = 1;
+    vm.tab = 1;
 
-    this.setTab = function (tabId) {
-      this.tab = tabId;
+    vm.setTab = function (tabId) {
+      vm.tab = tabId;
     };
 
-    this.isSet = function (tabId) {
-      return this.tab === tabId;
+    vm.isSet = function (tabId) {
+      return vm.tab === tabId;
     };
 
 
