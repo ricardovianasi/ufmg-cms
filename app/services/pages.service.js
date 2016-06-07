@@ -749,7 +749,7 @@
          */
         highlightedgallery: function (widget) {
           return {
-            gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
+            gallery_id: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
           };
         },
         /**
@@ -1118,11 +1118,47 @@
         },
 
         search: function(widget) {
-          return {
-            id: widget.id,
-            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
-          };
+          var postFilter;
+
+          if (widget.post_filter_id && widget.post_filter_id.length <= 2) {
+
+            postFilter = parseInt(widget.post_filter_id);
+            console.log(postFilter);
+
+            return {
+              id: widget.id,
+              post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+              post_filter_id: postFilter
+            };
+
+          } else if (widget.content) {
+
+            if (widget.content.postFilterId && widget.content.postFilterId.length <= 2) {
+
+              postFilter = parseInt(widget.content.postFilterId);
+              console.log(postFilter);
+
+              return {
+                id: widget.id,
+                post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+                post_filter_id: postFilter
+              };
+
+            } else {
+              return {
+                id: widget.id,
+                post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+                post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
+              };
+            }
+
+          } else {
+            return {
+              id: widget.id,
+              post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
+              post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
+            };
+          }
         }
 
       };

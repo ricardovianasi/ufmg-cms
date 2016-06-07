@@ -9,4 +9,5 @@ app/env-local.js
 build/*
 .idea
 app/env-local.json
+app/env-local.json.dist
 .DS_Store
