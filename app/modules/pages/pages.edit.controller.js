@@ -64,8 +64,8 @@
 
       $scope.pagesParent.push({
         id: null,
-        title: '- Página Normal'
-      })
+        title: '- Página Normal -'
+      });
     });
 
     TagsService.getTags().then(function(data){

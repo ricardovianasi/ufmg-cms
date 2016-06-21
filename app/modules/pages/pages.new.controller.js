@@ -60,8 +60,8 @@
 
       $scope.pagesParent.push({
         id: null,
-        title: '- Página Normal'
-      })
+        title: '- Página Normal -'
+      });
     });
 
     WidgetsService.getWidgets().then(function (data) {
