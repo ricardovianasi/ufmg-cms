@@ -189,7 +189,8 @@
             A página atual é filha de:
 
             <form action="">
-                <select  ng-options="item as item.title for item in pagesParent track by item.id"  class="form-control" ng-model="page.parent"></select>
+                <select class="form-control" ng-model="page.parent" ng-options="item as item.title for item in pagesParent | orderBy: 'title' track by item.id">
+                </select>
 
                 <input type="hidden" ng-model="page.page_type" value="">
             </form>
