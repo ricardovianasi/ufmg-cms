@@ -214,8 +214,8 @@
                                 <i class="fa fa-clock-o"></i> Horário de início
                             </label>
 
-                            <uib-timepicker ng-model="vm.event.init_hour" hour-step="1" minute-step="1"
-                                            show-meridian="vm.timepickerOpt.initTime.isMeridian"></uib-timepicker>
+                            <input id="initHour" type="text" name="initHour"
+                                   class="form-control" ng-model="vm.event.init_hour">
                         </div>
                     </div>
                 </div>
@@ -240,8 +240,8 @@
                                 <i class="fa fa-clock-o"></i> Horário de término
                             </label>
 
-                            <uib-timepicker ng-model="vm.event.end_hour" hour-step="1" minute-step="1"
-                                            show-meridian="vm.timepickerOpt.endTime.isMeridian"></uib-timepicker>
+                            <input id="endHour" type="text" name="endHour"
+                                   class="form-control" ng-model="vm.event.end_hour">
                         </div>
                     </div>
                 </div>

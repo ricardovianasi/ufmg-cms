@@ -112,9 +112,7 @@
     };
 
     vm.setEndDefault = function () {
-      console.log('Dentro');
       if (vm.event.endDate === "" || vm.event.endDate === null) {
-        console.log('Dentro IF');
         vm.event.endDate = vm.event.initDate;
       }
     };
@@ -184,7 +182,6 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
-      _parseTime(data);
 
       console.log(data);
 
@@ -226,9 +223,8 @@
       event.initDate = new Date(event.init_date);
       event.endDate = new Date(event.end_date);
 
-      event.init_hour = new Date("October 13, 2014 " + event.init_hour);
-      event.end_hour = new Date("October 13, 2014 " + event.end_hour);
-
+      vm.event.init_hour = event.init_hour;
+      vm.event.end_hour = event.end_hour;
 
       delete event.init_date;
       delete event.end_date;

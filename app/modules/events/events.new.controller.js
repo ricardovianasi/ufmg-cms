@@ -182,7 +182,6 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
-      _parseTime(data);
 
       EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');
