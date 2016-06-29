@@ -206,7 +206,8 @@
                                    is-open="vm.datepickerOpt.initDate.status.opened"
                                    min-date="vm.datepickerOpt.initDate.minDate"
                                    max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar" close-text="Fechar"
-                                   current-text="Hoje">
+                                   current-text="Hoje"
+                                   ng-change="vm.setEndDefault()">
                         </div>
                         <div class="form-group">
                             <label>

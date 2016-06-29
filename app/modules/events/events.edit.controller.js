@@ -62,7 +62,8 @@
     vm.breadcrumb = vm.title;
     vm.event = {
       courses: [],
-      tags: []
+      tags: [],
+      endDate: null
     };
     vm.categories = [];
     vm.courses = [];
@@ -108,6 +109,14 @@
     vm.timepickerOpt = {
       initTime: DateTimeHelper.getTimepickerOpt(),
       endTime: DateTimeHelper.getTimepickerOpt()
+    };
+
+    vm.setEndDefault = function () {
+      console.log('Dentro');
+      if (vm.event.endDate === "" || vm.event.endDate === null) {
+        console.log('Dentro IF');
+        vm.event.endDate = vm.event.initDate;
+      }
     };
 
     vm.redactorOptions = {
