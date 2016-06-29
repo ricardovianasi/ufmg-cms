@@ -57,6 +57,11 @@
 
     PagesService.getPages().then(function(data){
       $scope.pagesParent = data.data.items;
+
+      $scope.pagesParent.push({
+        id: null,
+        title: '- Página Normal -'
+      });
     });
 
     WidgetsService.getWidgets().then(function (data) {
@@ -90,6 +95,7 @@
       status: StatusService.STATUS_PUBLISHED,
       columns: 2,
       tags: [],
+      parent: null,
       title: null,
       widgets: {
         main: [],

@@ -62,7 +62,8 @@
     vm.breadcrumb = vm.title;
     vm.event = {
       courses: [],
-      tags: []
+      tags: [],
+      endDate: null
     };
     vm.categories = [];
     vm.courses = [];
@@ -108,6 +109,12 @@
     vm.timepickerOpt = {
       initTime: DateTimeHelper.getTimepickerOpt(),
       endTime: DateTimeHelper.getTimepickerOpt()
+    };
+
+    vm.setEndDefault = function () {
+      if (vm.event.endDate === "" || vm.event.endDate === null) {
+        vm.event.endDate = vm.event.initDate;
+      }
     };
 
     vm.redactorOptions = {
@@ -175,7 +182,8 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
-      _parseTime(data);
+
+      vm.setEndDefault();
 
       console.log(data);
 
@@ -217,9 +225,8 @@
       event.initDate = new Date(event.init_date);
       event.endDate = new Date(event.end_date);
 
-      event.init_hour = new Date("October 13, 2014 " + event.init_hour);
-      event.end_hour = new Date("October 13, 2014 " + event.end_hour);
-
+      vm.event.init_hour = event.init_hour;
+      vm.event.end_hour = event.end_hour;
 
       delete event.init_date;
       delete event.end_date;

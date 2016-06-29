@@ -58,7 +58,8 @@
     vm.event = {
       status: StatusService.STATUS_PUBLISHED,
       courses: [],
-      tags: []
+      tags: [],
+      endDate: null
     };
     vm.categories = [];
     vm.courses = [];
@@ -104,6 +105,12 @@
     vm.timepickerOpt = {
       initTime: DateTimeHelper.getTimepickerOpt(),
       endTime: DateTimeHelper.getTimepickerOpt()
+    };
+
+    vm.setEndDefault = function () {
+      if (vm.event.endDate === "" || vm.event.endDate === null) {
+        vm.event.endDate = vm.event.initDate;
+      }
     };
 
     vm.redactorOptions = {
@@ -175,7 +182,8 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
-      _parseTime(data);
+      
+      vm.setEndDefault();
 
       EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');
