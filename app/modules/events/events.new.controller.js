@@ -182,6 +182,8 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
+      
+      vm.setEndDefault();
 
       EventsService.store(data).then(function (event) {
         NotificationService.success('Evento criado com sucesso.');

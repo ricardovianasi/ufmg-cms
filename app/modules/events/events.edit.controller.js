@@ -183,6 +183,8 @@
      */
     vm.publish = function (data, preview) {
 
+      vm.setEndDefault();
+
       console.log(data);
 
       EventsService.update(data, $routeParams.id).then(function (event) {
