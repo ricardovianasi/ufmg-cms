@@ -1,0 +1,5 @@
+{
+  "apiUrl": "http://ufmg.br/webservice",
+  "grant_type_auth": "password",
+  "client_id_auth": "cms"
+}
