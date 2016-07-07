@@ -222,8 +222,10 @@
 
       event.courses = [];
       event.tags = [];
-      event.initDate = new Date(event.init_date);
-      event.endDate = new Date(event.end_date);
+      var reg_init_date = event.init_date.replace(/-/g, '/'),
+          reg_end_date  = event.end_date.replace(/-/g, '/'); 
+      event.initDate = new Date(reg_init_date);
+      event.endDate = new Date(reg_end_date);
 
       vm.event.init_hour = event.init_hour;
       vm.event.end_hour = event.end_hour;
