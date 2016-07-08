@@ -25,6 +25,16 @@
                 return sessionService.getIsLogged();
               }]
             }
+          }) 
+          .when('/user/edit/:userId', {
+            templateUrl: 'modules/users/users-new.template.html',
+            controller: 'usersNewController as vm',
+            controllerAs: 'ctrl',
+            resolve: {
+              isLogged: ['sessionService', function(sessionService) {
+                return sessionService.getIsLogged();
+              }]
+            }
           });
         }
     ]);

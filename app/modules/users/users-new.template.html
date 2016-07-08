@@ -45,12 +45,62 @@
 
     <div class="tab-pane tab-content" ng-show="vm.isSet(1)">
 
-        <div>
+        <div class="row">
+            <form class="form">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="user_name">Nome:</label>
+                        <input id="user_name" type="text" name="user_name" class="form-control" ng-model="vm.user.name">
+                    </div>
 
-            <p>Carriage quitting securing be appetite it declared. High eyes kept so busy feel call in. Would day nor ask walls known. But preserved advantage are but and certainty earnestly enjoyment. Passage weather as up am exposed. And natural related man subject. Eagerness get situation his was delighted. </p>
+                    <div class="form-group">
+                        <label for="user_email">Email:</label>
+                        <input id="user_email" type="email" name="user_email" class="form-control" ng-model="vm.user.email">
+                    </div>
 
-            <p>Fulfilled direction use continual set him propriety continued. Saw met applauded favourite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther related bed and passage comfort civilly. Dashwoods see frankness objection abilities the. As hastened oh produced prospect formerly up am. Placing forming nay looking old married few has. Margaret disposed add screened rendered six say his striking confined. </p>
+                    <div class="form-group">
+                        <label for="user_commercial_phone">Telefone comercial:</label>
+                        <input id="user_commercial_phone" type="text" name="user_commercial_phone" class="form-control" ng-model="vm.user.commercial_phone">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="user_home_phone">Telefone residencial:</label>
+                        <input id="user_home_phone" type="text" name="user_home_phone" class="form-control" ng-model="vm.user.home_phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_mobile_phone">Telefone celular:</label>
+                        <input id="user_mobile_phone" type="text" name="user_mobile_phone" class="form-control" ng-model="vm.user.mobile_phone">
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="user_unit">Unidade:</label>
+                        <input id="user_unit" type="text" name="user_unit" class="form-control" ng-model="vm.user.unit">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_sector">Setor:</label>
+                        <input id="user_sector" type="text" name="user_sector" class="form-control" ng-model="vm.user.sector">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_occupation">Cargo:</label>
+                        <input id="user_occupation" type="text" name="user_occupation" class="form-control" ng-model="vm.user.occupation">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_function">Função:</label>
+                        <input id="user_function" type="text" name="user_function" class="form-control" ng-model="vm.user.function">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user_site">Site:</label>
+                        <input id="user_site" type="text" name="user_site" class="form-control" ng-model="vm.user.site">
+                    </div>
+                </div>
+            </form>
         </div>
 
     </div>
@@ -61,3 +111,13 @@
         <p>When be draw drew ye. Defective in do recommend suffering. House it seven in spoil tiled court. Sister others marked fat missed did out use. Alteration possession dispatched collecting instrument travelling he or on. Snug give made at spot or late that mr. </p>
 
     </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <hr/>
+            <a href="" class="btn btn-secondary btn-lg" ng-click="vm.save()">
+                <i class="fa fa-check"></i> Salvar Usuário
+            </a>
+        </div>
+    </div>
+
