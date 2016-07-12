@@ -42,6 +42,7 @@ var SCRIPTS = [
   'bower_components/moment/min/moment.min.js',
   'bower_components/angular-loading-bar/build/loading-bar.min.js',
   'app/assets/scripts/remove-button.js',
+  'bower_components/v-accordion/dist/v-accordion.min.js',
 ];
 
 var STYLES = [
@@ -57,6 +58,7 @@ var STYLES = [
   'app/assets/scripts/redactor-2.1.2.4/redactor.css',
   'bower_components/ng-tags-input/ng-tags-input.min.css',
   'bower_components/angular-loading-bar/build/loading-bar.min.css',
+  'bower_components/v-accordion/dist/v-accordion.min.css',
 
   // God Damn Xenon
   'app/assets/xenon/css/bootstrap.css',

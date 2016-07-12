@@ -49,7 +49,7 @@
                     <tr role="row" class="odd"
                         ng-repeat="item in vm.users | filter: search | orderBy: '-created_at'">
                         <td>
-                            <a ng-href="#/users/edit/{{ item.id }}">{{ item.name }}</a>
+                            <a ng-href="#/user/edit/{{ item.id }}">{{ item.name }}</a>
                         </td>
 
                         <td class="table-fit">
