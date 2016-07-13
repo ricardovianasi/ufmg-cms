@@ -43,6 +43,7 @@ var SCRIPTS = [
   'bower_components/angular-loading-bar/build/loading-bar.min.js',
   'app/assets/scripts/remove-button.js',
   'bower_components/v-accordion/dist/v-accordion.min.js',
+  'bower_components/checklist-model/checklist-model.js'
 ];
 
 var STYLES = [

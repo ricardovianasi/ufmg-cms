@@ -24,6 +24,7 @@
       'pascalprecht.translate',
       'angular-loading-bar',
       'vAccordion',
+      'checklist-model',
 
       // App Modules
       'calendarModule',
