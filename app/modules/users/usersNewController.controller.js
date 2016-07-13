@@ -7,12 +7,13 @@
   usersNewController.$inject = [
     '$rootScope',
     'UsersService',
+    'ResourcesService',
     '$routeParams',
     '$location',
     'NotificationService'
   ];
 
-  function usersNewController($rootScope, UsersService, $routeParams, $location, NotificationService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -66,6 +67,22 @@
     }
 
     _getUser();
+
+
+    /**
+     *
+     * @private
+     */
+    function _getPerms() {
+      ResourcesService.get().then(function(data){
+        vm.resources = data.data.items; 
+
+        console.log('data perms >>>>>>>>>>>>', data.data.items);
+
+      });
+    }
+
+    _getPerms();
 
 
     /**

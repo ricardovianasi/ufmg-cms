@@ -23,6 +23,7 @@
       'ui.sortable',
       'pascalprecht.translate',
       'angular-loading-bar',
+      'vAccordion',
 
       // App Modules
       'calendarModule',
