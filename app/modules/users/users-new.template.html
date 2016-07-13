@@ -115,7 +115,11 @@
                         </v-pane-header>
 
                         <v-pane-content>
-                            werwerewrewrew
+                            <div class="checkbox">
+                                <label ng-repeat="(key, value) in item.privileges track by $index">
+                                    <input type="checkbox" data-checklist-model="vm.resourcePerms" data-checklist-value="key">{{ value }}
+                                </label>
+                            </div>
                         </v-pane-content>
                     </v-pane>
                 </div>
