@@ -109,15 +109,16 @@
         <v-accordion class="vAccordion--default" multiple>
             <div class="row">
                 <div class="col-xs-12">
-                    <v-pane ng-repeat="item in vm.resources track by $index">
+                    <pre>{{vm.resourcesPerms | json}}</pre>
+                    <v-pane ng-repeat="(key, value) in vm.resources.items track by $index">
                         <v-pane-header>
-                            {{ item.alias }}
+                            {{ value.alias }}
                         </v-pane-header>
 
                         <v-pane-content>
                             <div class="checkbox">
-                                <label ng-repeat="(key, value) in item.privileges track by $index">
-                                    <input type="checkbox" data-checklist-model="vm.resourcePerms" data-checklist-value="key">{{ value }}
+                                <label ng-repeat="(key, value) in value.privileges track by $index">
+                                    <input type="checkbox" data-checklist-model="vm.resourcesPerms[$parent.key].privilege" data-checklist-value="key">{{ value }}
                                 </label>
                             </div>
                         </v-pane-content>

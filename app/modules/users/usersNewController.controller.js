@@ -75,9 +75,12 @@
      */
     function _getPerms() {
       ResourcesService.get().then(function(data){
-        vm.resources = data.data.items; 
+        vm.resources = data.data;
 
-        console.log('data perms >>>>>>>>>>>>', data.data.items);
+        vm.resourcesPerms = [];
+        vm.resourcesPerms = {};
+
+        console.log('data perms >>>>>>>>>>>>', vm.resources);
 
       });
     }
