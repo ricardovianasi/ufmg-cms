@@ -10,10 +10,11 @@
     'ResourcesService',
     '$routeParams',
     '$location',
-    'NotificationService'
+    'NotificationService',
+    'PagesService',
   ];
 
-  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -46,10 +47,13 @@
       unit: '',
       sector: '',
       occupation: '',
-      function: ''
+      function: '',
+      resourcesPerms: {}
     };
 
     vm.save = _save;
+
+    vm.convertPrivileges = _convertPrivileges;
 
     /**
      *
@@ -59,9 +63,6 @@
       if(id) {
         UsersService.getUser(id).then(function(data){
           vm.user = data.data;
-
-          console.log('data >>>>>>>>>>>>', data.data.items);
-
         });
       }
     }
@@ -75,24 +76,54 @@
      */
     function _getPerms() {
       ResourcesService.get().then(function(data){
-        vm.resources = data.data;
-
-        vm.resourcesPerms = [];
-        vm.resourcesPerms = {};
-
-        console.log('data perms >>>>>>>>>>>>', vm.resources);
-
+        vm.resources = data.data.items;
       });
     }
 
     _getPerms();
 
 
+    PagesService.getPages().then(function(data){
+      vm.pagesParent = data.data.items;
+    });
+
+
+    function _convertPrivileges() {
+
+      // recursive function to clone an object. If a non object parameter
+      // is passed in, that parameter is returned and no recursion occurs.
+
+      function cloneObject(obj) {
+        if (obj === null || typeof obj !== 'object') {
+          return obj;
+        }
+
+        var temp = obj.constructor(); // give temp the original obj's constructor
+        for (var key in obj) {
+          temp[key] = cloneObject(obj[key]);
+        }
+
+        return temp;
+      }
+
+      var clonedPerms = (cloneObject(vm.user.resourcesPerms));
+
+      Object.keys(clonedPerms).forEach(function(k) {
+        clonedPerms[k] = clonedPerms[k].join(";");
+      });
+
+      console.log(JSON.stringify(clonedPerms, 0, 4));
+
+      vm.user.permissions = clonedPerms;
+
+    }
+
     /**
      *
      * @private
      */
     function _save() {
+      _convertPrivileges();
 
       if(id) {
         UsersService.updateUser(vm.user).then(function () {
