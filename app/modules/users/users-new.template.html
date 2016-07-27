@@ -126,6 +126,18 @@
         <v-accordion class="vAccordion--default" multiple>
             <div class="row">
                 <div class="col-xs-12">
+                    <h5><strong>Tipo de Usuário:</strong></h5>
+                    <label>
+                        <input type="radio" ng-model="vm.user.is_administrator" ng-value="false">
+                        Padrão
+                    </label>
+                    <label style="margin-left: 15px;">
+                        <input type="radio" ng-model="vm.user.is_administrator" ng-value="true">
+                        Administrador
+                    </label>
+                    <hr>
+                </div>
+                <div class="col-xs-12">
                     <v-pane ng-repeat="(key, value) in vm.resources track by $index">
                         <v-pane-header>
                             {{ value.alias }}

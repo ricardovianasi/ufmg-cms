@@ -92,8 +92,6 @@
 
     PeriodicalService.getPeriodicals().then(function (data) {
       vm.periodicals = data.data.items;
-
-      console.log(vm.periodicals)
     });
 
     PagesService.getPages().then(function(data){
