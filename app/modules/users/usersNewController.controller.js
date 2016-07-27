@@ -12,9 +12,10 @@
     '$location',
     'NotificationService',
     'PagesService',
+    'PeriodicalService'
   ];
 
-  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService, PeriodicalService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -82,6 +83,18 @@
 
     _getPerms();
 
+    /**
+     *
+     * @private
+     */
+
+    // Services to populate selects
+
+    PeriodicalService.getPeriodicals().then(function (data) {
+      vm.periodicals = data.data.items;
+
+      console.log(vm.periodicals)
+    });
 
     PagesService.getPages().then(function(data){
       vm.pagesParent = data.data.items;
@@ -108,8 +121,12 @@
 
       var clonedPerms = (cloneObject(vm.user.resourcesPerms));
 
-      Object.keys(clonedPerms).forEach(function(k) {
-        clonedPerms[k] = clonedPerms[k].join(";");
+      Object.keys(clonedPerms).forEach(function (k) {
+        var innerKeys = Object.keys(clonedPerms[k]), items = [];
+        innerKeys.forEach(function(key) {
+          items.push((Array.isArray(clonedPerms[k][key]))? key : key + ":" + clonedPerms[k][key]);
+        });
+        clonedPerms[k] = items.join(";");
       });
 
       console.log(JSON.stringify(clonedPerms, 0, 4));
@@ -127,12 +144,12 @@
 
       if(id) {
         UsersService.updateUser(vm.user).then(function () {
-          $location.path('/user');
+          $location.path('/users');
           NotificationService.success('Usuário alterado com sucesso!');
         });
       } else {
         UsersService.saveUser(vm.user).then(function () {
-          $location.path('/user');
+          $location.path('/users');
           NotificationService.success('Usuário salvo com sucesso!');
         });
       }

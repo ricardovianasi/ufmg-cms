@@ -47,6 +47,23 @@
 
         <div class="row">
             <form class="form">
+                <div class="col-xs-12">
+                    <h5><strong>Status:</strong></h5>
+                    <label>
+                        <input type="radio" ng-model="vm.user.status" value="1">
+                        Ativo
+                    </label>
+                    <label style="margin-left: 15px;">
+                        <input type="radio" ng-model="vm.user.status" value="0">
+                        Inativo
+                    </label>
+                    <hr>
+                </div>
+
+                <div class="col-xs-12">
+                    <h5><strong>Informações Gerais:</strong></h5>
+                <br>
+                </div>
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="user_name">Nome:</label>
@@ -109,16 +126,6 @@
         <v-accordion class="vAccordion--default" multiple>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="col-xs-6">
-                        <pre>{{vm.user.resourcesPerms | json}}</pre>
-                        <hr>
-                    </div>
-                    <div class="col-xs-6">
-                        <pre>{{vm.user | json}}</pre>
-                    </div>
-
-                    <hr>
-
                     <v-pane ng-repeat="(key, value) in vm.resources track by $index">
                         <v-pane-header>
                             {{ value.alias }}
@@ -127,8 +134,26 @@
                         <v-pane-content>
                             <div class="checkbox">
                                 <label ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key">
-                                    <input type="checkbox" checklist-model="vm.user.resourcesPerms[$parent.key]" checklist-value="key">{{ value }}
-                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'page_PUT'" ng-model="vm.user.resourcesPerms.page.PUT" ng-options="item.id as item.title for item in vm.pagesParent | orderBy: 'title' track by item.id">
+                                    <input type="checkbox" checklist-model="vm.user.resourcesPerms[$parent.key][key]" checklist-value="key">{{ value }}
+
+                                    <!-- Select edit page -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'page_PUT'"
+                                            ng-model="vm.user.resourcesPerms.page.PUT"
+                                            ng-options="item.id as item.title for item in vm.pagesParent | orderBy: 'title' track by item.id">
+                                    </select>
+
+                                    <!-- Select create, edit, delete periodicals editions -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_POST'"
+                                            ng-model="vm.user.resourcesPerms.periodical.POST"
+                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'title' track by item.id">
+                                    </select>
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_PUT'"
+                                            ng-model="vm.user.resourcesPerms.periodical.PUT"
+                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'title' track by item.id">
+                                    </select>
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_DELETE'"
+                                            ng-model="vm.user.resourcesPerms.periodical.DELETE"
+                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'title' track by item.id">
                                     </select>
                                 </label>
                             </div>
