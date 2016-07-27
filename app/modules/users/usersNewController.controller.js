@@ -12,10 +12,11 @@
     '$location',
     'NotificationService',
     'PagesService',
-    'PeriodicalService'
+    'PeriodicalService',
+    'CourseService'
   ];
 
-  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService, PeriodicalService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService, PeriodicalService, CourseService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -90,15 +91,42 @@
 
     // Services to populate selects
 
+
+    //Periodical Editions
     PeriodicalService.getPeriodicals().then(function (data) {
       vm.periodicals = data.data.items;
     });
 
+    //Pages
     PagesService.getPages().then(function(data){
       vm.pagesParent = data.data.items;
     });
 
+    //Courses - Graduation, Master, Doctorate, Specialization
+    CourseService.getCourses('graduation').then(function (data) {
+      vm.courses_g = data.data.items;
+    });
 
+    CourseService.getCourses('master').then(function (data) {
+      vm.courses_m = data.data.items;
+    });
+
+    CourseService.getCourses('doctorate').then(function (data) {
+      vm.courses_d = data.data.items;
+    });
+
+    CourseService.getCourses('specialization').then(function (data) {
+      vm.courses_s = data.data.items;
+    });
+
+    //Users service to populate Moderator Select
+    UsersService.getUsers().then(function (data) {
+      vm.users = data.data.items;
+    });
+    
+
+
+    //Function to clone perms Object and parse to save
     function _convertPrivileges() {
 
       // recursive function to clone an object. If a non object parameter
