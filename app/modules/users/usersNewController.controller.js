@@ -10,13 +10,15 @@
     'ResourcesService',
     '$routeParams',
     '$location',
+    '$timeout',
+    '$scope',
     'NotificationService',
     'PagesService',
     'PeriodicalService',
     'CourseService'
   ];
 
-  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, NotificationService, PagesService, PeriodicalService, CourseService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, $timeout, $scope, NotificationService, PagesService, PeriodicalService, CourseService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -27,7 +29,7 @@
 
     var id = $routeParams.userId;
 
-    //Tabs Handle
+    ////////////Tabs Handle
 
     vm.tab = 1;
 
@@ -49,13 +51,16 @@
       unit: '',
       sector: '',
       occupation: '',
-      function: '',
-      resourcesPerms: {}
+      function: ''
     };
 
     vm.save = _save;
-
-    vm.convertPrivileges = _convertPrivileges;
+    vm.getPeriodicals = _getPeriodicals;
+    vm.getPages = _getPages;
+    vm.getGraduation = _getGraduation;
+    vm.getMaster = _getMaster;
+    vm.getDoctorate = _getDoctorate;
+    vm.getSpecialization = _getSpecialization;
 
     /**
      *
@@ -65,6 +70,7 @@
       if(id) {
         UsersService.getUser(id).then(function(data){
           vm.user = data.data;
+          _convertPrivilegesToLoad();
         });
       }
     }
@@ -89,45 +95,100 @@
      * @private
      */
 
-    // Services to populate selects
+    //////////// Services to populate selects
 
 
     //Periodical Editions
-    PeriodicalService.getPeriodicals().then(function (data) {
-      vm.periodicals = data.data.items;
-    });
+    function _getPeriodicals() {
+      PeriodicalService.getPeriodicals().then(function (data) {
+        vm.periodicals = data.data.items;
+      });
+    }
 
     //Pages
-    PagesService.getPages().then(function(data){
-      vm.pagesParent = data.data.items;
-    });
+    function _getPages() {
+      PagesService.getPages().then(function(data){
+        vm.pagesParent = data.data.items;
+      });
+    }
 
     //Courses - Graduation, Master, Doctorate, Specialization
-    CourseService.getCourses('graduation').then(function (data) {
-      vm.courses_g = data.data.items;
-    });
+    function _getGraduation() {
+      CourseService.getCourses('graduation').then(function (data) {
+        vm.courses_g = data.data.items;
+      });
+    }
 
-    CourseService.getCourses('master').then(function (data) {
-      vm.courses_m = data.data.items;
-    });
+    function _getMaster() {
+      CourseService.getCourses('master').then(function (data) {
+        vm.courses_m = data.data.items;
+      });
+    }
 
-    CourseService.getCourses('doctorate').then(function (data) {
-      vm.courses_d = data.data.items;
-    });
+    function _getDoctorate() {
+      CourseService.getCourses('doctorate').then(function (data) {
+        vm.courses_d = data.data.items;
+      });
+    }
 
-    CourseService.getCourses('specialization').then(function (data) {
-      vm.courses_s = data.data.items;
-    });
+    function _getSpecialization() {
+      CourseService.getCourses('specialization').then(function (data) {
+        vm.courses_s = data.data.items;
+      });
+    }
 
-    //Users service to populate Moderator Select
+    _getPeriodicals();
+    _getPages();
+    _getGraduation();
+    _getMaster();
+    _getDoctorate();
+    _getSpecialization();
+
+
+    ////////////Users service to populate Moderator Select
+
     UsersService.getUsers().then(function (data) {
       vm.users = data.data.items;
     });
-    
 
 
-    //Function to clone perms Object and parse to save
-    function _convertPrivileges() {
+    ////////////Function to convert perms to Load
+
+    function _convertPrivilegesToLoad() {
+
+      var convertedPerms = {};
+      var permsToConvert = vm.user.resources_perms;
+
+      Object.keys(permsToConvert).forEach(function(key){
+
+        permsToConvert[key].split(";").forEach(function(value){
+
+          var item = value.split(":");
+          var permsToConvert = convertedPerms[key] || {};
+
+          if (item.length > 1) {
+
+            //permsToConvert[item[0]] = isNaN(Number(item[1])) ? item[1] : Number(item[1]);
+            permsToConvert[item[0]]=item[1];
+            convertedPerms[key] = permsToConvert;
+
+          } else {
+            permsToConvert[item[0]] = [item[0]];
+            convertedPerms[key] = permsToConvert;
+          }
+
+        });
+      });
+
+      console.log('MAGIC THE PERM >>>', convertedPerms);
+      vm.user.resources_perms = convertedPerms;
+
+    }
+
+
+    ////////////Function to clone perms Object and parse to save
+
+    function _convertPrivilegesToSave() {
 
       // recursive function to clone an object. If a non object parameter
       // is passed in, that parameter is returned and no recursion occurs.
@@ -145,7 +206,7 @@
         return temp;
       }
 
-      var clonedPerms = (cloneObject(vm.user.resourcesPerms));
+      var clonedPerms = (cloneObject(vm.user.resources_perms));
 
       Object.keys(clonedPerms).forEach(function (k) {
         var innerKeys = Object.keys(clonedPerms[k]), items = [];
@@ -166,7 +227,7 @@
      * @private
      */
     function _save() {
-      _convertPrivileges();
+      _convertPrivilegesToSave();
 
       if(id) {
         UsersService.updateUser(vm.user).then(function () {

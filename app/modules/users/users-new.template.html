@@ -155,50 +155,67 @@
                         <v-pane-content>
                             <div class="checkbox">
                                 <label ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key">
-                                    <input type="checkbox" ng-hide="vm.user.resourcesPerms[$parent.key][key]" checklist-model="vm.user.resourcesPerms[$parent.key][key]" checklist-value="key">{{ value }}
+                                    <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">{{ value }}
 
                                     <!-- Select edit page -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'page_PUT'"
-                                            ng-model="vm.user.resourcesPerms.page.PUT"
-                                            ng-options="item.id as item.title for item in vm.pagesParent | orderBy: 'title' track by item.id">
+                                            ng-model="vm.user.resources_perms.page.PUT"
+                                            ng-change="vm.getPages()">
+                                        <option ng-repeat="option in vm.pagesParent | orderBy: 'title'"
+                                                value="{{option.id}}">{{option.title}}
+                                        </option>
                                     </select>
 
                                     <!-- Select create, edit, delete periodicals editions -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_POST'"
-                                            ng-model="vm.user.resourcesPerms.periodical.POST"
-                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.periodical.POST"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_PUT'"
-                                            ng-model="vm.user.resourcesPerms.periodical.PUT"
-                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.periodical.PUT"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_DELETE'"
-                                            ng-model="vm.user.resourcesPerms.periodical.DELETE"
-                                            ng-options="item.id as item.name for item in vm.periodicals | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.periodical.DELETE"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Graduação -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_graduation_PUT'"
-                                            ng-model="vm.user.resourcesPerms.course_graduation.PUT"
-                                            ng-options="item.id as item.name for item in vm.courses_g | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.course_graduation.PUT"
+                                            ng-change="vm.getGraduation()">
+                                        <option ng-repeat="option in vm.courses_g | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Mestrado -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_master_PUT'"
-                                            ng-model="vm.user.resourcesPerms.course_master.PUT"
-                                            ng-options="item.id as item.name for item in vm.courses_m | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.course_master.PUT"
+                                            ng-change="vm.getMaster()">
+                                        <option ng-repeat="option in vm.courses_m | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Doutorado -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_doctorate_PUT'"
-                                            ng-model="vm.user.resourcesPerms.course_doctorate.PUT"
-                                            ng-options="item.id as item.name for item in vm.courses_d | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.course_doctorate.PUT"
+                                            ng-change="vm.getDoctorate()">
+                                        <option ng-repeat="option in vm.courses_d | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Especialização -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_specialization_PUT'"
-                                            ng-model="vm.user.resourcesPerms.course_specialization.PUT"
-                                            ng-options="item.id as item.name for item in vm.courses_s | orderBy: 'name' track by item.id">
+                                            ng-model="vm.user.resources_perms.course_specialization.PUT"
+                                            ng-change="vm.getSpecialization()">
+                                        <option ng-repeat="option in vm.courses_s | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                 </label>
