@@ -340,7 +340,7 @@
               if (typeof widget.content.tags[0].text !== 'undefined')
                 widget.content.tags = _.map(widget.content.tags, 'text');
             }
-          } else {
+          } else if (widget.tags) {
             if(widget.tags.length > 0) {
               if (typeof widget.tags[0].text !== 'undefined')
                 widget.tags = _.map(widget.tags, 'text');
