@@ -47,6 +47,23 @@
 
         <div class="row">
             <form class="form">
+                <div class="col-xs-12">
+                    <h5><strong>Status:</strong></h5>
+                    <label>
+                        <input type="radio" ng-model="vm.user.status" value="1">
+                        Ativo
+                    </label>
+                    <label style="margin-left: 15px;">
+                        <input type="radio" ng-model="vm.user.status" value="0">
+                        Inativo
+                    </label>
+                    <hr>
+                </div>
+
+                <div class="col-xs-12">
+                    <h5><strong>Informações Gerais:</strong></h5>
+                <br>
+                </div>
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="user_name">Nome:</label>
@@ -106,9 +123,108 @@
     </div>
     <div class="tab-pane tab-content" ng-show="vm.isSet(2)">
 
-        <p>Fulfilled direction use continual set him propriety continued. Saw met applauded favourite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther related bed and passage comfort civilly. Dashwoods see frankness objection abilities the. As hastened oh produced prospect formerly up am. Placing forming nay looking old married few has. Margaret disposed add screened rendered six say his striking confined. </p>
+        <v-accordion class="vAccordion--default" multiple>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5><strong>Tipo de Usuário:</strong></h5>
+                    <label>
+                        <input type="radio" ng-model="vm.user.is_administrator" ng-value="false">
+                        Padrão
+                    </label>
+                    <label style="margin-left: 15px;">
+                        <input type="radio" ng-model="vm.user.is_administrator" ng-value="true">
+                        Administrador
+                    </label>
+                    <hr>
+                </div>
+                <div class="col-xs-12">
+                    <h5><strong>Usuário moderado por:</strong></h5>
+                    <select class="form-control"
+                            ng-model="vm.user.moderator"
+                            ng-options="item.id as item.name for item in vm.users | orderBy: 'name' track by item.id">
+                    </select>
+                    <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
+                    <hr>
+                </div>
+                <div class="col-xs-12">
+                    <v-pane ng-repeat="(key, value) in vm.resources track by $index">
+                        <v-pane-header>
+                            {{ value.alias }}
+                        </v-pane-header>
 
-        <p>When be draw drew ye. Defective in do recommend suffering. House it seven in spoil tiled court. Sister others marked fat missed did out use. Alteration possession dispatched collecting instrument travelling he or on. Snug give made at spot or late that mr. </p>
+                        <v-pane-content>
+                            <div class="checkbox">
+                                <label ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key">
+                                    <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">{{ value }}
+
+                                    <!-- Select edit page -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'page_PUT'"
+                                            ng-model="vm.user.resources_perms.page.PUT"
+                                            ng-change="vm.getPages()">
+                                        <option ng-repeat="option in vm.pagesParent | orderBy: 'title'"
+                                                value="{{option.id}}">{{option.title}}
+                                        </option>
+                                    </select>
+
+                                    <!-- Select create, edit, delete periodicals editions -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_POST'"
+                                            ng-model="vm.user.resources_perms.periodical.POST"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_PUT'"
+                                            ng-model="vm.user.resources_perms.periodical.PUT"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_DELETE'"
+                                            ng-model="vm.user.resources_perms.periodical.DELETE"
+                                            ng-change="vm.getPeriodicals()">
+                                        <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+
+                                    <!-- Select cursos de Graduação -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'course_graduation_PUT'"
+                                            ng-model="vm.user.resources_perms.course_graduation.PUT"
+                                            ng-change="vm.getGraduation()">
+                                        <option ng-repeat="option in vm.courses_g | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+
+                                    <!-- Select cursos de Mestrado -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'course_master_PUT'"
+                                            ng-model="vm.user.resources_perms.course_master.PUT"
+                                            ng-change="vm.getMaster()">
+                                        <option ng-repeat="option in vm.courses_m | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+
+                                    <!-- Select cursos de Doutorado -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'course_doctorate_PUT'"
+                                            ng-model="vm.user.resources_perms.course_doctorate.PUT"
+                                            ng-change="vm.getDoctorate()">
+                                        <option ng-repeat="option in vm.courses_d | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+
+                                    <!-- Select cursos de Especialização -->
+                                    <select class="form-control" ng-show="$parent.key+'_'+key == 'course_specialization_PUT'"
+                                            ng-model="vm.user.resources_perms.course_specialization.PUT"
+                                            ng-change="vm.getSpecialization()">
+                                        <option ng-repeat="option in vm.courses_s | orderBy: 'name'"
+                                                value="{{option.id}}">{{option.name}}</option>
+                                    </select>
+
+                                </label>
+                            </div>
+                        </v-pane-content>
+                    </v-pane>
+                </div>
+            </div>
+        </v-accordion>
 
     </div>
 

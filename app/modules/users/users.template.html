@@ -49,17 +49,12 @@
                     <tr role="row" class="odd"
                         ng-repeat="item in vm.users | filter: search | orderBy: '-created_at'">
                         <td>
-                            <a ng-href="#/users/edit/{{ item.id }}">{{ item.name }}</a>
+                            <a ng-href="#/user/edit/{{ item.id }}">{{ item.name }}</a>
                         </td>
 
-                        <td class="table-fit">
-
+                        <td class="table-fit-single">
                             <a uib-tooltip="Editar" ng-href="#/user/edit/{{ item.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
-                            </a>
-
-                            <a uib-tooltip="Excluir" ng-click="vm.removeUser(item.id, item.name)" class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     </tr>

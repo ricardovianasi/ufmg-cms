@@ -1,0 +1,36 @@
+/**
+ * vAccordion - AngularJS multi-level accordion component
+ * @version v1.6.0
+ * @link http://lukaszwatroba.github.io/v-accordion
+ * @author Łukasz Wątroba <l@lukaszwatroba.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+
+
+.vAccordion--default v-pane
+  width: 33%
+  display: inline-block
+  padding: 0 1em
+
+  label
+    display: block
+
+  .checkbox
+    margin: 0
+    display: block
+
+.vAccordion--default v-pane-header
+  background-color: #f5f5f5
+  padding-left: 5px
+
+.vAccordion--default v-pane-header::after, .vAccordion--default v-pane-header::before
+  background-color: #ef3f4a
+  right: 7px
+
+.vAccordion--default v-pane.is-expanded>v-pane-header
+  border-bottom-color: #ef3f4a
+
+.vAccordion--default v-pane-header:focus, .vAccordion--default v-pane-header:hover
+  color: #ef3f4a
+
+.vAccordion--default v-pane-content>div

@@ -340,7 +340,7 @@
               if (typeof widget.content.tags[0].text !== 'undefined')
                 widget.content.tags = _.map(widget.content.tags, 'text');
             }
-          } else {
+          } else if (widget.tags) {
             if(widget.tags.length > 0) {
               if (typeof widget.tags[0].text !== 'undefined')
                 widget.tags = _.map(widget.tags, 'text');
@@ -458,7 +458,7 @@
               };
             } else if (widget.origin == "0") {
               return {
-                news: widget.news || (widget.content ? widget.content.news : null),
+                news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
@@ -476,7 +476,7 @@
               };
             } else if (widget.content.origin == "0") {
               return {
-                news: widget.news || (widget.content ? widget.content.news : null),
+                news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
@@ -939,10 +939,9 @@
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             } else if (widget.origin == "0"){
-              newsToSelect = [];
 
               return {
-                news: newsToSelect,
+                news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
@@ -962,10 +961,9 @@
 
               };
             } else if (widget.content.origin == "0") {
-              newsToSelect = [];
 
               return {
-                news: newsToSelect,
+                news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
               };
             }
