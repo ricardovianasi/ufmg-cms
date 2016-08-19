@@ -491,11 +491,19 @@
          * @returns {{links: Array}}
          */
         internalmenu: function (widget) {
+          console.log('parse to save internal >>>', widget);
+
           var widgetLinks = [];
           var page;
           var external_url;
+          var linksOnEach = widget.links ? widget.links : widget.content.links;
 
-          angular.forEach(widget.links, function (links) {
+          console.log('links on each >>>>', linksOnEach);
+
+          angular.forEach(linksOnEach, function (links) {
+            if (links.external_url)
+              links.isExternal = true;
+
             if (!links.isExternal) {
               external_url = null;
               page = links.page ? links.page.id : null;
