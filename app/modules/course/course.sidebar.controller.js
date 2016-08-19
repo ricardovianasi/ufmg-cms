@@ -11,7 +11,8 @@
     'ModalService',
     'CourseService',
     'NotificationService',
-    '$rootScope'];
+    '$rootScope',
+    '$location'];
 
   /**
    * @param $scope
@@ -31,7 +32,8 @@
                                    ModalService,
                                    CourseService,
                                    NotificationService,
-                                   $rootScope) {
+                                   $rootScope,
+                                   $location) {
     $rootScope.shownavbar = true;
     var vm = this;
 
@@ -109,10 +111,12 @@
       if (typeof vm.courseId !== 'undefined') {
         CourseService.updateRoutesSidebar(vm.type, vm.courseId, $scope.course.widgets.sidebar).then(function () {
           NotificationService.success('sidebar do percurso salva com sucesso!');
+            $location.path('course/list/'+ vm.type + '/' + vm.courseId);
         });
       } else {
         CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function () {
           NotificationService.success('sidebar salva com sucesso!');
+          $location.path('course/list/'+ vm.type);
         });
       }
     }
