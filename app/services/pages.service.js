@@ -293,10 +293,11 @@
             }
           }
 
+
           return {
             category: widget.category || (widget.content ? widget.content.category : null),
             limit: widget.limit || (widget.content ? widget.content.limit : null),
-            typeNews: widget.typeNews || (widget.content ? widget.content.typeNews.id : null),
+            typeNews: widget.typeNews || (widget.content ? (widget.content.typeNews ? widget.content.typeNews.id : '' ) : null),
             tags: tags,
           };
         },
@@ -798,6 +799,7 @@
          * @returns {{limit: (*|null), typeNews: (*|null), tag: (*|null)}}
          */
         listnews: function (widget) {
+
           var typeNews = '';
           var tagsForTagsInput = [];
 
@@ -807,7 +809,7 @@
               parseTags(widget.tags);
             }
 
-          } else if (widget.content.typeNews) {
+          } else if (widget.content.typeNews !== null) {
             typeNews = widget.content.typeNews.id;
             if (widget.content.tags) {
               parseTags(widget.content.tags);
