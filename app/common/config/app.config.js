@@ -61,6 +61,9 @@
       .setDefaults('tagsInput', {
         placeholder: 'Adicionar tag',
         replaceSpacesWithDashes: false
+      })
+      .setDefaults('autoComplete', {
+        selectFirstMatch: false
       });
   }
 })();
