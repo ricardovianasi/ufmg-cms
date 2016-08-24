@@ -11,6 +11,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         })
@@ -21,6 +25,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         })
@@ -31,6 +39,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         })
@@ -41,6 +53,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         })
@@ -51,6 +67,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         })
@@ -61,6 +81,10 @@
           resolve: {
             isLogged: ['sessionService', function(sessionService) {
               return sessionService.getIsLogged();
+            }],
+            tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+              if(sessionService.verifyTokenIsExpired())
+                $rootScope.logout();
             }]
           }
         });

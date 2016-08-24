@@ -13,6 +13,10 @@
             resolve: {
               isLogged: ['sessionService', function(sessionService) {
                 return sessionService.getIsLogged();
+              }],
+              tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+                if(sessionService.verifyTokenIsExpired())
+                  $rootScope.logout();
               }]
             }
           })
@@ -23,9 +27,13 @@
             resolve: {
               isLogged: ['sessionService', function(sessionService) {
                 return sessionService.getIsLogged();
+              }],
+              tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+                if(sessionService.verifyTokenIsExpired())
+                  $rootScope.logout();
               }]
             }
-          }) 
+          })
           .when('/user/edit/:userId', {
             templateUrl: 'modules/users/users-new.template.html',
             controller: 'usersNewController as vm',
@@ -33,6 +41,10 @@
             resolve: {
               isLogged: ['sessionService', function(sessionService) {
                 return sessionService.getIsLogged();
+              }],
+              tokenIsExpired: ['sessionService', '$rootScope', function(sessionService, $rootScope) {
+                if(sessionService.verifyTokenIsExpired())
+                  $rootScope.logout();
               }]
             }
           });
