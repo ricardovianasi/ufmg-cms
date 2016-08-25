@@ -15,7 +15,8 @@
     'DateTimeHelper',
     'RedactorPluginService',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'GalleryService'
   ];
 
   /**
@@ -41,7 +42,8 @@
     DateTimeHelper,
     RedactorPluginService,
     $rootScope,
-    TagsService) {
+    TagsService,
+    GalleryService) {
     $rootScope.shownavbar = true;
     console.log('... NoticiasNovoController');
 
@@ -61,6 +63,10 @@
 
     NewsService.getTvProgram().then(function (data) {
       $scope.tvPrograms = data.data.items;
+    });
+
+    GalleryService.getGalleries().then(function(data){
+      $scope.galleries = data.data.items;
     });
 
     /**
@@ -110,7 +116,8 @@
         highlight: data.highlight,
         highlight_ufmg: data.highlight_ufmg || false,
         has_video: data.has_video,
-        tv_program: data.tv_program
+        tv_program: data.tv_program,
+        gallery: data.gallery
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
