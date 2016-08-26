@@ -18,7 +18,8 @@
     'ModalService',
     'RedactorPluginService',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'GalleryService'
   ];
 
   /**
@@ -50,7 +51,8 @@
                               ModalService,
                               RedactorPluginService,
                               $rootScope,
-                              TagsService) {
+                              TagsService,
+                              GalleryService) {
     $rootScope.shownavbar = true;
     console.log('... NoticiasEditController');
 
@@ -115,8 +117,9 @@
         news_url: data.data.news_url,
         has_video: data.data.has_video,
         /* jshint ignore:start */
-        tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id
+        tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id,
         /* jshint ignore:end */
+        gallery: data.data.gallery
       };
 
 
@@ -141,6 +144,10 @@
 
     NewsService.getTvProgram().then(function(data) {
       $scope.tvPrograms = data.data.items;
+    });
+
+    GalleryService.getGalleries().then(function(data){
+      $scope.galleries = data.data.items;
     });
 
     /**
@@ -183,8 +190,9 @@
         highlight_ufmg: data.highlight_ufmg || false,
         has_video: data.has_video,
         /* jshint ignore:start */
-        tv_program: data.tv_program
+        tv_program: data.tv_program,
         /* jshint ignore:end */
+        gallery: data.gallery
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
