@@ -42,14 +42,22 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formNews" novalidate>
             <!-- TITLE -->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formNews.title.$error.required && formNews.title.$touched}">
                         <label>Título</label>
-                        <input type="text" class="form-control"
-                               ng-model="news.title">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="news.title"
+                               name="title"
+                               required>
+
+                      <div ng-show="formNews.title.$touched" class="error-message" role="alert">
+                        <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
+                      </div>
                     </div>
                 </div>
             </div>
