@@ -14,7 +14,8 @@
     'NotificationService',
     'MediaService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    'validationService'
   ];
 
   /**
@@ -39,7 +40,8 @@
                                     NotificationService,
                                     MediaService,
                                     DateTimeHelper,
-                                    $rootScope) {
+                                    $rootScope,
+                                    validationService) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalEditController');
 
@@ -107,6 +109,9 @@
     };
 
     $scope.publish = function (data) {
+      if(!validationService.isValid($scope.formPeriodicals.$invalid))
+        return false;
+
       var _data = angular.copy(data);
 
       _data.scheduled_at = data.scheduled_date + ' ' + data.scheduled_time;
