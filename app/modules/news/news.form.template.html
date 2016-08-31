@@ -115,11 +115,18 @@
             <div class="row">
                 <!-- CATEGORY -->
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formNews.category.$error.required && formNews.category.$touched}">
                         <label>Categoria</label>
                         <select class="form-control"
                                 ng-model="news.category"
-                                ng-options="category.id as category.name for category in categories.items"></select>
+                                name="category"
+                                ng-options="category.id as category.name for category in categories.items"
+                                required></select>
+
+                      <div ng-show="formNews.category.$touched" class="error-message" role="alert">
+                        <div ng-show="formNews.category.$error.required">Campo obrigatório</div>
+                      </div>
                     </div>
                 </div>
             </div>
