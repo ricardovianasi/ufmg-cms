@@ -104,7 +104,6 @@
     });
 
     $scope.publish = function (data, preview) {
-      $scope.formNews.$setTouched();
       if(!validationService.isValid($scope.formNews.$invalid))
         return false;
 
