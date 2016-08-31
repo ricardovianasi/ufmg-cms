@@ -46,19 +46,29 @@
 
 <div class=row>
     <div class="col-xs-12 panel panel-default">
-        <form class="form">
+        <form class="form" name="formPeriodicals" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                          ng-class="{'has-error': formPeriodicals.name.$error.required && !formPeriodicals.name.$valid}">
                         <label>Nome:</label>
-                        <input type="text" ng-model="periodical.name" class="form-control">
+                        <input type="text"
+                               ng-model="periodical.name"
+                               class="form-control"
+                               name="name"
+                               required>
+
+                        <div ng-show="!formPeriodicals.name.$valid" class="error-message" role="alert">
+                          <div ng-show="formPeriodicals.name.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                          ng-class="{'has-error': !periodical.url}">
                         <label>
                             Logo <small>(A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 72px)</small>:
                         </label>
@@ -67,7 +77,9 @@
                                ngf-select
                                ng-model="add_photos"
                                ngf-multiple="false"
-                               ng-show="!periodical.url" style="height:auto">
+                               ng-show="!periodical.url" style="height:auto"
+                               name="img"
+                               required>
 
                         <div class="clearfix form-control"
                              ng-show="periodical.url">
@@ -80,6 +92,10 @@
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
                             </div>
+                        </div>
+
+                        <div ng-show="!periodical.url" class="error-message" role="alert">
+                          <div ng-show="formPeriodicals.img.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -98,20 +114,34 @@
 
             <div class="row">
                 <div class="col-xs-3">
-                    <div class=form-group>
+                    <div class="form-group"
+                          ng-class="{'has-error': formPeriodicals.date.$error.required && !formPeriodicals.date.$valid}">
                         <label>Data da Criação:</label>
                         <input type="text" class="form-control"
                                ng-model="periodical.date"
-                               ui-mask="99/99/9999">
+                               ui-mask="99/99/9999"
+                               name="date"
+                               required>
+
+                       <div ng-show="!formPeriodicals.date.$valid" class="error-message" role="alert">
+                         <div ng-show="formPeriodicals.date.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
                 </div>
 
                 <div class="col-xs-3">
-                    <div class="form-group">
+                    <div class="form-group"
+                        ng-class="{'has-error': formPeriodicals.dateFormat.$error.required && !formPeriodicals.dateFormat.$valid}">
                         <label>Formato de Data:</label>
                         <select class="form-control"
                                 ng-model="periodical.date_format"
-                                ng-options="item.format as item.label for item in date_formats track by item.format"></select>
+                                ng-options="item.format as item.label for item in date_formats track by item.format"
+                                name="dateFormat"
+                                required></select>
+
+                        <div ng-show="!formPeriodicals.dateFormat.$valid" class="error-message" role="alert">
+                          <div ng-show="formPeriodicals.dateFormat.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
