@@ -16,7 +16,8 @@
     'MediaService',
     'NotificationService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    'validationService'
   ];
 
   /**
@@ -45,7 +46,8 @@
                                   MediaService,
                                   NotificationService,
                                   DateTimeHelper,
-                                  $rootScope) {
+                                  $rootScope,
+                                  validationService) {
     $rootScope.shownavbar = true;
     console.log('... ReleasesEditController');
 
@@ -255,6 +257,9 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formRelease.$invalid))
+        return false;
+
       ReleasesService.update(data, $routeParams.id).then(function (release) {
         NotificationService.success('Release salvo com sucesso.');
 

@@ -33,43 +33,81 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formClippings" novalidate>
             <div class="row">
-                <div class="form-group">
-                    <div class="col-xs-7">
+              <div class="col-xs-7">
+                <div class="form-group"
+                     ng-class="{'has-error': formClippings.origin.$error.required && !formClippings.origin.$valid}">
                         <div class="form-group">
                             <label for="origin">Origem da Matéria</label>
-                            <input id="origin" type="text" name="origin" ng-model="clipping.origin"
-                                   class="form-control">
+                            <input id="origin"
+                                   type="text"
+                                   name="origin"
+                                   ng-model="clipping.origin"
+                                   class="form-control"
+                                   required>
+
+                           <div ng-show="!formClippings.origin.$valid" class="error-message" role="alert">
+                             <div ng-show="formClippings.origin.$error.required">Campo obrigatório</div>
+                           </div>
                         </div>
                     </div>
+                  </div>
 
                     <div class="col-xs-5">
-                        <div class="form-group">
+                        <div class="form-group"
+                             ng-class="{'has-error': formClippings.day.$error.required && !formClippings.day.$valid || formClippings.month.$error.required && !formClippings.month.$valid}">
                             <label>Data de Publicação</label>
 
                             <div class="row">
                                 <div class="col-xs-4">
                                     <select title="Dia" class='form-control'
                                             ng-model="clipping.date.day"
-                                            ng-options="day as day for day in time_days">
+                                            ng-options="day as day for day in time_days"
+                                            name="day"
+                                            required>
                                     </select>
                                 </div>
 
                                 <div class="col-xs-4">
                                     <select title="Mês" class="form-control"
                                             ng-model="clipping.date.month"
-                                            ng-options="month as month for month in time_months">
+                                            ng-options="month as month for month in time_months"
+                                            name="month"
+                                            required>
                                     </select>
                                 </div>
 
                                 <div class="col-xs-4">
                                     <select title="Ano" class="form-control"
                                             ng-model="clipping.date.year"
-                                            ng-options="year as year for year in time_years">
+                                            ng-options="year as year for year in time_years"
+                                            name="year">
                                     </select>
                                 </div>
                             </div>
+
+                            <div ng-show="!formClippings.day.$valid || !formClippings.month.$valid" class="error-message" role="alert">
+                              <div>Campos obrigatórios</div>
+                            </div>
+                        </div>
+                    </div>
+            </div><!--row-->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group"
+                         ng-class="{'has-error': formClippings.title.$error.required && !formClippings.title.$valid}">
+                        <label for="title">Título da Matéria</label>
+                        <input id="title"
+                               type="text"
+                               name="title"
+                               ng-model="clipping.title"
+                               class="form-control"
+                               required>
+
+                        <div ng-show="!formClippings.title.$valid" class="error-message" role="alert">
+                          <div ng-show="formClippings.title.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -77,18 +115,19 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="title">Título da Matéria</label>
-                        <input id="title" type="text" name="title" ng-model="clipping.title" class="form-control">
-                    </div>
-                </div>
-            </div><!--row-->
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formClippings.url.$error.required && !formClippings.url.$valid}">
                         <label for="url">URL da Matéria</label>
-                        <input id="url" type="text" name="url" ng-model='clipping.url' class="form-control">
+                        <input id="url"
+                               type="text"
+                               name="url"
+                               ng-model='clipping.url'
+                               class="form-control"
+                               required>
+
+                        <div ng-show="!formClippings.url.$valid" class="error-message" role="alert">
+                          <div ng-show="formClippings.url.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div><!--row-->

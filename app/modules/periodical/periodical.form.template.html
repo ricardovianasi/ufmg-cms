@@ -77,7 +77,7 @@
                                ngf-select
                                ng-model="add_photos"
                                ngf-multiple="false"
-                               ng-show="!periodical.url" style="height:auto"
+                               ng-if="!periodical.url" style="height:auto"
                                name="img"
                                required>
 

@@ -13,9 +13,10 @@
                                     '$timeout',
                                     'NotificationService',
                                     '$location',
-                                    '$rootScope'];
+                                    '$rootScope',
+                                    'validationService'];
 
-    function featuredNewController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $rootScope) {
+    function featuredNewController($scope, ReleasesService, MediaService, featuredService, $timeout, NotificationService, $location, $rootScope, validationService) {
       $rootScope.shownavbar = true;
 
       var vm = this; // jshint ignore:line
@@ -25,6 +26,7 @@
           vm.saveFeatured = _saveFeatured;
           vm.featured = {};
           vm.releases = {};
+          vm.saveEspecialist = _saveEspecialist;
 
       // Cover Image - Upload
       $scope.$watch('vm.featured.photo', function () {
@@ -81,6 +83,10 @@
             opened: true
           });
         }
+
+        $timeout(function(){
+          $scope.$apply();
+        });
       }
 
       /**
@@ -95,6 +101,14 @@
        * _saveFeatured function
        */
       function _saveFeatured(){
+        if(!validationService.isValid($scope.formFeatured.$invalid))
+          return false;
+
+        if(!vm.featured.photo) {
+            validationService.isValid(true);
+            return false;
+        }
+
         _parseToSave();
         featuredService.save(vm.featured).then(function(res){
           NotificationService.success('Destaque salvo com sucesso!');
@@ -105,6 +119,13 @@
       function _parseToSave(){
         vm.featured.photo = vm.featured.photo.id;
         // vm.featured.releases = vm.featured.releases.id;
+      }
+
+      function _saveEspecialist(index) {
+        if(!validationService.isValid($scope.formEspecialist.$invalid))
+          return false;
+
+        vm.featured.specialists[index].opened =  false;
       }
     }
 })();

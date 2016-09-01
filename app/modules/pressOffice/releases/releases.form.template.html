@@ -43,12 +43,22 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formRelease" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formRelease.title.$error.required && !formRelease.title.$valid}">
                         <label for="title">Título</label>
-                        <input id="title" name="title" type="text" ng-model="release.title" class="form-control">
+                        <input id="title"
+                               name="title"
+                               type="text"
+                               ng-model="release.title"
+                               class="form-control"
+                               required>
+
+                        <div ng-show="!formRelease.title.$valid" class="error-message" role="alert">
+                          <div ng-show="formRelease.title.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div><!--row-->
@@ -98,10 +108,20 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formRelease.content.$error.required && !formRelease.content.$valid}">
                         <label for="content">Conteúdo</label>
-                        <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content"
-                                  redactor="redactorOptions"></textarea>
+                        <textarea id="content"
+                                  name="content"
+                                  cols="30"
+                                  rows="5"
+                                  ng-model="release.content"
+                                  redactor="redactorOptions"
+                                  required></textarea>
+
+                        <div ng-show="!formRelease.content.$valid" class="error-message" role="alert">
+                          <div ng-show="formRelease.content.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div><!--row-->
@@ -111,18 +131,38 @@
 
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formRelease.name.$error.required && !formRelease.name.$valid}">
                         <label for="name">Nome</label>
-                        <input id="name" name="name" type="text" ng-model="release.source.name" class="form-control">
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               ng-model="release.source.name"
+                               class="form-control"
+                               required>
+
+                       <div ng-show="!formRelease.name.$valid" class="error-message" role="alert">
+                         <div ng-show="formRelease.name.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
                 </div>
             </div><!--row-->
 
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formRelease.email.$error.required && !formRelease.email.$valid}">
                         <label for="email">E-mail</label>
-                        <input id="email" type="text" name="email" ng-model="release.source.email" class="form-control">
+                        <input id="email"
+                               type="text"
+                               name="email"
+                               ng-model="release.source.email"
+                               class="form-control"
+                               required>
+
+                       <div ng-show="!formRelease.email.$valid" class="error-message" role="alert">
+                         <div ng-show="formRelease.email.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
                 </div>
 

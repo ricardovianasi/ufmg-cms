@@ -40,46 +40,97 @@
 </div>
 <div class="row">
     <div class="col-xs-8 panel panel-default">
+      <form class="form" name="formEditions" novalidate>
         <div class="">
             <div class="row">
                 <div class=col-xs-12>
-                    <div class=form-group>
+                    <div class=form-group
+                         ng-class="{'has-error': formEditions.theme.$error.required && !formEditions.theme.$valid}">
                         <label>Tema:</label>
-                        <input type=text ng-model=edition.theme class=form-control>
+                        <input type="text"
+                               ng-model="edition.theme"
+                               class="form-control"
+                               name="theme"
+                               required>
+
+                        <div ng-show="!formEditions.theme.$valid" class="error-message" role="alert">
+                          <div ng-show="formEditions.theme.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class=col-xs-12>
-                    <div class=form-group>
+                    <div class=form-group
+                          ng-class="{'has-error': formEditions.resume.$error.required && !formEditions.resume.$valid}">
                         <label>Resumo/Sinopse:</label>
 
-                        <textarea class="form-control" ng-model="edition.resume" rows="5">
+                        <textarea class="form-control"
+                                  ng-model="edition.resume"
+                                  rows="5"
+                                  name="resume"
+                                  required>
                             {{ edition.resume }}
                         </textarea>
+
+                        <div ng-show="!formEditions.resume.$valid" class="error-message" role="alert">
+                          <div ng-show="formEditions.resume.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class=row>
                 <div class=col-xs-4>
-                    <div class=form-group>
+                    <div class="form-group"
+                         ng-class="{'has-error': formEditions.number.$error.required && !formEditions.number.$valid}">
                         <label>Número:</label>
-                        <input type="number" min="1" ng-model="edition.number" value="{{ edition.number }}" class=form-control>
+                        <input type="number"
+                               min="1"
+                               ng-model="edition.number"
+                               value="{{ edition.number }}"
+                               class="form-control"
+                               name="number"
+                               required>
+
+                        <div ng-show="!formEditions.number.$valid" class="error-message" role="alert">
+                          <div ng-show="formEditions.number.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class=col-xs-4>
-                    <div class=form-group>
+                    <div class="form-group"
+                         ng-class="{'has-error': formEditions.publishDate.$error.required && !formEditions.publishDate.$valid}">
                         <label>Data da Edição:</label>
-                        <input type=text ng-model=edition.publish_date class=form-control ui-mask="99/99/9999" model-view-value="true">
+                        <input type="text"
+                               ng-model="edition.publish_date"
+                               class="form-control"
+                               ui-mask="99/99/9999"
+                               model-view-value="true"
+                               name="publishDate"
+                               required>
+
+                       <div ng-show="!formEditions.publishDate.$valid" class="error-message" role="alert">
+                         <div ng-show="formEditions.publishDate.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
                 </div>
-                <div class=col-xs-4>
-                    <div class=form-group>
+                <div class="col-xs-4">
+                    <div class="form-group"
+                         ng-class="{'has-error': formEditions.year.$error.required && !formEditions.year.$valid}">
                         <label>Ano:</label>
-                        <input type="text"  ng-model="edition.year" value="edition.year" class=form-control>
+                        <input type="text"
+                               ng-model="edition.year"
+                               value="edition.year"
+                               class="form-control"
+                               name="year"
+                               required>
+
+                       <div ng-show="!formEditions.year.$valid" class="error-message" role="alert">
+                         <div ng-show="formEditions.year.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
                 </div>
 
@@ -188,6 +239,7 @@
             </div>
         </div>
     </div>
+  </form>
 
     <div class=col-xs-4>
         <publishment-options route-model="edition" back="periodicals/{{ periodical.id }}/editions"></publishment-options>

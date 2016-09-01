@@ -16,7 +16,8 @@
     'MediaService',
     'ModalService',
     '$rootScope',
-    '$window'
+    '$window',
+    'validationService'
   ];
 
   /**
@@ -44,7 +45,8 @@
                                           MediaService,
                                           ModalService,
                                           $rootScope,
-                                          $window) {
+                                          $window,
+                                          validationService) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionNewController');
 
@@ -69,6 +71,8 @@
     $scope.edition.articles = [];
 
     $scope.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formEditions.$invalid))
+        return false;
 
       if (data.status == 'scheduled') {
         data.post_date = data.scheduled_date + ' ' + data.scheduled_time;
