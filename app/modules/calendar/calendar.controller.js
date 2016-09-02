@@ -368,7 +368,7 @@
      *
      * @constructor
      */
-    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route) {
+    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route, validationService) {
       console.log('... ModalCalendarioNovoCtrl');
 
       $scope.type = type;
@@ -381,6 +381,9 @@
       };
 
       $scope.ok = function () {
+
+        if(!validationService.isValid($scope.formCalendar.$invalid))
+          return false;
 
         var newRegional = [];
 

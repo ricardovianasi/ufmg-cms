@@ -15,10 +15,11 @@
     'NotificationService',
     'PagesService',
     'PeriodicalService',
-    'CourseService'
+    'CourseService',
+    'validationService'
   ];
 
-  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, $timeout, $scope, NotificationService, PagesService, PeriodicalService, CourseService) {
+  function usersNewController($rootScope, UsersService, ResourcesService, $routeParams, $location, $timeout, $scope, NotificationService, PagesService, PeriodicalService, CourseService, validationService) {
 
     /* jshint ignore:start */
     var vm = this;
@@ -30,6 +31,7 @@
     var id = $routeParams.userId;
 
     ////////////Tabs Handle
+
 
     vm.tab = 1;
 
@@ -51,7 +53,8 @@
       unit: '',
       sector: '',
       occupation: '',
-      function: ''
+      function: '',
+      status: '1'
     };
 
     vm.save = _save;
@@ -137,12 +140,12 @@
       });
     }
 
-    _getPeriodicals();
-    _getPages();
-    _getGraduation();
-    _getMaster();
-    _getDoctorate();
-    _getSpecialization();
+    // _getPeriodicals();
+    // _getPages();
+    // _getGraduation();
+    // _getMaster();
+    // _getDoctorate();
+    // _getSpecialization();
 
 
     ////////////Users service to populate Moderator Select
@@ -227,6 +230,9 @@
      * @private
      */
     function _save() {
+      if(!validationService.isValid($scope.formUsers.$invalid))
+        return false;
+
       _convertPrivilegesToSave();
 
       if(id) {
