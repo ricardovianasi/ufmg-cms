@@ -18,7 +18,8 @@
     'ModalService',
     'DateTimeHelper',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'validationService'
   ];
 
   /**
@@ -50,7 +51,8 @@
                                 ModalService,
                                 DateTimeHelper,
                                 $rootScope,
-                                TagsService) {
+                                TagsService,
+                                validationService) {
     $rootScope.shownavbar = true;
     console.log('... EventsEditController');
 
@@ -182,6 +184,8 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formEvents.$invalid))
+        return false;
 
       vm.setEndDefault();
 
@@ -223,7 +227,7 @@
       event.courses = [];
       event.tags = [];
       var reg_init_date = event.init_date.replace(/-/g, '/'),
-          reg_end_date  = event.end_date.replace(/-/g, '/'); 
+          reg_end_date  = event.end_date.replace(/-/g, '/');
       event.initDate = new Date(reg_init_date);
       event.endDate = new Date(reg_end_date);
 
