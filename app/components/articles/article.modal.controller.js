@@ -14,7 +14,8 @@
     'article',
     'MediaService',
     'RedactorPluginService',
-    'TagsService'
+    'TagsService',
+    'validationService'
   ];
 
   /**
@@ -35,19 +36,20 @@
                                   article,
                                   MediaService,
                                   RedactorPluginService,
-                                  TagsService) {
+                                  TagsService,
+                                  validationService) {
     console.log('... ArticleModalController');
 
 
     var allTags = [];
 
-       TagsService.getTags().then(function(data){ 
+   TagsService.getTags().then(function(data){ 
          allTags = data.data.items[0];
-     });
+ });
 
     $scope.findTags = function($query) { 
       return TagsService.findTags($query, allTags);
-     };
+ };
 
     $scope.article = {};
     $scope.article.tags = [];
@@ -79,7 +81,7 @@
 
     // Upload
     // Cover Image - Upload
-    $scope.$watch('article_thumb', function () { 
+    $scope.$watch('article_thumb', function () {
       if ($scope.article_thumb) {
         $scope.upload($scope.article_thumb);
       }
@@ -127,6 +129,9 @@
     };
 
     $scope.ok = function () {
+      if(!validationService.isValid($scope.formArticle.$invalid))
+        return false;
+
       $uibModalInstance.close($scope.article);
     };
 
