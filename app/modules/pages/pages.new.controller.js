@@ -18,7 +18,8 @@
     'ModalService',
     'DateTimeHelper',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'validationService'
   ];
 
   /**
@@ -50,7 +51,8 @@
                               ModalService,
                               DateTimeHelper,
                               $rootScope,
-                              TagsService) {
+                              TagsService,
+                              validationService) {
     $rootScope.shownavbar = true;
     console.log('... PagesNewController');
     var allTags = [];
@@ -110,6 +112,9 @@
      * @param preview
      */
     $scope.publish = function (page, preview) {
+      if(!validationService.isValid($scope.formPage.$invalid))
+        return false;
+
       PagesService.addPage(page).then(function (page) {
         NotificationService.success('Página criada com sucesso.');
 

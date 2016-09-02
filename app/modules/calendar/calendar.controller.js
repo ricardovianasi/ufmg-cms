@@ -15,7 +15,8 @@
     'ModalService',
     'DateTimeHelper',
     '$rootScope',
-    '$route'
+    '$route',
+    'validationService'
   ];
 
   /**
@@ -41,7 +42,8 @@
                               ModalService,
                               DateTimeHelper,
                               $rootScope,
-                              $route) {
+                              $route,
+                              validationService) {
 
     $rootScope.shownavbar = true;
     console.log('... CalendarController');
@@ -275,7 +277,7 @@
      *
      * @constructor
      */
-    var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional) {
+    var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
       console.log('... ModalCalendarSchoolDaysCtrl');
 
       $scope.time_months = DateTimeHelper.getMonths(true);
@@ -338,6 +340,9 @@
 
       $scope.ok = function () {
         console.log('hasperiodo >>>>>>>>>>>',$scope.hasPeriod);
+        if(!validationService.isValid($scope.formDays.$invalid))
+          return false;
+
         if($scope.hasPeriod === true) {
           CalendarService.updatePeriod($scope.period).then(function (data) {
             $uibModalInstance.close();
@@ -363,7 +368,7 @@
      *
      * @constructor
      */
-    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route) {
+    var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route, validationService) {
       console.log('... ModalCalendarioNovoCtrl');
 
       $scope.type = type;
@@ -376,6 +381,9 @@
       };
 
       $scope.ok = function () {
+
+        if(!validationService.isValid($scope.formCalendar.$invalid))
+          return false;
 
         var newRegional = [];
 

@@ -7,11 +7,21 @@
 </div>
 
 <div class=modal-body>
+  <form class="form" name="formArticle" novalidate>
     <div class="row">
         <div class="col-xs-12">
-            <div class="form-group">
+            <div class="form-group"
+                 ng-class="{'has-error': formArticle.title.$error.required && !formArticle.title.$valid}">
                 <label>T&iacute;tulo</label>
-                <input class="form-control" type="text" ng-model="article.title">
+                <input class="form-control"
+                       type="text"
+                       ng-model="article.title"
+                       name="title"
+                       required>
+
+                <div ng-show="!formArticle.title.$valid" class="error-message" role="alert">
+                  <div ng-show="formArticle.title.$error.required">Campo obrigatório</div>
+                </div>
             </div>
         </div>
     </div>
@@ -113,7 +123,7 @@
         </div>
     </div>
 </div>
-
+</form>
 <div class="modal-footer">
     <button class="btn btn-danger"
             ng-click="cancel()">

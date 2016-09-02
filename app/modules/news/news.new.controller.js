@@ -16,7 +16,8 @@
     'RedactorPluginService',
     '$rootScope',
     'TagsService',
-    'GalleryService'
+    'GalleryService',
+    'validationService'
   ];
 
   /**
@@ -43,7 +44,8 @@
     RedactorPluginService,
     $rootScope,
     TagsService,
-    GalleryService) {
+    GalleryService,
+    validationService) {
     $rootScope.shownavbar = true;
     console.log('... NoticiasNovoController');
 
@@ -102,6 +104,8 @@
     });
 
     $scope.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formNews.$invalid))
+        return false;
 
       var _obj = {
         title: data.title,

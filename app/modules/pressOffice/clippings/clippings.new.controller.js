@@ -11,7 +11,8 @@
     'NotificationService',
     'StatusService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    'validationService'
   ];
 
   function ClippingsNewController($scope,
@@ -20,7 +21,8 @@
                                   NotificationService,
                                   StatusService,
                                   DateTimeHelper,
-                                  $rootScope) {
+                                  $rootScope,
+                                  validationService) {
      $rootScope.shownavbar = true;
     console.log('... ClippingsNewController');
 
@@ -51,6 +53,9 @@
      * @param data
      */
     $scope.publish = function (data) {
+      if(!validationService.isValid($scope.formClippings.$invalid))
+        return false;
+
       ClippingsService.store(data).then(function () {
         NotificationService.success('Clipping criado com sucesso.');
         $location.path('/clippings');

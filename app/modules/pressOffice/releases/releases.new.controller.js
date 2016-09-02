@@ -16,7 +16,8 @@
     'NotificationService',
     'StatusService',
     'DateTimeHelper',
-    '$rootScope'
+    '$rootScope',
+    'validationService'
   ];
 
   function ReleasesNewController($scope,
@@ -30,7 +31,8 @@
                                  NotificationService,
                                  StatusService,
                                  DateTimeHelper,
-                                 $rootScope) {
+                                 $rootScope,
+                                 validationService) {
     $rootScope.shownavbar = true;
     console.log('... ReleasesNewController');
 
@@ -242,6 +244,9 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formRelease.$invalid))
+        return false;
+
       ReleasesService.store(data).then(function (release) {
         NotificationService.success('Release criado com sucesso.');
 
