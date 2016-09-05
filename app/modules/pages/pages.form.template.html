@@ -33,13 +33,32 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formPage" novalidate>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group"
+                         ng-class="{'has-error': formPage.title.$error.required && !formPage.title.$valid}">
+                        <label for="title">Título</label>
+                        <input id="title"
+                               type="text"
+                               name="title"
+                               class="form-control"
+                               ng-model="page.title"
+                               required>
+
+                         <div ng-show="!formPage.title.$valid" class="error-message" role="alert">
+                           <div ng-show="formPage.title.$error.required">Campo obrigatório</div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label for="title">Título</label>
-                        <input id="title" type="text" name="title" class="form-control"
-                               ng-model="page.title">
+                        <label for="title">Slug</label>
+                        <input id="title" type="text" name="slug" class="form-control"
+                               ng-model="page.slug.slug">
                     </div>
                 </div>
             </div>

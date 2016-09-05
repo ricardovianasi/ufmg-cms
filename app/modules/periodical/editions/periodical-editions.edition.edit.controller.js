@@ -16,7 +16,8 @@
     'MediaService',
     'DateTimeHelper',
     '$rootScope',
-    '$window'
+    '$window',
+    'validationService'
   ];
 
   /**
@@ -44,7 +45,8 @@
                                            MediaService,
                                            DateTimeHelper,
                                            $rootScope,
-                                           $window) {
+                                           $window,
+                                           validationService) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionEditController');
 
@@ -63,7 +65,7 @@
       $scope.edition.theme = data.data.theme;
       $scope.edition.resume = data.data.resume;
       $scope.edition.year = data.data.year;
-      $scope.edition.number = data.data.number;
+      $scope.edition.number = parseFloat(data.data.number);
       $scope.edition.publish_date = DateTimeHelper.dateToStr(data.data.publish_date);
       $scope.edition.file = data.data.file ? data.data.file.id : '';
       $scope.edition.cover = data.data.cover ? data.data.cover.id : '';
@@ -113,6 +115,9 @@
      * @param preview
      */
     $scope.publish = function (data, preview) {
+      if(!validationService.isValid($scope.formEditions.$invalid))
+        return false;
+
       console.log('save >>>>>>', data.articles);
 
       var tags = [];

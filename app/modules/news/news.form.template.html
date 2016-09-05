@@ -42,14 +42,22 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formNews" novalidate>
             <!-- TITLE -->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formNews.title.$error.required && !formNews.title.$valid}">
                         <label>Título</label>
-                        <input type="text" class="form-control"
-                               ng-model="news.title">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="news.title"
+                               name="title"
+                               required>
+
+                      <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
+                        <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -107,22 +115,36 @@
             <div class="row">
                 <!-- CATEGORY -->
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formNews.category.$error.required && !formNews.category.$valid}">
                         <label>Categoria</label>
                         <select class="form-control"
                                 ng-model="news.category"
-                                ng-options="category.id as category.name for category in categories.items"></select>
+                                name="category"
+                                ng-options="category.id as category.name for category in categories.items"
+                                required></select>
+
+                      <div ng-show="!formNews.category.$valid" class="error-message" role="alert">
+                        <div ng-show="formNews.category.$error.required">Campo obrigatório</div>
+                      </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <!-- TYPE -->
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formNews.type.$error.required && !formNews.type.$valid}">
                         <label>Origem</label>
                         <select class="form-control"
                                 ng-model="news.type"
-                                ng-options="type.id as type.name for type in types.items"></select>
+                                name="type"
+                                ng-options="type.id as type.name for type in types.items"
+                                required></select>
+
+                        <div ng-show="!formNews.type.$valid" class="error-message" role="alert">
+                          <div ng-show="formNews.type.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,14 +220,23 @@
             <!-- TEXT -->
             <div class="row">
                 <div class="col-xs-12">
-                  <div class="form-group">
+                  <div class="form-group"
+                        ng-class="{'has-error': formNews.text.$error.required && !formNews.text.$valid}">
                     <label>Conteúdo</label>
-                    <textarea cols="30" rows="30" class="form-control"
+                    <textarea cols="30"
+                              rows="30"
+                              class="form-control"
                               ng-model="news.text"
                               redactor
                               imagencrop-options="imagencropOptions"
                               audioUpload-options="audioUploadOptions"
-                              uploadfiles-options="uploadfilesOptions"></textarea>
+                              uploadfiles-options="uploadfilesOptions"
+                              name="text"
+                              required></textarea>
+
+                     <div ng-show="!formNews.text.$valid" class="error-message" role="alert">
+                       <div ng-show="formNews.text.$error.required">Campo obrigatório</div>
+                     </div>
                   </div>
                 </div>
             </div>

@@ -46,15 +46,15 @@
     <div class="tab-pane tab-content" ng-show="vm.isSet(1)">
 
         <div class="row">
-            <form class="form">
-                <div class="col-xs-12">
+            <form class="form" name="formUsers" novalidate>
+                <div class="col-xs-12 form-group">
                     <h5><strong>Status:</strong></h5>
                     <label>
-                        <input type="radio" ng-model="vm.user.status" value="1">
+                        <input type="radio" ng-model="vm.user.status" name="status[]" value="1">
                         Ativo
                     </label>
                     <label style="margin-left: 15px;">
-                        <input type="radio" ng-model="vm.user.status" value="0">
+                        <input type="radio" ng-model="vm.user.status" name="status[]" value="0">
                         Inativo
                     </label>
                     <hr>
@@ -65,14 +65,34 @@
                 <br>
                 </div>
                 <div class="col-xs-6">
-                    <div class="form-group">
+                    <div class="form-group"
+                        ng-class="{'has-error': formUsers.user_name.$error.required && !formUsers.user_name.$valid}">
                         <label for="user_name">Nome:</label>
-                        <input id="user_name" type="text" name="user_name" class="form-control" ng-model="vm.user.name">
+                        <input id="user_name"
+                               type="text"
+                               name="user_name"
+                               class="form-control"
+                               ng-model="vm.user.name"
+                               required>
+
+                       <div ng-show="!formUsers.user_name.$valid" class="error-message" role="alert">
+                         <div ng-show="formUsers.user_name.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formUsers.user_email.$error.required && !formUsers.user_email.$valid}">
                         <label for="user_email">Email:</label>
-                        <input id="user_email" type="email" name="user_email" class="form-control" ng-model="vm.user.email">
+                        <input id="user_email"
+                               type="email"
+                               name="user_email"
+                               class="form-control"
+                               ng-model="vm.user.email"
+                               required>
+
+                       <div ng-show="!formUsers.user_email.$valid" class="error-message" role="alert">
+                         <div ng-show="formUsers.user_email.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
                     <div class="form-group">
@@ -92,24 +112,64 @@
                 </div>
 
                 <div class="col-xs-6">
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formUsers.user_unit.$error.required && !formUsers.user_unit.$valid}">
                         <label for="user_unit">Unidade:</label>
-                        <input id="user_unit" type="text" name="user_unit" class="form-control" ng-model="vm.user.unit">
+                        <input id="user_unit"
+                               type="text"
+                               name="user_unit"
+                               class="form-control"
+                               ng-model="vm.user.unit"
+                               required>
+
+                       <div ng-show="!formUsers.user_unit.$valid" class="error-message" role="alert">
+                         <div ng-show="formUsers.user_unit.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formUsers.user_sector.$error.required && !formUsers.user_sector.$valid}">
                         <label for="user_sector">Setor:</label>
-                        <input id="user_sector" type="text" name="user_sector" class="form-control" ng-model="vm.user.sector">
+                        <input id="user_sector"
+                               type="text"
+                               name="user_sector"
+                               class="form-control"
+                               ng-model="vm.user.sector"
+                               required>
+
+                       <div ng-show="!formUsers.user_sector.$valid" class="error-message" role="alert">
+                         <div ng-show="formUsers.user_sector.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formUsers.user_occupation.$error.required && !formUsers.user_occupation.$valid}">
                         <label for="user_occupation">Cargo:</label>
-                        <input id="user_occupation" type="text" name="user_occupation" class="form-control" ng-model="vm.user.occupation">
+                        <input id="user_occupation"
+                                type="text"
+                                name="user_occupation"
+                                class="form-control"
+                                ng-model="vm.user.occupation"
+                                required>
+
+                        <div ng-show="!formUsers.user_occupation.$valid" class="error-message" role="alert">
+                          <div ng-show="formUsers.user_occupation.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formUsers.user_function.$error.required && !formUsers.user_function.$valid}">
                         <label for="user_function">Função:</label>
-                        <input id="user_function" type="text" name="user_function" class="form-control" ng-model="vm.user.function">
+                        <input id="user_function"
+                               type="text"
+                               name="user_function"
+                               class="form-control"
+                               ng-model="vm.user.function"
+                               required>
+
+                       <div ng-show="!formUsers.user_function.$valid" class="error-message" role="alert">
+                         <div ng-show="formUsers.user_function.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
                     <div class="form-group">
@@ -236,4 +296,3 @@
             </a>
         </div>
     </div>
-

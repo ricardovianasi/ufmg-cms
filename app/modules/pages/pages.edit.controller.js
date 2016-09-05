@@ -19,7 +19,8 @@
     'DateTimeHelper',
     'ModalService',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'validationService'
   ];
 
   /**
@@ -54,7 +55,8 @@
                                DateTimeHelper,
                                ModalService,
                                $rootScope,
-                               TagsService) {
+                               TagsService,
+                               validationService) {
     $rootScope.shownavbar = true;
     console.log('... PaginasEditarController');
     var allTags = [];
@@ -122,6 +124,9 @@
      * @param preview
      */
     $scope.publish = function (page, preview) {
+      if(!validationService.isValid($scope.formPage.$invalid))
+        return false;
+
       PagesService.updatePage($routeParams.id, page).then(function (page) {
         NotificationService.success('Página atualizada com sucesso.');
 

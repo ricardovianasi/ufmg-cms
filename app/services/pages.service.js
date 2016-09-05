@@ -104,6 +104,8 @@
       cleanPage.parent = page.parent ? page.parent.id : undefined;
       cleanPage.page_type = page.page_type;
 
+      // cleanPage.slug = page.slug.slug;
+
       return cleanPage;
     };
 

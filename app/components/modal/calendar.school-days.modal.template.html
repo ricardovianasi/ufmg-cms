@@ -2,32 +2,60 @@
     <h3 class="modal-title">Dias Letivos</h3>
 </div>
 <div class="modal-body">
-    <form class="form">
+    <form class="form" name="formDays" novalidate>
         <div class="row">
             <div class="col-xs-4">
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error': formDays.month.$error.required && !formDays.month.$valid}">
                     <label>M&ecirc;s</label>
-                    <select class="form-control" ng-model="period.month" ng-change="periodUpdate(period.month, period.year, period.regional)">
+                    <select class="form-control"
+                            ng-model="period.month"
+                            ng-change="periodUpdate(period.month, period.year, period.regional)"
+                            name="month"
+                            required>
                         <option value="{{ $index }}" ng-repeat="month in time_months">{{ month|titleize }}</option>
                     </select>
+
+                    <div ng-show="!formDays.month.$valid" class="error-message" role="alert">
+                      <div ng-show="formDays.month.$error.required">Campo obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-4">
-                <div class="form-group">
+                <div class="form-group"
+                      ng-class="{'has-error': formDays.year.$error.required && !formDays.year.$valid}">
                     <label>Ano</label>
-                    <select class="form-control" ng-model="period.year" ng-options="year for year in time_years" ng-change="periodUpdate(period.month, period.year, period.regional)">
+                    <select class="form-control"
+                            ng-model="period.year"
+                            ng-options="year for year in time_years"
+                            ng-change="periodUpdate(period.month, period.year, period.regional)"
+                            name="year"
+                            required>
                     </select>
+
+                    <div ng-show="!formDays.year.$valid" class="error-message" role="alert">
+                      <div ng-show="formDays.year.$error.required">Campo obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-4">
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error': formDays.regional.$error.required && !formDays.regional.$valid}">
                     <label>Local</label>
-                    <select class="form-control" ng-model="period.regional" ng-change="periodUpdate(period.month, period.year, period.regional)">
+                    <select class="form-control"
+                            ng-model="period.regional"
+                            ng-change="periodUpdate(period.month, period.year, period.regional)"
+                            name="regional"
+                            required>
                         <option></option>
                         <option value="{{ regional_item.id }}" ng-repeat="regional_item in regional" ng-selected="regional_item.id == period.regional">
                             {{ regional_item.name }}
                         </option>
                     </select>
+
+                    <div ng-show="!formDays.regional.$valid" class="error-message" role="alert">
+                      <div ng-show="formDays.regional.$error.required">Campo obrigatório</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,9 +65,18 @@
             </div>
             <div class="row">
                 <div class=col-xs-6>
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formDays.schooldays.$error.required && !formDays.schooldays.$valid}">
                         <label>Dias letivos do m&ecirc;s</label>
-                        <input type="text" class="form-control" ng-model="period.school_days">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="period.school_days"
+                               name="schooldays"
+                               required>
+
+                         <div ng-show="!formDays.schooldays.$valid" class="error-message" role="alert">
+                           <div ng-show="formDays.schooldays.$error.required">Campo obrigatório</div>
+                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6">

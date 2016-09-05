@@ -12,7 +12,8 @@
     'StatusService',
     'NotificationService',
     'MediaService',
-    '$rootScope'
+    '$rootScope',
+    'validationService'
   ];
 
   /**
@@ -33,7 +34,8 @@
                                    StatusService,
                                    NotificationService,
                                    MediaService,
-                                   $rootScope) {
+                                   $rootScope,
+                                   validationService) {
     $rootScope.shownavbar = true;
     console.log('... PeriodicalNewController');
 
@@ -82,6 +84,9 @@
     };
 
     $scope.publish = function (data) {
+      if(!validationService.isValid($scope.formPeriodicals.$invalid))
+        return false;
+
       var _data = angular.copy(data);
 
       delete _data.url;

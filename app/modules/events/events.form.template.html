@@ -42,21 +42,40 @@
 
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form">
+        <form class="form" name="formEvents" novalidate>
             <div class="row">
                 <div class="col-xs-8">
                     <!-- CATEGORY -->
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formEvents.category.$error.required && !formPage.category.$valid}">
                         <label for="category">Categoria / Tipo do Evento</label>
 
-                        <select id="category" name="category" class="form-control" ng-model="vm.event.type"
-                                ng-options="category.id as category.name for category in vm.categories.items"></select>
+                        <select id="category"
+                                name="category"
+                                class="form-control"
+                                ng-model="vm.event.type"
+                                ng-options="category.id as category.name for category in vm.categories.items"
+                                required></select>
+
+                        <div ng-show="!formEvents.category.$valid" class="error-message" role="alert">
+                          <div ng-show="formEvents.category.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
 
                     <!-- NAME -->
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formEvents.name.$error.required && !formPage.name.$valid}">
                         <label for="name">Nome do Evento</label>
-                        <input id="name" type="text" name="name" class="form-control" ng-model="vm.event.name">
+                        <input id="name"
+                               type="text"
+                               name="name"
+                               class="form-control"
+                               ng-model="vm.event.name"
+                               required>
+
+                       <div ng-show="!formEvents.name.$valid" class="error-message" role="alert">
+                         <div ng-show="formEvents.name.$error.required">Campo obrigatório</div>
+                       </div>
                     </div>
 
                     <!-- HIGHLIGHT -->
@@ -171,10 +190,21 @@
             <!-- DESCRIPTION -->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
+                    <div class="form-group"
+                          ng-class="{'has-error': formEvents.description.$error.required && !formPage.description.$valid}">
                         <label for="description">Descrição</label>
-                        <textarea id="description" name="description" cols="30" rows="5" class="form-control"
-                                  redactor="vm.redactorOptions" ng-model="vm.event.description"></textarea>
+                        <textarea id="description"
+                                  name="description"
+                                  cols="30"
+                                  rows="5"
+                                  class="form-control"
+                                  redactor="vm.redactorOptions"
+                                  ng-model="vm.event.description"
+                                  required></textarea>
+
+                      <div ng-show="!formEvents.description.$valid" class="error-message" role="alert">
+                        <div ng-show="formEvents.description.$error.required">Campo obrigatório</div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -194,7 +224,8 @@
                 <div class="col-md-4">
                     <div class="well well-sm">
                         <!-- START DATE -->
-                        <div class="form-group">
+                        <div class="form-group"
+                             ng-class="{'has-error': formEvents.initDate.$error.required && !formPage.initDate.$valid}">
                             <label for="initDate">
                                 <span class="fa fa-calendar"></span> Data de início</label>
 
@@ -207,21 +238,36 @@
                                    min-date="vm.datepickerOpt.initDate.minDate"
                                    max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar" close-text="Fechar"
                                    current-text="Hoje"
-                                   ng-change="vm.setEndDefault()">
+                                   ng-change="vm.setEndDefault()"
+                                   required>
+
+                           <div ng-show="!formEvents.initDate.$valid" class="error-message" role="alert">
+                             <div ng-show="formEvents.initDate.$error.required">Campo obrigatório</div>
+                           </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"
+                             ng-class="{'has-error': formEvents.initHour.$error.required && !formPage.initHour.$valid}">
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de início
                             </label>
 
-                            <input id="initHour" type="text" name="initHour"
-                                   class="form-control" ng-model="vm.event.init_hour">
+                            <input id="initHour"
+                                   type="text"
+                                   name="initHour"
+                                   class="form-control"
+                                   ng-model="vm.event.init_hour"
+                                   required>
+
+                           <div ng-show="!formEvents.initHour.$valid" class="error-message" role="alert">
+                             <div ng-show="formEvents.initHour.$error.required">Campo obrigatório</div>
+                           </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="well well-sm">
-                        <div class="form-group">
+                        <div class="form-group"
+                             ng-class="{'has-error': formEvents.endDate.$error.required && !formPage.endDate.$valid}">
                             <label for="endDate">
                                 <span class="fa fa-calendar"></span> Data de término
                             </label>
@@ -233,7 +279,12 @@
                                    is-open="vm.datepickerOpt.endDate.status.opened"
                                    min-date="vm.datepickerOpt.endDate.minDate"
                                    max-date="vm.datepickerOpt.endDate.maxDate" clear-text="Limpar" close-text="Fechar"
-                                   current-text="Hoje">
+                                   current-text="Hoje"
+                                   required>
+
+                           <div ng-show="!formEvents.endDate.$valid" class="error-message" role="alert">
+                             <div ng-show="formEvents.endDate.$error.required">Campo obrigatório</div>
+                           </div>
                         </div>
                         <div class="form-group">
                             <label>
@@ -262,9 +313,19 @@
             <div class="row">
                 <div class="col-xs-6">
                     <!-- LOCAL -->
-                    <div class="form-group">
+                    <div class="form-group"
+                         ng-class="{'has-error': formEvents.local.$error.required && !formPage.local.$valid}">
                         <label for="local">Local</label>
-                        <input id="local" type="text" name="local" class="form-control" ng-model="vm.event.local">
+                        <input id="local"
+                               type="text"
+                               name="local"
+                               class="form-control"
+                               ng-model="vm.event.local"
+                               required>
+
+                        <div ng-show="!formEvents.local.$valid" class="error-message" role="alert">
+                          <div ng-show="formEvents.local.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
 
                     <!-- INVESTMENT -->

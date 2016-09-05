@@ -16,7 +16,8 @@
     'DateTimeHelper',
     'ModalService',
     '$rootScope',
-    'TagsService'
+    'TagsService',
+    'validationService'
   ];
 
   /**
@@ -44,7 +45,8 @@
                                DateTimeHelper,
                                ModalService,
                                $rootScope,
-                               TagsService) {
+                               TagsService,
+                               validationService) {
     $rootScope.shownavbar = true;
     console.log('... EventsNewController');
 
@@ -182,7 +184,9 @@
      * @param preview
      */
     vm.publish = function (data, preview) {
-      
+      if(!validationService.isValid($scope.formEvents.$invalid))
+        return false;
+
       vm.setEndDefault();
 
       EventsService.store(data).then(function (event) {
