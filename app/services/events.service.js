@@ -53,6 +53,7 @@
         status: data.status,
         type: data.type,
         video: data.video,
+        slug: data.slug.slug
       };
 
       if (data.photo) {

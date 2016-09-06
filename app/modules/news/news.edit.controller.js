@@ -121,7 +121,8 @@
         /* jshint ignore:start */
         tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id,
         /* jshint ignore:end */
-        gallery: data.data.gallery
+        gallery: data.data.gallery,
+        slug: { slug: data.data.slug.slug } 
       };
 
 
@@ -197,7 +198,8 @@
         /* jshint ignore:start */
         tv_program: data.tv_program,
         /* jshint ignore:end */
-        gallery: data.gallery
+        gallery: data.gallery,
+        slug: data.slug.slug
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
