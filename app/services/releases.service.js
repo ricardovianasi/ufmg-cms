@@ -46,7 +46,8 @@
         service: data.service,
         files: [],
         status: data.status,
-        authorName: data.authorName
+        authorName: data.authorName,
+        slug: data.slug.slug
       };
 
 
