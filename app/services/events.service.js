@@ -34,6 +34,8 @@
      * @private
      */
     var _parseData = function (data) {
+      var slug = typeof data.slug != 'undefined' ?  data.slug.slug : '';
+
       var event = {
         address: data.address,
         audio: data.audio,
@@ -53,7 +55,7 @@
         status: data.status,
         type: data.type,
         video: data.video,
-        slug: data.slug.slug
+        slug: slug
       };
 
       if (data.photo) {
