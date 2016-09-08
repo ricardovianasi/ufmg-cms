@@ -103,8 +103,9 @@
 
       cleanPage.parent = page.parent ? page.parent.id : undefined;
       cleanPage.page_type = page.page_type;
-      
-      cleanPage.slug = page.slug.slug;
+
+      console.log(typeof page.slug);
+      cleanPage.slug = typeof page.slug != 'undefined' ? page.slug.slug : '';
 
       return cleanPage;
     };
