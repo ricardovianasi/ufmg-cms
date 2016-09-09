@@ -122,7 +122,7 @@
         tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id,
         /* jshint ignore:end */
         gallery: data.data.gallery,
-        slug: { slug: data.data.slug.slug } 
+        slug: { slug: data.data.slug.slug }
       };
 
 
@@ -182,6 +182,8 @@
 
       console.log(data.tv_program, typeof data.tv_program);
 
+      var slug = typeof data.slug != 'undefined' ?  data.slug.slug : '';
+
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -199,7 +201,7 @@
         tv_program: data.tv_program,
         /* jshint ignore:end */
         gallery: data.gallery,
-        slug: data.slug.slug
+        slug: slug
       };
 
       _obj.tags = _.map(_obj.tags, 'text');

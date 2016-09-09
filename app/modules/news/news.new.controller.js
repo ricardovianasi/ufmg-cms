@@ -107,6 +107,8 @@
       if(!validationService.isValid($scope.formNews.$invalid))
         return false;
 
+      var slug = typeof data.slug != 'undefined' ?  data.slug.slug : '';
+
       var _obj = {
         title: data.title,
         subtitle: data.subtitle,
@@ -122,7 +124,7 @@
         has_video: data.has_video,
         tv_program: data.tv_program,
         gallery: data.gallery,
-        slug: data.slug.slug
+        slug: slug
       };
 
       _obj.tags = _.map(_obj.tags, 'text');
