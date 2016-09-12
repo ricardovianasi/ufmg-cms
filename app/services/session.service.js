@@ -104,9 +104,11 @@
     function verifyTokenIsExpired(){
       var tokenExpiredIn = getTokenTime();
       var dateLastLogin = getLastLoginDate();
-      var hours = Math.floor( tokenExpiredIn / 60);
+      var seconds = Math.floor( tokenExpiredIn / 60);
       var futureDate = moment(dateLastLogin);
-          futureDate.add(hours, 'hours');
+          futureDate.add(moment.duration(2, 'hours'));
+
+          console.log(futureDate);
 
       if(futureDate.isSameOrBefore(new Date()))
         return true;
