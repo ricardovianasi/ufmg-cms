@@ -445,8 +445,29 @@
          * @returns {{tag: (*|null)}}
          */
         editorialnews: function (widget) {
+          console.log('passa 1', widget);
 
           var newsToSelect = [];
+
+        var tags = [];
+
+          if(widget.content) {
+            if('tags' in widget.content && widget.content.tags.length > 0) {
+              if (typeof widget.content.tags[0].text !== 'undefined')
+                widget.content.tags = _.map(widget.content.tags, 'text');
+                tags = widget.content.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+            }
+          } else {
+            if('tags' in widget && widget.tags.length > 0) {
+              if (typeof widget.tags[0].text !== 'undefined')
+                widget.tags = _.map(widget.tags, 'text');
+                tags = widget.tags;
+            } else {
+              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+            }
+          }
 
           if (widget.origin) {
             if (widget.origin == "1" && widget.news) {
@@ -459,11 +480,13 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: widget.tags || (widget.content ? widget.content.tags : null)
               };
             } else if (widget.origin == "0") {
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: widget.tags || (widget.content ? widget.content.tags : null)
               };
             }
           } else if (widget.content.origin !== null) {
@@ -477,11 +500,13 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: widget.tags || (widget.content ? widget.content.tags : null)
               };
             } else if (widget.content.origin == "0") {
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: widget.tags || (widget.content ? widget.content.tags : null)
               };
             }
           }
@@ -943,19 +968,42 @@
          * @returns {{tag: (*|null), news: (*|null)}}
          */
         editorialnews: function (widget) {
+          console.log('passa 2', widget);
+
           var newsToSelect = [];
+          var tagsForTagsInput = [];
+
+          function parseTags(tags) {
+            if (widget.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].text
+                });
+              });
+            } else if (widget.content.tags) {
+              angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                  text: tags[k].name
+                });
+              });
+            }
+          }
+
+          parseTags(widget.tags);
 
           if (widget.origin) {
             if (widget.origin == "1" && widget.news) {
               return {
                 news: widget.news,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: tagsForTagsInput
               };
             } else if (widget.origin == "0"){
 
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: tagsForTagsInput
               };
             }
           } else if (widget.content.origin !== null) {
@@ -971,13 +1019,14 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-
+                tags: tagsForTagsInput
               };
             } else if (widget.content.origin == "0") {
 
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
+                tags: tagsForTagsInput
               };
             }
           }

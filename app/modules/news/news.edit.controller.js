@@ -120,8 +120,8 @@
         has_video: data.data.has_video,
         /* jshint ignore:start */
         tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id,
+        gallery: data.data.gallery == null ? '' : data.data.gallery.id,
         /* jshint ignore:end */
-        gallery: data.data.gallery,
         slug: { slug: data.data.slug.slug }
       };
 
@@ -151,6 +151,7 @@
 
     GalleryService.getGalleries().then(function(data){
       $scope.galleries = data.data.items;
+      $scope.galleries.splice(0, 0, {id: '', title: 'Nenhuma'});
     });
 
     /**

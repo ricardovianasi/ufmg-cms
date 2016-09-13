@@ -108,7 +108,6 @@
       var futureDate = moment(dateLastLogin);
           futureDate.add(moment.duration(2, 'hours'));
 
-          console.log(futureDate);
 
       if(futureDate.isSameOrBefore(new Date()))
         return true;
