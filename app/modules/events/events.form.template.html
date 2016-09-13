@@ -255,8 +255,7 @@
                              <div ng-show="formEvents.initDate.$error.required">Campo obrigatório</div>
                            </div>
                         </div>
-                        <div class="form-group"
-                             ng-class="{'has-error': formEvents.initHour.$error.required && !formPage.initHour.$valid}">
+                        <div class="form-group">
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de início
                             </label>
@@ -265,12 +264,7 @@
                                    type="text"
                                    name="initHour"
                                    class="form-control"
-                                   ng-model="vm.event.init_hour"
-                                   required>
-
-                           <div ng-show="!formEvents.initHour.$valid" class="error-message" role="alert">
-                             <div ng-show="formEvents.initHour.$error.required">Campo obrigatório</div>
-                           </div>
+                                   ng-model="vm.event.init_hour">
                         </div>
                     </div>
                 </div>
