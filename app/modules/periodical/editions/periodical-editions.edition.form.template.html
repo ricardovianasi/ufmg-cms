@@ -62,6 +62,18 @@
 
             <div class="row">
                 <div class=col-xs-12>
+                    <div class=form-group>
+                        <label>Slug:</label>
+                        <input type="text"
+                               ng-model="edition.slug.slug"
+                               class="form-control"
+                               name="slug">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class=col-xs-12>
                     <div class=form-group
                           ng-class="{'has-error': formEditions.resume.$error.required && !formEditions.resume.$valid}">
                         <label>Resumo/Sinopse:</label>
@@ -191,7 +203,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <span ng-click="handleArticle(this, $index, article)" class="label label-warning">
+                                            <span ng-click="openArticle(this, $index, article)" class="label label-warning">
                                                                             <i class="fa fa-pencil"></i> EDITAR
                                                                         </span>
                                             <span ng-click="removeArticle($index, article)" class="label label-danger">
