@@ -259,7 +259,7 @@
           id: data.data.id,
           url: data.data.url,
           legend: vm.currentFile.legend,
-          author: vm.currentFile.author.name
+          author: vm.currentFile.author_name
         });
       });
     }
