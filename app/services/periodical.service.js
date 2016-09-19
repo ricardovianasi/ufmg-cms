@@ -51,6 +51,7 @@
           thumb: article.thumb,
           tags: article.tags,
           content: article.content,
+          slug: typeof article.slug != 'undefined' ? article.slug.slug : ''
         });
       });
 
@@ -63,6 +64,9 @@
       obj.status = data.status;
       obj.resume = data.resume;
       obj.year = data.year;
+      obj.slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+
+      console.log(obj);
 
       if (obj.status == 'scheduled') {
         obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
@@ -188,7 +192,16 @@
             $scope.edition.articles.push(data);
           }
         });
-      }
+      },
+      /**
+       * @param id
+       * @param edition
+       *
+       * @returns {*}
+       */
+      getEditionArticle: function (editionSlug, articleSlug) {
+        return $http.get(APIUrl + '/periodical/boletim/edition/' + editionSlug + '/articles/' + articleSlug);
+      },
     };
   }
 })();

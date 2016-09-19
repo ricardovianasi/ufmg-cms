@@ -25,7 +25,7 @@
                                         dataTableConfigService,
                                         $route,
                                         $rootScope) {
-      $rootScope.shownavbar = true;
+    $rootScope.shownavbar = true;
     console.log('... PeriodicalEditionsController');
 
     $scope.periodical = {

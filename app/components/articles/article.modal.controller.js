@@ -65,9 +65,10 @@
       $scope.article.content = article.content;
       $scope.article.cover_url = article.cover_url;
       $scope.article.thumb_url = article.thumb_url;
+      $scope.article.slug = article.slug;
 
       angular.forEach(article.tags, function (tag) {
-        $scope.article.tags.push(tag);
+        $scope.article.tags.push(tag.name);
       });
     }
 

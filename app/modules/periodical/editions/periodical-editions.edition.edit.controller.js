@@ -61,6 +61,7 @@
     PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
       console.log('get >>>>>>', data);
       $scope.periodical = data.data.periodical;
+      $scope.edition.slug = data.data.slug.slug;
       $scope.edition.id = data.data.id;
       $scope.edition.theme = data.data.theme;
       $scope.edition.resume = data.data.resume;
@@ -72,6 +73,7 @@
       $scope.edition.background = data.data.background ? data.data.background.id : '';
       $scope.edition.status = data.data.status;
       $scope.edition.articles = [];
+      $scope.edition.slug = data.data.slug;
 
       angular.forEach(data.data.articles, function (article) {
         var obj = {
@@ -83,7 +85,8 @@
           thumb: article.thumb ? article.thumb.id : '',
           cover_url: article.cover ? article.cover.url : '',
           thumb_url: article.thumb ? article.thumb.url : '',
-          content: article.content
+          content: article.content,
+          slug: article.slug.slug
         };
 
         obj.tags = [];
@@ -135,6 +138,7 @@
         tags = [];
       });
 
+      console.log('teste >>>>>>>', data);
       PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
         NotificationService.success('Edição atualizada com sucesso.');
 
@@ -146,7 +150,17 @@
       });
     };
 
-    $scope.handleArticle = PeriodicalService.handleArticle;
+
+    $scope.handleArticle = function(self) {
+        PeriodicalService.handleArticle(self);
+    };
+
+    $scope.openArticle = function(self, idx, article) {
+      PeriodicalService.getEditionArticle($scope.edition.slug.slug, article.slug).then(function(result){
+        console.log('resultado da busca >>>>>>>', result);
+        PeriodicalService.handleArticle(self, idx, result.data);
+      });
+    };
 
     $scope.sortableOptions = {
       accept: function (sourceItemHandleScope, destSortableScope) {

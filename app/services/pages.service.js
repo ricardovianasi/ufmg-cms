@@ -103,8 +103,6 @@
 
       cleanPage.parent = page.parent ? page.parent.id : undefined;
       cleanPage.page_type = page.page_type;
-
-      console.log(typeof page.slug);
       cleanPage.slug = typeof page.slug != 'undefined' ? page.slug.slug : '';
 
       return cleanPage;
@@ -449,23 +447,23 @@
 
           var newsToSelect = [];
 
-        var tags = [];
+        var tag = [];
 
           if(widget.content) {
-            if('tags' in widget.content && widget.content.tags.length > 0) {
-              if (typeof widget.content.tags[0].text !== 'undefined')
-                widget.content.tags = _.map(widget.content.tags, 'text');
-                tags = widget.content.tags;
+            if('tag' in widget.content && widget.content.tag.length > 0) {
+              if (typeof widget.content.tag[0].text !== 'undefined')
+                widget.content.tag = _.map(widget.content.tag, 'text');
+                tag = widget.content.tag;
             } else {
-              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+              tag = widget.tag || (widget.content ? widget.content.tag.id : null);
             }
           } else {
-            if('tags' in widget && widget.tags.length > 0) {
-              if (typeof widget.tags[0].text !== 'undefined')
-                widget.tags = _.map(widget.tags, 'text');
-                tags = widget.tags;
+            if('tag' in widget && widget.tag.length > 0) {
+              if (typeof widget.tag[0].text !== 'undefined')
+                widget.tag = _.map(widget.tag, 'text');
+                tag = widget.tag;
             } else {
-              tags = widget.tags || (widget.content ? widget.content.tags.id : null);
+              tag = widget.tag || (widget.content ? widget.content.tag.id : null);
             }
           }
 
@@ -480,13 +478,13 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: widget.tags || (widget.content ? widget.content.tags : null)
+                tag: widget.tag || (widget.content ? widget.content.tag : null)
               };
             } else if (widget.origin == "0") {
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: widget.tags || (widget.content ? widget.content.tags : null)
+                tag: widget.tag || (widget.content ? widget.content.tag : null)
               };
             }
           } else if (widget.content.origin !== null) {
@@ -500,13 +498,13 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: widget.tags || (widget.content ? widget.content.tags : null)
+                tag: widget.tag || (widget.content ? widget.content.tag : null)
               };
             } else if (widget.content.origin == "0") {
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: widget.tags || (widget.content ? widget.content.tags : null)
+                tag: widget.tag || (widget.content ? widget.content.tag : null)
               };
             }
           }
@@ -996,14 +994,14 @@
               return {
                 news: widget.news,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: tagsForTagsInput
+                tag: tagsForTagsInput
               };
             } else if (widget.origin == "0"){
 
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: tagsForTagsInput
+                tag: tagsForTagsInput
               };
             }
           } else if (widget.content.origin !== null) {
@@ -1019,14 +1017,14 @@
               return {
                 news: newsToSelect,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: tagsForTagsInput
+                tag: tagsForTagsInput
               };
             } else if (widget.content.origin == "0") {
 
               return {
                 news: null,
                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                tags: tagsForTagsInput
+                tag: tagsForTagsInput
               };
             }
           }
