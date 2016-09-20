@@ -972,13 +972,13 @@
           var tagsForTagsInput = [];
 
           function parseTags(tags) {
-            if (widget.tags) {
+            if (widget.tag) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].text
                 });
               });
-            } else if (widget.content.tags) {
+            } else if (widget.content.tag) {
               angular.forEach(tags, function (v, k) {
                 tagsForTagsInput.push({
                   text: tags[k].name
@@ -987,7 +987,7 @@
             }
           }
 
-          parseTags(widget.tags);
+          parseTags(widget.tag);
 
           if (widget.origin) {
             if (widget.origin == "1" && widget.news) {
