@@ -68,7 +68,10 @@
       $scope.article.slug = article.slug;
 
       angular.forEach(article.tags, function (tag) {
-        $scope.article.tags.push(tag.name);
+        if(typeof tag.text != 'undefined')
+          $scope.article.tags.push(tag.text);
+        else
+          $scope.article.tags.push(tag);
       });
     }
 

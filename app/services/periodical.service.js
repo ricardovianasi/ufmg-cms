@@ -202,6 +202,9 @@
       getEditionArticle: function (editionSlug, articleSlug) {
         return $http.get(APIUrl + '/periodical/boletim/edition/' + editionSlug + '/articles/' + articleSlug);
       },
+      getEditionArticles: function (editionId) {
+        return $http.get(APIUrl + '/periodical/boletim/edition/' + editionId + '/articles/');
+      },
     };
   }
 })();

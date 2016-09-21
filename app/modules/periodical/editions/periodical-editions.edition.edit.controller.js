@@ -75,28 +75,7 @@
       $scope.edition.articles = [];
       $scope.edition.slug = data.data.slug;
 
-      angular.forEach(data.data.articles, function (article) {
-        var obj = {
-          title: article.title,
-          subtitle: article.subtitle,
-          author_name: article.author_name,
-          page_number: article.page_number,
-          cover: article.cover ? article.cover.id : '',
-          thumb: article.thumb ? article.thumb.id : '',
-          cover_url: article.cover ? article.cover.url : '',
-          thumb_url: article.thumb ? article.thumb.url : '',
-          content: article.content,
-          slug: article.slug.slug
-        };
-
-        obj.tags = [];
-
-        angular.forEach(article.tags, function (tag) {
-          obj.tags.push(tag.name);
-        });
-
-        $scope.edition.articles.push(obj);
-      });
+      _getAllArticles($scope.edition.id);
 
       console.log('articles quando entra >>>>>>', $scope.edition.articles);
       $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
@@ -112,6 +91,33 @@
       $scope.edition.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
       $scope.edition.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
     });
+
+    function _getAllArticles(id) {
+      PeriodicalService.getEditionArticles(id).then(function(result){
+        angular.forEach(result.data.items, function (article) {
+          var obj = {
+            title: article.title,
+            subtitle: article.subtitle,
+            author_name: article.author_name,
+            page_number: article.page_number,
+            cover: article.cover ? article.cover.id : '',
+            thumb: article.thumb ? article.thumb.id : '',
+            cover_url: article.cover ? article.cover.url : '',
+            thumb_url: article.thumb ? article.thumb.url : '',
+            content: article.content,
+            slug: article.slug.slug
+          };
+
+          obj.tags = [];
+
+          angular.forEach(article.tags, function (tag) {
+            obj.tags.push(tag.name);
+          });
+
+          $scope.edition.articles.push(obj);
+        });
+      });
+    }
 
     /**
      * @param data
@@ -156,10 +162,7 @@
     };
 
     $scope.openArticle = function(self, idx, article) {
-      PeriodicalService.getEditionArticle($scope.edition.slug.slug, article.slug).then(function(result){
-        console.log('resultado da busca >>>>>>>', result);
-        PeriodicalService.handleArticle(self, idx, result.data);
-      });
+      PeriodicalService.handleArticle(self, idx, article);
     };
 
     $scope.sortableOptions = {
