@@ -29,7 +29,7 @@
    */
   function Router($routeProvider) {
     $routeProvider.otherwise({
-      redirectTo: '/'
+      redirectTo: '/login'
     });
   }
 
