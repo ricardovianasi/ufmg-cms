@@ -160,7 +160,9 @@
      * @private
      */
     function _loadMidia(page) {
-      MediaService.getMedia(page, 35).then(function (result) {
+      console.log('aff');
+      var types = "types=png,jpg,jpeg";
+      MediaService.getMedia(page, 35, types).then(function (result) {
         vm.midia = result.data;
       });
     }
