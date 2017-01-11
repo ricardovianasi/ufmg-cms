@@ -22,6 +22,9 @@
     /* jshint ignore:end */
 
     vm.login = _login;
+    vm.credentials = {};
+    vm.credentials.username = 'portal@portal';
+    vm.credentials.password = 'teste';
 
       /**
        *
@@ -31,8 +34,9 @@
       authService.autenticate(vm.credentials).then(function(data){
         sessionService.saveData(data.data);
         sessionService.setIsLogged();
-        $location.path('dashboard');
-      }, function(error){
+        console.log($location.path());
+        $location.path('/');
+      }, function(error) {
           NotificationService.error('Usuário ou senha inválidos, tente novamente.');
           vm.credentials.password = '';
       });
