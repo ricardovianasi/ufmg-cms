@@ -86,7 +86,7 @@
     "yui"           : false,    // Yahoo User Interface
 
     // Adicional
-    "indent": 4,
+    "indent": 2,
     "esnext": false,
 
     // Custom Globals
