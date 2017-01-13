@@ -29,7 +29,7 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 **Windows 10**
 
-> **Automatização: ** use `ambient.cmd` do repositório `Home`
+> **Automatização: ** use `ambient.cmd` da sessão `Automatização`
  
 - Variável de ambiente <i class="icon-terminal"></i> `setx APPLICATION_ENV development`
 - [NodeJS 4.x](https://nodejs.org)
@@ -47,7 +47,7 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 **Linux (ubuntu)**
  
-  > **Automatização: ** use `sh ./ambient.sh` do repositório `Home`
+  > **Automatização: ** use `sh ./ambient.sh` da sessão `Automatização`
 
 - Variável de ambiente
 	 Edite o arquivo de configuração do seu shell <i class="icon-terminal"></i> `gedit ~/.bashrc` e adicione na última linha `export APPLICATION_ENV=development`
@@ -82,6 +82,20 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
     <i class="icon-terminal"></i>`npm i -g gulp-cli bower && npm i && bower i`
 3. Iniciando o projeto
     <i class="icon-terminal"></i> `gulp dev`
+
+## Automatização
+
+**Windows**
+
+Extraia o arquivo [windows.zip](./ambient/windows.zip) para a pasta em que irá trabalhar, em seguida, execute o `windows.cmd`
+
+**Linux (Ubuntu)**
+
+Baixe o arquivo [ubuntu.sh](./ambient/ubuntu.sh) e mova para sua pasta de trabalho, em seguida use <i class="icon-terminal"></i> `sh ./ambient.sh`
+
+**MacOS**
+
+TODO: Fazer!
 
 ## Deploy
 
