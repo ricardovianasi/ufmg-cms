@@ -1,49 +1,44 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('loginModule')
-    .controller('loginController', loginController);
+    angular
+        .module('loginModule')
+        .controller('LoginController', LoginController);
 
-  loginController.$inject = [
-    '$rootScope',
-    'authService',
-    'NotificationService',
-    'sessionService',
-    '$location'
-  ];
+    /** @ngInject */
+    function LoginController($rootScope,
+        authService,
+        NotificationService,
+        sessionService,
+        $location,
+        $log) {
 
-  function loginController($rootScope, authService, NotificationService, sessionService, $location) {
-    $rootScope.shownavbar = false;
-    console.log('... loginController');
+        var vm = this;
 
-    /* jshint ignore:start */
-    var vm = this;
-    /* jshint ignore:end */
+        vm.credentials = {};
+        // vm.credentials.username = 'portal@portal';
+        // vm.credentials.password = 'teste';
+        vm.login = _login;
 
-    vm.login = _login;
-    vm.credentials = {};
-    vm.credentials.username = 'portal@portal';
-    vm.credentials.password = 'teste';
+        $rootScope.shownavbar = false;
+        $log.info('LoginController');
 
-      /**
-       *
-       * @private
-       */
-    function _login() {
-      authService.autenticate(vm.credentials).then(function(data){
-        sessionService.saveData(data.data);
-        sessionService.setIsLogged();
-        console.log($location.path());
-        $location.path('/');
-      }, function(error) {
-          NotificationService.error('Usuário ou senha inválidos, tente novamente.');
-          vm.credentials.password = '';
-      });
+        function _login(isValid) {
+            $log.info(isValid);
+            if (isValid) {
+                authService
+                    .autenticate(vm.credentials)
+                    .then(function (data) {
+                        sessionService.saveData(data.data);
+                        sessionService.setIsLogged();
+                        $location.path('/');
+                    }, function (err) {
+                        NotificationService.error('Usuário ou senha inválidos, tente novamente.');
+                        vm.credentials.password = '';
+                        $log.error(err);
+                    });
+            }
+
+        }
     }
-
-
-
-
-  }
 })();

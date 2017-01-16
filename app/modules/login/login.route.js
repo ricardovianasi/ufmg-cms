@@ -1,13 +1,14 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('loginModule')
-    .config(['$routeProvider', function ($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          templateUrl: 'modules/login/login.template.html',
-          controller: 'loginController as vm',
+    angular
+        .module('loginModule')
+        /** ngInject */
+        .config(function ($routeProvider) {
+            $routeProvider
+                .when('/login', {
+                    templateUrl: 'modules/login/login.template.html',
+                    controller: 'LoginController as vm',
+                });
         });
-    }]);
 })();
