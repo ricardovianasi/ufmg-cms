@@ -1,66 +1,51 @@
-;(function(){
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('serviceModule')
-    .factory('authInterceptorService', authInterceptorService);
+    angular
+        .module('serviceModule')
+        .factory('authInterceptorService', authInterceptorService);
 
-  authInterceptorService.$inject = [
-    'sessionService',
-    '$q',
-    '$location',
-    'client_id_auth',
-    'apiUrl'
-  ];
-
-  function authInterceptorService(sessionService, $q, $location, client_id_auth, apiUrl) {
-    return {
-      request: _request,
-      responseError: responseError
-    };
-
-
-    /**
-     *
-     * @param config
-     * @returns {*}
-       * @private
-       */
-    function _request(config) {
-      if(sessionService.verifyTokenIsExpired()) {
-        var data  = {
-          refresh_token: sessionService.getTokenRefresh(),
-          grant_type: 'refresh_token',
-          client_id: client_id_auth
+    /** ngInject */
+    function authInterceptorService(sessionService, $q, $location, client_id_auth, apiUrl, $log) {
+        return {
+            request: _request,
+            responseError: _responseError
         };
 
-        $.ajax({
-          type:"POST",
-          url: apiUrl + '/authenticate',
-          data: data,
-        }).done(function(res) {
-          sessionService.saveData(res);
-        });
-      }
+        function _request(config) {
+            if (sessionService.verifyTokenIsExpired()) {
 
+                var data = {
+                    refresh_token: sessionService.getTokenRefresh(),
+                    grant_type: 'refresh_token',
+                    client_id: client_id_auth
+                };
 
+                // WTF! Fizeram o sistema de autenticação errado, e teve que fazer isso.
+                $.ajax({
+                    type: "POST",
+                    url: apiUrl + '/authenticate',
+                    data: data,
+                }).done(function (res) {
+                    $log.error('Chamada ajax inválida: ', res);
+                    sessionService.saveData(res);
+                });
+            }
+            var token = sessionService.getToken();
 
-      var token = sessionService.getToken();
+            if (token) {
+                config.headers = config.headers || {};
+                config.headers.Authorization = 'Bearer ' + token;
+            }
 
-      if(token) {
-        config.headers = config.headers || {};
-        config.headers.Authorization =  'Bearer ' + token;
-      }
+            return config;
+        }
 
-      return config;
+        function _responseError(response) {
+            if (response.status === 401 || response.status === 403) {
+                $location.path('/login');
+            }
+            return $q.reject(response);
+        }
     }
-
-
-    function responseError(response) {
-      if (response.status === 401 || response.status === 403) {
-        $location.path('/login');
-      }
-      return $q.reject(response);
-    }
-  }
 })();

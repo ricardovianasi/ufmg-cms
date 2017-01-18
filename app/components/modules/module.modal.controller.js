@@ -1,71 +1,71 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('componentsModule')
-    .controller('ModuleModalController', ModuleModalController);
+    angular.module('componentsModule')
+        .controller('ModuleModalController', ModuleModalController);
+    /** ngInject */
+    function ModuleModalController($scope,
+        $uibModalInstance,
+        PagesService,
+        module,
+        widgets,
+        RedactorPluginService,
+        $log) {
+        $log.info('ModuleModalController');
 
-  /**
-   * @param $scope
-   * @param $uibModalInstance
-   * @param PagesService
-   * @param module
-   * @param widgets
-   * @param RedactorPluginService
-   *
-   * @constructor
-   */
-  function ModuleModalController($scope,
-                                 $uibModalInstance,
-                                 PagesService,
-                                 module,
-                                 widgets,
-                                 RedactorPluginService) {
-    console.log('... ModuleModalController');
+        var vm = $scope;
 
-    $scope.widgets = widgets;
-    $scope.widget = {
-      selected: {},
-      type: '',
-      title: ''
-    };
+        $log.error(widgets);
 
-    $scope.$watch('widget.selected', function () {
-      $scope.widget.type = $scope.widget.selected.type;
-    });
+        vm.widgets = widgets;
+        vm.ok = _ok;
+        vm.cancel = _cancel;
 
-    if (module) {
-      $scope.module = angular.copy(module);
-      $scope.widget.id = module.id;
-      $scope.widget.type = module.type;
-      $scope.widget.title = module.title;
-      $scope.widget.selected.type = module.type;
+        function onInit() {
+            vm.widget = {
+                selected: {},
+                type: '',
+                title: ''
+            };
 
-      angular.extend($scope.widget, PagesService.module().parseWidgetToLoad($scope.module));
+            $scope.$watch('widget.selected', function () {
+                vm.widget.type = vm.widget.selected.type;
+            });
+
+            if (module) {
+                vm.module = angular.copy(module);
+                vm.widget.id = module.id;
+                vm.widget.type = module.type;
+                vm.widget.title = module.title;
+                vm.widget.selected.type = module.type;
+
+                angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
+            }
+            vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
+
+            vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+            vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+            vm.preparePartial = PagesService.module().preparePartial;
+        }
+
+        function _ok() {
+            var _obj = {
+                id: vm.widget.id || null,
+                title: vm.widget.title || null,
+                type: vm.widget.type
+            };
+
+            angular.extend(_obj, vm.widget);
+
+            $log.info(_obj);
+
+            $uibModalInstance.close(_obj);
+        }
+
+        function _cancel() {
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        onInit();
     }
-
-    $scope.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
-
-    $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
-    $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
-
-    $scope.ok = function () {
-      var _obj = {
-        id: $scope.widget.id || null,
-        title: $scope.widget.title || null,
-        type: $scope.widget.type
-      };
-
-      angular.extend(_obj, $scope.widget);
-
-      clog('OK >>>', _obj);
-
-      $uibModalInstance.close(_obj);
-    };
-
-    $scope.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
-
-    $scope.preparePartial = PagesService.module().preparePartial;
-  }
 })();

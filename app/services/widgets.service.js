@@ -1,71 +1,65 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('serviceModule')
-    .factory('WidgetsService', WidgetsService);
+    angular.module('serviceModule')
+        .factory('WidgetsService', WidgetsService);
 
-  WidgetsService.$inject = [
-    '$http',
-    '$q',
-    'apiUrl'
-  ];
+    /** ngInject */
+    function WidgetsService($http, $q, apiUrl, $log) {
+        $log.info('WidgetsService');
 
-  function WidgetsService($http, $q, apiUrl) {
-    console.log('... WidgetsService');
+        return {
+            getWidgets: _getWidgets,
+            convertFromRaw: _convertFromRaw
+        };
 
-    return {
-      /**
-       * @returns {*}
-       */
-      getWidgets: function () {
-        var deferred = $q.defer();
+        function _getWidgets() {
+            var deferred = $q.defer();
 
-        $http.get(apiUrl + '/widget').then(function (data) {
-          deferred.resolve(data);
-        });
+            $http
+                .get(apiUrl + '/widget')
+                .then(function (data) {
+                    deferred.resolve(data);
+                });
 
-        return deferred.promise;
-      },
-      /**
-       * @param widgets
-       */
-      convertFromRaw: function (widgets) {
-        widgets = [{}];
+            return deferred.promise;
+        }
 
-        angular.forEach(widgets, function (widget) {
-          var obj = {};
+        /** TODO: Esta classe não está sendo usada em nenhum lugar */
+        function _convertFromRaw(widgets) {
+            widgets = [{}];
 
-          obj.id = widget.id;
-          obj.type = widget.type;
-          obj.title = widget.title;
+            angular.forEach(widgets, function (widget) {
+                var obj = {};
 
-          if (widget.type == 'text') {
-            obj.text = widget.content ? widget.content.text : '';
-          } else if (widget.type == 'gallery') {
-            obj.gallery = widget.content ? widget.content.gallery.id : '';
-          } else if (widget.type == 'highlightedgallery') {
-            obj.gallery = widget.content ? widget.content.gallery.id : '';
-          } else if (widget.type == 'highlightedgalleries') {
-            obj.galleries = [];
+                obj.id = widget.id;
+                obj.type = widget.type;
+                obj.title = widget.title;
 
-            angular.forEach(widget.content.galleries, function (gallery) {
-              obj.galleries.push(gallery.id);
+                if (widget.type === 'text') {
+                    obj.text = widget.content ? widget.content.text : '';
+                } else if (widget.type === 'gallery') {
+                    obj.gallery = widget.content ? widget.content.gallery.id : '';
+                } else if (widget.type === 'highlightedgallery') {
+                    obj.gallery = widget.content ? widget.content.gallery.id : '';
+                } else if (widget.type === 'highlightedgalleries') {
+                    obj.galleries = [];
+                    angular.forEach(widget.content.galleries, function (gallery) {
+                        obj.galleries.push(gallery.id);
+                    });
+                } else if (widget.type === 'lastimagessidebar') {
+                    obj.category = widget.content ? widget.content.category.id : '';
+                } else if (widget.type === 'listnews') {
+                    obj.limit = widget.content ? widget.limit : '';
+                    obj.typeNews = widget.content ? widget.content.typeNews : '';
+                    obj.tag = widget.content ? widget.content.tag : '';
+                } else if (widget.type === 'highlightednews') {
+                    obj.news = [];
+                    angular.forEach(widget.content.news, function (news) {
+                        obj.news.push(news.id);
+                    });
+                }
             });
-          } else if (widget.type == 'lastimagessidebar') {
-            obj.category = widget.content ? widget.content.category.id : '';
-          } else if (widget.type == 'listnews') {
-            obj.limit = widget.content ? widget.limit : '';
-            obj.typeNews = widget.content ? widget.content.typeNews : '';
-            obj.tag = widget.content ? widget.content.tag : '';
-          } else if (widget.type == 'highlightednews') {
-            obj.news = [];
-
-            angular.forEach(widget.content.news, function (news) {
-              obj.news.push(news.id);
-            });
-          }
-        });
-      }
-    };
-  }
+        }
+    }
 })();

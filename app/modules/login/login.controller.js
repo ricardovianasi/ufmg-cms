@@ -15,9 +15,13 @@
 
         var vm = this;
 
+        vm.$onInit = function () {
+            $log.info('asd');
+        };
+
         vm.credentials = {};
-        // vm.credentials.username = 'portal@portal';
-        // vm.credentials.password = 'teste';
+        vm.credentials.username = 'portal@portal';
+        vm.credentials.password = 'teste';
         vm.login = _login;
 
         $rootScope.shownavbar = false;
