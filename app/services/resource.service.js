@@ -1,21 +1,19 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('usersModule')
-    .factory('ResourcesService', ResourcesService);
+    angular.module('usersModule')
+        .factory('ResourcesService', ResourcesService);
 
-  ResourcesService.$inject = [
-    '$http',
-    'apiUrl'
-  ];
+    /** ngInject */
+    function ResourcesService($http, apiUrl, $log) {
+        $log.info('... ResourcesService');
 
-  function ResourcesService($http, apiUrl) {
-    console.log('... ResourcesService');
+        return {
+            get: _get
+        };
 
-    return {
-      get: function() {
-        return $http.get(apiUrl+'/resource');
-      }
-    };
-  }
+        function _get() {
+            return $http.get(apiUrl + '/resource');
+        }
+    }
 })();

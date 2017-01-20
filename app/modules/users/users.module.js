@@ -1,7 +1,7 @@
-;(function(){
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('usersModule', []);
+    angular
+        .module('usersModule', []);
 
 })();

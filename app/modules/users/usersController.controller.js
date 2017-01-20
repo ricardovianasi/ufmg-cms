@@ -1,49 +1,65 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('usersModule')
-    .controller('usersController', usersController);
+    angular
+        .module('usersModule')
+        .controller('UsersController', UsersController);
+    /** ngInject */
+    function UsersController($rootScope,
+        UsersService,
+        ModalService,
+        NotificationService,
+        authService,
+        $log) {
 
-  usersController.$inject = [
-    '$rootScope',
-    'UsersService',
-    'ModalService',
-    'NotificationService'
-  ];
+        var vm = this;
+        vm.remove = _remove;
+        vm.normalize = _normalize;
+        vm.activate = _activate;
+        vm.reset = _reset;
 
+        function onInit() {
+            $rootScope.shownavbar = true;
+            $log.info('UsersController');
+            authService
+                .account()
+                .then(function (res) {
+                    vm.User = res.data;
+                    vm.isAdmin = res.data.is_administrator;
+                });
+            _loadUsers();
+        }
 
+        function _reset(idUser){
+            $log.warn('TODO: Reset password', idUser);
+        }
 
-  function usersController($rootScope, UsersService, ModalService, NotificationService) {
-    $rootScope.shownavbar = true;
-    console.log('... usersController');
+        function _activate(user) {
+            user.status = !user.status;
+            $log.info('TODO: Status: ' + user.status);
+        }
 
-    /* jshint ignore:start */
-    var vm = this;
-    /* jshint ignore:end */
+        function _normalize(value, value2) {
+            if (value && !value2) {
+                return value;
+            } else if (!value && !value2) {
+                return '';
+            }
+            return value + ' / ' + value2;
+        }
 
-    /**
-     *
-     * @private
-     */
-    function _loadUsers() {
-      UsersService.getUsers().then(function (data) {
-        vm.users = data.data.items;
-      });
+        function _loadUsers() {
+            UsersService
+                .getUsers()
+                .then(function (res) {
+                    vm.users = res.data.items;
+                });
+        }
+
+        function _remove(idUser) {
+            $log.warn('TODO: Implementar', idUser);
+        }
+
+        onInit();
     }
-
-    _loadUsers();
-
-    //
-    // vm.removeFaq = function (id, title) {
-    //   ModalService
-    //     .confirm('Você deseja excluir o FAQ <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
-    //     .result
-    //     .then(function () {
-    //       faqService.remove(id).then(function () {
-    //         NotificationService.success('FAQ removido com sucesso.');
-    //         _loadFaqs();
-    //       });
-    //     });
-    // };
-  }
 })();

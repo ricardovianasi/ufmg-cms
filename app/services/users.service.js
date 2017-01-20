@@ -1,39 +1,40 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('usersModule')
-    .factory('UsersService', UsersService);
+    angular
+        .module('usersModule')
+        .factory('UsersService', UsersService);
 
-  UsersService.$inject = [
-    '$http',
-    'apiUrl'
-  ];
+    /** ngInject */
+    function UsersService($http, apiUrl, $log) {
+        $log.info('UsersService');
 
-  function UsersService($http, apiUrl) {
-    console.log('... UsersService');
+        return {
+            getUsers: _getUsers,
+            getUser: _getUser,
+            saveUser: _saveUser,
+            updateUser: _updateUser
+        };
 
-    return {
-      getUsers: function() {
-        return $http.get(apiUrl+'/user');
-      },
+        function _getUsers() {
+            return $http.get(apiUrl + '/user');
+        }
 
-      getUser: function(id) {
-        var url = apiUrl + '/user';
+        function _getUser(id) {
+            var url = apiUrl + '/user';
+            if (id) {
+                url = apiUrl + '/user/' + id;
+            }
+            return $http.get(url);
+        }
 
-        if(id)
-          url =  apiUrl + '/user/' + id;
+        function _saveUser(data) {
+            return $http.post(apiUrl + '/user', data);
+        }
 
-        return $http.get(url);
-      },
-
-      saveUser: function (data) {
-        return $http.post(apiUrl + '/user', data);
-      },
-
-      updateUser: function (data) {
-        var id = data.id;
-        return $http.put(apiUrl + '/user/' + id, data);
-      }
-    };
-  }
+        function _updateUser(data) {
+            var id = data.id;
+            return $http.put(apiUrl + '/user/' + id, data);
+        }
+    }
 })();

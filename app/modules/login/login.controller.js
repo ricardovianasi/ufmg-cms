@@ -15,10 +15,6 @@
 
         var vm = this;
 
-        vm.$onInit = function () {
-            $log.info('asd');
-        };
-
         vm.credentials = {};
         vm.credentials.username = 'portal@portal';
         vm.credentials.password = 'teste';
@@ -32,9 +28,10 @@
             if (isValid) {
                 authService
                     .autenticate(vm.credentials)
-                    .then(function (data) {
-                        sessionService.saveData(data.data);
+                    .then(function (res) {
+                        sessionService.saveData(res.data);
                         sessionService.setIsLogged();
+                        $rootScope.User = res.data;
                         $location.path('/');
                     }, function (err) {
                         NotificationService.error('Usuário ou senha inválidos, tente novamente.');
