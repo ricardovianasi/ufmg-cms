@@ -58,7 +58,8 @@
     "ui-select": "angular-ui-select#~0.13.2",
     "v-accordion": "~1.6.0",
     "checklist-model": "~0.10.0",
-    "datatables": "~1.10.13"
+    "datatables": "~1.10.13",
+    "angular-input-masks": "^2.5.0"
   },
   "resolutions": {
     "angular": "~1.4.8",

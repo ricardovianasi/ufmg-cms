@@ -25,6 +25,7 @@
         'angular-loading-bar',
         'vAccordion',
         'checklist-model',
+        'ui.utils.masks',
 
         // App Modules
         'calendarModule',
