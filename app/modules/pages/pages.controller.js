@@ -1,85 +1,67 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('pagesModule')
-    .controller('PagesController', PagesController);
+    angular.module('pagesModule')
+        .controller('PagesController', PagesController);
 
-  PagesController.$inject = [
-    '$scope',
-    'dataTableConfigService',
-    'PagesService',
-    'NotificationService',
-    'StatusService',
-    'ModalService',
-    'DateTimeHelper',
-    '$rootScope'
-  ];
+    /** ngInject */
+    function PagesController($scope,
+        dataTableConfigService,
+        PagesService,
+        NotificationService,
+        StatusService,
+        ModalService,
+        DateTimeHelper,
+        $rootScope,
+        $log) {
+        var vm = $scope;
+        $log.info('PagesController');
 
-  /**
-   * @param $scope
-   * @param dataTableConfigService
-   * @param PagesService
-   * @param NotificationService
-   * @param StatusService
-   * @param ModalService
-   * @param DateTimeHelper
-   *
-   * @constructor
-   */
-  function PagesController($scope,
-                           dataTableConfigService,
-                           PagesService,
-                           NotificationService,
-                           StatusService,
-                           ModalService,
-                           DateTimeHelper,
-                           $rootScope) {
-    $rootScope.shownavbar = true;
-    console.log('... PagesController');
+        $rootScope.shownavbar = true;
+        vm.status = [];
+        vm.pages = [];
+        vm.currentPage = 1;
+        vm.remove = _remove;
+        vm.changePage = _changePage;
 
-    $scope.status = [];
-    $scope.pages = [];
-    $scope.currentPage = 1;
+        function onInit() {
+            StatusService
+                .getStatus()
+                .then(function (data) {
+                    vm.status = data.data;
+                    $log.info(vm.status);
+                });
+            vm.convertDate = DateTimeHelper.convertDate;
+            _loadPages();
+        }
 
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
+        function _loadPages(page) {
+            PagesService
+                .getPages(page)
+                .then(function (data) {
+                    vm.pages = data.data;
+                    $log.info(vm.pages);
+                    vm.dtOptions = dataTableConfigService.init();
+                });
+        }
 
-    /**
-     * @param page
-     */
-    var loadPages = function (page) {
-      PagesService.getPages(page).then(function (data) {
-        $scope.pages = data.data;
-        $scope.dtOptions = dataTableConfigService.init();
-      });
-    };
+        function _changePage() {
+            _loadPages(vm.currentPage);
+        }
 
-    loadPages();
-
-    /**
-     *
-     */
-    $scope.changePage = function () {
-      loadPages($scope.currentPage);
-    };
-
-    $scope.convertDate = DateTimeHelper.convertDate;
-
-    /**
-     * @param id
-     * @param title
-     */
-    $scope.remove = function (id, title) {
-      ModalService
-        .confirm('Você deseja excluir a página <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
-        .result
-        .then(function () {
-          PagesService.removePage(id).then(function () {
-            NotificationService.success('Página removida com sucesso.');
-            loadPages();
-          });
-        });
-    };
-  }
+        function _remove(id, title) {
+            ModalService
+                .confirm('Você deseja excluir a página <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+                .result
+                .then(function () {
+                    PagesService
+                        .removePage(id)
+                        .then(function () {
+                            NotificationService.success('Página removida com sucesso.');
+                            _loadPages();
+                        });
+                });
+        }
+        onInit();
+    }
 })();

@@ -13,13 +13,11 @@
                             <i class="fa-home"></i>Home
                         </a>
                     </li>
-
                     <li>
                         <a href="#/pages">
                             <strong>Páginas</strong>
                         </a>
                     </li>
-
                     <li class="active">
                         <a href="#/pages">
                             <strong>Nova Página</strong>
@@ -30,62 +28,44 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formPage" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group"
-                         ng-class="{'has-error': formPage.title.$error.required && !formPage.title.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formPage.title.$error.required && !formPage.title.$valid}">
                         <label for="title">Título</label>
-                        <input id="title"
-                               type="text"
-                               name="title"
-                               class="form-control"
-                               ng-model="page.title"
-                               required>
-
-                         <div ng-show="!formPage.title.$valid" class="error-message" role="alert">
-                           <div ng-show="formPage.title.$error.required">Campo obrigatório</div>
-                         </div>
+                        <input id="title" type="text" name="title" class="form-control" ng-model="page.title" required>
+                        <div ng-show="!formPage.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formPage.title.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="title">Slug</label>
-                        <input id="title" type="text" name="slug" class="form-control"
-                               ng-model="page.slug.slug">
+                        <input id="title" type="text" name="slug" class="form-control" ng-model="page.slug.slug">
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xs-8">
                     <div class="form-group">
                         <label>Tags</label>
-                        <tags-input add-on-comma="false"
-                                    ng-model="page.tags">
-                            <auto-complete source="findTags($query)"
-                                           max-results-to-show="1000"
-                                           minLength="1"></auto-complete>
+                        <tags-input add-on-comma="false" ng-model="page.tags">
+                            <auto-complete source="findTags($query)" max-results-to-show="1000" minLength="1"></auto-complete>
                         </tags-input>
                     </div>
                 </div>
-
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label>Template</label>
-                        <select title="Template" class="form-control"
-                                ng-model="page.columns"
-                                ng-options="column.value as column.label for column in columns"></select>
+                        <select title="Template" class="form-control" ng-model="page.columns" ng-options="column.value as column.label for column in columns"></select>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xs-12"></div>
             </div>
@@ -93,128 +73,84 @@
                 <div class="col-xs-12">
                     <div class="pages-module add-module pages-module-cover">
                         <div class="chosen-cover">
-                            <a href="javascript:void(0);" class="label label-danger remove-image"
-                               ng-click="removeCover()"
-                               ng-show="page.image">
+                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeCover()" ng-show="page.image">
                                 <i class="fa fa-remove"></i> REMOVER IMAGEM
                             </a>
                         </div>
-
-                        <div class="add-title"
-                             ng-model="page_cover"
-                             ng-click="uploadCover()"
-                             ng-show=!page.image>+
-                            Adicionar Capa
+                        <div class="add-title" ng-model="page_cover" ng-click="uploadCover()" ng-show=!page.image>+ Adicionar Capa
                         </div>
-
-                        <div class="uploaded-image"
-                             ng-show="page.image">
-                            <img class="img-responsive"
-                                 ng-src="{{ page.image.url }}">
+                        <div class="uploaded-image" ng-show="page.image">
+                            <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
-                <div id="sort-main"
-                     as-sortable="sortableOptions"
-                     ng-model="page.widgets.main"
-                     ng-class="{ 'col-xs-8': page.columns == 2, 'col-xs-12': page.columns == 1 }">
-                    <div class="pages-module"
-                         ng-repeat="item in page.widgets.main"
-                             as-sortable-item>
+                <div id="sort-main" as-sortable="sortableOptions" ng-model="page.widgets.main" ng-class="{ 'col-xs-8': page.columns == 2, 'col-xs-12': page.columns == 1 }">
+                    <div class="pages-module" ng-repeat="item in page.widgets.main" as-sortable-item>
                         <div class="row flex-center">
                             <div class="col-md-10">
                                 <h4>
                                     <strong>{{ item.title }}</strong>
                                 </h4>
-
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
-
                             <div class="col-md-2">
-                                <span class="label label-warning"
-                                      ng-click="handleModule('main', $index)">
+                                <span class="label label-warning" ng-click="handleModule('main', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
-
-                                <span class="label label-danger"
-                                      ng-click="removeModule('main', $index)">
+                                <span class="label label-danger" ng-click="removeModule('main', $index)">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
-
-                                <span class="label label-primary"
-                                      as-sortable-item-handle>
+                                <span class="label label-primary" as-sortable-item-handle>
                                     <i class="fa fa-arrows-v"></i> MOVER
                                 </span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="pages-module add-module"
-                         ng-click="handleModule('main')">
+                    <div class="pages-module add-module" ng-click="handleModule('main')">
                         <span class="add-title">+ Adicionar Módulo</span>
                     </div>
                 </div>
-
-                <div id="sort-side"
-                     as-sortable="sortableOptions"
-                     ng-model="page.widgets.side"
-                     ng-class="{ 'col-xs-4': page.columns == 2, 'hidden': page.columns == 1 }">
-                    <div class="pages-module"
-                         ng-repeat="item in page.widgets.side"
-                         as-sortable-item>
+                <div id="sort-side" as-sortable="sortableOptions" ng-model="page.widgets.side" ng-class="{ 'col-xs-4': page.columns == 2, 'hidden': page.columns == 1 }">
+                    <div class="pages-module" ng-repeat="item in page.widgets.side" as-sortable-item>
                         <div class="row flex-center">
                             <div class="col-md-8">
                                 <h4>
                                     <strong>{{ item.title }}</strong>
                                 </h4>
-
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
-
                             <div class="col-md-4">
-                                <span class="label label-warning"
-                                      ng-click="handleModule('side', $index)">
+                                <span class="label label-warning" ng-click="handleModule('side', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
-
-                                <span class="label label-danger"
-                                      ng-click="removeModule('side', $index)">
+                                <span class="label label-danger" ng-click="removeModule('side', $index)">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
-
-                                <span class="label label-primary"
-                                      as-sortable-item-handle>
+                                <span class="label label-primary" as-sortable-item-handle>
                                     <i class="fa fa-arrows-v"></i> MOVER
                                 </span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="pages-module add-module"
-                         ng-click="handleModule('side')">
+                    <div class="pages-module add-module" ng-click="handleModule('side')">
                         <span class="add-title">+ Adicionar Módulo</span>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-
     <div class="col-xs-4">
         <publishment-options route-model="page"></publishment-options>
         <div class="panel panel-default">
             A página atual é filha de:
-
             <form action="">
                 <select class="form-control" ng-model="page.parent" ng-options="item as item.title for item in pagesParent | orderBy: 'title' track by item.id">
                 </select>
-
                 <input type="hidden" ng-model="page.page_type" value="">
             </form>
         </div>
     </div>
 </div>
-
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>

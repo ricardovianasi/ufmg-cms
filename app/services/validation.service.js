@@ -1,23 +1,20 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('serviceModule')
-    .factory('validationService', validationService);
-
-    validationService.$inject = ['NotificationService'];
-
+    angular.module('serviceModule')
+        .factory('validationService', validationService);
+    /** ngInject */
     function validationService(NotificationService) {
-      return {
-        isValid: isValid
-      };
+        return {
+            isValid: _isValid
+        };
 
-      function isValid(formValid) {
-        if(formValid) {
-          NotificationService.error('Existem campos obrigatórios vazios ou inválidos.');
-          return false;
+        function _isValid(formValid) {
+            if (formValid) {
+                NotificationService.error('Existem campos obrigatórios vazios ou inválidos.');
+                return false;
+            }
+            return true;
         }
-
-        return true;
-      }
     }
 })();

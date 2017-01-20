@@ -1,113 +1,79 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('componentsModule')
-    .directive('publishmentOptions', PublishmentOptions);
+    angular.module('componentsModule')
+        .directive('publishmentOptions', PublishmentOptions);
 
-  PublishmentOptions.$inject = [
-    '$location',
-    '$filter',
-    'StatusService'
-  ];
-
-  /**
-   * @param $location
-   * @param $filter
-   * @param StatusService
-   *
-   * @returns {{restrict: string, templateUrl: string, scope: {obj: string}, link: link}}
-   *
-   * @constructor
-   */
-  function PublishmentOptions($location, $filter, StatusService) {
-    return {
-      restrict: 'E',
-      templateUrl: 'components/publishment/publishment.template.html',
-      scope: {
-        obj: '=routeModel',
-        publishMethod: '=?publishMethod'
-      },
-      /**
-       * @param $scope
-       * @param element
-       * @param attrs
-       */
-      link: function ($scope, element, attrs) {
-        console.log('... PublishmentDirective');
-
-        $scope.obj = $scope.$parent.$eval(attrs.routeModel);
-        $scope.publish = $scope.$parent.publish || $scope.publishMethod;
-        $scope.remove = $scope.$parent.remove;
-        $scope.statuses = [];
-
-
-
-        /**
-         * @param $event
-         */
-        $scope.saveDraft = function ($event) {
-          $event.stopPropagation();
-
-          $scope.obj.status = StatusService.STATUS_DRAFT;
-          $scope.obj.saveDraftClicked = true;
-          $scope.publish($scope.obj);
+    /** ngInject */
+    function PublishmentOptions($location, $filter, StatusService, $log) {
+        return {
+            restrict: 'E',
+            templateUrl: 'components/publishment/publishment.template.html',
+            scope: {
+                obj: '=routeModel',
+                publishMethod: '=?publishMethod'
+            },
+            link: linkController
         };
 
-        /**
-         * @param status
-         */
+        function linkController($scope, element, attrs) {
+            $log.info('PublishmentDirective');
+
+            $scope.obj = $scope.$parent.$eval(attrs.routeModel);
+            $scope.publish = $scope.$parent.publish || $scope.publishMethod;
+            $scope.remove = $scope.$parent.remove;
+            $scope.statuses = [];
+            $scope.saveDraft = _saveDraft;
+            $scope.status = _status;
+            $scope.back = _back;
+
+            StatusService
+                .getStatus()
+                .then(function (data) {
+                    $scope.statuses = data.data;
+                });
 
 
-        $scope.status = function (status) {
-          console.log('ahduhsaduhsudshdusahdusahdsaudas >>>>>>>>>>>>>>>>>>>>>>>>', status);
-
-          if(status !== StatusService.STATUS_PUBLISHED) {
-
-            if(!$scope.isScheduled && status === StatusService.STATUS_SCHEDULED) {
-              $scope.obj.status = StatusService.STATUS_PUBLISHED;
-              $scope.obj.scheduled_date = '';
-              $scope.obj.scheduled_time = '';
-            } else if ($scope.isScheduled) {
-              $scope.obj.status = StatusService.STATUS_SCHEDULED;
-            } else {
-              $scope.obj.status = status;
+            function _saveDraft($event) {
+                $event.stopPropagation();
+                $scope.obj.status = StatusService.STATUS_DRAFT;
+                $scope.obj.saveDraftClicked = true;
+                $scope.publish($scope.obj);
             }
 
-            console.log('objeto status <<<<<<<<<<<<<<<<<<<<<<<<<<',$scope.obj.status);
-
-          } else {
-            if($scope.obj.scheduled_date === '' && $scope.obj.scheduled_time === '')
-              $scope.obj.status = StatusService.STATUS_PUBLISHED;
-            else {
-              $scope.obj.scheduled_date = '';
-              $scope.obj.scheduled_time = '';
-              $scope.obj.status = StatusService.STATUS_PUBLISHED;
+            function _status(status) {
+                $log.info('Status: ', status);
+                if (status !== StatusService.STATUS_PUBLISHED) {
+                    if (!$scope.isScheduled && status === StatusService.STATUS_SCHEDULED) {
+                        $scope.obj.status = StatusService.STATUS_PUBLISHED;
+                        $scope.obj.scheduled_date = '';
+                        $scope.obj.scheduled_time = '';
+                    } else if ($scope.isScheduled) {
+                        $scope.obj.status = StatusService.STATUS_SCHEDULED;
+                    } else {
+                        $scope.obj.status = status;
+                    }
+                    $log.info('objeto status: ', $scope.obj.status);
+                } else {
+                    if ($scope.obj.scheduled_date === '' && $scope.obj.scheduled_time === '') {
+                        $scope.obj.status = StatusService.STATUS_PUBLISHED;
+                    } else {
+                        $scope.obj.scheduled_date = '';
+                        $scope.obj.scheduled_time = '';
+                        $scope.obj.status = StatusService.STATUS_PUBLISHED;
+                    }
+                }
+                $log.info('objeto status salvo: ', $scope.obj.status);
             }
 
-          }
-
-          console.log('objeto status salvo <<<<<<<<<<<<<<<<<<<<<<<<<<',$scope.obj.status);
-
-        };
-
-        /**
-         *
-         */
-        $scope.back = function () {
-          var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
-
-          if (typeof attrs.back !== 'undefined') {
-            back = attrs.back;
-          }
-
-          $location.path(back);
-        };
-
-        // Statuses
-        StatusService.getStatus().then(function (data) {
-          $scope.statuses = data.data;
-        });
-      }
-    };
-  }
+            function _back() {
+                var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
+                $log.info(angular.isDefined(attrs.back), attrs.back);
+                if (angular.isDefined(attrs.back)) {
+                    back = attrs.back;
+                }
+                $location.path(back);
+            }
+        }
+    }
 })();
