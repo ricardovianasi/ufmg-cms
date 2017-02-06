@@ -56,6 +56,12 @@
             UsersService.getUsers().then(function (data) {
                 vm.users = data.data.items;
             });
+            vm.getPages();
+            vm.getPeriodicals();
+            vm.getGraduation();
+            vm.getMaster();
+            vm.getDoctorate();
+            vm.getSpecialization();
         }
 
         function _setTab(tabId) {

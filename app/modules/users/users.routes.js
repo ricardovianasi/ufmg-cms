@@ -6,7 +6,7 @@
         .config(function ($routeProvider) {
             $routeProvider
                 .when('/users', {
-                    templateUrl: 'modules/users/users.template.html',
+                    templateUrl: 'modules/users/users.html',
                     controller: 'UsersController',
                     controllerAs: 'vm',
                     resolve: {
@@ -21,6 +21,8 @@
                     }
                 })
                 .when('/users/new', {
+                    // templateUrl: 'modules/users/users.actions.html',
+                    // controller: 'UsersActionsController',
                     templateUrl: 'modules/users/users-new.template.html',
                     controller: 'UsersNewController',
                     controllerAs: 'vm',

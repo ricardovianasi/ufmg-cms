@@ -30,7 +30,7 @@
             _loadUsers();
         }
 
-        function _reset(idUser){
+        function _reset(idUser) {
             $log.warn('TODO: Reset password', idUser);
         }
 
@@ -56,8 +56,13 @@
                 });
         }
 
-        function _remove(idUser) {
-            $log.warn('TODO: Implementar', idUser);
+        function _remove(userId, userName) {
+            ModalService
+                .confirm('Você deseja excluir este usuário <b>' + userName + '</b>?', ModalService.MODAL_SMALL)
+                .result
+                .then(function () {
+                    $log.warn('TODO: Implementar', userId);
+                });
         }
 
         onInit();

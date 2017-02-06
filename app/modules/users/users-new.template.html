@@ -75,7 +75,8 @@
                 </div>
                 <div class="form-group">
                     <label for="user_commercial_phone">Telefone comercial:</label>
-                    <input id="user_commercial_phone" type="text" name="user_commercial_phone" class="form-control" ng-model="vm.user.commercial_phone" ui-br-phone-number>
+                    <input id="user_commercial_phone" type="text" name="user_commercial_phone" class="form-control" ng-model="vm.user.commercial_phone"
+                        ui-br-phone-number>
                 </div>
                 <div class="form-group">
                     <label for="user_home_phone">Telefone residencial:</label>
@@ -157,8 +158,7 @@
 
                                     <!-- Select edit page -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'page_PUT'"
-                                            ng-model="vm.user.resources_perms.page.PUT"
-                                            ng-change="vm.getPages()">
+                                            ng-model="vm.user.resources_perms.page.PUT">
                                         <option ng-repeat="option in vm.pagesParent | orderBy: 'title'"
                                                 value="{{option.id}}">{{option.title}}
                                         </option>
@@ -166,52 +166,45 @@
 
                                     <!-- Select create, edit, delete periodicals editions -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_POST'"
-                                            ng-model="vm.user.resources_perms.periodical.POST"
-                                            ng-change="vm.getPeriodicals()">
+                                            ng-model="vm.user.resources_perms.periodical.POST">
                                         <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_PUT'"
-                                            ng-model="vm.user.resources_perms.periodical.PUT"
-                                            ng-change="vm.getPeriodicals()">
+                                            ng-model="vm.user.resources_perms.periodical.PUT">
                                         <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'editions_DELETE'"
-                                            ng-model="vm.user.resources_perms.periodical.DELETE"
-                                            ng-change="vm.getPeriodicals()">
+                                            ng-model="vm.user.resources_perms.periodical.DELETE">
                                         <option ng-repeat="option in vm.periodicals | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Graduação -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_graduation_PUT'"
-                                            ng-model="vm.user.resources_perms.course_graduation.PUT"
-                                            ng-change="vm.getGraduation()">
+                                            ng-model="vm.user.resources_perms.course_graduation.PUT">
                                         <option ng-repeat="option in vm.courses_g | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Mestrado -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_master_PUT'"
-                                            ng-model="vm.user.resources_perms.course_master.PUT"
-                                            ng-change="vm.getMaster()">
+                                            ng-model="vm.user.resources_perms.course_master.PUT">
                                         <option ng-repeat="option in vm.courses_m | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Doutorado -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_doctorate_PUT'"
-                                            ng-model="vm.user.resources_perms.course_doctorate.PUT"
-                                            ng-change="vm.getDoctorate()">
+                                            ng-model="vm.user.resources_perms.course_doctorate.PUT">
                                         <option ng-repeat="option in vm.courses_d | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>
 
                                     <!-- Select cursos de Especialização -->
                                     <select class="form-control" ng-show="$parent.key+'_'+key == 'course_specialization_PUT'"
-                                            ng-model="vm.user.resources_perms.course_specialization.PUT"
-                                            ng-change="vm.getSpecialization()">
+                                            ng-model="vm.user.resources_perms.course_specialization.PUT">
                                         <option ng-repeat="option in vm.courses_s | orderBy: 'name'"
                                                 value="{{option.id}}">{{option.name}}</option>
                                     </select>

@@ -29,12 +29,17 @@
         }
 
         function _saveUser(data) {
-            return $http.post(apiUrl + '/user', data);
+            console.log(angular.toJson(data));
+            // return $http.post(apiUrl + '/user', data);
         }
 
         function _updateUser(data) {
             var id = data.id;
             return $http.put(apiUrl + '/user/' + id, data);
+        }
+
+        function _delete(id) {
+            return $http.delete(apiUrl + '/user/' + id);
         }
     }
 })();

@@ -1,0 +1,112 @@
+<div class="col-xs-12 form-group">
+    <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.status.$touched) && (formUsers.status.$error.required)}">
+        <h5><strong>Status:*</strong></h5>
+        <input id="enable" name="status" type="radio" ng-model="vm.user.status" value="1" ng-required="!vm.user.status" ng-checked="true">
+        <label for="enable">Ativo</label>
+        <input id="disable" name="status" style="margin-left: 15px;" type="radio" ng-model="vm.user.status" value="0" ng-required="!vm.user.status">
+        <label for="disable">Inativo</label>
+        <div class="error-message" ng-show="formUsers.$submitted || formUsers.status.$touched">
+            <span ng-show="formUsers.status.$error.required">Campo status é obrigatório.</span>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-5">
+        <h5><strong>Informações do usuário:</strong></h5>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.name.$touched) && (formUsers.name.$error.required)}">
+            <label for="name">Nome:*</label>
+            <input id="name" name="name" type="text" class="form-control" ng-model="vm.user.name" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.name.$touched">
+                <span ng-show="formUsers.name.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.password.$touched) && (formUsers.password.$error.required)}">
+            <label for="password">Senha:</label>
+            <input id="password" name="password" type="password" class="form-control" ng-model="vm.user.password" ng-required="formUsers.password.$touched && vm.user.password === ''">
+            <div><small>Lembre-se: Senha em branco é definida para 12345</small></div>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.password.$touched">
+                <span ng-show="formUsers.password.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.passwordCheck.$touched) && (formUsers.passwordCheck.$error.required)}">
+            <label for="passwordCheck">Confirmação de senha:*</label>
+            <input id="passwordCheck" name="passwordCheck" type="password" ng-model="vm.passwordCheck" class="form-control" ng-required="formUsers.password.$touched && vm.user.password === ''">
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.passwordCheck.$touched">
+                <span ng-show="formUsers.passwordCheck.$error.required">Campo nome é obrigatório.</span>
+                <span ng-show="vm.passwordCheck != vm.user.password">Essas senhas não coincidem. Tentar novamente.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.email.$touched) && (formUsers.email.$error.required || formUsers.email.$error.email)}">
+            <label class="control-label" for="email">Email:*</label>
+            <input type="email" class="form-control" ng-model="vm.user.email" name="email" id="email" autocomplete="off" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.email.$touched">
+                <span ng-show="formUsers.email.$error.required">Campo email é obrigatório.</span>
+                <span ng-show="formUsers.email.$error.email">Este não é um email válido.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.commercial_phone.$touched) && formUsers.commercial_phone.$error.brPhoneNumber}">
+            <label for="commercial_phone">Telefone comercial:</label>
+            <input id="commercial_phone" name="commercial_phone" type="text" class="form-control" ng-model="vm.user.commercial_phone"
+                ui-br-phone-number>
+                <div class="error-message" ng-show="formUsers.$submitted || formUsers.commercial_phone.$touched">
+                    <span ng-show="formUsers.commercial_phone.$error.brPhoneNumber">Telefone inválido.</span>
+                </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.home_phone.$touched) && formUsers.home_phone.$error.brPhoneNumber}">
+            <label for="home_phone">Telefone residencial:</label>
+            <input id="home_phone" name="home_phone" type="text" class="form-control" ng-model="vm.user.home_phone" ui-br-phone-number>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.home_phone.$touched">
+                <span ng-show="formUsers.home_phone.$error.brPhoneNumber">Telefone inválido.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.mobile_phone.$touched) && formUsers.mobile_phone.$error.brPhoneNumber}">
+            <label for="mobile_phone">Telefone celular:</label>
+            <input id="mobile_phone" name="mobile_phone" type="text" class="form-control" ng-model="vm.user.mobile_phone" ui-br-phone-number>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.mobile_phone.$touched">
+                <span ng-show="formUsers.mobile_phone.$error.brPhoneNumber">Telefone inválido.</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-5 col-xs-offset-1">
+        <h5><strong>Informações Gerais:</strong></h5>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.unit.$touched) && (formUsers.unit.$error.required)}">
+            <label for="unit">Unidade:*</label>
+            <input id="unit" name="unit" type="text" class="form-control" ng-model="vm.user.unit" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.unit.$touched">
+                <span ng-show="formUsers.unit.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.sector.$touched) && (formUsers.sector.$error.required)}">
+            <label for="sector">Setor:*</label>
+            <input id="sector" name="sector" type="text" class="form-control" ng-model="vm.user.sector" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.sector.$touched">
+                <span ng-show="formUsers.sector.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.occupation.$touched) && (formUsers.occupation.$error.required)}">
+            <label for="occupation">Cargo:*</label>
+            <input id="occupation" name="occupation" type="text" class="form-control" ng-model="vm.user.occupation" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.occupation.$touched">
+                <span ng-show="formUsers.occupation.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.function.$touched) && (formUsers.function.$error.required)}">
+            <label for="function">Função:*</label>
+            <input id="function" name="function" type="text" class="form-control" ng-model="vm.user.function" required>
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.function.$touched">
+                <span ng-show="formUsers.function.$error.required">Campo nome é obrigatório.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.site.$touched) && formUsers.site.$error.pattern}">
+            <label for="site">Site:*</label>
+            <input id="site" name="site" type="text" class="form-control" ng-model="vm.user.site" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
+            <div class="error-message" ng-show="formUsers.$submitted || formUsers.site.$touched">
+                <span ng-show="formUsers.site.$error.pattern">Site inválido. Exemplo: http://www.google.com</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <small>* Campos obrigatórios</small>
+    </div>
+</div>
