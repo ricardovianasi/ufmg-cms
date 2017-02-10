@@ -13,7 +13,6 @@
         'toastr',
         'ui.bootstrap',
         'ui.select',
-        'ui.toggle',
         'ui.mask',
         'datatables',
         'datatables.bootstrap',
