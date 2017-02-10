@@ -144,7 +144,7 @@
                 <select class="form-control" ng-model="vm.user.moderator" ng-options="item.id as item.name for item in vm.users | orderBy: 'name' track by item.id">
                     </select>
                 <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
-                <hr>
+                <hr> {{vm.user.resources_perms | json}}
             </div>
             <div class="col-xs-12">
                 <v-pane ng-repeat="(key, value) in vm.resources track by $index">

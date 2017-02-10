@@ -1,0 +1,53 @@
+<div class="context-container">
+    <div class="row ">
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Panel heading</div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Título</th>
+                                    <th>Autor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="odd" ng-repeat="context in vm.deselects" ng-click="vm.select(context)">
+                                    <td>{{context.id}}</td>
+                                    <td>{{context.title}}</td>
+                                    <td>{{context.autor}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Panel heading</div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered" datatable="ng" dt-options="vm.dtOptions">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Título</th>
+                                    <th>Autor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="odd" ng-repeat="context in vm.selecteds track by $index" ng-click="vm.deselect(context)">
+                                    <td>{{context.id}}</td>
+                                    <td>{{context.title}}</td>
+                                    <td>{{context.autor}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success pull-right" ng-click="vm.save()">Salvar</button>
+        </div>
+    </div>
+</div>

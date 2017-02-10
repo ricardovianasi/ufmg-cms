@@ -1,0 +1,25 @@
+{
+    "name": "asdasd",
+    "email": "asdas@asdasd",
+    "site": "",
+    "commercial_phone": "",
+    "home_phone": "",
+    "mobile_phone": "",
+    "unit": "q1weqwe",
+    "sector": "qweqwe",
+    "occupation": "qweqwe",
+    "function": "qweqwe",
+    "status": "1",
+    "is_administrator": false,
+    "moderator": 10,
+    "resources_perms": {
+        "page": {
+            "POST": ["POST"],
+            "PUT": "4",
+            "DELETE": ["DELETE"]
+        }
+    },
+    "permissions": {
+        "page": "POST;PUT:4;DELETE"
+    }
+}

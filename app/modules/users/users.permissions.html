@@ -20,21 +20,29 @@
             </ui-select-choices>
         </ui-select>
         <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
-        <hr>
+        <hr> {{vm.user | json}}
     </div>
 </div>
-<v-accordion class="vAccordion--default" multiple>
-    <v-pane ng-repeat="(key, value) in vm.resources track by $index">
-        <v-pane-header>
-            {{ value.alias }}
-        </v-pane-header>
-        <v-pane-content>
-            <div class="checkbox">
-                <label ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key" ng-click="vm.log('asdasd')">
-                    <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key" ng-checked="true">
+<div class="row">
+    <v-accordion class="vAccordion--default" multiple>
+        <v-pane ng-repeat="(key, value) in vm.resources track by $index">
+            <v-pane-header>
+                {{ value.alias }}
+            </v-pane-header>
+            <v-pane-content>
+                <div ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key">
+                    <div class="checkbox">
+                        <label class="checkLabel" ng-class="$parent.key+'_'+key">
+                    <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">
                     {{ value }}
-                </label>
-            </div>
-        </v-pane-content>
-    </v-pane>
-</v-accordion>
+                        </label>
+                        <span ng-click="vm.modalGetContext($parent.key, key)" ng-show="$parent.key+'_'+key == 'page_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Custom
+                        </span>
+                    </div>
+                </div>
+            </v-pane-content>
+        </v-pane>
+    </v-accordion>
+</div>

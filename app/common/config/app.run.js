@@ -1,28 +1,20 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('app')
-    .run(Run);
+    angular.module('app')
+        .run(Run);
 
-  Run.$inject = [
-    '$rootScope',
-    'dataTableConfigService',
-    'sessionService',
-    '$route'
-  ];
+    /** ngInject */
+    function Run($rootScope, dataTableConfigService, sessionService, $route, DTDefaultOptions) {
+        $rootScope.dtOptions = dataTableConfigService.init();
 
-  function Run($rootScope, dataTableConfigService, sessionService, $route) {
-    $rootScope.dtOptions = dataTableConfigService.init();
+        $rootScope.logout = function () {
+            sessionService.removeToken();
+            sessionService.removeIsLogged();
+            $route.reload();
+        };
 
+        DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
 
-    /**
-     *
-     * @private
-     */
-    $rootScope.logout = function (){
-      sessionService.removeToken();
-      sessionService.removeIsLogged();
-      $route.reload();
-    };
-  }
+    }
 })();

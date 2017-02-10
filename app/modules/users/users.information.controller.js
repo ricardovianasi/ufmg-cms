@@ -20,7 +20,6 @@
 
         };
 
-        vm.$watch('vm.user', _emitUserFromFather, true);
 
         function onInit() {
             $log.info('UsersInformationController');

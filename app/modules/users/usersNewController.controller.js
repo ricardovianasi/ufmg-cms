@@ -57,11 +57,11 @@
                 vm.users = data.data.items;
             });
             vm.getPages();
-            vm.getPeriodicals();
-            vm.getGraduation();
-            vm.getMaster();
-            vm.getDoctorate();
-            vm.getSpecialization();
+            // vm.getPeriodicals();
+            // vm.getGraduation();
+            // vm.getMaster();
+            // vm.getDoctorate();
+            // vm.getSpecialization();
         }
 
         function _setTab(tabId) {
@@ -148,12 +148,11 @@
                     }
                 });
             });
-
-            $log.info('MAGIC THE PERM >>>', convertedPerms);
             vm.user.resources_perms = convertedPerms;
         }
         ////////////Function to clone perms Object and parse to save
         function _convertPrivilegesToSave() {
+            console.log(angular.toJson(vm.user));
             // recursive function to clone an object. If a non object parameter
             // is passed in, that parameter is returned and no recursion occurs.
             function cloneObject(obj) {
@@ -176,9 +175,8 @@
                 clonedPerms[k] = items.join(";");
             });
 
-            $log.warn(angular.toJson(clonedPerms, 0, 4));
-
             vm.user.permissions = clonedPerms;
+            console.log(angular.toJson(vm.user));
         }
 
         function _save() {

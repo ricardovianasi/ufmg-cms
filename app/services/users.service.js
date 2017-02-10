@@ -6,7 +6,7 @@
         .factory('UsersService', UsersService);
 
     /** ngInject */
-    function UsersService($http, apiUrl, $log) {
+    function UsersService($http, apiUrl, $log, $q) {
         $log.info('UsersService');
 
         return {
@@ -29,17 +29,22 @@
         }
 
         function _saveUser(data) {
+            var defer = $q.defer();
             console.log(angular.toJson(data));
+            defer.resolve(true);
+            return defer.promise;
             // return $http.post(apiUrl + '/user', data);
         }
 
         function _updateUser(data) {
             var id = data.id;
-            return $http.put(apiUrl + '/user/' + id, data);
+            console.log(angular.toJson(data));
+            // return $http.put(apiUrl + '/user/' + id, data);
         }
 
         function _delete(id) {
-            return $http.delete(apiUrl + '/user/' + id);
+            console.log(angular.toJson(data));
+            // return $http.delete(apiUrl + '/user/' + id);
         }
     }
 })();

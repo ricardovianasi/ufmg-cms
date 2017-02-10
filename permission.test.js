@@ -1,220 +1,135 @@
-'use strict';
+var l = any => console.log(any);
 
-let group = ['Registred', 'Author', 'Editor', 'Publisher', 'Manager', 'Admin'];
-
-let resource = [{
-    group: 'jornalista',
-    permissions: [{
-        context: 'page',
-        items: [{
-            roles: {
-                c: true,
-                r: true,
-                u: true,
-                d: true,
-                p: false
-            }
-        }]
-    }]
-}];
-
-let admin = {
-    id: 11,
-    isAdmin: true,
-};
-
-let user = {
-    id: 9,
-    isAdmin: false,
-    name: 'Henrique',
-    moderador: [10],
-    group: 'jornalista',
-    permissions: [{
-        context: 'page',
-        items: [{
-            id: 12,
-            roles: {
-                c: false
-            }
+var user = {
+    "id": 8,
+    "name": "Usuário de Testes 2",
+    "status": true,
+    "is_administrator": false,
+    "permissions": [{
+        "post_type": "resource",
+        "resource": "page",
+        "privileges": [{
+            "post_type": "privilege",
+            "privilege": "POST",
+            "posts": null
+        }, {
+            "post_type": "privilege",
+            "privilege": "PUT",
+            "posts": "1,2"
         }]
     }, {
-        context: 'events',
-        items: [{
-            id: 14,
-            roles: {
-                c: false,
-                r: true,
-                u: true,
-                d: true,
-            }
+        "post_type": "resource",
+        "resource": "news",
+        "privileges": [{
+            "post_type": "privilege",
+            "privilege": "POST",
+            "posts": null
+        }, {
+            "post_type": "privilege",
+            "privilege": "PUT",
+            "posts": null
         }]
-    }]
+    }],
+    "resources_perms": {
+        "page": "POST;PUT:1,2",
+        "news": "POST;PUT"
+    }
 };
 
-let moderator = {
-    id: 10,
-    name: 'Moderador',
-    group: 'moderador',
-    permissions: [{
-        context: 'page',
-        items: [{
-            id: 12,
-            roles: {
-                c: false,
-                r: false,
-                u: false,
-                d: false,
-                p: false,
-            }
-        }]
-    }]
-};
+function hasContext(permission, context) {
+    if (permission.resource === context) {
+        return permission;
+    }
+}
 
-let contexts = [{
-    id: 12,
-    context: 'page',
-    title: 'Hello',
-    moderators: [10],
-    status: 'moderator'
-}];
-
-let rolesCurrent = {};
-
-const isAdmin = (isAdmin) => {
-    if (isAdmin) {
-        console.log('Admin');
-        rolesCurrent = {
-            c: true,
-            r: true,
-            u: true,
-            d: true,
-            p: true
-        };
-        return true;
+function getPermissions(context) {
+    for (var i = 0; i < user.permissions.length; i++) {
+        var permission = user.permissions[i];
+        if (hasContext(permission, context)) {
+            return permission.privileges;
+        }
     }
     return false;
-};
+}
 
-const checkPermissionIdModerator = (listModerators, userIdModerator) => {
-    let res = false;
-    listModerators.forEach(idModerator => {
-        if (idModerator === userIdModerator) {
-            res = true;
-        }
-    });
-    return res;
-};
+function hasRole(privilege, role) {
+    if (privilege.privilege === role) {
+        return privilege;
+    }
+}
 
-const isModerator = (userIdModerator, contextName) => {
-    let res = false;
-    contexts.forEach(context => {
-        if (context.context === contextName && checkPermissionIdModerator(context.moderators, userIdModerator)) {
-            console.log('Moderador');
-            rolesCurrent.p = true;
-            res = true;
-        }
-    });
-    return res;
-};
-
-const verifyUser = (context, contextId, u) => {
-    u.permissions.forEach(permission => {
-        if (context === permission.context) {
-            permission.items.forEach(item => {
-                if (contextId === item.id) {
-                    rolesCurrent = item.roles;
-                }
-            });
-        }
-    });
-};
-
-const checkPermission = (context, contextId, u) => {
-    if (!context && !contextId && !u) {
+function getPrivilege(context, role) {
+    const permissions = getPermissions(context);
+    if (!permissions) {
         return false;
     }
-    if (isAdmin(u.isAdmin)) {
+    for (var i = 0; i < permissions.length; i++) {
+        var privilege = permissions[i];
+        if (hasRole(privilege, role)) {
+            return privilege;
+        }
+    }
+}
+
+function hasId(id, posts) {
+    var array = posts.split(',');
+    var postId = id.toString();
+    for (var i = 0; i < array.length; i++) {
+        var id = array[i];
+        if (postId === id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function verifyRole(hasPrivilege, id) {
+    if (hasPrivilege === undefined || !hasPrivilege) { // Sem permissão
+        return false;
+    }
+    if (id === undefined || id === null) { // Com permissão
         return true;
     }
-    verifyUser(context, contextId, u);
-    isModerator(u.id, context);
-};
-
-const canUpdate = () => {
-    return rolesCurrent.u ? true : false;
-};
-
-const canDelete = () => {
-    return rolesCurrent.d ? true : false;
-};
-
-const canCreate = () => {
-    return rolesCurrent.c ? true : false;
+    // Permissão específica
+    var posts = hasPrivilege.posts;
+    if (!posts) {
+        return true;
+    }
+    return hasId(id, posts);
 }
 
-const canRemove = () => {
-    return rolesCurrent.r ? true : false;
+function check(context, id, role) {
+    if (user.is_administrator) {
+        return true;
+    }
+    const hasPrivilege = getPrivilege(context, role);
+    return verifyRole(hasPrivilege, id);
 }
 
-const canPublish = () => {
-    return rolesCurrent.p ? true : false;
+function canPost(context, id) {
+    return check(context, id, 'POST');
 }
 
-const setPermissions = u => {
-    resource.forEach(permissionSuper => {
-        if (u.group === permissionSuper.group) {
-            delete permissionSuper.group;
-            u.permissions.forEach((permissionUser, index) => {
-                if (permissionUser.context === permissionSuper.permissions[0].context) {
-                    const copy = Object.assign(permissionSuper.permissions[0].items[0].roles, permissionUser.items[0].roles);
-                    u.permissions[index].items[0].roles = copy;
-                    // console.log();
-                    // console.log(u.permissions[index].items[0].roles);
-                    // console.log();
-                }
-                // u.permissions[index] = copy;
-                // console.log(permissionSuper.permissions);
-            });
-        }
-    });
-};
+function canDelete(context, id) {
+    return check(context, id, 'DELETE');
+}
 
-checkPermission('page', 12, user);
-console.log(canCreate());
-console.log(canRemove());
-console.log(canUpdate());
-console.log(canDelete());
-console.log(canPublish());
+function canPut(context, id) {
+    return check(context, id, 'PUT');
+}
 
-console.log('');
-
-setPermissions(user);
-
-checkPermission('page', 12, user);
-console.log(canCreate());
-console.log(canRemove());
-console.log(canUpdate());
-console.log(canDelete());
-console.log(canPublish());
-
-console.log('');
-console.log('');
-console.log('');
-
-checkPermission('page', 12, moderator);
-console.log(canCreate());
-console.log(canRemove());
-console.log(canUpdate());
-console.log(canDelete());
-console.log(canPublish());
-
-console.log('');
-console.log('');
-console.log('');
-
-checkPermission('page', 12, admin);
-console.log(canCreate());
-console.log(canRemove());
-console.log(canUpdate());
-console.log(canDelete());
-console.log(canPublish());
+l('');
+l('news');
+l('PUT: ' + canPut('news'));
+l('DELETE: ' + canDelete('news'));
+l('POST: ' + canPost('news'));
+l('');
+l('page');
+l('PUT: ' + canPut('page', 1));
+l('DELETE: ' + canDelete('page'));
+l('POST: ' + canPost('page'));
+l('');
+l('asd');
+l('PUT: ' + canPut('asd'));
+l('DELETE: ' + canDelete('asd'));
+l('POST: ' + canPost('asd'));
