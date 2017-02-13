@@ -21,10 +21,6 @@ var contextIdSelect = [];
 var contextIdDeSelect = [];
 
 var user = {
-    "id": 8,
-    "name": "Usuário de Testes 2",
-    "status": true,
-    "is_administrator": false,
     "permissions": [{
         "post_type": "resource",
         "resource": "page",
@@ -35,54 +31,50 @@ var user = {
         }, {
             "post_type": "privilege",
             "privilege": "PUT",
-            "posts": "1,2"
-        }]
-    }, {
-        "post_type": "resource",
-        "resource": "news",
-        "privileges": [{
-            "post_type": "privilege",
-            "privilege": "POST",
             "posts": null
         }, {
             "post_type": "privilege",
-            "privilege": "PUT",
+            "privilege": "DELETE",
             "posts": null
         }]
     }],
     "resources_perms": {
-        "page": "POST;PUT:1,2",
-        "news": "POST;PUT"
+        "page": {
+            "POST": ["POST"],
+            "PUT": '1,2,12',
+            "DELETE": ["DELETE"]
+        }
     }
 };
 
-function _convertPrivilegesToLoad() {
-    var convertedPerms = {};
-    var permsToConvert = user.resources_perms;
-    Object.keys(permsToConvert).forEach(function (key) {
-        permsToConvert[key].split(";").forEach(function (value) {
-            var item = value.split(":");
-            var permsToConvert = convertedPerms[key] || {};
 
-            if (item.length > 1) {
-                permsToConvert[item[0]] = isNaN(Number(item[1])) ? item[1] : Number(item[1]);
-                permsToConvert[item[0]] = item[1];
-                convertedPerms[key] = permsToConvert;
-            } else {
-                permsToConvert[item[0]] = [item[0]];
-                convertedPerms[key] = permsToConvert;
+function _convertPrivilegesToSave() {
+    function cloneObject(obj) {
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+        var temp = obj.constructor();
+        for (var key in obj) {
+            temp[key] = cloneObject(obj[key]);
+        }
+        return temp;
+    }
+    var clonedPerms = (cloneObject(user.resources_perms));
+    Object.keys(clonedPerms).forEach(function (k) {
+        var innerKeys = Object.keys(clonedPerms[k]),
+            items = [];
+        innerKeys.forEach(function (key) {
+            if (clonedPerms[k][key][0]) {
+                permission = (Array.isArray(clonedPerms[k][key])) ? key : key + ":" + clonedPerms[k][key];
+                items.push(permission);
             }
         });
+        clonedPerms[k] = items.join(";");
     });
-    user.resources_perms = convertedPerms;
+    user.permissions = clonedPerms;
 }
-// console.log(JSON.stringify(user.permissions));
-// _convertPrivilegesToLoad();
-// console.log('');
-// console.log(JSON.stringify(user.permissions));
-
-
-var listContextId = [1, 2, '3'];
-var a = listContextId.toString();
-console.log(a);
-
+console.log('');
+console.log(JSON.stringify(user.permissions));
+_convertPrivilegesToSave();
+console.log('');
+console.log(JSON.stringify(user.permissions));

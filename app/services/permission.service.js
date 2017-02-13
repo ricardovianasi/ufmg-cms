@@ -6,8 +6,8 @@
         .factory('PermissionService', PermissionService);
 
     /** ngInject */
-    function PermissionService(authService, $log, NotificationService, $timeout) {
-        var currentUser = {};
+    function PermissionService(authService, $log, NotificationService, $timeout, $rootScope) {
+        var currentUser = null;
         var showMessage = null;
         var service = {
             check: check,
@@ -91,14 +91,14 @@
                 }
                 // no permission
                 if (!currentUser.permissions || angular.equals([], currentUser.permissions)) {
-                    messageWarn()
+                    messageWarn();
                     return false;
                 }
                 var hasPrivilege = getPrivilege(context, role);
                 return verifyRole(hasPrivilege, id);
             } catch (err) {
                 $log.error(err);
-                messageAlert();
+                // messageAlert();
             }
             return false;
         }
@@ -112,7 +112,7 @@
                 NotificationService.error('ATENÇÃO', 'Não conseguimos verificar suas permissões, entre com contato com CEDECOM/WEB');
                 showMessage = true;
             }
-            $timeout(function() {
+            $timeout(function () {
                 showMessage = false;
             }, 5000);
         }
@@ -122,7 +122,7 @@
                 NotificationService.warning('ATENÇÃO', 'Você não possui permissões, entre com contato com CEDECOM/WEB');
                 showMessage = true;
             }
-            $timeout(function() {
+            $timeout(function () {
                 showMessage = false;
             }, 5000);
         }
@@ -135,17 +135,27 @@
             return check(context, id, 'PUT');
         }
 
-        function initService() {
-            authService
-                .account()
-                .then(function (res) {
-                    currentUser = res.data;
-                    TESTE();
-                })
-                .catch(function (err) {
-                    $log.error(err);
-                    messageAlert();
-                });
+        function initService(user) {
+            if (user) {
+                currentUser = user || $rootScope.User;
+                $log.info('PermissionService');
+            } else {
+                authService
+                    .account()
+                    .then(function (res) {
+                        currentUser = res.data;
+                        if (!currentUser.status) {
+                            NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                            $rootScope.logout();
+                        }
+                        $log.info('PermissionService');
+                        // TESTE();
+                    })
+                    .catch(function (err) {
+                        $log.error(err);
+                        // messageAlert();
+                    });
+            }
         }
 
         function TESTE() {
@@ -155,7 +165,6 @@
             // currentUser.permissions = undefined;
             // currentUser.permissions = [];
         }
-        initService();
         return service;
     }
 })();

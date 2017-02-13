@@ -2,10 +2,9 @@
     <div class="col-xs-12">
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.is_administrator.$touched) && (formUsers.is_administrator.$error.required)}">
             <h5><strong>Tipo de usuário:*</strong></h5>
-            <input id="default" name="is_administrator" type="radio" ng-model="vm.user.is_administrator" value="false" ng-required="!vm.user.is_administrator"
-                ng-checked="true">
+            <input id="default" name="is_administrator" type="radio" ng-model="vm.user.is_administrator" value="0" ng-required="!vm.user.is_administrator">
                 <label for="default">Padrão</label>
-                <input id="admin" name="is_administrator" style="margin-left: 15px;" type="radio" ng-model="vm.user.is_administrator" value="true"
+                <input id="admin" name="is_administrator" style="margin-left: 15px;" type="radio" ng-model="vm.user.is_administrator" value="1"
                     ng-required="!vm.user.is_administrator">
                     <label for="admin">Administrador</label>
                     <hr>

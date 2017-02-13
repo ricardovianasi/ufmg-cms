@@ -12,14 +12,17 @@
         ResourcesService,
         PagesService,
         $uibModal,
-        $scope,
-        DTOptionsBuilder) {
+        $location,
+        NotificationService) {
         var vm = this;
-        var userId = $routeParams.userId ? $routeParams.userId : null;
+        var userId = null;
 
         vm.tab = 2;
         vm.user = {};
-        vm.user = {};
+        vm.user = {
+            status: '1',
+            is_administrator: "false"
+        };
         vm.moderators = [];
         vm.resources = [];
         vm.pages = [];
@@ -31,6 +34,16 @@
 
         function onInit() {
             $log.info('UsersActionsController');
+            userId = $routeParams.userId ? $routeParams.userId : null;
+            if (userId) {
+                UsersService
+                    .getUser(userId)
+                    .then(function (data) {
+                        vm.user = data.data;
+                        _normalizeUser();
+                        _convertPrivilegesToLoad();
+                    });
+            }
         }
 
         function _initPermissions() {
@@ -38,9 +51,96 @@
             _getResources();
         }
 
+        function _normalizeUser() {
+            // moderator
+            var moderator = vm.user.moderator;
+            if (moderator) {
+                vm.user.moderator = moderator.id;
+            }
+
+            // status
+            vm.user.status = vm.user.status ? "1" : "0";
+
+            // Administrator
+
+            vm.user.is_administrator = vm.user.is_administrator ? "1" : "0";
+
+        }
+
+        function _convertPrivilegesToLoad() {
+            var convertedPerms = {};
+            var permsToConvert = vm.user.resources_perms;
+            Object.keys(permsToConvert).forEach(function (key) {
+                permsToConvert[key].split(";").forEach(function (value) {
+
+                    var item = value.split(":");
+                    var permsToConvert = convertedPerms[key] || {};
+
+                    if (item.length > 1) {
+                        //permsToConvert[item[0]] = isNaN(Number(item[1])) ? item[1] : Number(item[1]);
+                        permsToConvert[item[0]] = item[1];
+                        convertedPerms[key] = permsToConvert;
+                    } else {
+                        permsToConvert[item[0]] = [item[0]];
+                        convertedPerms[key] = permsToConvert;
+                    }
+                });
+            });
+            vm.user.resources_perms = convertedPerms;
+        }
+
+
+        ////////////Function to clone perms Object and parse to save
+        function _convertPrivilegesToSave() {
+            // recursive function to clone an object. If a non object parameter
+            // is passed in, that parameter is returned and no recursion occurs.
+            function cloneObject(obj) {
+                if (obj === null || typeof obj !== 'object') {
+                    return obj;
+                }
+                var temp = obj.constructor(); // give temp the original obj's constructor
+                for (var key in obj) {
+                    temp[key] = cloneObject(obj[key]);
+                }
+                return temp;
+            }
+            var clonedPerms = (cloneObject(vm.user.resources_perms));
+            Object.keys(clonedPerms).forEach(function (k) {
+                var innerKeys = Object.keys(clonedPerms[k]),
+                    items = [];
+                innerKeys.forEach(function (key) {
+                    if (clonedPerms[k][key][0]) {
+                        var permission = (Array.isArray(clonedPerms[k][key])) ? key : key + ":" + clonedPerms[k][key];
+                        items.push(permission);
+                    }
+                });
+                clonedPerms[k] = items.join(";");
+            });
+            vm.user.permissions = clonedPerms;
+        }
+
         function _save(isValid) {
-            if (isValid) {
-                $log.info(angular.toJson(vm.user));
+            if (!isValid) {
+                NotificationService.error('Existem campos obrigatórios vazios ou inválidos.');
+                return;
+            }
+
+            _convertPrivilegesToSave();
+
+            if (userId) {
+                UsersService
+                    .updateUser(vm.user)
+                    .then(function () {
+                        $location.path('/users');
+                        NotificationService.success('Usuário alterado com sucesso!');
+                    });
+            } else {
+                UsersService
+                    .saveUser(vm.user)
+                    .then(function () {
+                        $location.path('/users');
+                        NotificationService.success('Usuário salvo com sucesso!');
+                    });
             }
         }
 
@@ -65,9 +165,11 @@
         function _modalGetContext(context, permission) {
             switch (context) {
                 case 'page':
-                    openModal().result.then(function (contextPermissions) {
-                        vm.user.resources_perms[context][permission] = contextPermissions;
-                    });
+                    openModal()
+                        .result
+                        .then(function (contextPermissions) {
+                            vm.user.resources_perms[context][permission] = contextPermissions;
+                        });
                     break;
 
                 default:

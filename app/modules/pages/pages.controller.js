@@ -27,7 +27,6 @@
         vm.changePage = _changePage;
         vm.canDelete = null;
         vm.canPost = null;
-        vm.canPut = _canPut;
 
         function onInit() {
             StatusService
@@ -72,16 +71,12 @@
             _canPost();
         }
 
-        function _canPost(){
+        function _canPost() {
             vm.canPost = PermissionService.canPost('page');
         }
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('page');
-        }
-
-        function _canPut(id){
-            vm.canDelete = PermissionService.canPut('page', id);
         }
 
         onInit();

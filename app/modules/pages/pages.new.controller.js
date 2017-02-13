@@ -20,11 +20,12 @@
         $rootScope,
         TagsService,
         validationService,
+        PermissionService,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
         var allTags = [];
-        var vm = this;
+        var vm = $scope;
 
         $scope.publish = _publish;
         $scope.findTags = _findTags;
@@ -34,6 +35,7 @@
         $scope.removeModule = _removeModule;
 
         function onInit() {
+            vm.canPermission = PermissionService.canPost('page');
             PagesService.getPages().then(function (data) {
                 $scope.pagesParent = data.data.items;
 

@@ -10,6 +10,7 @@
         authService,
         NotificationService,
         sessionService,
+        PermissionService,
         $location,
         $log) {
 
@@ -30,9 +31,18 @@
                     .autenticate(vm.credentials)
                     .then(function (res) {
                         sessionService.saveData(res.data);
-                        sessionService.setIsLogged();
-                        $rootScope.User = res.data;
-                        $location.path('/');
+                        authService
+                            .account()
+                            .then(function (res1) {
+                                if (res1.data.status) {
+                                    $rootScope.User = res1.data;
+                                    PermissionService.initService(res1.data);
+                                    sessionService.setIsLogged();
+                                    $location.path('/');
+                                } else {
+                                    NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                                }
+                            });
                     }, function (err) {
                         NotificationService.error('Usuário ou senha inválidos, tente novamente.');
                         vm.credentials.password = '';

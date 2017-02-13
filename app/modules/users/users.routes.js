@@ -38,8 +38,10 @@
                     }
                 })
                 .when('/user/edit/:userId', {
-                    templateUrl: 'modules/users/users-new.template.html',
-                    controller: 'UsersNewController',
+                    // templateUrl: 'modules/users/users-new.template.html',
+                    // controller: 'UsersNewController',
+                    templateUrl: 'modules/users/users.actions.html',
+                    controller: 'UsersActionsController',
                     controllerAs: 'vm',
                     resolve: {
                         isLogged: ['sessionService', function (sessionService) {

@@ -13,7 +13,6 @@
         $log) {
 
         var vm = this;
-        vm.remove = _remove;
         vm.normalize = _normalize;
         vm.activate = _activate;
         vm.reset = _reset;
@@ -35,8 +34,24 @@
         }
 
         function _activate(user) {
-            user.status = !user.status;
-            $log.info('TODO: Status: ' + user.status);
+            var status = user.status ? 'desativar' : 'ativar';
+            ModalService
+                .confirm('Você deseja ' + status + ' o usuário <b>' + user.name + '</b>?', ModalService.MODAL_SMALL)
+                .result
+                .then(function () {
+                    user.status = !user.status;
+                    UsersService.updateUser(_normalizeUser(user));
+                });
+        }
+
+        function _normalizeUser(user) {
+            // moderator
+            var moderator = user.moderator;
+            if (moderator) {
+                user.moderator = moderator.id;
+            }
+
+            return user;
         }
 
         function _normalize(value, value2) {
@@ -53,15 +68,6 @@
                 .getUsers()
                 .then(function (res) {
                     vm.users = res.data.items;
-                });
-        }
-
-        function _remove(userId, userName) {
-            ModalService
-                .confirm('Você deseja excluir este usuário <b>' + userName + '</b>?', ModalService.MODAL_SMALL)
-                .result
-                .then(function () {
-                    $log.warn('TODO: Implementar', userId);
                 });
         }
 

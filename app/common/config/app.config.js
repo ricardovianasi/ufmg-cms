@@ -1,69 +1,63 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('app')
-    .config(Router)
-    .config(Translator)
-    .config(Tags)
-    .config(http);
+    angular.module('app')
+        .config(Router)
+        .config(Translator)
+        .config(Tags)
+        .config(http);
 
-  http.$inject = ['$httpProvider'];
+    http.$inject = ['$httpProvider'];
 
-  /**
-   *
-   * @param $httpProvider
-   */
-  function http($httpProvider) {
-    $httpProvider
-      .interceptors
-      .push('authInterceptorService');
-  }
+    /**
+     *
+     * @param $httpProvider
+     */
+    function http($httpProvider) {
+        $httpProvider
+            .interceptors
+            .push('authInterceptorService');
+    }
 
-  //Routing
-  Router.$inject = ['$routeProvider'];
+    Router.$inject = ['$routeProvider'];
 
-  /**
-   * @param $routeProvider
-   *
-   * @constructor
-   */
-  function Router($routeProvider) {
-    $routeProvider.otherwise({
-      redirectTo: '/login'
-    });
-  }
+    function Router($routeProvider) {
+        $routeProvider.otherwise({
+            redirectTo: '/login'
+        });
+    }
 
-  //Translation
-  Translator.$inject = ['$translateProvider'];
+    //Translation
+    Translator.$inject = ['$translateProvider'];
 
-  /**
-   * @param $translateProvider
-   *
-   * @constructor
-   */
-  function Translator($translateProvider) {
-    $translateProvider.useStaticFilesLoader({
-      prefix: 'lang/',
-      suffix: '.json',
-    });
+    /**
+     * @param $translateProvider
+     *
+     * @constructor
+     */
+    function Translator($translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'lang/',
+            suffix: '.json',
+        });
 
-    $translateProvider.preferredLanguage('pt-br');
-  }
+        $translateProvider.preferredLanguage('pt-br');
+    }
 
-  //Tags
-  /**
-   * @param tagsInputConfigProvider
-   *
-   * @constructor
-   */
-  function Tags(tagsInputConfigProvider) {
-    tagsInputConfigProvider
-      .setDefaults('tagsInput', {
-        placeholder: 'Adicionar tag',
-        replaceSpacesWithDashes: false
-      })
-      .setDefaults('autoComplete', {
-        selectFirstMatch: false
-      });
-  }
+    //Tags
+    /**
+     * @param tagsInputConfigProvider
+     *
+     * @constructor
+     */
+    function Tags(tagsInputConfigProvider) {
+        tagsInputConfigProvider
+            .setDefaults('tagsInput', {
+                placeholder: 'Adicionar tag',
+                replaceSpacesWithDashes: false
+            })
+            .setDefaults('autoComplete', {
+                selectFirstMatch: false
+            });
+    }
 })();

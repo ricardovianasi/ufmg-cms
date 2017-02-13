@@ -1,0 +1,23 @@
+{
+    "name": "t1",
+    "password": "123456",
+    "email": "t1@gmail.com",
+    "commercial_phone": "33333333333",
+    "home_phone": "33333333333",
+    "mobile_phone": "33333333333",
+    "unit": "a",
+    "sector": "a",
+    "occupation": "a",
+    "function": "a",
+    "site": "a.com",
+    "status": "1",
+    "is_administrator": "false",
+    "resources_perms": {
+        "page": {
+            "POST": ["POST"],
+            "PUT": ["PUT"],
+            "DELETE": ["DELETE"]
+        }
+    },
+    "moderator": 3
+}

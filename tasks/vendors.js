@@ -44,8 +44,7 @@ var SCRIPTS = [
     'app/assets/scripts/remove-button.js',
     'bower_components/v-accordion/dist/v-accordion.min.js',
     'bower_components/checklist-model/checklist-model.js',
-    'bower_components/angular-input-masks/angular-input-masks-standalone.min.js',
-    'bower_components/angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.js',
+    'bower_components/angular-input-masks/angular-input-masks-standalone.min.js'
 
 ];
 
@@ -63,7 +62,6 @@ var STYLES = [
     'bower_components/ng-tags-input/ng-tags-input.min.css',
     'bower_components/angular-loading-bar/build/loading-bar.min.css',
     'bower_components/v-accordion/dist/v-accordion.min.css',
-    'bower_components/angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.css',
 
     // God Damn Xenon
     'app/assets/xenon/css/bootstrap.css',

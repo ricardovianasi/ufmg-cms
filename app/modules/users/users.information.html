@@ -2,7 +2,7 @@
     <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.status.$touched) && (formUsers.status.$error.required)}">
         {{vm.user | json}}
         <h5><strong>Status:*</strong></h5>
-        <input id="enable" name="status" type="radio" ng-model="vm.user.status" value="1" ng-required="!vm.user.status" ng-checked="true">
+        <input id="enable" name="status" type="radio" ng-model="vm.user.status" value="1" ng-required="!vm.user.status">
         <label for="enable">Ativo</label>
         <input id="disable" name="status" style="margin-left: 15px;" type="radio" ng-model="vm.user.status" value="0" ng-required="!vm.user.status">
         <label for="disable">Inativo</label>
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.site.$touched) && formUsers.site.$error.pattern}">
-            <label for="site">Site:*</label>
+            <label for="site">Site:</label>
             <input id="site" name="site" type="text" class="form-control" ng-model="vm.user.site" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/">
             <div class="error-message" ng-show="formUsers.$submitted || formUsers.site.$touched">
                 <span ng-show="formUsers.site.$error.pattern">Site inválido. Exemplo: http://www.google.com</span>
