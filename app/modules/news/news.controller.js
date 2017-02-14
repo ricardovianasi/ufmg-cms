@@ -36,10 +36,6 @@
 
         $scope.convertDate = DateTimeHelper.dateToStr;
 
-        /**
-         * @param id
-         * @param title
-         */
         $scope.removeNews = function (id, title) {
             ModalService
                 .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)

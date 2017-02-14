@@ -31,8 +31,12 @@
         </div>
     </div>
 </div>
-
-<div class="row">
+<div class="row" ng-if="!canPut">
+    <div class="col-xs-12">
+        Você não tem permissão de editar está página!
+    </div>
+</div>
+<div class="row" ng-if="canPut">
     <div class="col-xs-8 panel panel-default">
         <form class="form">
             <div class="row">

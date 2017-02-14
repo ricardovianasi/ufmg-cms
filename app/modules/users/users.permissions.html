@@ -3,11 +3,11 @@
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.is_administrator.$touched) && (formUsers.is_administrator.$error.required)}">
             <h5><strong>Tipo de usuário:*</strong></h5>
             <input id="default" name="is_administrator" type="radio" ng-model="vm.user.is_administrator" value="0" ng-required="!vm.user.is_administrator">
-                <label for="default">Padrão</label>
-                <input id="admin" name="is_administrator" style="margin-left: 15px;" type="radio" ng-model="vm.user.is_administrator" value="1"
-                    ng-required="!vm.user.is_administrator">
-                    <label for="admin">Administrador</label>
-                    <hr>
+            <label for="default">Padrão</label>
+            <input id="admin" name="is_administrator" style="margin-left: 15px;" type="radio" ng-model="vm.user.is_administrator" value="1"
+                ng-required="!vm.user.is_administrator">
+                <label for="admin">Administrador</label>
+                <hr>
         </div>
     </div>
     <div class="col-xs-4">
@@ -35,10 +35,24 @@
                     <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">
                     {{ value }}
                         </label>
-                        <span ng-click="vm.modalGetContext($parent.key, key)" ng-show="$parent.key+'_'+key == 'page_PUT'">
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key)" ng-show="$parent.key+'_'+key == 'page_PUT'">
                             <i class="glyphicon glyphicon-cog"></i>
-                            Custom
+                            Personalizar
                         </span>
+                        <style>
+                            .vAccordion--default v-pane label {
+                                display: inline-block;
+                            }
+                            
+                            .custom-modal {
+                                position: absolute;
+                                display: inline-block;
+                                top: 0;
+                                cursor: pointer;
+                                left: 100px;
+                            }
+
+                        </style>
                     </div>
                 </div>
             </v-pane-content>

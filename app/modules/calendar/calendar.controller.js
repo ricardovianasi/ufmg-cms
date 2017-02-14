@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -22,15 +21,20 @@
 
         $rootScope.shownavbar = true;
         $log.info('CalendarController');
+        var _view = false;
 
         $scope.calendar = [];
         $scope.period_filter = [];
         $scope.active_period_filter = '';
 
         $scope.status = [];
-        StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
-        });
+        StatusService
+            .getStatus()
+            .then(function (data) {
+                $scope.status = data.data;
+            });
+
+        _permissions();
 
         var loadCalendar = function () {
             CalendarService.getCalendar().then(function (data) {
@@ -131,13 +135,6 @@
             });
         };
 
-        /**
-         * @param $scope
-         * @param $uibModalInstance
-         * @param title
-         *
-         * @constructor
-         */
         var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
             $scope.modal_title = title;
 
@@ -150,7 +147,10 @@
             };
         };
 
-        $scope.editEvent = function (size, event) {
+        $scope.editEvent = function (size, event, view) {
+            if (view) {
+                _view = view;
+            }
             var modalCalendarEditEvent = $uibModal.open({
                 templateUrl: 'components/modal/calendario.novo.modal.template.html',
                 controller: ModalEditEventCtrl,
@@ -186,20 +186,17 @@
             });
         };
 
-        /**
-         * @param $scope
-         * @param $http
-         * @param $uibModalInstance
-         * @param regional
-         * @param event
-         * @param type
-         *
-         * @constructor
-         */
-        var ModalEditEventCtrl = function ($scope, $http, $uibModalInstance, regional, event, type, $route) {
-            console.log('... ModalEditEventCtrl');
+        var ModalEditEventCtrl = function ($scope, $http, $log, $uibModalInstance, PermissionService, regional, event, type, $route) {
+            $log.info('ModalEditEventCtrl');
 
             $scope.type = type;
+
+            if (_view) {
+                $scope.canPermission = false;
+                _view = false;
+            } else {
+                $scope.canPermission = PermissionService.canPut('calendar');
+            }
 
             var new_init_date = CalendarService.convertDate(event.init_date);
             var new_end_date = CalendarService.convertDate(event.end_date);
@@ -243,15 +240,6 @@
             };
         };
 
-        /**
-         * @param $scope
-         * @param $http
-         * @param $uibModalInstance
-         * @param schoolDays
-         * @param regional
-         *
-         * @constructor
-         */
         var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
             console.log('... ModalCalendarSchoolDaysCtrl');
 
@@ -267,11 +255,6 @@
 
             $scope.months = _.uniq($scope.months);
 
-            /**
-             * @param date
-             *
-             * @returns {*}
-             */
             $scope.convertPeriodStr = function (date) {
                 return CalendarService.convertPeriodStr(date);
             };
@@ -285,11 +268,6 @@
                 school_saturdays: ''
             };
 
-            /**
-             * @param month
-             * @param year
-             * @param regional_id
-             */
             $scope.periodUpdate = function (month, year, regional_id) {
                 if (month && year && regional_id) {
                     var filtered_month = _.filter($scope.schoolDays.items, function (b) {
@@ -335,14 +313,6 @@
             };
         };
 
-        /**
-         * @param $scope
-         * @param $uibModalInstance
-         * @param regional
-         * @param type
-         *
-         * @constructor
-         */
         var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route, validationService) {
             console.log('... ModalCalendarioNovoCtrl');
 
@@ -380,5 +350,18 @@
                 $uibModalInstance.dismiss('cancel');
             };
         };
+
+        function _permissions() {
+            _canDelete();
+            _canPost();
+        }
+
+        function _canPost() {
+            $scope.canPost = PermissionService.canPost('calendar');
+        }
+
+        function _canDelete() {
+            $scope.canDelete = PermissionService.canDelete('calendar');
+        }
     }
 })();

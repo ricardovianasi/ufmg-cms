@@ -8,80 +8,55 @@
             <div class="col-xs-12">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="form-group"
-                             ng-class="{'has-error': formCalendar.regional.$error.required && !formCalendar.regional.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formCalendar.regional.$error.required && !formCalendar.regional.$valid}">
                             <label>Local</label>
-                            <select class="form-control"
-                                    ng-model="newRegister.regional"
-                                    name="regional"
-                                    required>
+                            <select class="form-control" ng-model="newRegister.regional" name="regional" ng-disabled="!canPermission" required>
                                 <option value="0">Todos os campus</option>
                                 <option ng-repeat="regional_item in regional" value="{{ regional_item.id }}">{{ regional_item.name }}</option>
                             </select>
-
                             <div ng-show="!formCalendar.regional.$valid" class="error-message" role="alert">
-                              <div ng-show="formCalendar.regional.$error.required">Campo obrigatório</div>
+                                <div ng-show="formCalendar.regional.$error.required">Campo obrigatório</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="form-group"
-                             ng-class="{'has-error': formCalendar.description.$error.required && !formCalendar.description.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formCalendar.description.$error.required && !formCalendar.description.$valid}">
                             <label>Descri&ccedil;&atilde;o do evento</label>
-                            <textarea type="text"
-                                      rows="10"
-                                      class="form-control"
-                                      ng-model="newRegister.description"
-                                      required
-                                      name="description">
-
-                            <div ng-show="!formCalendar.description.$valid" class="error-message" role="alert">
-                              <div ng-show="formCalendar.description.$error.required">Campo obrigatório</div>
-                            </div>
+                            <textarea ng-disabled="!canPermission" type="text" rows="10" class="form-control" ng-model="newRegister.description" required
+                                name="description">
+                                <div ng-show="!formCalendar.description.$valid" class="error-message" role="alert">
+                                    <div ng-show="formCalendar.description.$error.required">Campo obrigatório</div>
+                                </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-6">
-                        <div class="form-group"
-                             ng-class="{'has-error': formCalendar.initDate.$error.required && !formCalendar.initDate.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formCalendar.initDate.$error.required && !formCalendar.initDate.$valid}">
                             <label><i class="fa fa-calendar"></i> Data de In&iacute;cio</label>
-                            <input type="text"
-                                   class="form-control"
-                                   ng-model="newRegister.init_date"
-                                   ui-mask="99/99/9999"
-                                   model-view-value="true"
-                                   name="initDate"
-                                   required>
-
-                           <div ng-show="!formCalendar.initDate.$valid" class="error-message" role="alert">
-                             <div ng-show="formCalendar.initDate.$error.required">Campo obrigatório</div>
-                           </div>
+                            <input type="text" ng-disabled="!canPermission" class="form-control" ng-model="newRegister.init_date" ui-mask="99/99/9999"
+                                model-view-value="true" name="initDate" required>
+                                <div ng-show="!formCalendar.initDate.$valid" class="error-message" role="alert">
+                                    <div ng-show="formCalendar.initDate.$error.required">Campo obrigatório</div>
+                                </div>
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <div class="form-group"
-                             ng-class="{'has-error': formCalendar.endDate.$error.required && !formCalendar.endDate.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formCalendar.endDate.$error.required && !formCalendar.endDate.$valid}">
                             <label><i class="fa fa-calendar"></i> Data de fim</label>
-                            <input type="text"
-                                   class="form-control"
-                                   ng-model="newRegister.end_date"
-                                   ui-mask="99/99/9999"
-                                   model-view-value="true"
-                                   name="endDate"
-                                   required>
-
-                           <div ng-show="!formCalendar.endDate.$valid" class="error-message" role="alert">
-                             <div ng-show="formCalendar.endDate.$error.required">Campo obrigatório</div>
-                           </div>
+                            <input type="text" ng-disabled="!canPermission" class="form-control" ng-model="newRegister.end_date" ui-mask="99/99/9999"
+                                model-view-value="true" name="endDate" required>
+                                <div ng-show="!formCalendar.endDate.$valid" class="error-message" role="alert">
+                                    <div ng-show="formCalendar.endDate.$error.required">Campo obrigatório</div>
+                                </div>
                         </div>
                     </div>
                 </div>
                 <div class="well">
                     <label>
-                        <input type="checkbox" ng-model="newRegister.highlight" ng-checked="newRegister.highlight">
+                        <input ng-disabled="!canPermission" type="checkbox" ng-model="newRegister.highlight" ng-checked="newRegister.highlight">
                         <strong>Registro em destaque</strong>
                     </label>
                 </div>
@@ -90,8 +65,10 @@
     </form>
 </div>
 <div class=modal-footer>
-    <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
-    <button class="btn btn-success" ng-disabled="!newRegister.regional && !newRegister.description && !newRegister.init_date" ng-click="ok()">
+    <button ng-if="!canPermission" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Fechar</button>
+    <button ng-if="canPermission" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
+    <button ng-if="canPermission" class="btn btn-success" ng-disabled="!newRegister.regional && !newRegister.description && !newRegister.init_date"
+        ng-click="ok()">
         <i class="fa fa-check"></i> Salvar
-    </button>
+        </button>
 </div>

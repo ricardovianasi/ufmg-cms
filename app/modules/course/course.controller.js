@@ -9,6 +9,7 @@
         CourseService,
         dataTableConfigService,
         NotificationService,
+        PermissionService,
         ModalService,
         $rootScope,
         $log) {
@@ -21,21 +22,19 @@
         vm.courseId = $routeParams.courseId;
         vm.course = {};
 
+
         vm.removeImage = _removeImage;
         vm.uploadCover = _uploadCover;
 
         onInit();
 
         function onInit() {
+            vm.canPut = PermissionService.canPut('course_' + vm.type, vm.courseId);
             if (vm.courseId) {
                 CourseService
                     .getCourseRoutes(vm.type, vm.courseId)
                     .then(function (data) {
                         vm.courses = data.data;
-
-                        angular.forEach(vm.courses.items, function (value, key) {
-                            vm[key].name = value.subdivision_name ? value.subdivision_name : value.name;
-                        }, vm.courses.items);
 
                         vm.dtOptions = dataTableConfigService.init();
                     });
@@ -58,7 +57,6 @@
                         }
                     });
             } else {
-                $log.info('Load');
                 CourseService
                     .getCourses(vm.type)
                     .then(function (res) {
