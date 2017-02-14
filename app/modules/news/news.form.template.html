@@ -52,11 +52,16 @@
                         <input type="text"
                                class="form-control"
                                ng-model="news.title"
+                               ng-maxlength="96"
+                               maxlength="97"
                                name="title"
                                required>
 
                       <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
                         <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
+                      </div>
+                      <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
+                        <div ng-show="formNews.title.$error.maxlength">Tamanho máximo de 96 caracteres</div>
                       </div>
                     </div>
                 </div>
