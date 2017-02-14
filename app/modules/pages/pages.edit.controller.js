@@ -30,7 +30,7 @@
 
         var allTags = [];
 
-        vm.canPermission = PermissionService.canPut('page', $routeParams.id)
+        vm.canPermission = PermissionService.canPut('page', $routeParams.id);
 
         PagesService.getPages().then(function (data) {
             $scope.pagesParent = data.data.items;

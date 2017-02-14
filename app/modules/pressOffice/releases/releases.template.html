@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="pull-right">
-                    <a ng-href="#/releases/new" class="btn btn-secondary btn-lg pull-left">
+                    <a  ng-if="canPost" ng-href="#/releases/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> NOVO RELEASE
                     </a>
                 </div>
@@ -100,11 +100,11 @@
                                 <i class="fa fa-eye"></i>
                             </a>
 
-                            <a uib-tooltip="Editar" ng-href="#/releases/edit/{{ release.id }}" class="btn btn-warning">
+                            <a uib-tooltip="Editar" can-put context="release" context-id="release.id" ng-href="#/releases/edit/{{ release.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
-                            <a uib-tooltip="Excluir" ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="pull-right">
-                    <a ng-href="#/periodicals/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA PUBLICAÇÃO</a>
+                    <a ng-if="canPost" ng-href="#/periodicals/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA PUBLICAÇÃO</a>
                 </div>
             </div>
 
@@ -79,11 +79,11 @@
                         </td>
 
                         <td class="table-fit">
-                            <a uib-tooltip="Editar" ng-href="#/periodicals/edit/{{ item.id }}" class="btn btn-warning">
+                            <a uib-tooltip="Editar" can-put context="periodical" context-id="item.id" ng-href="#/periodicals/edit/{{ item.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
-                            <a uib-tooltip="Excluir" ng-click="removePeriodical(item.id, item.name)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removePeriodical(item.id, item.name)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

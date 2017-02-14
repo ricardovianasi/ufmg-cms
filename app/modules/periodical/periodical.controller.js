@@ -5,45 +5,33 @@
     angular.module('periodicalModule')
         .controller('PeriodicalController', PeriodicalController);
 
-    PeriodicalController.$inject = [
-        '$scope',
-        'dataTableConfigService',
-        'PeriodicalService',
-        'DateTimeHelper',
-        '$uibModal',
-        'NotificationService',
-        'dataTableConfigService',
-        '$route',
-        '$rootScope'
-    ];
-
+    /** ngInject */
     function PeriodicalController($scope,
         dataTableConfigService,
         PeriodicalService,
         DateTimeHelper,
-        $modal,
+        $uibModal,
         NotificationService,
         $route,
         PermissionService,
-        $rootScope) {
+        $rootScope,
+        $log) {
         $rootScope.shownavbar = true;
-        console.log('... PeriodicalController');
+        $log.info('PeriodicalController');
 
         $scope.periodicals = [];
         $scope.currentPage = 1;
+
+        _permissions();
 
         $scope.convertDate = function (data) {
             return DateTimeHelper.dateToStr(data);
         };
 
-        /**
-         * @param page
-         */
         var loadPeriodicals = function (page) {
             PeriodicalService.getPeriodicals(null, page).then(function (data) {
                 $scope.periodicals = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
             });
         };
 
@@ -66,7 +54,7 @@
         var removeConfirmationModal;
 
         $scope.confirmationModal = function (size, title) {
-            removeConfirmationModal = $modal.open({
+            removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
                 backdrop: 'static',
@@ -91,18 +79,17 @@
             };
         };
 
-
         function _permissions() {
             _canDelete();
             _canPost();
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('page');
+            $scope.canPost = PermissionService.canPost('periodical');
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('page');
+            $scope.canDelete = PermissionService.canDelete('periodical');
         }
     }
 })();

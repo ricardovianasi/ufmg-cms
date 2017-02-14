@@ -1,74 +1,68 @@
-;(function () {
-  'use strict';
+;
+(function () {
+    'use strict';
 
-  angular.module('newsModule')
-    .controller('NewsController', NewsController);
+    angular.module('newsModule')
+        .controller('NewsController', NewsController);
 
-  NewsController.$inject = [
-    '$scope',
-    'dataTableConfigService',
-    'NewsService',
-    'NotificationService',
-    'DateTimeHelper',
-    'ModalService',
-    '$rootScope'
-  ];
+    /** ngInject */
+    function NewsController($scope,
+        dataTableConfigService,
+        PermissionService,
+        NewsService,
+        NotificationService,
+        DateTimeHelper,
+        ModalService,
+        $rootScope,
+        $log) {
+        $rootScope.shownavbar = true;
+        $log.info('NoticiasController');
 
-  /**
-   * @param $scope
-   * @param dataTableConfigService
-   * @param NewsService
-   * @param NotificationService
-   * @param DateTimeHelper
-   * @param ModalService
-   *
-   * @constructor
-   */
-  function NewsController($scope,
-                          dataTableConfigService,
-                          NewsService,
-                          NotificationService,
-                          DateTimeHelper,
-                          ModalService,
-                          $rootScope) {
-    $rootScope.shownavbar = true;
-    console.log('... NoticiasController');
+        $scope.news = [];
+        $scope.currentPage = 1;
 
-    $scope.news = [];
-    $scope.currentPage = 1;
+        var loadNews = function (page) {
+            NewsService.getNews(null, page).then(function (data) {
+                $scope.news = data.data;
+                $scope.dtOptions = dataTableConfigService.init();
+            });
+        };
 
-    /**
-     * @param page
-     */
-    var loadNews = function (page) {
-      NewsService.getNews(null, page).then(function (data) {
-        $scope.news = data.data;
-        $scope.dtOptions = dataTableConfigService.init();
-      });
-    };
+        loadNews();
 
-    loadNews();
+        $scope.changePage = function () {
+            loadNews($scope.currentPage);
+        };
 
-    $scope.changePage = function () {
-      loadNews($scope.currentPage);
-    };
+        $scope.convertDate = DateTimeHelper.dateToStr;
 
-    $scope.convertDate = DateTimeHelper.dateToStr;
+        /**
+         * @param id
+         * @param title
+         */
+        $scope.removeNews = function (id, title) {
+            ModalService
+                .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+                .result
+                .then(function () {
+                    NewsService.removeNews(id).then(function () {
+                        NotificationService.success('Notícia removida com sucesso.');
+                        loadNews();
+                    });
+                });
+        };
 
-    /**
-     * @param id
-     * @param title
-     */
-    $scope.removeNews = function (id, title) {
-      ModalService
-        .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
-        .result
-        .then(function () {
-          NewsService.removeNews(id).then(function () {
-            NotificationService.success('Notícia removida com sucesso.');
-            loadNews();
-          });
-        });
-    };
-  }
+        function _permissions() {
+            _canDelete();
+            _canPost();
+        }
+
+        function _canPost() {
+            vm.canPost = PermissionService.canPost('news');
+        }
+
+        function _canDelete() {
+            vm.canDelete = PermissionService.canDelete('news');
+        }
+    }
 })();

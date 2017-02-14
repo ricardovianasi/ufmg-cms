@@ -15,9 +15,10 @@
         MediaService,
         PermissionService,
         $rootScope,
-        validationService) {
+        validationService,
+        $log) {
         $rootScope.shownavbar = true;
-        console.log('... PeriodicalNewController');
+        $log.info('PeriodicalNewController');
         $scope.canPermission = PermissionService.canPost('periodical');
         $scope.status = [];
         $scope.periodical = {};

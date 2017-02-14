@@ -3,32 +3,28 @@
         <div class="col-md-6">
             <div class="title-env">
                 <h1>
-                   <span ng-if="vm.event.id">
+                    <span ng-if="vm.event.id">
                        <span ng-if="vm.event.name">Editar Evento - {{ vm.event.name }}</span>
-                       <span ng-if="!vm.event.name">Editar Evento</span>
-                   </span>
-
-                   <span ng-if="!vm.event.id">
+                    <span ng-if="!vm.event.name">Editar Evento</span>
+                    </span>
+                    <span ng-if="!vm.event.id">
                        <span ng-if="vm.event.name">Novo Evento - {{ vm.event.name }}</span>
-                       <span ng-if="!vm.event.name">Novo Evento</span>
-                   </span>
+                    <span ng-if="!vm.event.name">Novo Evento</span>
+                    </span>
                 </h1>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
                     <li>
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
-
                     <li>
                         <a href="#/events">
                             <strong>Eventos</strong>
                         </a>
                     </li>
-
                     <li class="active">
                         <a href="#/events/new">
                             <strong>Novo Evento</strong>
@@ -39,55 +35,41 @@
         </div>
     </div>
 </div>
-
-<div class="row">
+<div class="row" ng-if="!canPermission">
+    <div class="col-xs-12">
+        Você não tem permissão de editar está página!
+    </div>
+</div>
+<div class="row" ng-if="canPermission">
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formEvents" novalidate>
             <div class="row">
                 <div class="col-xs-8">
                     <!-- CATEGORY -->
-                    <div class="form-group"
-                         ng-class="{'has-error': formEvents.category.$error.required && !formPage.category.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formEvents.category.$error.required && !formPage.category.$valid}">
                         <label for="category">Categoria / Tipo do Evento</label>
-
-                        <select id="category"
-                                name="category"
-                                class="form-control"
-                                ng-model="vm.event.type"
-                                ng-options="category.id as category.name for category in vm.categories.items"
-                                required></select>
-
-                        <div ng-show="!formEvents.category.$valid" class="error-message" role="alert">
-                          <div ng-show="formEvents.category.$error.required">Campo obrigatório</div>
+                        <select id="category" name="category" class="form-control" ng-model="vm.event.type" ng-options="category.id as category.name for category in vm.categories.items"
+                            required></select>
+                            <div ng-show="!formEvents.category.$valid" class="error-message" role="alert">
+                                <div ng-show="formEvents.category.$error.required">Campo obrigatório</div>
+                            </div>
+                    </div>
+                    <!-- NAME -->
+                    <div class="form-group" ng-class="{'has-error': formEvents.name.$error.required && !formPage.name.$valid}">
+                        <label for="name">Nome do Evento</label>
+                        <input id="name" type="text" name="name" class="form-control" ng-model="vm.event.name" required>
+                        <div ng-show="!formEvents.name.$valid" class="error-message" role="alert">
+                            <div ng-show="formEvents.name.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
-
-                    <!-- NAME -->
-                    <div class="form-group"
-                         ng-class="{'has-error': formEvents.name.$error.required && !formPage.name.$valid}">
-                        <label for="name">Nome do Evento</label>
-                        <input id="name"
-                               type="text"
-                               name="name"
-                               class="form-control"
-                               ng-model="vm.event.name"
-                               required>
-
-                       <div ng-show="!formEvents.name.$valid" class="error-message" role="alert">
-                         <div ng-show="formEvents.name.$error.required">Campo obrigatório</div>
-                       </div>
-                    </div>
-
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for="title">Slug</label>
-                                <input id="title" type="text" name="slug" class="form-control"
-                                       ng-model="vm.event.slug.slug">
+                                <input id="title" type="text" name="slug" class="form-control" ng-model="vm.event.slug.slug">
                             </div>
                         </div>
                     </div>
-
                     <!-- HIGHLIGHT -->
                     <div class="form-group">
                         <div class="checkbox">
@@ -99,54 +81,41 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label>Tags</label>
                         <tags-input add-on-comma="false" ng-model="vm.event.tags">
-                            <auto-complete source="findTags($query)" 
-                                           max-results-to-show="1000"
-                                           minLength="1"></auto-complete>
+                            <auto-complete source="findTags($query)" max-results-to-show="1000" minLength="1"></auto-complete>
                         </tags-input>
                     </div>
                 </div>
-
                 <!-- POSTER -->
                 <div class="col-xs-4">
                     <div style="margin-top: 20px" class="pages-module pages-module-cover add-module">
                         <div class="chosen-cover">
-                            <span class="label label-danger remove-image" ng-click="vm.imgHandler.removeImage('poster')"
-                                  ng-show="vm.event.poster">
+                            <span class="label label-danger remove-image" ng-click="vm.imgHandler.removeImage('poster')" ng-show="vm.event.poster">
                                 <span class="fa fa-remove"></span> Remover Cartaz
                             </span>
                         </div>
-
-                        <div class="add-title" ngf-select ngf-accept="'image/*'" ngf-multiple="false"
-                             ng-model="vm.event.poster" ng-show="!vm.event.poster">+ Adicionar Cartaz
+                        <div class="add-title" ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="vm.event.poster" ng-show="!vm.event.poster">+ Adicionar Cartaz
                         </div>
-
                         <div class="uploaded-image" ng-show="vm.event.poster">
                             <img class="img-responsive" ng-src="{{ vm.event.poster.url }}">
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- PHOTO -->
             <div class="row">
                 <div class="col-xs-12">
                     <label>Foto</label>
                     <div class="form-group form-img">
-                        <button
-                                ng-click="vm.imgHandler.uploadPhoto()"
-                                ng-show="!vm.event.photo">
+                        <button ng-click="vm.imgHandler.uploadPhoto()" ng-show="!vm.event.photo">
                             Inserir...
                         </button>
-
                         <div class="clearfix form-control" ng-show="vm.event.photo">
                             {{ vm.event.photo.url }}
                             <div class="form-img-label">
-                                <span class="label label-danger remove-image-news" ng-show="vm.event.photo"
-                                      ng-click="vm.imgHandler.removeImage('photo')">
+                                <span class="label label-danger remove-image-news" ng-show="vm.event.photo" ng-click="vm.imgHandler.removeImage('photo')">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
                             </div>
@@ -154,13 +123,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- COURSES -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class=form-group>
                         <label class="">Cursos de Interesse</label>
-
                         <div id="event-courses" class="row">
                             <div class="col-md-4" ng-repeat="course in vm.courses.items">
                                 <div class="checkbox">
@@ -176,127 +143,88 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <!-- AUDIO -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="audio">Áudio</label>
-                        <input id="audio" type="text" name="audio" ng-model="vm.event.audio" class="form-control"
-                               placeholder="Inserir URL">
+                        <input id="audio" type="text" name="audio" ng-model="vm.event.audio" class="form-control" placeholder="Inserir URL">
                     </div>
                 </div>
-
                 <!-- VIDEO -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="video">Vídeo</label>
-                        <input id="video" type="text" name="video" ng-model="vm.event.video" class="form-control"
-                               placeholder="Inserir URL">
+                        <input id="video" type="text" name="video" ng-model="vm.event.video" class="form-control" placeholder="Inserir URL">
                     </div>
                 </div>
             </div>
-
             <!-- DESCRIPTION -->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group"
-                          ng-class="{'has-error': formEvents.description.$error.required && !formPage.description.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formEvents.description.$error.required && !formPage.description.$valid}">
                         <label for="description">Descrição</label>
-                        <textarea id="description"
-                                  name="description"
-                                  cols="30"
-                                  rows="5"
-                                  class="form-control"
-                                  redactor="vm.redactorOptions"
-                                  ng-model="vm.event.description"
-                                  required></textarea>
-
-                      <div ng-show="!formEvents.description.$valid" class="error-message" role="alert">
-                        <div ng-show="formEvents.description.$error.required">Campo obrigatório</div>
-                      </div>
+                        <textarea id="description" name="description" cols="30" rows="5" class="form-control" redactor="vm.redactorOptions" ng-model="vm.event.description"
+                            required></textarea>
+                            <div ng-show="!formEvents.description.$valid" class="error-message" role="alert">
+                                <div ng-show="formEvents.description.$error.required">Campo obrigatório</div>
+                            </div>
                     </div>
                 </div>
             </div>
-
             <!-- DATASHEET -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="datasheet">Ficha Técnica</label>
-                        <textarea id="datasheet" name="datasheet" cols="30" rows="5" redactor="vm.redactorOptions"
-                                  ng-model="vm.event.datasheet"></textarea>
+                        <textarea id="datasheet" name="datasheet" cols="30" rows="5" redactor="vm.redactorOptions" ng-model="vm.event.datasheet"></textarea>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="well well-sm">
                         <!-- START DATE -->
-                        <div class="form-group"
-                             ng-class="{'has-error': formEvents.initDate.$error.required && !formPage.initDate.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formEvents.initDate.$error.required && !formPage.initDate.$valid}">
                             <label for="initDate">
                                 <span class="fa fa-calendar"></span> Data de início</label>
-
-                            <input id="initDate" type="text" name="initDate"
-                                   class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.initDate"
-                                   ng-focus="vm.datepickerOpt.initDate.open(vm, $event)"
-                                   uib-datepicker-popup="{{ vm.datepickerOpt.initDate.format }}"
-                                   datepicker-options="vm.datepickerOpt.initDate.dateOptions"
-                                   is-open="vm.datepickerOpt.initDate.status.opened"
-                                   min-date="vm.datepickerOpt.initDate.minDate"
-                                   max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar" close-text="Fechar"
-                                   current-text="Hoje"
-                                   ng-change="vm.setEndDefault()"
-                                   required>
-
-                           <div ng-show="!formEvents.initDate.$valid" class="error-message" role="alert">
-                             <div ng-show="formEvents.initDate.$error.required">Campo obrigatório</div>
-                           </div>
+                            <input id="initDate" type="text" name="initDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.initDate"
+                                ng-focus="vm.datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ vm.datepickerOpt.initDate.format }}"
+                                datepicker-options="vm.datepickerOpt.initDate.dateOptions" is-open="vm.datepickerOpt.initDate.status.opened"
+                                min-date="vm.datepickerOpt.initDate.minDate" max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar"
+                                close-text="Fechar" current-text="Hoje" ng-change="vm.setEndDefault()" required>
+                                <div ng-show="!formEvents.initDate.$valid" class="error-message" role="alert">
+                                    <div ng-show="formEvents.initDate.$error.required">Campo obrigatório</div>
+                                </div>
                         </div>
                         <div class="form-group">
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de início
                             </label>
-
-                            <input id="initHour"
-                                   type="text"
-                                   name="initHour"
-                                   class="form-control"
-                                   ng-model="vm.event.init_hour">
+                            <input id="initHour" type="text" name="initHour" class="form-control" ng-model="vm.event.init_hour">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="well well-sm">
-                        <div class="form-group"
-                             ng-class="{'has-error': formEvents.endDate.$error.required && !formPage.endDate.$valid}">
+                        <div class="form-group" ng-class="{'has-error': formEvents.endDate.$error.required && !formPage.endDate.$valid}">
                             <label for="endDate">
                                 <span class="fa fa-calendar"></span> Data de término
                             </label>
-                            <input id="endDate" type="text" name="endDate"
-                                   class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.endDate"
-                                   ng-focus="vm.datepickerOpt.endDate.open(vm, $event, 'initDate')"
-                                   uib-datepicker-popup="{{ vm.datepickerOpt.endDate.format }}"
-                                   datepicker-options="vm.datepickerOpt.endDate.dateOptions"
-                                   is-open="vm.datepickerOpt.endDate.status.opened"
-                                   min-date="vm.datepickerOpt.endDate.minDate"
-                                   max-date="vm.datepickerOpt.endDate.maxDate" clear-text="Limpar" close-text="Fechar"
-                                   current-text="Hoje"
-                                   required>
-
-                           <div ng-show="!formEvents.endDate.$valid" class="error-message" role="alert">
-                             <div ng-show="formEvents.endDate.$error.required">Campo obrigatório</div>
-                           </div>
+                            <input id="endDate" type="text" name="endDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.endDate"
+                                ng-focus="vm.datepickerOpt.endDate.open(vm, $event, 'initDate')" uib-datepicker-popup="{{ vm.datepickerOpt.endDate.format }}"
+                                datepicker-options="vm.datepickerOpt.endDate.dateOptions" is-open="vm.datepickerOpt.endDate.status.opened"
+                                min-date="vm.datepickerOpt.endDate.minDate" max-date="vm.datepickerOpt.endDate.maxDate" clear-text="Limpar"
+                                close-text="Fechar" current-text="Hoje" required>
+                                <div ng-show="!formEvents.endDate.$valid" class="error-message" role="alert">
+                                    <div ng-show="formEvents.endDate.$error.required">Campo obrigatório</div>
+                                </div>
                         </div>
                         <div class="form-group">
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de término
                             </label>
-
-                            <input id="endHour" type="text" name="endHour"
-                                   class="form-control" ng-model="vm.event.end_hour">
+                            <input id="endHour" type="text" name="endHour" class="form-control" ng-model="vm.event.end_hour">
                         </div>
                     </div>
                 </div>
@@ -306,56 +234,40 @@
                             <label for="duration">
                                 <i class="fa fa-history"></i> Duração
                             </label>
-
-                            <input id="duration" type="text" name="duration" class="form-control"
-                                   ng-model="vm.event.duration" ui-mask="99:99">
+                            <input id="duration" type="text" name="duration" class="form-control" ng-model="vm.event.duration" ui-mask="99:99">
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xs-6">
                     <!-- LOCAL -->
-                    <div class="form-group"
-                         ng-class="{'has-error': formEvents.local.$error.required && !formPage.local.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formEvents.local.$error.required && !formPage.local.$valid}">
                         <label for="local">Local</label>
-                        <input id="local"
-                               type="text"
-                               name="local"
-                               class="form-control"
-                               ng-model="vm.event.local"
-                               required>
-
+                        <input id="local" type="text" name="local" class="form-control" ng-model="vm.event.local" required>
                         <div ng-show="!formEvents.local.$valid" class="error-message" role="alert">
-                          <div ng-show="formEvents.local.$error.required">Campo obrigatório</div>
+                            <div ng-show="formEvents.local.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
-
                     <!-- INVESTMENT -->
                     <div class="form-group">
                         <label for="investment">Investimento</label>
-                        <input id="investment" type="text" name="investment" class="form-control"
-                               ng-model="vm.event.investment">
+                        <input id="investment" type="text" name="investment" class="form-control" ng-model="vm.event.investment">
                     </div>
                 </div>
-
                 <div class="col-xs-6">
                     <!-- ADDRESS -->
                     <div class="form-group">
                         <label for="address">Endereço</label>
                         <input id="address" type="text" name="address" class="form-control" ng-model="vm.event.address">
                     </div>
-
                     <!-- REGISTRATION -->
                     <div class="form-group">
                         <label for="enrollment">Inscrição</label>
-                        <input id="enrollment" type="text" name="enrollment" class="form-control"
-                               ng-model="vm.event.registration">
+                        <input id="enrollment" type="text" name="enrollment" class="form-control" ng-model="vm.event.registration">
                     </div>
                 </div>
             </div>
-
             <!-- FREE -->
             <div class="row">
                 <div class="col-xs-12">
@@ -371,7 +283,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <!-- PHONE -->
                 <div class="col-xs-4">
@@ -380,7 +291,6 @@
                         <input id="phone" type="text" name="phone" class="form-control" ng-model="vm.event.phone">
                     </div>
                 </div>
-
                 <!-- EMAIL -->
                 <div class="col-xs-4">
                     <div class="form-group">
@@ -388,7 +298,6 @@
                         <input id="email" type="text" name="email" class="form-control" ng-model="vm.event.email">
                     </div>
                 </div>
-
                 <!-- SITE -->
                 <div class="col-xs-4">
                     <div class="form-group">
@@ -399,7 +308,6 @@
             </div>
         </form>
     </div>
-
     <div class="col-xs-4">
         <publishment-options route-model="vm.event" publish-method="vm.publish"></publishment-options>
     </div>

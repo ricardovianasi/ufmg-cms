@@ -1,75 +1,69 @@
-;(function () {
-  'use strict';
+;
+(function () {
+    'use strict';
 
-  angular.module('eventsModule')
-    .controller('EventsController', EventsController);
+    angular.module('eventsModule')
+        .controller('EventsController', EventsController);
+    /** ngInject */
+    function EventsController($scope,
+        $route,
+        PermissionService,
+        dataTableConfigService,
+        EventsService,
+        DateTimeHelper,
+        ModalService,
+        NotificationService,
+        $rootScope,
+        $log) {
+        $rootScope.shownavbar = true;
+        $log.info('EventsController');
 
-  EventsController.$inject = [
-    '$scope',
-    '$route',
-    'dataTableConfigService',
-    'EventsService',
-    'DateTimeHelper',
-    'ModalService',
-    'NotificationService',
-    '$rootScope'
-  ];
+        $scope.title = 'Eventos';
+        $scope.events = [];
+        $scope.currentPage = 1;
 
-  /**
-   * @param $scope
-   * @param $route
-   * @param dataTableConfigService
-   * @param EventsService
-   * @param DateTimeHelper
-   * @param ModalService
-   * @param NotificationService
-   *
-   * @constructor
-   */
-  function EventsController($scope,
-                            $route,
-                            dataTableConfigService,
-                            EventsService,
-                            DateTimeHelper,
-                            ModalService,
-                            NotificationService,
-                            $rootScope) {
-    $rootScope.shownavbar = true;
-    console.log('... EventsController');
+        var loadEvents = function (page) {
+            EventsService.getEvents(page).then(function (data) {
+                $scope.events = data.data;
+                $scope.dtOptions = dataTableConfigService.init();
+            });
+        };
 
-    $scope.title = 'Eventos';
-    $scope.events = [];
-    $scope.currentPage = 1;
+        loadEvents();
 
-    var loadEvents = function (page) {
-      EventsService.getEvents(page).then(function (data) {
-        $scope.events = data.data;
-        $scope.dtOptions = dataTableConfigService.init();
-      });
-    };
+        $scope.changePage = function () {
+            loadEvents($scope.currentPage);
+        };
 
-    loadEvents();
+        $scope.convertDate = DateTimeHelper.convertDate;
 
-    $scope.changePage = function () {
-      loadEvents($scope.currentPage);
-    };
+        /**
+         * @param id
+         * @param title
+         */
+        $scope.remove = function (id, title) {
+            ModalService
+                .confirm('Deseja remover o evento <b>' + title + '</b>', ModalService.MODAL_MEDIUM)
+                .result
+                .then(function () {
+                    EventsService.destroy(id).then(function () {
+                        NotificationService.success('Evento removido com sucesso!');
+                        $route.reload();
+                    });
+                });
+        };
 
-    $scope.convertDate = DateTimeHelper.convertDate;
+        function _permissions() {
+            _canDelete();
+            _canPost();
+        }
 
-    /**
-     * @param id
-     * @param title
-     */
-    $scope.remove = function (id, title) {
-      ModalService
-        .confirm('Deseja remover o evento <b>'+title+'</b>', ModalService.MODAL_MEDIUM)
-        .result
-        .then(function () {
-          EventsService.destroy(id).then(function () {
-            NotificationService.success('Evento removido com sucesso!');
-            $route.reload();
-          });
-        });
-    };
-  }
+        function _canPost() {
+            vm.canPost = PermissionService.canPost('events');
+        }
+
+        function _canDelete() {
+            vm.canDelete = PermissionService.canDelete('events');
+        }
+    }
 })();

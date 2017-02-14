@@ -17,9 +17,10 @@
         MediaService,
         DateTimeHelper,
         $rootScope,
-        validationService) {
+        validationService,
+        $log) {
         $rootScope.shownavbar = true;
-        console.log('... PeriodicalEditController');
+        $log.info('PeriodicalEditController');
         $scope.canPermission = PermissionService.canPut('periodical', $routeParams.id);
         $scope.status = [];
         $scope.highlight_ufmg_visible = false;

@@ -9,6 +9,7 @@
         UsersService,
         ModalService,
         NotificationService,
+        PermissionService,
         authService,
         $log) {
 

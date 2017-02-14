@@ -1,211 +1,165 @@
 <div class="page-title">
-   <div class="row flex-center">
-       <div class="col-md-6">
-           <div class="title-env">
-               <h1 class="title">
-                   <span ng-if="release.id">
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">
+                    <span ng-if="release.id">
                        <span ng-if="release.title">Editar Release - {{ release.title }}</span>
-                       <span ng-if="!release.title">Editar Release</span>
-                   </span>
-                   <span ng-if="!release.id">
+                    <span ng-if="!release.title">Editar Release</span>
+                    </span>
+                    <span ng-if="!release.id">
                        <span ng-if="release.title">Novo Release - {{ release.title }}</span>
-                       <span ng-if="!release.title">Novo Release</span>
-                   </span>
-               </h1>
-           </div>
-       </div>
-       <div class="col-md-6">
-           <div class="breadcrumb-env">
-               <ol class="breadcrumb bc-1">
-                   <li>
-                       <a href="#/">
-                           <i class="fa-home"></i>Home
-                       </a>
-                   </li>
-
-                   <li>
-                       <a href="#/releases">
-                           <strong>Release</strong>
-                       </a>
-                   </li>
-
-                   <li class="active">
-                       <a href="#/gallery/new">
-                           <strong>Novo release</strong>
-                       </a>
-                   </li>
-               </ol>
-           </div>
-       </div>
-   </div>
+                    <span ng-if="!release.title">Novo Release</span>
+                    </span>
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/releases">
+                            <strong>Release</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/gallery/new">
+                            <strong>Novo release</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<div class="row">
+<div class="row" ng-if="!canPermission">
+    <div class="col-xs-12">
+        Você não tem permissão de editar está página!
+    </div>
+</div>
+<div class="row" ng-if="canPermission">
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formRelease" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group"
-                         ng-class="{'has-error': formRelease.title.$error.required && !formRelease.title.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formRelease.title.$error.required && !formRelease.title.$valid}">
                         <label for="title">Título</label>
-                        <input id="title"
-                               name="title"
-                               type="text"
-                               ng-model="release.title"
-                               class="form-control"
-                               required>
-
+                        <input id="title" name="title" type="text" ng-model="release.title" class="form-control" required>
                         <div ng-show="!formRelease.title.$valid" class="error-message" role="alert">
-                          <div ng-show="formRelease.title.$error.required">Campo obrigatório</div>
+                            <div ng-show="formRelease.title.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="title">Slug</label>
-                        <input id="slug" type="text" name="slug" class="form-control"
-                               ng-model="release.slug.slug">
+                        <input id="slug" type="text" name="slug" class="form-control" ng-model="release.slug.slug">
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="subtitle">Bigode</label>
-                        <input id="subtitle" name="subtitle" type="text" ng-model="release.subtitle"
-                               class="form-control">
+                        <input id="subtitle" name="subtitle" type="text" ng-model="release.subtitle" class="form-control">
                     </div>
                 </div>
-
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="authorName">Autor</label>
-                        <input id="authorName" name="authorName" type="text" ng-model="release.authorName"
-                               class="form-control">
+                        <input id="authorName" name="authorName" type="text" ng-model="release.authorName" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <input type="file" class="form-control"
-                               ngf-select
-                               ng-model="release.thumb"
-                               ngf-multiple="false"
-                               ng-show="!release.thumb">
-
-                        <div class="clearfix form-control"
-                             ng-show="release.thumb" style="height:auto">
+                        <input type="file" class="form-control" ngf-select ng-model="release.thumb" ngf-multiple="false" ng-show="!release.thumb">
+                        <div class="clearfix form-control" ng-show="release.thumb" style="height:auto">
                             <div class="pull-left">{{ release.thumb.url }}</div>
-
                             <div class="pull-right">
-                                <span class="label label-danger remove-image"
-                                      ng-show="release.thumb"
-                                      ng-click="imgHandler.removeImage('thumb')">
+                                <span class="label label-danger remove-image" ng-show="release.thumb" ng-click="imgHandler.removeImage('thumb')">
                                     <span class="fa fa-remove"></span> REMOVER
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group"
-                         ng-class="{'has-error': formRelease.content.$error.required && !formRelease.content.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formRelease.content.$error.required && !formRelease.content.$valid}">
                         <label for="content">Conteúdo</label>
-                        <textarea id="content"
-                                  name="content"
-                                  cols="30"
-                                  rows="5"
-                                  ng-model="release.content"
-                                  redactor="redactorOptions"
-                                  required></textarea>
-
+                        <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorOptions" required></textarea>
                         <div ng-show="!formRelease.content.$valid" class="error-message" role="alert">
-                          <div ng-show="formRelease.content.$error.required">Campo obrigatório</div>
+                            <div ng-show="formRelease.content.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <hr>
             <h3>Fonte</h3>
-
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group"
-                         ng-class="{'has-error': formRelease.name.$error.required && !formRelease.name.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formRelease.name.$error.required && !formRelease.name.$valid}">
                         <label for="name">Nome</label>
-                        <input id="name"
-                               name="name"
-                               type="text"
-                               ng-model="release.source.name"
-                               class="form-control"
-                               required>
-
-                       <div ng-show="!formRelease.name.$valid" class="error-message" role="alert">
-                         <div ng-show="formRelease.name.$error.required">Campo obrigatório</div>
-                       </div>
+                        <input id="name" name="name" type="text" ng-model="release.source.name" class="form-control" required>
+                        <div ng-show="!formRelease.name.$valid" class="error-message" role="alert">
+                            <div ng-show="formRelease.name.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group"
-                         ng-class="{'has-error': formRelease.email.$error.required && !formRelease.email.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formRelease.email.$error.required && !formRelease.email.$valid}">
                         <label for="email">E-mail</label>
-                        <input id="email"
-                               type="text"
-                               name="email"
-                               ng-model="release.source.email"
-                               class="form-control"
-                               required>
-
-                       <div ng-show="!formRelease.email.$valid" class="error-message" role="alert">
-                         <div ng-show="formRelease.email.$error.required">Campo obrigatório</div>
-                       </div>
+                        <input id="email" type="text" name="email" ng-model="release.source.email" class="form-control" required>
+                        <div ng-show="!formRelease.email.$valid" class="error-message" role="alert">
+                            <div ng-show="formRelease.email.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label for="phone">Telefone</label>
                         <input id="phone" type="text" name="phone" ng-model="release.source.phone" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
-
-
-             <div class="row">
+            </div>
+            <!--row-->
+            <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="name">URL:</label>
                         <input id="name" name="url" type="text" ng-model="release.source.url" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <hr>
             <h3>Serviços</h3>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="whats">O que é</label>
-                        <input id="whats" type="text" name="whats" ng-model="release.service.whats"
-                               class="form-control">
+                        <input id="whats" type="text" name="whats" ng-model="release.service.whats" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -214,29 +168,25 @@
                                 <label for="" class="">Data:</label>
                                 <input type="text" ng-model="release.service.when" class="form-control">
                             </div>
-
                             <div class="col-xs-6">
                                 <label for="" class="">Horário:</label>
-                                 <input type="text" ng-model="release.service.time" class="form-control">
+                                <input type="text" ng-model="release.service.time" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="where">Onde</label>
-                        <input id="where" type="text" name="where" ng-model="release.service.where"
-                               class="form-control">
+                        <input id="where" type="text" name="where" ng-model="release.service.where" class="form-control">
                     </div>
                 </div>
-            </div><!--row-->
-
+            </div>
+            <!--row-->
             <hr>
             <h3>
                 Arquivos
             </h3>
-
             <div class="row">
                 <div class="col-xs-12">
                     <div ng-repeat="(idx, file) in release.files" class="well well-sm">
@@ -244,86 +194,51 @@
                             <div class="pull-left">
                                 <label>Arquivo {{ idx + 1 }}</label>
                             </div>
-
                             <div class="pull-right">
-                                <button type="button" class="btn btn-danger btn-sm"
-                                        ng-click="fileHandler.removeItem(idx)">
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="fileHandler.removeItem(idx)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
                         </div>
-
                         <div ng-show="release.files[idx].opened">
                             <div class="form-group">
-                                    <ul class="nav nav-tabs nav-tabs-justified">
-                                        <li  ng-class="{ active: release.files[idx].isFile }"
-                                            ng-click="release.files[idx].isFile = true">
-
-                                            <span class="visible-xs"><i class="fa fa-home"></i></span>
-                                            <span class="hidden-xs">Arquivos (Upload)</span>
-                                        </li>
-                                        <li ng-class="{ active: !release.files[idx].isFile }"
-                                            ng-click="release.files[idx].isFile = false">
-
-                                                <span class="visible-xs"><i class="fa fa-upload"></i></span>
-                                                <span class="hidden-xs">Vídeo (URL)</span>
-                                        </li>
-                                    </ul>
-
-                                    <div class="tab-content">
-                                        <div class="tab-pane"  ng-class="{ active: release.files[idx].isFile }" id="upload">
-
-                                                <input  type="file"
-                                                    class="form-control"
-                                                    ngf-select
-                                                    ngf-accept="'*'"
-                                                    ngf-multiple="false"
-                                                    ng-model="release.files[idx].file"
-                                                    ng-show="!release.files[idx].file">
-
-                                                <br>
-
-                                                <label class="text-left" ng-show="release.files[idx].file">Breve descrição</label>
-                                                <input  type="text"
-                                                        class="form-control"
-                                                        ng-model="release.files[idx].title"
-                                                        ng-show="release.files[idx].file">
-
+                                <ul class="nav nav-tabs nav-tabs-justified">
+                                    <li ng-class="{ active: release.files[idx].isFile }" ng-click="release.files[idx].isFile = true">
+                                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                        <span class="hidden-xs">Arquivos (Upload)</span>
+                                    </li>
+                                    <li ng-class="{ active: !release.files[idx].isFile }" ng-click="release.files[idx].isFile = false">
+                                        <span class="visible-xs"><i class="fa fa-upload"></i></span>
+                                        <span class="hidden-xs">Vídeo (URL)</span>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane" ng-class="{ active: release.files[idx].isFile }" id="upload">
+                                        <input type="file" class="form-control" ngf-select ngf-accept="'*'" ngf-multiple="false" ng-model="release.files[idx].file"
+                                            ng-show="!release.files[idx].file">
+                                            <br>
+                                            <label class="text-left" ng-show="release.files[idx].file">Breve descrição</label>
+                                            <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].file">
                                             <br><br>
-                                            <div class="clearfix"
-                                                 ng-show="release.files[idx].file" style="height:auto">
+                                            <div class="clearfix" ng-show="release.files[idx].file" style="height:auto">
                                                 <div class="pull-left">{{ release.files[idx].file }}</div>
-
                                                 <div class="pull-right">
-                                                    <span class="label label-danger remove-image-releases"
-                                                          ng-show="release.files[idx].file"
-                                                          ng-click="removeReleasesFiles(idx)">
-                                                        <span class="fa fa-remove"></span> REMOVER
+                                                    <span class="label label-danger remove-image-releases" ng-show="release.files[idx].file" ng-click="removeReleasesFiles(idx)">
+                                                        <span class="fa fa-remove"></span>                                                    REMOVER
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="tab-pane
-                                        " ng-class="{ active: !release.files[idx].isFile }" id="video">
-                                                <input  type="text"
-                                                    placeholder="Inserir URL do Vídeo (Youtube ou Vimeo)..."
-                                                    ng-model="release.files[idx].external_url"
-                                                    class="form-control"
-                                                    ng-show="release.files[idx].isFile == false">
-
-                                            <br>
-
-                                            <label class="text-left">Breve descrição</label>
-                                            <input  type="text"
-                                                    class="form-control"
-                                                    ng-model="release.files[idx].title"
-                                                    ng-show="release.files[idx].isFile == false"
-                                                    >
-                                        </div>
                                     </div>
-
-                      <!--           <div class="form-group">
+                                    <div class="tab-pane
+                                        " ng-class="{ active: !release.files[idx].isFile }" id="video">
+                                        <input type="text" placeholder="Inserir URL do Vídeo (Youtube ou Vimeo)..." ng-model="release.files[idx].external_url" class="form-control"
+                                            ng-show="release.files[idx].isFile == false">
+                                            <br>
+                                            <label class="text-left">Breve descrição</label>
+                                            <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].isFile == false">
+                                </div>
+                            </div>
+                            <!--           <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
 
@@ -360,30 +275,26 @@
                                     </div>
 
                                 </div> -->
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <a class="pages-module add-module"
-                            ng-click="fileHandler.addItem()">
-                        <span class="add-title">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="pages-module add-module" ng-click="fileHandler.addItem()">
+                <span class="add-title">
                             + Novo Arquivo
                         </span>
-                    </a>
-                </div>
-            </div>
-        </form>
+            </a>
+        </div>
     </div>
-
-    <div class="col-xs-4">
-        <publishment-options route-model="release"></publishment-options>
-    </div>
+    </form>
 </div>
-
+<div class="col-xs-4">
+    <publishment-options route-model="release"></publishment-options>
+</div>
+</div>
 <br/>
 <br/>
-
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>

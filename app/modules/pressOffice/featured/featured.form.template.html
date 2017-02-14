@@ -1,187 +1,152 @@
 <div class="page-title">
-   <div class="row flex-center">
-       <div class="col-md-6">
-           <div class="title-env">
-               <h1 class="title">Novo Destaque</h1>
-           </div>
-       </div>
-       <div class="col-md-6">
-           <div class="breadcrumb-env">
-               <ol class="breadcrumb bc-1">
-                   <li>
-                       <a href="#/"><i class="fa-home"></i>Home</a>
-                   </li>
-                   <li>
-                       <a href="#/featured">
-                           <strong>Destaque</strong>
-                       </a>
-                   </li>
-                   <li class="active">
-                       <a href="#/featured/new">
-                           <strong>Novo Destaque</strong>
-                       </a>
-                   </li>
-               </ol>
-           </div>
-       </div>
-   </div>
-</div>
-<div class="row panel panel-default col-md-10">
-  <form class="form" name="formFeatured" novalidate>
-    <div class="row">
-        <div class="col-md-9">
-            <div class="form-group"
-                 ng-class="{'has-error': formFeatured.title.$error.required && !formClippings.title.$valid}">
-                <label>Títutlo</label>
-                <input class="form-control"
-                       ng-model="vm.featured.title"
-                       name="title"
-                       required>
-
-                <div ng-show="!formFeatured.title.$valid" class="error-message" role="alert">
-                  <div ng-show="formFeatured.title.$error.required">Campo obrigatório</div>
-                </div>
-            </div>
-            <div class="form-group"
-                 ng-class="{'has-error': formFeatured.description.$error.required && !formClippings.description.$valid}">
-                <label>Descri&ccedil;&atilde;o:</label>
-                <textarea cols="30" rows="4"
-                          title="Descrição"
-                          class="form-control"
-                          ng-model="vm.featured.description"
-                          name="description"
-                          required>
-                </textarea>
-
-                <div ng-show="!formFeatured.description.$valid" class="error-message" role="alert">
-                  <div ng-show="formFeatured.description.$error.required">Campo obrigatório</div>
-                </div>
-            </div>
-            <div class=form-group>
-                <label>Anexar release:</label>
-                <select title="Status" ng-model="vm.featured.release.id" ng-options="release.id as release.title for release in vm.releases.items" class=form-control>
-                </select>
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">Novo Destaque</h1>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group"
-                 ng-class="{'has-error': !vm.featured.photo}">
-                <div class="pages-module add-module edition-cover-thumb pull-right">
-                    <div ng-show="!vm.featured.photo" ngf-accept="'image/*'" ngf-select ng-model=vm.featured.photo ngf-multiple=false class="add-title">
-                        + Adicionar Imagem
-                        </span>
-                    </div>
-                    <div ng-show="vm.featured.photo.url">
-                        <div class=chosen-cover>
-                            <span ng-click=vm.removeImage() class="label label-danger remove-image">
-                            <i class="fa fa-remove"></i> REMOVER IMAGEM
-                        </span>
-                        </div>
-                        <div class="uploaded-image edition-cover-image">
-                            <img class="img-responsive" ng-src="{{ vm.featured.photo.url }}">
-                        </div>
-                    </div>
-                </div>
-
-                <div ng-show="!vm.featured.photo" class="error-message" role="alert">
-                  <div>Campo obrigatório</div>
-                </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="#/featured">
+                            <strong>Destaque</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/featured/new">
+                            <strong>Novo Destaque</strong>
+                        </a>
+                    </li>
+                </ol>
             </div>
         </div>
     </div>
-  </form>
+</div>
+<div class="row" ng-if="!canPermission">
+    <div class="col-xs-12">
+        Você não tem permissão de editar está página!
+    </div>
+</div>
+<div class="row panel panel-default col-md-10" ng-if="canPermission">
+    <form class="form" name="formFeatured" novalidate>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group" ng-class="{'has-error': formFeatured.title.$error.required && !formClippings.title.$valid}">
+                    <label>Títutlo</label>
+                    <input class="form-control" ng-model="vm.featured.title" name="title" required>
+                    <div ng-show="!formFeatured.title.$valid" class="error-message" role="alert">
+                        <div ng-show="formFeatured.title.$error.required">Campo obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': formFeatured.description.$error.required && !formClippings.description.$valid}">
+                    <label>Descri&ccedil;&atilde;o:</label>
+                    <textarea cols="30" rows="4" title="Descrição" class="form-control" ng-model="vm.featured.description" name="description"
+                        required>
+                        </textarea>
+                        <div ng-show="!formFeatured.description.$valid" class="error-message" role="alert">
+                            <div ng-show="formFeatured.description.$error.required">Campo obrigatório</div>
+                        </div>
+                </div>
+                <div class=form-group>
+                    <label>Anexar release:</label>
+                    <select title="Status" ng-model="vm.featured.release.id" ng-options="release.id as release.title for release in vm.releases.items"
+                        class=form-control>
+                        </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group" ng-class="{'has-error': !vm.featured.photo}">
+                    <div class="pages-module add-module edition-cover-thumb pull-right">
+                        <div ng-show="!vm.featured.photo" ngf-accept="'image/*'" ngf-select ng-model=vm.featured.photo ngf-multiple=false class="add-title">
+                            + Adicionar Imagem
+                            </span>
+                        </div>
+                        <div ng-show="vm.featured.photo.url">
+                            <div class=chosen-cover>
+                                <span ng-click=vm.removeImage() class="label label-danger remove-image">
+                            <i class="fa fa-remove"></i> REMOVER IMAGEM
+                        </span>
+                            </div>
+                            <div class="uploaded-image edition-cover-image">
+                                <img class="img-responsive" ng-src="{{ vm.featured.photo.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!vm.featured.photo" class="error-message" role="alert">
+                        <div>Campo obrigatório</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class=row>
         <div class=col-md-9>
             <div class=form-group>
                 <label>Especialistas:</label>
-              <form class="form" name="formEspecialist" novalidate>
-                <div ng-repeat="specialist in vm.featured.specialists" class="well well-sm">
-                    <div ng-click="specialist.opened = true" class="clearfix text-right">
-                        <strong class="pull-left">{{ specialist.name }}</strong>
-                        <a ng-click="vm.removeSpecialist($index)" class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </div>
-                    <div ng-show="specialist.opened">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group"
-                                     ng-class="{'has-error': formEspecialist.name.$error.required && !formEspecialist.name.$valid}">
-                                    <label>Nome:</label>
-                                    <input  type="text"
-                                            title="Nome"
-                                            ng-model="specialist.name"
-                                            class="form-control"
-                                            name="name"
-                                            required>
-
-                                    <div ng-show="!formEspecialist.name.$valid" class="error-message" role="alert">
-                                      <div ng-show="formEspecialist.name.$error.required">Campo obrigatório</div>
+                <form class="form" name="formEspecialist" novalidate>
+                    <div ng-repeat="specialist in vm.featured.specialists" class="well well-sm">
+                        <div ng-click="specialist.opened = true" class="clearfix text-right">
+                            <strong class="pull-left">{{ specialist.name }}</strong>
+                            <a ng-click="vm.removeSpecialist($index)" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                        <div ng-show="specialist.opened">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group" ng-class="{'has-error': formEspecialist.name.$error.required && !formEspecialist.name.$valid}">
+                                        <label>Nome:</label>
+                                        <input type="text" title="Nome" ng-model="specialist.name" class="form-control" name="name" required>
+                                        <div ng-show="!formEspecialist.name.$valid" class="error-message" role="alert">
+                                            <div ng-show="formEspecialist.name.$error.required">Campo obrigatório</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group" ng-class="{'has-error': formEspecialist.personTitle.$error.required && !formEspecialist.personTitle.$valid}">
+                                        <label>T&iacute;tulo/cargo:</label>
+                                        <input type="text" title="Título/cargo" ng-model="specialist.office" class="form-control" required name="personTitle">
+                                        <div ng-show="!formEspecialist.personTitle.$valid" class="error-message" role="alert">
+                                            <div ng-show="formEspecialist.personTitle.$error.required">Campo obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="form-group"
-                                     ng-class="{'has-error': formEspecialist.personTitle.$error.required && !formEspecialist.personTitle.$valid}">
-                                    <label>T&iacute;tulo/cargo:</label>
-                                    <input type="text"
-                                           title="Título/cargo"
-                                           ng-model="specialist.office"
-                                           class="form-control"
-                                           required
-                                           name="personTitle">
-
-                                   <div ng-show="!formEspecialist.personTitle.$valid" class="error-message" role="alert">
-                                     <div ng-show="formEspecialist.personTitle.$error.required">Campo obrigatório</div>
-                                   </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group" ng-class="{'has-error': formEspecialist.email.$error.required && !formEspecialist.email.$valid}">
+                                        <label>Email:</label>
+                                        <input type="text" title="Email" ng-model="specialist.email" class="form-control" required name="email">
+                                        <div ng-show="!formEspecialist.email.$valid" class="error-message" role="alert">
+                                            <div ng-show="formEspecialist.email.$error.required">Campo obrigatório</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group" ng-class="{'has-error': formEspecialist.phone.$error.required && !formEspecialist.phone.$valid}">
+                                        <label>Telefone:</label>
+                                        <input type="text" title="Telefone" ng-model="specialist.phone" class="form-control" name="phone" required>
+                                        <div ng-show="!formEspecialist.phone.$valid" class="error-message" role="alert">
+                                            <div ng-show="formEspecialist.phone.$error.required">Campo obrigatório</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group"
-                                     ng-class="{'has-error': formEspecialist.email.$error.required && !formEspecialist.email.$valid}">
-                                    <label>Email:</label>
-                                    <input type="text"
-                                           title="Email"
-                                           ng-model="specialist.email"
-                                           class="form-control"
-                                           required
-                                           name="email">
-
-                                     <div ng-show="!formEspecialist.email.$valid" class="error-message" role="alert">
-                                       <div ng-show="formEspecialist.email.$error.required">Campo obrigatório</div>
-                                     </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    <a ng-click="vm.saveEspecialist($index)" class="btn btn-secondary">
+                                        <i class="fa fa-check"></i> Inserir
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group"
-                                     ng-class="{'has-error': formEspecialist.phone.$error.required && !formEspecialist.phone.$valid}">
-                                    <label>Telefone:</label>
-                                    <input type="text"
-                                           title="Telefone"
-                                           ng-model="specialist.phone"
-                                           class="form-control"
-                                           name="phone"
-                                           required>
-
-                                   <div ng-show="!formEspecialist.phone.$valid" class="error-message" role="alert">
-                                     <div ng-show="formEspecialist.phone.$error.required">Campo obrigatório</div>
-                                   </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 text-right">
-                                <a ng-click="vm.saveEspecialist($index)" class="btn btn-secondary">
-                                    <i class="fa fa-check"></i> Inserir
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-              </form>
-                <a  class="pages-module add-module" ng-click="vm.addSpecialist()" class="btn btn-primary btn-sm">
+                </form>
+                <a class="pages-module add-module" ng-click="vm.addSpecialist()" class="btn btn-primary btn-sm">
                     <span class="add-title">+ Adicionar Especialista</span>
                 </a>
             </div>
