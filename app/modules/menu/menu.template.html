@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-   <div id="menu-panel">
+<div id="menu-panel">
     <div class="row">
         <div class="panel panel-default menu-pane text-center">
             <div class="panel-heading">
@@ -46,13 +46,13 @@ ng-include="'modules/menu/items.template.html'">
                                         <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
                                     </div>
                                     <div class="col-md-4 text-right">
-                                        <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
+                                        <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle" can-put context="menu" context-id="item.id">
                                             <i class="fa fa-pencil"></i> Editar
                                         </a>
-                                        <a class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index)" ng-show="!item.editTitle">
+                                        <a ng-if="vm.canDelete" class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index)" ng-show="!item.editTitle">
                                             <i class="fa fa-close"></i> Apagar
                                         </a>
-                                        <a class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
+                                        <a ng-if="vm.canPost" class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
                                             <i class="fa fa-check"></i> Salvar
                                         </a>
                                     </div>
@@ -72,7 +72,8 @@ ng-include="'modules/menu/items.template.html'">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
                                 <!--<input type="text" class="form-control" placeholder="Procurar..." ng-change="vm.teste" ng-model="pageFilter">-->
-                                <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false" ng-change="vm.filterPages('mainMenu', pageFilter)" ng-model="pageFilter">
+                                <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false" ng-change="vm.filterPages('mainMenu', pageFilter)"
+                                    ng-model="pageFilter">
                             </div>
                         </form>
                         <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
@@ -82,7 +83,7 @@ ng-include="'modules/menu/items.template.html'">
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" ng-if="vm.canPost || vm.canPut">
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-secondary btn-lg pull-right" ng-click="vm.save('mainMenu')"><i class="fa fa-check"></i> Salvar Menu Principal</button>
@@ -110,13 +111,13 @@ ng-include="'modules/menu/items.template.html'">
                                         <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
                                     </div>
                                     <div class="col-md-4 text-right">
-                                        <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
+                                        <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle" can-put context="menu">
                                             <i class="fa fa-pencil"></i> Editar
                                         </a>
-                                        <a class="label label-sm label-danger" ng-click="vm.removeQuickAccessItem($index)" ng-show="!item.editTitle">
+                                        <a ng-if="vm.canDelete" class="label label-sm label-danger" ng-click="vm.removeQuickAccessItem($index)" ng-show="!item.editTitle">
                                             <i class="fa fa-close"></i> Apagar
                                         </a>
-                                        <a class="label label-sm label-secondary pull-right" ng-click="item.editTitle = false" ng-show="item.editTitle">
+                                        <a ng-if="vm.canPost" class="label label-sm label-secondary pull-right" ng-click="item.editTitle = false" ng-show="item.editTitle">
                                             <i class="fa fa-check"></i> Salvar
                                         </a>
                                     </div>
@@ -144,7 +145,7 @@ ng-include="'modules/menu/items.template.html'">
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" ng-if="vm.canPost || vm.canPut">
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-secondary btn-lg pull-right" ng-click="vm.save('quickAccess')"><i class="fa fa-check"></i> Salvar Acesso Rápido</button>

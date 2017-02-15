@@ -17,11 +17,13 @@
         $filter) {
 
         $rootScope.shownavbar = true;
-        console.log('... NoticiasController');
+        $log.info('NoticiasController');
 
         var vm = this;
         var pages = [];
         var menus = MenuService.MENUS;
+
+        _permissions();
 
         //Public functions
         vm.removeItem = _removeItem;
@@ -121,10 +123,6 @@
                 //  //vm.pages = pages.slice();
                 //}
             },
-            /**
-             * @param event
-             * @param ui
-             */
             update: function (event, ui) {
                 console.log(event, ui);
                 // on cross list sortings received is not true
@@ -153,12 +151,6 @@
             },
         };
 
-        /**
-         * @param menu
-         * @param idx
-         *
-         * @private
-         */
         function _removeItem() {
             var args = Array.prototype.slice.call(arguments);
             var allArgs = Array.prototype.slice.call(arguments);
@@ -208,11 +200,6 @@
                 });
         }
 
-        /**
-         *
-         * @param idx
-         * @private
-         */
         function _removeQuickAccessItem(idx) {
             ModalService
                 .confirm('Deseja remover o item?')
@@ -224,11 +211,6 @@
                 });
         }
 
-        /**
-         * @param idx
-         *
-         * @private
-         */
         function _editTitle(idx) {
 
             if (typeof idx.newTitle === 'undefined') {
@@ -238,21 +220,12 @@
             idx.editTitle = true;
         }
 
-
-        /**
-         * @param type
-         *
-         * @private
-         */
         function _save(type) {
             MenuService.update(inflection.underscore(type), $scope.menus[type]).then(function () {
                 NotificationService.success('Menu salvo com sucesso!');
             });
         }
 
-        /**
-         * @param {string} type
-         */
         function _newGroup(type) {
             $scope.menus[type].push({
                 page: null,
@@ -263,9 +236,6 @@
             });
         }
 
-        /**
-         * @private
-         */
         function _populateMenus() {
             angular.forEach(menus, function (value, type) {
                 MenuService.get(type).then(function (data) {
@@ -278,11 +248,6 @@
             });
         }
 
-        /**
-         * @param type
-         *
-         * @private
-         */
         function _populateMenusChildren(type) {
             angular.forEach(menus[type], function (item) {
                 $scope.menus[type].push({
@@ -318,11 +283,6 @@
             _populateMenus();
         });
 
-        /**
-         *
-         * @param menuItems
-         * @private
-         */
         function _removePagesIndexed(menuType, menuItems, onFilter) {
 
             angular.forEach(menuItems, function (value, key) {
@@ -356,6 +316,24 @@
                 if (menuItems[key].children.length > 0);
                 _removePagesIndexed(menuType, menuItems[key].children, onFilter);
             });
+        }
+
+        function _permissions() {
+            _canDelete();
+            _canPost();
+            _canPut();
+        }
+
+        function _canPost() {
+            vm.canPost = PermissionService.canPost('menu');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('menu');
+        }
+
+        function _canDelete() {
+            vm.canDelete = PermissionService.canDelete('menu');
         }
 
 
