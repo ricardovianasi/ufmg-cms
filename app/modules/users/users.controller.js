@@ -27,6 +27,7 @@
                     vm.User = res.data;
                     vm.isAdmin = res.data.is_administrator;
                 });
+            _permissions();
             _loadUsers();
         }
 
@@ -70,6 +71,14 @@
                 .then(function (res) {
                     vm.users = res.data.items;
                 });
+        }
+
+        function _permissions() {
+            _canPost();
+        }
+
+        function _canPost() {
+            vm.canPost = PermissionService.canPost('page');
         }
 
         onInit();

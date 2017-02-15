@@ -13,7 +13,7 @@
                             ng-change="periodUpdate(period.month, period.year, period.regional)"
                             name="month"
                             required>
-                        <option value="{{ $index }}" ng-repeat="month in time_months">{{ month|titleize }}</option>
+                        <option value="{{ ($index + 1) }}" ng-repeat="month in time_months">{{ month|titleize }}</option>
                     </select>
 
                     <div ng-show="!formDays.month.$valid" class="error-message" role="alert">

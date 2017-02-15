@@ -313,8 +313,15 @@
             };
         };
 
-        var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, type, $route, validationService) {
-            console.log('... ModalCalendarioNovoCtrl');
+        var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, $log, type, $route, validationService) {
+            $log.info('ModalCalendarioNovoCtrl');
+
+            if (_view) {
+                $scope.canPermission = false;
+                _view = false;
+            } else {
+                $scope.canPermission = PermissionService.canPut('calendar');
+            }
 
             $scope.type = type;
             $scope.regional = regional;

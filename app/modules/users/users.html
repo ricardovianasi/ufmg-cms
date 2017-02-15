@@ -27,7 +27,7 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="pull-right">
-                    <a class="btn btn-secondary btn-lg pull-left" ng-href="#/users/new"><i class="fa fa-plus"></i> NOVO USUÁRIO</a>
+                    <a ng-if="vm.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/users/new"><i class="fa fa-plus"></i> NOVO USUÁRIO</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -44,24 +44,27 @@
                     </thead>
                     <tbody>
                         <tr role="row" class="odd" ng-repeat="user in vm.users | filter: search | orderBy: '-created_at'">
-                            <td> <a ng-href="#/user/edit/{{ user.id }}">{{ user.name }}</a> </td>
+                            <td> {{ user.name }} </td>
                             <!--<td>{{user.commercial_phone}}</td>-->
                             <td>{{vm.normalize(user.unit,user.sector)}}</td>
                             <td>{{vm.normalize(user.occupation,user.function)}}</td>
                             <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
                             <td class="table-fit-single">
-                                <a uib-tooltip="Resetar Senha" ng-click="vm.reset(user.id)" class="btn btn-default" ng-if="vm.isAdmin">
+                                <a uib-tooltip="Resetar Senha" can-put context="page" context-id="item.id" ng-click="vm.reset(user.id)" class="btn btn-default"
+                                    ng-if="vm.isAdmin">
                                     <i class="fa fa-eraser"></i>
-                                </a>
-                                <a uib-tooltip="Ativar" ng-click="vm.activate(user)" class="btn btn-default" ng-if="vm.isAdmin && !user.status">
-                                    <i class="fa fa-square-o"></i>
-                                </a>
-                                <a uib-tooltip="Desativar" ng-click="vm.activate(user)" class="btn btn-default" ng-if="vm.isAdmin && user.status">
-                                    <i class="fa fa-check-square-o"></i>
-                                </a>
-                                <a uib-tooltip="Editar" ng-href="#/user/edit/{{ user.id }}" class="btn btn-warning">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
+                                    </a>
+                                    <a uib-tooltip="Ativar" can-put context="page" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default"
+                                        ng-if="vm.isAdmin && !user.status">
+                                        <i class="fa fa-square-o"></i>
+                                        </a>
+                                        <a uib-tooltip="Desativar" can-put context="page" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default"
+                                            ng-if="vm.isAdmin && user.status">
+                                            <i class="fa fa-check-square-o"></i>
+                                            </a>
+                                            <a uib-tooltip="Editar" can-put context="page" context-id="item.id" ng-href="#/user/edit/{{ user.id }}" class="btn btn-warning">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
                             </td>
                         </tr>
                     </tbody>
