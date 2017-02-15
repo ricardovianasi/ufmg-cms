@@ -21,6 +21,8 @@
         $scope.news = [];
         $scope.currentPage = 1;
 
+        _permissions();
+
         var loadNews = function (page) {
             NewsService.getNews(null, page).then(function (data) {
                 $scope.news = data.data;
@@ -54,11 +56,11 @@
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('news');
+            $scope.canPost = PermissionService.canPost('news');
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('news');
+            $scope.canDelete = PermissionService.canDelete('news');
         }
     }
 })();

@@ -79,7 +79,7 @@
                                 <small>{{ item.status|translate|titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Visualizar" target="_blank" ng-click="editEvent('lg', item, true)" class="btn btn-primary">
+                                <a uib-tooltip="Visualizar" ng-click="editEvent('lg', item, true)" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="calendar" context-id="item.id" ng-click="editEvent('lg', item)" class="btn btn-warning">
