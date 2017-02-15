@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -26,8 +25,9 @@
             });
         }
 
-        _loadFaqs();
+        _permissions();
 
+        _loadFaqs();
 
         vm.removeFaq = function (id, title) {
             ModalService
@@ -40,5 +40,18 @@
                     });
                 });
         };
+
+        function _permissions() {
+            _canDelete();
+            _canPost();
+        }
+
+        function _canPost() {
+            vm.canPost = PermissionService.canPost('faq');
+        }
+
+        function _canDelete() {
+            vm.canDelete = PermissionService.canDelete('faq');
+        }
     }
 })();

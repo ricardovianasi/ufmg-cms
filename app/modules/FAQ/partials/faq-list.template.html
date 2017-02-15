@@ -6,13 +6,13 @@
                 <p ng-bind-html="ask.answer"></p>
             </div>
             <div class="col-md-3">
-                <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
+                <a uib-tooltip="Excluir"  ng-if="vm.canDelete" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a uib-tooltip="Editar" ng-show="vm.idCurrentAskEdit == ''" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
+                <a  ng-if="vm.canPut" uib-tooltip="Editar" ng-show="vm.idCurrentAskEdit == ''" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
                     <i class="fa fa-pencil"></i>
                 </a>
-                <span class="label label-primary pull-right"
+                <span  ng-if="vm.canPut" class="label label-primary pull-right"
                               as-sortable-item-handle>
                     <i class="fa fa-arrows-v"></i> MOVER
                 </span>
