@@ -6,70 +6,96 @@
         .controller('UsersPermissionModelController', UsersPermissionModelController);
 
     /** ngInject */
-    function UsersPermissionModelController($log, DTOptionsBuilder, contextPermissions, $uibModalInstance) {
+    function UsersPermissionModelController($log,
+        DTOptionsBuilder,
+        $window,
+        PagesService,
+        contextPermissions,
+        $uibModalInstance) {
         var vm = this;
+        vm.heightScreen = $window.screen.availHeight * 0.78;
+        vm.configTable = {};
+        vm.configTable.page = 1;
+        vm.configTable.limitTo = 10;
+        vm.title = contextPermissions.title;
         vm.select = _select;
         vm.deselect = _deselect;
+        vm.cancel = _cancel;
         vm.save = _save;
 
         function onInit() {
             $log.info('UsersPermissionModelController');
-            console.log(contextPermissions);
+            switch (contextPermissions.context) {
+                case 'page':
+                    PagesService
+                        .getPages()
+                        .then(function (res) {
+                            _mountListPermissionContextId(res.data.items);
+                        });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function _cancel() {
+            $uibModalInstance.dismiss('cancel');
         }
 
         function _save() {
             $uibModalInstance.close(_updateCustomPermission());
         }
 
-        var pages = [{
-            id: 1,
-            title: 'Title 1',
-            autor: 'Autor 1'
-        }, {
-            id: 2,
-            title: 'Title 2',
-            autor: 'Autor 2'
-        }, {
-            id: 3,
-            title: 'Title 3',
-            autor: 'Autor 3'
-        }];
-
-        var contextList = mountListPermissionContextId(pages);
-        vm.deselects = contextList.deselects;
-        vm.selecteds = contextList.selecteds;
-        vm.dtOptions = _getConfigDataTableDTOptionsBuilder();
-
         function _select(item) {
             _arrayRemoveItem(vm.deselects, item);
             vm.selecteds.push(item);
         }
 
-        function mountListPermissionContextId(listContext) {
-            var arraycontextPermissions = contextPermissions;
-            var selecteds = [];
-            if (angular.isString(arraycontextPermissions) && arraycontextPermissions[0] !== "PUT") {
-                // arraycontextPermissions = vm.user.resources_perms[context][permission].replace(/\s/g, '').split(',');
+        function _mountItem(item) {
+            if (contextPermissions.context === 'page') {
+                return {
+                    id: item.id,
+                    title: item.title
+                };
+            }
+            return false;
+        }
+
+        function _mountListPermissionContextId(listContext) {
+            vm.selecteds = [];
+            vm.deselects = [];
+            var isString = angular.isString(contextPermissions.valuePermission);
+            var countIsVerify = 0;
+            if (isString) {
+                var arraycontextPermissions = contextPermissions.valuePermission.split(',');
                 for (var i = 0; i < listContext.length; i++) {
-                    var deselect = listContext[i];
+                    var item = listContext[i];
                     for (var j = 0; j < arraycontextPermissions.length; j++) {
                         var contextId = arraycontextPermissions[j];
-                        if (deselect.id.toString() === contextId.toString()) {
-                            _arrayRemoveItem(listContext, deselect);
-                            selecteds.push(deselect);
+                        if (item.id.toString() === contextId.toString()) {
+                            vm.selecteds.push(_mountItem(item));
+                            listContext[i] = null;
+                            countIsVerify++;
+                            break;
                         }
+                    }
+                    if (arraycontextPermissions.length === countIsVerify) {
+                        break;
                     }
                 }
             }
-            return {
-                selecteds: selecteds,
-                deselects: listContext
-            };
+            for (var i = 0; i < listContext.length; i++) {
+                var item = listContext[i];
+                if (item) {
+                    vm.deselects.push(_mountItem(item));
+                }
+            }
         }
 
         function _arrayRemoveItem(arr, item) {
             for (var i = arr.length; i--;) {
                 if (arr[i] === item) {
+                    console.log('array remove');
                     arr.splice(i, 1);
                 }
             }
@@ -82,6 +108,9 @@
 
         function _updateCustomPermission() {
             var array = [];
+            if (!vm.selecteds) {
+                return [];
+            }
             for (var i = 0; i < vm.selecteds.length; i++) {
                 var select = vm.selecteds[i];
                 array.push(select.id);
@@ -91,40 +120,6 @@
                 return ["PUT"];
             }
             return contextIds;
-        }
-
-
-        function _getConfigDataTableDTOptionsBuilder() {
-            return DTOptionsBuilder
-                .newOptions()
-                .withPaginationType('full_numbers')
-                .withDisplayLength(10)
-                .withLanguage({
-                    'sEmptyTable': 'Nenhum dado foi encontrado.',
-                    'sInfo': 'Exibindo de _START_ a _END_ de _TOTAL_ resultados',
-                    'sInfoEmpty': 'Exibindo de 0 a 0 de 0 resultados',
-                    'sInfoFiltered': '(Filtrado de _MAX_ resultados)',
-                    'sInfoPostFix': '',
-                    'sInfoThousands': ',',
-                    'sLengthMenu': 'Exibir _MENU_ resultados',
-                    'sLoadingRecords': 'Carregando...',
-                    'sProcessing': 'Processando...',
-                    'sSearch': '<i class="fa fa-search"></i>',
-                    'sZeroRecords': 'Não foram encontrados resultados',
-                    'oPaginate': {
-                        'sFirst': '<i class="fa fa-angle-double-left"></i>',
-                        'sPrevious': '<i class="fa fa-angle-left"></i>',
-                        'sNext': '<i class="fa fa-angle-right"></i>',
-                        'sLast': '<i class="fa fa-angle-double-right"></i>',
-                    },
-                    'oAria': {
-                        'sSortAscending': ': filtro ascendente ativo',
-                        'sSortDescending': ': filtro descendente ativo'
-                    }
-                })
-                .withOption('bLengthChange', false)
-                .withOption('aaSorting', [])
-                .withBootstrap();
         }
 
         onInit();

@@ -47,7 +47,6 @@
         }
 
         function _normalizeUser(user) {
-            // moderator
             var moderator = user.moderator;
             if (moderator) {
                 user.moderator = moderator.id;

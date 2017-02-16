@@ -35,9 +35,9 @@
                     <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">
                     {{ value }}
                         </label>
-                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key)" ng-show="$parent.key+'_'+key == 'page_PUT'">
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'page_PUT'">
                             <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar
+                            Personalizar permissões
                         </span>
                         <style>
                             .vAccordion--default v-pane label {

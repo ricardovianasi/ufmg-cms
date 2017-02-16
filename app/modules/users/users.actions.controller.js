@@ -21,7 +21,7 @@
         vm.user = {};
         vm.user = {
             status: '1',
-            is_administrator: "false"
+            is_administrator: "0"
         };
         vm.moderators = [];
         vm.resources = [];
@@ -160,39 +160,35 @@
                 });
         }
 
-        var count = 0;
-
-        function _modalGetContext(context, permission) {
-            switch (context) {
-                case 'page':
-                    openModal()
-                        .result
-                        .then(function (contextPermissions) {
-                            vm.user.resources_perms[context][permission] = contextPermissions;
-                        });
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (angular.isUndefined(vm.user.resources_perms[context][permission])) {
-                vm.user.resources_perms[context][permission] = '';
-            }
-
-            function openModal() {
-                return $uibModal.open({
-                    templateUrl: 'modules/users/users.permissions.model.html',
-                    controller: 'UsersPermissionModelController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        contextPermissions: function () {
-                            return vm.user.resources_perms[context][permission];
-                        }
-                    },
-                    size: 'xl',
+        function _modalGetContext(context, permission, contextName) {
+            _openModal(context, permission, contextName)
+                .result
+                .then(function (contextPermissions) {
+                    vm.user.resources_perms[context][permission] = contextPermissions;
                 });
-            }
+
+        }
+
+        function _openModal(context, permission, contextName) {
+            return $uibModal.open({
+                templateUrl: 'modules/users/users.permissions.model.html',
+                controller: 'UsersPermissionModelController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                resolve: {
+                    contextPermissions: function () {
+                        vm.user.resources_perms = vm.user.resources_perms ? vm.user.resources_perms : {};
+                        vm.user.resources_perms[context] = vm.user.resources_perms[context] ? vm.user.resources_perms[context] : {};
+                        vm.user.resources_perms[context][permission] = vm.user.resources_perms[context][permission] ? vm.user.resources_perms[context][permission] : [];
+                        return {
+                            title: contextName,
+                            context: context,
+                            valuePermission: vm.user.resources_perms[context][permission]
+                        };
+                    }
+                },
+                size: 'xl',
+            });
         }
 
         function _getResources() {
@@ -200,15 +196,6 @@
                 .get()
                 .then(function (res) {
                     vm.resources = res.data.items;
-                });
-        }
-
-        function _getPages() {
-            PagesService
-                .getPages()
-                .then(function (res) {
-                    $log.info('Get Pages');
-                    vm.pages = res.data.items;
                 });
         }
 

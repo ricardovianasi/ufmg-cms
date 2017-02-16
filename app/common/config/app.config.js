@@ -5,14 +5,18 @@
         .config(Router)
         .config(Translator)
         .config(Tags)
+        .config(Debug)
         .config(http);
+
+
+    Debug.$inject = ['$logProvider'];
+
+    function Debug($logProvider) {
+        $logProvider.debugEnabled(false);
+    }
 
     http.$inject = ['$httpProvider'];
 
-    /**
-     *
-     * @param $httpProvider
-     */
     function http($httpProvider) {
         $httpProvider
             .interceptors
@@ -30,11 +34,6 @@
     //Translation
     Translator.$inject = ['$translateProvider'];
 
-    /**
-     * @param $translateProvider
-     *
-     * @constructor
-     */
     function Translator($translateProvider) {
         $translateProvider.useStaticFilesLoader({
             prefix: 'lang/',
@@ -44,12 +43,6 @@
         $translateProvider.preferredLanguage('pt-br');
     }
 
-    //Tags
-    /**
-     * @param tagsInputConfigProvider
-     *
-     * @constructor
-     */
     function Tags(tagsInputConfigProvider) {
         tagsInputConfigProvider
             .setDefaults('tagsInput', {
