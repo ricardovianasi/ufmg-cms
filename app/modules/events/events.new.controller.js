@@ -3,6 +3,7 @@
 
     angular.module('eventsModule')
         .controller('EventsNewController', EventsNewController);
+
     /** ngInject */
     function EventsNewController($scope,
         $timeout,
@@ -40,9 +41,7 @@
 
         /**
          * Controls event.courses array
-         *
-         * @param {number} courseId
-         */
+         **/
         vm.toggleSelection = function toggleSelection(courseId) {
             var idx = vm.event.courses.indexOf(courseId);
 
@@ -64,7 +63,6 @@
         /**
          * Add status 'on the fly', according to requirements
          *
-         * @type {{opened: boolean}}
          */
         vm.datepickerOpt.initDate.status = {
             opened: false
@@ -104,10 +102,6 @@
          * Handle img upload
          */
         vm.imgHandler = {
-            /**
-             * @param elem
-             * @param files
-             */
             upload: function (elem, files) {
                 angular.forEach(files, function (file) {
                     MediaService.newFile(file).then(function (data) {
@@ -118,9 +112,6 @@
                     });
                 });
             },
-            /**
-             *
-             */
             uploadPhoto: function () {
                 var resolve = {
                     formats: function () {
@@ -138,9 +129,6 @@
                         };
                     });
             },
-            /**
-             * @param elem
-             */
             removeImage: function (elem) {
                 $timeout(function () {
                     vm.event[elem] = '';
@@ -149,12 +137,6 @@
             }
         };
 
-        /**
-         * Post to Event Endpoint
-         *
-         * @param data
-         * @param preview
-         */
         vm.publish = function (data, preview) {
             if (!validationService.isValid($scope.formEvents.$invalid))
                 return false;
@@ -187,12 +169,6 @@
             vm.statuses = data.data;
         });
 
-
-        /**
-         *
-         * @param data
-         * @private
-         */
         function _parseTime(data) {
             data.end_hour = moment(data.end_hour).format('HH:mm');
             data.init_hour = moment(data.init_hour).format('HH:mm');

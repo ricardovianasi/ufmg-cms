@@ -102,22 +102,6 @@
             });
         };
 
-        $scope.addEvent = function (size) {
-            var modalCalendarioNovo = $uibModal.open({
-                templateUrl: 'components/modal/calendario.novo.modal.template.html',
-                controller: ModalCalendarioNovoCtrl,
-                backdrop: 'static',
-                size: size,
-                resolve: {
-                    type: function () {
-                        return 'add';
-                    },
-                    regional: function () {
-                        return $scope.regional;
-                    }
-                }
-            });
-        };
 
         var removeConfirmationModal;
 
@@ -145,6 +129,24 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
+        };
+
+        $scope.addEvent = function (size) {
+            _view = false;
+            var modalCalendarioNovo = $uibModal.open({
+                templateUrl: 'components/modal/calendario.novo.modal.template.html',
+                controller: ModalCalendarioNovoCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    type: function () {
+                        return 'add';
+                    },
+                    regional: function () {
+                        return $scope.regional;
+                    }
+                }
+            });
         };
 
         $scope.editEvent = function (size, event, view) {
@@ -241,7 +243,7 @@
         };
 
         var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
-            console.log('... ModalCalendarSchoolDaysCtrl');
+            $log.info('ModalCalendarSchoolDaysCtrl');
 
             $scope.time_months = DateTimeHelper.getMonths(true);
             $scope.time_years = DateTimeHelper.yearRange();
@@ -292,7 +294,6 @@
             };
 
             $scope.ok = function () {
-                console.log('hasperiodo >>>>>>>>>>>', $scope.hasPeriod);
                 if (!validationService.isValid($scope.formDays.$invalid))
                     return false;
 
@@ -313,14 +314,15 @@
             };
         };
 
-        var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, $log, type, $route, validationService) {
+        var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, $log, PermissionService, type, $route, validationService) {
             $log.info('ModalCalendarioNovoCtrl');
 
             if (_view) {
                 $scope.canPermission = false;
                 _view = false;
             } else {
-                $scope.canPermission = PermissionService.canPut('calendar');
+                $scope.canPermission = PermissionService.canPost('calendar');
+                console.log($scope.canPermission);
             }
 
             $scope.type = type;
@@ -333,9 +335,9 @@
             };
 
             $scope.ok = function () {
-
-                if (!validationService.isValid($scope.formCalendar.$invalid))
+                if (!validationService.isValid($scope.formCalendar.$invalid)) {
                     return false;
+                }
 
                 var newRegional = [];
 
@@ -361,10 +363,15 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
             $scope.canPost = PermissionService.canPost('calendar');
+        }
+
+        function _canPut() {
+            $scope.canPut = PermissionService.canPut('calendar');
         }
 
         function _canDelete() {

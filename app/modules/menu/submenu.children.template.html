@@ -7,14 +7,14 @@
                 <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
             </div>
             <div class="col-md-4 text-right">
-                <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle" can-put context="menu" context-id="item.id">
+                <a class="label label-sm label-warning" ng-if="vm.canPut" ng-click="vm.editTitle(item)" ng-show="!item.editTitle">
                     <i class="fa fa-pencil"></i> Editar
                 </a>
-                <a ng-if="vm.canDelete" class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', menuIndex, $parent.$index, $index)"
+                <a ng-if="vm.canPut" class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', menuIndex, $parent.$index, $index)"
                     ng-show="!item.editTitle">
                     <i class="fa fa-close"></i> Apagar
                     </a>
-                    <a ng-if="vm.canPost" class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
+                    <a ng-if="vm.canPut" class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
                         <i class="fa fa-check"></i> Salvar
                     </a>
             </div>

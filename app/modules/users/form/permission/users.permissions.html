@@ -1,4 +1,4 @@
-<div class="row" ng-init="vm.initPermissions()">
+<div class="row">
     <div class="col-xs-12">
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.is_administrator.$touched) && (formUsers.is_administrator.$error.required)}">
             <h5><strong>Tipo de usuário:*</strong></h5>
@@ -19,7 +19,7 @@
             </ui-select-choices>
         </ui-select>
         <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
-        <hr> {{vm.user | json}}
+        <hr>
     </div>
 </div>
 <div class="row">
@@ -39,20 +39,34 @@
                             <i class="glyphicon glyphicon-cog"></i>
                             Personalizar permissões
                         </span>
-                        <style>
-                            .vAccordion--default v-pane label {
-                                display: inline-block;
-                            }
-                            
-                            .custom-modal {
-                                position: absolute;
-                                display: inline-block;
-                                top: 0;
-                                cursor: pointer;
-                                left: 100px;
-                            }
-
-                        </style>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_POST'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_DELETE'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_graduation_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_master_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_doctorate_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_specialization_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
                     </div>
                 </div>
             </v-pane-content>

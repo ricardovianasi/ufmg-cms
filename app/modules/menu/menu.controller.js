@@ -319,21 +319,11 @@
         }
 
         function _permissions() {
-            _canDelete();
-            _canPost();
             _canPut();
-        }
-
-        function _canPost() {
-            vm.canPost = PermissionService.canPost('menu');
         }
 
         function _canPut() {
             vm.canPut = PermissionService.canPut('menu');
-        }
-
-        function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('menu');
         }
 
 

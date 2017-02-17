@@ -17,7 +17,6 @@
             name: '',
             status: 1,
             isValid: false
-
         };
 
 
@@ -26,7 +25,6 @@
         }
 
         function _emitUserFromFather(newUser, oldUser) {
-            console.log(vm.formUsers.$valid);
             vm.user.isValid = vm.formUsers.$valid;
             $rootScope.$broadcast('UserChange', newUser);
         }

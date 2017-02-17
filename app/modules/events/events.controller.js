@@ -22,6 +22,8 @@
         $scope.events = [];
         $scope.currentPage = 1;
 
+        _permissions();
+
         var loadEvents = function (page) {
             EventsService.getEvents(page).then(function (data) {
                 $scope.events = data.data;
@@ -59,11 +61,11 @@
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('events');
+            $scope.canPost = PermissionService.canPost('events');
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('events');
+            $scope.canDelete = PermissionService.canDelete('events');
         }
     }
 })();

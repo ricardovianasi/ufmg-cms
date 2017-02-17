@@ -17,7 +17,7 @@
         var vm = this;
         var userId = null;
 
-        vm.tab = 2;
+        vm.tab = 1;
         vm.user = {};
         vm.user = {
             status: '1',
@@ -29,11 +29,11 @@
         vm.save = _save;
         vm.setTab = _setTab;
         vm.isActive = _isActive;
-        vm.initPermissions = _initPermissions;
         vm.modalGetContext = _modalGetContext;
 
         function onInit() {
             $log.info('UsersActionsController');
+            _initPermissions();
             userId = $routeParams.userId ? $routeParams.userId : null;
             if (userId) {
                 UsersService
@@ -62,7 +62,6 @@
             vm.user.status = vm.user.status ? "1" : "0";
 
             // Administrator
-
             vm.user.is_administrator = vm.user.is_administrator ? "1" : "0";
 
         }
@@ -77,7 +76,6 @@
                     var permsToConvert = convertedPerms[key] || {};
 
                     if (item.length > 1) {
-                        //permsToConvert[item[0]] = isNaN(Number(item[1])) ? item[1] : Number(item[1]);
                         permsToConvert[item[0]] = item[1];
                         convertedPerms[key] = permsToConvert;
                     } else {
@@ -171,7 +169,7 @@
 
         function _openModal(context, permission, contextName) {
             return $uibModal.open({
-                templateUrl: 'modules/users/users.permissions.model.html',
+                templateUrl: 'modules/users/form/permission/users.permissions.model.html',
                 controller: 'UsersPermissionModelController',
                 controllerAs: 'vm',
                 backdrop: 'static',

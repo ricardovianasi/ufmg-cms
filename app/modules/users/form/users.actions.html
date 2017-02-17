@@ -41,13 +41,13 @@
 <form class="form" name="formUsers" novalidate ng-submit="vm.save(formUsers.$valid)">
     <div class="tab-pane tab-content" ng-if="vm.isActive(1)">
         <div class="row">
-            <ng-include src="'modules/users/users.information.html'">
+            <ng-include src="'modules/users/form/information/users.information.html'">
             </ng-include>
         </div>
     </div>
     <div class="tab-pane tab-content" ng-if="vm.isActive(2)">
         <div class="row">
-            <ng-include src="'modules/users/users.permissions.html'">
+            <ng-include src="'modules/users/form/permission/users.permissions.html'">
             </ng-include>
         </div>
     </div>

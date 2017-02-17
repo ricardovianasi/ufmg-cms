@@ -21,10 +21,8 @@
                     }
                 })
                 .when('/users/new', {
-                    templateUrl: 'modules/users/users.actions.html',
+                    templateUrl: 'modules/users/form/users.actions.html',
                     controller: 'UsersActionsController',
-                    // templateUrl: 'modules/users/users-new.template.html',
-                    // controller: 'UsersNewController',
                     controllerAs: 'vm',
                     resolve: {
                         isLogged: ['sessionService', function (sessionService) {
@@ -38,10 +36,8 @@
                     }
                 })
                 .when('/user/edit/:userId', {
-                    templateUrl: 'modules/users/users-new.template.html',
-                    controller: 'UsersNewController',
-                    // templateUrl: 'modules/users/users.actions.html',
-                    // controller: 'UsersActionsController',
+                    templateUrl: 'modules/users/form/users.actions.html',
+                    controller: 'UsersActionsController',
                     controllerAs: 'vm',
                     resolve: {
                         isLogged: ['sessionService', function (sessionService) {

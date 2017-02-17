@@ -10,7 +10,9 @@
         DTOptionsBuilder,
         $window,
         PagesService,
+        CourseService,
         contextPermissions,
+        PeriodicalService,
         $uibModalInstance) {
         var vm = this;
         vm.heightScreen = $window.screen.availHeight * 0.78;
@@ -32,6 +34,33 @@
                         .then(function (res) {
                             _mountListPermissionContextId(res.data.items);
                         });
+                    break;
+                case 'editions':
+                    PeriodicalService
+                        .getPeriodicals()
+                        .then(function (res) {
+                            _mountListPermissionContextId(res.data.items);
+                        });
+                    break;
+                case 'course_graduation':
+                    CourseService.getCourses('graduation').then(function (res) {
+                        _mountListPermissionContextId(res.data.items);
+                    });
+                    break;
+                case 'course_specialization':
+                    CourseService.getCourses('specialization').then(function (res) {
+                        _mountListPermissionContextId(res.data.items);
+                    });
+                    break;
+                case 'course_master':
+                    CourseService.getCourses('master').then(function (res) {
+                        _mountListPermissionContextId(res.data.items);
+                    });
+                    break;
+                case 'course_doctorate':
+                    CourseService.getCourses('doctorate').then(function (res) {
+                        _mountListPermissionContextId(res.data.items);
+                    });
                     break;
                 default:
                     break;
@@ -56,6 +85,16 @@
                 return {
                     id: item.id,
                     title: item.title
+                };
+            } else if (contextPermissions.context === 'editions') {
+                return {
+                    id: item.id,
+                    title: item.name
+                };
+            } else if (contextPermissions.context.substr(0, 6) === 'course') {
+                return {
+                    id: item.id,
+                    title: item.name
                 };
             }
             return false;
@@ -95,7 +134,6 @@
         function _arrayRemoveItem(arr, item) {
             for (var i = arr.length; i--;) {
                 if (arr[i] === item) {
-                    console.log('array remove');
                     arr.splice(i, 1);
                 }
             }
