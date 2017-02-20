@@ -29,7 +29,6 @@
         onInit();
 
         function onInit() {
-            vm.canPut = PermissionService.canPut('course_' + vm.type, vm.courseId);
             if (vm.courseId) {
                 CourseService
                     .getCourseRoutes(vm.type, vm.courseId)
@@ -55,6 +54,7 @@
                         if (vm.course.cover) {
                             vm.showCover = true;
                         }
+                        _permissions();
                     });
             } else {
                 CourseService
@@ -62,8 +62,13 @@
                     .then(function (res) {
                         vm.courses = res.data;
                         vm.dtOptions = dataTableConfigService.init();
+                        _permissions();
                     });
             }
+        }
+
+        function _permissions() {
+            vm.canPut = PermissionService.canPut('course_' + vm.type, vm.courseId);
         }
 
         function _uploadCover() {

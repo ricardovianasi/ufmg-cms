@@ -52,10 +52,10 @@
                                 <a uib-tooltip="Resetar Senha" can-put context="user" context-id="item.id" ng-click="vm.reset(user.id)" class="btn btn-default">
                                     <i class="fa fa-eraser"></i>
                                 </a>
-                                <a uib-tooltip="Ativar" can-put context="user" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default">
+                                <a uib-tooltip="Ativar" ng-if="!user.status" can-put context="user" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default">
                                     <i class="fa fa-square-o"></i>
                                 </a>
-                                <a uib-tooltip="Desativar" can-put context="user" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default">
+                                <a uib-tooltip="Desativar" ng-if="user.status" can-put context="user" context-id="item.id" ng-click="vm.activate(user)" class="btn btn-default">
                                     <i class="fa fa-check-square-o"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="user" context-id="item.id" ng-href="#/user/edit/{{ user.id }}" class="btn btn-warning">

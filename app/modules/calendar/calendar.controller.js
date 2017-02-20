@@ -34,8 +34,6 @@
                 $scope.status = data.data;
             });
 
-        _permissions();
-
         var loadCalendar = function () {
             CalendarService.getCalendar().then(function (data) {
                 $scope.calendar = data.data;
@@ -47,6 +45,7 @@
 
                 $scope.period_filter = _.uniq($scope.period_filter);
                 $scope.active_period_filter = $scope.period_filter[0];
+                _permissions();
             });
         };
 

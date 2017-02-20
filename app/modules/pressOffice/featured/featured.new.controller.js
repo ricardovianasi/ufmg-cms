@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-
     angular
         .module('featuredModule')
         .controller('featuredNewController', featuredNewController);
@@ -15,8 +14,10 @@
         $timeout,
         NotificationService,
         $location,
+        $log,
         $rootScope,
         validationService) {
+        $log.info('featuredNewController');
         $rootScope.shownavbar = true;
 
         var vm = this; // jshint ignore:line
@@ -38,10 +39,6 @@
             vm.releases = data.data;
         });
 
-        /**
-         * upload function
-         * @param  {file} file
-         */
         function _upload(file) {
             MediaService.newFile(file).then(function (data) {
                 vm.featured.photo = {
@@ -92,7 +89,6 @@
 
         /**
          * _removeSpecialist function
-         * @param  {int} idx index specialist in array
          */
         function _removeSpecialist(idx) {
             vm.featured.specialists.splice(idx, 1);
@@ -123,8 +119,9 @@
         }
 
         function _saveEspecialist(index) {
-            if (!validationService.isValid($scope.formEspecialist.$invalid))
+            if (!validationService.isValid($scope.formEspecialist.$invalid)) {
                 return false;
+            }
 
             vm.featured.specialists[index].opened = false;
         }

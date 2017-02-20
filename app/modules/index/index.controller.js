@@ -1,14 +1,13 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('indexModule')
-    .controller('IndexController', IndexController);
+    angular
+        .module('indexModule')
+        .controller('IndexController', IndexController);
 
-  IndexController.$inject = ['$rootScope'];
-
-  function IndexController($rootScope) {
-    console.log('... IndexController');
-    $rootScope.shownavbar = true;
-  }
+    /** ngInject */
+    function IndexController($rootScope, $log) {
+        $log.info('IndexController');
+        $rootScope.shownavbar = true;
+    }
 })();

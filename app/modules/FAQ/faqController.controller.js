@@ -22,10 +22,9 @@
         function _loadFaqs() {
             faqService.get().then(function (data) {
                 vm.faqs = data.data.items;
+                _permissions();
             });
         }
-
-        _permissions();
 
         _loadFaqs();
 

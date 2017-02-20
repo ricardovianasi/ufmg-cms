@@ -22,8 +22,6 @@
         $scope.periodicals = [];
         $scope.currentPage = 1;
 
-        _permissions();
-
         $scope.convertDate = function (data) {
             return DateTimeHelper.dateToStr(data);
         };
@@ -32,6 +30,7 @@
             PeriodicalService.getPeriodicals(null, page).then(function (data) {
                 $scope.periodicals = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
             });
         };
 

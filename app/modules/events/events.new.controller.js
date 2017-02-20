@@ -27,7 +27,6 @@
 
         var vm = this;
 
-        vm.canPermission = PermissionService.canPost('events');
         vm.title = 'Novo Evento';
         vm.breadcrumb = vm.title;
         vm.event = {
@@ -51,6 +50,10 @@
                 vm.event.courses.push(courseId);
             }
         };
+
+        function _permissions() {
+            vm.canPermission = PermissionService.canPost('events');
+        }
 
         /**
          * Datepicker options
@@ -157,6 +160,7 @@
         // Undergraduate Courses
         CourseService.getCourses('graduation').then(function (data) {
             vm.courses = data.data;
+            _permissions();
         });
 
         // Events Categories

@@ -3,10 +3,10 @@
 
     angular
         .module('componentsModule')
-        .directive('canPut', CanPutCtrl);
+        .directive('canPost', CanPostCtrl);
 
     /** ngInject */
-    function CanPutCtrl(PermissionService) {
+    function CanPostCtrl(PermissionService) {
         return {
             restrict: 'A',
             scope: {
@@ -14,8 +14,8 @@
                 contextId: '='
             },
             link: function ($scope, elem, attr) {
-                var canPut = PermissionService.canPut($scope.context, $scope.contextId);
-                if (!canPut) {
+                var canPost = PermissionService.canPost($scope.context, $scope.contextId);
+                if (!canPost) {
                     elem.remove();
                 }
             }

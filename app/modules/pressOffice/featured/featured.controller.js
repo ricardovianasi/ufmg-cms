@@ -23,7 +23,6 @@
         vm.DateTimeHelper = DateTimeHelper;
         vm.remove = _remove;
         vm.highlights = [];
-        _permissions();
 
 
         loadHighlights();
@@ -32,6 +31,7 @@
             featuredService.get().then(function (res) {
                     vm.highlights = res.data || {};
                     vm.dtOptions = dataTableConfigService.init();
+                    _permissions();
                 },
                 function (err) {
                     vm.dtOptions = dataTableConfigService.init();

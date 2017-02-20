@@ -21,13 +21,6 @@
         function onInit() {
             $rootScope.shownavbar = true;
             $log.info('UsersController');
-            authService
-                .account()
-                .then(function (res) {
-                    vm.User = res.data;
-                    vm.isAdmin = res.data.is_administrator;
-                });
-            _permissions();
             _loadUsers();
         }
 
@@ -69,6 +62,7 @@
                 .getUsers()
                 .then(function (res) {
                     vm.users = res.data.items;
+                    _permissions();
                 });
         }
 
@@ -78,6 +72,7 @@
 
         function _canPost() {
             vm.canPost = PermissionService.canPost('page');
+            console.log(vm.canPost);
         }
 
         onInit();

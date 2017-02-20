@@ -19,13 +19,12 @@
         $rootScope.shownavbar = true;
         $log.info('GaleriasNovoController');
 
-        $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
-
         $scope.categories = [];
         $scope.gallery = {};
 
         GalleryService.getCategories().then(function (data) {
             $scope.categories = data.data.items;
+            $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
         });
 
         $scope.gallery.title = '';

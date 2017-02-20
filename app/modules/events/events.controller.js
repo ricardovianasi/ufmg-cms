@@ -22,12 +22,12 @@
         $scope.events = [];
         $scope.currentPage = 1;
 
-        _permissions();
 
         var loadEvents = function (page) {
             EventsService.getEvents(page).then(function (data) {
                 $scope.events = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
             });
         };
 

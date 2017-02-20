@@ -23,8 +23,6 @@
         var pages = [];
         var menus = MenuService.MENUS;
 
-        _permissions();
-
         //Public functions
         vm.removeItem = _removeItem;
         vm.editTitle = _editTitle;
@@ -59,10 +57,6 @@
         vm.sortableOptions = {
             placeholder: 'list-group-item',
             connectWith: '.main',
-            /**
-             * @param e
-             * @param ui
-             */
             stop: function (e, ui) {
                 // if the element is removed from the first container
                 //if (
@@ -74,10 +68,6 @@
                 //  //vm.pages = pages.slice();
                 //}
             },
-            /**
-             * @param event
-             * @param ui
-             */
             update: function (event, ui) {
                 console.log(event, ui);
                 // on cross list sortings received is not true
@@ -108,10 +98,6 @@
         vm.quickSortableOptions = {
             placeholder: 'list-group-item-quickaccess',
             connectWith: '.main',
-            /**
-             * @param e
-             * @param ui
-             */
             stop: function (e, ui) {
                 // if the element is removed from the first container
                 //if (
@@ -281,6 +267,8 @@
 
             //Populate menus (type: quick_access, main_menu)
             _populateMenus();
+            _permissions();
+
         });
 
         function _removePagesIndexed(menuType, menuItems, onFilter) {

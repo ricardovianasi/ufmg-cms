@@ -57,8 +57,6 @@
         vm.editCategoryAsk = _editCategoryAsk;
         vm.editAsk = _editAsk;
 
-        _permissions();
-
         function _permissions() {
             if (VIEWER) {
                 vm.canPost = false;
@@ -75,6 +73,7 @@
             if (id) {
                 faqService.get(id).then(function (data) {
                     vm.faq = data.data;
+                    _permissions();
                     vm.faq.categories = [];
 
                     var ids = [];

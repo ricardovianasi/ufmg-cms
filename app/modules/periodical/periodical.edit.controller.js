@@ -21,7 +21,6 @@
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PeriodicalEditController');
-        $scope.canPermission = PermissionService.canPut('periodical', $routeParams.id);
         $scope.status = [];
         $scope.highlight_ufmg_visible = false;
 
@@ -32,6 +31,7 @@
         $scope.periodical = {};
 
         PeriodicalService.getPeriodicals($routeParams.id).then(function (data) {
+            $scope.canPermission = PermissionService.canPut('periodical', $routeParams.id);
             $scope.periodical.id = data.data.id;
             $scope.periodical.name = data.data.name;
             $scope.periodical.logo = data.data.logo ? data.data.logo.id : '';

@@ -25,9 +25,6 @@
         $scope.status = [];
         $scope.currentPage = 1;
 
-        /**
-         * @param page
-         */
         var loadMedia = function (page) {
             MediaService.getMedia(page).then(function (data) {
                 $scope.media = data.data;
@@ -37,16 +34,10 @@
 
         loadMedia();
 
-        /**
-         *
-         */
         $scope.changePage = function () {
             loadMedia($scope.currentPage);
         };
 
-        /**
-         *
-         */
         StatusService.getStatus().then(function (data) {
             $scope.status = data.data;
         });
@@ -55,10 +46,6 @@
 
         var removeConfirmationModal;
 
-        /**
-         * @param size
-         * @param title
-         */
         $scope.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
@@ -73,9 +60,6 @@
             });
         };
 
-        /**
-         * @param id
-         */
         $scope.removeMedia = function (id) {
             ModalService
                 .confirm('Você deseja excluir a mídia selecionada?', ModalService.MODAL_MEDIUM)

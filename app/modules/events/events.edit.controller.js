@@ -28,7 +28,6 @@
         var allTags = [];
 
         var vm = this;
-        vm.canPermission = PermissionService.canPut('events', $routeParams.id);
 
         vm.title = 'Editar Evento: ';
         vm.breadcrumb = vm.title;
@@ -187,7 +186,12 @@
                 });
         };
 
+        function _permissions() {
+            vm.canPermission = PermissionService.canPut('events', $routeParams.id);
+        }
+
         EventsService.getEvent($routeParams.id).then(function (data) {
+            _permissions();
             console.log(data);
 
             var event = data.data;

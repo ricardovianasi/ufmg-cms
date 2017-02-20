@@ -18,7 +18,6 @@
         $log) {
         $log.info('GaleriasController');
         $rootScope.shownavbar = true;
-        _permissions();
 
         $scope.galleries = [];
         $scope.status = [];
@@ -31,6 +30,7 @@
                 .then(function (data) {
                     $scope.galleries = data.data;
                     $scope.dtOptions = dataTableConfigService.init();
+                    _permissions();
                 });
         };
 

@@ -19,8 +19,6 @@
         $rootScope.shownavbar = true;
         $log.info('ReleasesController');
 
-        _permissions();
-
         $scope.title = 'Releases';
         $scope.releases = [];
         $scope.DateTimeHelper = DateTimeHelper;
@@ -30,6 +28,7 @@
             ReleasesService.getReleases(page).then(function (data) {
                 $scope.releases = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
             });
         };
 

@@ -19,7 +19,6 @@
         PermissionService) {
         $rootScope.shownavbar = true;
         $log.info('PeriodicalEditionsController');
-        _permissions();
 
         $scope.periodical = {
             id: $routeParams.id
@@ -33,7 +32,7 @@
                     $scope.periodical.id = $scope.editions.items[0].periodical.id;
                     $scope.periodical.name = $scope.editions.items[0].periodical.name;
                 }
-
+                _permissions();
                 $scope.dtOptions = dataTableConfigService.init();
             });
         };

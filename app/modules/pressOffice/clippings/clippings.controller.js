@@ -19,7 +19,6 @@
         $log) {
         $rootScope.shownavbar = true;
         $log.info('ClippingsController');
-        _permissions();
 
 
         $scope.title = 'Clippings';
@@ -31,6 +30,7 @@
             ClippingsService.getClippings(page).then(function (data) {
                 $scope.clippings = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
             });
         };
 

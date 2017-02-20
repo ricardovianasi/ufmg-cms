@@ -28,7 +28,6 @@
         $log.info('NoticiasEditController');
 
         var allTags = [];
-        $scope.canPermission = PermissionService.canPut('news', $routeParams.id);
 
         $scope.news = {};
         $scope.categories = [];
@@ -69,7 +68,7 @@
         });
 
         NewsService.getNews($routeParams.id).then(function (data) {
-
+            $scope.canPermission = PermissionService.canPut('news', $routeParams.id);
 
             $scope.obj = {};
 

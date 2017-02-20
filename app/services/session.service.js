@@ -4,6 +4,7 @@
     angular
         .module('serviceModule')
         .factory('sessionService', sessionService);
+
     /**ngInject */
     function sessionService($location, $window) {
         var store = $window.localStorage,

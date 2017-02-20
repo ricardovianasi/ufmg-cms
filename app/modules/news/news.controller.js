@@ -21,12 +21,11 @@
         $scope.news = [];
         $scope.currentPage = 1;
 
-        _permissions();
-
         var loadNews = function (page) {
             NewsService.getNews(null, page).then(function (data) {
                 $scope.news = data.data;
                 $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
             });
         };
 

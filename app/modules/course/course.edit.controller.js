@@ -34,11 +34,9 @@
         $scope.courseId = $routeParams.courseId;
         $scope.type = $routeParams.type;
 
-        $scope.canPut = PermissionService.canPut('course_' + $scope.type, $scope.courseId);
-
         CourseService.getCourse($routeParams.type, $routeParams.courseId, $routeParams.id).then(function (data) {
             var courseData = data.data;
-
+            _permissions();
             $scope.course.subdivision_name = courseData.subdivision_name + ' - ' + courseData.modality;
 
             if (!_.isEmpty(courseData.detail)) {
@@ -96,6 +94,10 @@
         $scope.redactorConfig = {
             plugins: false
         };
+
+        function _permissions() {
+            $scope.canPut = PermissionService.canPut('course_' + $scope.type, $scope.courseId);
+        }
 
         function _parseData(data) {
             if (typeof data.cover == 'object')

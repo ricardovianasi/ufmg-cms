@@ -19,6 +19,7 @@
         $routeParams,
         $log,
         $rootScope) {
+        $log.info('featuredEditController');
 
         $rootScope.shownavbar = true;
         var vm = this; // jshint ignore:line

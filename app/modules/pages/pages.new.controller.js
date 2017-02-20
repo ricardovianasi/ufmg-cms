@@ -35,8 +35,8 @@
         $scope.removeModule = _removeModule;
 
         function onInit() {
-            vm.canPermission = PermissionService.canPost('page');
             PagesService.getPages().then(function (data) {
+                vm.canPermission = PermissionService.canPost('page');
                 $scope.pagesParent = data.data.items;
 
                 $scope.pagesParent.push({

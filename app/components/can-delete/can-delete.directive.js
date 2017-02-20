@@ -4,6 +4,7 @@
     angular
         .module('componentsModule')
         .directive('canDelete', CanDeleteCtrl);
+
     /** ngInject */
     function CanDeleteCtrl(PermissionService) {
         return {
@@ -13,7 +14,10 @@
                 contextId: '='
             },
             link: function ($scope, elem, attr) {
-                PermissionService.check();
+                var canDelete = PermissionService.canDelete($scope.context, $scope.contextId);
+                if (!canDelete) {
+                    elem.remove();
+                }
             }
         };
     }

@@ -22,9 +22,8 @@
 
           $scope.categories = [];
 
-          $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPut('gallery', $routeParams.id);
-
           GalleryService.getGallery(parseInt($routeParams.id)).then(function (data) {
+              $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPut('gallery', $routeParams.id);
               $scope.gallery = data.data;
               $scope.gallery.category = '' + data.data.category.id + '';
           });
