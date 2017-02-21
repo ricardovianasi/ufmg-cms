@@ -16,6 +16,7 @@
         MediaService,
         DateTimeHelper,
         $rootScope,
+        PermissionService,
         $window,
         $log,
         validationService) {
@@ -49,15 +50,12 @@
 
             _getAllArticles($scope.edition.id);
 
-            console.log('articles quando entra >>>>>>', $scope.edition.articles);
             $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
             $scope.edition.background_url = data.data.background ? data.data.background.url : '';
             $scope.edition.file_name = data.data.file ? data.data.file.title : '';
 
             $scope.edition.pdf = data.data.file ? data.data.file : '';
             $scope.edition.pdf_url = data.data.file ? data.data.file.url : '';
-
-            console.log('post date >>>>>', data.data.post_date);
 
             $scope.edition.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
             $scope.edition.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
@@ -95,8 +93,6 @@
                 return false;
             }
 
-            console.log('save >>>>>>', data.articles);
-
             var tags = [];
 
             angular.forEach(data.articles, function (v, k) {
@@ -112,7 +108,6 @@
                 tags = [];
             });
 
-            console.log('teste >>>>>>>', data);
             PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
                 NotificationService.success('Edição atualizada com sucesso.');
 

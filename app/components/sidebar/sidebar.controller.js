@@ -1,15 +1,12 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('componentsModule')
-    .controller('SidebarController', [
-      '$scope',
-      'NavigationService',
-      function ($scope, NavigationService) {
-        console.log('... SidebarController');
+    angular
+        .module('componentsModule')
 
-        $scope.navigation = NavigationService.get();
-      }
-    ]);
+        /** ngInject */
+        .controller('SidebarController', function ($scope, NavigationService, $log) {
+            $log.info('SidebarController');
+            $scope.navigation = NavigationService.get();
+        });
 })();

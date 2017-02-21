@@ -21,7 +21,6 @@
                     client_id: client_id_auth
                 };
 
-                // WTF! Fizeram o sistema de autenticação errado, e teve que fazer isso.
                 $.ajax({
                     type: "POST",
                     url: apiUrl + '/authenticate',

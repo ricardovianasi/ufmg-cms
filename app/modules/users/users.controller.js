@@ -4,6 +4,7 @@
     angular
         .module('usersModule')
         .controller('UsersController', UsersController);
+
     /** ngInject */
     function UsersController($rootScope,
         UsersService,
@@ -24,8 +25,14 @@
             _loadUsers();
         }
 
-        function _reset(idUser) {
-            $log.warn('TODO: Reset password', idUser);
+        function _reset(user) {
+            ModalService
+                .confirm('Deseja resetar a senha do usuário <b>' + user.name + '</b> para 12345?', ModalService.MODAL_SMALL)
+                .result
+                .then(function () {
+                    user.password = '12345';
+                    UsersService.updateUser(_normalizeUser(user));
+                });
         }
 
         function _activate(user) {
@@ -71,8 +78,7 @@
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('page');
-            console.log(vm.canPost);
+            vm.canPost = PermissionService.canPost('user');
         }
 
         onInit();

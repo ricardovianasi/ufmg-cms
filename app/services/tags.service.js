@@ -1,52 +1,39 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('serviceModule')
-    .factory('TagsService', TagsService);
+    angular.module('serviceModule')
+        .factory('TagsService', TagsService);
 
-  TagsService.$inject = [
-    '$http',
-    '$q',
-    'apiUrl',
-    '$filter'
-  ];
+    /** ngInjetc */
+    function TagsService($http, $q, apiUrl, $filter, $log) {
+        $log.info('TagsService');
 
-  function TagsService($http, $q, apiUrl, $filter) {
-    console.log('... TagsService');
+        function _tagsForTagsInput(tags) {
+            var tagsForTagsInput = [];
 
+            angular.forEach(tags, function (v, k) {
+                tagsForTagsInput.push({
+                    text: tags[k].name
+                });
+            });
 
-    /**
-     *
-      * @param tags
-     * @returns {Array}
-     * @private
-       */
-    function  _tagsForTagsInput(tags) {
-      var tagsForTagsInput = [];
+            return tagsForTagsInput;
+        }
 
-      angular.forEach(tags, function(v, k) {
-        tagsForTagsInput.push({
-          text: tags[k].name
-        });
-      });
+        return {
+            getTags: function () {
+                var deferred = $q.defer();
 
-      return tagsForTagsInput;
+                $http.get(apiUrl + '/tag').then(function (data) {
+                    deferred.resolve(data);
+                });
+
+                return deferred.promise;
+            },
+            findTags: function ($query, tags) {
+                var allTags = _tagsForTagsInput(tags);
+                return $filter('filter')(allTags, $query);
+            }
+        };
     }
-
-    return {
-      getTags: function () {
-        var deferred = $q.defer();
-
-        $http.get(apiUrl+'/tag').then(function (data) {
-          deferred.resolve(data);
-        });
-
-        return deferred.promise;
-      },
-      findTags: function($query, tags) {
-        var allTags = _tagsForTagsInput(tags);
-        return $filter('filter')(allTags, $query);
-      }
-    };
-  }
 })();

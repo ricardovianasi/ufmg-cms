@@ -1,147 +1,143 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('mediaModule')
-    .controller('MediaNewController', MediaNewController);
+    angular.module('mediaModule')
+        .controller('MediaNewController', MediaNewController);
 
-  MediaNewController.$inject = [
-    '$scope',
-    '$uibModal',
-    '$location',
-    '$timeout',
-    'StatusService',
-    'MediaService',
-    '$rootScope'
-  ];
+    /** ngInject */
+    function MediaNewController($scope,
+        $uibModal,
+        $location,
+        $timeout,
+        StatusService,
+        MediaService,
+        $log,
+        $rootScope) {
+        $rootScope.shownavbar = true;
+        $log.info('GalleryEditController');
 
-  function MediaNewController($scope,
-                              $modal,
-                              $location,
-                              $timeout,
-                              StatusService,
-                              MediaService,
-                              $rootScope) {
-      $rootScope.shownavbar = true;
-    console.log('... GalleryEditController');
+        $scope.status = [];
+        $scope.file = {};
 
-    $scope.status = [];
-    $scope.file = {};
-
-    StatusService.getStatus().then(function (data) {
-      $scope.status = data.data;
-    });
-
-    $scope.$watch('add_photos', function () {
-      if ($scope.add_photos) {
-        MediaService.newFile($scope.add_photos).then(function (data) {
-          $scope.file.url = data.url;
-          $scope.file.id = data.id;
+        StatusService.getStatus().then(function (data) {
+            $scope.status = data.data;
         });
-      }
-    });
 
-    $scope.publish = function (file) {
-      var obj = {
-        legend: file.legend ? file.legend : '',
-        author_name: file.author_name ? file.author_name: ''
-      };
+        $scope.$watch('add_photos', function () {
+            if ($scope.add_photos) {
+                MediaService.newFile($scope.add_photos).then(function (data) {
+                    $scope.file.url = data.url;
+                    $scope.file.id = data.id;
+                });
+            }
+        });
 
-      MediaService.updateFile(file.id, obj).then(function (data) {
-        $location.path('/media');
-      });
-    };
+        $scope.publish = function (file) {
+            var obj = {
+                legend: file.legend ? file.legend : '',
+                author_name: file.author_name ? file.author_name : ''
+            };
 
-    var removeConfirmationModal, EditPhotosModal;
+            MediaService.updateFile(file.id, obj).then(function (data) {
+                $location.path('/media');
+            });
+        };
 
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
+        var removeConfirmationModal, EditPhotosModal;
 
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
-    };
+        $scope.confirmationModal = function (size, title) {
+            removeConfirmationModal = $modal.open({
+                templateUrl: 'components/modal/confirmation.modal.template.html',
+                controller: ConfirmationModalCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    title: function () {
+                        return title;
+                    }
+                }
+            });
+        };
 
-    $scope.removePhoto = function (id) {
-      var idx = _.findIndex($scope.gallery.photos, {id: id});
-      $scope.confirmationModal('md', 'Você deseja excluir esta foto?');
-      removeConfirmationModal.result.then(function (data) {
-        $scope.gallery.photos.splice(idx, 1);
-      });
-    };
+        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+            $scope.modal_title = title;
+            $scope.ok = function () {
+                $uibModalInstance.close();
+            };
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        };
 
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
-        }
-      });
-    };
+        $scope.removePhoto = function (id) {
+            var idx = _.findIndex($scope.gallery.photos, {
+                id: id
+            });
+            $scope.confirmationModal('md', 'Você deseja excluir esta foto?');
+            removeConfirmationModal.result.then(function (data) {
+                $scope.gallery.photos.splice(idx, 1);
+            });
+        };
 
-    $scope.editPhoto = function (id) {
-      EditPhotosModal = $modal.open({
-        templateUrl: 'components/modal/photos-edit.modal.template.html',
-        controller: EditPhotosModalCtrl,
-        backdrop: 'static',
-        size: 'lg',
-        resolve: {
-          photos: function () {
-            return $scope.gallery.photos;
-          },
-          id: function () {
-            return id;
-          }
-        }
-      });
+        $scope.confirmationModal = function (size, title) {
+            removeConfirmationModal = $modal.open({
+                templateUrl: 'components/modal/confirmation.modal.template.html',
+                controller: ConfirmationModalCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    title: function () {
+                        return title;
+                    }
+                }
+            });
+        };
 
-      EditPhotosModal.result.then(function (data) {
-        $scope.gallery.photos = data;
-      });
-    };
+        $scope.editPhoto = function (id) {
+            EditPhotosModal = $modal.open({
+                templateUrl: 'components/modal/photos-edit.modal.template.html',
+                controller: EditPhotosModalCtrl,
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    photos: function () {
+                        return $scope.gallery.photos;
+                    },
+                    id: function () {
+                        return id;
+                    }
+                }
+            });
 
-    var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, id) {
-      $scope.photos = angular.copy(photos);
+            EditPhotosModal.result.then(function (data) {
+                $scope.gallery.photos = data;
+            });
+        };
 
-      var index = _.findIndex($scope.photos, {id: id});
+        var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, id) {
+            $scope.photos = angular.copy(photos);
 
-      $scope.currentPhoto = $scope.photos[index];
+            var index = _.findIndex($scope.photos, {
+                id: id
+            });
 
-      $scope.ok = function () {
-        $uibModalInstance.close($scope.photos);
-      };
+            $scope.currentPhoto = $scope.photos[index];
 
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss();
-      };
-    };
+            $scope.ok = function () {
+                $uibModalInstance.close($scope.photos);
+            };
 
-    $scope.removeMidia = function () {
-      $timeout(function () {
-        $scope.file.url = '';
-        $scope.file.type = '';
-        $scope.$apply();
-      });
-    };
-  }
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss();
+            };
+        };
+
+        $scope.removeMidia = function () {
+            $timeout(function () {
+                $scope.file.url = '';
+                $scope.file.type = '';
+                $scope.$apply();
+            });
+        };
+    }
 })();

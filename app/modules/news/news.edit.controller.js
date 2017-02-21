@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -43,11 +42,6 @@
             endDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        /**
-         * Add status 'on the fly', according to requirements
-         *
-         * @type {{opened: boolean}}
-         */
         $scope.datepickerOpt.initDate.status = {
             opened: false
         };
@@ -128,9 +122,6 @@
             });
         });
 
-        /**
-         *
-         */
         $scope.remove = function () {
             ModalService
                 .confirm('Você deseja excluir esta notícia?')
@@ -143,10 +134,6 @@
                 });
         };
 
-        /**
-         * @param data
-         * @param preview
-         */
         $scope.publish = function (data, preview) {
             if (!validationService.isValid($scope.formNews.$invalid))
                 return false;
@@ -154,8 +141,6 @@
             if (!data.saveDraftClicked && data.status != 'scheduled') {
                 data.status = 'published';
             }
-
-            console.log(data.tv_program, typeof data.tv_program);
 
             var slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
 
@@ -185,8 +170,6 @@
                 _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 
-            console.log('tv program >>>>>>>>>>>>>>>>>', data.tv_program);
-
             NewsService.updateNews(data.id, _obj).then(function (news) {
                 NotificationService.success('Notícia atualizada com sucesso.');
 
@@ -207,9 +190,6 @@
             }
         });
 
-        /**
-         * @param file
-         */
         $scope.upload = function (file) {
             MediaService.newFile(file).then(function (data) {
                 $scope.news.thumb = data.id;

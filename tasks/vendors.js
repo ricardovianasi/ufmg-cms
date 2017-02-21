@@ -45,7 +45,6 @@ var SCRIPTS = [
     'bower_components/v-accordion/dist/v-accordion.min.js',
     'bower_components/checklist-model/checklist-model.js',
     'bower_components/angular-input-masks/angular-input-masks-standalone.min.js'
-
 ];
 
 var STYLES = [

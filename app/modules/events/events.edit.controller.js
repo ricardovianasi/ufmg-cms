@@ -1,9 +1,9 @@
-;
 (function () {
     'use strict';
 
     angular.module('eventsModule')
         .controller('EventsEditController', EventsEditController);
+
     /** ngInject */
     function EventsEditController($scope,
         $timeout,
@@ -42,7 +42,6 @@
         /**
          * Controls event.courses array
          *
-         * @param {integer} courseId
          */
         vm.toggleSelection = function toggleSelection(courseId) {
             var idx = vm.event.courses.indexOf(courseId);
@@ -65,7 +64,6 @@
         /**
          * Add status 'on the fly', according to requirements
          *
-         * @type {{opened: boolean}}
          */
         vm.datepickerOpt.initDate.status = {
             opened: false
@@ -104,10 +102,6 @@
          * Handle img upload
          */
         vm.imgHandler = {
-            /**
-             * @param elem
-             * @param files
-             */
             upload: function (elem, files) {
                 angular.forEach(files, function (file) {
                     MediaService.newFile(file).then(function (data) {
@@ -118,9 +112,6 @@
                     });
                 });
             },
-            /**
-             *
-             */
             uploadPhoto: function () {
                 var resolve = {
                     formats: function () {
@@ -146,19 +137,11 @@
             }
         };
 
-        /**
-         * Post to Event Endpoint
-         *
-         * @param data
-         * @param preview
-         */
         vm.publish = function (data, preview) {
             if (!validationService.isValid($scope.formEvents.$invalid))
                 return false;
 
             vm.setEndDefault();
-
-            console.log(data);
 
             EventsService.update(data, $routeParams.id).then(function (event) {
                 NotificationService.success('Evento atualizado com sucesso.');
@@ -171,9 +154,6 @@
             });
         };
 
-        /**
-         *
-         */
         vm.remove = function () {
             ModalService
                 .confirm('Você deseja excluir o evento <b>' + vm.event.name + '</b>?', ModalService.MODAL_MEDIUM)
@@ -192,7 +172,6 @@
 
         EventsService.getEvent($routeParams.id).then(function (data) {
             _permissions();
-            console.log(data);
 
             var event = data.data;
             var tags = event.tags;
@@ -247,12 +226,6 @@
             vm.statuses = data.data;
         });
 
-
-        /**
-         *
-         * @param data
-         * @private
-         */
         function _parseTime(data) {
             data.end_hour = moment(data.end_hour).format('HH:mm');
             data.init_hour = moment(data.init_hour).format('HH:mm');

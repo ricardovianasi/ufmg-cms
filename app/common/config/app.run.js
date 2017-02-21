@@ -2,15 +2,27 @@
     'use strict';
 
     angular.module('app')
+        .run(Debug)
         .run(Run);
 
     /** ngInject */
-    function Run($rootScope, dataTableConfigService, sessionService, $route, DTDefaultOptions, PermissionService) {
+    function Debug($log) {
+        $log.debugEnabled(false);
+    }
+
+    /** ngInject */
+    function Run($rootScope,
+        dataTableConfigService,
+        sessionService,
+        $route,
+        DTDefaultOptions,
+        $timeout,
+        PermissionService) {
         var startPermission = false;
+
         $rootScope.dtOptions = dataTableConfigService.init();
 
         $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
-            console.log(startPermission);
             if (!startPermission) {
                 PermissionService.initService();
                 startPermission = true;

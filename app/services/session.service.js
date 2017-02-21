@@ -7,8 +7,8 @@
 
     /**ngInject */
     function sessionService($location, $window) {
-        var store = $window.localStorage,
-            key = 'token';
+        var store = $window.localStorage;
+        var key = 'token';
 
         return {
             saveData: saveData,
@@ -93,7 +93,7 @@
         }
 
         function setLastLoginDate() {
-            return store.setItem('LastLoginDate', Date());
+            return store.setItem('LastLoginDate', moment());
         }
 
         function removeLastLoginDate() {

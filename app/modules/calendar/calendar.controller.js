@@ -321,7 +321,6 @@
                 _view = false;
             } else {
                 $scope.canPermission = PermissionService.canPost('calendar');
-                console.log($scope.canPermission);
             }
 
             $scope.type = type;

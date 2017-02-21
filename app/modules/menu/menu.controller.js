@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -58,18 +57,8 @@
             placeholder: 'list-group-item',
             connectWith: '.main',
             stop: function (e, ui) {
-                // if the element is removed from the first container
-                //if (
-                //  $(e.target).hasClass('selectable') &&
-                //  ui.item.sortable.droptarget &&
-                //  e.target != ui.item.sortable.droptarget[0]
-                //) {
-                //  // clone the original model to restore the removed item
-                //  //vm.pages = pages.slice();
-                //}
             },
             update: function (event, ui) {
-                console.log(event, ui);
                 // on cross list sortings received is not true
                 // during the first update
                 // which is fired on the source sortable
@@ -99,18 +88,8 @@
             placeholder: 'list-group-item-quickaccess',
             connectWith: '.main',
             stop: function (e, ui) {
-                // if the element is removed from the first container
-                //if (
-                //  $(e.target).hasClass('selectable') &&
-                //  ui.item.sortable.droptarget &&
-                //  e.target != ui.item.sortable.droptarget[0]
-                //) {
-                //  // clone the original model to restore the removed item
-                //  //vm.pages = pages.slice();
-                //}
             },
             update: function (event, ui) {
-                console.log(event, ui);
                 // on cross list sortings received is not true
                 // during the first update
                 // which is fired on the source sortable
@@ -155,27 +134,25 @@
                     var menu = args.splice(0, 1)[0];
                     var idx = base > 3 ? args.splice(2, 1)[0] : args.splice(1, 1)[0];
 
-                    if (idx === undefined)
+                    if (idx === undefined){
                         idx = args.splice(0, 1)[0];
+                    }
 
                     var menuName = 'menus.' + menu;
 
-                    /*
-                     menus.mainMenu[0]
-                     menus.mainMenu[0].children[0]
-                     menus.mainMenu[0].children[0].children[0]
-                     */
                     var auxInterator = 0;
 
                     angular.forEach(allArgs, function (i) {
 
-                        if (auxInterator !== 2 && allArgs.length === 3)
+                        if (auxInterator !== 2 && allArgs.length === 3){
                             menuName += '[' + i + '].children';
-                        else if (auxInterator !== 1 && allArgs.length === 2)
+                        }
+                        else if (auxInterator !== 1 && allArgs.length === 2){
                             menuName += '[' + i + '].children';
-                        else
-                            console.log('ready');
-
+                        }
+                        else{
+                            $log.info('ready');
+                        }
                         auxInterator++;
                     });
 
@@ -191,7 +168,6 @@
                 .confirm('Deseja remover o item?')
                 .result
                 .then(function () {
-                    console.log('vai toma no cu');
                     vm.quickPages.push($scope.menus.quickAccess[idx]);
                     $scope.menus.quickAccess.splice(idx, 1);
                 });
@@ -246,10 +222,6 @@
             });
         }
 
-        /*
-         * SERVICES
-         */
-
         PagesService.getPages().then(function (data) {
 
             angular.forEach(data.data.items, function (page) {
@@ -265,7 +237,6 @@
             vm.pages = pages.slice();
             vm.quickPages = (JSON.parse(JSON.stringify(vm.pages)));
 
-            //Populate menus (type: quick_access, main_menu)
             _populateMenus();
             _permissions();
 
@@ -313,7 +284,5 @@
         function _canPut() {
             vm.canPut = PermissionService.canPut('menu');
         }
-
-
     }
 })();

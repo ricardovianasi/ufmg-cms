@@ -29,13 +29,11 @@
         }
 
         function _saveUser(data) {
-            console.log(angular.toJson(data));
             return $http.post(apiUrl + '/user', data);
         }
 
         function _updateUser(user) {
             var id = user.id;
-            console.log(angular.toJson(user));
             return $http.put(apiUrl + '/user/' + id, user);
         }
     }

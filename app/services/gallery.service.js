@@ -1,72 +1,37 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('serviceModule')
-    .factory('GalleryService', GalleryService);
+    angular.module('serviceModule')
+        .factory('GalleryService', GalleryService);
 
-  GalleryService.$inject = [
-    '$q',
-    '$http',
-    '$filter',
-    'apiUrl'
-  ];
+    /** ngInject */
+    function GalleryService($q, $http, $filter, apiUrl, $log) {
+        $log.info('GalleryService');
 
-  function GalleryService($q, $http, $filter, apiUrl) {
-    console.log('... GalleryService');
+        var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
 
-    var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
+        return {
+            getGalleries: function (page) {
+                page = page || 1;
+                var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
 
-    return {
-      /**
-       * @param page
-       *
-       * @returns {*}
-       */
-      getGalleries: function (page) {
-        page = page || 1;
-        var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
-
-        return $http.get(url);
-      },
-      /**
-       * @param id
-       *
-       * @returns {*}
-       */
-      getGallery: function (id) {
-        return $http.get(apiUrl + '/gallery/' + id);
-      },
-      /**
-       * @param gallery
-       *
-       * @returns {*}
-       */
-      newGallery: function (gallery) {
-        return $http.post(apiUrl + '/gallery', gallery);
-      },
-      /**
-       * @param id
-       * @param gallery
-       *
-       * @returns {*}
-       */
-      updateGallery: function (id, gallery) {
-        return $http.put(apiUrl + '/gallery/' + id, gallery);
-      },
-      /**
-       * @param id
-       *
-       * @returns {*}
-       */
-      removeGallery: function (id) {
-        return $http.delete(apiUrl + '/gallery/' + id);
-      },
-      /**
-       * @returns {*}
-       */
-      getCategories: function () {
-        return $http.get(apiUrl + '/gallery/category');
-      }
-    };
-  }
+                return $http.get(url);
+            },
+            getGallery: function (id) {
+                return $http.get(apiUrl + '/gallery/' + id);
+            },
+            newGallery: function (gallery) {
+                return $http.post(apiUrl + '/gallery', gallery);
+            },
+            updateGallery: function (id, gallery) {
+                return $http.put(apiUrl + '/gallery/' + id, gallery);
+            },
+            removeGallery: function (id) {
+                return $http.delete(apiUrl + '/gallery/' + id);
+            },
+            getCategories: function () {
+                return $http.get(apiUrl + '/gallery/category');
+            }
+        };
+    }
 })();

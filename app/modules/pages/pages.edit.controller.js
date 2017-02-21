@@ -187,7 +187,6 @@
         // Get Page
         PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
             vm.canPermission = PermissionService.canPut('page', $routeParams.id);
-            console.log(data.data);
             var page = data.data;
             var tags = page.tags;
 

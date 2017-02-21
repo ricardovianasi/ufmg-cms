@@ -299,7 +299,6 @@
                 },
 
                 editorialnews: function (widget) {
-                    console.log('passa 1', widget);
 
                     var newsToSelect = [];
 
@@ -367,14 +366,12 @@
                 },
 
                 internalmenu: function (widget) {
-                    console.log('parse to save internal >>>', widget);
 
                     var widgetLinks = [];
                     var page;
                     var external_url;
                     var linksOnEach = widget.links ? widget.links : widget.content.links;
 
-                    console.log('links on each >>>>', linksOnEach);
 
                     angular.forEach(linksOnEach, function (links) {
                         if (links.external_url)
@@ -695,7 +692,6 @@
                 },
 
                 editorialnews: function (widget) {
-                    console.log('passa 2', widget);
 
                     var newsToSelect = [];
                     var tagsForTagsInput = [];
@@ -760,7 +756,6 @@
                 },
 
                 internalmenu: function (widget) {
-                    console.log(widget);
                     var widgetLinks = [];
 
                     if (!widget.content) {
@@ -832,21 +827,15 @@
                     return {
                         content: widget.content,
                         news: [{
-                                selected: widget.content.news[0]
-                            },
-                            {
-                                selected: widget.content.news[1]
-                            },
-                        ],
+                            selected: widget.content.news[0]
+                        }, {
+                            selected: widget.content.news[1]
+                        }],
                     };
                 },
 
                 faq: function (widget) {
-                    console.log('faq >>>>>>', widget);
-
                     widget.content.faq = widget.content.faq.id;
-
-                    console.log(widget.content);
                     return {
                         title: widget.title,
                         content: widget.content,
@@ -867,7 +856,6 @@
                     if (widget.post_filter_id && widget.post_filter_id.length <= 2) {
 
                         postFilter = parseInt(widget.post_filter_id);
-                        console.log(postFilter);
 
                         return {
                             id: widget.id,
@@ -880,7 +868,6 @@
                         if (widget.content.postFilterId && widget.content.postFilterId.length <= 2) {
 
                             postFilter = parseInt(widget.content.postFilterId);
-                            console.log(postFilter);
 
                             return {
                                 id: widget.id,
@@ -1184,14 +1171,12 @@
             return {
 
                 parseWidgetToSave: function (widget) {
-                    clog('parseWidgetToSave >>>', widget);
 
                     if (typeof _parseToSave[widget.type] !== 'undefined') {
                         return _parseToSave[widget.type](widget);
                     }
                 },
                 parseWidgetToLoad: function (widget) {
-                    clog('parseWidgetToLoad >>>', widget);
 
                     if (typeof _parseToLoad[widget.type] !== 'undefined') {
                         return _parseToLoad[widget.type](widget);
