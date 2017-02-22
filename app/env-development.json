@@ -1,5 +1,6 @@
 {
-  "apiUrl": "http://cajuri.bu.ufmg.br:9999",
-  "grant_type_auth": "password",
-  "client_id_auth": "cms"
+    "apiUrl": "http://cajuri.bu.ufmg.br:9999",
+    "grant_type_auth": "password",
+    "client_id_auth": "cms",
+    "ENV": "development"
 }

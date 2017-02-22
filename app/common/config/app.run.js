@@ -6,8 +6,9 @@
         .run(Run);
 
     /** ngInject */
-    function Debug($log) {
-        $log.debugEnabled(false);
+    function Debug($log, ENV) {
+        var enabled = (ENV === 'development' || ENV === 'test');
+        $log.debugEnabled(enabled);
     }
 
     /** ngInject */
