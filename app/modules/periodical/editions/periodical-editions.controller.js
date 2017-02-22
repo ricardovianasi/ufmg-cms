@@ -25,13 +25,8 @@
         };
 
         $scope.loadEditions = function () {
-            PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (data) {
-                $scope.editions = data.data;
-
-                if ($scope.editions.items.length) {
-                    $scope.periodical.id = $scope.editions.items[0].periodical.id;
-                    $scope.periodical.name = $scope.editions.items[0].periodical.name;
-                }
+            PeriodicalService.getPeriodicalEditions($routeParams.id).then(function (res) {
+                $scope.editions = res.data;
                 _permissions();
                 $scope.dtOptions = dataTableConfigService.init();
             });
@@ -81,18 +76,22 @@
             };
         };
 
-
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
+        }
+
+        function _canPut() {
+            $scope.canPut = PermissionService.canPut('editions', $routeParams.id);
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('periodical');
+            $scope.canPost = PermissionService.canPost('editions', $routeParams.id);
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('periodical');
+            $scope.canDelete = PermissionService.canDelete('editions', $routeParams.id);
         }
     }
 })();

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
+
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Xenon Boostrap Admin Panel"/>
-    <meta name="author" content=""/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Xenon Boostrap Admin Panel" />
+    <meta name="author" content="" />
     <title>UFMG | POST - Sistema de Gerenciamento de Conteúdo</title>
-
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors.min.css">
     <link rel="stylesheet" href="assets/css/main.min.css">
 </head>
 
 <body class="page-body">
-    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar"><!-- set fixed position by adding class "navbar-fixed-top" -->
+    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
+        <!-- set fixed position by adding class "navbar-fixed-top" -->
         <div class="navbar-inner">
             <!-- Navbar Brand -->
             <div class="navbar-brand ufmg">
@@ -24,13 +24,11 @@
                     <img src="assets/img/ufmg-logo.svg" alt="UFMG">
                 </a>
             </div>
-
             <div class="navbar-brand post">
                 <a href="#/" class="logo">
                     <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
                 </a>
             </div>
-
             <!-- notifications and other links -->
             <ul class="nav nav-userinfo navbar-right">
                 <li class="dropdown user-profile">
@@ -42,52 +40,47 @@
             </ul>
         </div>
     </nav>
-
     <div class="page-container">
         <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar">
             <!--<ufmg-sidebar></ufmg-sidebar>-->
         </div>
-
         <div class="main-content">
             <ng-view></ng-view>
         </div>
     </div>
+    <script src="assets/js/TweenMax.min.js"></script>
+    <script src="scripts/vendors.min.js"></script>
+    <script>
+        function clog() {
+            var args = Array.prototype.slice.call(arguments);
 
-<script src="assets/js/TweenMax.min.js"></script>
-<script src="scripts/vendors.min.js"></script>
+            if (!args.length) {
+                return;
+            }
 
-<script>
-    function clog() {
-        var args = Array.prototype.slice.call(arguments);
+            //in case logging without title
+            if (typeof args[0] !== 'string') {
+                log(args);
+            }
 
-        if (!args.length) {
-            return;
+            var title = '[c="color:#fff;background-color:#000"] {title} [c]'.replace('{title}', args.splice(0, 1)[0]);
+
+            if (!args.length) {
+                log(title);
+            } else {
+                log(title, args);
+            }
         }
 
-        //in case logging without title
-        if (typeof args[0] !== 'string') {
-            log(args);
-        }
-
-        var title = '[c="color:#fff;background-color:#000"] {title} [c]'.replace('{title}', args.splice(0, 1)[0]);
-
-        if (!args.length) {
-            log(title);
-        } else {
-            log(title, args);
-        }
-    }
-</script>
-
-<script src="scripts/app.min.js"></script>
-
-<!-- Bottom Scripts -->
-<script src="assets/js/resizeable.js"></script>
-<script src="assets/js/joinable.js"></script>
-<script src="assets/js/xenon-api.js"></script>
-<script src="assets/js/xenon-toggles.js"></script>
-
-<!-- JavaScripts initializations and stuff -->
-<script src="assets/js/xenon-custom.js"></script>
+    </script>
+    <script src="scripts/app.min.js"></script>
+    <!-- Bottom Scripts -->
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/xenon-api.js"></script>
+    <script src="assets/js/xenon-toggles.js"></script>
+    <!-- JavaScripts initializations and stuff -->
+    <script src="assets/js/xenon-custom.js"></script>
 </body>
+
 </html>

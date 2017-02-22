@@ -32,7 +32,6 @@
         });
 
         PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
-            $scope.canPermission = PermissionService.canPost('periodical');
             $scope.periodical = data.data.periodical;
             $scope.edition.slug = data.data.slug.slug;
             $scope.edition.id = data.data.id;
@@ -223,5 +222,23 @@
                 $scope.$apply();
             });
         };
+
+        function _permissions() {
+            _canDelete();
+            _canPost();
+            _canPut();
+        }
+
+        function _canPut() {
+            $scope.canPut = PermissionService.canPut('editions', $routeParams.id);
+        }
+
+        function _canPost() {
+            $scope.canPost = PermissionService.canPost('editions', $routeParams.id);
+        }
+
+        function _canDelete() {
+            $scope.canDelete = PermissionService.canDelete('editions', $routeParams.id);
+        }
     }
 })();
