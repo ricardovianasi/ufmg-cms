@@ -32,6 +32,11 @@
                         tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
                             if (sessionService.verifyTokenIsExpired())
                                 $rootScope.logout();
+                        }],
+                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
+                            if (!PermissionService.canPost('highlighted_press')) {
+                                $window.location.href = '#/featured';
+                            }
                         }]
                     }
                 })
@@ -46,6 +51,11 @@
                         tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
                             if (sessionService.verifyTokenIsExpired())
                                 $rootScope.logout();
+                        }],
+                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
+                            if (!PermissionService.canPut('highlighted_press', $routeParams.id)) {
+                                $window.location.href = '#/featured';
+                            }
                         }]
                     }
                 });

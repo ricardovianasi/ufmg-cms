@@ -84,6 +84,9 @@
         }
 
         function check(context, id, role) {
+            if (!currentUser) {
+                return false;
+            }
             try {
                 // permission admin
                 if (currentUser.is_administrator) {

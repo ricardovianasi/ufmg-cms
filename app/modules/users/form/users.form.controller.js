@@ -3,10 +3,10 @@
 
     angular
         .module('usersModule')
-        .controller('UsersActionsController', UsersActionsController);
+        .controller('UsersFormController', UsersFormController);
 
     /** ngInject */
-    function UsersActionsController($routeParams,
+    function UsersFormController($routeParams,
         $log,
         UsersService,
         ResourcesService,
@@ -32,7 +32,7 @@
         vm.modalGetContext = _modalGetContext;
 
         function onInit() {
-            $log.info('UsersActionsController');
+            $log.info('UsersFormController');
             _initPermissions();
             userId = $routeParams.userId ? $routeParams.userId : null;
             if (userId) {

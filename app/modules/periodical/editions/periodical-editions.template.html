@@ -34,7 +34,7 @@
             <div class="btn-toolbar">
                 <a ng-href="#/periodicals" class="btn btn-gray"><i class="fa fa-angle-left"></i> &nbsp;Voltar para Publicações Jornalísticas</a>
                 <div class=pull-right>
-                    <a ng-if="canPost" ng-href="#/periodicals/{{ periodical.id }}/edition/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA EDIÇÃO</a>
+                    <a ng-if="canPost" ng-href="#/periodicals/{{ periodical.id }}/editions/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA EDIÇÃO</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -50,7 +50,7 @@
                     <tbody>
                         <tr role=row ng-repeat="item in editions.items | filter: search | filter: { status: itemStatus } | orderBy: '-number'" class=odd>
                             <td>
-                                <a ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
+                                <a href="{{ item.edition_url }}" target="_blank">
                                     <strong>{{ item.number }}</strong> {{ item.theme }}
                                 </a>
                             </td>
@@ -63,7 +63,7 @@
                                 <a uib-tooltip="Visualizar" class="btn btn-primary" href="{{ item.edition_url }}" target="_blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" ng-if="canPut" class="btn btn-warning" ng-href="#/periodicals/{{ periodical.id }}/edition/edit/{{ item.id }}">
+                                <a uib-tooltip="Editar" ng-if="canPut" class="btn btn-warning" ng-href="#/periodicals/{{ periodical.id }}/editions/edit/{{ item.id }}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeEdition(item.id, item.theme)" class="btn btn-danger">

@@ -71,9 +71,6 @@
             containment: '#sort-main'
         };
 
-        /**
-         * @param idx
-         */
         $scope.removeArticle = function (idx) {
             ModalService
                 .confirm('Você deseja excluir este artigo?')

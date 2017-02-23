@@ -61,7 +61,7 @@
                                 status: itemStatus
                             } | orderBy: '-created_at'">
                             <td>
-                                <a ng-click="editEvent('lg', item)">
+                                <a class="cursor-pointer" ng-click="editEvent('lg', item)">
                                     {{ item.description }}
                                 </a>
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>

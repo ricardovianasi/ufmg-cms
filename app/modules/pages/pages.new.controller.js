@@ -20,7 +20,6 @@
         $rootScope,
         TagsService,
         validationService,
-        PermissionService,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
@@ -36,7 +35,6 @@
 
         function onInit() {
             PagesService.getPages().then(function (data) {
-                vm.canPermission = PermissionService.canPost('page');
                 $scope.pagesParent = data.data.items;
 
                 $scope.pagesParent.push({
@@ -97,7 +95,6 @@
         }
 
         function _publish(page, preview) {
-            $log.info('page: ' + page, 'preview: ' + preview);
             if (!validationService.isValid($scope.formPage.$invalid)) {
                 return false;
             }

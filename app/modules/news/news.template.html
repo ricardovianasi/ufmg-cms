@@ -61,7 +61,7 @@
                     <tbody>
                         <tr role="row" class="odd" ng-repeat="item in news.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
                             <td>
-                                <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
+                                <a target="_blank" ng-href="{{ item.news_url }}">{{ item.title }}</a>&nbsp;
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>
                                 <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
                             </td>

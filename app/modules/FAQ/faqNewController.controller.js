@@ -24,6 +24,8 @@
 
         var id = $routeParams.faqId;
 
+        vm.canPermission = !VIEWER;
+
         vm.idCurrentAskEdit = '';
         vm.idCurrentCategoryEdit = '';
         vm.showCategoryAsk = false;
@@ -56,18 +58,6 @@
         vm.editCategory = _editCategory;
         vm.editCategoryAsk = _editCategoryAsk;
         vm.editAsk = _editAsk;
-
-        function _permissions() {
-            if (VIEWER) {
-                vm.canPost = false;
-                vm.canPut = false;
-                vm.canDelete = false;
-            } else {
-                vm.canPost = PermissionService.canPost('faq');
-                vm.canPut = PermissionService.canPut('faq', id);
-                vm.canDelete = PermissionService.canDelete('faq');
-            }
-        }
 
         function _getFaq() {
             if (id) {

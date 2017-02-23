@@ -62,7 +62,7 @@
                     <tbody>
                         <tr role="row" class="odd" ng-repeat="item in pages.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at' track by item.id">
                             <td>
-                                <a ng-href="#/pages/edit/{{ item.id }}">{{ item.title }}</a>
+                                <a target="_blank" ng-href="{{ item.page_url }}">{{ item.title }}</a>
                             </td>
                             <td>{{ item.author.name }}</td>
                             <td>

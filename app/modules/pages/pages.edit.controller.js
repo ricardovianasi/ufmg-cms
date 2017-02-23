@@ -21,7 +21,6 @@
         ModalService,
         $rootScope,
         TagsService,
-        PermissionService,
         validationService,
         $log) {
         $rootScope.shownavbar = true;
@@ -85,7 +84,6 @@
         };
 
         $scope.publish = function (page, preview) {
-            $log.info('page: ' + page, 'preview: ' + preview);
             if (!validationService.isValid($scope.formPage.$invalid)) {
                 return false;
             }
@@ -186,7 +184,6 @@
 
         // Get Page
         PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
-            vm.canPermission = PermissionService.canPut('page', $routeParams.id);
             var page = data.data;
             var tags = page.tags;
 

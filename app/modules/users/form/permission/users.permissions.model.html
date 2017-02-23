@@ -5,7 +5,7 @@
                 <h3>Permissões personalizadas</h3>
             </div>
             <div class="col-xs-offset-6 col-xs-6">
-                <div class="dataTables_filter"><label><i class="fa fa-search"></i><input type="search" class="form-control input-sm" placeholder="" ng-model="search" aria-controls="DataTables_Table_0"></label></div>
+                <div class="dataTables_filter"><label><i class="fa fa-search"></i><input type="search" ng-change="vm.changeTable()" class="form-control input-sm" placeholder="" ng-model="search" aria-controls="DataTables_Table_0"></label></div>
             </div>
             <div class="row">
                 <div class="col-xs-6">
@@ -13,16 +13,14 @@
                     <table class="table table-striped table-bordered remove-padding">
                         <thead>
                             <tr>
-                                <th>id</th>
                                 <th>Título</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.deselects | filter: search | orderBy:'title' | limitTo: vm.configTable.limitTo track by $index"
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.filterDataDeselected = (vm.deselects | filter: search) | orderBy:'title' | limitTo: vm.limitTo:vm.limitTo*(vm.configTableDeselected.page-1) track by $index"
                                 ng-click="vm.select(context)">
-                                <td>{{context.id}}</td>
                                 <td>{{context.title}}</td>
-                            </tr>
+                                </tr>
                         </tbody>
                     </table>
                 </div>
@@ -31,16 +29,14 @@
                     <table class="table table-striped table-bordered remove-padding">
                         <thead>
                             <tr>
-                                <th>id</th>
                                 <th>Título</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.selecteds | filter: search | orderBy:'title' | limitTo: vm.configTable.limitTo track by $index"
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.filterDataSelected = (vm.selecteds | filter: search) | orderBy:'title' | limitTo: vm.limitTo:vm.limitTo*(vm.configTableSelected.page-1) track by $index"
                                 ng-click="vm.deselect(context)">
-                                <td>{{context.id}}</td>
                                 <td>{{context.title}}</td>
-                            </tr>
+                                </tr>
                         </tbody>
                     </table>
                 </div>
@@ -49,64 +45,28 @@
                 <div class="col-xs-6 margin-bottom">
                     <div class="row">
                         <div class="col-xs-5">
-                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de 1 a 25 de 149 resultados</div>
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{vm.configTableDeselected.in}} a {{vm.configTableDeselected.to}} de {{vm.configTableDeselected.size}}
+                                resultados
+                            </div>
                         </div>
                         <div class="col-xs-7">
-                            <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_0_paginate">
-                                <ul class="pagination">
-                                    <li class="disabled">
-                                        <a href="#" class="first" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_first"><i class="fa fa-angle-double-left"></i></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#" class="previous" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" id="DataTables_Table_0_previous"><i class="fa fa-angle-left"></i></a>
-                                    </li>
-                                    <li></li>
-                                    <li class="active"><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">1</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">2</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">3</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">4</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">5</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">6</a></li>
-                                    <li>
-                                        <a href="#" class="next" aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0" id="DataTables_Table_0_next"><i class="fa fa-angle-right"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="last" aria-controls="DataTables_Table_0" data-dt-idx="9" tabindex="0" id="DataTables_Table_0_last"><i class="fa fa-angle-double-right"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul uib-pagination ng-change="vm.changeTable()" total-items="vm.filterDataDeselected.length" ng-model="vm.configTableDeselected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6 margin-bottom">
                     <div class="row">
                         <div class="col-xs-5">
-                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de 1 a 25 de 149 resultados</div>
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{vm.configTableSelected.in}} a {{vm.configTableSelected.to}} de {{vm.configTableSelected.size}}
+                                resultados
+                            </div>
                         </div>
                         <div class="col-xs-7">
-                            <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_0_paginate">
-                                <ul class="pagination">
-                                    <li class="disabled">
-                                        <a href="#" class="first" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_first"><i class="fa fa-angle-double-left"></i></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#" class="previous" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" id="DataTables_Table_0_previous"><i class="fa fa-angle-left"></i></a>
-                                    </li>
-                                    <li></li>
-                                    <li class="active"><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0">1</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0">2</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="4" tabindex="0">3</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="5" tabindex="0">4</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0">5</a></li>
-                                    <li><a href="#" class="" aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">6</a></li>
-                                    <li>
-                                        <a href="#" class="next" aria-controls="DataTables_Table_0" data-dt-idx="8" tabindex="0" id="DataTables_Table_0_next"><i class="fa fa-angle-right"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="last" aria-controls="DataTables_Table_0" data-dt-idx="9" tabindex="0" id="DataTables_Table_0_last"><i class="fa fa-angle-double-right"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul uib-pagination ng-change="vm.changeTable()" total-items="vm.filterDataSelected.length" ng-model="vm.configTableSelected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
                         </div>
                     </div>
                 </div>
@@ -143,6 +103,7 @@
     
     .fixed-bottom {
         position: absolute;
+        width: 100%;
         bottom: 10px;
     }
     

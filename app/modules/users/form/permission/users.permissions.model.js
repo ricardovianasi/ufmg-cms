@@ -13,17 +13,26 @@
         CourseService,
         contextPermissions,
         PeriodicalService,
+        $timeout,
         $uibModalInstance) {
         var vm = this;
         vm.heightScreen = $window.screen.availHeight * 0.78;
-        vm.configTable = {};
-        vm.configTable.page = 1;
-        vm.configTable.limitTo = 10;
+        vm.configTableDeselected = {};
+        vm.configTableDeselected.page = 1;
+        vm.configTableDeselected.size = 0;
+        vm.limitTo = 10;
+        vm.configTableSelected = {};
+        vm.configTableSelected.page = 1;
+        vm.configTableSelected.size = 0;
         vm.title = contextPermissions.title;
         vm.select = _select;
         vm.deselect = _deselect;
         vm.cancel = _cancel;
         vm.save = _save;
+
+        vm.changeTable = function () {
+            _changeTables();
+        };
 
         function onInit() {
             $log.info('UsersPermissionModelController');
@@ -75,11 +84,6 @@
             $uibModalInstance.close(_updateCustomPermission());
         }
 
-        function _select(item) {
-            _arrayRemoveItem(vm.deselects, item);
-            vm.selecteds.push(item);
-        }
-
         function _mountItem(item) {
             if (contextPermissions.context === 'page') {
                 return {
@@ -98,6 +102,14 @@
                 };
             }
             return false;
+        }
+
+        function _changeTables() {
+            vm.configTableDeselected.in = (vm.configTableDeselected.page * vm.limitTo) - vm.limitTo;
+            vm.configTableDeselected.to = vm.configTableDeselected.page * vm.limitTo < vm.filterDataDeselected.length ? vm.configTableDeselected.page * vm.limitTo : vm.filterDataDeselected.length;
+
+            vm.configTableSelected.in = (vm.configTableSelected.page * vm.limitTo) - vm.limitTo;
+            vm.configTableSelected.to = vm.configTableSelected.page * vm.limitTo < vm.filterDataSelected.length ? vm.configTableSelected.page * vm.limitTo : vm.filterDataSelected.length;
         }
 
         function _mountListPermissionContextId(listContext) {
@@ -119,6 +131,7 @@
                         }
                     }
                     if (arraycontextPermissions.length === countIsVerify) {
+                        vm.configTableSelected.size = vm.selecteds.length;
                         break;
                     }
                 }
@@ -129,6 +142,10 @@
                     vm.deselects.push(_mountItem(item));
                 }
             }
+            vm.configTableDeselected.size = vm.deselects.length;
+            $timeout(function () {
+                _changeTables();
+            }, 100);
         }
 
         function _arrayRemoveItem(arr, item) {
@@ -142,7 +159,19 @@
         function _deselect(item) {
             _arrayRemoveItem(vm.selecteds, item);
             vm.deselects.push(item);
+            vm.configTableSelected.size = vm.selecteds.length;
+            vm.configTableDeselected.size = vm.deselects.length;
+            _changeTables();
         }
+
+        function _select(item) {
+            _arrayRemoveItem(vm.deselects, item);
+            vm.selecteds.push(item);
+            vm.configTableSelected.size = vm.selecteds.length;
+            vm.configTableDeselected.size = vm.deselects.length;
+            _changeTables();
+        }
+
 
         function _updateCustomPermission() {
             var array = [];
@@ -155,7 +184,7 @@
             }
             var contextIds = array.toString();
             if (!contextIds) {
-                return ["PUT"];
+                return [];
             }
             return contextIds;
         }
