@@ -63,7 +63,6 @@
             if (id) {
                 faqService.get(id).then(function (data) {
                     vm.faq = data.data;
-                    _permissions();
                     vm.faq.categories = [];
 
                     var ids = [];

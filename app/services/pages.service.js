@@ -76,8 +76,6 @@
 
             var url = $filter('format')('{0}?page={1}', PAGES_ENDPOINT, page);
 
-            $log.warn(url);
-
             return $http.get(url);
         };
 

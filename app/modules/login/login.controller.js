@@ -11,14 +11,19 @@
         NotificationService,
         sessionService,
         PermissionService,
+        ENV,
         $location,
         $log) {
 
         var vm = this;
+        vm.ENV = ENV;
+        vm.desenvMode = (ENV === 'development' || ENV === 'test');
 
         vm.credentials = {};
-        vm.credentials.username = 'portal@portal';
-        vm.credentials.password = 'teste';
+        if (vm.desenvMode) {
+            vm.credentials.username = 'portal@portal';
+            vm.credentials.password = 'teste';
+        }
         vm.login = _login;
 
         $rootScope.shownavbar = false;
@@ -32,11 +37,13 @@
                     .then(function (res) {
                         sessionService.saveData(res.data);
                         authService
-                            .account()
+                            .get()
                             .then(function (res1) {
-                                if (res1.data.status) {
-                                    $rootScope.User = res1.data;
-                                    PermissionService.initService(res1.data);
+                                var dataUser = res1;
+                                var user = dataUser.data;
+                                if (user.status) {
+                                    $rootScope.dataUser = dataUser;
+                                    PermissionService.initService(user);
                                     sessionService.setIsLogged();
                                     $location.path('/');
                                 } else {

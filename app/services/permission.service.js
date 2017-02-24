@@ -7,14 +7,15 @@
 
     /** ngInject */
     function PermissionService(authService, $log, NotificationService, $timeout, $rootScope) {
-        var currentUser = null;
+        $rootScope.currentUser = null;
         var showMessage = null;
         var service = {
             check: check,
             initService: initService,
             canDelete: canDelete,
             canPost: canPost,
-            canPut: canPut
+            canPut: canPut,
+            hasPermission: hasPermission
         };
 
         function hasContext(permission, context) {
@@ -24,8 +25,8 @@
         }
 
         function getPermissions(context) {
-            for (var i = 0; i < currentUser.permissions.length; i++) {
-                var permission = currentUser.permissions[i];
+            for (var i = 0; i < $rootScope.currentUser.permissions.length; i++) {
+                var permission = $rootScope.currentUser.permissions[i];
                 if (hasContext(permission, context)) {
                     return permission.privileges;
                 }
@@ -84,16 +85,16 @@
         }
 
         function check(context, id, role) {
-            if (!currentUser) {
+            if (!$rootScope.currentUser) {
                 return false;
             }
             try {
                 // permission admin
-                if (currentUser.is_administrator) {
+                if ($rootScope.currentUser.is_administrator) {
                     return true;
                 }
                 // no permission
-                if (!currentUser.permissions || angular.equals([], currentUser.permissions)) {
+                if (!$rootScope.currentUser.permissions || angular.equals([], $rootScope.currentUser.permissions)) {
                     messageWarn();
                     return false;
                 }
@@ -101,7 +102,6 @@
                 return verifyRole(hasPrivilege, id);
             } catch (err) {
                 $log.error(err);
-                // messageAlert();
             }
             return false;
         }
@@ -138,35 +138,27 @@
             return check(context, id, 'PUT');
         }
 
+        function hasPermission(context) {
+            return canPut(context) || canPost(context) || canDelete(context);
+        }
+
         function initService(user) {
-            if (user) {
-                currentUser = user || $rootScope.User;
-                $log.info('PermissionService');
+            if (angular.isDefined(user)) {
+                $rootScope.currentUser = user;
             } else {
                 authService
                     .account()
                     .then(function (res) {
-                        currentUser = res.data;
-                        if (!currentUser.status) {
+                        $rootScope.currentUser = res.data;
+                        if (!$rootScope.currentUser.status) {
                             NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
                             $rootScope.logout();
                         }
-                        $log.info('PermissionService');
-                        // TESTE();
                     })
                     .catch(function (err) {
                         $log.error(err);
-                        // messageAlert();
                     });
             }
-        }
-
-        function TESTE() {
-            currentUser.is_administrator = false; // remove admin
-            currentUser.permissions[0].privileges[1].posts = '184,180, 145'; // set permission only
-            currentUser.permissions[0].privileges.splice(0, 1); // remove permission POST
-            // currentUser.permissions = undefined;
-            // currentUser.permissions = [];
         }
         return service;
     }

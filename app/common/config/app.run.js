@@ -5,6 +5,7 @@
         .run(Debug)
         .run(Run);
 
+
     /** ngInject */
     function Debug($log, ENV) {
         var enabled = (ENV === 'development' || ENV === 'test');
@@ -15,7 +16,8 @@
     function Run($rootScope,
         dataTableConfigService,
         sessionService,
-        $route,
+        $window,
+        $log,
         DTDefaultOptions,
         $timeout,
         PermissionService) {
@@ -31,9 +33,13 @@
         });
 
         $rootScope.logout = function () {
+            $log.info('logout');
+            $rootScope.dataUser = null;
+            $rootScope.currentUser = null;
+            $rootScope.isRequiredAccount = false;
             sessionService.removeToken();
             sessionService.removeIsLogged();
-            $route.reload();
+            $window.location.reload();
         };
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
