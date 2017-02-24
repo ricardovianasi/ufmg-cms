@@ -67,6 +67,9 @@
         }
 
         function _convertPrivilegesToLoad() {
+            if (angular.isUndefined(vm.user.resources_perms)) {
+                return;
+            }
             var convertedPerms = {};
             var permsToConvert = vm.user.resources_perms;
             Object.keys(permsToConvert).forEach(function (key) {
@@ -88,15 +91,16 @@
         }
 
 
-        ////////////Function to clone perms Object and parse to save
         function _convertPrivilegesToSave() {
-            // recursive function to clone an object. If a non object parameter
-            // is passed in, that parameter is returned and no recursion occurs.
+            if (angular.isUndefined(vm.user.resources_perms)) {
+                return;
+            }
+
             function cloneObject(obj) {
                 if (obj === null || typeof obj !== 'object') {
                     return obj;
                 }
-                var temp = obj.constructor(); // give temp the original obj's constructor
+                var temp = obj.constructor();
                 for (var key in obj) {
                     temp[key] = cloneObject(obj[key]);
                 }
