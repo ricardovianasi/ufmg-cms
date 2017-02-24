@@ -7,6 +7,8 @@
         /** ngInject */
         .controller('SidebarController', function ($scope, NavigationService, $log) {
             $log.info('SidebarController');
-            $scope.navigation = NavigationService.get();
+            NavigationService.get().then(function (menu) {
+                $scope.navigation = menu;
+            });
         });
 })();
