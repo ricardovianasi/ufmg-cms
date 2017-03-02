@@ -18,10 +18,12 @@
         sessionService,
         $window,
         $log,
+        ModalService,
         DTDefaultOptions,
         $timeout,
         PermissionService) {
         var startPermission = false;
+
 
         $rootScope.dtOptions = dataTableConfigService.init();
 
@@ -31,6 +33,10 @@
                 startPermission = true;
             }
         });
+
+        $rootScope.changePassword = function () {
+            return ModalService.changePassword();
+        };
 
         $rootScope.logout = function () {
             $log.info('logout');

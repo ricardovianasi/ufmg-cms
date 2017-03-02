@@ -68,6 +68,52 @@
             });
         };
 
+        function _changePassword() {
+            return $uibModal.open({
+                templateUrl: 'components/modal/message-password-change.template.html',
+                controller: changePasswordController,
+                backdrop: false,
+                keyboard: false,
+                size: 'md'
+            });
+
+            function changePasswordController(accountService, $scope, $uibModalInstance, authService, $log, NotificationService) {
+                var vm = $scope;
+                vm.save = save;
+                vm.cancel = cancel;
+                vm.password = '';
+                vm.passwordCheck = '';
+                var user = {};
+
+                function onInit() {
+                    $log.info('changePasswordController');
+                    authService.account()
+                        .then(function (res) {
+                            user = res.data;
+                        });
+                }
+
+                function cancel() {
+                    $uibModalInstance.dismiss('cancel');
+                }
+
+                function save(isValid) {
+                    if (isValid) {
+                        var data = {
+                            password: vm.password,
+                        };
+                        accountService
+                            .edit(data, user.id)
+                            .then(function (res) {
+                                NotificationService.success('Senha atualizado com sucesso!');
+                            });
+                    }
+                }
+
+                onInit();
+            }
+        }
+
         return {
             MODAL_SMALL: 'sm',
             MODAL_MEDIUM: 'md',
@@ -75,7 +121,8 @@
             confirm: _confirm,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,
-            uploadFiles: _uploadFiles
+            uploadFiles: _uploadFiles,
+            changePassword: _changePassword
         };
     }
 })();

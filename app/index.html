@@ -15,9 +15,7 @@
 
 <body class="page-body">
     <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
-        <!-- set fixed position by adding class "navbar-fixed-top" -->
         <div class="navbar-inner">
-            <!-- Navbar Brand -->
             <div class="navbar-brand ufmg">
                 <a href="#/" class="logo">
                     <img src="assets/img/ufmg-logo.svg" alt="UFMG">
@@ -28,13 +26,30 @@
                     <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
                 </a>
             </div>
-            <!-- notifications and other links -->
             <ul class="nav nav-userinfo navbar-right">
-                <li class="dropdown user-profile">
-                    <a class="btn-exit" aria-label="Encerrar sessão" ng-click="logout()">
-                        <!--<img src="assets/images/user-1.png" alt="user-image" class="img-circle img-inline userpic-32" width="28"/>-->
-                        <span><i class="fa fa-power-off"></i></span>
+                <li class="dropdown">
+                    <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<img src="assets/img/logo.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" height="28">-->
+                        <span ng-bind="User.name"></span>
+                        <i class="fa-angle-down"></i>
                     </a>
+                    <ul class="dropdown-menu user-profile-menu list-unstyled">
+                        <li>
+                            <a class="cursor-pointer" ng-click="changePassword()">
+                                <i class="fa-exchange"></i> Trocar Senha
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/profile">
+                                <i class="fa-edit"></i> Editar perfil
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="btn-exit margin-right" uib-tooltip="Encerrar sessão" tooltip-placement="bottom">
+                            <i class="fa fa-sign-out" aria-hidden="true" ng-click="logout()"></i>
+                    </span>
                 </li>
             </ul>
         </div>
@@ -49,29 +64,6 @@
     </div>
     <script src="assets/js/TweenMax.min.js"></script>
     <script src="scripts/vendors.min.js"></script>
-    <script>
-        function clog() {
-            var args = Array.prototype.slice.call(arguments);
-
-            if (!args.length) {
-                return;
-            }
-
-            //in case logging without title
-            if (typeof args[0] !== 'string') {
-                log(args);
-            }
-
-            var title = '[c="color:#fff;background-color:#000"] {title} [c]'.replace('{title}', args.splice(0, 1)[0]);
-
-            if (!args.length) {
-                log(title);
-            } else {
-                log(title, args);
-            }
-        }
-
-    </script>
     <script src="scripts/app.min.js"></script>
     <!-- Bottom Scripts -->
     <script src="assets/js/resizeable.js"></script>

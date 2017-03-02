@@ -4,7 +4,7 @@
     angular.module('serviceModule')
         .factory('NavigationService',
             /** ngInject */
-            function ($log, PermissionService, authService, $q) {
+            function ($log, PermissionService, authService, $q, $rootScope) {
                 $log.info('NavigationService');
 
                 function get() {
@@ -13,6 +13,8 @@
                         .account()
                         .then(function (res) {
                             var user = res.data;
+                            $rootScope.User = user;
+                            $log.info(user);
                             PermissionService.initService(user);
                             var hasPermissionUser = PermissionService.hasPermission('user');
                             var hasPermissionMenu = PermissionService.hasPermission('menu');

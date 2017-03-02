@@ -12,6 +12,7 @@
         sessionService,
         PermissionService,
         ENV,
+        ModalService,
         $location,
         $log) {
 
@@ -45,6 +46,7 @@
                                     $rootScope.dataUser = dataUser;
                                     PermissionService.initService(user);
                                     sessionService.setIsLogged();
+                                    changePassword(user);
                                     $location.path('/');
                                 } else {
                                     NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
@@ -55,6 +57,12 @@
                         vm.credentials.password = '';
                         $log.error(err);
                     });
+            }
+
+            function changePassword(user) {
+                if (user.required_password_change) {
+                    ModalService.changePassword();
+                }
             }
 
         }
