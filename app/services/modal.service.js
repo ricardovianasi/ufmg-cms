@@ -106,6 +106,7 @@
                             .edit(data, user.id)
                             .then(function (res) {
                                 NotificationService.success('Senha atualizado com sucesso!');
+                                $uibModalInstance.dismiss('close');
                             });
                     }
                 }

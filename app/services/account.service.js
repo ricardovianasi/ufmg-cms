@@ -24,7 +24,6 @@
         }
 
         function _edit(user, id) {
-            console.log(user, id);
             return $http.put(apiUrl + '/account/' + id, user);
         }
 

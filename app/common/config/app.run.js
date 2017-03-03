@@ -38,6 +38,10 @@
             return ModalService.changePassword();
         };
 
+        $rootScope.backHistory = function () {
+            $window.history.back();
+        };
+
         $rootScope.logout = function () {
             $log.info('logout');
             $rootScope.dataUser = null;
