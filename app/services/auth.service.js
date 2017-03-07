@@ -11,7 +11,8 @@
         return {
             autenticate: _autenticate,
             account: _account,
-            get: _get
+            get: _get,
+            refresh: _refresh
         };
 
         function _autenticate(credentials) {
@@ -19,6 +20,15 @@
                 username: credentials.username,
                 password: credentials.password,
                 grant_type: grant_type_auth,
+                client_id: client_id_auth
+            };
+            return $http.post(apiUrl + '/authenticate', data);
+        }
+
+        function _refresh(refreshToken) {
+            var data = {
+                refresh_token: refreshToken,
+                grant_type: 'refresh_token',
                 client_id: client_id_auth
             };
             return $http.post(apiUrl + '/authenticate', data);

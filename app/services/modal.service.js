@@ -115,6 +115,76 @@
             }
         }
 
+        function _login() {
+            return $uibModal.open({
+                templateUrl: 'components/modal/login.modal.template.html',
+                controller: LoginModalController,
+                controllerAs: 'vm',
+                backdrop: false,
+                keyboard: false,
+                size: 'md'
+            });
+
+            function LoginModalController(
+                $log,
+                $rootScope,
+                sessionService,
+                authService,
+                PermissionService,
+                ENV,
+                $uibModalInstance
+            ) {
+                var vm = this;
+                $log.info('LoginModalController');
+                vm.ENV = ENV;
+                vm.desenvMode = (ENV === 'development' || ENV === 'test');
+                vm.credentials = {};
+                vm.rememberMe = false;
+                vm.login = _login;
+
+                if (vm.desenvMode) {
+                    vm.credentials.username = 'portal@portal';
+                    vm.credentials.password = 'teste';
+                }
+
+                function _login(isValid) {
+                    if (isValid) {
+                        authService
+                            .autenticate(vm.credentials)
+                            .then(function (res) {
+                                sessionService.saveData(res.data, vm.rememberMe);
+                                authService
+                                    .get()
+                                    .then(function (res1) {
+                                        var dataUser = res1;
+                                        var user = dataUser.data;
+                                        if (user.status) {
+                                            $rootScope.dataUser = dataUser;
+                                            PermissionService.initService(user);
+                                            sessionService.setIsLogged();
+                                            changePassword(user);
+                                            $rootScope.modalLoginIsDisabled = true;
+                                            $uibModalInstance.close();
+                                        } else {
+                                            NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                                        }
+                                    });
+                            }, function (err) {
+                                NotificationService.error('Usuário ou senha inválidos, tente novamente.');
+                                vm.credentials.password = '';
+                                $log.error(err);
+                            });
+                    }
+                }
+
+                function changePassword(user) {
+                    if (user.required_password_change) {
+                        ModalService.changePassword();
+                    }
+                }
+            }
+        }
+
         return {
             MODAL_SMALL: 'sm',
             MODAL_MEDIUM: 'md',
@@ -123,7 +193,8 @@
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,
             uploadFiles: _uploadFiles,
-            changePassword: _changePassword
+            changePassword: _changePassword,
+            login: _login
         };
     }
 })();

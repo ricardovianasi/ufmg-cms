@@ -18,6 +18,7 @@
 
         var vm = this;
         vm.ENV = ENV;
+        vm.rememberMe = false;
         vm.desenvMode = (ENV === 'development' || ENV === 'test');
 
         vm.credentials = {};
@@ -36,7 +37,7 @@
                 authService
                     .autenticate(vm.credentials)
                     .then(function (res) {
-                        sessionService.saveData(res.data);
+                        sessionService.saveData(res.data, vm.rememberMe);
                         authService
                             .get()
                             .then(function (res1) {
@@ -45,6 +46,7 @@
                                 if (user.status) {
                                     $rootScope.dataUser = dataUser;
                                     PermissionService.initService(user);
+                                    $rootScope.modalLoginIsDisabled = true;
                                     sessionService.setIsLogged();
                                     changePassword(user);
                                     $location.path('/');
