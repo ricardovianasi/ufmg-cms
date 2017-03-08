@@ -6,7 +6,7 @@
 
     /** ngInject */
     function MediaEditController($scope,
-        $modal,
+        $uibModal,
         $log,
         $location,
         $document,
@@ -52,7 +52,7 @@
         var removeConfirmationModal, EditPhotosModal;
 
         $scope.confirmationModal = function (size, title) {
-            removeConfirmationModal = $modal.open({
+            removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
                 backdrop: 'static',
@@ -89,7 +89,7 @@
         };
 
         $scope.confirmationModal = function (size, title) {
-            removeConfirmationModal = $modal.open({
+            removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
                 backdrop: 'static',
@@ -103,7 +103,7 @@
         };
 
         $scope.editPhoto = function (id) {
-            EditPhotosModal = $modal.open({
+            EditPhotosModal = $uibModal.open({
                 templateUrl: 'components/modal/photos-edit.modal.template.html',
                 controller: EditPhotosModalCtrl,
                 backdrop: 'static',
