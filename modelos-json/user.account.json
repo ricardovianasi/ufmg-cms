@@ -1,0 +1,64 @@
+{
+    "data": {
+        "post_type": "user",
+        "id": 8,
+        "name": "Usuário de Testes 2",
+        "email": "portal@portal",
+        "site": null,
+        "temp_password": null,
+        "status": true,
+        "client": null,
+        "unit": "1",
+        "sector": null,
+        "occupation": null,
+        "function": null,
+        "moderator": null,
+        "commercial_phone": null,
+        "home_phone": null,
+        "mobile_phone": null,
+        "required_password_change": null,
+        "is_administrator": true,
+        "permissions": [{
+            "post_type": "resource",
+            "resource": "page",
+            "privileges": [{
+                "post_type": "privilege",
+                "privilege": "POST",
+                "posts": null
+            }, {
+                "post_type": "privilege",
+                "privilege": "PUT",
+                "posts": "1,2"
+            }]
+        }, {
+            "post_type": "resource",
+            "resource": "news",
+            "privileges": [{
+                "post_type": "privilege",
+                "privilege": "POST",
+                "posts": null
+            }, {
+                "post_type": "privilege",
+                "privilege": "PUT",
+                "posts": null
+            }]
+        }],
+        "resources_perms": {
+            "page": "POST;PUT:1,2",
+            "news": "POST;PUT"
+        }
+    },
+    "status": 200,
+    "config": {
+        "method": "GET",
+        "transformRequest": [null],
+        "transformResponse": [null],
+        "url": "http://cajuri.bu.ufmg.br:9999/account",
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Authorization": "Bearer d4902c5daf4b5b807ac016ac278a7828c81c9413"
+        },
+        "cached": false
+    },
+    "statusText": "OK"
+}

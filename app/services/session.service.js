@@ -4,10 +4,12 @@
     angular
         .module('serviceModule')
         .factory('sessionService', sessionService);
+
     /**ngInject */
     function sessionService($location, $window) {
-        var store = $window.localStorage,
-            key = 'token';
+        var store = $window.localStorage;
+        var SAFETY_TIME = 20;
+        var key = 'token';
 
         return {
             saveData: saveData,
@@ -28,9 +30,11 @@
             removeLastLoginDate: removeLastLoginDate
         };
 
-        function saveData(data) {
+        function saveData(data, rememberMe) {
             setToken(data.access_token);
-            setTokenRefresh(data.refresh_token);
+            if (rememberMe) {
+                setTokenRefresh(data.refresh_token);
+            }
             setTokenTime(data.expires_in);
             setLastLoginDate();
         }
@@ -76,7 +80,7 @@
         }
 
         function getTokenTime() {
-            return store.getItem('token_Time');
+            return Number(store.getItem('token_Time')) - SAFETY_TIME;
         }
 
         function setTokenTime(time) {
@@ -92,7 +96,7 @@
         }
 
         function setLastLoginDate() {
-            return store.setItem('LastLoginDate', Date());
+            return store.setItem('LastLoginDate', moment());
         }
 
         function removeLastLoginDate() {

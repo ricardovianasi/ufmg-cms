@@ -1,69 +1,77 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('app')
-    .config(Router)
-    .config(Translator)
-    .config(Tags)
-    .config(http);
+    angular.module('app')
+        .config(Debug)
+        .config(Router)
+        .config(Translator)
+        .config(Tags)
+        .config(http);
 
-  http.$inject = ['$httpProvider'];
+    Debug.$inject = ['$logProvider', '$provide'];
 
-  /**
-   *
-   * @param $httpProvider
-   */
-  function http($httpProvider) {
-    $httpProvider
-      .interceptors
-      .push('authInterceptorService');
-  }
+    function Debug($logProvider, $provide) {
+        
+        $provide.decorator('$log', ['$delegate',
+            function ($delegate) {
+                var $log = {};
+                var enabled = true;
+                $log = {
+                    debugEnabled: function (flag) {
+                        enabled = !!flag;
+                    }
+                };
 
-  //Routing
-  Router.$inject = ['$routeProvider'];
+                ['log', 'warn', 'info', 'error'].forEach(function (methodName) {
+                    $log[methodName] = function () {
+                        if (!enabled) return;
 
-  /**
-   * @param $routeProvider
-   *
-   * @constructor
-   */
-  function Router($routeProvider) {
-    $routeProvider.otherwise({
-      redirectTo: '/login'
-    });
-  }
+                        var logger = $delegate;
+                        logger[methodName].apply(logger, arguments);
+                    };
+                });
+                return $log;
+            }
+        ]);
+        $logProvider.debugEnabled(false);
+    }
 
-  //Translation
-  Translator.$inject = ['$translateProvider'];
+    http.$inject = ['$httpProvider'];
 
-  /**
-   * @param $translateProvider
-   *
-   * @constructor
-   */
-  function Translator($translateProvider) {
-    $translateProvider.useStaticFilesLoader({
-      prefix: 'lang/',
-      suffix: '.json',
-    });
+    function http($httpProvider) {
+        $httpProvider
+            .interceptors
+            .push('authInterceptorService');
+    }
 
-    $translateProvider.preferredLanguage('pt-br');
-  }
+    Router.$inject = ['$routeProvider'];
 
-  //Tags
-  /**
-   * @param tagsInputConfigProvider
-   *
-   * @constructor
-   */
-  function Tags(tagsInputConfigProvider) {
-    tagsInputConfigProvider
-      .setDefaults('tagsInput', {
-        placeholder: 'Adicionar tag',
-        replaceSpacesWithDashes: false
-      })
-      .setDefaults('autoComplete', {
-        selectFirstMatch: false
-      });
-  }
+    function Router($routeProvider) {
+        $routeProvider.otherwise({
+            redirectTo: '/login'
+        });
+    }
+
+    //Translation
+    Translator.$inject = ['$translateProvider'];
+
+    function Translator($translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'lang/',
+            suffix: '.json',
+        });
+
+        $translateProvider.preferredLanguage('pt-br');
+    }
+
+    function Tags(tagsInputConfigProvider) {
+        tagsInputConfigProvider
+            .setDefaults('tagsInput', {
+                placeholder: 'Adicionar tag',
+                replaceSpacesWithDashes: false
+            })
+            .setDefaults('autoComplete', {
+                selectFirstMatch: false
+            });
+    }
 })();

@@ -24,7 +24,7 @@
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
         var allTags = [];
-        var vm = this;
+        var vm = $scope;
 
         $scope.publish = _publish;
         $scope.findTags = _findTags;
@@ -95,7 +95,6 @@
         }
 
         function _publish(page, preview) {
-            $log.info('page: ' + page, 'preview: ' + preview);
             if (!validationService.isValid($scope.formPage.$invalid)) {
                 return false;
             }

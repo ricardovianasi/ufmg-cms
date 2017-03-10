@@ -1,91 +1,94 @@
-;(function () {
-  'use strict';
+;
+(function () {
+    'use strict';
 
-  angular.module('periodicalModule')
-    .controller('PeriodicalController', PeriodicalController);
+    angular.module('periodicalModule')
+        .controller('PeriodicalController', PeriodicalController);
 
-  PeriodicalController.$inject = [
-    '$scope',
-    'dataTableConfigService',
-    'PeriodicalService',
-    'DateTimeHelper',
-    '$uibModal',
-    'NotificationService',
-    'dataTableConfigService',
-    '$route',
-    '$rootScope'
-  ];
+    /** ngInject */
+    function PeriodicalController($scope,
+        dataTableConfigService,
+        PeriodicalService,
+        DateTimeHelper,
+        $uibModal,
+        NotificationService,
+        $route,
+        PermissionService,
+        $rootScope,
+        $log) {
+        $rootScope.shownavbar = true;
+        $log.info('PeriodicalController');
 
-  function PeriodicalController($scope,
-                                dataTableConfigService,
-                                PeriodicalService,
-                                DateTimeHelper,
-                                $modal,
-                                NotificationService,
-                                $route,
-                                $rootScope) {
-    $rootScope.shownavbar = true;
-    console.log('... PeriodicalController');
+        $scope.periodicals = [];
+        $scope.currentPage = 1;
 
-    $scope.periodicals = [];
-    $scope.currentPage = 1;
+        $scope.convertDate = function (data) {
+            return DateTimeHelper.dateToStr(data);
+        };
 
-    $scope.convertDate = function (data) {
-      return DateTimeHelper.dateToStr(data);
-    };
+        var loadPeriodicals = function (page) {
+            PeriodicalService.getPeriodicals(null, page).then(function (data) {
+                $scope.periodicals = data.data;
+                $scope.dtOptions = dataTableConfigService.init();
+                _permissions();
+            });
+        };
 
-    /**
-     * @param page
-     */
-    var loadPeriodicals = function (page) {
-      PeriodicalService.getPeriodicals(null, page).then(function (data) {
-        $scope.periodicals = data.data;
-        $scope.dtOptions = dataTableConfigService.init();
-      });
-    };
+        loadPeriodicals();
 
-    loadPeriodicals();
+        $scope.changePage = function () {
+            loadPeriodicals($scope.currentPage);
+        };
 
-    $scope.changePage = function () {
-      loadPeriodicals($scope.currentPage);
-    };
+        $scope.removePeriodical = function (id, description) {
+            $scope.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
+            removeConfirmationModal.result.then(function (data) {
+                PeriodicalService.removePeriodical(id).then(function (data) {
+                    NotificationService.success('Publicação removida com sucesso.');
+                    $route.reload();
+                });
+            });
+        };
 
-    $scope.removePeriodical = function (id, description) {
-      $scope.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
-      removeConfirmationModal.result.then(function (data) {
-        PeriodicalService.removePeriodical(id).then(function (data) {
-          NotificationService.success('Publicação removida com sucesso.');
-          $route.reload();
-        });
-      });
-    };
+        var removeConfirmationModal;
 
-    var removeConfirmationModal;
+        $scope.confirmationModal = function (size, title) {
+            removeConfirmationModal = $uibModal.open({
+                templateUrl: 'components/modal/confirmation.modal.template.html',
+                controller: ConfirmationModalCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    title: function () {
+                        return title;
+                    }
+                }
+            });
+        };
 
-    $scope.confirmationModal = function (size, title) {
-      removeConfirmationModal = $modal.open({
-        templateUrl: 'components/modal/confirmation.modal.template.html',
-        controller: ConfirmationModalCtrl,
-        backdrop: 'static',
-        size: size,
-        resolve: {
-          title: function () {
-            return title;
-          }
+        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+            $scope.modal_title = title;
+
+            $scope.ok = function () {
+                $uibModalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        };
+
+        function _permissions() {
+            _canDelete();
+            _canPost();
         }
-      });
-    };
 
-    var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-      $scope.modal_title = title;
+        function _canPost() {
+            $scope.canPost = PermissionService.canPost('periodical');
+        }
 
-      $scope.ok = function () {
-        $uibModalInstance.close();
-      };
-
-      $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      };
-    };
-  }
+        function _canDelete() {
+            $scope.canDelete = PermissionService.canDelete('periodical');
+        }
+    }
 })();

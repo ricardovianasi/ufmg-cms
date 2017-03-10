@@ -5,7 +5,6 @@
                 <h1 class="title">Notícias</h1>
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
@@ -14,96 +13,82 @@
                             <i class="fa-home"></i>Home
                         </a>
                     </li>
-
                     <li class="active">
                         <a href="#/news">
                             <strong>Notícias</strong>
                         </a>
                     </li>
                 </ol>
-            </div><!--breadcrumb-env-->
+            </div>
+            <!--breadcrumb-env-->
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a ng-click="itemStatus = ''" class="btn"
-                       ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
+                    <a ng-click="itemStatus = ''" class="btn" ng-class="{ 'btn-gray': itemStatus == '' || itemStatus == undefined}">
                         <span ng-class="{ 'strong': itemStatus == '' || itemStatus == undefined }">Tudo</span>
                         <span class=small>({{ news.total }})</span>
                     </a>
-
                     <a ng-click="itemStatus = 'publish'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'publish'}">
                         <span ng-class="{ 'strong': itemStatus == 'publish'}">Publicados</span>
                         <span class=small>({{ (news.items | filter: {status: 'publish'}).length }})</span>
                     </a>
-
                     <a ng-click="itemStatus = 'draft'" class="btn" ng-class="{ 'btn-gray': itemStatus == 'draft'}">
                         <span ng-class="{ 'strong': itemStatus == 'draft'}">Rascunho</span>
                         <span class=small>({{ (news.items | filter: {status: 'draft'}).length }})</span>
                     </a>
                 </div>
-
                 <div class="pull-right">
-                    <a ng-href="#/news/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/news/new" class="btn btn-secondary btn-lg pull-left">
                         <i class="fa fa-plus"></i> NOVA NOTÍCIA
                     </a>
                 </div>
             </div>
-
             <div class="panel-body">
                 <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
                     <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Usuário</th>
-                        <th>Data da Publicação</th>
-                        <th>Ações</th>
-                    </tr>
+                        <tr>
+                            <th>Título</th>
+                            <th>Usuário</th>
+                            <th>Data da Publicação</th>
+                            <th>Ações</th>
+                        </tr>
                     </thead>
-
                     <tbody>
-                    <tr role="row" class="odd"
-                        ng-repeat="item in news.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
-                        <td>
-                            <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
-                            <span class="label label-primary"
-                                  ng-if="item.highlight">Destaque</span>
-                            <span class="label label-danger"
-                                  ng-if="item.highlight_ufmg">UFMG</span>
-                        </td>
-
-                        <td>{{ item.author.name }}</td>
-
-                        <td>
-                            <strong>{{ convertDate(item.post_date) }}</strong>
-                            <br>
-                            <small>{{ item.status|translate|titleize }}</small>
-                        </td>
-
-                        <td class="table-fit">
-                            <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.news_url }}"
-                               class="btn btn-primary">
-                                <i class="fa fa-eye"></i>
-                            </a>
-
-                            <a uib-tooltip="Editar" ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-
-                            <a uib-tooltip="Excluir" ng-click="removeNews(item.id, item.title)" class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr role="row" class="odd" ng-repeat="item in news.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
+                            <td>
+                                <a target="_blank" ng-href="{{ item.news_url }}">{{ item.title }}</a>&nbsp;
+                                <span class="label label-primary" ng-if="item.highlight">Destaque</span>
+                                <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
+                            </td>
+                            <td>{{ item.author.name }}</td>
+                            <td>
+                                <strong>{{ convertDate(item.post_date) }}</strong>
+                                <br>
+                                <small>{{ item.status|translate|titleize }}</small>
+                            </td>
+                            <td class="table-fit">
+                                <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.news_url }}" class="btn btn-primary">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a uib-tooltip="Editar" can-put context="news" context-id="item.id" ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeNews(item.id, item.title)" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-
-        </div><!--panel-->
-    </div><!--col-xs-12-->
-</div><!--row-->
+        </div>
+        <!--panel-->
+    </div>
+    <!--col-xs-12-->
+</div>
+<!--row-->

@@ -1,5 +1,6 @@
 {
-  "apiUrl": "https://portal-des.cecom.ufmg.br/webservice",
-  "grant_type_auth": "password",
-  "client_id_auth": "cms"
+    "apiUrl": "https://portal-des.cecom.ufmg.br/webservice",
+    "grant_type_auth": "password",
+    "client_id_auth": "cms",
+    "ENV": "staging"
 }

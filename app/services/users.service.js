@@ -6,14 +6,14 @@
         .factory('UsersService', UsersService);
 
     /** ngInject */
-    function UsersService($http, apiUrl, $log) {
+    function UsersService($http, apiUrl, $log, $q) {
         $log.info('UsersService');
 
         return {
             getUsers: _getUsers,
             getUser: _getUser,
             saveUser: _saveUser,
-            updateUser: _updateUser
+            updateUser: _updateUser,
         };
 
         function _getUsers() {
@@ -32,9 +32,9 @@
             return $http.post(apiUrl + '/user', data);
         }
 
-        function _updateUser(data) {
-            var id = data.id;
-            return $http.put(apiUrl + '/user/' + id, data);
+        function _updateUser(user) {
+            var id = user.id;
+            return $http.put(apiUrl + '/user/' + id, user);
         }
     }
 })();

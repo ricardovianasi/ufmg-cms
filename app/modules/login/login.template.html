@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="row panel">
-            <div class="col-sm-12 col-">
+            <div class="col-sm-12">
+                <p ng-if="vm.ENV === 'development'"><b>Modo: </b> Desenvolvimento</p>
+                <p ng-if="vm.ENV === 'test'"><b>Modo: </b> Teste</p>
                 <form name="formLogin" id="login" class="login-form fade-in-effect" ng-submit="vm.login(formLogin.$valid)" novalidate>
                     <div class="form-group" ng-class="{'has-error':(formLogin.$submitted || formLogin.username.$touched) && (formLogin.username.$error.required || formLogin.username.$error.email)}">
                         <label class="control-label" for="username">Usuário</label>
@@ -27,6 +29,12 @@
                             <div class="error-message" ng-show="formLogin.$submitted || formLogin.password.$touched">
                                 <div ng-show="formLogin.password.$error.required">Digite sua senha.</div>
                             </div>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input name="remember" type="checkbox" ng-model="vm.rememberMe">
+                            Manter-me conectado
+                        </label>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block btn-lg">

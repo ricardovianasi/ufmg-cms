@@ -69,6 +69,7 @@ var STYLES = [
     'app/assets/xenon/css/xenon-forms.css',
     'app/assets/xenon/css/xenon-components.css',
     'app/assets/xenon/css/xenon-skins.css',
+
 ];
 
 var FONTS = [

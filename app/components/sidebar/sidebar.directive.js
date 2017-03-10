@@ -1,17 +1,16 @@
-;(function () {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular.module('componentsModule')
-    .directive('ufmgSidebar', [
-      function () {
-        return {
-          restrict: 'A',
-          templateUrl: 'components/sidebar/sidebar.template.html',
-          controller: 'SidebarController',
-          link: function () {
-            console.log('... SidebarDirective');
-          }
-        };
-      }
-    ]);
+    angular.module('componentsModule')
+        /** ngInject */
+        .directive('ufmgSidebar', function ($log) {
+            return {
+                restrict: 'A',
+                templateUrl: 'components/sidebar/sidebar.template.html',
+                controller: 'SidebarController',
+                link: function () {
+                    $log.info('SidebarController');
+                }
+            };
+        });
 })();

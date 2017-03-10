@@ -1,0 +1,114 @@
+<div class="page-container">
+    <div class="main-content ms-container">
+        <div class="row" ng-style="{height: vm.heightScreen}">
+            <div class="col-xs-12">
+                <h3>Permissões personalizadas</h3>
+            </div>
+            <div class="col-xs-offset-6 col-xs-6">
+                <div class="dataTables_filter"><label><i class="fa fa-search"></i><input type="search" ng-change="vm.changeTable()" class="form-control input-sm" placeholder="" ng-model="search" aria-controls="DataTables_Table_0"></label></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>{{vm.title}} sem acesso para editar</h4>
+                    <table class="table table-striped table-bordered remove-padding">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.filterDataDeselected = (vm.deselects | filter: search) | orderBy:'title' | limitTo: vm.limitTo:vm.limitTo*(vm.configTableDeselected.page-1) track by $index"
+                                ng-click="vm.select(context)">
+                                <td>{{context.title}}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                    <h4>{{vm.title}} editáveis</h4>
+                    <table class="table table-striped table-bordered remove-padding">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in vm.filterDataSelected = (vm.selecteds | filter: search) | orderBy:'title' | limitTo: vm.limitTo:vm.limitTo*(vm.configTableSelected.page-1) track by $index"
+                                ng-click="vm.deselect(context)">
+                                <td>{{context.title}}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row fixed-bottom">
+                <div class="col-xs-6 margin-bottom">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{vm.configTableDeselected.in}} a {{vm.configTableDeselected.to}} de {{vm.configTableDeselected.size}}
+                                resultados
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <ul uib-pagination ng-change="vm.changeTable()" total-items="vm.filterDataDeselected.length" ng-model="vm.configTableDeselected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 margin-bottom">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{vm.configTableSelected.in}} a {{vm.configTableSelected.to}} de {{vm.configTableSelected.size}}
+                                resultados
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <ul uib-pagination ng-change="vm.changeTable()" total-items="vm.filterDataSelected.length" ng-model="vm.configTableSelected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-danger" ng-click="vm.cancel()">
+                        <i class="fa fa-remove"></i> 
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-success  pull-right" ng-click="vm.save()">
+                        <i class="fa fa-check"></i>
+                        Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .ms-container {
+        background: transparent url('assets/img/switch.png') no-repeat 50% 50%;
+        position: relative;
+    }
+    
+    .ms-hover:hover {
+        background-color: #e4e4e4 !important;
+        cursor: pointer;
+    }
+    
+    .remove-padding tbody tr td {
+        padding: 9px !important;
+    }
+    
+    .fixed-bottom {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+    }
+    
+    .margin-bottom {
+        margin-bottom: 15px;
+    }
+
+</style>

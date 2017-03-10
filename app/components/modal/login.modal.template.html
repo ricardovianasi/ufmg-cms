@@ -1,0 +1,78 @@
+<style>
+    .login-wrapper-modal {
+        display: block ! important;
+        min-width: 400px;
+        max-width: 960px;
+        /* align-items: center; */
+        /* justify-content: center; */
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .login-modal-header {
+        background-color: #ef3f4a;
+        padding: 40px 20px 40px 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+</style>
+<div class="col-xs-8 col-xs-offset-2">
+    <div class="row login-modal-header">
+        <div class="col-xs-4">
+            <img src="assets/img/ufmg-logo.svg" alt="UFMG">
+        </div>
+        <div class="col-xs-8">
+            <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
+        </div>
+    </div>
+    <div class="row panel">
+        <div class="col-xs-12">
+            <p ng-if="vm.ENV === 'development'"><b>Modo: </b> Desenvolvimento</p>
+            <p ng-if="vm.ENV === 'test'"><b>Modo: </b> Teste</p>
+            <form name="formLogin" id="login" class="login-form fade-in-effect" ng-submit="vm.login(formLogin.$valid)" novalidate>
+                <div class="form-group" ng-class="{'has-error':(formLogin.$submitted || formLogin.username.$touched) && (formLogin.username.$error.required || formLogin.username.$error.email)}">
+                    <label class="control-label" for="username">Usuário</label>
+                    <input type="email" class="form-control" ng-model="vm.credentials.username" name="username" id="username" autocomplete="off"
+                        required>
+                        <div class="error-message" ng-show="formLogin.$submitted || formLogin.username.$touched">
+                            <span ng-show="formLogin.username.$error.required">Insira seu e-mail.</span>
+                            <span ng-show="formLogin.username.$error.email">Este não é um email válido.</span>
+                        </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error':(formLogin.$submitted || formLogin.password.$touched) && formLogin.password.$error.required}">
+                    <label class="control-label" for="password">Senha</label>
+                    <input class="form-control" type="password" name="password" ng-model="vm.credentials.password" id="password" autocomplete="off"
+                        required>
+                        <div class="error-message" ng-show="formLogin.$submitted || formLogin.password.$touched">
+                            <div ng-show="formLogin.password.$error.required">Digite sua senha.</div>
+                        </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                            <input name="remember" type="checkbox" ng-model="vm.rememberMe">
+                            Manter-me conectado
+                        </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block btn-lg">
+                <i class="fa fa-sign-in"></i> Entrar
+            </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--<div class="row">
+    <div class="col-xs-10">
+        <div class="login-wrapper login-wrapper-modal">
+            <div class="col-xs-4 col-xs-offset-4 login-container">
+                <div class="row panel">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
