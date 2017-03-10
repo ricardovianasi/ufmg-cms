@@ -1,92 +1,75 @@
 <div class="page-title">
-   <div class="row flex-center">
-       <div class="col-md-6">
-           <div class="title-env">
-               <h1 class="title">Mídia</h1>
-           </div>
-       </div>
-       <div class="col-md-6">
-           <div class="breadcrumb-env">
-               <ol class="breadcrumb bc-1">
-                   <li>
-                       <a href="#/">
-                           <i class="fa-home"></i>Home
-                       </a>
-                   </li>
-
-                   <li class="active">
-                       <a href="#/media">
-                           <strong>Mídia</strong>
-                       </a>
-                   </li>
-               </ol>
-           </div>
-       </div>
-   </div>
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">Mídia</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/media">
+                            <strong>Mídia</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="btn-toolbar">
-
-
-
                 <div class="pull-right">
                     <a ng-href=#/media/new class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA MÍDIA</a>
                 </div>
             </div>
-
             <div class="panel-body">
                 <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
                     <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Usuário</th>
-                        <th>Data da Criação</th>
-                        <th>Ações</th>
-                    </tr>
+                        <tr>
+                            <th>Mídia</th>
+                            <th>Título</th>
+                            <th>Usuário</th>
+                            <th>Data da Criação</th>
+                            <th>Ações</th>
+                        </tr>
                     </thead>
-
                     <tbody>
-                    <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
-                        <td>
-                            <div>
-                                <div class="pull-left spacer-right">
-                                    <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'"
-                                         style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
-                                    <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
-                                </div>
-
-                                <div class="pull-left">
-                                    {{ item.title }}
-                                    <small>{{ item.subtitle }}</small>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>{{ item.author.name }}</td>
-
-                        <td>
-                            <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
-                            <br>
-                            <small>{{ item.status|translate|titleize }}</small>
-                        </td>
-
-                        <td class="table-fit">
-                            <a uib-tooltip="Visualizar" target="_blank" ng-href="{{item.url}}" class="btn btn-primary">
-                                <i class="fa fa-eye"></i>
-                            </a>
-
-                            <a uib-tooltip="Editar" ng-href="#/media/edit/{{item.id}}" class="btn btn-warning">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-
-                            <a uib-tooltip="Excluir" ng-click="removeMedia(item.id, item.title)" class="btn btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                        <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
+                            <td>
+                                <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'" style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
+                                <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
+                            </td>
+                            <td>
+                                {{ item.title }}
+                                <small>{{ item.subtitle }}</small>
+                            </td>
+                            <td>{{ item.author.name }}</td>
+                            <td>
+                                <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
+                                <br>
+                                <small>{{ item.status|translate|titleize }}</small>
+                            </td>
+                            <td class="table-fit">
+                                <a uib-tooltip="Visualizar" target="_blank" ng-href="{{item.url}}" class="btn btn-primary">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a uib-tooltip="Editar" ng-href="#/media/edit/{{item.id}}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a uib-tooltip="Excluir" ng-click="removeMedia(item.id, item.title)" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

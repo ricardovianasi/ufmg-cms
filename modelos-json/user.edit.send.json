@@ -1,0 +1,35 @@
+{
+    "post_type": "user",
+    "id": 8,
+    "name": "Usuário de Testes 2",
+    "email": "portal@portal",
+    "site": null,
+    "temp_password": null,
+    "status": true,
+    "client": null,
+    "unit": "1",
+    "sector": "CEDECOM",
+    "occupation": "WEB",
+    "function": "Desenvolvedor",
+    "moderator": null,
+    "commercial_phone": null,
+    "home_phone": null,
+    "mobile_phone": null,
+    "required_password_change": null,
+    "is_administrator": true,
+    "permissions": {
+        "page": "POST;PUT:1,2;DELETE",
+        "news": "POST;PUT"
+    },
+    "resources_perms": {
+        "page": {
+            "POST": ["POST"],
+            "PUT": "1,2",
+            "DELETE": ["DELETE"]
+        },
+        "news": {
+            "POST": ["POST"],
+            "PUT": ["PUT"]
+        }
+    }
+}

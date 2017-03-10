@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="pull-right">
-                    <a ng-href="#/clippings/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/clippings/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> INSERIR NOVA MATÉRIA
                     </a>
                 </div>
@@ -88,11 +88,11 @@
                         </td>
 
                         <td class="table-fit">
-                            <a uib-tooltip="Editar" ng-href="#/clippings/edit/{{ clipping.id }}" class="btn btn-warning">
+                            <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clippings/edit/{{ clipping.id }}" class="btn btn-warning">
                                 <i class="fa fa-pencil"></i>
                             </a>
 
-                            <a uib-tooltip="Excluir" ng-click="removeClipping(clipping.id, clipping.title)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeClipping(clipping.id, clipping.title)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

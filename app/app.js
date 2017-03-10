@@ -47,6 +47,7 @@
         'serviceModule',
         'loginModule',
         'faqModule',
-        'usersModule'
+        'usersModule',
+        'accountModule'
     ]);
 })();

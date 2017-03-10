@@ -1,93 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Xenon Boostrap Admin Panel"/>
-    <meta name="author" content=""/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Xenon Boostrap Admin Panel" />
+    <meta name="author" content="" />
     <title>UFMG | POST - Sistema de Gerenciamento de Conteúdo</title>
-
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">
     <link rel="stylesheet" type="text/css" href="assets/css/vendors.min.css">
     <link rel="stylesheet" href="assets/css/main.min.css">
 </head>
 
 <body class="page-body">
-    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar"><!-- set fixed position by adding class "navbar-fixed-top" -->
+    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
         <div class="navbar-inner">
-            <!-- Navbar Brand -->
             <div class="navbar-brand ufmg">
                 <a href="#/" class="logo">
                     <img src="assets/img/ufmg-logo.svg" alt="UFMG">
                 </a>
             </div>
-
             <div class="navbar-brand post">
                 <a href="#/" class="logo">
                     <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
                 </a>
             </div>
-
-            <!-- notifications and other links -->
             <ul class="nav nav-userinfo navbar-right">
-                <li class="dropdown user-profile">
-                    <a class="btn-exit" aria-label="Encerrar sessão" ng-click="logout()">
-                        <!--<img src="assets/images/user-1.png" alt="user-image" class="img-circle img-inline userpic-32" width="28"/>-->
-                        <span><i class="fa fa-power-off"></i></span>
+                <li class="dropdown">
+                    <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<img src="assets/img/logo.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" height="28">-->
+                        <span ng-bind="User.name"></span>
+                        <i class="fa-angle-down"></i>
                     </a>
+                    <ul class="dropdown-menu user-profile-menu list-unstyled">
+                        <li>
+                            <a class="cursor-pointer" ng-click="changePassword()">
+                                <i class="fa-exchange"></i> Trocar Senha
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/profile">
+                                <i class="fa-edit"></i> Editar perfil
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="margin-right">
+                    <span class="btn-exit" uib-tooltip="Encerrar sessão" tooltip-placement="bottom" ng-click="logout()">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </span>
                 </li>
             </ul>
         </div>
     </nav>
-
     <div class="page-container">
         <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar">
             <!--<ufmg-sidebar></ufmg-sidebar>-->
         </div>
-
         <div class="main-content">
             <ng-view></ng-view>
         </div>
     </div>
-
-<script src="assets/js/TweenMax.min.js"></script>
-<script src="scripts/vendors.min.js"></script>
-
-<script>
-    function clog() {
-        var args = Array.prototype.slice.call(arguments);
-
-        if (!args.length) {
-            return;
-        }
-
-        //in case logging without title
-        if (typeof args[0] !== 'string') {
-            log(args);
-        }
-
-        var title = '[c="color:#fff;background-color:#000"] {title} [c]'.replace('{title}', args.splice(0, 1)[0]);
-
-        if (!args.length) {
-            log(title);
-        } else {
-            log(title, args);
-        }
-    }
-</script>
-
-<script src="scripts/app.min.js"></script>
-
-<!-- Bottom Scripts -->
-<script src="assets/js/resizeable.js"></script>
-<script src="assets/js/joinable.js"></script>
-<script src="assets/js/xenon-api.js"></script>
-<script src="assets/js/xenon-toggles.js"></script>
-
-<!-- JavaScripts initializations and stuff -->
-<script src="assets/js/xenon-custom.js"></script>
+    <script src="assets/js/TweenMax.min.js"></script>
+    <script src="scripts/vendors.min.js"></script>
+    <script src="scripts/app.min.js"></script>
+    <!-- Bottom Scripts -->
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/xenon-api.js"></script>
+    <script src="assets/js/xenon-toggles.js"></script>
+    <!-- JavaScripts initializations and stuff -->
+    <script src="assets/js/xenon-custom.js"></script>
 </body>
+
 </html>

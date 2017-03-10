@@ -30,7 +30,7 @@
 
             <div class="btn-toolbar">
                 <div class="pull-right">
-                    <a ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> NOVO DESTAQUE
                     </a>
                 </div>
@@ -64,11 +64,11 @@
 
                             <td class="table-fit">
 
-                                <a uib-tooltip="Editar" ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <a uib-tooltip="Excluir" ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
+                                <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

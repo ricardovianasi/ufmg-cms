@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -7,16 +6,13 @@
 
     /** ngInject */
     function dataTableConfigService(DTOptionsBuilder, $log) {
-        $log.info('... dataTableConfigService');
+        $log.info('dataTableConfigService');
 
         return {
             init: _init
         };
 
         function _init() {
-            /**
-             * config DTOptionsBuilder
-             */
             return DTOptionsBuilder
                 .newOptions()
                 .withPaginationType('full_numbers')

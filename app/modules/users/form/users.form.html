@@ -1,0 +1,69 @@
+<div class="page-title">
+    <div class="row flexcenter">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">Novo Usuário</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="#/users">
+                            Usuários
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/users/new">
+                            <strong>Novo Usuário</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="nav nav-tabs">
+    <li ng-class="{active:vm.isActive(1)}">
+        <a href ng-click="vm.setTab(1)">
+            <span class="hidden-xs">Informações</span>
+        </a>
+    </li>
+    <li ng-class="{active:vm.isActive(2)}">
+        <a href ng-click="vm.setTab(2)">
+            <span class="hidden-xs">Permissões</span>
+        </a>
+    </li>
+</ul>
+<form class="form" name="formUsers" novalidate ng-submit="vm.save(formUsers.$valid)">
+    <div class="tab-pane tab-content" ng-if="vm.isActive(1)">
+        <div class="row">
+            <ng-include src="'modules/users/form/information/users.information.html'">
+            </ng-include>
+        </div>
+    </div>
+    <div class="tab-pane tab-content" ng-if="vm.isActive(2)">
+        <div class="row">
+            <ng-include src="'modules/users/form/permission/users.permissions.html'">
+            </ng-include>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr/>
+            <div class="col-md-2">
+                <a href="#/users" class="btn btn-danger btn-lg">
+                    <i class="fa fa-close"></i> Cancelar
+                </a>
+            </div>
+            <div class="col-md-2 col-md-offset-8">
+                <button type="submit" class="btn btn-secondary btn-lg">
+                    <i class="fa fa-check"></i> Salvar Usuário
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

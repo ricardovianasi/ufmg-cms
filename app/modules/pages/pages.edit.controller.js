@@ -24,13 +24,13 @@
         validationService,
         $log) {
         $rootScope.shownavbar = true;
+        var vm = $scope;
         $log.info('PaginasEditarController');
 
         var allTags = [];
 
         PagesService.getPages().then(function (data) {
             $scope.pagesParent = data.data.items;
-
             $scope.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
@@ -84,7 +84,6 @@
         };
 
         $scope.publish = function (page, preview) {
-            $log.info('page: ' + page, 'preview: ' + preview);
             if (!validationService.isValid($scope.formPage.$invalid)) {
                 return false;
             }
@@ -185,8 +184,6 @@
 
         // Get Page
         PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
-
-            console.log(data.data);
             var page = data.data;
             var tags = page.tags;
 
@@ -216,8 +213,10 @@
             $scope.widgets = data.data;
         });
 
+
         $scope.findTags = function ($query) {
             return TagsService.findTags($query, allTags);
         };
+
     }
 })();

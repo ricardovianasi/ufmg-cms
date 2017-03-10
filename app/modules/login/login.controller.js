@@ -10,14 +10,22 @@
         authService,
         NotificationService,
         sessionService,
+        PermissionService,
+        ENV,
+        ModalService,
         $location,
         $log) {
 
         var vm = this;
+        vm.ENV = ENV;
+        vm.rememberMe = false;
+        vm.desenvMode = (ENV === 'development' || ENV === 'test');
 
         vm.credentials = {};
-        vm.credentials.username = 'portal@portal';
-        vm.credentials.password = 'teste';
+        if (vm.desenvMode) {
+            vm.credentials.username = 'portal@portal';
+            vm.credentials.password = 'teste';
+        }
         vm.login = _login;
 
         $rootScope.shownavbar = false;
@@ -29,15 +37,34 @@
                 authService
                     .autenticate(vm.credentials)
                     .then(function (res) {
-                        sessionService.saveData(res.data);
-                        sessionService.setIsLogged();
-                        $rootScope.User = res.data;
-                        $location.path('/');
+                        sessionService.saveData(res.data, vm.rememberMe);
+                        authService
+                            .get()
+                            .then(function (res1) {
+                                var dataUser = res1;
+                                var user = dataUser.data;
+                                if (user.status) {
+                                    $rootScope.dataUser = dataUser;
+                                    PermissionService.initService(user);
+                                    $rootScope.modalLoginIsDisabled = true;
+                                    sessionService.setIsLogged();
+                                    changePassword(user);
+                                    $location.path('/');
+                                } else {
+                                    NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                                }
+                            });
                     }, function (err) {
                         NotificationService.error('Usuário ou senha inválidos, tente novamente.');
                         vm.credentials.password = '';
                         $log.error(err);
                     });
+            }
+
+            function changePassword(user) {
+                if (user.required_password_change) {
+                    ModalService.changePassword();
+                }
             }
 
         }

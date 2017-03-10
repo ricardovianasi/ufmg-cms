@@ -15,8 +15,6 @@
 
         var vm = $scope;
 
-        $log.error(widgets);
-
         vm.widgets = widgets;
         vm.ok = _ok;
         vm.cancel = _cancel;

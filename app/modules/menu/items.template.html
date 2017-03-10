@@ -1,39 +1,23 @@
 <div class="row">
     <div class="col-md-10">
-        <input type="text" value="{{ item.newTitle }}" class="form-control"
-               ng-show="item.editTitle"
-               ng-model="item.newTitle">
+        <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
         <span ng-show="!item.editTitle">{{ item.newTitle || item.label }}</span>
         <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
-
-        <a class="label label-sm label-warning pull-right"
-           ng-click="vm.editTitle('mainMenu', item)"
-           ng-show="!item.editTitle">
+        <a class="label label-sm label-warning pull-right" ng-click="vm.editTitle('mainMenu', item)" ng-show="!item.editTitle" ng-if="vm.canPut">
             <i class="fa fa-edit"></i> Editar
-        </a>
+            </a>
     </div>
-
     <div class="col-md-2">
-        <a class="label label-sm label-danger pull-right"
-           ng-click="vm.removeItem('mainMenu', item)"
-           ng-show="!item.editTitle">
+        <a ng-if="vm.canPut" class="label label-sm label-danger pull-right" ng-click="vm.removeItem('mainMenu', item)" ng-show="!item.editTitle">
             <i class="fa fa-close"></i> Apagar
         </a>
-
-        <a class="label label-sm label-secondary pull-right"
-           ng-click="item.editTitle = false"
-           ng-show="item.editTitle">
+        <a ng-if="vm.canPut" class="label label-sm label-secondary pull-right" ng-click="item.editTitle = false" ng-show="item.editTitle">
             <i class="fa fa-check"></i> Salvar
         </a>
     </div>
 </div>
-
-<ul class="list-group list-group-minimal sortable-list main sortable-sublist"
-    ui-sortable="vm.sortableOptions"
-    ng-model="item.children"
+<ul class="list-group list-group-minimal sortable-list main sortable-sublist" ui-sortable="vm.sortableOptions" ng-model="item.children"
     ng-if="vm.checkChildren(this, item)">
-    <li class="list-group-item"
-        ng-repeat="item in item.children"
-        ng-include="'modules/menu/items.template.html'">
+    <li class="list-group-item" ng-repeat="item in item.children" ng-include="'modules/menu/items.template.html'">
     </li>
-</ul>
+    </ul>

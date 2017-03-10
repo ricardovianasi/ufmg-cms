@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.is_administrator.$touched) && (formUsers.is_administrator.$error.required)}">
+            <h5><strong>Tipo de usuário:*</strong></h5>
+            <input id="default" name="is_administrator" type="radio" ng-model="vm.user.is_administrator" value="0" ng-required="!vm.user.is_administrator">
+            <label for="default">Padrão</label>
+            <input id="admin" name="is_administrator" style="margin-left: 15px;" type="radio" ng-model="vm.user.is_administrator" value="1"
+                ng-required="!vm.user.is_administrator">
+                <label for="admin">Administrador</label>
+                <hr>
+        </div>
+    </div>
+    <div class="col-xs-4" ng-if="vm.user.is_administrator === '0'">
+        <h5><strong>Moderado por:</strong></h5>
+        <ui-select ng-model="vm.user.moderator" title="Moderado por: {{$select.selected.name}}">
+            <ui-select-match placeholder="Selecione ou procure um moderador na lista...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="moderator.id as moderator in vm.moderators | filter: $select.search">
+                <span ng-bind-html="moderator.name | highlight: $select.search"></span>
+            </ui-select-choices>
+        </ui-select>
+        <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
+        <hr>
+    </div>
+</div>
+<div class="row" ng-if="vm.user.is_administrator === '0'">
+    <v-accordion class="vAccordion--default" multiple>
+        <v-pane ng-repeat="(key, value) in vm.resources track by $index">
+            <v-pane-header>
+                {{ value.alias }}
+            </v-pane-header>
+            <v-pane-content>
+                <div ng-repeat="(key, value) in value.privileges track by $index" class="checkLabel" ng-class="$parent.key+'_'+key">
+                    <div class="checkbox">
+                        <label class="checkLabel" ng-class="$parent.key+'_'+key">
+                    <input type="checkbox" ng-hide="vm.user.resources_perms[$parent.key][key]" checklist-model="vm.user.resources_perms[$parent.key][key]" checklist-value="key">
+                    {{ value }}
+                        </label>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'page_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_POST'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'editions_DELETE'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_graduation_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_master_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_doctorate_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                        <span class="custom-modal" ng-click="vm.modalGetContext($parent.key, key, $parent.value.alias)" ng-show="$parent.key+'_'+key == 'course_specialization_PUT'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
+                    </div>
+                </div>
+            </v-pane-content>
+        </v-pane>
+    </v-accordion>
+</div>

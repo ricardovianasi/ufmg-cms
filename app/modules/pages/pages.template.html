@@ -46,7 +46,7 @@
                     </a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-secondary btn-lg pull-left" ng-href="#/pages/new"><i class="fa fa-plus"></i> NOVA PÁGINA</a>
+                    <a ng-if="canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/pages/new"><i class="fa fa-plus"></i> NOVA PÁGINA</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -62,7 +62,7 @@
                     <tbody>
                         <tr role="row" class="odd" ng-repeat="item in pages.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at' track by item.id">
                             <td>
-                                <a ng-href="#/pages/edit/{{ item.id }}">{{ item.title }}</a>
+                                <a target="_blank" ng-href="{{ item.page_url }}">{{ item.title }}</a>
                             </td>
                             <td>{{ item.author.name }}</td>
                             <td>
@@ -74,10 +74,10 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.page_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" ng-href="#/pages/edit/{{ item.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="page" context-id="item.id" ng-href="#/pages/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a uib-tooltip="Excluir" ng-click="remove(item.id, item.title)" class="btn btn-danger">
+                                <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="remove(item.id, item.title)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

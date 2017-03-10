@@ -4,7 +4,7 @@
     angular.module('serviceModule')
         .factory('NotificationService', NotificationService);
 
-    /** @ngInject */
+    /** ngInject */
     function NotificationService(toastr, $log) {
         $log.info('NotificationService');
 
