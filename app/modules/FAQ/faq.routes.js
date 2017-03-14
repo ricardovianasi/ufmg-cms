@@ -25,9 +25,6 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            VIEWER: function () {
-                                return false;
-                            },
                             isLogged: ['sessionService', function (sessionService) {
                                 return sessionService.getIsLogged();
                             }],
@@ -39,6 +36,7 @@
                                 if (!PermissionService.canPost('faq')) {
                                     $window.location.href = '#/faq';
                                 }
+                                return true;
                             }]
                         }
                     })
@@ -47,9 +45,6 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            VIEWER: function () {
-                                return false;
-                            },
                             isLogged: ['sessionService', function (sessionService) {
                                 return sessionService.getIsLogged();
                             }],
@@ -61,6 +56,7 @@
                                 if (!PermissionService.canPut('faq', $routeParams.faqId)) {
                                     $window.location.href = '#/faq';
                                 }
+                                return true;
                             }]
                         }
                     })
@@ -69,16 +65,16 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            VIEWER: function () {
-                                return true;
-                            },
                             isLogged: ['sessionService', function (sessionService) {
                                 return sessionService.getIsLogged();
                             }],
                             tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
                                 if (sessionService.verifyTokenIsExpired())
                                     $rootScope.logout();
-                            }]
+                            }],
+                            permission: function () {
+                                return false;
+                            }
                         }
                     });
             }
