@@ -1,19 +1,18 @@
-<div id="sort-main" as-sortable="sortableOptions"   ng-model="vm.faq.items">
+<div id="sort-main" as-sortable="sortableOptions" ng-model="vm.faq.items">
     <div class="pages-module" ng-repeat="ask in vm.faq.items" as-sortable-item>
         <div class="row">
             <div class="col-md-9 text-end">
                 <label for="">{{ ask.question }}</label>
                 <p ng-bind-html="ask.answer"></p>
             </div>
-            <div class="col-md-3">
-                <a uib-tooltip="Excluir"  ng-if="vm.canDelete" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
+            <div class="col-md-3" ng-if="vm.canPermission">
+                <a uib-tooltip="Excluir" ng-click="vm.removeAsk('ask', $index)" class=" margin-left-aux btn btn-danger btn-small pull-right">
                     <i class="fa fa-trash"></i>
                 </a>
-                <a  ng-if="vm.canPut" uib-tooltip="Editar" ng-show="vm.idCurrentAskEdit == ''" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
+                <a uib-tooltip="Editar" ng-show="vm.idCurrentAskEdit == ''" ng-click="vm.editAsk($index)" class="btn btn-warning btn-small pull-right">
                     <i class="fa fa-pencil"></i>
                 </a>
-                <span  ng-if="vm.canPut" class="label label-primary pull-right"
-                              as-sortable-item-handle>
+                <span class="label label-primary pull-right" as-sortable-item-handle>
                     <i class="fa fa-arrows-v"></i> MOVER
                 </span>
             </div>
