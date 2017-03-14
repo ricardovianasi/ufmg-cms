@@ -6,13 +6,12 @@
 
     function faqNewController($rootScope,
         faqService,
-        VIEWER,
         NotificationService,
         $location,
         $routeParams,
         $route,
         $log,
-        PermissionService,
+        permission,
         $scope) {
 
         /* jshint ignore:start */
@@ -23,8 +22,7 @@
         $log.info('faNewController');
 
         var id = $routeParams.faqId;
-
-        vm.canPermission = !VIEWER;
+        vm.canPermission = permission;
 
         vm.idCurrentAskEdit = '';
         vm.idCurrentCategoryEdit = '';
