@@ -45,30 +45,13 @@
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formNews.title.$error.required && !formNews.title.$valid}">
                         <label>Título</label>
-<<<<<<< HEAD
-                        <input type="text"
-                               class="form-control"
-                               ng-model="news.title"
-                               ng-maxlength="96"
-                               maxlength="97"
-                               name="title"
-                               required>
-
-                      <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
-                        <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
-                      </div>
-                      <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
-                        <div ng-show="formNews.title.$error.maxlength">Tamanho máximo de 96 caracteres</div>
-                      </div>
-=======
-                        <input ng-maxlength="95" maxlength="96" type="text" class="form-control" ng-model="news.title" name="title" required>
+                        <input type="text" class="form-control" ng-model="news.title" ng-maxlength="96" maxlength="97" name="title" required>
                         <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
                             <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
                         </div>
                         <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
                             <div ng-show="formNews.title.$error.maxlength">Tamanho máximo de 96 caracteres</div>
                         </div>
->>>>>>> develop
                     </div>
                 </div>
             </div>
