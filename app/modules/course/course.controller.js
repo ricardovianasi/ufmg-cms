@@ -9,9 +9,10 @@
         CourseService,
         dataTableConfigService,
         NotificationService,
-        PermissionService,
         ModalService,
+        permission,
         $rootScope,
+        $location,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('CourseController');
@@ -19,41 +20,33 @@
         var vm = this;
 
         vm.type = $routeParams.type;
-        vm.courseId = $routeParams.courseId;
+        vm.courseId = $routeParams.courseId || false;
         vm.course = {};
 
 
         vm.removeImage = _removeImage;
         vm.uploadCover = _uploadCover;
+        vm.save = _save;
 
         onInit();
 
         function onInit() {
+            if (angular.isUndefined(vm.type)) {
+                $location.path('/course');
+                return;
+            }
             if (vm.courseId) {
                 CourseService
                     .getCourseRoutes(vm.type, vm.courseId)
-                    .then(function (data) {
-                        vm.courses = data.data;
-
-                        vm.dtOptions = dataTableConfigService.init();
+                    .then(function (res) {
+                        vm.courses = res.data;
                     });
 
                 CourseService
                     .getCourseRoute(vm.type, vm.courseId)
-                    .then(function (data) {
-                        vm.course = {
-                            id: data.data.id,
-                            name: data.data.name
-                        };
-
-                        if (data.data.cover) {
-                            vm.course.cover_url = data.data.cover.url;
-                            vm.course.cover = data.data.cover.id;
-                        }
-
-                        if (vm.course.cover) {
-                            vm.showCover = true;
-                        }
+                    .then(function (res) {
+                        vm.course = res.data;
+                        vm.course.detail ? vm.course.detail : vm.course.detail = {};
                         _permissions();
                     });
             } else {
@@ -67,8 +60,21 @@
             }
         }
 
+        function _save(redirect) {
+            CourseService
+                .updateTypeCourse(vm.type, vm.courseId, {
+                    cover: vm.course.cover,
+                    description: vm.course.detail.description
+                })
+                .then(function (res) {
+                    if (redirect) {
+                        $location.path('/course/list/' + vm.type);
+                    }
+                });
+        }
+
         function _permissions() {
-            vm.canPut = PermissionService.canPut('course_' + vm.type, vm.courseId);
+            vm.canPermission = permission;
         }
 
         function _uploadCover() {
@@ -81,24 +87,16 @@
                 .result
                 .then(function (data) {
                     vm.course.cover = data.id;
-                    vm.course.cover_url = data.url;
-
-                    _uploadCourseCover();
+                    vm.course.detail.cover = {};
+                    vm.course.detail.cover.url = data.url;
+                    _save();
                 });
         }
 
         function _removeImage() {
             vm.course.cover = '';
-            vm.course.cover_url = '';
-            vm.showCover = false;
-
-            _uploadCourseCover();
-        }
-
-        function _uploadCourseCover() {
-            CourseService.uploadCourseCover(vm.type, vm.courseId, vm.course.cover).then(function () {
-                NotificationService.success('Capa atualizada com sucesso!');
-            });
+            delete vm.course.detail.cover.url;
+            _save();
         }
     }
 })();
