@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -77,6 +76,10 @@
             updateRoutesSidebar: function (type, course_id, obj) {
                 var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
                 var data = _parseCoursesData(obj);
+                return $http.put(url, data);
+            },
+            updateTypeCourse: function (type, course_id, data) {
+                var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
                 return $http.put(url, data);
             }
         };

@@ -2,7 +2,7 @@
     <div class="row flexcenter">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Cursos</h1>
+                <h1 class="title">Cursos - {{ vm.type|translate }}</h1>
             </div>
         </div>
         <div class="col-md-6">
@@ -42,7 +42,7 @@
                     <i class="fa fa-angle-left"></i> &nbsp;Voltar para Nível Acadêmico
                 </a>
                 <div class="pull-right">
-                    <a ng-if="vm.canPut" ng-href="#/course/sidebar/{{ vm.type }}" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="vm.canPermission" ng-href="#/course/sidebar/{{ vm.type }}" class="btn btn-secondary btn-lg pull-left">
                         Editar Sidebar {{ vm.type|translate }}
                     </a>
                 </div>
@@ -59,14 +59,14 @@
                         <tr role="row" ng-repeat="item in vm.courses.items | filter: search" class="odd">
                             <td>
                                 <div class="clearfix">
-                                    <a href="#/course/list/{{ vm.type }}/{{ item.id }}">{{ item.name|titleize }}</a>
+                                    <a href="#/course/view/{{ vm.type }}/{{ item.id }}">{{ item.name|titleize }}</a>
                                 </div>
                             </td>
                             <td>
-                                <a uib-tooltip="Visualizar" href="#/course/list/{{ vm.type }}/{{ item.id }}" class="btn btn-primary">
+                                <a uib-tooltip="Visualizar" href="#/course/view/{{ vm.type }}/{{ item.id }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="course_{{vm.type}}" context-id="item.id" ng-href="#/course/list/{{ vm.type }}/{{ item.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="course_{{vm.type}}" context-id="item.id" ng-href="#/course/edit/{{ vm.type }}/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                             </td>

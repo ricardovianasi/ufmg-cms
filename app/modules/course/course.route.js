@@ -29,11 +29,19 @@
                         tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
                             if (sessionService.verifyTokenIsExpired())
                                 $rootScope.logout();
+                        }],
+                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
+                            var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
+                            var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
+                            if (canPost || canPut) {
+                                return true;
+                            }
+                            return false;
                         }]
                     }
                 })
-                .when('/course/list/:type/:courseId', {
-                    templateUrl: 'modules/course/routes.template.html',
+                .when('/course/edit/:type/:courseId', {
+                    templateUrl: 'modules/course/course.form.template.html',
                     controller: 'CourseController',
                     controllerAs: 'vm',
                     resolve: {
@@ -43,12 +51,22 @@
                         tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
                             if (sessionService.verifyTokenIsExpired())
                                 $rootScope.logout();
+                        }],
+                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
+                            var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
+                            var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
+                            if (canPost || canPut) {
+                                return true;
+                            }
+                            $window.location.href = '#/course/list/' + $routeParams.type;
+                            return false;
                         }]
                     }
                 })
-                .when('/course/edit/:type/:courseId/:id', {
+                .when('/course/view/:type/:courseId', {
                     templateUrl: 'modules/course/course.form.template.html',
-                    controller: 'CourseEditController',
+                    controller: 'CourseController',
+                    controllerAs: 'vm',
                     resolve: {
                         isLogged: ['sessionService', function (sessionService) {
                             return sessionService.getIsLogged();
@@ -57,11 +75,9 @@
                             if (sessionService.verifyTokenIsExpired())
                                 $rootScope.logout();
                         }],
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId)) {
-                                $window.location.href = '#/course/list/' + $routeParams.type + '/' + $routeParams.courseId;
-                            }
-                        }]
+                        permission: function () {
+                            return false;
+                        }
                     }
                 })
                 .when('/course/sidebar/:type', {
