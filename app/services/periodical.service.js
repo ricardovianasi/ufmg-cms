@@ -7,6 +7,7 @@
     /** ngInject */
     function PeriodicalService($http, $filter, $uibModal, apiUrl, $log) {
         $log.info('PeriodicalService');
+        var periodicalName = '';
 
         var APIUrl = apiUrl;
         var PERIODICAL_ENDPOINT = $filter('format')('{0}/{1}', APIUrl, 'periodical');
@@ -51,8 +52,17 @@
         };
 
         return {
-            getPeriodicalEditions: function (id) {
-                return $http.get(APIUrl + '/periodical/' + id + '/editions');
+            getPeriodicalEditions: function (id, params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
+                return $http.get(APIUrl + '/periodical/' + id + '/editions' + params);
+            },
+            setPeriodicalName: function (periodical) {
+                periodicalName = periodical;
+            },
+            getPeriodicalName: function () {
+                return periodicalName;
             },
             getEdition: function (id, edition) {
                 return $http.get(APIUrl + '/periodical/' + id + '/edition/' + edition);

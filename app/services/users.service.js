@@ -16,8 +16,11 @@
             updateUser: _updateUser,
         };
 
-        function _getUsers() {
-            return $http.get(apiUrl + '/user');
+        function _getUsers(params) {
+            if(angular.isUndefined(params)){
+                params = '';
+            }
+            return $http.get(apiUrl + '/user' + params);
         }
 
         function _getUser(id) {

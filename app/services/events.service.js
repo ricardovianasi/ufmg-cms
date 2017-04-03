@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -76,10 +75,11 @@
         };
 
         return {
-            getEvents: function (page) {
-                page = page || 1;
-
-                var url = $filter('format')('{0}?page={1}', EVENT_ENDPOINT, page);
+            getEvents: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
+                var url = $filter('format')('{0}{1}', EVENT_ENDPOINT, params);
 
                 return $http.get(url);
             },

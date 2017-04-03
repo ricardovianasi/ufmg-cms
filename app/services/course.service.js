@@ -51,10 +51,13 @@
                 var obj = _parseCourseData(course);
                 return $http.put(apiUrl + '/route/' + id, obj);
             },
-            getCourses: function (type, slug) {
+            getCourses: function (type, slug, params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
                 type = type || '';
 
-                var url = $filter('format')('{0}/course/{1}', apiUrl, type);
+                var url = $filter('format')('{0}/course/{1}{2}', apiUrl, type, params);
 
                 if (slug) {
                     url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);

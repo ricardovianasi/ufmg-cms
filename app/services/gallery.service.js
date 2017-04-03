@@ -11,10 +11,11 @@
         var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
 
         return {
-            getGalleries: function (page) {
-                page = page || 1;
-                var url = $filter('format')('{0}?page={1}', GALLERY_ENDPOINT, page);
-
+            getGalleries: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
+                var url = $filter('format')('{0}{1}', GALLERY_ENDPOINT, params);
                 return $http.get(url);
             },
             getGallery: function (id) {

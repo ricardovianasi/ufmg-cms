@@ -27,7 +27,8 @@
             save: _save,
             get: _get,
             remove: _remove,
-            update: _update
+            update: _update,
+            faqs: _faqs
         };
 
         function _save(data) {
@@ -38,11 +39,19 @@
         function _get(id) {
             var url = apiUrl + '/faq';
 
-            if (id)
+            if (id) {
                 url = apiUrl + '/faq/' + id;
+            }
 
             return $http.get(url);
+        }
 
+        function _faqs(params) {
+            if (angular.isUndefined(params)) {
+                params = '';
+            }
+            var url = apiUrl + '/faq' + params;
+            return $http.get(url);
         }
 
         function _remove(id) {
