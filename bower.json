@@ -20,7 +20,7 @@
         "angular-animate": "~1.4.8",
         "angular-bootstrap": "~1.1.2",
         "angular-bootstrap-calendar": "~0.18.4",
-        "angular-datatables": "~0.5.2",
+        "angular-datatables": "^0.5.2",
         "angular-filter": "~0.5.8",
         "angular-i18n": "~1.4.9",
         "angular-img-cropper": "~1.1.0",
