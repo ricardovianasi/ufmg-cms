@@ -92,11 +92,22 @@
         sessionService,
         $window,
         $log,
+        Util,
         ModalService,
         DTDefaultOptions,
         $timeout,
         PermissionService) {
         var startPermission = false;
+
+        $rootScope.ngScrollbarsConfig = {
+            autoHideScrollbar: false,
+            theme: 'light-thin',
+            advanced: {
+                updateOnContentResize: true
+            },
+            scrollInertia: 0
+        };
+        Util.hiddenOverflow();
 
 
         $rootScope.dtOptions = dataTableConfigService.init();

@@ -3,7 +3,50 @@
 @import '_objects/*.sass'
 @import '_modules/_pagesModule/*.sass'
 @import '_modules/_editions/editions.sass'
+body, html
+  overflow-x: hidden
 
+// .page-container 
+//   display: block !important
+
+.page-container .main-content
+  display: block
+  height: 100%
+  width: 100%
+  float: left
+
+.row-content 
+  margin: 0 !important
+
+.margin-sidebar
+  margin-left: 290px
+  width: calc(100% - 290px) !important
+
+
+.sidebar-menu
+  display: block
+  float: left
+
+.sidebar-menu, .sidebar-menu-inner
+  min-width: 290px
+  max-width: 290px
+
+
+.mCSB_container_wrapper>.mCSB_container
+    padding-right: 0px
+.mCSB_container_wrapper
+    margin-right: 0px
+
+.page-container
+  margin-right: 0px
+  margin-left: 0px
+
+.dataTables_processing
+  position: static !important
+  background-color: #fff !important
+  height: 2000px !important
+  z-index: 99999 !important
+  margin: 150px 0 auto !important
 
 .vAccordion--default v-pane label
   display: inline-block
