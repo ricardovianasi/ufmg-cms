@@ -76,10 +76,9 @@
             removeEdition: function (id, edition) {
                 return $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition);
             },
-            getPeriodicals: function (id, page) {
-                page = page || 1;
+            getPeriodicals: function (id, params) {
 
-                var url = $filter('format')('{0}?page={1}', PERIODICAL_ENDPOINT, page);
+                var url = $filter('format')('{0}{1}', PERIODICAL_ENDPOINT, params);
 
                 if (id) {
                     url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
