@@ -2,9 +2,5 @@
     'use strict';
 
     angular
-        .module('usersModule')
-        /** ngInject */
-        .controller(function () {
-
-        });
+        .module('usersModule');
 })();

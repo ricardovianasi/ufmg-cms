@@ -96,6 +96,7 @@
         ModalService,
         DTDefaultOptions,
         $timeout,
+        $location,
         PermissionService) {
         var startPermission = false;
 
@@ -127,7 +128,7 @@
             $window.history.back();
         };
 
-        $rootScope.logout = function () {
+        $rootScope.logout = function (notReload) {
             $log.info('logout');
             $rootScope.dataUser = null;
             $rootScope.currentUser = null;
@@ -135,7 +136,7 @@
             sessionService.removeToken();
             sessionService.removeTokenRefresh();
             sessionService.removeIsLogged();
-            $window.location.reload();
+            $location.path('/login');
         };
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
