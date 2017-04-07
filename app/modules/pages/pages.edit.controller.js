@@ -152,13 +152,13 @@
 
         $scope.removeModule = function (column, idx) {
             $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
-            removeConfirmationModal.result.then(function (data) {
+            $scope.removeConfirmationModal.result.then(function (data) {
                 $scope.page.widgets[column].splice(idx, 1);
             });
         };
 
         $scope.confirmationModal = function (size, title) {
-            removeConfirmationModal = $uibModal.open({
+            $scope.removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
                 backdrop: 'static',
