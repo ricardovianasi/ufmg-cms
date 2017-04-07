@@ -8,29 +8,13 @@
                 .when('/events', {
                     templateUrl: 'modules/events/events.template.html',
                     controller: 'EventsController as vm',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }]
-                    }
+                    controllerAs: 'ctrl'
                 })
                 .when('/events/new', {
                     templateUrl: 'modules/events/events.form.template.html',
                     controller: 'EventsNewController as vm',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }],
                         permission: ['PermissionService', '$window', function (PermissionService, $window) {
                             if (!PermissionService.canPut('events')) {
                                 $window.location.href = '#/events';
@@ -43,13 +27,6 @@
                     controller: 'EventsEditController as vm',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }],
                         permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
                             if (!PermissionService.canPut('events', $routeParams.id)) {
                                 $window.location.href = '#/events';

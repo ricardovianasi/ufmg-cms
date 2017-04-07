@@ -49,6 +49,11 @@
                                 getAuth();
                             });
                     } else {
+                        if (!sessionService.getIsLogged()) {
+                            $location.path('/login');
+                            return;
+                        }
+                        sessionService.setIsLogged(false);
                         return ModalService
                             .login()
                             .result
@@ -76,6 +81,13 @@
             }, time);
         }
 
+        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
+            if (!sessionService.getIsLogged()) {
+                $location.path('/login');
+                return;
+            }
+        });
+
         $rootScope.$on('AuthenticateResponseError', function () {
             if ($location.path() !== '/login' && $rootScope.modalLoginIsDisabled) {
                 $log.info('Erro 401 | 403 Request auth');
@@ -98,7 +110,6 @@
         $timeout,
         $location,
         PermissionService) {
-        var startPermission = false;
 
         $rootScope.ngScrollbarsConfig = {
             autoHideScrollbar: false,
@@ -109,16 +120,10 @@
             scrollInertia: 0
         };
         Util.hiddenOverflow();
+        PermissionService.initService();
 
 
         $rootScope.dtOptions = dataTableConfigService.init();
-
-        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
-            if (!startPermission) {
-                PermissionService.initService();
-                startPermission = true;
-            }
-        });
 
         $rootScope.changePassword = function () {
             return ModalService.changePassword();

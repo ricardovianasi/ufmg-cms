@@ -8,29 +8,13 @@
                 .when('/news', {
                     templateUrl: 'modules/news/news.template.html',
                     controller: 'NewsController',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }]
-                    }
+                    controllerAs: 'ctrl'
                 })
                 .when('/news/new', {
                     templateUrl: 'modules/news/news.form.template.html',
                     controller: 'NewsNewController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }],
                         permission: ['PermissionService', '$window', function (PermissionService, $window) {
                             if (!PermissionService.canPut('news')) {
                                 $window.location.href = '#/news';
@@ -43,13 +27,6 @@
                     controller: 'NewsEditController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired())
-                                $rootScope.logout();
-                        }],
                         permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
                             if (!PermissionService.canPut('news', $routeParams.id)) {
                                 $window.location.href = '#/news';
