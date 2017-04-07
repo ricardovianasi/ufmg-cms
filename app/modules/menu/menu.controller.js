@@ -11,6 +11,7 @@
         PermissionService,
         MenuService,
         $log,
+        $q,
         PagesService,
         $rootScope,
         $filter) {

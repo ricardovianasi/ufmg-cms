@@ -15,6 +15,7 @@
           NotificationService,
           $rootScope,
           $log,
+          Util,
           VIEWER,
           PermissionService) {
           $rootScope.shownavbar = true;
@@ -22,6 +23,7 @@
 
           $scope.categories = [];
 
+          Util.restoreOverflow();
           GalleryService.getGallery(parseInt($routeParams.id)).then(function (data) {
               $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPut('gallery', $routeParams.id);
               $scope.gallery = data.data;

@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -14,30 +13,71 @@
         DateTimeHelper,
         ModalService,
         $rootScope,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('NoticiasController');
 
-        $scope.news = [];
-        $scope.currentPage = 1;
+        var vm = $scope;
 
-        var loadNews = function (page) {
-            NewsService.getNews(null, page).then(function (data) {
-                $scope.news = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
-            });
+        vm.news = [];
+        vm.currentPage = 1;
+        vm.convertDate = DateTimeHelper.dateToStr;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
+
+        function onInit() {
+            _renderDataTable();
+        }
+
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getNews(params, fnCallback) {
+                NewsService
+                    .getNews(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.news = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
+        }
+
+        vm.changePage = function () {
+            loadNews(vm.currentPage);
         };
 
-        loadNews();
 
-        $scope.changePage = function () {
-            loadNews($scope.currentPage);
-        };
-
-        $scope.convertDate = DateTimeHelper.dateToStr;
-
-        $scope.removeNews = function (id, title) {
+        vm.removeNews = function (id, title) {
             ModalService
                 .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
                 .result
@@ -55,11 +95,12 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('news');
+            vm.canPost = PermissionService.canPost('news');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('news');
+            vm.canDelete = PermissionService.canDelete('news');
         }
+        onInit();
     }
 })();

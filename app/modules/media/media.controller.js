@@ -17,36 +17,71 @@
         NotificationService,
         DateTimeHelper,
         ModalService,
+        Util,
         $rootScope) {
         $rootScope.shownavbar = true;
         $log.info('MediaController');
 
-        $scope.media = [];
-        $scope.status = [];
-        $scope.currentPage = 1;
-
-        var loadMedia = function (page) {
-            MediaService.getMedia(page).then(function (data) {
-                $scope.media = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-            });
-        };
-
-        loadMedia();
-
-        $scope.changePage = function () {
-            loadMedia($scope.currentPage);
-        };
-
-        StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
-        });
-
-        $scope.convertDate = DateTimeHelper.convertDate;
+        var vm = $scope;
 
         var removeConfirmationModal;
 
-        $scope.confirmationModal = function (size, title) {
+        vm.convertDate = DateTimeHelper.convertDate;
+        vm.media = [];
+        vm.status = [];
+        vm.currentPage = 1;
+
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
+
+        onInit();
+
+        function onInit() {
+            _renderDataTable();
+        }
+
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 5;
+            var columnsHasNotOrder = [0, 4];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 1,
+                name: 'title'
+            }, {
+                index: 2,
+                name: 'name',
+                filter: 'author'
+            }, {
+                index: 3,
+                name: 'postDate'
+            }]);
+
+            function getMedias(params, fnCallback) {
+                MediaService
+                    .getMedias(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        vm.media = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getMedias);
+        }
+
+        vm.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
@@ -60,7 +95,7 @@
             });
         };
 
-        $scope.removeMedia = function (id) {
+        vm.removeMedia = function (id) {
             ModalService
                 .confirm('Você deseja excluir a mídia selecionada?', ModalService.MODAL_MEDIUM)
                 .result.then(function () {

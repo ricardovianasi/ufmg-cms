@@ -61,7 +61,7 @@
             $scope.status = data.data;
         });
 
-        NewsService.getNews($routeParams.id).then(function (data) {
+        NewsService.getNew($routeParams.id).then(function (data) {
             $scope.canPermission = PermissionService.canPut('news', $routeParams.id);
 
             $scope.obj = {};

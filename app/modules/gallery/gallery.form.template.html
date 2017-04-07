@@ -1,138 +1,101 @@
-<div class="page-title">
-    <div class="row flex-center">
-        <div class="col-md-6">
-            <div class="title-env">
-                <h1 class="title">Nova Galeria</h1>
+<div class="row row-content">
+    <div class="page-title">
+        <div class="row flex-center">
+            <div class="col-md-6">
+                <div class="title-env">
+                    <h1 class="title">Nova Galeria</h1>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="breadcrumb-env">
-                <ol class="breadcrumb bc-1">
-                    <li>
-                        <a href="#/"><i class="fa-home"></i>Home</a>
-                    </li>
-                    <li>
-                        <a href="#/galleries">
-                            <strong>Galerias</strong>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="#/gallery/new">
-                            <strong>Nova Galeria</strong>
-                        </a>
-                    </li>
-                </ol>
+            <div class="col-md-6">
+                <div class="breadcrumb-env">
+                    <ol class="breadcrumb bc-1">
+                        <li>
+                            <a href="#/"><i class="fa-home"></i>Home</a>
+                        </li>
+                        <li>
+                            <a href="#/galleries">
+                                <strong>Galerias</strong>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#/gallery/new">
+                                <strong>Nova Galeria</strong>
+                            </a>
+                        </li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-xs-8">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input ng-disabled="!canPermission" type="text" ng-model="gallery.title" class="form-control" />
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select ng-disabled="!canPermission" ng-model="gallery.category" class="form-control">
+                        <option value="{{ category.id }}" ng-repeat="category in categories">{{ category.name }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="canPermission">
+        <div class="form-group">
+            <label>
+                    Adicionar fotos à galeria de imagens:<small ng-show="(gallery.photos | filter: {selected: true}).length &gt; 0">( Selecionadas: {{ (gallery.photos | filter: {selected: true}).length }}/{{ (gallery.photos).length }} )</small>
+                </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="dashed gallery-item upload-photos upload-gallery" ng-if="canPermission">
+            <div ng-click="uploadImage()" class="pages-module add-module">
+                <span class="fa fa-file-image-o"></span>
+                <br> Biblioteca de Mídia
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="gallery-list" class="sortable-row gallery-list gallery-list__img-gallery clearfix" as-sortable="sortableOptions"
+            ng-model="gallery.photos">
+            <div class="row">
+                <div class="col-xs-offset-2">
+                    <div ng-if="gallery.photos.length &gt; 0" ng-repeat="photo in gallery.photos" as-sortable-item ng-class="{ 'selected': photo.selected }"
+                        class="dashed gallery-item as-sortable-item as-sortable-dragging col-xs-3">
+                        <div class="gallery-photo-control">
+                            <div class="pull-right" ng-if="canPermission">
+                                <span as-sortable-item-handle class="label label-primary">
+                                    <span class="fa fa-arrows"></span>
+                                </span>
+                                <span ng-click="editPhotos($index)" class="label label-warning">
+                                    <span class="fa fa-pencil"></span>
+                                </span>
+                                <span ng-click="removePhoto(photo.file.id)" class="label label-danger">
+                                    <span class="fa fa-remove"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="gallery-thumb">
+                            <img class="img-responsive" ng-src="{{ photo.file.url }}" alt="{{ photo.file.name }}">
+                        </div>
+                </div>
+            </div>
+    </div>
+</div>
 </div>
 <div class="row">
-    <div class="col-xs-10 panel panel-default">
-        <form class="form">
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="form-group">
-                        <label>Título</label>
-                        <input ng-disabled="!canPermission" type="text" ng-model="gallery.title" class="form-control">
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="form-group">
-                        <label>Categoria</label>
-                        <select ng-disabled="!canPermission" ng-model="gallery.category" class="form-control">
-                            <option value="{{ category.id }}" ng-repeat="category in categories">{{ category.name }}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--row-->
-            <div class="row" ng-if="canPermission">
-                <div class="form-group">
-                    <label>
-                        Adicionar fotos à galeria de imagens:<small ng-show="(gallery.photos | filter: {selected: true}).length &gt; 0">( Selecionadas: {{ (gallery.photos | filter: {selected: true}).length }}/{{ (gallery.photos).length }} )</small>
-                    </label>
-                </div>
-            </div>
-            <!--row-->
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="dashed gallery-item upload-photos upload-gallery" ng-if="canPermission">
-                        <div ng-click="uploadImage()" class="pages-module add-module">
-                            <span class="fa fa-file-image-o"></span>
-                            <br>Biblioteca de Mídia
-                        </div>
-                    </div>
-                    <!-- <ul id="gallery-list" as-sortable="sortableOptions" ng-model="gallery.photos" class="sortable-row gallery-list clearfix">
-                        <li ng-if="gallery.photos.length &gt; 0"
-                            ng-repeat="photo in gallery.photos"
-                            as-sortable-item ng-class="{ 'selected': photo.selected }"
-                            class="dashed gallery-item as-sortable-item as-sortable-dragging">
-
-                            <div class="gallery-photo-control">
-                                <div class="pull-right">
-                                    <span as-sortable-item-handle class="label label-primary">
-                                        <span class="fa fa-arrows"></span>
-                                    </span>
-
-                                    <span ng-click="editPhotos($index)" class="label label-warning">
-                                        <span class="fa fa-pencil"></span>
-                                        </span><span ng-click="removePhoto(photo.file.id)" class="label label-danger">
-                                        <span class="fa fa-remove"></span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="gallery-thumb">
-                                <img class="img-responsive" ng-src="{{ photo.url }}" alt="{{ photo.title }}">
-                            </div>
-                        </li>
-                    </ul> -->
-                    <div id="gallery-list" class="row sortable-row gallery-list gallery-list__img-gallery clearfix" as-sortable="sortableOptions"
-                        ng-model="gallery.photos">
-                        <div ng-if="gallery.photos.length &gt; 0" ng-repeat="photo in gallery.photos" as-sortable-item ng-class="{ 'selected': photo.selected }"
-                            class="dashed gallery-item as-sortable-item as-sortable-dragging col-xs-3">
-                            <div class="gallery-photo-control">
-                                <div class="pull-right" ng-if="canPermission">
-                                    <span as-sortable-item-handle class="label label-primary">
-                                      <span class="fa fa-arrows"></span>
-                                    </span>
-                                    <span ng-click="editPhotos($index)" class="label label-warning">
-                                      <span class="fa fa-pencil"></span>
-                                    </span><span ng-click="removePhoto(photo.file.id)" class="label label-danger">
-                                      <span class="fa fa-remove"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="gallery-thumb">
-                                <img class="img-responsive" ng-src="{{ photo.file.url }}" alt="{{ photo.file.name }}">
-                            </div>
-                </div>
-            </div>
-            <div id="sortable-container">
-                <div as-sortable=sortableOptions ng-model=itemsList.items1 class=sortable-row>
-                    <div ng-repeat="item in itemsList.items1" as-sortable-item>
-                        <div as-sortable-item-handle>{{ item.Label }}</div>
-                    </div>
-                </div>
-                <div as-sortable=sortableOptions ng-model=itemsList.items2 class=sortable-row>
-                    <div ng-repeat="item in itemsList.items2" as-sortable-item>
-                        <div as-sortable-item-handle>{{ item.Label }}</div>
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
-<!--row-->
-<div class=row>
-    <div class=col-xs-12>
+    <div class="col-xs-12">
         <hr>
-        <div class=pull-right>
+        <div class="pull-right">
             <a ng-href="#/galleries" ng-if="!canPermission" class="btn btn-danger pull-left spacer-right">Fechar</a>
             <a ng-href="#/galleries" ng-if="canPermission" class="btn btn-danger pull-left spacer-right">Cancelar</a>
             <a ng-click="publish(page)" ng-if="canPermission" class="btn btn-success pull-left">Salvar</a>
         </div>
     </div>
-</div>
-</form>
 </div>
 </div>

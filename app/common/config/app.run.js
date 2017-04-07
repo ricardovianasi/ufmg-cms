@@ -123,7 +123,10 @@
         PermissionService.initService();
 
 
-        $rootScope.dtOptions = dataTableConfigService.init();
+        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
+            // Reset status
+            dataTableConfigService.setParamStatus('all');
+        });
 
         $rootScope.changePassword = function () {
             return ModalService.changePassword();
