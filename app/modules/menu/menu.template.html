@@ -23,63 +23,57 @@
         </div>
     </div>
 </div>
-<div id="menu-panel">
-    <div class="row">
-        <div class="panel panel-default menu-pane text-center">
+<div id="menu-panel" class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default text-center">
             <div class="panel-heading">
                 Menu Principal
             </div>
-            <div class="panel-body">
-                <div class="col-xs-6">
-                    <label>Menu Principal</label> Arraste as páginas e grupos para alterar a ordem
-                    <div>
-                        <ul class="menu-main main" ui-sortable="vm.sortableOptions" ng-model="menus.mainMenu">
-                            <!--<li class="list-group-item"
-ng-repeat="item in menus.mainMenu"
-ng-include="'modules/menu/items.template.html'">
-</li>-->
-                            <li class="list-group-item" ng-repeat="item in menus.mainMenu track by $index" ng-init="menuIndex=$index">
-                                <div class="row">
-                                    <div class="col-md-8 text-left">
-                                        <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
-                                        <span ng-show="!item.editTitle">{{ item.newTitle || item.label }}</span>
-                                        <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
+            <div class="panel-body menu-pane ">
+                <div class="row">
+                    <div class="col-xs-6"><label>Menu Principal</label> Arraste as páginas e grupos para alterar a ordem
+                        <div>
+                            <ul class="menu-main main" ui-sortable="vm.sortableOptions" ng-model="menus.mainMenu">
+                                <li class="list-group-item" ng-repeat="item in menus.mainMenu track by $index" ng-init="menuIndex=$index">
+                                    <div class="row">
+                                        <div class="col-md-8 text-left">
+                                            <input type="text" value="{{ item.newTitle }}" class="form-control" ng-show="item.editTitle" ng-model="item.newTitle">
+                                            <span ng-show="!item.editTitle">{{ item.newTitle || item.label }}</span>
+                                            <small ng-show="item.newTitle && !item.editTitle">({{ item.label }})</small>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle" ng-if="vm.canPut">
+                                                <i class="fa fa-pencil"></i> Editar
+                                            </a>
+                                            <a ng-if="vm.canPut" class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index)" ng-show="!item.editTitle">
+                                                <i class="fa fa-close"></i> Apagar
+                                            </a>
+                                            <a ng-if="vm.canPut" class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
+                                                <i class="fa fa-check"></i> Salvar
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 text-right">
-                                        <a class="label label-sm label-warning" ng-click="vm.editTitle(item)" ng-show="!item.editTitle" ng-if="vm.canPut">
-                                            <i class="fa fa-pencil"></i> Editar
-                                        </a>
-                                        <a ng-if="vm.canPut" class="label label-sm label-danger" ng-click="vm.removeItem('mainMenu', $index)" ng-show="!item.editTitle">
-                                            <i class="fa fa-close"></i> Apagar
-                                        </a>
-                                        <a ng-if="vm.canPut" class="label label-sm label-secondary" ng-click="item.editTitle = false" ng-show="item.editTitle">
-                                            <i class="fa fa-check"></i> Salvar
-                                        </a>
-                                    </div>
-                                </div>
-                                <div ng-include="'modules/menu/submenu.template.html'"></div>
-                            </li>
-                        </ul>
+                                    <div ng-include="'modules/menu/submenu.template.html'"></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-1 col-xs-offset-1">
-                    <div class="triangle-left"></div>
-                </div>
-                <div class="col-xs-4">
-                    <label>Páginas</label> Adicione as páginas arrastando para a esquerda
-                    <div>
-                        <form>
+                    <div class="col-xs-1 col-xs-offset-1">
+                        <div class="triangle-left"></div>
+                    </div>
+                    <div class="col-xs-4">
+                        <label>Páginas</label> Adicione as páginas arrastando para a esquerda
+                        <div>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                                <!--<input type="text" class="form-control" placeholder="Procurar..." ng-change="vm.teste" ng-model="pageFilter">-->
                                 <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false" ng-change="vm.filterPages('mainMenu', pageFilter)"
                                     ng-model="pageFilter">
                             </div>
-                        </form>
-                        <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
-                            <li class="list-group-item" ng-repeat="item in vm.pages">{{ item.label }}
-                            </li>
-                        </ul>
+                            <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
+                                <li class="list-group-item" ng-repeat="item in vm.pages">{{ item.label }}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,7 +86,7 @@ ng-include="'modules/menu/items.template.html'">
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="col-xs-12">
         <div class="panel panel-default menu-pane text-center">
             <div class="panel-heading">
                 Menu de Acesso Rápido
@@ -100,7 +94,6 @@ ng-include="'modules/menu/items.template.html'">
             <div class="panel-body">
                 <div class="col-xs-6">
                     <label>Acesso rápido</label> Arraste as páginas para alterar a ordem
-                    <!--Busque as paginas no panel a direita e arraste aqui-->
                     <div>
                         <ul class="menu-main main" ui-sortable="vm.sortableOptions" ng-model="menus.quickAccess">
                             <li class="list-group-item" ng-repeat="item in menus.quickAccess">
