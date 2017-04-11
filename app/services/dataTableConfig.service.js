@@ -14,7 +14,6 @@
         var columnsHasOrder = [];
 
         return {
-            init: _init,
             dtOptionsBuilder: _dtOptionsBuilder,
             getParams: _getParams,
             columnBuilder: _columnBuilder,
@@ -42,7 +41,6 @@
 
         function _getParams(params) {
             Util.goTop();
-            Util.hiddenOverflow();
             var parameters = '?';
             params.page ? parameters += 'page=' + params.page : false;
             params.page_size ? parameters += '&page_size=' + params.page_size : false;
@@ -88,6 +86,33 @@
                             direction: order[0].dir.toUpperCase(),
                             filter: element.filter
                         };
+                    }
+                }
+            } else {
+                var isNotOrder = true;
+                for (var i = 0; i < columnsHasOrder.length; i++) {
+                    var element = columnsHasOrder[i];
+                    if (element.name === 'postDate' || element.name === 'initDate' || element.name === 'publishDate') {
+                        orderBy = {
+                            field: element.name,
+                            direction: 'DESC',
+                            filter: element.filter
+                        };
+                        isNotOrder = false;
+                        break;
+                    }
+                }
+                if (isNotOrder) {
+                    for (var i = 0; i < columnsHasOrder.length; i++) {
+                        var element = columnsHasOrder[i];
+                        if (element.name === 'name' || element.name === 'title') {
+                            orderBy = {
+                                field: element.name,
+                                direction: 'ASC',
+                                filter: element.filter
+                            };
+                            break;
+                        }
                     }
                 }
             }
@@ -197,8 +222,9 @@
         function _dtOptionsBuilder(getContextCallback) {
             return DTOptionsBuilder
                 .newOptions()
-                .withOption('processing', true)
+                .withOption('processing', false)
                 .withOption('serverSide', true)
+                .withOption('searchDelay', 800)
                 .withOption('aaSorting', [])
                 .withDataProp('data')
                 .withFnServerData(function (sSource, aoData, fnCallback, oSettings) {
@@ -244,38 +270,6 @@
                         'sSortDescending': ': filtro descendente ativo'
                     }
                 });
-        }
-
-        function _init() {
-            return DTOptionsBuilder
-                .newOptions()
-                .withPaginationType('full_numbers')
-                .withDisplayLength(25)
-                .withLanguage({
-                    'sEmptyTable': 'Nenhum dado foi encontrado. :(',
-                    'sInfo': 'Exibindo de _START_ a _END_ de _TOTAL_ resultados',
-                    'sInfoEmpty': 'Exibindo de 0 a 0 de 0 resultados',
-                    'sInfoFiltered': '(Filtrado de _MAX_ resultados)',
-                    'sInfoPostFix': '',
-                    'sInfoThousands': ',',
-                    'sLengthMenu': 'Exibir _MENU_ resultados',
-                    'sLoadingRecords': 'Carregando...',
-                    'sProcessing': 'Processando...',
-                    'sSearch': '<i class="fa fa-search"></i>',
-                    'sZeroRecords': 'Não foram encontrados resultados',
-                    'oPaginate': {
-                        'sFirst': '<i class="fa fa-angle-double-left"></i>',
-                        'sPrevious': '<i class="fa fa-angle-left"></i>',
-                        'sNext': '<i class="fa fa-angle-right"></i>',
-                        'sLast': '<i class="fa fa-angle-double-right"></i>',
-                    },
-                    'oAria': {
-                        'sSortAscending': ': filtro ascendente ativo',
-                        'sSortDescending': ': filtro descendente ativo'
-                    }
-                })
-                .withOption('aaSorting', [])
-                .withBootstrap();
         }
     }
 })();
