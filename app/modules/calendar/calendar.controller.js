@@ -92,7 +92,7 @@
                         };
                         _permissions();
                         fnCallback(records);
-                        Util.restoreOverflow();
+                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCalendar);

@@ -36,7 +36,7 @@
             var columnsHasNotOrder = [1, 2, 4];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
-                name: 'title'
+                name: 'name'
             }, {
                 index: 3,
                 name: 'email'
@@ -56,7 +56,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                        Util.restoreOverflow();
+                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getUsers);
