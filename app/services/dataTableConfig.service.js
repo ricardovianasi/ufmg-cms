@@ -28,6 +28,7 @@
         }
 
         function hasAuthor() {
+            filterIndex++;
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
                 if (element.filter === 'author') {
@@ -45,8 +46,6 @@
             var parameters = '?';
             params.page ? parameters += 'page=' + params.page : false;
             params.page_size ? parameters += '&page_size=' + params.page_size : false;
-
-            filterIndex++;
 
             parameters += hasAuthor();
 
@@ -148,7 +147,7 @@
                 return "&query[filter][" + filterIndex + "][type]=like" +
                     "&query[filter][" + filterIndex + "][field]=" + columnsHasOrder[0].name +
                     "&query[filter][" + filterIndex + "][value]=" + wildcard(search) +
-                    "&query[filter][" + filterIndex + "][where]=or";
+                    "&query[filter][" + filterIndex + "][where]=and";
             }
             conditionsIndex = 0;
             var searchParam = "&query[filter][" + filterIndex + "][type]=orx";
