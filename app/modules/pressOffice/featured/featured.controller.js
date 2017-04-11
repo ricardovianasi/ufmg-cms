@@ -68,7 +68,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                        Util.restoreOverflow();
+                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);

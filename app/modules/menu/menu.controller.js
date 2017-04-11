@@ -24,7 +24,7 @@
         var pages = [];
         var menus = MenuService.MENUS;
 
-        Util.restoreOverflow();
+         
 
         //Public functions
         vm.removeItem = _removeItem;

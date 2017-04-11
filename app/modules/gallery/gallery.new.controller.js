@@ -27,7 +27,7 @@
         GalleryService.getCategories().then(function (res) {
             $scope.categories = res.data.items;
             $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
-            Util.restoreOverflow();
+             
         });
 
         $scope.gallery.title = '';
