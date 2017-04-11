@@ -7,7 +7,12 @@
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/course', {
-                    templateUrl: 'modules/course/course-types.template.html'
+                    templateUrl: 'modules/course/course-types.template.html',
+                    resolve: {
+                        restoreOverflow: ['Util', function (Util) {
+                            Util.restoreOverflow();
+                        }]
+                    }
                 })
                 .when('/course/list/:type', {
                     templateUrl: 'modules/course/course.template.html',
