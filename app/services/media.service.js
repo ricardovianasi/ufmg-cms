@@ -34,6 +34,13 @@
 
                 return $http.get(url);
             },
+            getMedias: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
+                var url = $filter('format')('{0}{1}', MEDIA_ENDPOINT, params);
+                return $http.get(url);
+            },
             removeMedia: function (id) {
                 return $http.delete(apiUrl + '/file/' + id);
             },

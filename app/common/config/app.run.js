@@ -49,6 +49,11 @@
                                 getAuth();
                             });
                     } else {
+                        if (!sessionService.getIsLogged()) {
+                            $location.path('/login');
+                            return;
+                        }
+                        sessionService.setIsLogged(false);
                         return ModalService
                             .login()
                             .result
@@ -76,6 +81,13 @@
             }, time);
         }
 
+        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
+            if (!sessionService.getIsLogged()) {
+                $location.path('/login');
+                return;
+            }
+        });
+
         $rootScope.$on('AuthenticateResponseError', function () {
             if ($location.path() !== '/login' && $rootScope.modalLoginIsDisabled) {
                 $log.info('Erro 401 | 403 Request auth');
@@ -92,20 +104,28 @@
         sessionService,
         $window,
         $log,
+        Util,
         ModalService,
         DTDefaultOptions,
         $timeout,
+        $location,
         PermissionService) {
-        var startPermission = false;
 
+        $rootScope.ngScrollbarsConfig = {
+            autoHideScrollbar: false,
+            theme: 'light-thin',
+            advanced: {
+                updateOnContentResize: true
+            },
+            scrollInertia: 0
+        };
+        Util.hiddenOverflow();
+        PermissionService.initService();
 
-        $rootScope.dtOptions = dataTableConfigService.init();
 
         $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
-            if (!startPermission) {
-                PermissionService.initService();
-                startPermission = true;
-            }
+            // Reset status
+            dataTableConfigService.setParamStatus('all');
         });
 
         $rootScope.changePassword = function () {
@@ -116,7 +136,7 @@
             $window.history.back();
         };
 
-        $rootScope.logout = function () {
+        $rootScope.logout = function (notReload) {
             $log.info('logout');
             $rootScope.dataUser = null;
             $rootScope.currentUser = null;
@@ -124,7 +144,7 @@
             sessionService.removeToken();
             sessionService.removeTokenRefresh();
             sessionService.removeIsLogged();
-            $window.location.reload();
+            $location.path('/login');
         };
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');

@@ -26,6 +26,7 @@
         'vAccordion',
         'checklist-model',
         'ui.utils.masks',
+        'ngScrollbars',
 
         // App Modules
         'calendarModule',

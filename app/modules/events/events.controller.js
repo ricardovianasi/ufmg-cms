@@ -1,9 +1,9 @@
-;
 (function () {
     'use strict';
 
     angular.module('eventsModule')
         .controller('EventsController', EventsController);
+
     /** ngInject */
     function EventsController($scope,
         $route,
@@ -14,36 +14,69 @@
         ModalService,
         NotificationService,
         $rootScope,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('EventsController');
 
-        $scope.title = 'Eventos';
-        $scope.events = [];
-        $scope.currentPage = 1;
+        var vm = $scope;
 
+        vm.title = 'Eventos';
+        vm.convertDate = DateTimeHelper.convertDate;
+        vm.events = [];
+        vm.currentPage = 1;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-        var loadEvents = function (page) {
-            EventsService.getEvents(page).then(function (data) {
-                $scope.events = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
-            });
-        };
+        onInit();
 
-        loadEvents();
+        function onInit() {
+            _renderDataTable();
+        }
 
-        $scope.changePage = function () {
-            loadEvents($scope.currentPage);
-        };
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
 
-        $scope.convertDate = DateTimeHelper.convertDate;
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'name'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
 
-        /**
-         * @param id
-         * @param title
-         */
-        $scope.remove = function (id, title) {
+            function getEvents(params, fnCallback) {
+                EventsService
+                    .getEvents(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.events = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getEvents);
+        }
+
+        vm.remove = function (id, title) {
             ModalService
                 .confirm('Deseja remover o evento <b>' + title + '</b>', ModalService.MODAL_MEDIUM)
                 .result
@@ -61,11 +94,11 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('events');
+            vm.canPost = PermissionService.canPost('events');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('events');
+            vm.canDelete = PermissionService.canDelete('events');
         }
     }
 })();

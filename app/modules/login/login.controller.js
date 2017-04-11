@@ -27,6 +27,7 @@
             vm.credentials.password = 'teste';
         }
         vm.login = _login;
+        $rootScope.$uibModalInstance ? $rootScope.$uibModalInstance.close() : false;
 
         $rootScope.shownavbar = false;
         $log.info('LoginController');
@@ -56,7 +57,6 @@
                             });
                     }, function (err) {
                         NotificationService.error('Usuário ou senha inválidos, tente novamente.');
-                        vm.credentials.password = '';
                         $log.error(err);
                     });
             }

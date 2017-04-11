@@ -11,18 +11,14 @@
         var NEWS_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'news');
 
         return {
-            getNews: function (id, page) {
-                page = page || 1;
-
-                var url = $filter('format')('{0}?page={1}', NEWS_ENDPOINT, page);
-
-                if (id) {
-                    url = $filter('format')('{0}/{1}', NEWS_ENDPOINT, id);
-
-                    return $http.get(url);
+            getNew: function (id) {
+                return $http.get(apiUrl + '/news/' + id);
+            },
+            getNews: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
                 }
-
-                return $http.get(url);
+                return $http.get(apiUrl + '/news' + params);
             },
             getNewsCategories: function () {
                 return $http.get(apiUrl + '/news/category');

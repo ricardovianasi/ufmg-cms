@@ -7,7 +7,6 @@
         </div>
         <div class="col-md-6">
             <div class="breadcrumb-env">
-
                 <ol class="breadcrumb bc-1">
                     <li>
                         <a href="#/"><i class="fa-home"></i>Home</a>
@@ -18,65 +17,70 @@
                         </a>
                     </li>
                 </ol>
-
-            </div><!--breadcrumb-env-->
+            </div>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
-
             <div class="btn-toolbar">
+                <div class="btn-group focus-btn-group">
+                    <a ng-click="changeStatus('all')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'all'}">
+                        <span ng-class="{ 'strong': itemStatus === 'all' || itemStatus === undefined }">Tudo</span>
+                    </a>
+                    <a ng-click="changeStatus('published')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'published'}">
+                        <span ng-class="{ 'strong': itemStatus === 'published'}">Publicados</span>
+                    </a>
+                    <a ng-click="changeStatus('draft')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'draft'}">
+                        <span ng-class="{ 'strong': itemStatus === 'draft'}">Rascunho</span>
+                    </a>
+                </div>
                 <div class="pull-right">
                     <a ng-if="canPost" ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> NOVO DESTAQUE
                     </a>
                 </div>
             </div>
-
             <div class="panel-body">
-                <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" datatable dt-instance="dtInstance" dt-options="dtOptions" dt-columns="dtColumns">
                     <thead>
                         <tr>
-                            <th>Título</th>
-                            <th>Usuário</th>
-                            <th>Data da criação</th>
-                            <th>Ações</th>
+                            <th class="col-xs-5">Título</th>
+                            <th class="col-xs-2">Usuário</th>
+                            <th class="col-xs-3">Data da criação</th>
+                            <th class="col-xs-2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" ng-repeat="featured in vm.highlights.items | filter: {description: search} | orderBy: '-created_at'" class="odd">
+                        <tr role="row" ng-repeat="featured in highlights.items track by featured.id" class="odd">
                             <td>
                                 <a ng-href="#/featured/edit/{{ featured.id }}">
                                     {{ featured.title }}
                                 </a>
                             </td>
-
                             <td>{{ featured.author.name }}</td>
-
                             <td>
-                                <strong>{{ vm.DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
+                                <strong>{{ DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
                                 <br>
                                 <small>{{ featured.status|translate|titleize }}</small>
                             </td>
-
                             <td class="table-fit">
-
-                                <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}"
+                                    class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
-                                </a>
-
-                                <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="vm.remove(featured.id, featured.title)" class="btn btn-danger">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                    </a>
+                                    <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="remove(featured.id, featured.title)" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-        </div><!--panel-->
-    </div><!--col-xs-12-->
-</div><!--row-->
+        </div>
+        <!--panel-->
+    </div>
+    <!--col-xs-12-->
+</div>
+<!--row-->

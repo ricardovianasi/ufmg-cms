@@ -12,8 +12,108 @@
     <link rel="stylesheet" type="text/css" href="assets/css/vendors.min.css">
     <link rel="stylesheet" href="assets/css/main.min.css">
 </head>
+<!--Loading-->
+<style>
+    .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        background: #eee;
+        z-index: 99999;
+        opacity: 1;
+        transition: opacity 1.3s ease-in-out;
+        -moz-transition: opacity 1.3s ease-in-out;
+        -webkit-transition: opacity 1.3s ease-in-out;
+    }
+    
+    .loading {
+        position: relative;
+        top: 40%;
+        display: table;
+        margin: 0 auto;
+    }
+    
+    .loading .spinner {
+        position: relative;
+        width: 45px;
+        height: 45px;
+        margin: 0 auto;
+    }
+    
+    .loading .box-loading {
+        margin-top: 30px;
+    }
+    
+    .loading .text {
+        font-size: 11px;
+        margin: 0 auto;
+        position: relative;
+        top: 20px;
+        text-transform: uppercase;
+        color: #777;
+        font-weight: 600;
+    }
+    
+    .loading .bubble-1,
+    .loading .bubble-2 {
+        position: absolute;
+        top: 0;
+        width: 18px;
+        height: 18px;
+        border-radius: 100%;
+        background-color: #ef3f4a;
+    }
+    
+    .loading .bubble-2 {
+        top: auto;
+        bottom: 0;
+    }
+    
+    .loading .spinner {
+        animation: Loading 2s linear infinite;
+    }
+    
+    .loading .bubble-1,
+    .loading .bubble-2 {
+        animation: Rotate 2s ease-in-out infinite;
+    }
+    
+    .loading .bubble-2 {
+        animation-delay: -1.0s;
+    }
+    
+    @keyframes Loading {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes Rotate {
+        0%,
+        100% {
+            transform: scale(0.0);
+        }
+        50% {
+            transform: scale(1.0);
+        }
+    }
+
+</style>
+<!--End Loading-->
 
 <body class="page-body">
+    <div class="fullscreen" app-load>
+        <div class="loading">
+            <div class="spinner">
+                <div class="bubble-1"></div>
+                <div class="bubble-2"></div>
+            </div>
+            <span class="text">Carregando</span>
+        </div>
+    </div>
     <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
         <div class="navbar-inner">
             <div class="navbar-brand ufmg">
@@ -54,12 +154,10 @@
             </ul>
         </div>
     </nav>
-    <div class="page-container">
-        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar">
-            <!--<ufmg-sidebar></ufmg-sidebar>-->
-        </div>
-        <div class="main-content">
-            <ng-view></ng-view>
+    <div class="page-container row">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar"></div>
+        <div class="main-content" ng-class="{'margin-sidebar': shownavbar}">
+            <ng-view />
         </div>
     </div>
     <script src="assets/js/TweenMax.min.js"></script>

@@ -48,15 +48,15 @@
                 </div>
             </div>
             <div class="panel-body">
-                <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" datatable dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-columns="vm.dtColumns">
                     <thead>
                         <tr>
-                            <th>Nome do Curso</th>
-                            <th>Ação</th>
+                            <th class="col-xs-10">Título</th>
+                            <th class="col-xs-2">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" ng-repeat="item in vm.courses.items | filter: search" class="odd">
+                        <tr role="row" ng-repeat="item in vm.courses.items" class="odd">
                             <td>
                                 <div class="clearfix">
                                     <a href="#/course/view/{{ vm.type }}/{{ item.id }}">{{ item.name|titleize }}</a>

@@ -32,18 +32,18 @@
                 </div>
             </div>
             <div class="panel-body">
-                <table datatable="ng" dt-options="dtOptions" class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" datatable dt-instance="dtInstance" dt-options="dtOptions" dt-columns="dtColumns">
                     <thead>
                         <tr>
-                            <th>Mídia</th>
-                            <th>Título</th>
-                            <th>Usuário</th>
-                            <th>Data da Criação</th>
-                            <th>Ações</th>
+                            <th class="col-xs-1">Mídia</th>
+                            <th class="col-xs-4">Título</th>
+                            <th class="col-xs-2">Usuário</th>
+                            <th class="col-xs-2">Data da Criação</th>
+                            <th class="col-xs-1">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" ng-repeat="item in media.items | filter: search | filter: {status: itemStatus} | orderBy: '-created_at'">
+                        <tr role="row" ng-repeat="item in media.items">
                             <td>
                                 <img ng-src="{{item.url}}" ng-show="item.url && item.type != 'mp3'" style="max-width: 120px; max-height: 120px; overflow: hidden; height: auto;">
                                 <div ng-show="item.url && item.type === 'mp3'" audio audio-url="item.url"></div>
@@ -52,7 +52,7 @@
                                 {{ item.title }}
                                 <small>{{ item.subtitle }}</small>
                             </td>
-                            <td>{{ item.author.name }}</td>
+                            <td>{{ item.author_name }}</td>
                             <td>
                                 <strong>{{ convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
                                 <br>

@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -13,49 +12,97 @@
         $uibModal,
         NotificationService,
         $route,
+        DTOptionsBuilder,
         PermissionService,
+        DTColumnDefBuilder,
         $rootScope,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PeriodicalController');
 
-        $scope.periodicals = [];
-        $scope.currentPage = 1;
+        var vm = $scope;
+        var removeConfirmationModal;
+        vm.periodicals = [];
+        vm.currentPage = 1;
+        vm.confirmationModal = _confirmationModal;
+        vm.convertDate = _convertDate;
+        vm.removePeriodical = _removePeriodical;
+        vm.setNamePeriodical = _setNamePeriodical;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-        $scope.convertDate = function (data) {
+        onInit();
+
+        function onInit() {
+            _renderDataTable();
+        }
+
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'name'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getPeriodicals(params, fnCallback) {
+                PeriodicalService
+                    .getPeriodicals(false, dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.periodicals = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPeriodicals);
+        }
+
+        function _setNamePeriodical(periodical) {
+            PeriodicalService.setPeriodicalName(periodical);
+        }
+
+        function _convertDate(data) {
             return DateTimeHelper.dateToStr(data);
-        };
+        }
 
-        var loadPeriodicals = function (page) {
-            PeriodicalService.getPeriodicals(null, page).then(function (data) {
-                $scope.periodicals = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
-            });
-        };
-
-        loadPeriodicals();
-
-        $scope.changePage = function () {
-            loadPeriodicals($scope.currentPage);
-        };
-
-        $scope.removePeriodical = function (id, description) {
-            $scope.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
+        function _removePeriodical(id, description) {
+            vm.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
             removeConfirmationModal.result.then(function (data) {
                 PeriodicalService.removePeriodical(id).then(function (data) {
                     NotificationService.success('Publicação removida com sucesso.');
                     $route.reload();
                 });
             });
-        };
+        }
 
-        var removeConfirmationModal;
-
-        $scope.confirmationModal = function (size, title) {
+        function _confirmationModal(size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
-                controller: ConfirmationModalCtrl,
+                controller: _ConfirmationModalCtrl,
                 backdrop: 'static',
                 size: size,
                 resolve: {
@@ -64,19 +111,20 @@
                     }
                 }
             });
-        };
+        }
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
+            var vm = $scope;
+            vm.modal_title = title;
 
-            $scope.ok = function () {
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
 
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         function _permissions() {
             _canDelete();
@@ -84,11 +132,11 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('periodical');
+            vm.canPost = PermissionService.canPost('periodical');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('periodical');
+            vm.canDelete = PermissionService.canDelete('periodical');
         }
     }
 })();

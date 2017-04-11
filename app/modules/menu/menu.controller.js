@@ -11,6 +11,8 @@
         PermissionService,
         MenuService,
         $log,
+        Util,
+        $q,
         PagesService,
         $rootScope,
         $filter) {
@@ -21,6 +23,8 @@
         var vm = this;
         var pages = [];
         var menus = MenuService.MENUS;
+
+        Util.restoreOverflow();
 
         //Public functions
         vm.removeItem = _removeItem;
@@ -56,18 +60,10 @@
         vm.sortableOptions = {
             placeholder: 'list-group-item',
             connectWith: '.main',
-            stop: function (e, ui) {
-            },
             update: function (event, ui) {
-                // on cross list sortings received is not true
-                // during the first update
-                // which is fired on the source sortable
                 if (!ui.item.sortable.received) {
                     var originNgModel = ui.item.sortable.sourceModel;
                     var itemModel = originNgModel[ui.item.sortable.index];
-
-                    // check that its an actual moving
-                    // between the two lists
                     if (
                         originNgModel == vm.pages ||
                         ui.item.sortable.droptargetModel == $scope.menus.quickAccess
@@ -87,8 +83,7 @@
         vm.quickSortableOptions = {
             placeholder: 'list-group-item-quickaccess',
             connectWith: '.main',
-            stop: function (e, ui) {
-            },
+            stop: function (e, ui) {},
             update: function (event, ui) {
                 // on cross list sortings received is not true
                 // during the first update
@@ -134,7 +129,7 @@
                     var menu = args.splice(0, 1)[0];
                     var idx = base > 3 ? args.splice(2, 1)[0] : args.splice(1, 1)[0];
 
-                    if (idx === undefined){
+                    if (idx === undefined) {
                         idx = args.splice(0, 1)[0];
                     }
 
@@ -144,13 +139,11 @@
 
                     angular.forEach(allArgs, function (i) {
 
-                        if (auxInterator !== 2 && allArgs.length === 3){
+                        if (auxInterator !== 2 && allArgs.length === 3) {
                             menuName += '[' + i + '].children';
-                        }
-                        else if (auxInterator !== 1 && allArgs.length === 2){
+                        } else if (auxInterator !== 1 && allArgs.length === 2) {
                             menuName += '[' + i + '].children';
-                        }
-                        else{
+                        } else {
                             $log.info('ready');
                         }
                         auxInterator++;

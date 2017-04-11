@@ -1,9 +1,8 @@
 (function () {
     'use strict';
 
-    angular
-        .module('featuredModule')
-        .controller('featuredController', featuredNewController);
+    angular.module('featuredModule')
+        .controller('FeaturedController', featuredNewController);
 
     /** ngInject */
     function featuredNewController(featuredService,
@@ -16,40 +15,74 @@
         NotificationService,
         $location,
         $route,
+        Util,
         $rootScope) {
         $rootScope.shownavbar = true;
 
-        var vm = this; // jshint ignore:line
+        var vm = $scope;
+        var removeConfirmationModal;
+
         vm.DateTimeHelper = DateTimeHelper;
         vm.remove = _remove;
         vm.highlights = [];
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-
-        loadHighlights();
-
-        function loadHighlights() {
-            featuredService.get().then(function (res) {
-                    vm.highlights = res.data || {};
-                    vm.dtOptions = dataTableConfigService.init();
-                    _permissions();
-                },
-                function (err) {
-                    vm.dtOptions = dataTableConfigService.init();
-                });
-
+        function onInit() {
+            _renderDataTable();
         }
 
-        // Confirmation to remove
-        var removeConfirmationModal;
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getFeatureds(params, fnCallback) {
+                featuredService
+                    .getFeatureds(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.highlights = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);
+        }
 
         var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+            var vm = $scope;
+            vm.modal_title = title;
 
-            $scope.ok = function () {
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
 
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
         };
@@ -85,11 +118,12 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('highlighted_press');
+            vm.canPost = PermissionService.canPost('highlighted_press');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('highlighted_press');
+            vm.canDelete = PermissionService.canDelete('highlighted_press');
         }
+        onInit();
     }
 })();

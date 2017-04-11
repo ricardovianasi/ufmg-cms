@@ -14,42 +14,73 @@
         ModalService,
         DateTimeHelper,
         $rootScope,
+        Util,
         $log) {
-        var vm = $scope;
-        var roleDelete = null;
         $log.info('PagesController');
-
         $rootScope.shownavbar = true;
+        var vm = this;
+        var roleDelete = null;
+        vm.dtColumns = {};
+        vm.dtOptions = {};
         vm.status = [];
-        vm.pages = [];
+        vm.pages = null;
         vm.currentPage = 1;
         vm.remove = _remove;
-        vm.changePage = _changePage;
         vm.canDelete = null;
         vm.canPost = null;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
         function onInit() {
+            _renderDataTable();
             StatusService
                 .getStatus()
-                .then(function (data) {
-                    vm.status = data.data;
+                .then(function (res) {
+                    vm.status = res.data;
                 });
             vm.convertDate = DateTimeHelper.convertDate;
-            _loadPages();
         }
 
-        function _loadPages(page) {
-            PagesService
-                .getPages(page)
-                .then(function (data) {
-                    vm.pages = data.data;
-                    vm.dtOptions = dataTableConfigService.init();
-                    _permissions();
-                });
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
         }
 
-        function _changePage() {
-            _loadPages(vm.currentPage);
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getPages(params, fnCallback) {
+                PagesService
+                    .getPages(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.pages = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);
         }
 
         function _remove(id, title) {
@@ -61,7 +92,6 @@
                         .removePage(id)
                         .then(function () {
                             NotificationService.success('Página removida com sucesso.');
-                            _loadPages();
                         });
                 });
         }

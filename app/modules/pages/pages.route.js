@@ -8,31 +8,13 @@
                 .when('/pages', {
                     templateUrl: 'modules/pages/pages.template.html',
                     controller: 'PagesController',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired()) {
-                                $rootScope.logout();
-                            }
-                        }]
-                    }
+                    controllerAs: 'vm'
                 })
                 .when('/pages/new', {
                     templateUrl: 'modules/pages/pages.form.template.html',
                     controller: 'PagesNewController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired()) {
-                                $rootScope.logout();
-                            }
-                        }],
                         permission: ['PermissionService', '$window', function (PermissionService, $window) {
                             if (!PermissionService.canPost('page')) {
                                 $window.location.href = '#/pages';
@@ -45,14 +27,6 @@
                     controller: 'PagesEditController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        isLogged: ['sessionService', function (sessionService) {
-                            return sessionService.getIsLogged();
-                        }],
-                        tokenIsExpired: ['sessionService', '$rootScope', function (sessionService, $rootScope) {
-                            if (sessionService.verifyTokenIsExpired()) {
-                                $rootScope.logout();
-                            }
-                        }],
                         permission: ['PermissionService', '$window', function (PermissionService, $window) {
                             if (!PermissionService.canPut('page')) {
                                 $window.location.href = '#/pages';

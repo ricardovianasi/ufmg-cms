@@ -1,4 +1,4 @@
-<div class="sidebar-menu-inner">
+<div class="sidebar-menu-inner" ng-scrollbars ng-scrollbars-config="ngScrollbarsConfig">
     <ul id="main-menu" class="main-menu">
         <li ng-repeat="navItem in navigation | filter: {enabled: true}" ng-class="{'active': itemActive === navItem.location}" ng-click="navItem.submenuState ? (navItem.submenuState = !navItem.submenuState) : (navItem.submenuState = true)">
             <a ng-href="#/{{ navItem.location }}">

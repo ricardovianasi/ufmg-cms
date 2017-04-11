@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -14,45 +13,85 @@
         DateTimeHelper,
         PermissionService,
         $log,
+        Util,
         $rootScope) {
 
         $rootScope.shownavbar = true;
         $log.info('ReleasesController');
+        var vm = $scope;
 
-        $scope.title = 'Releases';
-        $scope.releases = [];
-        $scope.DateTimeHelper = DateTimeHelper;
-        $scope.currentPage = 1;
+        vm.title = 'Releases';
+        vm.releases = [];
+        vm.DateTimeHelper = DateTimeHelper;
+        vm.currentPage = 1;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-        var loadReleases = function (page) {
-            ReleasesService.getReleases(page).then(function (data) {
-                $scope.releases = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
-            });
+        function onInit() {
+            _renderDataTable();
+        }
+
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getReleases(params, fnCallback) {
+                ReleasesService
+                    .getReleases(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.releases = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getReleases);
+        }
+
+        vm.changePage = function () {
+            loadReleases(vm.currentPage);
         };
 
-        loadReleases();
-
-        $scope.changePage = function () {
-            loadReleases($scope.currentPage);
-        };
-
-        // Confirmation to remove
         var removeConfirmationModal;
 
         var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+            var vm = $scope;
+            vm.modal_title = title;
 
-            $scope.ok = function () {
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
         };
 
-        $scope.confirmationModal = function (size, title) {
+        vm.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
@@ -66,8 +105,8 @@
             });
         };
 
-        $scope.removeRelease = function (id, title) {
-            $scope.confirmationModal('md', $filter('format')('Você deseja excluir o release "{0}"?', title));
+        vm.removeRelease = function (id, title) {
+            vm.confirmationModal('md', $filter('format')('Você deseja excluir o release "{0}"?', title));
 
             removeConfirmationModal.result.then(function () {
                 ReleasesService.destroy(id).then(function () {
@@ -83,11 +122,13 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('release');
+            vm.canPost = PermissionService.canPost('release');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('release');
+            vm.canDelete = PermissionService.canDelete('release');
         }
+
+        onInit();
     }
 })();

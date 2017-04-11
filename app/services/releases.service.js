@@ -48,10 +48,11 @@
         };
 
         return {
-            getReleases: function (page) {
-                page = page || 1;
-
-                var url = $filter('format')('{0}?page={1}', RELEASE_ENDPOINT, page);
+            getReleases: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
+                var url = $filter('format')('{0}?page={1}', RELEASE_ENDPOINT, params);
 
                 return $http.get(url);
             },
