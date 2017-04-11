@@ -13,7 +13,7 @@
                     controller: 'GalleryNewController',
                     resolve: {
                         VIEWER: ['Util', function (Util) {
-                            Util.restoreOverflow();
+                             
                             return true;
                         }]
                     }
@@ -23,7 +23,7 @@
                     controller: 'GalleryEditController',
                     resolve: {
                         VIEWER: ['Util', function (Util) {
-                            Util.restoreOverflow();
+                             
                             return true;
                         }]
                     }
@@ -33,7 +33,7 @@
                     controller: 'GalleryEditController',
                     resolve: {
                         VIEWER: ['Util', function (Util) {
-                            Util.restoreOverflow();
+                             
                             return false;
                         }]
                     }

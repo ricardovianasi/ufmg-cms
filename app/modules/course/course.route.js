@@ -10,7 +10,7 @@
                     templateUrl: 'modules/course/course-types.template.html',
                     resolve: {
                         restoreOverflow: ['Util', function (Util) {
-                            Util.restoreOverflow();
+                             
                         }]
                     }
                 })
