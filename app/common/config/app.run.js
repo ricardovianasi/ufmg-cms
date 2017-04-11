@@ -104,7 +104,6 @@
         sessionService,
         $window,
         $log,
-        Util,
         ModalService,
         DTDefaultOptions,
         $timeout,
@@ -119,7 +118,6 @@
             },
             scrollInertia: 0
         };
-        Util.hiddenOverflow();
         PermissionService.initService();
 
 
