@@ -26,17 +26,11 @@
             };
 
             return {
-                getClippings: function (page) {
-                    page = page || 1;
-
-                    var deferred = $q.defer();
-                    var url = $filter('format')('{0}?page={1}', CLIPPING_ENDPOINT, page);
-
-                    $http.get(url).then(function (data) {
-                        deferred.resolve(data);
-                    });
-
-                    return deferred.promise;
+                getClippings: function (params) {
+                    if (angular.isUndefined(params)) {
+                        params = '';
+                    }
+                    return $http.get(apiUrl + '/clipping' + params);
                 },
                 store: function (data) {
                     var deferred = $q.defer();

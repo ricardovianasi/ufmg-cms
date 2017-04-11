@@ -1,6 +1,7 @@
 <div class=modal-header>
-    <h3 class="modal-title" ng-if="type == 'add'">Adicionar novo registro</h3>
-    <h3 class="modal-title" ng-if="type == 'edit'">Editar registro</h3>
+    <h3 class="modal-title" ng-if="type === 'add'">Adicionar novo registro</h3>
+    <h3 class="modal-title" ng-if="type === 'edit'">Editar registro</h3>
+    <h3 class="modal-title" ng-if="type === 'view'">Registro</h3>
 </div>
 <div class="modal-body">
     <form class="form" name="formCalendar" novalidate>

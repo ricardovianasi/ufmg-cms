@@ -15,36 +15,74 @@
         DateTimeHelper,
         $rootScope,
         PermissionService,
+        Util,
         $log) {
         $log.info('GaleriasController');
         $rootScope.shownavbar = true;
 
-        $scope.galleries = [];
-        $scope.status = [];
-        $scope.currentPage = 1;
-        $scope.DateTimeHelper = DateTimeHelper;
+        var vm = $scope;
 
-        var loadGalleries = function (page) {
-            GalleryService
-                .getGalleries(page)
-                .then(function (data) {
-                    $scope.galleries = data.data;
-                    $scope.dtOptions = dataTableConfigService.init();
-                    _permissions();
-                });
-        };
+        vm.galleries = [];
+        vm.status = [];
+        vm.currentPage = 1;
+        vm.DateTimeHelper = DateTimeHelper;
+        vm.removeGallery = _removeGallery;
 
-        loadGalleries();
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-        $scope.changePage = function () {
-            loadGalleries($scope.currentPage);
-        };
+        onInit();
 
-        StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
-        });
+        function onInit() {
+            _renderDataTable();
+            // StatusService.getStatus().then(function (data) {
+            //     vm.status = data.data;
+            // });
+        }
 
-        $scope.removeGallery = function (id, name) {
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getGalleries(params, fnCallback) {
+                GalleryService
+                    .getGalleries(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.galleries = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getGalleries);
+        }
+
+        function _removeGallery(id, name) {
             ModalService
                 .confirm('Você deseja excluir a galeria "' + name + '"?')
                 .result
@@ -54,7 +92,7 @@
                         $route.reload();
                     });
                 });
-        };
+        }
 
         function _permissions() {
             _canDelete();
@@ -62,11 +100,11 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('gallery');
+            vm.canPost = PermissionService.canPost('gallery');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('gallery');
+            vm.canDelete = PermissionService.canDelete('gallery');
         }
     }
 })();

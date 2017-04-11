@@ -13,6 +13,7 @@
         permission,
         $rootScope,
         $location,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('CourseController');
@@ -22,6 +23,7 @@
         vm.type = $routeParams.type;
         vm.courseId = $routeParams.courseId || false;
         vm.course = {};
+        vm.dtInstance = {};
 
 
         vm.removeImage = _removeImage;
@@ -50,14 +52,36 @@
                         _permissions();
                     });
             } else {
+                _renderDataTable();
+            }
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 2;
+            var columnsHasNotOrder = [1];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'name'
+            }]);
+
+            function getCourses(params, fnCallback) {
                 CourseService
-                    .getCourses(vm.type)
+                    .getCourses(vm.type, false, dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.courses = res.data;
-                        vm.dtOptions = dataTableConfigService.init();
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
+                        vm.courses = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
                     });
             }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCourses);
         }
 
         function _save(redirect) {

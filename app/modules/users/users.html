@@ -31,19 +31,18 @@
                 </div>
             </div>
             <div class="panel-body">
-                <table class="table table-striped table-bordered" datatable="ng" dt-options="dtOptions">
+                <table class="table table-striped table-bordered" datatable dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-columns="vm.dtColumns">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <!--<th>Telefone</th>-->
-                            <th>Unidade/Setor</th>
-                            <th>Cargo/Função</th>
-                            <th>Email</th>
-                            <th>Ações</th>
+                            <th class="col-xs-3">Nome</th>
+                            <th class="col-xs-2">Unidade/Setor</th>
+                            <th class="col-xs-3">Cargo/Função</th>
+                            <th class="col-xs-3">Email</th>
+                            <th class="col-xs-1">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role="row" class="odd" ng-repeat="user in vm.users | filter: search | orderBy: '-created_at'">
+                        <tr role="row" class="odd" ng-repeat="user in vm.users">
                             <td> {{ user.name }} </td>
                             <td>{{vm.normalize(user.unit,user.sector)}}</td>
                             <td>{{vm.normalize(user.occupation,user.function)}}</td>

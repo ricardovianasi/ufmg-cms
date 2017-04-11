@@ -89,14 +89,11 @@
 
                         return months[month] + ' / ' + year;
                     },
-                    getCalendar: function () {
-                        var deferred = $q.defer();
-
-                        $http.get(apiUrl + '/calendar').then(function (data) {
-                            deferred.resolve(data);
-                        });
-
-                        return deferred.promise;
+                    getCalendar: function (params) {
+                        if (angular.isUndefined(params)) {
+                            params = '';
+                        }
+                        return $http.get(apiUrl + '/calendar' + params);
                     },
                     getRegional: function () {
                         var deferred = $q.defer();

@@ -51,16 +51,18 @@
             return store.removeItem(key);
         }
 
-        function setIsLogged() {
-            return store.setItem('isLogged', true);
+        function setIsLogged(value) {
+            angular.isUndefined(value)  ? value = true : false;
+            return store.setItem('isLogged', value);
         }
 
         function getIsLogged() {
             if (store.getItem('isLogged') === 'true') {
                 return true;
+            } else if (store.getItem('isLogged') === 'false') {
+                return false;
             }
-            $location.path('login');
-            return false;
+            return null;
         }
 
         function removeIsLogged() {

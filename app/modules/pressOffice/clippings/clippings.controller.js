@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -16,46 +15,83 @@
         DateTimeHelper,
         NotificationService,
         $rootScope,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('ClippingsController');
 
-
-        $scope.title = 'Clippings';
-        $scope.clippings = [];
-        $scope.DateTimeHelper = DateTimeHelper;
-        $scope.currentPage = 1;
-
-        var loadClippings = function (page) {
-            ClippingsService.getClippings(page).then(function (data) {
-                $scope.clippings = data.data;
-                $scope.dtOptions = dataTableConfigService.init();
-                _permissions();
-            });
-        };
-
-        loadClippings();
-
-        $scope.changePage = function () {
-            loadClippings($scope.currentPage);
-        };
-
-        // Confirmation to remove
+        var vm = $scope;
         var removeConfirmationModal;
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+        vm.title = 'Clippings';
+        vm.clippings = [];
+        vm.DateTimeHelper = DateTimeHelper;
+        vm.currentPage = 1;
+        vm.changeStatus = _changeStatus;
+        vm.itemStatus = 'all';
+        vm.dtInstance = {};
 
-            $scope.ok = function () {
+
+        function onInit() {
+            _renderDataTable();
+        }
+
+        function _changeStatus(status) {
+            vm.itemStatus = status;
+            dataTableConfigService.setParamStatus(status);
+            vm.dtInstance.DataTable.draw();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 4;
+            var columnsHasNotOrder = [3];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 1,
+                filter: 'author',
+                name: 'name'
+            }, {
+                index: 2,
+                name: 'postDate'
+            }]);
+
+            function getClippings(params, fnCallback) {
+                ClippingsService
+                    .getClippings(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.clippings = res.data;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getClippings);
+        }
+
+
+        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+            var vm = $scope;
+            vm.modal_title = title;
+
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
 
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
         };
 
-        $scope.confirmationModal = function (size, title) {
+        vm.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
@@ -69,8 +105,8 @@
             });
         };
 
-        $scope.removeClipping = function (id, description) {
-            $scope.confirmationModal('md', $filter('format')('Você deseja excluir o clipping "{0}"?', description));
+        vm.removeClipping = function (id, description) {
+            vm.confirmationModal('md', $filter('format')('Você deseja excluir o clipping "{0}"?', description));
 
             removeConfirmationModal.result.then(function () {
                 ClippingsService.destroy(id).then(function () {
@@ -87,11 +123,12 @@
         }
 
         function _canPost() {
-            $scope.canPost = PermissionService.canPost('clipping');
+            vm.canPost = PermissionService.canPost('clipping');
         }
 
         function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('clipping');
+            vm.canDelete = PermissionService.canDelete('clipping');
         }
+        onInit();
     }
 })();

@@ -42,7 +42,7 @@
       },
       {
         step: 'Publicação da Imagem',
-        slug: 'publish'
+        slug: 'published'
       }
     ];
 

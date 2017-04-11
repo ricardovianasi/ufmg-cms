@@ -21,8 +21,6 @@
         $log) {
         $log.info('PagesService');
 
-        var PAGES_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'page');
-
         var _parseData = function (page) {
             var cleanPage = {};
 
@@ -71,12 +69,11 @@
             return cleanPage;
         };
 
-        var _getPages = function (page) {
-            page = page || 1;
-
-            var url = $filter('format')('{0}?page={1}', PAGES_ENDPOINT, page);
-
-            return $http.get(url);
+        var _getPages = function (params) {
+            if (angular.isUndefined(params)) {
+                params = '';
+            }
+            return $http.get(apiUrl + '/page' + params);
         };
 
         var _getTags = function ($scope) {

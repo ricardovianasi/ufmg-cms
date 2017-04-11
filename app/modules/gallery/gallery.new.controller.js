@@ -15,6 +15,7 @@
         NotificationService,
         PermissionService,
         $rootScope,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('GaleriasNovoController');
@@ -22,9 +23,11 @@
         $scope.categories = [];
         $scope.gallery = {};
 
-        GalleryService.getCategories().then(function (data) {
-            $scope.categories = data.data.items;
+
+        GalleryService.getCategories().then(function (res) {
+            $scope.categories = res.data.items;
             $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
+            Util.restoreOverflow();
         });
 
         $scope.gallery.title = '';

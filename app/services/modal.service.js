@@ -127,6 +127,7 @@
 
             function LoginModalController(
                 $log,
+                NotificationService,
                 $rootScope,
                 sessionService,
                 authService,
@@ -141,6 +142,8 @@
                 vm.credentials = {};
                 vm.rememberMe = false;
                 vm.login = _login;
+
+                $rootScope.$uibModalInstance = $uibModalInstance;
 
                 if (vm.desenvMode) {
                     vm.credentials.username = 'portal@portal';

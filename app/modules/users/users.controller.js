@@ -11,18 +11,55 @@
         ModalService,
         NotificationService,
         PermissionService,
+        dataTableConfigService,
+        Util,
         authService,
         $log) {
+        $log.info('UsersController');
 
         var vm = this;
         vm.normalize = _normalize;
         vm.activate = _activate;
         vm.reset = _reset;
+        $rootScope.shownavbar = true;
+
+        vm.dtInstance = {};
+
+        onInit();
 
         function onInit() {
-            $rootScope.shownavbar = true;
-            $log.info('UsersController');
-            _loadUsers();
+            _renderDataTable();
+        }
+
+        function _renderDataTable() {
+            var numberOfColumns = 5;
+            var columnsHasNotOrder = [1, 2, 4];
+            dataTableConfigService.setColumnsHasOrderAndSearch([{
+                index: 0,
+                name: 'title'
+            }, {
+                index: 3,
+                name: 'email'
+            }]);
+
+            function getUsers(params, fnCallback) {
+                UsersService
+                    .getUsers(dataTableConfigService.getParams(params))
+                    .then(function (res) {
+                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                        _permissions();
+                        vm.users = res.data.items;
+                        var records = {
+                            'draw': params.draw,
+                            'recordsTotal': res.data.total,
+                            'data': [],
+                            'recordsFiltered': res.data.total
+                        };
+                        fnCallback(records);
+                        Util.restoreOverflow();
+                    });
+            }
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getUsers);
         }
 
         function _reset(user) {
@@ -51,7 +88,6 @@
             if (moderator) {
                 user.moderator = moderator.id;
             }
-
             return user;
         }
 
@@ -64,15 +100,6 @@
             return value + ' / ' + value2;
         }
 
-        function _loadUsers() {
-            UsersService
-                .getUsers()
-                .then(function (res) {
-                    vm.users = res.data.items;
-                    _permissions();
-                });
-        }
-
         function _permissions() {
             _canPost();
         }
@@ -80,7 +107,5 @@
         function _canPost() {
             vm.canPost = PermissionService.canPost('user');
         }
-
-        onInit();
     }
 })();
