@@ -1,28 +1,23 @@
-<div class=form-group>
+<div class="form-group">
     <label>Tipo de Not&iacute;cia:</label>
-
-    <select title="Tipo de Notícia" class="form-control"
-            ng-model="widget.typeNews"
-            ng-options="news_type.id as news_type.name for news_type in news_types.items"></select>
+    <select title="Tipo de Notícia" class="form-control" ng-model="widget.typeNews" ng-options="news_type.id as news_type.name for news_type in news_types.items"></select>
 </div>
-
-<div class=form-group>
+<div class="form-group checkbox" ng-init="widget.highlight_ufmg = false">
+    <label>
+        <input type="checkbox" title="Número de notícias" ng-model="widget.highlight_ufmg">
+        Notícia UFMG
+    </label>
+</div>
+<div class="form-group">
     <label>N&uacute;mero de not&iacute;cias:</label>
-
-    <input type="number" title="Número de notícias" class="form-control"
-           ng-model="widget.limit">
+    <input type="number" title="Número de notícias" class="form-control" ng-model="widget.limit">
 </div>
-
-<div class=form-group>
+<div class="form-group">
     <label>Tags:</label>
-
     <!--<select title="Tag" class="form-control"-->
-            <!--ng-options="tag.id as tag.name for tag in tags"-->
-            <!--ng-model="widget.tag"></select>-->
-
+    <!--ng-options="tag.id as tag.name for tag in tags"-->
+    <!--ng-model="widget.tag"></select>-->
     <tags-input ng-model="widget.tags">
-        <auto-complete source="findTags($query)"
-                       max-results-to-show="1000"
-                       minLength="1"></auto-complete>
+        <auto-complete source="findTags($query)" max-results-to-show="1000" minLength="1"></auto-complete>
     </tags-input>
 </div>
