@@ -300,12 +300,14 @@
                     var tag = [];
 
                     if (widget.content) {
-                        if ('tag' in widget.content && widget.content.tag.length > 0) {
-                            if (typeof widget.content.tag[0].text !== 'undefined')
-                                widget.content.tag = _.map(widget.content.tag, 'text');
-                            tag = widget.content.tag;
-                        } else {
-                            tag = widget.tag || (widget.content ? widget.content.tag.id : null);
+                        if (widget.content.tag) {
+                            if ('tag' in widget.content && widget.content.tag.length > 0) {
+                                if (typeof widget.content.tag[0].text !== 'undefined')
+                                    widget.content.tag = _.map(widget.content.tag, 'text');
+                                tag = widget.content.tag;
+                            } else {
+                                tag = widget.tag || (widget.content ? widget.content.tag.id : null);
+                            }
                         }
                     } else {
                         if ('tag' in widget && widget.tag.length > 0) {
