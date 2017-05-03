@@ -193,6 +193,7 @@
                         category: widget.category || (widget.content ? widget.content.category : null),
                         limit: widget.limit || (widget.content ? widget.content.limit : null),
                         typeNews: widget.typeNews || (widget.content ? (widget.content.typeNews ? widget.content.typeNews.id : '') : null),
+                        highlight_ufmg: widget.highlight_ufmg ? 1 : 0,
                         tags: tags,
                     };
                 },
@@ -615,6 +616,7 @@
                         category: widget.category || (widget.content ? widget.content.category : null),
                         limit: widget.limit || (widget.content ? widget.content.limit : null),
                         typeNews: typeNews,
+                        highlight_ufmg: widget.highlight_ufmg ? 1 : 0,
                         tags: tagsForTagsInput
                     };
                 },
