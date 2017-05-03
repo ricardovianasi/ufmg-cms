@@ -2,7 +2,7 @@
     <label>Tipo de Not&iacute;cia:</label>
     <select title="Tipo de Notícia" class="form-control" ng-model="widget.typeNews" ng-options="news_type.id as news_type.name for news_type in news_types.items"></select>
 </div>
-<div class="form-group checkbox" ng-init="widget.highlight_ufmg = false">
+<div class="form-group checkbox">
     <label>
         <input type="checkbox" title="Número de notícias" ng-model="widget.highlight_ufmg">
         Notícia UFMG
