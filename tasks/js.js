@@ -11,27 +11,26 @@ var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 
 gulp.task('js', function () {
-  return gulp.src([
-      'app/**/*.js',
-      '!app/assets/**/*.js'
-    ])
-    .pipe(plumber())
-    .pipe(jshint({
-      esnext: true,
-      strict: true
-    }))
-    .pipe(jshint.reporter(stylish))
-    .pipe(naturalSort())
-    .pipe(angularFilesort())
-    .pipe(concat('app.js'))
-    .pipe(ngAnnotate())
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      compact: false
-    }))
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./build/scripts/'));
+    return gulp.src(['app/**/*.js',
+            '!app/assets/**/*.js'
+        ])
+        .pipe(plumber())
+        .pipe(jshint({
+            esnext: true,
+            strict: true
+        }))
+        .pipe(jshint.reporter(stylish))
+        .pipe(naturalSort())
+        .pipe(angularFilesort())
+        .pipe(concat('app.js'))
+        .pipe(ngAnnotate())
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            compact: false
+        }))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./build/scripts/'));
 });

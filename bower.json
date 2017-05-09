@@ -60,7 +60,10 @@
     "checklist-model": "~0.10.0",
     "datatables": "~1.10.13",
     "angular-input-masks": "^2.5.0",
-    "ng-scrollbars": "^0.0.11"
+    "ng-scrollbars": "^0.0.11",
+    "angular-ui-scroll": "^1.6.1",
+    "nanoscroller": "^0.8.7",
+    "ui-select-infinity": "^0.1.6"
   },
   "resolutions": {
     "angular": "~1.4.8",
