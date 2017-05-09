@@ -25,7 +25,7 @@
 
         function _selectTab(nextTab) {
             angular.forEach(tabs, function (value, key) {
-                tabs[key] = key == nextTab;
+                tabs[key] = key === nextTab;
             });
         }
     }

@@ -9,7 +9,7 @@
         $log.info('RedactorPluginService');
 
         var _insertItemOnEditor = function (redactor, template, obj) {
-            var html = _.template($(template).html());
+            var html = _.template($(template).html()); // jshint ignore: line
 
             redactor.selection.restore();
             redactor.buffer.set();

@@ -16,12 +16,14 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                                if (!PermissionService.canPost('faq')) {
-                                    $window.location.href = '#/faq';
+                            permission: ['PermissionService', '$window',
+                                function (PermissionService, $window) {
+                                    if (!PermissionService.canPost('faq')) {
+                                        $window.location.href = '#/faq';
+                                    }
+                                    return true;
                                 }
-                                return true;
-                            }]
+                            ]
                         }
                     })
                     .when('/faq/edit/:faqId', {
@@ -29,12 +31,14 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('faq', $routeParams.faqId)) {
-                                    $window.location.href = '#/faq';
+                            permission: ['PermissionService', '$window', '$routeParams',
+                                function (PermissionService, $window, $routeParams) {
+                                    if (!PermissionService.canPut('faq', $routeParams.faqId)) {
+                                        $window.location.href = '#/faq';
+                                    }
+                                    return true;
                                 }
-                                return true;
-                            }]
+                            ]
                         }
                     })
                     .when('/faq/view/:faqId', {

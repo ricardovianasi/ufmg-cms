@@ -21,7 +21,7 @@
 
         var _parseCourseData = function (course) {
             var obj = {
-                tags: _.map(course.tags, 'text'),
+                tags: _.map(course.tags, 'text'), // jshint ignore: line
                 cover: course.cover,
                 status: course.status,
                 description: course.description,

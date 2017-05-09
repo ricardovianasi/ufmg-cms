@@ -6,7 +6,7 @@
         .directive('appLoad', function ($rootScope, $timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, element, attrs) {
+                link: function (scope, element) {
                     element.css({
                         'opacity': '0'
                     });

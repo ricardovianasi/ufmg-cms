@@ -13,7 +13,7 @@
                 context: '@',
                 contextId: '='
             },
-            link: function ($scope, elem, attr) {
+            link: function ($scope, elem) {
                 var canDelete = PermissionService.canDelete($scope.context, $scope.contextId);
                 if (!canDelete) {
                     elem.remove();

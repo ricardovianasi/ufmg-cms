@@ -10,23 +10,21 @@
                     'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
                 ];
 
-                var calendario = [];
-
                 return {
                     convertDate: function (date) {
                         return new Date(date);
                     },
                     dateToStr: function (date) {
-                        Date.prototype.yyyymmdd = function () {
+                        Date.prototype.yyyymmdd = function () { // jshint ignore: line
                             var yyyy = this.getFullYear().toString();
                             var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based
                             var dd = this.getDate().toString();
 
                             if (dd[1]) {
-                                return dd + '/' + (mm[1] ? mm : "0" + mm[0]) + '/' + yyyy;
+                                return dd + '/' + (mm[1] ? mm : '0' + mm[0]) + '/' + yyyy;
                             }
 
-                            return "0" + dd[0] + '/' + (mm[1] ? mm : "0" + mm[0]) + '/' + yyyy;
+                            return '0' + dd[0] + '/' + (mm[1] ? mm : '0' + mm[0]) + '/' + yyyy;
                         };
                         var d = new Date(date);
                         return d.yyyymmdd();

@@ -16,7 +16,6 @@
         $location,
         $rootScope) {
         var vm = $scope;
-        var userId = $routeParams.userId ? $routeParams.userId : null;
 
         vm.account = {};
         vm.save = save;
@@ -50,7 +49,7 @@
 
             accountService
                 .edit(data, vm.account.id)
-                .then(function (res) {
+                .then(function () {
                     $location.path('/');
                     NotificationService.success('Perfil atualizado com sucesso!');
                 }).catch(function (err) {

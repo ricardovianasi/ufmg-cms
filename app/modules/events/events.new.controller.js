@@ -18,6 +18,7 @@
         $rootScope,
         TagsService,
         $log,
+        $window,
         PermissionService,
         validationService) {
         $rootScope.shownavbar = true;
@@ -83,7 +84,7 @@
         };
 
         vm.setEndDefault = function () {
-            if (vm.event.endDate === "" || vm.event.endDate === null) {
+            if (vm.event.endDate === '' || vm.event.endDate === null) {
                 vm.event.endDate = vm.event.initDate;
             }
         };
@@ -141,8 +142,9 @@
         };
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formEvents.$invalid))
+            if (!validationService.isValid($scope.formEvents.$invalid)){
                 return false;
+            }
 
             vm.setEndDefault();
 
@@ -169,14 +171,9 @@
         });
 
         // Statuses
-        StatusService.getStatus().then(function (data) {
-            vm.statuses = data.data;
+        StatusService.getStatus().then(function (res) {
+            vm.statuses = res.data;
         });
-
-        function _parseTime(data) {
-            data.end_hour = moment(data.end_hour).format('HH:mm');
-            data.init_hour = moment(data.init_hour).format('HH:mm');
-        }
 
         TagsService.getTags().then(function (data) {
             allTags = data.data.items[0];

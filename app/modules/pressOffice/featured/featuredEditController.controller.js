@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -106,7 +105,7 @@
         function _saveFeatured() {
             _parseToSave();
 
-            featuredService.update(vm.featured.id, _updateFeatured).then(function (res) {
+            featuredService.update(vm.featured.id, _updateFeatured).then(function () {
                 NotificationService.success('Destaque alterado com sucesso!');
                 $location.path('/featured');
             });

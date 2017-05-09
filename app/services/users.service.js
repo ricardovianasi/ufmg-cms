@@ -6,7 +6,7 @@
         .factory('UsersService', UsersService);
 
     /** ngInject */
-    function UsersService($http, apiUrl, $log, $q) {
+    function UsersService($http, apiUrl, $log) {
         $log.info('UsersService');
 
         return {
@@ -17,7 +17,7 @@
         };
 
         function _getUsers(params) {
-            if(angular.isUndefined(params)){
+            if (angular.isUndefined(params)) {
                 params = '';
             }
             return $http.get(apiUrl + '/user' + params);

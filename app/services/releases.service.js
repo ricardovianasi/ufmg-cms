@@ -12,7 +12,7 @@
 
         var _parseData = function (data) {
 
-            var slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+            var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
             var obj = {
                 id: data.id || null,

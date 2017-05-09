@@ -61,8 +61,8 @@
             var array = validatePostsId(posts);
             var postId = id.toString();
             for (var i = 0; i < array.length; i++) {
-                var id = array[i];
-                if (postId === id) {
+                var elId = array[i];
+                if (postId === elId) {
                     return true;
                 }
             }
@@ -110,19 +110,10 @@
             return check(context, id, 'POST');
         }
 
-        function messageAlert() {
-            if (!showMessage) {
-                NotificationService.error('ATENÇÃO', 'Não conseguimos verificar suas permissões, entre com contato com CEDECOM/WEB');
-                showMessage = true;
-            }
-            $timeout(function () {
-                showMessage = false;
-            }, 5000);
-        }
-
         function messageWarn() {
             if (!showMessage) {
-                NotificationService.warning('ATENÇÃO', 'Você não possui permissões, entre com contato com CEDECOM/WEB');
+                NotificationService.warning('ATENÇÃO',
+                    'Você não possui permissões, entre com contato com CEDECOM/WEB');
                 showMessage = true;
             }
             $timeout(function () {
@@ -151,7 +142,8 @@
                     .then(function (res) {
                         $rootScope.currentUser = res.data;
                         if (!$rootScope.currentUser.status) {
-                            NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                            NotificationService
+                                .error('Usuário desativado, entrar em contato com CEDECOM/WEB');
                             $rootScope.logout();
                         }
                     })

@@ -56,7 +56,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getUsers);
@@ -64,7 +64,8 @@
 
         function _reset(user) {
             ModalService
-                .confirm('Deseja resetar a senha do usuário <b>' + user.name + '</b> para 12345?', ModalService.MODAL_SMALL)
+                .confirm('Deseja resetar a senha do usuário <b>' + user.name + '</b> para 12345?',
+                    ModalService.MODAL_SMALL)
                 .result
                 .then(function () {
                     user.password = '12345';

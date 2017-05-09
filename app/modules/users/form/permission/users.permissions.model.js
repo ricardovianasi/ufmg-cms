@@ -106,10 +106,12 @@
 
         function _changeTables() {
             vm.configTableDeselected.in = (vm.configTableDeselected.page * vm.limitTo) - vm.limitTo;
-            vm.configTableDeselected.to = vm.configTableDeselected.page * vm.limitTo < vm.filterDataDeselected.length ? vm.configTableDeselected.page * vm.limitTo : vm.filterDataDeselected.length;
+            vm.configTableDeselected.to = vm.configTableDeselected.page * vm.limitTo < vm.filterDataDeselected.length ?
+                vm.configTableDeselected.page * vm.limitTo : vm.filterDataDeselected.length;
 
             vm.configTableSelected.in = (vm.configTableSelected.page * vm.limitTo) - vm.limitTo;
-            vm.configTableSelected.to = vm.configTableSelected.page * vm.limitTo < vm.filterDataSelected.length ? vm.configTableSelected.page * vm.limitTo : vm.filterDataSelected.length;
+            vm.configTableSelected.to = vm.configTableSelected.page * vm.limitTo < vm.filterDataSelected.length ?
+                vm.configTableSelected.page * vm.limitTo : vm.filterDataSelected.length;
         }
 
         function _mountListPermissionContextId(listContext) {
@@ -134,12 +136,13 @@
                         vm.configTableSelected.size = vm.selecteds.length;
                         break;
                     }
+                    item = null;
                 }
             }
-            for (var i = 0; i < listContext.length; i++) {
-                var item = listContext[i];
-                if (item) {
-                    vm.deselects.push(_mountItem(item));
+            for (var k = 0; k < listContext.length; k++) {
+                var el = listContext[k];
+                if (el) {
+                    vm.deselects.push(_mountItem(el));
                 }
             }
             vm.configTableDeselected.size = vm.deselects.length;

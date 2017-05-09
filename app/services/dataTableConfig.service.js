@@ -8,7 +8,6 @@
     function dataTableConfigService(DTOptionsBuilder, DTColumnDefBuilder, $log, $timeout, Util) {
         $log.info('dataTableConfigService');
         var paramStatus = 'all';
-        var count = 0;
         var filterIndex = 0;
         var conditionsIndex = 0;
         var columnsHasOrder = [];
@@ -31,28 +30,35 @@
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
                 if (element.filter === 'author') {
-                    return "&query[filter][" + filterIndex + "][type]=innerjoin" +
-                        "&query[filter][" + filterIndex + "][field]=author" +
-                        "&query[filter][" + filterIndex + "][alias]=author";
+                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
+                        '&query[filter][' + filterIndex + '][field]=author' +
+                        '&query[filter][' + filterIndex + '][alias]=author';
                 }
             }
             return '';
         }
 
-        function _getParams(params) {
-            Util.goTop();
+        function _getParams(params, elementSearch) {
             var parameters = '?';
-            params.page ? parameters += 'page=' + params.page : false;
-            params.page_size ? parameters += '&page_size=' + params.page_size : false;
-
+            if (angular.isUndefined(elementSearch)) {
+                Util.goTop();
+            }
+            if (params.page) {
+                parameters += 'page=' + params.page;
+            }
+            if (params.page_size) {
+                parameters += '&page_size=' + params.page_size;
+            }
             parameters += hasAuthor();
-
-            paramStatus ? parameters += _getStatusParam(paramStatus) : false;
-
-            params.order_by ? parameters += _getOrderByParam(params.order_by) : false;
-
-            params.search ? parameters += _getSearchParam(params.search) : false;
-
+            if (paramStatus) {
+                parameters += _getStatusParam(paramStatus);
+            }
+            if (params.order_by) {
+                parameters += _getOrderByParam(params.order_by);
+            }
+            if (params.search) {
+                parameters += _getSearchParam(params.search, elementSearch);
+            }
             filterIndex = 0;
             conditionsIndex = 0;
             return parameters;
@@ -78,8 +84,8 @@
         function _getOrderBy(columns, order) {
             var orderBy = '';
             if (order[0]) {
-                for (var i = 0; i < columns.length; i++) {
-                    var element = columns[i];
+                for (var j = 0; j < columns.length; j++) {
+                    var element = columns[j];
                     if (element.index === order[0].column) {
                         orderBy = {
                             field: element.name,
@@ -90,26 +96,26 @@
                 }
             } else {
                 var isNotOrder = true;
-                for (var i = 0; i < columnsHasOrder.length; i++) {
-                    var element = columnsHasOrder[i];
-                    if (element.name === 'postDate' || element.name === 'initDate' || element.name === 'publishDate') {
+                for (var k = 0; k < columnsHasOrder.length; k++) {
+                    var el = columnsHasOrder[k];
+                    if (el.name === 'postDate' || el.name === 'initDate' || el.name === 'publishDate') {
                         orderBy = {
-                            field: element.name,
+                            field: el.name,
                             direction: 'DESC',
-                            filter: element.filter
+                            filter: el.filter
                         };
                         isNotOrder = false;
                         break;
                     }
                 }
                 if (isNotOrder) {
-                    for (var i = 0; i < columnsHasOrder.length; i++) {
-                        var element = columnsHasOrder[i];
-                        if (element.name === 'name' || element.name === 'title') {
+                    for (var f = 0; f < columnsHasOrder.length; f++) {
+                        var ele = columnsHasOrder[f];
+                        if (ele.name === 'name' || ele.name === 'title') {
                             orderBy = {
-                                field: element.name,
+                                field: ele.name,
                                 direction: 'ASC',
-                                filter: element.filter
+                                filter: ele.filter
                             };
                             break;
                         }
@@ -121,11 +127,11 @@
 
         function _columnBuilder(colunmsNumbers, notSortables) {
             var dtColumnDefBuilder = [];
-            for (var i = 0; i < colunmsNumbers; i++) {
+            for (var e = 0; e < colunmsNumbers; e++) {
                 if (angular.isDefined(notSortables)) {
-                    dtColumnDefBuilder.push(_verifyNotSortables(i, notSortables));
+                    dtColumnDefBuilder.push(_verifyNotSortables(e, notSortables));
                 } else {
-                    dtColumnDefBuilder.push(_setColumnSortable(i));
+                    dtColumnDefBuilder.push(_setColumnSortable(e));
                 }
             }
             return dtColumnDefBuilder;
@@ -141,18 +147,14 @@
             }
             filterIndex++;
             if (order.filter === 'author') {
-                return "&query[order_by][" + filterIndex + "][type]=field" +
-                    "&query[order_by][" + filterIndex + "][field]=" + order.field +
-                    "&query[order_by][" + filterIndex + "][direction]=" + order.direction +
-                    "&query[order_by][" + filterIndex + "][alias]=author";
+                return '&query[order_by][' + filterIndex + '][type]=field' +
+                    '&query[order_by][' + filterIndex + '][field]=' + order.field +
+                    '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
+                    '&query[order_by][' + filterIndex + '][alias]=author';
             }
-            return "&query[order_by][" + filterIndex + "][type]=field" +
-                "&query[order_by][" + filterIndex + "][field]=" + order.field +
-                "&query[order_by][" + filterIndex + "][direction]=" + order.direction;
-        }
-
-        function _getNormalizeDate() {
-            return false;
+            return '&query[order_by][' + filterIndex + '][type]=field' +
+                '&query[order_by][' + filterIndex + '][field]=' + order.field +
+                '&query[order_by][' + filterIndex + '][direction]=' + order.direction;
         }
 
         function wildcard(el) {
@@ -163,48 +165,54 @@
             return '%\\' + el + '%';
         }
 
-        function _getSearchParam(search) {
+        function _getSearchParam(search, elementSearch) {
             if (!search) {
                 return '';
             }
             filterIndex++;
+            if (angular.isDefined(elementSearch)) {
+                return '&query[filter][' + filterIndex + '][type]=like' +
+                    '&query[filter][' + filterIndex + '][field]=' + elementSearch +
+                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
+                    '&query[filter][' + filterIndex + '][where]=and';
+            }
             if (columnsHasOrder.length === 1) {
-                return "&query[filter][" + filterIndex + "][type]=like" +
-                    "&query[filter][" + filterIndex + "][field]=" + columnsHasOrder[0].name +
-                    "&query[filter][" + filterIndex + "][value]=" + wildcard(search) +
-                    "&query[filter][" + filterIndex + "][where]=and";
+                return '&query[filter][' + filterIndex + '][type]=like' +
+                    '&query[filter][' + filterIndex + '][field]=' + columnsHasOrder[0].name +
+                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
+                    '&query[filter][' + filterIndex + '][where]=and';
             }
             conditionsIndex = 0;
-            var searchParam = "&query[filter][" + filterIndex + "][type]=orx";
+            var searchParam = '&query[filter][' + filterIndex + '][type]=orx';
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
                 if (element.name === 'postDate' || element.name === 'initDate' || element.name === 'publishDate') {
                     var isDate = Util.getDateBetween(search);
                     if (isDate) {
                         conditionsIndex++;
-                        searchParam += "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][type]=between" +
-                            "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][field]=" + element.name +
-                            "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][from]=" + isDate.from +
-                            "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][to]=" + isDate.to +
-                            "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][format]=Y-m-d H:i:s" +
-                            "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][where]=or";
+                        searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=between' +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][from]=' + isDate.from +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][to]=' + isDate.to +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][format]=Y-m-d H:i:s' +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
                     }
                 } else if (element.filter === 'author') {
                     conditionsIndex++;
-                    searchParam += "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][type]=like" +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][field]=" + element.name +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][value]=" + wildcard(search) +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][alias]=author" +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][where]=or";
+                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=author' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
                 } else {
                     conditionsIndex++;
-                    searchParam += "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][type]=like" +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][field]=" + element.name +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][value]=" + wildcard(search) +
-                        "&query[filter][" + filterIndex + "][conditions][" + conditionsIndex + "][where]=or";
+                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
                 }
             }
-            searchParam += "&query[filter][" + filterIndex + "][where]=and";
+            searchParam += '&query[filter][' + filterIndex + '][where]=and';
             return searchParam;
         }
 
@@ -213,19 +221,23 @@
                 return '';
             }
             filterIndex++;
-            return "&query[filter][" + filterIndex + "][type]=eq" +
-                "&query[filter][" + filterIndex + "][field]=status" +
-                "&query[filter][" + filterIndex + "][value]=" + paramStatus +
-                "&query[filter][" + filterIndex + "][where]=and";
+            return '&query[filter][' + filterIndex + '][type]=eq' +
+                '&query[filter][' + filterIndex + '][field]=status' +
+                '&query[filter][' + filterIndex + '][value]=' + paramStatus +
+                '&query[filter][' + filterIndex + '][where]=and';
         }
 
-        function _dtOptionsBuilder(getContextCallback) {
+        function _dtOptionsBuilder(getContextCallback, options) {
+            if (!options) {
+                options = {};
+            }
             return DTOptionsBuilder
                 .newOptions()
                 .withOption('processing', false)
                 .withOption('serverSide', true)
                 .withOption('searchDelay', 800)
                 .withOption('aaSorting', [])
+                .withOption('bLengthChange', !!!options.displayLength)
                 .withDataProp('data')
                 .withFnServerData(function (sSource, aoData, fnCallback, oSettings) {
                     var currentPage = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1;
@@ -243,8 +255,8 @@
                     };
                     getContextCallback(params, fnCallback);
                 })
-                .withDisplayLength(25)
-                .withPaginationType('full_numbers')
+                .withDisplayLength(options.displayLength || 25)
+                .withPaginationType(options.paginationType || 'full_numbers')
                 .withBootstrap()
                 .withLanguage({
                     'sEmptyTable': 'Nenhum dado foi encontrado.',
@@ -261,9 +273,9 @@
                     'sZeroRecords': '',
                     'oPaginate': {
                         'sFirst': '<i class="fa fa-angle-double-left"></i>',
-                        'sPrevious': '<i class="fa fa-angle-left"></i>',
-                        'sNext': '<i class="fa fa-angle-right"></i>',
-                        'sLast': '<i class="fa fa-angle-double-right"></i>',
+                        'sPrevious': '<i class="fa fa-angle-left "></i>',
+                        'sNext': '<i class="fa fa-angle-right "></i>',
+                        'sLast': '<i class="fa fa-angle-double-right "></i>',
                     },
                     'oAria': {
                         'sSortAscending': ': filtro ascendente ativo',

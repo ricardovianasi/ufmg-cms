@@ -25,7 +25,7 @@
                     page_size: page_size || PAGE_SIZE
                 };
 
-                if (typeof search != 'undefined') {
+                if (typeof search !== 'undefined') {
                     obj.search = search;
                 }
 

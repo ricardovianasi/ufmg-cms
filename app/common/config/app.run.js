@@ -23,8 +23,7 @@
         PermissionService,
         NotificationService,
         sessionService,
-        $timeout,
-        $route
+        $timeout
     ) {
         var hasRequired = true;
         $rootScope.modalLoginIsDisabled = true;
@@ -81,7 +80,7 @@
             }, time);
         }
 
-        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
+        $rootScope.$on('$routeChangeSuccess', function () {
             if (!sessionService.getIsLogged()) {
                 $location.path('/login');
                 return;
@@ -121,7 +120,7 @@
         PermissionService.initService();
 
 
-        $rootScope.$on("$routeChangeSuccess", function (event, next, current) {
+        $rootScope.$on('$routeChangeSuccess', function () {
             // Reset status
             dataTableConfigService.setParamStatus('all');
         });
@@ -134,7 +133,7 @@
             $window.history.back();
         };
 
-        $rootScope.logout = function (notReload) {
+        $rootScope.logout = function () {
             $log.info('logout');
             $rootScope.dataUser = null;
             $rootScope.currentUser = null;

@@ -8,8 +8,6 @@
     function NewsService($http, $filter, apiUrl, $log) {
         $log.info('NewsService');
 
-        var NEWS_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'news');
-
         return {
             getNew: function (id) {
                 return $http.get(apiUrl + '/news/' + id);

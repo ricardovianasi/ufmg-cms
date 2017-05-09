@@ -11,7 +11,6 @@
         $location,
         $routeParams,
         $timeout,
-        $filter,
         $window,
         NotificationService,
         PagesService,
@@ -22,20 +21,66 @@
         $rootScope,
         TagsService,
         validationService,
+        Util,
         $log) {
         $rootScope.shownavbar = true;
-        var vm = $scope;
         $log.info('PaginasEditarController');
-
         var allTags = [];
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
+        var hasRequest = false;
+        var countPage = 1;
+        $scope.pagesParent = [];
+        $scope.loadMore = function (search) {
+            if (search) {
+                countPage = 1;
+                $scope.pagesParent = [];
+                _getPages(search);
+                return;
+            }
+            if (!hasRequest) {
+                if (countPage === 1) {
+                    $scope.pagesParent = [];
+                }
+                hasRequest = true;
+                _getPages();
+            }
+        };
 
-        PagesService.getPages().then(function (data) {
-            $scope.pagesParent = data.data.items;
+        onInit();
+
+        function onInit() {
+            _getPages();
             $scope.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
             });
-        });
+        }
+
+        function _getPages(search) {
+            var params = {
+                page: countPage,
+                page_size: 15,
+                order_by: {
+                    field: 'postDate',
+                    direction: 'DESC'
+                },
+                search: search
+            };
+
+            PagesService
+                .getPages(Util.getParams(params, 'title'))
+                .then(function (res) {
+                    countPage++;
+                    for (var index = 0; index < res.data.items.length; index++) {
+                        var element = res.data.items[index];
+                        $scope.pagesParent.push(element);
+                    }
+                    $scope.currentElement = $scope.pagesParent.length;
+                    if (res.data.total >= $scope.currentElement && 15 >= res.data.items.length) {
+                        hasRequest = false;
+                    }
+                });
+        }
 
         TagsService.getTags().then(function (data) {
             allTags = data.data.items[0];
@@ -73,7 +118,8 @@
 
         $scope.remove = function () {
             ModalService
-                .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?',
+                    ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
                     PagesService.removePage($routeParams.id).then(function () {
@@ -152,7 +198,7 @@
 
         $scope.removeModule = function (column, idx) {
             $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
-            $scope.removeConfirmationModal.result.then(function (data) {
+            $scope.removeConfirmationModal.result.then(function () {
                 $scope.page.widgets[column].splice(idx, 1);
             });
         };
@@ -171,7 +217,7 @@
             });
         };
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
             $scope.modal_title = title;
 
             $scope.ok = function () {
@@ -180,7 +226,7 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         // Get Page
         PagesService.getPage(parseInt($routeParams.id)).then(function (data) {
@@ -189,10 +235,8 @@
 
             page.tags = [];
 
-            $scope.title = $filter('format')('Editar "{0}"', page.title);
+            $scope.title = 'Editar ' + page.title;
             $scope.breadcrumb_active = page.title;
-
-            var scheduledAt = DateTimeHelper.toBrStandard(page.scheduled_at, true, true);
 
 
             angular.forEach(tags, function (tag) {
@@ -203,8 +247,8 @@
                 page.columns = 1;
             }
 
-            page.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
-            page.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
+            page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+            page.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
 
             angular.extend($scope.page, page);
         });

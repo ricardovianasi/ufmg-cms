@@ -29,11 +29,13 @@
                     controller: 'ReleasesEditController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('release', $routeParams.id)) {
-                                $window.location.href = '#/releases';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('release', $routeParams.id)) {
+                                    $window.location.href = '#/releases';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         });
