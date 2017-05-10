@@ -1,82 +1,68 @@
 <div class="form-group">
     <div class="clearfix">
         <label>Links:</label>
-
         <div class="pull-right">
-            <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm"
-                    ng-click="addItem()">
+            <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm" ng-click="addItem()">
                 <i class="fa fa-plus"></i>
             </button>
         </div>
     </div>
-    <div id="sort-main"
-         as-sortable="sortableOptions"
-        ng-model="widget.links">
-    <div ng-repeat="link in widget.links" class="well well-sm" as-sortable-item>
-        <div class="clearfix">
-            <div class=pull-left>Link {{ $index + 1 }}</div>
-
-            <div class="pull-right">
-                <button type="button" class="btn btn-danger btn-sm"
-                        ng-click="removeItem($index)">
+    <div id="sort-main" as-sortable="sortableOptions" ng-model="widget.links">
+        <div ng-repeat="link in widget.links" class="well well-sm" as-sortable-item>
+            <div class="clearfix">
+                <div class=pull-left>Link {{ $index + 1 }}</div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeItem($index)">
                     <i class="fa fa-trash"></i>
                 </button>
-
-                <button type="button" as-sortable-item-handle class="btn btn-primary btn-sm">
+                    <button type="button" as-sortable-item-handle class="btn btn-primary btn-sm">
                     <i class="fa fa-arrows-v"></i>
                 </button>
-            </div>
-        </div>
-
-        <div class=row>
-            <div class="col-xs-4">
-                <div class="form-group">
-                    <label>Label do link:</label>
-
-                    <input type="text" title="Label do link" class="form-control"
-                           ng-model="link.label">
                 </div>
             </div>
-
-            <div class="col-xs-4">
-                <div class="form-group">
-                    <label>Destino do link:</label>
-
-                    <select title="Destino do link" class="form-control"
-                            ng-model="link.link_type"
-                            ng-change="changeType($index)">
+            <div class=row>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label>Label do link:</label>
+                        <input type="text" title="Label do link" class="form-control" ng-model="link.label">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label>Destino do link:</label>
+                        <select title="Destino do link" class="form-control" ng-model="link.link_type" ng-change="changeType($index)">
                         <option value="page"
-                                ng-selected="link.link_type == 'page';">
+                                ng-selected="link.link_type === 'page';">
                             P&aacute;ginas internas
                         </option>
 
                         <option value="link"
-                                ng-selected="link.link_type == 'link';">
+                                ng-selected="link.link_type === 'link';">
                             Url externa
                         </option>
                     </select>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-xs-4">
-                <div class="form-group"
-                     ng-show="link.link_type == 'page'">
-                    <label>P&aacute;gina:</label>
-
-                    <select title="Página" class="form-control"
-                            ng-model="link.page"
-                            ng-options="page.id as page.title for page in pages.items"></select>
-                </div>
-
-                <div class="form-group"
-                     ng-show="link.link_type == 'link'">
-                    <label>Url do link:</label>
-
-                    <input type="text" title="Url do link" class="form-control"
-                           ng-model="link.external_url">
+                <div class="col-xs-4">
+                    <div class="form-group" ng-show="link.link_type === 'page'" onload="loadMorePage()">
+                        <label>P&aacute;gina:</label>
+                        <ui-select ng-model="link.page">
+                            <ui-select-match placeholder="Buscar Página">
+                                {{ $select.selected.title }}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item.id as item in dataPage | filter: $select.search track by $index" scroll-detect="loadMorePage()"
+                                refresh="loadMorePage($select.search)" refresh-delay="300">
+                                <div ng-bind-html="item.title | highlight: $select.search">
+                                </div>
+                                </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group" ng-show="link.link_type === 'link'">
+                        <label>Url do link:</label>
+                        <input type="text" title="Url do link" class="form-control" ng-model="link.external_url">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </div>

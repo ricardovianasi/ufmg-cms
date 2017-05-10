@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -10,7 +9,6 @@
         $location,
         $timeout,
         $window,
-        $filter,
         NotificationService,
         PagesService,
         WidgetsService,
@@ -19,12 +17,12 @@
         DateTimeHelper,
         $rootScope,
         TagsService,
+        Util,
         validationService,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
         var allTags = [];
-        var vm = $scope;
 
         $scope.publish = _publish;
         $scope.findTags = _findTags;
@@ -33,14 +31,57 @@
         $scope.handleModule = _handleModule;
         $scope.removeModule = _removeModule;
 
-        function onInit() {
-            PagesService.getPages().then(function (data) {
-                $scope.pagesParent = data.data.items;
+        var hasRequest = false;
+        var countPage = 1;
+        $scope.pagesParent = [];
+        $scope.loadMore = function (search) {
+            if (search) {
+                countPage = 1;
+                $scope.pagesParent = [];
+                _getPages(search);
+                return;
+            }
+            if (!hasRequest) {
+                if (countPage === 1) {
+                    $scope.pagesParent = [];
+                }
+                hasRequest = true;
+                _getPages();
+            }
+        };
 
-                $scope.pagesParent.push({
-                    id: null,
-                    title: '- Página Normal -'
+        function _getPages(search) {
+            var params = {
+                page: countPage,
+                page_size: 15,
+                order_by: {
+                    field: 'postDate',
+                    direction: 'DESC'
+                },
+                search: search
+            };
+
+            PagesService
+                .getPages(Util.getParams(params, 'title'))
+                .then(function (res) {
+                    countPage++;
+                    for (var index = 0; index < res.data.items.length; index++) {
+                        var element = res.data.items[index];
+                        $scope.pagesParent.push(element);
+                    }
+                    $scope.currentElement = $scope.pagesParent.length;
+                    if (res.data.total >= $scope.currentElement && 15 >= res.data.items.length) {
+                        hasRequest = false;
+                    }
                 });
+        }
+
+
+        function onInit() {
+            _getPages();
+            $scope.pagesParent.push({
+                id: null,
+                title: '- Página Normal -'
             });
 
             WidgetsService.getWidgets().then(function (data) {

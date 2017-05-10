@@ -1,43 +1,41 @@
-<div class="clearfix">
+<div class="clearfix" onload="loadMorePage()">
     <label>Links:</label>
-
     <div class="pull-right">
         <button type="button" style="margin-bottom: 3px" ng-click="addItem()" class="btn btn-primary btn-sm">
             <i class="fa fa-plus"></i>
         </button>
     </div>
 </div>
-
 <div ng-repeat="link in widget.links" class="well well-sm">
     <div class="clearfix">
         <div class="pull-left">Link {{ $index + 1 }}</div>
-
         <div class="pull-right">
             <button type="button" ng-click="removeItem($index)" class="btn btn-danger btn-sm">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-6">
             <div class="form-group">
                 <label>Label do link:</label>
-
                 <input type="text" title="Label do link" ng-model="widget.links[$index].label" class="form-control">
             </div>
         </div>
-
         <div class="col-xs-6">
             <div class="form-group">
                 <label>P&aacute;gina:</label>
-
-                <input type="checkbox" ng-model="widget.links[$index].isExternal"> link externo
-                    {{ linkExterno | json }}
-
-                <select ng-if="!widget.links[$index].isExternal" title="Página" ng-model="widget.links[$index].page.id" ng-options="page.id as page.title for page in pages.items"
-                        class="form-control">
-                </select>
+                <input type="checkbox" ng-model="widget.links[$index].isExternal"> link externo {{ linkExterno | json }}
+                <ui-select ng-if="!widget.links[$index].isExternal" ng-model="widget.links[$index].page.id">
+                    <ui-select-match placeholder="Buscar Página">
+                        {{ $select.selected.title }}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.id as item in dataPage | filter: $select.search track by $index" scroll-detect="loadMorePage()"
+                        refresh="loadMorePage($select.search)" refresh-delay="300">
+                        <div ng-bind-html="item.title | highlight: $select.search">
+                        </div>
+                        </ui-select-choices>
+                </ui-select>
                 <input type="text" class="form-control" ng-if="widget.links[$index].isExternal" ng-model="widget.links[$index].external_url">
             </div>
         </div>

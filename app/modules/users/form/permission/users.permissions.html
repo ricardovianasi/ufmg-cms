@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" onload="vm.loadMoreUser()">
     <div class="col-xs-12">
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.is_administrator.$touched) && (formUsers.is_administrator.$error.required)}">
             <h5><strong>Tipo de usuário:*</strong></h5>
@@ -12,11 +12,12 @@
     </div>
     <div class="col-xs-4" ng-if="vm.user.is_administrator === '0'">
         <h5><strong>Moderado por:</strong></h5>
-        <ui-select ng-model="vm.user.moderator" title="Moderado por: {{$select.selected.name}}">
-            <ui-select-match placeholder="Selecione ou procure um moderador na lista...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="moderator.id as moderator in vm.moderators | filter: $select.search">
-                <span ng-bind-html="moderator.name | highlight: $select.search"></span>
-            </ui-select-choices>
+        <ui-select ng-model="vm.user.moderator" theme="bootstrap" class="ui-select" title="Moderado por: {{$select.selected.name}}">
+            <ui-select-match placeholder="Selecione ou procure um moderador na lista...">{{ $select.selected.name }}</ui-select-match>
+            <ui-select-choices repeat="moderator.id as moderator in vm.moderators | filter: $select.search track by $index" scroll-detect="vm.loadMoreUser()"
+                refresh="vm.loadMoreUser($select.search)" refresh-delay="300">
+                <div ng-bind-html="moderator.name | highlight: $select.search"></div>
+                </ui-select-choices>
         </ui-select>
         <p><i>Todo conteúdo produzido só é publicado após a aprovação do moderador</i></p>
         <hr>

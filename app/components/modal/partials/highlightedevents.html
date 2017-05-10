@@ -1,9 +1,10 @@
-<div class=form-group>
+<div class="form-group" onload="loadMoreEvents()">
     <label>Selecione o evento:</label>
-
-    <ul class=selection-list>
-        <li ng-repeat="item in events.items | limitTo: 30"
-            ng-click="item.selected = !item.selected"
-            ng-class="{ active: item.selected }">{{ item.name }}</li>
-    </ul>
+    <ui-select ng-model="widget.content.event" theme="bootstrap" class="ui-select">
+        <ui-select-match placeholder="Buscar Evento">{{ $select.selected.name }}</ui-select-match>
+        <ui-select-choices repeat="event in events | filter: $select.search track by $index" scroll-detect="loadMoreEvents()" refresh="loadMoreEvents($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="event.name | highlight: $select.search"></div>
+            </ui-select-choices>
+    </ui-select>
 </div>
