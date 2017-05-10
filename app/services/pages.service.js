@@ -245,15 +245,17 @@
                         }
                     }
 
-
-                    return {
+                    var res = {
                         category: widget.category || (widget.content ? widget.content.category : null),
                         limit: widget.limit || (widget.content ? widget.content.limit : null),
                         typeNews: widget.typeNews || (widget.content ?
                             (widget.content.typeNews ? widget.content.typeNews.id : '') :
                             null),
+                        highlight_ufmg: widget.highlight_ufmg ? 1 : null,
                         tags: tags,
                     };
+
+                    return res;
                 },
 
                 eventlist: function (widget) {
@@ -359,13 +361,14 @@
 
 
                     if (widget.content) {
-                        if ('tag' in widget.content && widget.content.tag.length > 0) {
-                            if (typeof widget.content.tag[0].text !== 'undefined') {
-                                widget.content.tag = _.map(widget.content.tag, 'text');
+                        if (widget.content.tag) {
+                            if ('tag' in widget.content && widget.content.tag.length > 0) {
+                                if (typeof widget.content.tag[0].text !== 'undefined')
+                                    widget.content.tag = _.map(widget.content.tag, 'text');
+                                tag = widget.content.tag;
+                            } else {
+                                tag = widget.tag || (widget.content ? widget.content.tag.id : null);
                             }
-                            tag = widget.content.tag;
-                        } else {
-                            tag = widget.tag || (widget.content ? widget.content.tag.id : null);
                         }
                     } else {
                         if ('tag' in widget && widget.tag.length > 0) {
@@ -675,13 +678,15 @@
                             });
                         }
                     }
-
-                    return {
+                    var res = {
                         category: widget.category || (widget.content ? widget.content.category : null),
                         limit: widget.limit || (widget.content ? widget.content.limit : null),
                         typeNews: typeNews,
+                        highlight_ufmg: widget.content.highlight_ufmg ? 1 : null,
                         tags: tagsForTagsInput
                     };
+
+                    return res;
                 },
 
                 eventlist: function (widget) {

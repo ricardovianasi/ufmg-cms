@@ -147,6 +147,10 @@
                 vm.widget.selected.type = module.type;
 
                 angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
+
+                if (module.type === 'listnews') {
+                    vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
+                }
             }
             vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
 
