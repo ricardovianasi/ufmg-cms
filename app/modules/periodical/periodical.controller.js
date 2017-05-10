@@ -91,10 +91,10 @@
 
         function _removePeriodical(id, description) {
             vm.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
-            removeConfirmationModal.result.then(function (data) {
-                PeriodicalService.removePeriodical(id).then(function (data) {
+            removeConfirmationModal.result.then(function () {
+                PeriodicalService.removePeriodical(id).then(function () {
                     NotificationService.success('Publicação removida com sucesso.');
-                    $route.reload();
+                    vm.dtInstance.DataTable.draw();
                 });
             });
         }

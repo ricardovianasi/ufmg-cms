@@ -19,10 +19,8 @@
         $log.info('PagesController');
         $rootScope.shownavbar = true;
         var vm = this;
-        var roleDelete = null;
         vm.dtColumns = {};
         vm.dtOptions = {};
-        vm.status = [];
         vm.pages = null;
         vm.currentPage = 1;
         vm.remove = _remove;
@@ -34,11 +32,6 @@
 
         function onInit() {
             _renderDataTable();
-            StatusService
-                .getStatus()
-                .then(function (res) {
-                    vm.status = res.data;
-                });
             vm.convertDate = DateTimeHelper.convertDate;
         }
 
@@ -91,6 +84,7 @@
                     PagesService
                         .removePage(id)
                         .then(function () {
+                            vm.dtInstance.DataTable.draw();
                             NotificationService.success('Página removida com sucesso.');
                         });
                 });

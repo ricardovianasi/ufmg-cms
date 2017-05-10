@@ -73,10 +73,6 @@
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getReleases);
         }
 
-        vm.changePage = function () {
-            loadReleases(vm.currentPage);
-        };
-
         var removeConfirmationModal;
 
         var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
@@ -110,8 +106,8 @@
 
             removeConfirmationModal.result.then(function () {
                 ReleasesService.destroy(id).then(function () {
+                    vm.dtInstance.DataTable.draw();
                     NotificationService.success('Release removido com sucesso.');
-                    loadReleases();
                 });
             });
         };

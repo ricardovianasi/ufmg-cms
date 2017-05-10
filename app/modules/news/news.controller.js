@@ -72,19 +72,14 @@
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
         }
 
-        vm.changePage = function () {
-            loadNews(vm.currentPage);
-        };
-
-
         vm.removeNews = function (id, title) {
             ModalService
                 .confirm('Você deseja excluir a notícia <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
                     NewsService.removeNews(id).then(function () {
+                        vm.dtInstance.DataTable.draw();
                         NotificationService.success('Notícia removida com sucesso.');
-                        loadNews();
                     });
                 });
         };

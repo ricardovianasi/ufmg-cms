@@ -106,7 +106,7 @@
 
             removeConfirmationModal.result.then(function () {
                 featuredService.destroy(id).then(function () {
-                    loadHighlights();
+                    vm.dtInstance.DataTable.draw();
                     NotificationService.success('Destaque removido com sucesso.');
                 });
             });

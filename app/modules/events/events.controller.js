@@ -83,7 +83,7 @@
                 .then(function () {
                     EventsService.destroy(id).then(function () {
                         NotificationService.success('Evento removido com sucesso!');
-                        $route.reload();
+                        vm.dtInstance.DataTable.draw();
                     });
                 });
         };

@@ -71,7 +71,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getClippings);
@@ -111,8 +111,7 @@
             removeConfirmationModal.result.then(function () {
                 ClippingsService.destroy(id).then(function () {
                     NotificationService.success('Clipping removido com sucesso.');
-
-                    $route.reload();
+                    vm.dtInstance.DataTable.draw();
                 });
             });
         };

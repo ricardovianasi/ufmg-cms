@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -89,7 +88,7 @@
                 .then(function () {
                     GalleryService.removeGallery(id).then(function () {
                         NotificationService.success('Galeria removida com sucesso.');
-                        $route.reload();
+                        vm.dtInstance.DataTable.draw();
                     });
                 });
         }
