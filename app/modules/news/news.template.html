@@ -59,8 +59,13 @@
                     </thead>
                     <tbody>
                         <tr role="row" class="odd" ng-repeat="item in news.items track by item.id">
-                            <td>
-                                <a target="_blank" ng-href="{{ item.news_url }}">{{ item.title }}</a>&nbsp;
+                            <td ng-if="!canPut">
+                                <span>{{ item.title }}</span>&nbsp;
+                                <span class="label label-primary" ng-if="item.highlight">Destaque</span>
+                                <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
+                            </td>
+                            <td can-put context="news" context-id="item.id">
+                                <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>
                                 <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
                             </td>

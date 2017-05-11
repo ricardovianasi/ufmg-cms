@@ -143,13 +143,14 @@
     </div>
     <div class="col-xs-4">
         <publishment-options route-model="page"></publishment-options>
-        <div class="panel panel-default">
+        <div class="panel panel-default" onload="loadMorePage()">
             A página atual é filha de:
-            <ui-select ng-model="page.parent" title="Moderado por: {{$select.selected.title}}">
+            <ui-select ng-model="page.parent" title="Selecione ou procure a página...">
                 <ui-select-match placeholder="Selecione ou procure a página...">{{$select.selected.title}}</ui-select-match>
-                <ui-select-choices repeat="item in pagesParent | filter: $select.search | limitTo: currentElement" scroll-detect="loadMore()" refresh="loadMore($select.search)" refresh-delay="300">
+                <ui-select-choices repeat="item in pagesParent | filter: $select.search | limitTo: currentElement" scroll-detect="loadMorePage()"
+                    refresh="loadMorePage($select.search)" refresh-delay="300">
                     <span ng-bind-html="item.title | highlight: $select.search"></span>
-                </ui-select-choices>
+                    </ui-select-choices>
             </ui-select>
         </div>
     </div>

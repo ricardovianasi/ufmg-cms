@@ -18,7 +18,9 @@
         $rootScope,
         TagsService,
         Util,
+        $q,
         validationService,
+        UsersService,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
@@ -34,51 +36,72 @@
         var hasRequest = false;
         var countPage = 1;
         $scope.pagesParent = [];
-        $scope.loadMore = function (search) {
-            if (search) {
-                countPage = 1;
-                $scope.pagesParent = [];
-                _getPages(search);
-                return;
-            }
-            if (!hasRequest) {
-                if (countPage === 1) {
-                    $scope.pagesParent = [];
-                }
-                hasRequest = true;
-                _getPages();
-            }
+
+
+        $scope.loadMorePage = function (search) {
+            reset($scope.pagesParent);
+            loadMore($scope.pagesParent, search)
+                .then(function (data) {
+                    $scope.pagesParent = Object.assign($scope.pagesParent, data);
+                });
         };
 
-        function _getPages(search) {
-            var params = {
-                page: countPage,
-                page_size: 15,
-                order_by: {
-                    field: 'postDate',
-                    direction: 'DESC'
-                },
-                search: search
-            };
-
-            PagesService
-                .getPages(Util.getParams(params, 'title'))
-                .then(function (res) {
-                    countPage++;
-                    for (var index = 0; index < res.data.items.length; index++) {
-                        var element = res.data.items[index];
-                        $scope.pagesParent.push(element);
-                    }
-                    $scope.currentElement = $scope.pagesParent.length;
-                    if (res.data.total >= $scope.currentElement && 15 >= res.data.items.length) {
-                        hasRequest = false;
-                    }
+        function reset(data) {
+            if (angular.isUndefined(data[0])) {
+                countPage = 1;
+                $scope.currentElement = 0;
+                $scope.pagesParent.push({
+                    id: null,
+                    title: '- Página Normal -'
                 });
+            }
         }
 
+        function loadMore(dataTemp, search) {
+            var defer = $q.defer();
+            var searchQuery = 'title';
+            if (search || !hasRequest) {
+                if (search) {
+                    countPage = 1;
+                    dataTemp = [];
+                } else {
+                    if (countPage === 1) {
+                        dataTemp = [];
+                    }
+                    hasRequest = true;
+                }
+                var params = {
+                    page: countPage,
+                    page_size: 15,
+                    order_by: {
+                        field: 'title',
+                        direction: 'ASC'
+                    },
+                    search: search
+                };
+                if (!params.search && countPage === 1) {
+                    $scope.currentElement = 0;
+                }
+                UsersService
+                    .getUsers(Util.getParams(params, searchQuery))
+                    .then(function (res) {
+                        countPage++;
+                        $scope.currentElement += res.data.items.length;
+                        if (res.data.total > $scope.currentElement && 15 >= res.data.items.length) {
+                            $timeout(function () {
+                                hasRequest = false;
+                            }, 100);
+                        }
+                        for (var index = 0; index < res.data.items.length; index++) {
+                            dataTemp.push(res.data.items[index]);
+                        }
+                        defer.resolve(dataTemp);
+                    });
+            }
+            return defer.promise;
+        }
 
         function onInit() {
-            _getPages();
             $scope.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'

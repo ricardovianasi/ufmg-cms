@@ -87,6 +87,11 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('news');
         }
 
         function _canPost() {

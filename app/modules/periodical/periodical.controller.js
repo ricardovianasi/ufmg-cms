@@ -74,7 +74,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
 
@@ -129,6 +129,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -137,6 +138,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('periodical');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('periodical');
         }
     }
 })();

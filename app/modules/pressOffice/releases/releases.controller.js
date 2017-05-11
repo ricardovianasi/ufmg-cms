@@ -67,7 +67,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getReleases);
@@ -115,6 +115,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -123,6 +124,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('release');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('release');
         }
 
         onInit();

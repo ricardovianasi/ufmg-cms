@@ -119,6 +119,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -127,6 +128,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('clipping');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('clipping');
         }
         onInit();
     }

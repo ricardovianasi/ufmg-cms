@@ -68,7 +68,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);
@@ -115,6 +115,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -124,6 +125,12 @@
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('highlighted_press');
         }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('highlighted_press');
+        }
+
+
         onInit();
     }
 })();

@@ -29,6 +29,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPut = false;
 
         function onInit() {
             _renderDataTable();
@@ -70,7 +71,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);
@@ -93,6 +94,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -101,6 +103,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('page');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('page');
         }
 
         onInit();
