@@ -34,3 +34,5 @@ gulp.task('serve', function () {
 gulp.task('production', function () {
     return runSequence(['build', 'imagemin'], 'compress');
 });
+
+console.log('test deploy');
