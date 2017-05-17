@@ -5,13 +5,13 @@ var angularFilesort = require('gulp-angular-filesort');
 var naturalSort = require('gulp-natural-sort');
 var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
-var babel = require('gulp-babel');
 var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 
 gulp.task('js', function () {
-    return gulp.src(['app/**/*.js',
+    return gulp
+        .src(['app/**/*.js',
             '!app/assets/**/*.js'
         ])
         .pipe(plumber())
@@ -24,13 +24,8 @@ gulp.task('js', function () {
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
         .pipe(ngAnnotate())
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            compact: false
-        }))
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./build/scripts/'));
 });

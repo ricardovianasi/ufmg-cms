@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var gulpNgConfig = require('gulp-ng-config');
 var fs = require('fs');
-var colors = require('colors');
 var rename = require('gulp-rename');
 var minimist = require('minimist');
 
@@ -20,7 +19,11 @@ var env = options.env;
 gulp.task('env', function () {
     var file = 'env-' + env + '.json';
 
+
+    /*eslint-disable */
     console.log(options);
+    /*eslint-enable */
+
 
     fs.stat('app/env-local.json', function (err) {
         // Default env file is local
@@ -28,8 +31,11 @@ gulp.task('env', function () {
             file = 'env-local.json';
         }
 
+        /*eslint-disable */
         console.log(env);
-        console.log(colors.black.bgGreen(file));
+        console.log(file);
+        /*eslint-enable */
+
 
 
         gulp.src('./app/' + file)
