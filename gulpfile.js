@@ -27,12 +27,16 @@ gulp.task('build', [
 
 //task for developer
 gulp.task('serve', function () {
+    /*eslint-disable */
+    console.log('MODE: serve');
+    /*eslint-enable */
     return runSequence('build', 'browser-sync', 'watch');
 });
 
 //task for prepare deploy
 gulp.task('production', function () {
+    /*eslint-disable */
+    console.log('MODE: production');
+    /*eslint-enable */
     return runSequence(['build', 'imagemin'], 'compress');
 });
-
-console.log('test deploy');
