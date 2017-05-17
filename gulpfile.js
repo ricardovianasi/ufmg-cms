@@ -10,7 +10,7 @@ var runSequence = require('run-sequence');
 
 // Taks default gulp!
 gulp.task('default', function () {
-    gulp.start('serve');
+    gulp.start('production');
 });
 
 //task for build
