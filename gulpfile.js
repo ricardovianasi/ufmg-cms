@@ -14,7 +14,7 @@ gulp.task('default', function () {
 });
 
 //task for build
-gulp.task('production', [
+gulp.task('build', [
     'env',
     'html',
     'copyimage',
@@ -28,15 +28,15 @@ gulp.task('production', [
 //task for developer
 gulp.task('serve', function () {
     /*eslint-disable */
-    console.log('MODE: serve');
+    console.log('MODE: production');
     /*eslint-enable */
-    return runSequence('production', 'browser-sync', 'watch');
+    return runSequence('build', 'browser-sync', 'watch');
 });
 
 //task for prepare deploy
-gulp.task('build', function () {
+gulp.task('production', function () {
     /*eslint-disable */
-    console.log('MODE: deploy production');
+    console.log('MODE: production');
     /*eslint-enable */
-    return runSequence(['production', 'imagemin'], 'compress');
+    return runSequence(['build', 'imagemin']);
 });
