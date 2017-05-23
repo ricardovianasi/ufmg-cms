@@ -16,8 +16,6 @@
             status: 1,
             isValid: false
         };
-
-
         function onInit() {
             $log.info('UsersInformationController');
         }

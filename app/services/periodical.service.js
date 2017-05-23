@@ -77,13 +77,13 @@
                 return $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition);
             },
             getPeriodicals: function (id, params) {
-
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
                 var url = $filter('format')('{0}{1}', PERIODICAL_ENDPOINT, params);
-
                 if (id) {
                     url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
                 }
-
                 return $http.get(url);
             },
             newPeriodical: function (data) {

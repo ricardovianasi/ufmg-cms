@@ -16,6 +16,7 @@
         $timeout,
         $uibModalInstance) {
         var vm = this;
+        var lengthOfDataContext = 0;
         vm.heightScreen = $window.screen.availHeight * 0.78;
         vm.configTableDeselected = {};
         vm.configTableDeselected.page = 1;
@@ -115,6 +116,7 @@
         }
 
         function _mountListPermissionContextId(listContext) {
+            lengthOfDataContext = listContext.length;
             vm.selecteds = [];
             vm.deselects = [];
             var isString = angular.isString(contextPermissions.valuePermission);
@@ -177,19 +179,34 @@
 
 
         function _updateCustomPermission() {
-            var array = [];
+            var array = {
+                ids: [],
+                data: []
+            };
+            var contextIds = false;
             if (!vm.selecteds) {
                 return [];
             }
             for (var i = 0; i < vm.selecteds.length; i++) {
                 var select = vm.selecteds[i];
-                array.push(select.id);
+                array.ids.push(select.id);
+                array.data.push({
+                    title: select.name || select.title
+                });
             }
-            var contextIds = array.toString();
-            if (!contextIds) {
-                return [];
+            if (array.ids.length !== 0) {
+                if (array.data.length === lengthOfDataContext) {
+                    contextIds = true;
+                } else if (array.data.length === 0) {
+                    contextIds = false;
+                } else {
+                    contextIds = array.ids.toString();
+                }
             }
-            return contextIds;
+            return {
+                ids: contextIds,
+                data: array.data
+            };
         }
 
         onInit();

@@ -14,6 +14,7 @@
         dataTableConfigService,
         Util,
         authService,
+        ENV,
         $log) {
         $log.info('UsersController');
 
@@ -63,6 +64,17 @@
         }
 
         function _reset(user) {
+
+            var desenvMode = (ENV === 'development' || ENV === 'test');
+
+            if (desenvMode) {
+                if (user.email === 'portal@portal') {
+                    ModalService
+                        .confirm('Por favor, não reset esta senha!',
+                            ModalService.MODAL_SMALL);
+                    return;
+                }
+            }
             ModalService
                 .confirm('Deseja resetar a senha do usuário <b>' + user.name + '</b> para 12345?',
                     ModalService.MODAL_SMALL)
