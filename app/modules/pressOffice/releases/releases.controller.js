@@ -39,8 +39,8 @@
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
+            var numberOfColumns = 3;
+            var columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
