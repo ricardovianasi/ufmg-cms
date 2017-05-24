@@ -1,4 +1,4 @@
-UFMG CMS 2.0.0
+UFMG CMS v2.0.0
 ===============
 
 > **Alo! Alo! Seja Bem vindo ao repositório do UFMG CMS**
