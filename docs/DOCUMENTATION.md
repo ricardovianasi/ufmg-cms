@@ -3,7 +3,7 @@
 ####Servidores
 - Produção `150.164.80.212:8085`
 - Teste ´150.164.80.212:´
-- Desenvolvimento `150.164.80.212:9999`
+- Desenvolvimento `150.164.80.212:9999/webservice`
 
 ####SSH 
 - `USER@150.164.80.212`
