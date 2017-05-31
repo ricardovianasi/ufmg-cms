@@ -7,7 +7,7 @@
 
     /** ngInject */
     function PermissionService(authService, $log, NotificationService, $timeout, $rootScope) {
-        $rootScope.currentUser = null;
+        $rootScope.User = null;
         var showMessage = null;
         var service = {
             check: check,
@@ -25,8 +25,8 @@
         }
 
         function getPermissions(context) {
-            for (var i = 0; i < $rootScope.currentUser.permissions.length; i++) {
-                var permission = $rootScope.currentUser.permissions[i];
+            for (var i = 0; i < $rootScope.User.permissions.length; i++) {
+                var permission = $rootScope.User.permissions[i];
                 if (hasContext(permission, context)) {
                     return permission.privileges;
                 }
@@ -85,16 +85,16 @@
         }
 
         function check(context, id, role) {
-            if (!$rootScope.currentUser) {
+            if (!$rootScope.User) {
                 return false;
             }
             try {
                 // permission admin
-                if ($rootScope.currentUser.is_administrator) {
+                if ($rootScope.User.is_administrator) {
                     return true;
                 }
                 // no permission
-                if (!$rootScope.currentUser.permissions || angular.equals([], $rootScope.currentUser.permissions)) {
+                if (!$rootScope.User.permissions || angular.equals([], $rootScope.User.permissions)) {
                     messageWarn();
                     return false;
                 }
@@ -135,13 +135,13 @@
 
         function initService(user) {
             if (angular.isDefined(user)) {
-                $rootScope.currentUser = user;
+                $rootScope.User = user;
             } else {
                 authService
                     .account()
                     .then(function (res) {
-                        $rootScope.currentUser = res.data;
-                        if (!$rootScope.currentUser.status) {
+                        $rootScope.User = res.data;
+                        if (!$rootScope.User.status) {
                             NotificationService
                                 .error('Usuário desativado, entrar em contato com CEDECOM/WEB');
                             $rootScope.logout();

@@ -136,7 +136,7 @@
         $rootScope.logout = function () {
             $log.info('logout');
             $rootScope.dataUser = null;
-            $rootScope.currentUser = null;
+            $rootScope.User = null;
             $rootScope.isRequiredAccount = false;
             sessionService.removeToken();
             sessionService.removeTokenRefresh();

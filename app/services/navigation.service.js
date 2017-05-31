@@ -4,7 +4,7 @@
     angular.module('serviceModule')
         .factory('NavigationService',
             /** ngInject */
-            function ($log, PermissionService, authService, $q, $rootScope) {
+            function ($log, PermissionService, authService, $q) {
                 $log.info('NavigationService');
 
                 function get() {
@@ -12,13 +12,11 @@
                     authService
                         .account()
                         .then(function (res) {
-                            var user = res.data;
-                            $rootScope.User = user;
-                            $log.info(user);
-                            PermissionService.initService(user);
                             var hasPermissionUser = PermissionService.hasPermission('user');
                             var hasPermissionMenu = PermissionService.hasPermission('menu');
-                            $log.info('hasPermissionMenu', hasPermissionMenu, 'hasPermissionUser', hasPermissionUser);
+                            var hasPermissionNewsAgency = PermissionService.hasPermission('news_agencia_de_agencia');
+                            var hasPermissionNewsTV = PermissionService.hasPermission('news_tv');
+                            var hasPermissionNewsRadio = PermissionService.hasPermission('news_radio');
                             defer.resolve([{
                                 icon: 'fa fa-file-o',
                                 name: 'Páginas',
@@ -93,7 +91,6 @@
                         });
                     return defer.promise;
                 }
-
                 return {
                     get: get
                 };
