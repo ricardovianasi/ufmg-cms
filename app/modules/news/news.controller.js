@@ -13,12 +13,14 @@
         DateTimeHelper,
         ModalService,
         $rootScope,
+        $routeParams,
         Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('NoticiasController');
 
         var vm = $scope;
+        vm.typeNews = $routeParams.typeNews;
 
         vm.news = [];
         vm.currentPage = 1;
@@ -28,6 +30,14 @@
         vm.dtInstance = {};
 
         function onInit() {
+            var typeNews = $routeParams.typeNews;
+            if (typeNews === 'agencia-de-noticias') {
+                vm.typeNewsPermission = 'news_agencia_de_agencia';
+            } else if (typeNews === 'tv') {
+                vm.typeNewsPermission = 'news_tv';
+            } else if (typeNews === 'radio') {
+                vm.typeNewsPermission = 'news_radio';
+            }
             _renderDataTable();
         }
 
@@ -54,7 +64,7 @@
 
             function getNews(params, fnCallback) {
                 NewsService
-                    .getNews(dataTableConfigService.getParams(params))
+                    .getNews(dataTableConfigService.getParams(params), vm.typeNews)
                     .then(function (res) {
                         vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
@@ -66,7 +76,6 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
@@ -91,15 +100,18 @@
         }
 
         function _canPut() {
-            vm.canPut = PermissionService.canPut('news');
+            console.log(vm.typeNewsPermission);
+            vm.canPut = PermissionService.canPut(vm.typeNewsPermission);
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('news');
+            console.log(vm.typeNewsPermission);
+            vm.canPost = PermissionService.canPost(vm.typeNewsPermission);
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('news');
+            console.log(vm.typeNewsPermission);
+            vm.canDelete = PermissionService.canDelete(vm.typeNewsPermission);
         }
         onInit();
     }

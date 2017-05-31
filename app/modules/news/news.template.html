@@ -14,8 +14,8 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="#/news">
-                            <strong>Notícias</strong>
+                        <a href="#/news/{{typeNews}}">
+                            <strong>Notícias UFMG</strong>
                         </a>
                     </li>
                 </ol>
@@ -42,7 +42,7 @@
                     </a>
                 </div>
                 <div class="pull-right">
-                    <a ng-if="canPost" ng-href="#/news/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/news/{{typeNews}}/new" class="btn btn-secondary btn-lg pull-left">
                         <i class="fa fa-plus"></i> NOVA NOTÍCIA
                     </a>
                 </div>
@@ -64,10 +64,11 @@
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>
                                 <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
                             </td>
-                            <td can-put context="news" context-id="item.id">
-                                <a ng-href="#/news/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
+                            <td can-put context="{{typeNewsPermission}}" context-id="item.id">
+                                <a ng-href="#/news/{{typeNews}}/edit/{{ item.id }}">{{ item.title }}</a>&nbsp;
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>
                                 <span class="label label-danger" ng-if="item.highlight_ufmg">UFMG</span>
+                                
                             </td>
                             <td>{{ item.author.name }}</td>
                             <td>
@@ -79,7 +80,7 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.news_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="news" context-id="item.id" ng-href="#/news/edit/{{ item.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="{{typeNewsPermission}}" context-id="item.id" ng-href="#/news/{{typeNews}}/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeNews(item.id, item.title)" class="btn btn-danger">

@@ -25,14 +25,13 @@
             $scope.statuses = [];
             $scope.saveDraft = _saveDraft;
             $scope.status = _status;
-            $scope.back = _back;
+            $scope.back = $scope.$parent.back || _back;
 
             StatusService
                 .getStatus()
                 .then(function (data) {
                     $scope.statuses = data.data;
                 });
-
 
             function _saveDraft($event) {
                 $event.stopPropagation();
@@ -68,7 +67,7 @@
 
             function _back() {
                 var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel)); // jshint ignore: line
-                $log.info(angular.isDefined(attrs.back), attrs.back);
+                $log.info('Backing to', angular.isDefined(attrs.back), attrs.back);
                 if (angular.isDefined(attrs.back)) {
                     back = attrs.back;
                 }

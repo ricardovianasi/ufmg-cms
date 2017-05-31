@@ -44,9 +44,19 @@
                                 enabled: true
                             }, {
                                 icon: 'fa fa-newspaper-o',
-                                name: 'Notícias',
-                                location: 'news',
-                                enabled: true
+                                name: 'Notícias - Agência',
+                                location: 'news/agencia-de-noticias',
+                                enabled: hasPermissionNewsAgency
+                            }, {
+                                icon: 'fa fa-play-circle-o',
+                                name: 'Notícias - TV UFMG',
+                                location: 'news/tv',
+                                enabled: hasPermissionNewsTV
+                            }, {
+                                icon: 'fa fa-volume-up',
+                                name: 'Notícias - Radio UFMG',
+                                location: 'news/radio',
+                                enabled: hasPermissionNewsRadio
                             }, {
                                 icon: 'fa fa-circle-o',
                                 name: 'Cursos',

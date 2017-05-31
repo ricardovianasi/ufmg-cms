@@ -23,12 +23,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#/news">
+                        <a href="#/news/{{typeNews}}">
                             <strong>Notícias</strong>
                         </a>
                     </li>
                     <li class="active">
-                        <a href="#/news/new">
+                        <a href="#/news/{{typeNews}}/new">
                             <strong>Nova Notícia</strong>
                         </a>
                     </li>
@@ -40,7 +40,6 @@
 <div class="row">
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formNews" novalidate>
-            <!-- TITLE -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formNews.title.$error.required && !formNews.title.$valid}">
@@ -64,14 +63,12 @@
                 </div>
             </div>
             <div class="row">
-                <!-- SUBTITLE -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label>Bigode</label>
                         <input type="text" class="form-control" ng-model="news.subtitle">
                     </div>
                 </div>
-                <!-- AUTHOR -->
                 <div class="col-xs-6">
                     <div class="form-group">
                         <label>Autor</label>
@@ -81,7 +78,6 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <!-- HIGHLIGHT -->
                     <div class="form-group">
                         <div class="checkbox">
                             <div class="well well-sm">
@@ -93,8 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- HIGHLIGHT UFMG -->
-                    <div class="form-group">
+                    <div class="form-group" ng-hide="typeNews === 'agencia-de-noticias'">
                         <div class="checkbox">
                             <div class="well well-sm">
                                 <label>
@@ -108,26 +103,13 @@
                 </div>
             </div>
             <div class="row">
-                <!-- CATEGORY -->
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formNews.category.$error.required && !formNews.category.$valid}">
                         <label>Categoria</label>
                         <select class="form-control" ng-model="news.category" name="category" ng-options="category.id as category.name for category in categories.items"
                             required></select>
-                            <div ng-show="!formNews.category.$valid" class="error-message" role="alert">
-                                <div ng-show="formNews.category.$error.required">Campo obrigatório</div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- TYPE -->
-                <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formNews.type.$error.required && !formNews.type.$valid}">
-                        <label>Origem</label>
-                        <select class="form-control" ng-model="news.type" name="type" ng-options="type.id as type.name for type in types.items" required></select>
-                        <div ng-show="!formNews.type.$valid" class="error-message" role="alert">
-                            <div ng-show="formNews.type.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formNews.category.$valid" class="error-message" role="alert">
+                            <div ng-show="formNews.category.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -144,7 +126,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- TYPE -->
                 <div class="col-xs-6" ng-show="news.has_video">
                     <div class="form-group">
                         <label>Editoria</label>
@@ -152,7 +133,6 @@
                     </div>
                 </div>
             </div>
-            <!--TAGS -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -166,7 +146,6 @@
                     </div>
                 </div>
             </div>
-            <!-- THUMB-->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -183,16 +162,15 @@
                     </div>
                 </div>
             </div>
-            <!-- TEXT -->
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formNews.text.$error.required && !formNews.text.$valid}">
                         <label>Conteúdo</label>
                         <textarea cols="30" rows="30" class="form-control" ng-model="news.text" redactor imagencrop-options="imagencropOptions" audioUpload-options="audioUploadOptions"
                             uploadfiles-options="uploadfilesOptions" name="text" required></textarea>
-                            <div ng-show="!formNews.text.$valid" class="error-message" role="alert">
-                                <div ng-show="formNews.text.$error.required">Campo obrigatório</div>
-                            </div>
+                        <div ng-show="!formNews.text.$valid" class="error-message" role="alert">
+                            <div ng-show="formNews.text.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>

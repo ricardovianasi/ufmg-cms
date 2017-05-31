@@ -27,6 +27,8 @@
         $log.info('NoticiasEditController');
 
         var allTags = [];
+        var vm = $scope;
+        vm.typeNews = $routeParams.typeNews;
 
         $scope.news = {};
         $scope.categories = [];
@@ -109,7 +111,6 @@
             $scope.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
         });
 
-
         NewsService.getTvProgram().then(function (data) {
             $scope.tvPrograms = data.data.items;
         });
@@ -122,6 +123,10 @@
             });
         });
 
+        $scope.back = function () {
+            $location.path('/news/' + vm.typeNews);
+        };
+
         $scope.remove = function () {
             ModalService
                 .confirm('Você deseja excluir esta notícia?')
@@ -129,7 +134,7 @@
                 .then(function () {
                     NewsService.removeNews($routeParams.id).then(function () {
                         NotificationService.success('Notícia removida com sucesso.');
-                        $location.path('/news');
+                        $location.path('/news/' + vm.typeNews);
                     });
                 });
         };
@@ -175,7 +180,7 @@
                 NotificationService.success('Notícia atualizada com sucesso.');
 
                 if (!preview) {
-                    $location.path('/news');
+                    $location.path('/news/' + vm.typeNews);
                 } else {
                     $window.open(news.data.news_url);
                 }
