@@ -55,15 +55,18 @@
                             <th class="col-xs-5">Título</th>
                             <th class="col-xs-2">Usuário</th>
                             <th class="col-xs-3">Data da Publicação</th>
-                            <th class="col-xs-2">Ações</th>
+                            <th class="col-xs-2" ng-show="canPut">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="odd" role="row" ng-repeat="release in releases.items track by release.id">
                             <td>
-                                <a target="_blank" ng-href="{{ release.release_url }}">
-                                {{ release.title }}
-                            </a>
+                                <a target="_blank" ng-href="{{ release.release_url }}" ng-if="!canPut">
+                                    {{ release.title }}
+                                </a>
+                                <a can-put context="release" context-id="release.id" ng-href="#/releases/edit/{{ release.id }}">
+                                    {{ release.title }}
+                                </a>
                             </td>
                             <td>{{ release.author.name }}</td>
                             <td>

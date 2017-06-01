@@ -55,19 +55,20 @@
                             <th class="col-xs-5">Título</th>
                             <th class="col-xs-2">Usuário</th>
                             <th class="col-xs-3">Data da criação</th>
-                            <th class="col-xs-2">Ações</th>
+                            <th class="col-xs-2" ng-show="canPut">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr role="row" ng-repeat="clipping in clippings.items track by clipping.id" class="odd">
                             <td>
+                                <span ng-if="!canPut">{{ clipping.title }}</span>
                                 <a ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>
                             </td>
                             <td>{{ clipping.author.name }}</td>
                             <td>
                                 <strong>{{ DateTimeHelper.convertDate(clipping.created_at)|date:'dd/MM/yyyy' }}</strong>
                                 <br>
-                                <small>{{ clipping.status|translate|titleize }}</small>
+                                <small>{{ clipping.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
                                 <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clippings/edit/{{ clipping.id }}"

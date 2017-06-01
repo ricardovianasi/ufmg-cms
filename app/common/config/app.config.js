@@ -8,10 +8,12 @@
         .config(Tags)
         .config(http);
 
+
+
     Debug.$inject = ['$logProvider', '$provide'];
 
     function Debug($logProvider, $provide) {
-        
+
         $provide.decorator('$log', ['$delegate',
             function ($delegate) {
                 var $log = {};
@@ -24,7 +26,9 @@
 
                 ['log', 'warn', 'info', 'error'].forEach(function (methodName) {
                     $log[methodName] = function () {
-                        if (!enabled) return;
+                        if (!enabled) {
+                            return;
+                        }
 
                         var logger = $delegate;
                         logger[methodName].apply(logger, arguments);

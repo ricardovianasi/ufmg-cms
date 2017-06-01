@@ -19,10 +19,8 @@
         $log.info('PagesController');
         $rootScope.shownavbar = true;
         var vm = this;
-        var roleDelete = null;
         vm.dtColumns = {};
         vm.dtOptions = {};
-        vm.status = [];
         vm.pages = null;
         vm.currentPage = 1;
         vm.remove = _remove;
@@ -31,14 +29,10 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPut = false;
 
         function onInit() {
             _renderDataTable();
-            StatusService
-                .getStatus()
-                .then(function (res) {
-                    vm.status = res.data;
-                });
             vm.convertDate = DateTimeHelper.convertDate;
         }
 
@@ -77,7 +71,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);
@@ -91,6 +85,7 @@
                     PagesService
                         .removePage(id)
                         .then(function () {
+                            vm.dtInstance.DataTable.draw();
                             NotificationService.success('Página removida com sucesso.');
                         });
                 });
@@ -99,6 +94,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -107,6 +103,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('page');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('page');
         }
 
         onInit();

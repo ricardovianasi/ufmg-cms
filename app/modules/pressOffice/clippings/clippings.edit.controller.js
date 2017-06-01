@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -44,14 +43,10 @@
             $scope.title += clipping.title;
         });
 
-        /**
-         * Post to Event Endpoint
-         *
-         * @param data
-         */
         $scope.publish = function (data) {
-            if (!validationService.isValid($scope.formClippings.$invalid))
+            if (!validationService.isValid($scope.formClippings.$invalid)) {
                 return false;
+            }
 
             ClippingsService.update(data, $routeParams.id).then(function () {
                 NotificationService.success('Clipping salvo com sucesso.');

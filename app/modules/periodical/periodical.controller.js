@@ -74,7 +74,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
 
@@ -91,10 +91,10 @@
 
         function _removePeriodical(id, description) {
             vm.confirmationModal('md', 'Você deseja excluir a publicação "' + description + '"?');
-            removeConfirmationModal.result.then(function (data) {
-                PeriodicalService.removePeriodical(id).then(function (data) {
+            removeConfirmationModal.result.then(function () {
+                PeriodicalService.removePeriodical(id).then(function () {
                     NotificationService.success('Publicação removida com sucesso.');
-                    $route.reload();
+                    vm.dtInstance.DataTable.draw();
                 });
             });
         }
@@ -129,6 +129,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -137,6 +138,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('periodical');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('periodical');
         }
     }
 })();

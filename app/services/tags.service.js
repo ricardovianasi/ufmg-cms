@@ -21,13 +21,17 @@
         }
 
         return {
-            getTags: function () {
+            getTags: function (params) {
                 var deferred = $q.defer();
-
-                $http.get(apiUrl + '/tag').then(function (data) {
-                    deferred.resolve(data);
-                });
-
+                if (angular.isUndefined(params)) {
+                    $http.get(apiUrl + '/tag').then(function (data) {
+                        deferred.resolve(data);
+                    });
+                } else {
+                    $http.get(apiUrl + '/tag' + params).then(function (data) {
+                        deferred.resolve(data);
+                    });
+                }
                 return deferred.promise;
             },
             findTags: function ($query, tags) {

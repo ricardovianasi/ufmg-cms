@@ -125,12 +125,10 @@
                 <div class="col-xs-5">
                     <label>Páginas</label> Adicione as páginas arrastando para a esquerda
                     <div>
-                        <form>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                                <input type="text" class="form-control" placeholder="Procurar..." ng-model="pageQuickFilter" ng-trim="false" ng-change="vm.filterPages('quickAccess', pageQuickFilter)">
-                            </div>
-                        </form>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Procurar..." ng-model="pageQuickFilter" ng-trim="false" ng-change="vm.filterPages('quickAccess', pageQuickFilter)">
+                        </div>
                         <ul class="menu-side selectable" ui-sortable="vm.quickSortableOptions" ng-model="vm.quickPages">
                             <li class="list-group-item list-group-item-quickaccess" ng-repeat="item in vm.quickPages">{{ item.label }}
                             </li>

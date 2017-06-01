@@ -17,6 +17,10 @@
         $rootScope) {
         $rootScope.shownavbar = true;
         $log.info('GalleryEditController');
+        var removeConfirmationModal = {};
+        var EditPhotosModal = {};
+        var EditPhotosModalCtrl = _EditPhotosModalCtrl;
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 
         $scope.status = [];
         $scope.file = {};
@@ -44,12 +48,10 @@
                 legend: file.legend ? file.legend : '',
                 author_name: file.author_name ? file.author_name : ''
             };
-            MediaService.updateFile(file.id, obj).then(function (data) {
+            MediaService.updateFile(file.id, obj).then(function () {
                 $location.path('/media');
             });
         };
-
-        var removeConfirmationModal, EditPhotosModal;
 
         $scope.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
@@ -65,7 +67,7 @@
             });
         };
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
             $scope.modal_title = title;
 
             $scope.ok = function () {
@@ -75,15 +77,15 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         $scope.removePhoto = function (id) {
-            var idx = _.findIndex($scope.gallery.photos, {
+            var idx = _.findIndex($scope.gallery.photos, { // jshint ignore: line
                 id: id
             });
 
             $scope.confirmationModal('md', 'Você deseja excluir esta foto?');
-            removeConfirmationModal.result.then(function (data) {
+            removeConfirmationModal.result.then(function () {
                 $scope.gallery.photos.splice(idx, 1);
             });
         };
@@ -123,10 +125,10 @@
             });
         };
 
-        var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos, id) {
+        function _EditPhotosModalCtrl($scope, $uibModalInstance, photos, id) {
             $scope.photos = angular.copy(photos);
 
-            var index = _.findIndex($scope.photos, {
+            var index = _.findIndex($scope.photos, { // jshint ignore: line
                 id: id
             });
 
@@ -139,7 +141,7 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss();
             };
-        };
+        }
 
         $scope.removeMidia = function () {
             $timeout(function () {

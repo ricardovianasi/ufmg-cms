@@ -29,7 +29,7 @@
                     thumb: article.thumb,
                     tags: article.tags,
                     content: article.content,
-                    slug: typeof article.slug != 'undefined' ? article.slug.slug : ''
+                    slug: typeof article.slug !== 'undefined' ? article.slug.slug : ''
                 });
             });
 
@@ -42,9 +42,9 @@
             obj.status = data.status;
             obj.resume = data.resume;
             obj.year = data.year;
-            obj.slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+            obj.slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
-            if (obj.status == 'scheduled') {
+            if (obj.status === 'scheduled') {
                 obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 
@@ -77,13 +77,13 @@
                 return $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition);
             },
             getPeriodicals: function (id, params) {
-
+                if (angular.isUndefined(params)) {
+                    params = '';
+                }
                 var url = $filter('format')('{0}{1}', PERIODICAL_ENDPOINT, params);
-
                 if (id) {
                     url = $filter('format')('{0}/{1}', PERIODICAL_ENDPOINT, id);
                 }
-
                 return $http.get(url);
             },
             newPeriodical: function (data) {

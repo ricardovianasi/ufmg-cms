@@ -15,7 +15,7 @@
                 var pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
 
                 if (pluginSource) {
-                    jQuery.Redactor.prototype[plugin] = function () {
+                    jQuery.Redactor.prototype[plugin] = function () { // jshint ignore: line
                         return pluginSource;
                     };
                 }
@@ -45,7 +45,7 @@
                     formatting: ['p', 'blockquote'],
                     formattingAdd: {
                         'red-p-add': {
-                            title: '<i class="fa fa-text-height"></i> Subtítulo',
+                            title: '<i class="fa fa-text-height"></i> Subtítulo', // jshint ignore: line
                             args: ['h3', 'class', 'news__subtitle', 'toggle']
                         }
                     },
@@ -62,7 +62,7 @@
                         init: function () {
                             this.code.get();
                             setTimeout(function () {
-                                $(".fig-delete").on('click', function (event) {
+                                $('.fig-delete').on('click', function (event) {
                                     event.preventDefault();
                                     $(this).parent('figure').remove();
                                 });

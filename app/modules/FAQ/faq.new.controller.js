@@ -14,9 +14,7 @@
         permission,
         $scope) {
 
-        /* jshint ignore:start */
-        var vm = this;
-        /* jshint ignore:end */
+        var vm = this; //jshint ignore: line
 
         $rootScope.shownavbar = true;
         $log.info('faNewController');
@@ -85,10 +83,11 @@
                         }
                     });
 
-                    if (vm.faq.categories.length < 1)
+                    if (vm.faq.categories.length < 1) {
                         _showType('ask');
-                    else
+                    } else {
                         _showType('');
+                    }
                 });
             }
         }
@@ -96,7 +95,7 @@
         _getFaq();
 
         function _showType(type) {
-            if (type == 'ask') {
+            if (type === 'ask') {
                 vm.showCategoryAsk = false;
                 vm.showAsk = true;
             } else {
@@ -149,7 +148,7 @@
             _verifyType();
 
             if (id) {
-                faqService.update(vm.faq).then(function (data) {
+                faqService.update(vm.faq).then(function () {
                     $route.reload();
                     _getFaq();
                     NotificationService.success('FAQ alterado com sucesso!');
@@ -160,16 +159,16 @@
                     NotificationService.success('FAQ salvo com sucesso!');
                 });
             }
-
         }
 
         function _removeAsk(type, idx) {
-            if (type === 'ask')
+            if (type === 'ask') {
                 vm.faq.items.splice(idx, 1);
-            else if (type === 'category')
+            } else if (type === 'category') {
                 vm.faq.categories.splice(idx, 1);
-            else
+            } else {
                 vm.currentNewCategoryAsk.items.splice(idx, 1);
+            }
         }
 
         function _addCategoryAsk() {

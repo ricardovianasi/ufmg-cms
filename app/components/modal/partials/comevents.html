@@ -1,13 +1,13 @@
-<div class="form-group">
+<div class="form-group" onload="loadMoreEvents()">
     <label>
         Selecionar Evento
         <small>(Os próximos eventos serão exibidos automaticamente)</small>
     </label>
-
     <ui-select ng-model="widget.content.event" theme="bootstrap" class="ui-select">
         <ui-select-match placeholder="Buscar Evento">{{ $select.selected.name }}</ui-select-match>
-        <ui-select-choices repeat="event in events.items|filter: $select.search">
-            <div ng-bind-html="event.name|highlight: $select.search"></div>
-        </ui-select-choices>
+        <ui-select-choices repeat="event in events | filter: $select.search track by $index" scroll-detect="loadMoreEvents()" refresh="loadMoreEvents($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="event.name | highlight: $select.search"></div>
+            </ui-select-choices>
     </ui-select>
 </div>

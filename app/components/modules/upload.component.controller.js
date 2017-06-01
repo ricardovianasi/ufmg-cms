@@ -85,12 +85,6 @@
         vm.save = _save;
         vm.setFormat = _setFormat;
 
-        /**
-         * @param format
-         * @param setCrop
-         *
-         * @private
-         */
         function _setFormat(format, setCrop) {
             var obj = availableFormats[format];
 
@@ -141,7 +135,7 @@
          * @private
          */
         function _loadMidia(page) {
-            var types = "types=png,jpg,jpeg";
+            var types = 'types=png,jpg,jpeg';
             MediaService.getMedia(page, 35, types).then(function (result) {
                 vm.midia = result.data;
             });
@@ -228,7 +222,7 @@
             };
 
             //Workaround for MrImage that does not provide these values
-            if (vm.image.naturalWidth != vm.image.width) {
+            if (vm.image.naturalWidth !== vm.image.width) {
                 obj.x = (vm.image.naturalWidth * vm.selector.x1) / vm.image.width;
                 obj.y = (vm.image.naturalHeight * vm.selector.y1) / vm.image.height;
                 obj.width = ((vm.image.naturalWidth * vm.selector.x2) / vm.image.width) - obj.x;

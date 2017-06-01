@@ -11,7 +11,7 @@
         var EVENT_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'event');
 
         var _parseData = function (data) {
-            var slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+            var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
             var event = {
                 address: data.address,
@@ -43,9 +43,6 @@
                 event.poster = data.poster.id;
             }
 
-            var initTime = new Date(data.initTime);
-            var endTime = new Date(data.endTime);
-
             event.initDate = new Date(data.initDate);
             event.initDate = DateTimeHelper.toBrStandard(event.initDate, true);
 
@@ -65,7 +62,7 @@
                 // delete data.updated_at;
             }
 
-            if (data.status == 'scheduled') {
+            if (data.status === 'scheduled') {
                 event.post_date = data.scheduled_date + ' ' + data.scheduled_time;
                 // delete data.scheduled_date;
                 // delete data.scheduled_time;

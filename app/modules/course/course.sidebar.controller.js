@@ -45,10 +45,11 @@
 
         function _getCoursesRoutes() {
             CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
-                if (data.data.sidebar.length > 0)
+                if (data.data.sidebar.length > 0) {
                     $scope.course.widgets.sidebar = data.data.sidebar;
-                else
+                } else {
                     _getCourses();
+                }
             });
         }
 

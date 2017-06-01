@@ -7,26 +7,23 @@
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
                 .when('/course', {
-                    templateUrl: 'modules/course/course-types.template.html',
-                    resolve: {
-                        restoreOverflow: ['Util', function (Util) {
-                             
-                        }]
-                    }
+                    templateUrl: 'modules/course/course-types.template.html'
                 })
                 .when('/course/list/:type', {
                     templateUrl: 'modules/course/course.template.html',
                     controller: 'CourseController',
                     controllerAs: 'vm',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
-                            var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
-                            if (canPost || canPut) {
-                                return true;
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
+                                var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
+                                if (canPost || canPut) {
+                                    return true;
+                                }
+                                return false;
                             }
-                            return false;
-                        }]
+                        ]
                     }
                 })
                 .when('/course/edit/:type/:courseId', {
@@ -34,15 +31,17 @@
                     controller: 'CourseController',
                     controllerAs: 'vm',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
-                            var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
-                            if (canPost || canPut) {
-                                return true;
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
+                                var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
+                                if (canPost || canPut) {
+                                    return true;
+                                }
+                                $window.location.href = '#/course/list/' + $routeParams.type;
+                                return false;
                             }
-                            $window.location.href = '#/course/list/' + $routeParams.type;
-                            return false;
-                        }]
+                        ]
                     }
                 })
                 .when('/course/view/:type/:courseId', {

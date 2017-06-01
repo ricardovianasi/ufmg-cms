@@ -1,0 +1,10 @@
+<p>{{vm.title}}</p>
+<div class="input-group input-group-lg">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    <input type="text" class="form-control" placeholder="Procurar..." ng-model="vm.search">
+</div>
+<ul class="menu-side">
+    <li class="list-group-item list-group-item-quickaccess" ng-repeat="item in vm.data | filter: vm.search track by $index">
+        {{ item.name || item.title }}
+    </li>
+</ul>

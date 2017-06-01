@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -23,8 +22,6 @@
         $log.info('MediaController');
 
         var vm = $scope;
-
-        var removeConfirmationModal;
 
         vm.convertDate = DateTimeHelper.convertDate;
         vm.media = [];
@@ -75,25 +72,11 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getMedias);
         }
-
-        vm.confirmationModal = function (size, title) {
-            removeConfirmationModal = $uibModal.open({
-                templateUrl: 'components/modal/confirmation.modal.template.html',
-                controller: ConfirmationModalCtrl,
-                backdrop: 'static',
-                size: size,
-                resolve: {
-                    title: function () {
-                        return title;
-                    }
-                }
-            });
-        };
 
         vm.removeMedia = function (id) {
             ModalService
@@ -101,10 +84,10 @@
                 .result.then(function () {
                     MediaService.removeMedia(id).then(function () {
                         NotificationService.success('Mídia removida com sucesso.');
-
-                        $route.reload();
+                        vm.dtInstance.DataTable.draw();
                     }, function () {
-                        NotificationService.error('A imagem está vinculada a alguma postagem, por este motivo não é possível exclui-la.');
+                        NotificationService
+                            .error('A imagem está vinculada a alguma postagem, por este motivo não é possível exclui-la.');
                     });
                 });
         };

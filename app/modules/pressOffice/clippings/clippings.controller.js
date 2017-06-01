@@ -43,8 +43,8 @@
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
+            var numberOfColumns = 3;
+            var columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -71,7 +71,6 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getClippings);
@@ -111,8 +110,7 @@
             removeConfirmationModal.result.then(function () {
                 ClippingsService.destroy(id).then(function () {
                     NotificationService.success('Clipping removido com sucesso.');
-
-                    $route.reload();
+                    vm.dtInstance.DataTable.draw();
                 });
             });
         };
@@ -120,6 +118,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -128,6 +127,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('clipping');
+        }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('clipping');
         }
         onInit();
     }

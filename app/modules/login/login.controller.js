@@ -27,7 +27,10 @@
             vm.credentials.password = 'teste';
         }
         vm.login = _login;
-        $rootScope.$uibModalInstance ? $rootScope.$uibModalInstance.close() : false;
+
+        if ($rootScope.$uibModalInstance) {
+            $rootScope.$uibModalInstance.close();
+        }
 
         $rootScope.shownavbar = false;
         $log.info('LoginController');
@@ -66,7 +69,6 @@
                     ModalService.changePassword();
                 }
             }
-
         }
     }
 })();

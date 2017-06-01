@@ -5,12 +5,170 @@
         .factory('Util', Util);
 
     /** ngInject */
-    function Util($log) {
+    function Util(
+        $log,
+        $rootScope,
+        $timeout,
+        $q) {
         $log.info('Util');
+        var filterIndex = 0;
+        var conditionsIndex = 0;
+        var columnsHasOrder = [];
+
+        var mem = {};
+
         return {
             goTop: goTop,
-            getDateBetween: getDateBetween
+            getDateBetween: getDateBetween,
+            getParams: getParams,
+            get: get,
+            set: set,
+            event: event
         };
+
+        function event(event, data) {
+            var defer = $q.defer();
+            $rootScope.$emit('set' + event, data);
+            $rootScope.$on('get' + event, function (event, data) {
+                defer.resolve(data);
+            });
+            return defer.promise;
+        }
+
+        function set(key, value) {
+            $rootScope.$emit('scope.setted', key);
+            mem[key] = value;
+        }
+
+        function get(key) {
+            return mem[key];
+        }
+
+        function getParams(params, elementSearch) {
+            var parameters = '?';
+            if (angular.isUndefined(elementSearch)) {
+                goTop();
+            }
+            if (params.page) {
+                parameters += 'page=' + params.page;
+            }
+            if (params.page_size) {
+                parameters += '&page_size=' + params.page_size;
+            }
+            parameters += hasAuthor();
+            if (params.filter) {
+                parameters += _getCustomParam(params.filter);
+            }
+            if (params.order_by) {
+                parameters += _getOrderByParam(params.order_by);
+            }
+            if (params.search) {
+                parameters += _getSearchParam(params.search, elementSearch);
+            }
+
+            filterIndex = 0;
+            conditionsIndex = 0;
+            return parameters;
+        }
+
+        function hasAuthor() {
+            filterIndex++;
+            for (var i = 0; i < columnsHasOrder.length; i++) {
+                var element = columnsHasOrder[i];
+                if (element.filter === 'author') {
+                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
+                        '&query[filter][' + filterIndex + '][field]=author' +
+                        '&query[filter][' + filterIndex + '][alias]=author';
+                }
+            }
+            return '';
+        }
+
+        function _getOrderByParam(order) {
+            if (!order) {
+                return '';
+            }
+            filterIndex++;
+            if (order.filter === 'author') {
+                return '&query[order_by][' + filterIndex + '][type]=field' +
+                    '&query[order_by][' + filterIndex + '][field]=' + order.field +
+                    '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
+                    '&query[order_by][' + filterIndex + '][alias]=author';
+            }
+            return '&query[order_by][' + filterIndex + '][type]=field' +
+                '&query[order_by][' + filterIndex + '][field]=' + order.field +
+                '&query[order_by][' + filterIndex + '][direction]=' + order.direction;
+        }
+
+        function wildcard(el) {
+            var element = Number(el);
+            if (!isNaN(element)) {
+                return element;
+            }
+            return '%\\' + el + '%';
+        }
+
+        function _getSearchParam(search, elementSearch) {
+            if (!search) {
+                return '';
+            }
+            filterIndex++;
+            if (angular.isDefined(elementSearch)) {
+                return '&query[filter][' + filterIndex + '][type]=like' +
+                    '&query[filter][' + filterIndex + '][field]=' + elementSearch +
+                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
+                    '&query[filter][' + filterIndex + '][where]=and';
+            }
+            if (columnsHasOrder.length === 1) {
+                return '&query[filter][' + filterIndex + '][type]=like' +
+                    '&query[filter][' + filterIndex + '][field]=' + columnsHasOrder[0].name +
+                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
+                    '&query[filter][' + filterIndex + '][where]=and';
+            }
+            conditionsIndex = 0;
+            var searchParam = '&query[filter][' + filterIndex + '][type]=orx';
+            for (var i = 0; i < columnsHasOrder.length; i++) {
+                var element = columnsHasOrder[i];
+                if (element.name === 'postDate' || element.name === 'initDate' || element.name === 'publishDate') {
+                    var isDate = getDateBetween(search);
+                    if (isDate) {
+                        conditionsIndex++;
+                        searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=between' +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][from]=' + isDate.from +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][to]=' + isDate.to +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][format]=Y-m-d H:i:s' +
+                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                    }
+                } else if (element.filter === 'author') {
+                    conditionsIndex++;
+                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=author' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                } else {
+                    conditionsIndex++;
+                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                }
+            }
+            searchParam += '&query[filter][' + filterIndex + '][where]=and';
+            return searchParam;
+        }
+
+        function _getCustomParam(customFilter) {
+            if (!customFilter || customFilter === '') {
+                return '';
+            }
+            filterIndex++;
+            return '&query[filter][' + filterIndex + '][type]=eq' +
+                '&query[filter][' + filterIndex + '][field]=' + customFilter.field +
+                '&query[filter][' + filterIndex + '][value]=' + customFilter.value +
+                '&query[filter][' + filterIndex + '][where]=and';
+        }
 
         function goTop() {
             $('html, body')
@@ -78,7 +236,6 @@
 
         function verifyYearMonth(date) {
             if (date.length >= 5 && date.length <= 7) {
-                var yearMonth = {};
                 var month;
                 var year;
                 var splited = date.split('-');

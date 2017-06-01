@@ -42,7 +42,7 @@
         }
 
         function _loadMidia(page) {
-            var types = "types=doc,docx,xls,xlsx,ppt,pptx,pps,ppsx,ai,psd,zip,rar,7z,pdf";
+            var types = 'types=doc,docx,xls,xlsx,ppt,pptx,pps,ppsx,ai,psd,zip,rar,7z,pdf';
             MediaService.getMedia(page, 35, types).then(function (result) {
                 vm.midia = result.data;
             });

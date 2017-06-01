@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -63,23 +62,20 @@
         var date = new Date();
 
         $scope.date_formats = [{
-                label: $filter('format')('ano ({0})', date.getFullYear()),
-                format: 'Y'
-            },
-            {
-                label: $filter('format')('mês/ano ({0}/{1})', date.getMonth() + 1, date.getFullYear()),
-                format: 'm/Y'
-            },
-            {
-                label: $filter('format')(
-                    'dia/mês/ano ({0}/{1}/{2})',
-                    date.getDate(),
-                    date.getMonth() + 1,
-                    date.getFullYear()
-                ),
-                format: 'd/m/Y'
-            }
-        ];
+            label: $filter('format')('ano ({0})', date.getFullYear()),
+            format: 'Y'
+        }, {
+            label: $filter('format')('mês/ano ({0}/{1})', date.getMonth() + 1, date.getFullYear()),
+            format: 'm/Y'
+        }, {
+            label: $filter('format')(
+                'dia/mês/ano ({0}/{1}/{2})',
+                date.getDate(),
+                date.getMonth() + 1,
+                date.getFullYear()
+            ),
+            format: 'd/m/Y'
+        }];
 
         $scope.removeImage = function () {
             $scope.periodical.logo = '';
@@ -87,8 +83,9 @@
         };
 
         $scope.publish = function (data) {
-            if (!validationService.isValid($scope.formPeriodicals.$invalid))
+            if (!validationService.isValid($scope.formPeriodicals.$invalid)) {
                 return false;
+            }
 
             var _data = angular.copy(data);
 
@@ -98,10 +95,12 @@
             delete _data.scheduled_date;
             delete _data.scheduled_time;
 
-            PeriodicalService.updatePeriodical($routeParams.id, _data).then(function (data) {
-                NotificationService.success('Publicação atualizada com sucesso.');
-                $location.path('/periodicals');
-            });
+            PeriodicalService
+                .updatePeriodical($routeParams.id, _data)
+                .then(function () {
+                    NotificationService.success('Publicação atualizada com sucesso.');
+                    $location.path('/periodicals');
+                });
         };
 
     }

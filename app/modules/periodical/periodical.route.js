@@ -23,11 +23,13 @@
                     templateUrl: 'modules/periodical/periodical.form.template.html',
                     controller: 'PeriodicalEditController',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('periodicals', $routeParams.id)) {
-                                $window.location.href = '#/periodicals';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('periodicals', $routeParams.id)) {
+                                    $window.location.href = '#/periodicals';
+                                }
                             }
-                        }]
+                        ]
                     }
                 })
                 .when('/periodicals/:id/editions', {
@@ -38,22 +40,26 @@
                     templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
                     controller: 'PeriodicalEditionEditController',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('editions', $routeParams.id)) {
-                                $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('editions', $routeParams.id)) {
+                                    $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
+                                }
                             }
-                        }]
+                        ]
                     }
                 })
                 .when('/periodicals/:id/editions/new', {
                     templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
                     controller: 'PeriodicalEditionNewController',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPost('editions', $routeParams.id)) {
-                                $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPost('editions', $routeParams.id)) {
+                                    $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         }]);

@@ -40,8 +40,8 @@
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
+            var numberOfColumns = 3;
+            var columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -68,7 +68,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);
@@ -106,7 +106,7 @@
 
             removeConfirmationModal.result.then(function () {
                 featuredService.destroy(id).then(function () {
-                    loadHighlights();
+                    vm.dtInstance.DataTable.draw();
                     NotificationService.success('Destaque removido com sucesso.');
                 });
             });
@@ -115,6 +115,7 @@
         function _permissions() {
             _canDelete();
             _canPost();
+            _canPut();
         }
 
         function _canPost() {
@@ -124,6 +125,12 @@
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('highlighted_press');
         }
+
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('highlighted_press');
+        }
+
+
         onInit();
     }
 })();

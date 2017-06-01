@@ -98,8 +98,9 @@
          * _saveFeatured function
          */
         function _saveFeatured() {
-            if (!validationService.isValid($scope.formFeatured.$invalid))
+            if (!validationService.isValid($scope.formFeatured.$invalid)) {
                 return false;
+            }
 
             if (!vm.featured.photo) {
                 validationService.isValid(true);
@@ -107,7 +108,7 @@
             }
 
             _parseToSave();
-            featuredService.save(vm.featured).then(function (res) {
+            featuredService.save(vm.featured).then(function () {
                 NotificationService.success('Destaque salvo com sucesso!');
                 $location.path('/featured');
             });

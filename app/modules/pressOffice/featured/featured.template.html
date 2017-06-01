@@ -49,21 +49,24 @@
                             <th class="col-xs-5">Título</th>
                             <th class="col-xs-2">Usuário</th>
                             <th class="col-xs-3">Data da criação</th>
-                            <th class="col-xs-2">Ações</th>
+                            <th class="col-xs-2" ng-show="canPut || canDelete">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr role="row" ng-repeat="featured in highlights.items track by featured.id" class="odd">
                             <td>
-                                <a ng-href="#/featured/edit/{{ featured.id }}">
+                                <span ng-if="!canPut">
+                                    {{ featured.title }}
+                                </span>
+                                <a can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}">
                                     {{ featured.title }}
                                 </a>
                             </td>
                             <td>{{ featured.author.name }}</td>
                             <td>
-                                <strong>{{ DateTimeHelper.convertDate(featured.post_date)|date:'dd/MM/yyyy' }}</strong>
+                                <strong>{{ DateTimeHelper.convertDate(featured.post_date) | date:'dd/MM/yyyy' }}</strong>
                                 <br>
-                                <small>{{ featured.status|translate|titleize }}</small>
+                                <small>{{ featured.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
                                 <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}"

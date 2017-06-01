@@ -16,49 +16,57 @@
         MediaService,
         DateTimeHelper,
         $rootScope,
-        PermissionService,
         $window,
         $log,
         validationService) {
         $rootScope.shownavbar = true;
         $log.info('PeriodicalEditionEditController');
 
+        var removeConfirmationModal = {};
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
+
+
         $scope.edition = {};
-        $scope.status = [];
         $scope.highlight_ufmg_visible = false;
 
-        StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
-        });
+        onInit();
 
-        PeriodicalService.getEdition($routeParams.id, $routeParams.edition).then(function (data) {
-            $scope.periodical = data.data.periodical;
-            $scope.edition.slug = data.data.slug.slug;
-            $scope.edition.id = data.data.id;
-            $scope.edition.theme = data.data.theme;
-            $scope.edition.resume = data.data.resume;
-            $scope.edition.year = data.data.year;
-            $scope.edition.number = parseFloat(data.data.number);
-            $scope.edition.publish_date = DateTimeHelper.dateToStr(data.data.publish_date);
-            $scope.edition.file = data.data.file ? data.data.file.id : '';
-            $scope.edition.cover = data.data.cover ? data.data.cover.id : '';
-            $scope.edition.background = data.data.background ? data.data.background.id : '';
-            $scope.edition.status = data.data.status;
+        function onInit() {
+            PeriodicalService
+                .getEdition($routeParams.id, $routeParams.edition)
+                .then(function (res) {
+                    setEdition(res);
+                });
+        }
+
+        function setEdition(res) {
+            $scope.periodical = res.data.periodical;
+            $scope.edition.slug = res.data.slug.slug;
+            $scope.edition.id = res.data.id;
+            $scope.edition.theme = res.data.theme;
+            $scope.edition.resume = res.data.resume;
+            $scope.edition.year = res.data.year;
+            $scope.edition.number = parseFloat(res.data.number);
+            $scope.edition.publish_date = DateTimeHelper.dateToStr(res.data.publish_date);
+            $scope.edition.file = res.data.file ? res.data.file.id : '';
+            $scope.edition.cover = res.data.cover ? res.data.cover.id : '';
+            $scope.edition.background = res.data.background ? res.data.background.id : '';
+            $scope.edition.status = res.data.status;
             $scope.edition.articles = [];
-            $scope.edition.slug = data.data.slug;
+            $scope.edition.slug = res.data.slug;
 
             _getAllArticles($scope.edition.id);
 
-            $scope.edition.cover_url = data.data.cover ? data.data.cover.url : '';
-            $scope.edition.background_url = data.data.background ? data.data.background.url : '';
-            $scope.edition.file_name = data.data.file ? data.data.file.title : '';
+            $scope.edition.cover_url = res.data.cover ? res.data.cover.url : '';
+            $scope.edition.background_url = res.data.background ? res.data.background.url : '';
+            $scope.edition.file_name = res.data.file ? res.data.file.title : '';
 
-            $scope.edition.pdf = data.data.file ? data.data.file : '';
-            $scope.edition.pdf_url = data.data.file ? data.data.file.url : '';
+            $scope.edition.pdf = res.data.file ? res.data.file : '';
+            $scope.edition.pdf_url = res.data.file ? res.data.file.url : '';
 
-            $scope.edition.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
-            $scope.edition.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
-        });
+            $scope.edition.scheduled_date = moment(res.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+            $scope.edition.scheduled_time = moment(res.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
+        }
 
         function _getAllArticles(id) {
             PeriodicalService.getEditionArticles(id).then(function (result) {
@@ -101,21 +109,24 @@
                     }
                 });
 
-                if (tags.length > 0)
+                if (tags.length > 0) {
                     data.articles[k].tags = tags;
+                }
 
                 tags = [];
             });
 
-            PeriodicalService.updateEdition($routeParams.id, $routeParams.edition, data).then(function (data) {
-                NotificationService.success('Edição atualizada com sucesso.');
+            PeriodicalService
+                .updateEdition($routeParams.id, $routeParams.edition, data)
+                .then(function (res) {
+                    NotificationService.success('Edição atualizada com sucesso.');
 
-                if (!preview) {
-                    $location.path('/periodicals/' + $routeParams.id + '/editions');
-                } else {
-                    $window.open(data.data.edition_url);
-                }
-            });
+                    if (!preview) {
+                        $location.path('/periodicals/' + $routeParams.id + '/editions');
+                    } else {
+                        $window.open(res.data.edition_url);
+                    }
+                });
         };
 
 
@@ -136,16 +147,16 @@
 
         $scope.removeArticle = function (idx) {
             $scope.confirmationModal('md', 'Você deseja excluir este artigo?');
-            removeConfirmationModal.result.then(function (data) {
-                $scope.edition.articles.splice(idx, 1);
-
-                $timeout(function () {
-                    $scope.$apply();
+            removeConfirmationModal
+                .result
+                .then(function () {
+                    $scope.edition.articles.splice(idx, 1);
+                    $scope.dtInstance.DataTable.draw();
+                    $timeout(function () {
+                        $scope.$apply();
+                    });
                 });
-            });
         };
-
-        var removeConfirmationModal;
 
         $scope.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
@@ -161,7 +172,7 @@
             });
         };
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
             $scope.modal_title = title;
 
             $scope.ok = function () {
@@ -170,7 +181,7 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         // Upload
         // PDF
@@ -222,23 +233,5 @@
                 $scope.$apply();
             });
         };
-
-        function _permissions() {
-            _canDelete();
-            _canPost();
-            _canPut();
-        }
-
-        function _canPut() {
-            $scope.canPut = PermissionService.canPut('editions', $routeParams.id);
-        }
-
-        function _canPost() {
-            $scope.canPost = PermissionService.canPost('editions', $routeParams.id);
-        }
-
-        function _canDelete() {
-            $scope.canDelete = PermissionService.canDelete('editions', $routeParams.id);
-        }
     }
 })();

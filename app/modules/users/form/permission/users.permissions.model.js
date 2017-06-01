@@ -16,6 +16,7 @@
         $timeout,
         $uibModalInstance) {
         var vm = this;
+        var lengthOfDataContext = 0;
         vm.heightScreen = $window.screen.availHeight * 0.78;
         vm.configTableDeselected = {};
         vm.configTableDeselected.page = 1;
@@ -106,13 +107,16 @@
 
         function _changeTables() {
             vm.configTableDeselected.in = (vm.configTableDeselected.page * vm.limitTo) - vm.limitTo;
-            vm.configTableDeselected.to = vm.configTableDeselected.page * vm.limitTo < vm.filterDataDeselected.length ? vm.configTableDeselected.page * vm.limitTo : vm.filterDataDeselected.length;
+            vm.configTableDeselected.to = vm.configTableDeselected.page * vm.limitTo < vm.filterDataDeselected.length ?
+                vm.configTableDeselected.page * vm.limitTo : vm.filterDataDeselected.length;
 
             vm.configTableSelected.in = (vm.configTableSelected.page * vm.limitTo) - vm.limitTo;
-            vm.configTableSelected.to = vm.configTableSelected.page * vm.limitTo < vm.filterDataSelected.length ? vm.configTableSelected.page * vm.limitTo : vm.filterDataSelected.length;
+            vm.configTableSelected.to = vm.configTableSelected.page * vm.limitTo < vm.filterDataSelected.length ?
+                vm.configTableSelected.page * vm.limitTo : vm.filterDataSelected.length;
         }
 
         function _mountListPermissionContextId(listContext) {
+            lengthOfDataContext = listContext.length;
             vm.selecteds = [];
             vm.deselects = [];
             var isString = angular.isString(contextPermissions.valuePermission);
@@ -134,12 +138,13 @@
                         vm.configTableSelected.size = vm.selecteds.length;
                         break;
                     }
+                    item = null;
                 }
             }
-            for (var i = 0; i < listContext.length; i++) {
-                var item = listContext[i];
-                if (item) {
-                    vm.deselects.push(_mountItem(item));
+            for (var k = 0; k < listContext.length; k++) {
+                var el = listContext[k];
+                if (el) {
+                    vm.deselects.push(_mountItem(el));
                 }
             }
             vm.configTableDeselected.size = vm.deselects.length;
@@ -174,19 +179,34 @@
 
 
         function _updateCustomPermission() {
-            var array = [];
+            var array = {
+                ids: [],
+                data: []
+            };
+            var contextIds = false;
             if (!vm.selecteds) {
                 return [];
             }
             for (var i = 0; i < vm.selecteds.length; i++) {
                 var select = vm.selecteds[i];
-                array.push(select.id);
+                array.ids.push(select.id);
+                array.data.push({
+                    title: select.name || select.title
+                });
             }
-            var contextIds = array.toString();
-            if (!contextIds) {
-                return [];
+            if (array.ids.length !== 0) {
+                if (array.data.length === lengthOfDataContext) {
+                    contextIds = true;
+                } else if (array.data.length === 0) {
+                    contextIds = false;
+                } else {
+                    contextIds = array.ids.toString();
+                }
             }
-            return contextIds;
+            return {
+                ids: contextIds,
+                data: array.data
+            };
         }
 
         onInit();

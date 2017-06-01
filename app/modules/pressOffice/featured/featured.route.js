@@ -26,11 +26,13 @@
                     templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
                     controller: 'featuredEditController',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('highlighted_press', $routeParams.id)) {
-                                $window.location.href = '#/featured';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('highlighted_press', $routeParams.id)) {
+                                    $window.location.href = '#/featured';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         });

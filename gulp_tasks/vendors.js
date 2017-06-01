@@ -46,7 +46,11 @@ var SCRIPTS = [
     'bower_components/checklist-model/checklist-model.js',
     'bower_components/angular-input-masks/angular-input-masks-standalone.min.js',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
-    'bower_components/ng-scrollbars/dist/scrollbars.min.js'
+    'bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js',
+    'bower_components/ng-scrollbars/dist/scrollbars.min.js',
+    'bower_components/angular-ui-scroll/dist/ui-scroll.min.js',
+    'bower_components/angular-ui-scroll/dist/ui-scroll-grid.min.js',
+    'bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.min.js'
 ];
 
 var STYLES = [
@@ -64,6 +68,7 @@ var STYLES = [
     'bower_components/angular-loading-bar/build/loading-bar.min.css',
     'bower_components/v-accordion/dist/v-accordion.min.css',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
+    'bower_components/nanoscroller/bin/css/nanoscroller.css',
 
     // God Damn Xenon
     'app/assets/xenon/css/bootstrap.css',
@@ -71,8 +76,7 @@ var STYLES = [
     'app/assets/xenon/css/xenon-core.css',
     'app/assets/xenon/css/xenon-forms.css',
     'app/assets/xenon/css/xenon-components.css',
-    'app/assets/xenon/css/xenon-skins.css',
-
+    'app/assets/xenon/css/xenon-skins.css'
 ];
 
 var FONTS = [

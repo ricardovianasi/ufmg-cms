@@ -45,10 +45,11 @@
             $scope.article.slug = article.slug;
 
             angular.forEach(article.tags, function (tag) {
-                if (typeof tag.text != 'undefined')
+                if (typeof tag.text !== 'undefined') {
                     $scope.article.tags.push(tag.text);
-                else
+                } else {
                     $scope.article.tags.push(tag);
+                }
             });
         }
 
@@ -104,8 +105,9 @@
         };
 
         $scope.ok = function () {
-            if (!validationService.isValid($scope.formArticle.$invalid))
+            if (!validationService.isValid($scope.formArticle.$invalid)) {
                 return false;
+            }
 
             $uibModalInstance.close($scope.article);
         };

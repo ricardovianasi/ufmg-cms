@@ -104,13 +104,12 @@
                         };
                         accountService
                             .edit(data, user.id)
-                            .then(function (res) {
+                            .then(function () {
                                 NotificationService.success('Senha atualizado com sucesso!');
                                 $uibModalInstance.dismiss('close');
                             });
                     }
                 }
-
                 onInit();
             }
         }

@@ -56,7 +56,8 @@
                         <tbody>
                             <tr role="row" ng-repeat="item in periodicals.items track by item.id" class="odd">
                                 <td>
-                                    <a ng-href="#/periodicals/{{item.id}}/editions" ng-click="setNamePeriodical(item.name)">{{ item.name }}</a>
+                                    <a ng-href="#/periodicals/{{item.id}}/editions" ng-click="setNamePeriodical(item.name)" ng-if="!canPut">{{ item.name }}</a>
+                                    <a can-put context="periodical" context-id="item.id" ng-href="#/periodicals/edit/{{ item.id }}">{{ item.name }}</a>
                                 </td>
                                 <td>{{ item.author.name }}</td>
                                 <td>

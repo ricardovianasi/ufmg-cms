@@ -58,13 +58,14 @@
                     <tbody>
                         <tr dt-rows role="row" class="odd" ng-repeat="item in vm.pages.items track by item.id">
                             <td>
-                                <a target="_blank" ng-href="{{ item.page_url }}">{{ item.title }}</a>
+                                <a target="_blank" ng-href="{{ item.page_url }}" ng-if="!vm.canPut">{{ item.title }}</a>
+                                <a can-put context="page" context-id="item.id" ng-href="#/pages/edit/{{ item.id }}">{{ item.title }}</a>
                             </td>
                             <td>{{ item.author.name }}</td>
                             <td>
-                                <strong>{{ vm.convertDate(item.post_date)|date:'dd/MM/yyyy' }}</strong>
+                                <strong>{{ vm.convertDate(item.post_date) | date:'dd/MM/yyyy' }}</strong>
                                 <br>
-                                <small>{{ item.status|translate|titleize }}</small>
+                                <small>{{ item.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.page_url }}" class="btn btn-primary">
@@ -80,12 +81,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <style>
-                    .table {
-                        width: 100% !important;
-                    }
-
-                </style>
             </div>
         </div>
     </div>

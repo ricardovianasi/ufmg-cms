@@ -12,39 +12,34 @@
         $timeout,
         dataTableConfigService,
         NotificationService,
-        StatusService,
-        ModalService,
         DateTimeHelper,
-        $rootScope,
-        Util,
-        $route,
-        validationService) {
-
+        $rootScope) {
         $rootScope.shownavbar = true;
         $log.info('CalendarController');
         var _view = false;
         var vm = $scope;
-
-        vm.calendar = [];
-        vm.period_filter = [];
-        vm.active_period_filter = '';
-
-        vm.status = [];
-        vm.schoolDays = [];
-        vm.regional = [];
-
-
-        vm.changeStatus = _changeStatus;
-        vm.itemStatus = 'all';
-        vm.dtInstance = {};
+        var removeConfirmationModal = {};
+        var ModalEditEventCtrl = _ModalEditEventCtrl;
+        var ModalCalendarSchoolDaysCtrl = _ModalCalendarSchoolDaysCtrl;
+        var ModalCalendarioNovoCtrl = _ModalCalendarioNovoCtrl;
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 
         onInit();
 
         function onInit() {
+            vm.calendar = [];
+            vm.period_filter = [];
+            vm.active_period_filter = '';
+
+            vm.status = [];
+            vm.schoolDays = [];
+            vm.regional = [];
+
+
+            vm.changeStatus = _changeStatus;
+            vm.itemStatus = 'all';
+            vm.dtInstance = {};
             _renderDataTable();
-            // StatusService.getStatus().then(function (data) {
-            //     vm.status = data.data;
-            // });
         }
 
         function _changeStatus(status) {
@@ -92,7 +87,7 @@
                         };
                         _permissions();
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCalendar);
@@ -138,7 +133,7 @@
                 }
             });
 
-            modalCalendarSchoolDays.result.then(function (data) {
+            modalCalendarSchoolDays.result.then(function () {
                 CalendarService.getSchoolDays().then(function (res) {
                     vm.schoolDays = res.data;
                 });
@@ -146,7 +141,6 @@
         };
 
 
-        var removeConfirmationModal;
 
         vm.confirmationModal = function (size, title) {
             removeConfirmationModal = $uibModal.open({
@@ -162,7 +156,7 @@
             });
         };
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
             var vm = $scope;
             vm.modal_title = title;
 
@@ -173,11 +167,11 @@
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         vm.addEvent = function (size) {
             _view = false;
-            var modalCalendarioNovo = $uibModal.open({
+            $uibModal.open({
                 templateUrl: 'components/modal/calendario.novo.modal.template.html',
                 controller: ModalCalendarioNovoCtrl,
                 backdrop: 'static',
@@ -218,7 +212,7 @@
                 }
             });
 
-            modalCalendarEditEvent.result.then(function (data) {
+            modalCalendarEditEvent.result.then(function () {
                 CalendarService.getCalendar().then(function (res) {
                     vm.calendar = res.data;
                 });
@@ -226,16 +220,29 @@
         };
 
         vm.removeEvent = function (id, description) {
-            vm.confirmationModal('md', 'Você deseja excluir o evento "' + description + '"?');
-            removeConfirmationModal.result.then(function (data) {
-                CalendarService.removeCalendar(id).then(function (data) {
-                    NotificationService.success('Evento removido com sucesso.');
-                    loadCalendar();
+            vm.confirmationModal('md', 'Você deseja excluir o evento ' + description + '?');
+            removeConfirmationModal
+                .result
+                .then(function () {
+                    CalendarService
+                        .removeCalendar(id)
+                        .then(function () {
+                            vm.dtInstance.DataTable.draw();
+                            NotificationService.success('Evento removido com sucesso.');
+                        });
                 });
-            });
         };
 
-        var ModalEditEventCtrl = function ($scope, $http, $log, $uibModalInstance, PermissionService, regional, event, type, $route) {
+        function _ModalEditEventCtrl(
+            $scope,
+            $http,
+            $log,
+            $uibModalInstance,
+            PermissionService,
+            regional,
+            event,
+            type
+        ) {
             var vm = $scope;
             $log.info('ModalEditEventCtrl');
 
@@ -254,7 +261,7 @@
             vm.regional = regional;
             vm.newRegister = {};
             vm.newRegister.id = event.id;
-            vm.newRegister.regional = event.regional.length == 2 ? '0' : String(event.regional[0].id);
+            vm.newRegister.regional = event.regional.length === 2 ? '0' : String(event.regional[0].id);
             vm.newRegister.description = event.description;
             vm.newRegister.init_date = event.init_date ? CalendarService.dateToStr(new_init_date) : '';
             vm.newRegister.end_date = event.end_date ? CalendarService.dateToStr(new_end_date) : '';
@@ -263,7 +270,7 @@
             vm.ok = function () {
                 var newRegional = [];
 
-                if (vm.newRegister.regional === "0") {
+                if (vm.newRegister.regional === '0') {
                     angular.forEach(regional, function (v, k) {
                         newRegional.push(regional[k].id);
                     });
@@ -271,9 +278,9 @@
                     vm.newRegister.regional = newRegional;
                 }
                 CalendarService.updateCalendar(vm.newRegister).then(function (data) {
-                    if (data.status == '200') {
+                    if (data.status === '200') {
                         NotificationService.success('Evento atualizado com sucesso.');
-                        $route.reload();
+                        vm.dtInstance.DataTable.draw();
                     }
                     $uibModalInstance.close();
                 });
@@ -282,9 +289,9 @@
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
-        var ModalCalendarSchoolDaysCtrl = function ($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
+        function _ModalCalendarSchoolDaysCtrl($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
             $log.info('ModalCalendarSchoolDaysCtrl');
             var vm = $scope;
 
@@ -298,7 +305,7 @@
                 vm.months.push(data.period);
             });
 
-            vm.months = _.uniq(vm.months);
+            vm.months = _.uniq(vm.months); // jshint ignore: line
 
             vm.convertPeriodStr = function (date) {
                 return CalendarService.convertPeriodStr(date);
@@ -315,8 +322,8 @@
 
             vm.periodUpdate = function (month, year, regional_id) {
                 if (month && year && regional_id) {
-                    var filtered_month = _.filter(vm.schoolDays.items, function (b) {
-                        if (b.month == month && b.year == year && b.regional.id == parseInt(regional_id)) {
+                    var filtered_month = _.filter(vm.schoolDays.items, function (b) { // jshint ignore: line
+                        if (b.month === month && b.year === year && b.regional.id === parseInt(regional_id)) {
                             return b;
                         }
                     });
@@ -337,15 +344,16 @@
             };
 
             vm.ok = function () {
-                if (!validationService.isValid(vm.formDays.$invalid))
+                if (!validationService.isValid(vm.formDays.$invalid)) {
                     return false;
+                }
 
                 if (vm.hasPeriod === true) {
-                    CalendarService.updatePeriod(vm.period).then(function (data) {
+                    CalendarService.updatePeriod(vm.period).then(function () {
                         $uibModalInstance.close();
                     });
                 } else {
-                    CalendarService.newPeriod(vm.period).then(function (data) {
+                    CalendarService.newPeriod(vm.period).then(function () {
                         $uibModalInstance.close();
                     });
                 }
@@ -355,9 +363,17 @@
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
-        var ModalCalendarioNovoCtrl = function ($scope, $uibModalInstance, regional, $log, PermissionService, type, $route, validationService) {
+        function _ModalCalendarioNovoCtrl(
+            $scope,
+            $uibModalInstance,
+            regional,
+            $log,
+            PermissionService,
+            type,
+            $route,
+            validationService) {
             $log.info('ModalCalendarioNovoCtrl');
             var vm = $scope;
 
@@ -384,7 +400,7 @@
 
                 var newRegional = [];
 
-                if (vm.newRegister.regional === "0") {
+                if (vm.newRegister.regional === '0') {
                     angular.forEach(regional, function (v, k) {
                         newRegional.push(regional[k].id);
                     });
@@ -392,7 +408,7 @@
                     vm.newRegister.regional = newRegional;
                 }
 
-                CalendarService.postCalendar(vm.newRegister).then(function (data) {
+                CalendarService.postCalendar(vm.newRegister).then(function () {
                     $route.reload();
                     $uibModalInstance.close();
                 });
@@ -401,7 +417,7 @@
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
         function _permissions() {
             _canDelete();
