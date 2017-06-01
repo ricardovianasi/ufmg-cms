@@ -47,7 +47,7 @@
         onInit();
 
         function onInit() {
-            if (vm.typeNews === 'agencia-de-noticias') {
+            if (vm.typeNews === 'news_agencia_de_agencia') {
                 $scope.news.highlight_ufmg = 1;
             }
         }

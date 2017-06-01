@@ -31,7 +31,7 @@
 
         function onInit() {
             var typeNews = $routeParams.typeNews;
-            if (typeNews === 'agencia-de-noticias') {
+            if (typeNews === 'news_agencia_de_agencia') {
                 vm.typeNewsPermission = 'news_agencia_de_agencia';
             } else if (typeNews === 'tv') {
                 vm.typeNewsPermission = 'news_tv';
@@ -100,17 +100,14 @@
         }
 
         function _canPut() {
-            console.log(vm.typeNewsPermission);
             vm.canPut = PermissionService.canPut(vm.typeNewsPermission);
         }
 
         function _canPost() {
-            console.log(vm.typeNewsPermission);
             vm.canPost = PermissionService.canPost(vm.typeNewsPermission);
         }
 
         function _canDelete() {
-            console.log(vm.typeNewsPermission);
             vm.canDelete = PermissionService.canDelete(vm.typeNewsPermission);
         }
         onInit();
