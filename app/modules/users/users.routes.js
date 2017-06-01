@@ -27,11 +27,13 @@
                     controller: 'UsersFormController',
                     controllerAs: 'vm',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('user', $routeParams.userId)) {
-                                $window.location.href = '#/users';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('user', $routeParams.userId)) {
+                                    $window.location.href = '#/users';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         });

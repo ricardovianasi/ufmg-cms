@@ -81,7 +81,7 @@
         };
 
         vm.setEndDefault = function () {
-            if (vm.event.endDate === "" || vm.event.endDate === null) {
+            if (vm.event.endDate === '' || vm.event.endDate === null) {
                 vm.event.endDate = vm.event.initDate;
             }
         };
@@ -138,8 +138,9 @@
         };
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formEvents.$invalid))
+            if (!validationService.isValid($scope.formEvents.$invalid)){
                 return false;
+            }
 
             vm.setEndDefault();
 
@@ -205,8 +206,8 @@
             });
 
 
-            event.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
-            event.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
+            event.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+            event.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
 
             vm.event = event;
         });
@@ -225,11 +226,6 @@
         StatusService.getStatus().then(function (data) {
             vm.statuses = data.data;
         });
-
-        function _parseTime(data) {
-            data.end_hour = moment(data.end_hour).format('HH:mm');
-            data.init_hour = moment(data.init_hour).format('HH:mm');
-        }
 
         TagsService.getTags().then(function (data) {
             allTags = data.data.items[0];

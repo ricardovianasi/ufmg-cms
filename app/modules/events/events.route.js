@@ -15,11 +15,13 @@
                     controller: 'EventsNewController as vm',
                     controllerAs: 'ctrl',
                     resolve: {
-                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPut('events')) {
-                                $window.location.href = '#/events';
+                        permission: ['PermissionService', '$window',
+                            function (PermissionService, $window) {
+                                if (!PermissionService.canPut('events')) {
+                                    $window.location.href = '#/events';
+                                }
                             }
-                        }]
+                        ]
                     }
                 })
                 .when('/events/edit/:id', {
@@ -27,11 +29,13 @@
                     controller: 'EventsEditController as vm',
                     controllerAs: 'ctrl',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('events', $routeParams.id)) {
-                                $window.location.href = '#/events';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('events', $routeParams.id)) {
+                                    $window.location.href = '#/events';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         });

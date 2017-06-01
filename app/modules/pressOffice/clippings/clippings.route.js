@@ -29,11 +29,13 @@
                     controller: 'ClippingsEditController',
                     controllerAs: 'ctrl',
                     resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams', function (PermissionService, $window, $routeParams) {
-                            if (!PermissionService.canPut('clipping', $routeParams.id)) {
-                                $window.location.href = '#/clippings';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                if (!PermissionService.canPut('clipping', $routeParams.id)) {
+                                    $window.location.href = '#/clippings';
+                                }
                             }
-                        }]
+                        ]
                     }
                 });
         });

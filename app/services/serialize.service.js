@@ -8,7 +8,7 @@
 
             return function (data) {
                 if (!angular.isObject(data)) {
-                    return ((data === null) ? "" : data.toString());
+                    return ((data === null) ? '' : data.toString());
                 }
 
                 var param = function (obj) {
@@ -40,8 +40,9 @@
                                 innerObj[fullSubName] = subValue;
                                 query += param(innerObj) + '&';
                             }
-                        } else if (value !== undefined && value !== null)
+                        } else if (value !== undefined && value !== null) {
                             query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+                        }
                     }
 
                     return query.length ? query.substr(0, query.length - 1) : query;

@@ -66,7 +66,10 @@
                     <tbody>
                         <tr role=row ng-repeat="item in editions.items track by item.id" class=odd>
                             <td>
-                                <a href="{{ item.edition_url }}" target="_blank">
+                                <a href="{{ item.edition_url }}" target="_blank" ng-if="!canPut">
+                                    <strong>Nº: {{ item.number }}</strong> - {{ item.theme }}
+                                </a>
+                                <a ng-if="canPut" href="#/periodicals/{{ periodical.id }}/editions/edit/{{ item.id }}">
                                     <strong>Nº: {{ item.number }}</strong> - {{ item.theme }}
                                 </a>
                             </td>

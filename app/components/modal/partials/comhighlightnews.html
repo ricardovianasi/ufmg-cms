@@ -1,20 +1,20 @@
-<div class="form-group">
+<div class="form-group" onload="loadMoreNews()">
     <label>
         Selecionar Notícias
         <small>(selecione 2 notícias)</small>
     </label>
-
     <ui-select ng-model="widget.content.news[0]" theme="bootstrap" class="ui-select">
         <ui-select-match placeholder="Buscar Notícia">{{ $select.selected.title }}</ui-select-match>
-        <ui-select-choices repeat="news in news.items|filter: $select.search">
-            <div ng-bind-html="news.title|highlight: $select.search"></div>
-        </ui-select-choices>
+        <ui-select-choices repeat="item in dataNews | filter: $select.search track by $index" scroll-detect="loadMoreNews()" refresh="loadMoreNews($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="item.title|highlight: $select.search"></div>
+            </ui-select-choices>
     </ui-select>
-
     <ui-select ng-model="widget.content.news[1]" theme="bootstrap" class="ui-select">
         <ui-select-match placeholder="Buscar Notícia">{{ $select.selected.title }}</ui-select-match>
-        <ui-select-choices repeat="news in news.items|filter: $select.search">
-            <div ng-bind-html="news.title|highlight: $select.search"></div>
-        </ui-select-choices>
+        <ui-select-choices repeat="item in dataNews | filter: $select.search track by $index" scroll-detect="loadMoreNews()" refresh="loadMoreNews($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="item.title|highlight: $select.search"></div>
+            </ui-select-choices>
     </ui-select>
 </div>

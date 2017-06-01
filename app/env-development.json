@@ -1,5 +1,5 @@
 {
-    "apiUrl": "http://cajuri.bu.ufmg.br:9999",
+    "apiUrl": "http://cajuri.bu.ufmg.br:9999/webservice",
     "grant_type_auth": "password",
     "client_id_auth": "cms",
     "ENV": "development"

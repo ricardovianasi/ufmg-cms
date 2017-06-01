@@ -112,12 +112,12 @@
                         <span class="add-title">+ Adicionar Módulo</span>
                     </div>
                 </div>
-                <div id="sort-side" as-sortable="sortableOptions" ng-model="page.widgets.side" ng-class="{ 'col-xs-4': page.columns == 2, 'hidden': page.columns == 1 }">
+                <div id="sort-side" as-sortable="sortableOptions" ng-model="page.widgets.side" ng-class="{ 'col-xs-4': page.columns === 2, 'hidden': page.columns === 1 }">
                     <div class="pages-module" ng-repeat="item in page.widgets.side" as-sortable-item>
                         <div class="row flex-center">
                             <div class="col-md-8">
                                 <h4>
-                                    <strong>{{ item.title }}</strong>
+                                    {{ item.title }}
                                 </h4>
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
@@ -143,13 +143,15 @@
     </div>
     <div class="col-xs-4">
         <publishment-options route-model="page"></publishment-options>
-        <div class="panel panel-default">
+        <div class="panel panel-default" onload="loadMorePage()">
             A página atual é filha de:
-            <form action="">
-                <select class="form-control" ng-model="page.parent" ng-options="item as item.title for item in pagesParent | orderBy: 'title' track by item.id">
-                </select>
-                <input type="hidden" ng-model="page.page_type" value="">
-            </form>
+            <ui-select ng-model="page.parent" title="Selecione ou procure a página...">
+                <ui-select-match placeholder="Selecione ou procure a página...">{{$select.selected.title}}</ui-select-match>
+                <ui-select-choices repeat="item in pagesParent | filter: $select.search | limitTo: currentElement" scroll-detect="loadMorePage()"
+                    refresh="loadMorePage($select.search)" refresh-delay="300">
+                    <span ng-bind-html="item.title | highlight: $select.search"></span>
+                    </ui-select-choices>
+            </ui-select>
         </div>
     </div>
 </div>

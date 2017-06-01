@@ -22,12 +22,14 @@
 
         $scope.categories = [];
         $scope.gallery = {};
+        var EditPhotosModalCtrl = _EditPhotosModalCtrl;
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 
 
         GalleryService.getCategories().then(function (res) {
             $scope.categories = res.data.items;
             $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
-             
+
         });
 
         $scope.gallery.title = '';
@@ -77,7 +79,7 @@
                         NotificationService.success('"' + data.title + '"' + ' enviado para Biblioteca de Mídia.');
                     });
 
-                    if (idx + 1 == $scope.add_photos.length) {
+                    if (idx + 1 === $scope.add_photos.length) {
                         setTimeout(function () {
                             $scope.editPhotos();
                         }, 250);
@@ -87,12 +89,12 @@
         });
 
         $scope.removePhoto = function (id) {
-            var idx = _.findIndex($scope.gallery.photos, {
+            var idx = _.findIndex($scope.gallery.photos, { // jshint ignore: line
                 id: id
             });
 
             $scope.confirmationModal('md', 'Você deseja remover esta imagem da galeria?');
-            removeConfirmationModal.result.then(function (data) {
+            removeConfirmationModal.result.then(function () {
                 $scope.gallery.photos.splice(idx, 1);
             });
         };
@@ -111,7 +113,7 @@
             });
         };
 
-        var EditPhotosModalCtrl = function ($scope, $uibModalInstance, photos) {
+        function _EditPhotosModalCtrl($scope, $uibModalInstance, photos) {
             $scope.photos = photos;
 
             $scope.currentPhoto = $scope.photos[0];
@@ -119,7 +121,7 @@
 
             $scope.nextPhoto = function (index) {
                 // não é o último
-                if (index != $scope.photos.length - 1) {
+                if (index !== $scope.photos.length - 1) {
                     $scope.currentPhoto = $scope.photos[index + 1];
                     $scope.currentPhotoIdx = index + 1;
                     setTimeout(function () {
@@ -145,9 +147,9 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss();
             };
-        };
+        }
 
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
             $scope.modal_title = title;
 
             $scope.ok = function () {
@@ -157,9 +159,9 @@
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
-        $scope.publish = function (gallery) {
+        $scope.publish = function () {
             var _photos = [];
 
             angular.forEach($scope.gallery.photos, function (photo) {
@@ -172,7 +174,7 @@
                 photos: _photos
             };
 
-            GalleryService.newGallery(obj).then(function (data) {
+            GalleryService.newGallery(obj).then(function () {
                 $location.path('/galleries');
             });
         };

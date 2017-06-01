@@ -82,8 +82,8 @@
                 news_url: data.data.news_url,
                 has_video: data.data.has_video,
                 /* jshint ignore:start */
-                tv_program: data.data.tv_program == null ? data.data.tv_program : data.data.tv_program.id,
-                gallery: data.data.gallery == null ? '' : data.data.gallery.id,
+                tv_program: data.data.tv_program === null ? data.data.tv_program : data.data.tv_program.id,
+                gallery: data.data.gallery === null ? '' : data.data.gallery.id,
                 /* jshint ignore:end */
                 slug: {
                     slug: data.data.slug.slug
@@ -105,8 +105,8 @@
             $scope.title = 'Editar "' + $scope.news.title + '"';
             $scope.breadcrumb_active = $scope.news.title;
 
-            $scope.news.scheduled_date = moment(data.data.post_date, "YYYY-DD-MM").format('DD/MM/YYYY');
-            $scope.news.scheduled_time = moment(data.data.post_date, "YYYY-DD-MM hh:mm").format('hh:mm');
+            $scope.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+            $scope.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
         });
 
 
@@ -135,14 +135,15 @@
         };
 
         $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formNews.$invalid))
+            if (!validationService.isValid($scope.formNews.$invalid)) {
                 return false;
+            }
 
-            if (!data.saveDraftClicked && data.status != 'scheduled') {
+            if (!data.saveDraftClicked && data.status !== 'scheduled') {
                 data.status = 'published';
             }
 
-            var slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+            var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
             var _obj = {
                 title: data.title,
@@ -164,9 +165,9 @@
                 slug: slug
             };
 
-            _obj.tags = _.map(_obj.tags, 'text');
+            _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
-            if (_obj.status == 'scheduled') {
+            if (_obj.status === 'scheduled') {
                 _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 

@@ -47,7 +47,7 @@
                 quickAccess: [],
             },
             get: function (menu) {
-                return $http.get($filter('format')('{0}/{1}', MENU_ENDPOINT, inflection.underscore(menu)));
+                return $http.get($filter('format')('{0}/{1}', MENU_ENDPOINT, inflection.underscore(menu))); // jshint ignore: line
             },
             update: function (menu, data) {
                 var url = $filter('format')('{0}/{1}', MENU_ENDPOINT, menu);

@@ -48,7 +48,9 @@
                     .getCourseRoute(vm.type, vm.courseId)
                     .then(function (res) {
                         vm.course = res.data;
-                        vm.course.detail ? vm.course.detail : vm.course.detail = {};
+                        if (!vm.course.detail) {
+                            vm.course.detail = {};
+                        }
                         _permissions();
                     });
             } else {
@@ -78,7 +80,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCourses);
@@ -90,7 +92,7 @@
                     cover: vm.course.cover,
                     description: vm.course.detail.description
                 })
-                .then(function (res) {
+                .then(function () {
                     if (redirect) {
                         $location.path('/course/list/' + vm.type);
                     }

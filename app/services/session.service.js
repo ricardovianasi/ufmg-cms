@@ -52,7 +52,9 @@
         }
 
         function setIsLogged(value) {
-            angular.isUndefined(value)  ? value = true : false;
+            if (angular.isUndefined(value)) {
+                value = true;
+            }
             return store.setItem('isLogged', value);
         }
 
@@ -106,9 +108,7 @@
         }
 
         function verifyTokenIsExpired() {
-            var tokenExpiredIn = getTokenTime();
             var dateLastLogin = getLastLoginDate();
-            var seconds = Math.floor(tokenExpiredIn / 60);
             var futureDate = moment(dateLastLogin);
             futureDate.add(moment.duration(2, 'hours'));
 

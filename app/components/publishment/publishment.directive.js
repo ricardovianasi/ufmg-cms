@@ -67,7 +67,7 @@
             }
 
             function _back() {
-                var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel));
+                var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel)); // jshint ignore: line
                 $log.info(angular.isDefined(attrs.back), attrs.back);
                 if (angular.isDefined(attrs.back)) {
                     back = attrs.back;

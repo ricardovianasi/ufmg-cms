@@ -24,8 +24,6 @@
         var pages = [];
         var menus = MenuService.MENUS;
 
-         
-
         //Public functions
         vm.removeItem = _removeItem;
         vm.editTitle = _editTitle;
@@ -34,7 +32,7 @@
         vm.removeQuickAccessItem = _removeQuickAccessItem;
 
         vm.filterPages = function (menuType, val) {
-            if (menuType == 'mainMenu') {
+            if (menuType === 'mainMenu') {
                 vm.pages = $filter('filter')(vm.pages, val);
                 if (vm.pages.length <= 0) {
                     vm.pages = pages;
@@ -54,36 +52,39 @@
             }
         };
 
+        function _updateSortable(event, ui) {
+            if (!ui.item.sortable.received) {
+                var originNgModel = ui.item.sortable.sourceModel;
+                var itemModel = originNgModel[ui.item.sortable.index];
+                if (
+                    originNgModel === vm.pages ||
+                    ui.item.sortable.droptargetModel === $scope.menus.quickAccess
+                ) {
+                    var exists = !!$scope.menus.quickAccess.filter(function (x) {
+                        return x.label === itemModel.label;
+                    }).length;
+
+                    if (exists) {
+                        ui.item.sortable.cancel();
+                    }
+                }
+            }
+
+        }
+
         //Public models
         vm.pages = [];
         $scope.menus = {};
         vm.sortableOptions = {
             placeholder: 'list-group-item',
             connectWith: '.main',
-            update: function (event, ui) {
-                if (!ui.item.sortable.received) {
-                    var originNgModel = ui.item.sortable.sourceModel;
-                    var itemModel = originNgModel[ui.item.sortable.index];
-                    if (
-                        originNgModel == vm.pages ||
-                        ui.item.sortable.droptargetModel == $scope.menus.quickAccess
-                    ) {
-                        var exists = !!$scope.menus.quickAccess.filter(function (x) {
-                            return x.label === itemModel.label;
-                        }).length;
-
-                        if (exists) {
-                            ui.item.sortable.cancel();
-                        }
-                    }
-                }
-            },
+            update: _updateSortable
         };
 
         vm.quickSortableOptions = {
             placeholder: 'list-group-item-quickaccess',
             connectWith: '.main',
-            stop: function (e, ui) {},
+            stop: function () {},
             update: function (event, ui) {
                 // on cross list sortings received is not true
                 // during the first update
@@ -96,8 +97,8 @@
                     // check that its an actual moving
                     // between the two lists
                     if (
-                        originNgModel == vm.quickPages ||
-                        ui.item.sortable.droptargetModel == $scope.menus.quickAccess
+                        originNgModel === vm.quickPages ||
+                        ui.item.sortable.droptargetModel === $scope.menus.quickAccess
                     ) {
                         var exists = !!$scope.menus.quickAccess.filter(function (x) {
                             return x.label === itemModel.label;
@@ -120,11 +121,11 @@
                 .result
                 .then(function () {
                     var base = 0;
-                    angular.forEach(allArgs, function (i) {
+                    angular.forEach(allArgs, function () {
                         base++;
                     });
 
-                    var spliceAux = allArgs.splice(0, 1)[0];
+                    allArgs.splice(0, 1)[0]; // jshint ignore: line
 
                     var menu = args.splice(0, 1)[0];
                     var idx = base > 3 ? args.splice(2, 1)[0] : args.splice(1, 1)[0];
@@ -176,9 +177,12 @@
         }
 
         function _save(type) {
-            MenuService.update(inflection.underscore(type), $scope.menus[type]).then(function () {
-                NotificationService.success('Menu salvo com sucesso!');
-            });
+            MenuService
+                .update(inflection.underscore(type), $scope.menus[type]) // jshint ignore: line
+                .then(function () {
+                    NotificationService.success('Menu salvo com sucesso!');
+                    vm.dtInstance.DataTable.draw();
+                });
         }
 
         function _newGroup(type) {
@@ -240,33 +244,38 @@
             angular.forEach(menuItems, function (value, key) {
 
                 if (onFilter) {
-                    if (menuType == 'mainMenu') {
+                    if (menuType === 'mainMenu') {
                         angular.forEach(vm.pages, function (v, k) {
-                            if (menuItems[key].page == vm.pages[k].page)
+                            if (menuItems[key].page === vm.pages[k].page) {
                                 vm.pages.splice(k, 1);
+                            }
                         });
                     } else {
                         angular.forEach(vm.quickPages, function (v, k) {
-                            if (menuItems[key].page == vm.quickPages[k].page)
+                            if (menuItems[key].page === vm.quickPages[k].page) {
                                 vm.quickPages.splice(k, 1);
+                            }
                         });
                     }
                 } else {
-                    if (menuType == 'mainMenu') {
+                    if (menuType === 'mainMenu') {
                         angular.forEach(vm.pages, function (v, k) {
-                            if (menuItems[key].page.id == vm.pages[k].page)
+                            if (menuItems[key].page.id === vm.pages[k].page) {
                                 vm.pages.splice(k, 1);
+                            }
                         });
                     } else {
                         angular.forEach(vm.quickPages, function (v, k) {
-                            if (menuItems[key].page.id == vm.quickPages[k].page)
+                            if (menuItems[key].page.id === vm.quickPages[k].page) {
                                 vm.quickPages.splice(k, 1);
+                            }
                         });
                     }
                 }
 
-                if (menuItems[key].children.length > 0);
-                _removePagesIndexed(menuType, menuItems[key].children, onFilter);
+                if (menuItems[key].children.length > 0) {
+                    _removePagesIndexed(menuType, menuItems[key].children, onFilter);
+                }
             });
         }
 

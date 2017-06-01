@@ -3,7 +3,7 @@
 
     angular.module('serviceModule')
         /** ngInject */
-        .factory('UploadService', function ($q, $http, Upload, $log) {
+        .factory('UploadService', function ($q, $http, Upload, $log, apiUrl) {
             $log.info('UploadService');
 
             return {
@@ -20,7 +20,7 @@
 
                             Upload
                                 .upload({
-                                    url: APIUrl + '/file',
+                                    url: apiUrl + '/file',
                                     fields: {
                                         title: files[i].title,
                                         file: files[i].file,

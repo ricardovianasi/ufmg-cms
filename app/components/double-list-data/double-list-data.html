@@ -1,0 +1,99 @@
+<div class="page-container">
+    <div class="main-content ms-container">
+        <div class="row" ng-style="{height: heightScreen}">
+            <div class="col-xs-offset-6 col-xs-6">
+                <div class="dataTables_filter"><label><i class="fa fa-search"></i><input type="search" ng-change="changeTable()" class="form-control input-sm" placeholder="" ng-model="search" aria-controls="DataTables_Table_0"></label></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <h4>{{title}} Páginas</h4>
+                    <table class="table table-striped table-bordered remove-padding">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in filterDataDeselected = (deselects | filter: search) | orderBy:'title' | limitTo: limitTo:limitTo*(configTableDeselected.page-1) track by $index"
+                                ng-click="select(context)">
+                                <td>{{context.title}}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                    <h4>{{title}} Selecionados</h4>
+                    <table class="table table-striped table-bordered remove-padding">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="odd ms-hover" ng-repeat="context in filterDataSelected = (selecteds | filter: search) | orderBy:'title' | limitTo: limitTo:limitTo*(configTableSelected.page-1) track by $index"
+                                ng-click="deselect(context)">
+                                <td>{{context.title}}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row fixed-bottom">
+                <div class="col-xs-6 margin-bottom">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{configTableDeselected.in}} a {{configTableDeselected.to}} de {{configTableDeselected.size}}
+                                resultados
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <ul uib-pagination ng-change="changeTable()" total-items="filterDataDeselected.length" ng-model="configTableDeselected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 margin-bottom">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Exibindo de {{configTableSelected.in}} a {{configTableSelected.to}} de {{configTableSelected.size}}
+                                resultados
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <ul uib-pagination ng-change="changeTable()" total-items="filterDataSelected.length" ng-model="configTableSelected.page"
+                                max-size="4" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                                next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .ms-container {
+        background: transparent url('assets/img/switch.png') no-repeat 50% 50%;
+        position: relative;
+    }
+    
+    .ms-hover:hover {
+        background-color: #e4e4e4 !important;
+        cursor: pointer;
+    }
+    
+    .remove-padding tbody tr td {
+        padding: 9px !important;
+    }
+    
+    .fixed-bottom {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+    }
+    
+    .margin-bottom {
+        margin-bottom: 15px;
+    }
+
+</style>

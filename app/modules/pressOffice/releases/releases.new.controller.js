@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -6,10 +5,10 @@
         .controller('ReleasesNewController', ReleasesNewController);
 
     /** ngInject */
-    function ReleasesNewController($scope,
+    function ReleasesNewController(
+        $scope,
         $timeout,
         $location,
-        $filter,
         $uibModal,
         $window,
         ReleasesService,
@@ -23,12 +22,17 @@
         validationService) {
         $rootScope.shownavbar = true;
         $log.info('ReleasesNewController');
+        var vm = $scope;
+        var removeConfirmationModal = {};
+        var confirmationModal = _confirmationModal;
+        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 
-        $scope.canPermission = PermissionService.canPost('release');
 
-        $scope.title = 'Novo Release';
-        $scope.breadcrumb = $scope.title;
-        $scope.release = {
+        vm.canPermission = PermissionService.canPost('release');
+
+        vm.title = 'Novo Release';
+        vm.breadcrumb = vm.title;
+        vm.release = {
             status: StatusService.STATUS_PUBLISHED,
             source: {},
             service: {},
@@ -38,38 +42,34 @@
         /**
          * Redactor config
          */
-        $scope.redactorOptions = {
+        vm.redactorOptions = {
             plugins: false,
         };
 
         // Time and Date
-        $scope.time_days = DateTimeHelper.getDays();
-        $scope.time_months = DateTimeHelper.getMonths();
-        $scope.time_years = ['2015', '2016', '2017'];
-        $scope.time_hours = DateTimeHelper.getHours();
-        $scope.time_minutes = DateTimeHelper.getMinutes();
+        vm.time_days = DateTimeHelper.getDays();
+        vm.time_months = DateTimeHelper.getMonths();
+        vm.time_years = ['2015', '2016', '2017'];
+        vm.time_hours = DateTimeHelper.getHours();
+        vm.time_minutes = DateTimeHelper.getMinutes();
 
-        $scope.$watch('release.thumb', function () {
-            if ($scope.release.thumb && $scope.release.thumb instanceof File) {
-                $scope.imgHandler.upload('thumb', [
-                    $scope.release.thumb
+        vm.$watch('release.thumb', function () {
+            if (vm.release.thumb && vm.release.thumb instanceof File) {
+                vm.imgHandler.upload('thumb', [
+                    vm.release.thumb
                 ]);
             }
         });
 
-        /**
-         * _addWatcher function
-         * @param {int} idx
-         */
         var _addWatcher = function (idx) {
 
-            var watchee = $filter('format')('release.files[{0}].file', idx);
+            var watchee = 'release.files[' + idx + '].file';
 
-            $scope.$watch(watchee, function () {
-                if ($scope.release.files[idx].file && $scope.release.files[idx].file instanceof File) {
-                    $scope.release.files[idx].external_url = '';
-                    $scope.fileHandler.uploadFile(idx, [
-                        $scope.release.files[idx].file
+            vm.$watch(watchee, function () {
+                if (vm.release.files[idx].file && vm.release.files[idx].file instanceof File) {
+                    vm.release.files[idx].external_url = '';
+                    vm.fileHandler.uploadFile(idx, [
+                        vm.release.files[idx].file
                     ]);
                 }
             });
@@ -78,7 +78,7 @@
         /**
          * Handle img upload
          */
-        $scope.imgHandler = {
+        vm.imgHandler = {
             upload: function (elem, files) {
                 angular.forEach(files, function (file) {
                     MediaService.newFile(file).then(function (data) {
@@ -87,7 +87,7 @@
                         var width = data.width;
                         var height = data.height;
 
-                        if (data.width != data.height) {
+                        if (data.width !== data.height) {
                             x = (data.width / 2) - (256 / 2);
                             y = (data.height / 2) - (256 / 2);
                             width = 256;
@@ -106,7 +106,7 @@
                         MediaService.cropImage(data.id, obj).then(function (data) {
                             var resp = data.data;
 
-                            $scope.release[elem] = {
+                            vm.release[elem] = {
                                 url: resp.url,
                                 id: resp.id
                             };
@@ -116,23 +116,15 @@
             },
             removeImage: function (elem) {
                 $timeout(function () {
-                    $scope.release[elem] = '';
-                    $scope.$apply();
+                    vm.release[elem] = '';
+                    vm.$apply();
                 });
             }
         };
 
-        /**
-         * File Handler
-         *
-         * @type {{add: $scope.fileHandler.add, remove: $scope.fileHandler.remove, save: $scope.fileHandler.save}}
-         */
-        $scope.fileHandler = {
-            /**
-             *
-             */
+        vm.fileHandler = {
             addItem: function () {
-                var idx = $scope.release.files.push({
+                var idx = vm.release.files.push({
                     external_url: '',
                     file: '',
                     opened: true,
@@ -142,60 +134,41 @@
 
                 _addWatcher(idx);
             },
-            /**
-             * @param {number} idx
-             */
             removeItem: function (idx) {
-                if ($scope.release.files[idx].external_url !== '' || $scope.release.files[idx].file !== '') {
+                if (vm.release.files[idx].external_url !== '' || vm.release.files[idx].file !== '') {
                     confirmationModal('md', 'Você deseja excluir este arquivo?');
 
                     removeConfirmationModal.result.then(function () {
-                        $scope.release.files.splice(idx, 1);
+                        vm.release.files.splice(idx, 1);
                     });
 
                     return;
                 }
 
-                $scope.release.files.splice(idx, 1);
+                vm.release.files.splice(idx, 1);
             },
-            /**
-             * @param {number} idx
-             */
             saveItem: function (idx) {
-                $scope.release.files[idx].opened = false;
+                vm.release.files[idx].opened = false;
             },
-            /**
-             * @param idx
-             * @param files
-             */
             uploadFile: function (idx, files) {
                 angular.forEach(files, function (file) {
                     MediaService.newFile(file).then(function (data) {
-                        $scope.release.files[idx].file = data.url;
-                        $scope.release.files[idx].id = data.id;
+                        vm.release.files[idx].file = data.url;
+                        vm.release.files[idx].id = data.id;
                     });
                 });
             },
-            /**
-             * @param idx
-             */
             removeFile: function (idx) {
                 $timeout(function () {
-                    delete $scope.release.files[idx].id;
+                    delete vm.release.files[idx].id;
 
-                    $scope.release.files[idx].file = '';
-                    $scope.$apply();
+                    vm.release.files[idx].file = '';
+                    vm.$apply();
                 });
             }
         };
 
-        var removeConfirmationModal;
-
-        /**
-         * @param size
-         * @param title
-         */
-        var confirmationModal = function (size, title) {
+        function _confirmationModal(size, title) {
             removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
@@ -207,35 +180,23 @@
                     }
                 }
             });
-        };
+        }
 
-        /**
-         * @param $scope
-         * @param $uibModalInstance
-         * @param title
-         *
-         * @constructor
-         */
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
+            vm.modal_title = title;
 
-            $scope.ok = function () {
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        };
+        }
 
-        /**
-         * Post to Event Endpoint
-         *
-         * @param data
-         * @param preview
-         */
-        $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formRelease.$invalid))
+        vm.publish = function (data, preview) {
+            if (!validationService.isValid(vm.formRelease.$invalid)) {
                 return false;
+            }
 
             ReleasesService.store(data).then(function (release) {
                 NotificationService.success('Release criado com sucesso.');
@@ -248,8 +209,8 @@
             });
         };
 
-        $scope.removeReleasesFiles = function (idx) {
-            $scope.release.files[idx].file = '';
+        vm.removeReleasesFiles = function (idx) {
+            vm.release.files[idx].file = '';
         };
     }
 })();

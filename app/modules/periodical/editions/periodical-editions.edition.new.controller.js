@@ -43,10 +43,11 @@
         $scope.edition.articles = [];
 
         $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formEditions.$invalid))
+            if (!validationService.isValid($scope.formEditions.$invalid)) {
                 return false;
+            }
 
-            if (data.status == 'scheduled') {
+            if (data.status === 'scheduled') {
                 data.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 
@@ -96,8 +97,6 @@
 
         /**
          * Upload files like pdf, txt, doc, etc. Not for images
-         *
-         * @param file
          */
         $scope.uploadFile = function (file) {
             MediaService.newFile(file).then(function (data) {
@@ -107,9 +106,6 @@
             });
         };
 
-        /**
-         * @param type
-         */
         $scope.uploadImage = function (type) {
             var moduleModal = $uibModal.open({
                 templateUrl: 'components/modal/upload-component.template.html',

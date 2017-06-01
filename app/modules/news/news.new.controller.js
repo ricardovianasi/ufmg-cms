@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -13,6 +12,7 @@
         NewsService,
         NotificationService,
         StatusService,
+        $timeout,
         DateTimeHelper,
         RedactorPluginService,
         $rootScope,
@@ -57,8 +57,6 @@
 
         /**
          * Add status 'on the fly', according to requirements
-         *
-         * @type {{opened: boolean}}
          */
         $scope.datepickerOpt.initDate.status = {
             opened: false
@@ -80,10 +78,11 @@
         });
 
         $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formNews.$invalid))
+            if (!validationService.isValid($scope.formNews.$invalid)) {
                 return false;
+            }
 
-            var slug = typeof data.slug != 'undefined' ? data.slug.slug : '';
+            var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
             var _obj = {
                 title: data.title,
@@ -103,10 +102,10 @@
                 slug: slug
             };
 
-            _obj.tags = _.map(_obj.tags, 'text');
+            _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
 
-            if (_obj.status == 'scheduled') {
+            if (_obj.status === 'scheduled') {
                 _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 

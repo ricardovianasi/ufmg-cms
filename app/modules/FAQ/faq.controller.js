@@ -1,7 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('faqModule')
+    angular
+        .module('faqModule')
         .controller('faqController', faqController);
 
     /** ngInject */
@@ -15,8 +16,7 @@
         PermissionService) {
         $rootScope.shownavbar = true;
         $log.info('faqController');
-
-        var vm = this;
+        var vm = this; // jshint ignore: line
         vm.dtInstance = {};
 
 
@@ -48,7 +48,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(faqs);
@@ -61,7 +61,7 @@
                 .then(function () {
                     faqService.remove(id).then(function () {
                         NotificationService.success('FAQ removido com sucesso.');
-                        _loadFaqs();
+                        vm.dtInstance.DataTable.draw();
                     });
                 });
         };

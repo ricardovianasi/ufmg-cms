@@ -12,30 +12,27 @@
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryNewController',
                     resolve: {
-                        VIEWER: ['Util', function (Util) {
-                             
+                        VIEWER: function () {
                             return true;
-                        }]
+                        }
                     }
                 })
                 .when('/gallery/edit/:id', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryEditController',
                     resolve: {
-                        VIEWER: ['Util', function (Util) {
-                             
+                        VIEWER: function () {
                             return true;
-                        }]
+                        }
                     }
                 })
                 .when('/gallery/view/:id', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryEditController',
                     resolve: {
-                        VIEWER: ['Util', function (Util) {
-                             
+                        VIEWER: function () {
                             return false;
-                        }]
+                        }
                     }
                 });
         }]);

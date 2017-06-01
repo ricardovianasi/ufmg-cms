@@ -1,4 +1,3 @@
-;
 (function () {
     'use strict';
 
@@ -50,7 +49,7 @@
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'number'
-            },{
+            }, {
                 index: 0,
                 name: 'theme'
             }, {
@@ -76,7 +75,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPeriodicalEditions);
@@ -88,14 +87,17 @@
 
         function _removeEdition(id, description) {
             vm.confirmationModal('md', 'Você deseja excluir a edição "' + description + '"?');
-            removeConfirmationModal.result.then(function (data) {
-                PeriodicalService.removeEdition($routeParams.id, id).then(function (data) {
-                    NotificationService.success('Edição removida com sucesso.');
-                    $route.reload();
+            removeConfirmationModal
+                .result
+                .then(function () {
+                    PeriodicalService
+                        .removeEdition($routeParams.id, id)
+                        .then(function () {
+                            NotificationService.success('Edição removida com sucesso.');
+                            vm.dtInstance.DataTable.draw();
+                        });
                 });
-            });
         }
-
 
         function _confirmationModal(size, title) {
             removeConfirmationModal = $uibModal.open({
