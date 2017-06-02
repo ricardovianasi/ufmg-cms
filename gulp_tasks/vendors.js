@@ -47,10 +47,7 @@ var SCRIPTS = [
     'bower_components/angular-input-masks/angular-input-masks-standalone.min.js',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
     'bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js',
-    'bower_components/ng-scrollbars/dist/scrollbars.min.js',
-    'bower_components/angular-ui-scroll/dist/ui-scroll.min.js',
-    'bower_components/angular-ui-scroll/dist/ui-scroll-grid.min.js',
-    'bower_components/angular-ui-scroll/dist/ui-scroll-jqlite.min.js'
+    'bower_components/ng-scrollbars/dist/scrollbars.min.js'
 ];
 
 var STYLES = [

@@ -110,8 +110,8 @@
         PermissionService) {
 
         $rootScope.ngScrollbarsConfig = {
-            autoHideScrollbar: false,
-            theme: 'light-thin',
+            autoHideScrollbar: true,
+            theme: 'minimal',
             advanced: {
                 updateOnContentResize: true
             },
