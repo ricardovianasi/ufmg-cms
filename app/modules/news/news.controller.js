@@ -30,14 +30,6 @@
         vm.dtInstance = {};
 
         function onInit() {
-            var typeNews = $routeParams.typeNews;
-            if (typeNews === 'news_agencia_de_agencia') {
-                vm.typeNewsPermission = 'news_agencia_de_agencia';
-            } else if (typeNews === 'tv') {
-                vm.typeNewsPermission = 'news_tv';
-            } else if (typeNews === 'radio') {
-                vm.typeNewsPermission = 'news_radio';
-            }
             _renderDataTable();
         }
 
@@ -100,15 +92,15 @@
         }
 
         function _canPut() {
-            vm.canPut = PermissionService.canPut(vm.typeNewsPermission);
+            vm.canPut = PermissionService.canPut(vm.typeNews);
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost(vm.typeNewsPermission);
+            vm.canPost = PermissionService.canPost(vm.typeNews);
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete(vm.typeNewsPermission);
+            vm.canDelete = PermissionService.canDelete(vm.typeNews);
         }
         onInit();
     }
