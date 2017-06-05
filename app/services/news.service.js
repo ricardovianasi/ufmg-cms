@@ -18,7 +18,7 @@
                 }
                 var paramType = getParamType(type);
                 if (!paramType) {
-                    return $q.reject(false);
+                    paramType = '';
                 }
                 return $http.get(apiUrl + '/news' + params + paramType);
             },
