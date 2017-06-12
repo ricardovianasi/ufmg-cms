@@ -185,8 +185,7 @@
                                 <span class="fa fa-calendar"></span> Data de início</label>
                             <input id="initDate" type="text" name="initDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.initDate"
                                 ng-focus="vm.datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ vm.datepickerOpt.initDate.format }}"
-                                datepicker-options="vm.datepickerOpt.initDate.dateOptions" is-open="vm.datepickerOpt.initDate.status.opened"
-                                min-date="vm.datepickerOpt.initDate.minDate" max-date="vm.datepickerOpt.initDate.maxDate" clear-text="Limpar"
+                                datepicker-options="vm.datepickerOpt.initDate.dateOptions" is-open="vm.datepickerOpt.initDate.status.opened" clear-text="Limpar"
                                 close-text="Fechar" current-text="Hoje" ng-change="vm.setEndDefault()" required>
                                 <div ng-show="!formEvents.initDate.$valid" class="error-message" role="alert">
                                     <div ng-show="formEvents.initDate.$error.required">Campo obrigatório</div>
@@ -196,7 +195,7 @@
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de início
                             </label>
-                            <input id="initHour" type="text" name="initHour" class="form-control" ng-model="vm.event.init_hour">
+                            <input id="initHour" type="text" name="initHour" class="form-control" ng-model="vm.event.init_hour" ui-mask="99:99">
                         </div>
                     </div>
                 </div>
@@ -209,7 +208,7 @@
                             <input id="endDate" type="text" name="endDate" class="form-control ng-pristine ng-untouched ng-valid" ng-model="vm.event.endDate"
                                 ng-focus="vm.datepickerOpt.endDate.open(vm, $event, 'initDate')" uib-datepicker-popup="{{ vm.datepickerOpt.endDate.format }}"
                                 datepicker-options="vm.datepickerOpt.endDate.dateOptions" is-open="vm.datepickerOpt.endDate.status.opened"
-                                min-date="vm.datepickerOpt.endDate.minDate" max-date="vm.datepickerOpt.endDate.maxDate" clear-text="Limpar"
+                                min-date="vm.datepickerOpt.endDate.minDate" clear-text="Limpar"
                                 close-text="Fechar" current-text="Hoje" required>
                                 <div ng-show="!formEvents.endDate.$valid" class="error-message" role="alert">
                                     <div ng-show="formEvents.endDate.$error.required">Campo obrigatório</div>
@@ -219,7 +218,7 @@
                             <label>
                                 <i class="fa fa-clock-o"></i> Horário de término
                             </label>
-                            <input id="endHour" type="text" name="endHour" class="form-control" ng-model="vm.event.end_hour">
+                            <input id="endHour" type="text" name="endHour" class="form-control" ng-model="vm.event.end_hour" ui-mask="99:99">
                         </div>
                     </div>
                 </div>

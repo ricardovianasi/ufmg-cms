@@ -98,7 +98,6 @@
 
                             $scope.datepickerOpt[elem].minDate = minDate;
                         },
-                        maxDate: new Date(2020, 5, 22),
                         open: function ($scope, $event, source) {
                             var elem = $event.currentTarget.id;
 
