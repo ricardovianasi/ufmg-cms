@@ -5,15 +5,13 @@
         /**ngInject */
         .config(function ($routeProvider) {
             $routeProvider
-                .when('/news', {
+                .when('/news/:typeNews', {
                     templateUrl: 'modules/news/news.template.html',
-                    controller: 'NewsController',
-                    controllerAs: 'ctrl'
+                    controller: 'NewsController'
                 })
-                .when('/news/new', {
+                .when('/news/:typeNews/new', {
                     templateUrl: 'modules/news/news.form.template.html',
                     controller: 'NewsNewController',
-                    controllerAs: 'ctrl',
                     resolve: {
                         permission: ['PermissionService', '$window',
                             function (PermissionService, $window) {
@@ -24,10 +22,9 @@
                         ]
                     }
                 })
-                .when('/news/edit/:id', {
+                .when('/news/:typeNews/edit/:id', {
                     templateUrl: 'modules/news/news.form.template.html',
                     controller: 'NewsEditController',
-                    controllerAs: 'ctrl',
                     resolve: {
                         permission: ['PermissionService', '$window', '$routeParams',
                             function (PermissionService, $window, $routeParams) {

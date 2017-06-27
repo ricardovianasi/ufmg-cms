@@ -13,12 +13,14 @@
         DateTimeHelper,
         ModalService,
         $rootScope,
+        $routeParams,
         Util,
         $log) {
         $rootScope.shownavbar = true;
         $log.info('NoticiasController');
 
         var vm = $scope;
+        vm.typeNews = $routeParams.typeNews;
 
         vm.news = [];
         vm.currentPage = 1;
@@ -54,7 +56,7 @@
 
             function getNews(params, fnCallback) {
                 NewsService
-                    .getNews(dataTableConfigService.getParams(params))
+                    .getNews(dataTableConfigService.getParams(params), vm.typeNews)
                     .then(function (res) {
                         vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
@@ -66,7 +68,6 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
@@ -91,15 +92,15 @@
         }
 
         function _canPut() {
-            vm.canPut = PermissionService.canPut('news');
+            vm.canPut = PermissionService.canPut(vm.typeNews);
         }
 
         function _canPost() {
-            vm.canPost = PermissionService.canPost('news');
+            vm.canPost = PermissionService.canPost(vm.typeNews);
         }
 
         function _canDelete() {
-            vm.canDelete = PermissionService.canDelete('news');
+            vm.canDelete = PermissionService.canDelete(vm.typeNews);
         }
         onInit();
     }

@@ -1,17 +1,24 @@
 <div class="sidebar-menu-inner" ng-scrollbars ng-scrollbars-config="ngScrollbarsConfig">
-    <ul id="main-menu" class="main-menu">
-        <li ng-repeat="navItem in navigation | filter: {enabled: true}" ng-class="{'active': itemActive === navItem.location}" ng-click="navItem.submenuState ? (navItem.submenuState = !navItem.submenuState) : (navItem.submenuState = true)">
-            <a ng-href="#/{{ navItem.location }}">
-                <i class="{{ navItem.icon }}"></i>
-                <span class=title>{{ navItem.name }}</span>
-            </a>
-            <ul ng-if="navItem.submenu" ng-show="navItem.submenuState">
-                <li ng-repeat="subnavItem in navItem.submenu">
-                    <a ng-href="#/{{ subnavItem.location }}">
-                        <span class=title>{{ subnavItem.name }}</span>
-                    </a>
-                </li>
-            </ul>
+    <script type="text/ng-template" id="menu-item-link-tpl">
+        <i ng-if="item.icon" class="{{item.icon}}"></i>
+        <span class="title">{{item.name}}</span>
+        <span ng-if="item.label" class="label label-{{item.label.classname}} pull-right" ng-class="{'hidden-collapsed': item.label.collapsedHide}">{{item.label.text}}</span>
+    </script>
+
+    <script type="text/ng-template" id="menu-items-recursive-tpl">
+        <li ng-repeat="item in subItems  | filter: {enabled: true} track by $index" ng-class="{'opened expanded': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
+            <a href="#/{{item.location}}" ng-include="'menu-item-link-tpl'"></a>
+            <ul ng-if="item.menuItems.length" ng-init="subItems = item.menuItems" ng-include="'menu-items-recursive-tpl'"></ul>
         </li>
-    </ul>
+    </script>
+
+    <script type="text/ng-template" id="menu-items-tpl">
+        <li ng-repeat="item in navigation | filter: {enabled: true} track by $index" ng-class="{'opened': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
+            <a ng-if="item.menuItems.length" ng-click="item.isOpen = !item.isOpen" ng-include="'menu-item-link-tpl'"></a>
+            <a ng-if="!item.menuItems.length" href="#/{{item.location}}" ng-include="'menu-item-link-tpl'" ng-click=""></a>
+            <ul ng-if="item.menuItems.length" ng-init="subItems = item.menuItems" class="main-menu" ng-include="'menu-items-recursive-tpl'"></ul>
+        </li>
+    </script>
+
+    <ul id="main-menu" class="main-menu" ng-include="'menu-items-tpl'"></ul>
 </div>

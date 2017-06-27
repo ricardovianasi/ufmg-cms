@@ -58,6 +58,21 @@
                             <td>
                                 <a target="_blank" ng-href="{{ item.event_url }}">{{ item.name }}</a>&nbsp;
                                 <span class="label label-primary" ng-if="item.highlight">Destaque</span>
+                                <p>
+                                    {{item.init_date | date:'dd/MM/yyyy'}}
+                                    <span ng-if="item.init_hour">
+                                        às {{item.init_hour}}
+                                    </span>
+                                    <span ng-if="item.init_date !== item.end_date">
+                                        até {{item.end_date | date:'dd/MM/yyyy'}}
+                                    </span>
+                                    <span ng-if="(item.init_date === item.end_date && !!item.end_hour) || (!!!item.end_date && !!item.end_hour)">
+                                        até {{item.end_hour}}
+                                    </span>
+                                    <span ng-if="item.init_date !== item.end_date && !!item.end_hour">
+                                        às {{item.end_hour}}
+                                    </span>
+                                </p>
                             </td>
                             <td>{{ item.author.name }}</td>
                             <td>

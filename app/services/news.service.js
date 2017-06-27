@@ -5,18 +5,22 @@
         .factory('NewsService', NewsService);
 
     /** ngInject */
-    function NewsService($http, $filter, apiUrl, $log) {
+    function NewsService($http, $filter, $q, apiUrl, $log) {
         $log.info('NewsService');
 
         return {
             getNew: function (id) {
                 return $http.get(apiUrl + '/news/' + id);
             },
-            getNews: function (params) {
+            getNews: function (params, type) {
                 if (angular.isUndefined(params)) {
                     params = '';
                 }
-                return $http.get(apiUrl + '/news' + params);
+                var paramType = getParamType(type);
+                if (!paramType) {
+                    paramType = '';
+                }
+                return $http.get(apiUrl + '/news' + params + paramType);
             },
             getNewsCategories: function () {
                 return $http.get(apiUrl + '/news/category');
@@ -37,5 +41,39 @@
                 return $http.get(apiUrl + '/news/tv-program');
             }
         };
+
+        function getParamType(type) {
+            if (!type) {
+                return '';
+            }
+            if (type === 'news_agencia_de_agencia') {
+                return '&query[filter][' + 98 + '][type]=innerjoin' +
+                    '&query[filter][' + 98 + '][field]=type' +
+                    '&query[filter][' + 98 + '][alias]=TNEWS' +
+                    '&query[filter][' + 99 + '][type]=orx' +
+                    '&query[filter][' + 99 + '][conditions][' + 0 + '][type]=eq' +
+                    '&query[filter][' + 99 + '][conditions][' + 0 + '][field]=slug' +
+                    '&query[filter][' + 99 + '][conditions][' + 0 + '][value]=agencia-de-noticias' +
+                    '&query[filter][' + 99 + '][conditions][' + 0 + '][alias]=TNEWS' +
+                    '&query[filter][' + 99 + '][conditions][' + 0 + '][where]=or' +
+                    '&query[filter][' + 99 + '][conditions][' + 1 + '][type]=eq' +
+                    '&query[filter][' + 99 + '][conditions][' + 1 + '][field]=highlightUfmg' +
+                    '&query[filter][' + 99 + '][conditions][' + 1 + '][value]=1' +
+                    '&query[filter][' + 99 + '][where]=and';
+            }
+            if (type === 'news_radio') {
+                type = 'radio';
+            } else if (type === 'news_tv') {
+                type = 'tv';
+            }
+            return '&query[filter][' + 98 + '][type]=innerjoin' +
+                '&query[filter][' + 98 + '][field]=type' +
+                '&query[filter][' + 98 + '][alias]=TNEWS' +
+                '&query[filter][' + 99 + '][type]=eq' +
+                '&query[filter][' + 99 + '][field]=slug' +
+                '&query[filter][' + 99 + '][value]=' + type +
+                '&query[filter][' + 99 + '][alias]=TNEWS' +
+                '&query[filter][' + 99 + '][where]=and';
+        }
     }
 })();

@@ -10,6 +10,7 @@
         $window,
         MediaService,
         NewsService,
+        $routeParams,
         NotificationService,
         StatusService,
         $timeout,
@@ -21,6 +22,10 @@
         PermissionService,
         $log,
         validationService) {
+        var vm = $scope;
+        vm.typeNews = $routeParams.typeNews;
+
+
         $rootScope.shownavbar = true;
         $log.info('NoticiasNovoController');
         $scope.canPermission = PermissionService.canPost('news');
@@ -38,6 +43,14 @@
         $scope.status = [];
         $scope.types = [];
         $scope.highlight_ufmg_visible = true;
+
+        onInit();
+
+        function onInit() {
+            if (vm.typeNews === 'news_agencia_de_agencia') {
+                $scope.news.highlight_ufmg = 1;
+            }
+        }
 
         NewsService.getTvProgram().then(function (data) {
             $scope.tvPrograms = data.data.items;
@@ -71,6 +84,12 @@
 
         NewsService.getNewsTypes().then(function (data) {
             $scope.types = data.data;
+            for (var k = 0; k < data.data.items.length; k++) {
+                var element = data.data.items[k];
+                if (element.slug === vm.typeNews) {
+                    $scope.news.type = element.id;
+                }
+            }
         });
 
         StatusService.getStatus().then(function (data) {
@@ -108,12 +127,11 @@
             if (_obj.status === 'scheduled') {
                 _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
-
             NewsService.postNews(_obj).then(function (news) {
                 NotificationService.success('Notícia criada com sucesso.');
-
+                $log.info('Objeto salvo', news);
                 if (!preview) {
-                    $location.path('/news');
+                    $location.path('/news/' + vm.typeNews);
                 } else {
                     $window.open(news.data.news_url);
                 }

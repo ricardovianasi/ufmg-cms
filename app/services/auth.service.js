@@ -36,12 +36,14 @@
 
         function _account() {
             if (angular.isDefined($rootScope.dataUser)) {
+                $rootScope.User = $rootScope.dataUser.data;
                 defer.resolve($rootScope.dataUser);
             } else {
                 if (!$rootScope.isRequiredAccount) {
                     $rootScope.isRequiredAccount = true;
                     _get().then(function (res) {
                         $rootScope.dataUser = res;
+                        $rootScope.User = $rootScope.dataUser.data;
                         defer.resolve(res);
                     });
                 }
