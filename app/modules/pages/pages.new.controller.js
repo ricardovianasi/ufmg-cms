@@ -25,37 +25,18 @@
         $rootScope.shownavbar = true;
         $log.info('PagesNewController');
         var allTags = [];
+        var vm = $scope;
 
-        $scope.publish = _publish;
-        $scope.findTags = _findTags;
-        $scope.uploadCover = _uploadCover;
-        $scope.removeCover = _removeCover;
-        $scope.handleModule = _handleModule;
-        $scope.removeModule = _removeModule;
+        vm.publish = _publish;
+        vm.findTags = _findTags;
+        vm.uploadCover = _uploadCover;
+        vm.removeCover = _removeCover;
+        vm.handleModule = _handleModule;
+        vm.removeModule = _removeModule;
 
         var hasRequest = false;
         var countPage = 1;
-        $scope.pagesParent = [];
-
-
-        $scope.loadMorePage = function (search) {
-            reset($scope.pagesParent);
-            loadMore($scope.pagesParent, search)
-                .then(function (data) {
-                    $scope.pagesParent = Object.assign($scope.pagesParent, data);
-                });
-        };
-
-        function reset(data) {
-            if (angular.isUndefined(data[0])) {
-                countPage = 1;
-                $scope.currentElement = 0;
-                $scope.pagesParent.push({
-                    id: null,
-                    title: '- Página Normal -'
-                });
-            }
-        }
+        vm.pagesParent = [];
 
         function loadMore(dataTemp, search) {
             var defer = $q.defer();
@@ -72,7 +53,7 @@
                 }
                 var params = {
                     page: countPage,
-                    page_size: 15,
+                    page_size: 10,
                     order_by: {
                         field: 'title',
                         direction: 'ASC'
@@ -80,14 +61,14 @@
                     search: search
                 };
                 if (!params.search && countPage === 1) {
-                    $scope.currentElement = 0;
+                    vm.currentElement = 0;
                 }
-                UsersService
-                    .getUsers(Util.getParams(params, searchQuery))
+                PagesService
+                    .getPages(Util.getParams(params, searchQuery))
                     .then(function (res) {
                         countPage++;
-                        $scope.currentElement += res.data.items.length;
-                        if (res.data.total > $scope.currentElement && 15 >= res.data.items.length) {
+                        vm.currentElement += res.data.items.length;
+                        if (res.data.total > vm.currentElement && 10 >= res.data.items.length) {
                             $timeout(function () {
                                 hasRequest = false;
                             }, 100);
@@ -101,39 +82,54 @@
             return defer.promise;
         }
 
+        vm.loadMore = function (search) {
+            reset(vm.pagesParent);
+            loadMore(vm.pagesParent, search)
+                .then(function (data) {
+                    vm.pagesParent = Object.assign(vm.pagesParent, data);
+                });
+        };
+
+        function reset(data) {
+            if (angular.isUndefined(data[0])) {
+                countPage = 1;
+                vm.currentElement = 0;
+            }
+        }
+
         function onInit() {
-            $scope.pagesParent.push({
+            vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
             });
 
             WidgetsService.getWidgets().then(function (data) {
-                $scope.widgets = data.data;
+                vm.widgets = data.data;
             });
 
-            $scope.title = 'Nova Página';
-            $scope.breadcrumb_active = $scope.title;
+            vm.title = 'Nova Página';
+            vm.breadcrumb_active = vm.title;
 
-            $scope.publishment = StatusService.STATUS_PUBLISHED;
-            $scope.widgets = [];
-            $scope.columns = PagesService.COLUMNS;
+            vm.publishment = StatusService.STATUS_PUBLISHED;
+            vm.widgets = [];
+            vm.columns = PagesService.COLUMNS;
 
-            $scope.time_days = DateTimeHelper.getDays();
-            $scope.time_months = DateTimeHelper.getMonths();
-            $scope.time_years = ['2015', '2016', '2017'];
-            $scope.time_hours = DateTimeHelper.getHours();
-            $scope.time_minutes = DateTimeHelper.getMinutes();
+            vm.time_days = DateTimeHelper.getDays();
+            vm.time_months = DateTimeHelper.getMonths();
+            vm.time_years = ['2015', '2016', '2017'];
+            vm.time_hours = DateTimeHelper.getHours();
+            vm.time_minutes = DateTimeHelper.getMinutes();
 
-            $scope.sortableOptions = {
+            vm.sortableOptions = {
                 accept: function (sourceItemHandleScope, destSortableScope) {
                     return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
                 },
                 containment: '#sort-main'
             };
 
-            $scope.page_cover = null;
+            vm.page_cover = null;
 
-            $scope.page = {
+            vm.page = {
                 image: null,
                 scheduled_at: {},
                 status: StatusService.STATUS_PUBLISHED,
@@ -159,7 +155,7 @@
         }
 
         function _publish(page, preview) {
-            if (!validationService.isValid($scope.formPage.$invalid)) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -190,7 +186,7 @@
             });
 
             moduleModal.result.then(function (data) {
-                $scope.page.image = {
+                vm.page.image = {
                     url: data.url,
                     id: data.id
                 };
@@ -199,8 +195,8 @@
 
         function _removeCover() {
             $timeout(function () {
-                $scope.page.image = '';
-                $scope.$apply();
+                vm.page.image = '';
+                vm.$apply();
             });
         }
 
@@ -215,7 +211,7 @@
                 .confirm('Você deseja excluir este módulo?')
                 .result
                 .then(function () {
-                    $scope.page.widgets[column].splice(idx, 1);
+                    vm.page.widgets[column].splice(idx, 1);
                 });
         }
 
