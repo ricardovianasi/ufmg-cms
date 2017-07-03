@@ -14,6 +14,7 @@
         dataTableConfigService,
         $route,
         $rootScope,
+        ModalService,
         Util,
         $log,
         PermissionService) {
@@ -86,8 +87,8 @@
         }
 
         function _removeEdition(id, description) {
-            vm.confirmationModal('md', 'Você deseja excluir a edição "' + description + '"?');
-            removeConfirmationModal
+            ModalService
+                .confirm('Você deseja excluir a edição "' + description + '"?', ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
                     PeriodicalService
