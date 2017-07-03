@@ -30,21 +30,21 @@
 </div>
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form" name="formClippings" novalidate>
+        <form class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-7">
-                    <div class="form-group" ng-class="{'has-error': formClippings.origin.$error.required && !formClippings.origin.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.origin.$error.required && !formData.origin.$valid}">
                         <div class="form-group">
                             <label for="origin">Origem da Matéria</label>
                             <input id="origin" type="text" name="origin" ng-model="clipping.origin" class="form-control" required>
-                            <div ng-show="!formClippings.origin.$valid" class="error-message" role="alert">
-                                <div ng-show="formClippings.origin.$error.required">Campo obrigatório</div>
+                            <div ng-show="!formData.origin.$valid" class="error-message" role="alert">
+                                <div ng-show="formData.origin.$error.required">Campo obrigatório</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5">
-                    <div class="form-group" ng-class="{'has-error': formClippings.day.$error.required && !formClippings.day.$valid || formClippings.month.$error.required && !formClippings.month.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.day.$error.required && !formData.day.$valid || formData.month.$error.required && !formData.month.$valid}">
                         <label>Data de Publicação</label>
                         <div class="row">
                             <div class="col-xs-4">
@@ -62,7 +62,7 @@
                                     </select>
                             </div>
                         </div>
-                        <div ng-show="!formClippings.day.$valid || !formClippings.month.$valid" class="error-message" role="alert">
+                        <div ng-show="!formData.day.$valid || !formData.month.$valid" class="error-message" role="alert">
                             <div>Campos obrigatórios</div>
                         </div>
                     </div>
@@ -71,11 +71,11 @@
             <!--row-->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formClippings.title.$error.required && !formClippings.title.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
                         <label for="title">Título da Matéria</label>
                         <input id="title" type="text" name="title" ng-model="clipping.title" class="form-control" required>
-                        <div ng-show="!formClippings.title.$valid" class="error-message" role="alert">
-                            <div ng-show="formClippings.title.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.title.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -83,11 +83,11 @@
             <!--row-->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formClippings.url.$error.required && !formClippings.url.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.url.$error.required && !formData.url.$valid}">
                         <label for="url">URL da Matéria</label>
                         <input id="url" type="text" name="url" ng-model='clipping.url' class="form-control" required>
-                        <div ng-show="!formClippings.url.$valid" class="error-message" role="alert">
-                            <div ng-show="formClippings.url.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.url.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.url.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>

@@ -20,16 +20,18 @@
         $rootScope.shownavbar = true;
         $log.info('ClippingsEditController');
 
-        $scope.title = 'Editar Clipping: ';
-        $scope.breadcrumb = $scope.title;
-        $scope.clipping = {};
-        $scope.canPermission = PermissionService.canPut('clipping', $routeParams.id);
+        var vm = $scope;
+
+        vm.title = 'Editar Clipping: ';
+        vm.breadcrumb = vm.title;
+        vm.clipping = {};
+        vm.canPermission = PermissionService.canPut('clipping', $routeParams.id);
         // Time and Date
-        $scope.time_days = DateTimeHelper.getDays();
-        $scope.time_months = DateTimeHelper.getMonths();
-        $scope.time_years = ['2015', '2016', '2017'];
-        $scope.time_hours = DateTimeHelper.getHours();
-        $scope.time_minutes = DateTimeHelper.getMinutes();
+        vm.time_days = DateTimeHelper.getDays();
+        vm.time_months = DateTimeHelper.getMonths();
+        vm.time_years = ['2015', '2016', '2017'];
+        vm.time_hours = DateTimeHelper.getHours();
+        vm.time_minutes = DateTimeHelper.getMinutes();
 
         ClippingsService.getClipping($routeParams.id).then(function (data) {
             var clipping = data.data;
@@ -39,12 +41,12 @@
                 day: $filter('date')(data.data.date, 'dd')
             };
 
-            $scope.clipping = clipping;
-            $scope.title += clipping.title;
+            vm.clipping = clipping;
+            vm.title += clipping.title;
         });
 
-        $scope.publish = function (data) {
-            if (!validationService.isValid($scope.formClippings.$invalid)) {
+        vm.publish = function (data) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 

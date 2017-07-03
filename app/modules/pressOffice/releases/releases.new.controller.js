@@ -194,7 +194,7 @@
         }
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid(vm.formRelease.$invalid)) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 

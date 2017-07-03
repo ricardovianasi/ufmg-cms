@@ -3,48 +3,69 @@
     <div class="publishment-body">
         <div class="clearfix">
             <div class="pull-left">
-                <button type=button ng-click=saveDraft($event) class="btn btn-sm btn-gray"><i class="fa fa-floppy-o"></i> Salvar como rascunho</button>
+                <button type="button" ng-click="saveDraft($event)" class="btn btn-sm btn-gray"><i class="fa fa-floppy-o"></i> Salvar como rascunho</button>
             </div>
-
             <div class="pull-right">
-                <a target="_blank" class="btn btn-sm btn-gray"
-                   ng-click="publish(obj, true)"><i class="fa fa-eye"></i> Pré-visualizar</a>
+                <a target="_blank" class="btn btn-sm btn-gray" ng-click="publish(obj, true)"><i class="fa fa-eye"></i> Pré-visualizar</a>
             </div>
         </div>
 
-        <div class="publishment-block">
-            <div class="form-group">
-                <input type="checkbox"
-                       ng-click="status('scheduled')"
-                       ng-model="isScheduled"
-                       ng-checked="obj.status == 'scheduled'"> Publicação Agendada
-            </div>
-            <!--     <div class="form-group">
-                    <label>Status:</label>
-                    <div class="publishment-form">
-                        <select title=Status ng-model=obj.status ng-options="option.status as option.name for option in statuses.items" class="form-control"></select>
-                    </div>
-                </div> -->
-        </div>
+        <ul class="publishment-block">
+            <li>
+                <i class="fa fa-info"></i>
+                <span class="title">Status: <strong>{{ obj.status | translate}}</strong></span>
+            </li>
+            <li>
+                <i class="fa fa-calendar"></i>
 
-        <div class="publishment-block">
-            <div ng-show="obj.status == 'scheduled'" class="form-group">
-                <div class="publishment-form">
-                    <div class="clearfix">
-                        <div style="width: 48%" class="pull-left input-group input-group-sm">
-                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                            <input type=text title=Data class="form-control"
-                                   ng-model=obj.scheduled_date
-                                   ui-mask="99/99/9999"
-                                   model-view-value="true">
+                <p class="title" ng-show="obj.status === 'published' || obj.status === 'scheduled'">
+                    Publicado no dia <strong>{{obj.scheduled_date | date:'dd/MM/yyyy'}}</strong> às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && retroactive && !todayDiferentHour">
+                    Publicação <strong>retrocedida</strong> para o dia <strong>{{obj.scheduled_date | date:'dd/MM/yyyy'}}</strong>                    às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && retroactive && todayDiferentHour">
+                    Publicação <strong>retrocedida</strong> para <strong>hoje</strong> às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && immediately">
+                    Publicar <strong>imediatamente</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && todayDiferentHour && !retroactive">
+                    Publicar <strong>hoje</strong> às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && tomorrow">
+                    Publicar <strong>amanhã</strong> às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="title" ng-show="obj.status !== 'published' && scheduled">
+                    Publicar dia <strong>{{obj.scheduled_date | date:'dd/MM/yyyy'}}</strong> às <strong>{{obj.scheduled_time}}</strong>
+                </p>
+                <p class="btn-edit">
+                    <button type="button" ng-if="!selectDate" ng-click="publishEdit();" class="btn btn-sm btn-gray"><i class="fa fa-edit"></i> Editar</button>
+                </p>
+            </li>
+        </ul>
+        <div ng-if="selectDate" class="publishment-block form-group">
+            <div class="publishment-form">
+                <div class="clearfix select-date">
+                    <div class="form-group select-date-item">
+                        <div class="input-group input-group-sm">
+                            <label for="initDate" class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </label>
+                            <input id="initDate" ng-change="datePost()" type="text" name="initDate" class="form-control" ng-model="obj.scheduled_date"
+                                ng-click="datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
+                                datepicker-options="datepickerOpt.initDate.dateOptions" is-open="datepickerOpt.initDate.status.opened"
+                                clear-text="Limpar" close-text="Fechar" current-text="Hoje" required>
                         </div>
-
-                        <div style="width: 48%" class="pull-right input-group input-group-sm">
+                    </div>
+                    <div class="form-group select-date-item" ng-class="{'has-error': errorInvalid}">
+                        <div class="input-group input-group-sm">
                             <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
-                            <input type=text title=Hora class="form-control"
-                                   ng-model=obj.scheduled_time
-                                   ui-mask="99:99"
-                                   model-view-value="true">
+                            <input ng-change="datePost(true)" type="text" ng-click="clearFildHour($event)" name="initHour" title="Hora" class="form-control"
+                                ng-model="obj.scheduled_time" ui-mask="99:99" model-view-value="true">
+                        </div>
+                        <div ng-show="errorInvalid" class="error-message" role="alert">
+                            <div ng-show="errorInvalid">Hora inválida.</div>
                         </div>
                     </div>
                 </div>
@@ -52,27 +73,19 @@
         </div>
     </div>
 
-    <div class=clearfix>
-        <div class=pull-left>
-            <button type=button class="btn btn-sm btn-danger"
-                    ng-click="back()">
+    <div class="clearfix">
+        <div class="pull-left">
+            <button type=button class="btn btn-sm btn-danger" ng-click="back()">
                 <i class="fa fa-times"></i> Cancelar
             </button>
 
-            <button type=button class="btn btn-sm btn-danger"
-                    ng-show="obj.id"
-                    ng-click="remove(obj.id)">
+            <button type="button" class="btn btn-sm btn-danger" ng-show="obj.id" ng-click="remove(obj.id)">
                 <span class="fa fa-trash"></span>
             </button>
         </div>
 
-        <div class=pull-right>
-            <button ng-show="!isScheduled" id="publish-button" type="button" class="btn btn-sm btn-secondary"
-                    ng-click="status('published');publish(obj)">
-                <i class="fa fa-check"></i> Publicar
-            </button>
-            <button ng-show="isScheduled" id="publish-button" type="button" class="btn btn-sm btn-secondary"
-                    ng-click="status('scheduled');publish(obj)">
+        <div class="pull-right">
+            <button id="publish-button" type="button" class="btn btn-sm btn-secondary" ng-click="publish()">
                 <i class="fa fa-check"></i> Publicar
             </button>
         </div>

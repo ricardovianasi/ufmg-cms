@@ -10,6 +10,7 @@
         $routeParams,
         $location,
         $timeout,
+        DateTimeHelper,
         PeriodicalService,
         StatusService,
         NotificationService,
@@ -19,31 +20,55 @@
         $window,
         $log,
         validationService) {
+        var vm = $scope;
+        vm.vm = $scope;
+        vm.getYear = _getYear;
+
         $rootScope.shownavbar = true;
         $log.info('PeriodicalEditionNewController');
 
-        $scope.edition = {};
-        $scope.status = [];
+        vm.edition = {};
+        vm.status = [];
+
+        onInit();
+
+        function onInit() {
+            vm.datepickerOpt = {
+                initDate: DateTimeHelper.getDatepickerOpt()
+            };
+
+            vm.datepickerOpt.initDate.status = {
+                opened: false
+            };
+
+            vm.timepickerOpt = {
+                initTime: DateTimeHelper.getTimepickerOpt()
+            };
+        }
+        function _getYear() {
+            vm.edition.year = new Date(vm.edition.publish_date).getFullYear();
+        }
+
 
         StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
+            vm.status = data.data;
         });
 
         PeriodicalService.getPeriodicals($routeParams.id).then(function (data) {
-            $scope.periodical = data.data;
+            vm.periodical = data.data;
         });
 
-        $scope.edition.theme = '';
-        $scope.edition.resume = '';
-        $scope.edition.publish_date = '';
-        $scope.edition.file = '';
-        $scope.edition.cover = '';
-        $scope.edition.background = '';
-        $scope.edition.status = StatusService.STATUS_DRAFT;
-        $scope.edition.articles = [];
+        vm.edition.theme = '';
+        vm.edition.resume = '';
+        vm.edition.publish_date = '';
+        vm.edition.file = '';
+        vm.edition.cover = '';
+        vm.edition.background = '';
+        vm.edition.status = StatusService.STATUS_DRAFT;
+        vm.edition.articles = [];
 
-        $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formEditions.$invalid)) {
+        vm.publish = function (data, preview) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -63,50 +88,50 @@
             });
         };
 
-        $scope.handleArticle = PeriodicalService.handleArticle;
+        vm.handleArticle = PeriodicalService.handleArticle;
 
-        $scope.sortableOptions = {
+        vm.sortableOptions = {
             accept: function (sourceItemHandleScope, destSortableScope) {
                 return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
             },
             containment: '#sort-main'
         };
 
-        $scope.removeArticle = function (idx) {
+        vm.removeArticle = function (idx) {
             ModalService
                 .confirm('Você deseja excluir este artigo?')
                 .result
                 .then(function () {
-                    $scope.edition.articles.splice(idx, 1);
+                    vm.edition.articles.splice(idx, 1);
 
                     $timeout(function () {
-                        $scope.$apply();
+                        vm.$apply();
                     });
                 });
         };
 
         // Upload
         // PDF
-        $scope.edition_file = null;
+        vm.edition_file = null;
 
-        $scope.$watch('edition_file', function () {
-            if ($scope.edition_file) {
-                $scope.uploadFile($scope.edition_file);
+        vm.$watch('edition_file', function () {
+            if (vm.edition_file) {
+                vm.uploadFile(vm.edition_file);
             }
         });
 
         /**
          * Upload files like pdf, txt, doc, etc. Not for images
          */
-        $scope.uploadFile = function (file) {
+        vm.uploadFile = function (file) {
             MediaService.newFile(file).then(function (data) {
-                $scope.edition.pdf = data.id;
-                $scope.edition.file = data.id;
-                $scope.edition.pdf_url = data.url;
+                vm.edition.pdf = data.id;
+                vm.edition.file = data.id;
+                vm.edition.pdf_url = data.url;
             });
         };
 
-        $scope.uploadImage = function (type) {
+        vm.uploadImage = function (type) {
             var moduleModal = $uibModal.open({
                 templateUrl: 'components/modal/upload-component.template.html',
                 controller: 'UploadComponentController as vm',
@@ -125,17 +150,17 @@
             });
 
             moduleModal.result.then(function (data) {
-                $scope.edition[type] = data.id;
-                $scope.edition[type + '_url'] = data.url;
+                vm.edition[type] = data.id;
+                vm.edition[type + '_url'] = data.url;
             });
         };
 
-        $scope.removeImage = function (type) {
+        vm.removeImage = function (type) {
             $timeout(function () {
-                $scope.edition[type] = '';
-                $scope.edition[type + '_url'] = '';
+                vm.edition[type] = '';
+                vm.edition[type + '_url'] = '';
 
-                $scope.$apply();
+                vm.$apply();
             });
         };
     }

@@ -51,6 +51,7 @@
                 if (!params.search && countPage === 1) {
                     currentElement = 0;
                 }
+                $log.info('_getDatarequest', event);
                 fnResquest(Util.getParams(params, searchQuery))
                     .then(function (res) {
                         countPage++;
@@ -77,12 +78,22 @@
             cleanPage.image = page.image ? page.image.id : null;
             cleanPage.status = page.status;
 
-            if (page.status === 'scheduled') {
-                cleanPage.post_date = page.scheduled_date + ' ' + page.scheduled_time;
+            var datePost = new Date(page.scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+            if (dd < 10) {
+                dd = '0' + dd;
             }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var yyyy = datePost.getFullYear();
+            
+            cleanPage.post_date = dd + '/' + mm + '/' + yyyy + ' ' + page.scheduled_time;
 
             cleanPage.tags = _.map(page.tags, 'text');
             cleanPage.title = page.title;
+
             //@todo: change this to editable slug
             // cleanPage.slug = page.title;
             cleanPage.widgets = {
@@ -114,7 +125,7 @@
 
             cleanPage.parent = page.parent ? page.parent.id : undefined;
             cleanPage.page_type = page.page_type;
-            cleanPage.slug = typeof page.slug !== 'undefined' ? page.slug.slug : '';
+            cleanPage.slug = angular.isDefined(page.slug) ? page.slug.slug : '';
 
             return cleanPage;
         };
@@ -1193,6 +1204,9 @@
 
                     _preparingNews($scope);
                 },
+                comhub: function () {
+
+                },
                 hublinks: function ($scope) {
                     $log.info('hublinks');
                     request('LoadMorePage', _getPages, {
@@ -1214,8 +1228,6 @@
                             $scope.widget.links.splice(idx, 1);
                         }
                     };
-
-
 
                     $scope.changeType = function (idx) {
                         if ($scope.widget.links[idx].link_type === 'page') {

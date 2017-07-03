@@ -8,6 +8,21 @@
     function NewsService($http, $filter, $q, apiUrl, $log) {
         $log.info('NewsService');
 
+
+        function convertPostDateToSend(data) {
+            var datePost = new Date(data.scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var yyyy = datePost.getFullYear();
+            return dd + '/' + mm + '/' + yyyy + ' ' + data.scheduled_time;
+        }
+
         return {
             getNew: function (id) {
                 return $http.get(apiUrl + '/news/' + id);
@@ -29,9 +44,11 @@
                 return $http.get(apiUrl + '/news/type');
             },
             postNews: function (data) {
+                data.post_date = convertPostDateToSend(data);
                 return $http.post(apiUrl + '/news', data);
             },
             updateNews: function (id, data) {
+                data.post_date = convertPostDateToSend(data);
                 return $http.put(apiUrl + '/news/' + id, data);
             },
             removeNews: function (id) {

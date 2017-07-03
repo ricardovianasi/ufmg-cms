@@ -142,7 +142,7 @@
         };
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formEvents.$invalid)){
+            if (!validationService.isValid($scope.formData.$invalid)){
                 return false;
             }
 
