@@ -457,7 +457,14 @@
                 .get()
                 .then(function (res) {
                     vm.resources = res.data.items;
-                    vm.listContextName = Object.keys(vm.resources);
+                    vm.listContextName = [];
+                    var listKeys = Object.keys(vm.resources);
+                    for (var i = 0; i < listKeys.length; i++) {
+                        vm.listContextName.push({
+                            context: listKeys[i],
+                            alias: vm.resources[listKeys[i]].alias
+                        });
+                    }
                 });
         }
 
