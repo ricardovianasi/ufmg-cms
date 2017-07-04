@@ -1,8 +1,8 @@
-UFMG CMS v2.0.0
+UFMG CMS v2.0.2
 ===============
 
 > **Alo! Alo! Seja Bem vindo ao repositório do UFMG CMS**
-Versão: 2.0.0 <sub>[changelogs](./docs/CHANGELOG_V2.md)</sub>
+Versão: 2.0.2 <sub>[changelogs](./docs/CHANGELOG_V2.md)</sub>
 
  - [Introdução](#introdução)
 	 - [Workflow](#workflow)
@@ -16,11 +16,11 @@ Versão: 2.0.0 <sub>[changelogs](./docs/CHANGELOG_V2.md)</sub>
 
 ----------
 ## Introdução
-Este projeto é um Web App SPA feito em AngularJS com a finalidade de gerenciar o conteúdo do portal [ufmg.br](https://ufmg.br/)
+Este projeto é um Web App SPA feito em AngularJS 1.6.x com a finalidade de gerenciar o conteúdo do portal [ufmg.br](https://ufmg.br/)
 
-####**Workflow**
+###**Workflow**
 
-- [AngularJS v1.4.x](https://angularjs.org) `- JavaScript MVW Framework`
+- [AngularJS v1.6.x](https://angularjs.org) `- JavaScript MVW Framework`
 - [Browsersync](https://browsersync.io/) `- Sync devices`
 - [NPM](https://www.npmjs.com/) `- Package manager for NodeJS`
 - [Bower](https://bower.io) `- Package manager for the web`
@@ -38,14 +38,14 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 ## Requisitos de Ambiente
 
-####**Windows**
+###**Windows**
 
 > **Automatização: ** use `ambient.cmd` da sessão [`Automatização`](#automatização)
  
 - Variável de ambiente <i class="icon-terminal"></i> `setx APPLICATION_ENV development`
-- [NodeJS 4.x](https://nodejs.org)
+- [NodeJS 7.x](https://nodejs.org)
 		 - Fazer o download do programa e instalar
-- [NPM 3.x](https://www.npmjs.com/) (incluso no NodeJS)
+- [NPM 4.x](https://www.npmjs.com/) (incluso no NodeJS)
 - [Git 2.x](https://git-scm.com/) 
 		 - Fazer o download do programa e instalar
 
@@ -56,15 +56,15 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 > **\*** Programas de tratamento de imagem usados no deploy, fazer download dos executavéis e copiar para a pasta `%Windir%\System32`
 
-####**Linux**
+###**Linux**
  
   > **Automatização: ** use `sh ./ambient.sh` da sessão [`Automatização`](#automatização)
 
 - Variável de ambiente
 	 Edite o arquivo de configuração do seu shell <i class="icon-terminal"></i> `gedit ~/.bashrc` e adicione na última linha `export APPLICATION_ENV=development`
-- [NodeJS 4.x](nodejs.org)
+- [NodeJS 7.x](nodejs.org)
 	 <i class="icon-terminal"></i> `sudo apt-get install -y nodejs`
-- [NPM 3.x](https://www.npmjs.com/) (incluso no NodeJS)
+- [NPM 4.x](https://www.npmjs.com/) (incluso no NodeJS)
 - [Git 2.x](https://git-scm.com/) 
 	 <i class="icon-terminal"></i> `sudo apt-get install git-all`
 	 
@@ -80,7 +80,7 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 > **\*** Programas de tratamento de imagem usados no deploy
 
-####**MacOS**
+###**MacOS**
 
 >TODO: Fazer!
 

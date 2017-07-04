@@ -1,10 +1,11 @@
-#Changelogs
+Changelogs
+==========
 
 Este projeto assume a organização e padronização do versionamento chamado semantic version presente em [SemVer](http://semver.org/lang/pt-BR/)
 
-Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova versão como marco, sendo então versionado para a versão 2.0 devido a grandes mudanças estruturais, organização e padronização do projeto onde será válido o SemVer
+Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova versão como marco, sendo então versionado para a versão 2.0 devido a grandes mudanças estruturais, organização e padronização do projeto onde será válido o SemVer. A ideia é ter releases mensais.
 
-##CMS UFMG.BR
+#CMS UFMG.BR
 
 <table>
 	<thead>
@@ -16,8 +17,18 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 	</thead>
 	<tbody>
 		<tr>
+			<td><a href="#2.0.2">2.0.2</a></td>
+			<td>04 Junho, 2017</td>
+			<td>Henrique Rodrigues</td>
+		</tr>
+		<tr>
+			<td><a href="#2.0.1">2.0.1</a></td>
+			<td>05 Abril, 2017</td>
+			<td>Henrique Rodrigues</td>
+		</tr>
+		<tr>
 			<td><a href="#2.0.0">2.0.0</a></td>
-			<td>24 Mar, 2016</td>
+			<td>24 Maio, 2017</td>
 			<td>Henrique Rodrigues</td>
 		</tr>
 		<tr>
@@ -43,10 +54,38 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 	</tbody>
 </table>
 
-<a id="2.0.0"></a>
-###2.0.0 <sub><sup>24/05/2017</sup></sub>
+#Para próxima versão
+- Refatorar e criar todos os widgets
 
-####**Principais refatorações**
+<a id="2.0.2"></a>
+##2.0.2 <sub><sup>04/07/2017</sup></sub>
+- estrutura: Atualizado todas as dependências. E isso inclui o angular.js :D
+- fix: Bug no modal login, não some, mas faz login.
+- otimize: Ordenar permissões em ordem alfabética.
+- refactor: Refatorando component de publicação.
+- layout: Remoção da coluna de publicação em modulo mídia.
+- layout: add tag em cursos desativados
+- fix: Não está excluindo 'editions'.
+- fix: autocomplete de páginas filhas não carrega.
+- fix: não salva type de novas notícias.
+- fix: Cancelar das notícias não está funcionando.
+- layout: mudado cor de citação no editor de texto. No editor de texto, retirar o estilo original do plugin, pois dá a entender que esta desabilitado.
+- new: Componente publish, adicionar opções de publicação, aceitando hora e datas retroativas.
+- refactor: aceitar datas de eventos retroativos em eventos e calendário.
+
+<a id="2.0.1"></a>
+##2.0.1 <sub><sup>05/06/2017</sup></sub>
+- Modulo News: Correção de tipos em permissão.
+- Layout: Add submenus Sidebar.
+- Modulo news: correção do typeNews.
+- Modulo news: Desmembrado Notícias em Agência, TV e Radio.
+- Estrutura: Fix Bug Permission and Auth
+- Estrutura: Troca de API Web Service
+
+<a id="2.0.0"></a>
+##2.0.0 <sub><sup>24/05/2017</sup></sub>
+
+###**Principais refatorações**
 - Modulo de usuários
 - Modulo de permissões
 - Tela de login
@@ -57,7 +96,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - Views
 - Rotas
 
-####**Mudanças notáveis**
+###**Mudanças notáveis**
 - Estrutural: 
 	- Adoção do style guide John Papa
 	- Correções na interface
@@ -66,10 +105,11 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 	- JSHint
 	- ESLint
 - Otimização:
+	- Organização de projetos :D (usando Google Keep para organizar tarefas)
 	- Componente autocomplete
 	- Datatables com paginação no Web Service
 	
-#####**Outros**
+**Outros**
 - [fix](http://150.164.80.212:8789/web/ufmg-cms/commit/86d4cd6d4687ea110cde8d14ce9204eae224c23c): Login não redireciona
 - [new](http://150.164.80.212:8789/web/ufmg-cms/commit/616a0d7910ecd044c882d41d4601fdcf09ee6ab3): Loading 
 - [fix](http://150.164.80.212:8789/web/ufmg-cms/commit/616a0d7910ecd044c882d41d4601fdcf09ee6ab3): Correções no layout e fixed sidebar
@@ -78,7 +118,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - [new](http://150.164.80.212:8789/web/ufmg-cms/commit/b3a4a597b453016e1729c4c1a56cb4ac36870109): Novo campo de 'Notícia UFMG' no widget listnews
 - [fix]() link do item da datatable é editar
 - E muito mais! :D
-####**Principais commits** (commits de alto impacto na aplicação)
+**Principais commits** (commits de alto impacto na aplicação)
 - [Paginação](http://150.164.80.212:8789/web/ufmg-cms/commit/a54bcf766caef8c18838c8b658df67dd1ce633f9)
 - [Auth](http://150.164.80.212:8789/web/ufmg-cms/commit/ae735b97c5ce752a3f3c9e5ffd227054995615a4)
 - [Lembrar usuário](http://150.164.80.212:8789/web/ufmg-cms/commit/06e6a3c6afabb0da89b9398676a280eda845119c)
@@ -89,14 +129,14 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - [Correção de dependências](http://150.164.80.212:8789/web/ufmg-cms/commit/e52350705e675e5ea40c43c08d241a914b16511e)
 
 <a id="1.0.xx"></a>
-###1.0.xx (Não versionado)
+##1.0.xx (Não versionado)
 ...
 <a id="1.0.24"></a>
-###1.0.24
+##1.0.24
 ...
 <a id="1.x.x"></a>
-###1.x.x
+##1.x.x
 ...
 <a id="0.x.x"></a>
-###0.x.x
+##0.x.x
 ...
