@@ -85,7 +85,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 <a id="2.0.0"></a>
 ##2.0.0 <sub><sup>24/05/2017</sup></sub>
 
-###**Principais refatorações**
+###Principais refatorações
 - Modulo de usuários
 - Modulo de permissões
 - Tela de login
@@ -96,7 +96,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - Views
 - Rotas
 
-###**Mudanças notáveis**
+###Mudanças notáveis
 - Estrutural: 
 	- Adoção do style guide John Papa
 	- Correções na interface

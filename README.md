@@ -15,10 +15,10 @@ Versão: 2.0.2 <sub>[changelogs](./docs/CHANGELOG_V2.md)</sub>
  - [Deploy](#deploy)
 
 ----------
-## Introdução
+##Introdução
 Este projeto é um Web App SPA feito em AngularJS 1.6.x com a finalidade de gerenciar o conteúdo do portal [ufmg.br](https://ufmg.br/)
 
-###**Workflow**
+###Workflow
 
 - [AngularJS v1.6.x](https://angularjs.org) `- JavaScript MVW Framework`
 - [Browsersync](https://browsersync.io/) `- Sync devices`
@@ -36,9 +36,9 @@ Este projeto é um Web App SPA feito em AngularJS 1.6.x com a finalidade de gere
 OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será desenvolvido com o tempo.
 ```
 
-## Requisitos de Ambiente
+##Requisitos de Ambiente
 
-###**Windows**
+###Windows
 
 > **Automatização: ** use `ambient.cmd` da sessão [`Automatização`](#automatização)
  
@@ -56,7 +56,7 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 > **\*** Programas de tratamento de imagem usados no deploy, fazer download dos executavéis e copiar para a pasta `%Windir%\System32`
 
-###**Linux**
+###Linux
  
   > **Automatização: ** use `sh ./ambient.sh` da sessão [`Automatização`](#automatização)
 
@@ -80,11 +80,11 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 
 > **\*** Programas de tratamento de imagem usados no deploy
 
-###**MacOS**
+###MacOS
 
 >TODO: Fazer!
 
-## Execução do projeto
+##Execução do projeto
 
 1. Baixe o código fonte:
     <i class="icon-terminal"></i>`git clone http://cajuri.bu.ufmg.br:8789/web/ufmg-cms.git`
@@ -94,7 +94,7 @@ OBS.: "JSHhint", "Angular 1 Style Guide", "Angular Patterns: Clean Code" será d
 3. Iniciando o projeto
     <i class="icon-terminal"></i> `gulp dev`
 
-## Automatização
+##Automatização
 
 **Windows**
 
@@ -108,10 +108,10 @@ Baixe o arquivo [ubuntu.sh](./ambient/ubuntu.sh) e mova para sua pasta de trabal
 
 TODO: Fazer!
 
-## Deploy
+##Deploy
 
   Use `gulp production`
 
-## E pra finalizar!
+##E pra finalizar!
 
 Achou algo de errado neste README? Por favor use o [StackEdit](https://stackedit.io/editor#)  e faça o seu commit! :)
