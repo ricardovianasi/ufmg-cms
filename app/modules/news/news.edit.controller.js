@@ -30,45 +30,42 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-        $scope.news = {};
-        $scope.categories = [];
-        $scope.status = [];
-        $scope.types = [];
-        $scope.highlight_ufmg_visible = true;
+        vm.news = {};
+        vm.categories = [];
+        vm.status = [];
+        vm.types = [];
+        vm.highlight_ufmg_visible = true;
 
-        /**
-         * Datepicker options
-         */
-        $scope.datepickerOpt = {
-            initDate: DateTimeHelper.getDatepickerOpt(),
-            endDate: DateTimeHelper.getDatepickerOpt()
+
+        vm.datepickerOpt = {
+            initDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        $scope.datepickerOpt.initDate.status = {
-            opened: false
-        };
-        $scope.datepickerOpt.endDate.status = {
+        vm.datepickerOpt.initDate.status = {
             opened: false
         };
 
+        vm.timepickerOpt = {
+            initTime: DateTimeHelper.getTimepickerOpt()
+        };
         NewsService.getNewsCategories().then(function (data) {
-            $scope.categories = data.data;
+            vm.categories = data.data;
         });
 
         NewsService.getNewsTypes().then(function (data) {
-            $scope.types = data.data;
+            vm.types = data.data;
         });
 
         StatusService.getStatus().then(function (data) {
-            $scope.status = data.data;
+            vm.status = data.data;
         });
 
         NewsService.getNew($routeParams.id).then(function (data) {
-            $scope.canPermission = PermissionService.canPut('news', $routeParams.id);
+            vm.canPermission = PermissionService.canPut('news', $routeParams.id);
 
-            $scope.obj = {};
+            vm.obj = {};
 
-            $scope.news = {
+            vm.news = {
                 id: data.data.id,
                 title: data.data.title || '',
                 subtitle: data.data.subtitle || '',
@@ -77,6 +74,7 @@
                 text: data.data.text || '',
                 status: data.data.status || '',
                 type: data.data.type ? data.data.type.id : '',
+                post_date: data.data.post_date,
                 thumb: data.data.thumb ? data.data.thumb.id : '',
                 thumb_name: data.data.thumb ? data.data.thumb.title : '',
                 highlight: data.data.highlight,
@@ -92,42 +90,36 @@
                 }
             };
 
-
-            var scheduled_at = DateTimeHelper.toBrStandard(data.data.scheduled_at, true, true);
-
-            $scope.news.scheduled_date = scheduled_at.date;
-            $scope.news.scheduled_time = scheduled_at.time;
-
-            $scope.news.tags = [];
+            vm.news.tags = [];
 
             angular.forEach(data.data.tags, function (tag) {
-                $scope.news.tags.push(tag.name);
+                vm.news.tags.push(tag.name);
             });
 
-            $scope.title = 'Editar "' + $scope.news.title + '"';
-            $scope.breadcrumb_active = $scope.news.title;
+            vm.title = 'Editar "' + vm.news.title + '"';
+            vm.breadcrumb_active = vm.news.title;
 
-            $scope.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
-            $scope.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
+            vm.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+            vm.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
         });
 
         NewsService.getTvProgram().then(function (data) {
-            $scope.tvPrograms = data.data.items;
+            vm.tvPrograms = data.data.items;
         });
 
         GalleryService.getGalleries().then(function (data) {
-            $scope.galleries = data.data.items;
-            $scope.galleries.splice(0, 0, {
+            vm.galleries = data.data.items;
+            vm.galleries.splice(0, 0, {
                 id: '',
                 title: 'Nenhuma'
             });
         });
 
-        $scope.back = function () {
+        vm.back = function () {
             $location.path('/news/' + vm.typeNews);
         };
 
-        $scope.remove = function () {
+        vm.remove = function () {
             ModalService
                 .confirm('Você deseja excluir esta notícia?')
                 .result
@@ -139,8 +131,8 @@
                 });
         };
 
-        $scope.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formNews.$invalid)) {
+        vm.publish = function (data, preview) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -166,15 +158,13 @@
                 /* jshint ignore:start */
                 tv_program: data.tv_program,
                 /* jshint ignore:end */
+                scheduled_date: data.scheduled_date,
+                scheduled_time: data.scheduled_time,
                 gallery: data.gallery,
                 slug: slug
             };
 
             _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
-
-            if (_obj.status === 'scheduled') {
-                _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
-            }
 
             NewsService.updateNews(data.id, _obj).then(function (news) {
                 NotificationService.success('Notícia atualizada com sucesso.');
@@ -188,41 +178,41 @@
         };
 
         // Cover Image - Upload
-        $scope.news_thumb = null;
+        vm.news_thumb = null;
 
-        $scope.$watch('news_thumb', function () {
-            if ($scope.news_thumb) {
-                $scope.upload($scope.news_thumb);
+        vm.$watch('news_thumb', function () {
+            if (vm.news_thumb) {
+                vm.upload(vm.news_thumb);
             }
         });
 
-        $scope.upload = function (file) {
+        vm.upload = function (file) {
             MediaService.newFile(file).then(function (data) {
-                $scope.news.thumb = data.id;
-                $scope.news.thumb_name = data.title;
+                vm.news.thumb = data.id;
+                vm.news.thumb_name = data.title;
             });
         };
 
-        $scope.removeImage = function () {
+        vm.removeImage = function () {
             $timeout(function () {
-                $scope.news.thumb = '';
-                $scope.news.thumb_name = '';
-                $scope.$apply();
+                vm.news.thumb = '';
+                vm.news.thumb_name = '';
+                vm.$apply();
             });
         };
 
-        $scope.imagencropOptions = angular.extend({
+        vm.imagencropOptions = angular.extend({
             formats: ['vertical', 'medium']
         }, RedactorPluginService.getOptions('imagencrop'));
 
-        $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
-        $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+        vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+        vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
 
         TagsService.getTags().then(function (data) {
             allTags = data.data.items[0];
         });
 
-        $scope.findTags = function ($query) {
+        vm.findTags = function ($query) {
             return TagsService.findTags($query, allTags);
         };
     }

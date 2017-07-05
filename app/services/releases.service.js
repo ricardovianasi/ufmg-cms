@@ -28,7 +28,6 @@
                 slug: slug
             };
 
-
             angular.forEach(data.files, function (value) {
                 // TODO DELETE COMMENT
                 var file = value;
@@ -40,12 +39,24 @@
                 obj.files.push(file);
             });
 
-            if (data.status === StatusService.STATUS_SCHEDULED) {
-                obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
-            }
+            obj.post_date = convertPostDateToSend(data);
 
             return obj;
         };
+
+        function convertPostDateToSend(data) {
+            var datePost = new Date(data.scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var yyyy = datePost.getFullYear();
+            return dd + '/' + mm + '/' + yyyy + ' ' + data.scheduled_time;
+        }
 
         return {
             getReleases: function (params) {

@@ -30,14 +30,14 @@
 </div>
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form" name="formPage" novalidate>
+        <form class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formPage.title.$error.required && !formPage.title.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
                         <label for="title">Título</label>
                         <input id="title" type="text" name="title" class="form-control" ng-model="page.title" required>
-                        <div ng-show="!formPage.title.$valid" class="error-message" role="alert">
-                            <div ng-show="formPage.title.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.title.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -143,14 +143,14 @@
     </div>
     <div class="col-xs-4">
         <publishment-options route-model="page"></publishment-options>
-        <div class="panel panel-default" onload="loadMorePage()">
+        <div class="panel panel-default" onload="loadMore()">
             A página atual é filha de:
-            <ui-select ng-model="page.parent" title="Selecione ou procure a página...">
-                <ui-select-match placeholder="Selecione ou procure a página...">{{$select.selected.title}}</ui-select-match>
-                <ui-select-choices repeat="item in pagesParent | filter: $select.search | limitTo: currentElement" scroll-detect="loadMorePage()"
-                    refresh="loadMorePage($select.search)" refresh-delay="300">
-                    <span ng-bind-html="item.title | highlight: $select.search"></span>
-                    </ui-select-choices>
+            <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
+                <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.title }}</ui-select-match>
+                <ui-select-choices repeat="item.id as item in pagesParent | filter: $select.search track by $index" scroll-detect="loadMore()"
+                    refresh="loadMore($select.search)" refresh-delay="300">
+                    <div ng-bind-html="item.title | highlight: $select.search"></div>
+                </ui-select-choices>
             </ui-select>
         </div>
     </div>

@@ -37,19 +37,45 @@
             obj.cover = data.cover;
             obj.number = data.number;
             obj.file = data.file;
-            obj.publish_date = data.publish_date;
             obj.theme = data.theme;
             obj.status = data.status;
             obj.resume = data.resume;
             obj.year = data.year;
             obj.slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
-            if (obj.status === 'scheduled') {
-                obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
-            }
+            obj.post_date = convertPostDateToSend(data);
+            obj.publish_date = convertPublishDateToSend(data);
 
             return obj;
         };
+
+        function convertPublishDateToSend(data) {
+            var datePublish = new Date(data.publish_date);
+            var dd = datePublish.getDate();
+            var mm = datePublish.getMonth() + 1;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var yyyy = datePublish.getFullYear();
+            return dd + '/' + mm + '/' + yyyy;
+        }
+
+        function convertPostDateToSend(data) {
+            var datePost = new Date(data.scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var yyyy = datePost.getFullYear();
+            return dd + '/' + mm + '/' + yyyy + ' ' + data.scheduled_time;
+        }
 
         return {
             getPeriodicalEditions: function (id, params) {
@@ -71,7 +97,8 @@
                 return $http.post(APIUrl + '/periodical/' + id + '/edition', _parseEditionData(data));
             },
             updateEdition: function (id, edition, data) {
-                return $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, _parseEditionData(data));
+                var updated = _parseEditionData(data);
+                return $http.put(APIUrl + '/periodical/' + id + '/edition/' + edition, updated);
             },
             removeEdition: function (id, edition) {
                 return $http.delete(APIUrl + '/periodical/' + id + '/edition/' + edition);

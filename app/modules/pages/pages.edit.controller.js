@@ -17,6 +17,7 @@
         WidgetsService,
         StatusService,
         DateTimeHelper,
+        $q,
         ModalService,
         $rootScope,
         TagsService,
@@ -29,68 +30,86 @@
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
         var hasRequest = false;
         var countPage = 1;
-        $scope.pagesParent = [];
-        $scope.loadMore = function (search) {
-            if (search) {
-                countPage = 1;
-                $scope.pagesParent = [];
-                _getPages(search);
-                return;
-            }
-            if (!hasRequest) {
-                if (countPage === 1) {
-                    $scope.pagesParent = [];
-                }
-                hasRequest = true;
-                _getPages();
-            }
-        };
+        var vm = $scope;
+        vm.pagesParent = [];
 
         onInit();
 
+        function loadMore(dataTemp, search) {
+            var defer = $q.defer();
+            var searchQuery = 'title';
+            if (search || !hasRequest) {
+                if (search) {
+                    countPage = 1;
+                    dataTemp = [];
+                } else {
+                    if (countPage === 1) {
+                        dataTemp = [];
+                    }
+                    hasRequest = true;
+                }
+                var params = {
+                    page: countPage,
+                    page_size: 10,
+                    order_by: {
+                        field: 'title',
+                        direction: 'ASC'
+                    },
+                    search: search
+                };
+                if (!params.search && countPage === 1) {
+                    vm.currentElement = 0;
+                }
+                PagesService
+                    .getPages(Util.getParams(params, searchQuery))
+                    .then(function (res) {
+                        countPage++;
+                        vm.currentElement += res.data.items.length;
+                        if (res.data.total > vm.currentElement && 10 >= res.data.items.length) {
+                            $timeout(function () {
+                                hasRequest = false;
+                            }, 100);
+                        }
+                        for (var index = 0; index < res.data.items.length; index++) {
+                            dataTemp.push(res.data.items[index]);
+                        }
+                        defer.resolve(dataTemp);
+                    });
+            }
+            return defer.promise;
+        }
+
+        vm.loadMore = function (search) {
+            reset(vm.pagesParent);
+            loadMore(vm.pagesParent, search)
+                .then(function (data) {
+                    vm.pagesParent = Object.assign(vm.pagesParent, data);
+                });
+        };
+
+        function reset(data) {
+            if (angular.isUndefined(data[0])) {
+                countPage = 1;
+                vm.currentElement = 0;
+            }
+        }
+
         function onInit() {
-            _getPages();
-            $scope.pagesParent.push({
+            vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
             });
-        }
-
-        function _getPages(search) {
-            var params = {
-                page: countPage,
-                page_size: 15,
-                order_by: {
-                    field: 'postDate',
-                    direction: 'DESC'
-                },
-                search: search
-            };
-
-            PagesService
-                .getPages(Util.getParams(params, 'title'))
-                .then(function (res) {
-                    countPage++;
-                    for (var index = 0; index < res.data.items.length; index++) {
-                        var element = res.data.items[index];
-                        $scope.pagesParent.push(element);
-                    }
-                    $scope.currentElement = $scope.pagesParent.length;
-                    if (res.data.total >= $scope.currentElement && 15 >= res.data.items.length) {
-                        hasRequest = false;
-                    }
-                });
         }
 
         TagsService.getTags().then(function (data) {
             allTags = data.data.items[0];
         });
 
-        $scope.widgets = [];
-        $scope.status = [];
-        $scope.columns = PagesService.COLUMNS;
+        vm.widgets = [];
+        vm.status = [];
+        vm.columns = PagesService.COLUMNS;
 
-        $scope.page = {
+        vm.page = {
             image: null,
             status: StatusService.STATUS_PUBLISHED,
             columns: 2,
@@ -103,22 +122,22 @@
             }
         };
 
-        $scope.time_days = DateTimeHelper.getDays();
-        $scope.time_months = DateTimeHelper.getMonths();
-        $scope.time_years = DateTimeHelper.yearRange();
-        $scope.time_hours = DateTimeHelper.getHours();
-        $scope.time_minutes = DateTimeHelper.getMinutes();
+        vm.time_days = DateTimeHelper.getDays();
+        vm.time_months = DateTimeHelper.getMonths();
+        vm.time_years = DateTimeHelper.yearRange();
+        vm.time_hours = DateTimeHelper.getHours();
+        vm.time_minutes = DateTimeHelper.getMinutes();
 
-        $scope.sortableOptions = {
+        vm.sortableOptions = {
             accept: function (sourceItemHandleScope, destSortableScope) {
                 return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
             },
             containment: '#sort-main'
         };
 
-        $scope.remove = function () {
+        vm.remove = function () {
             ModalService
-                .confirm('Você deseja excluir a página <b>' + $scope.page.title + '</b>?',
+                .confirm('Você deseja excluir a página <b>' + vm.page.title + '</b>?',
                     ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
@@ -129,8 +148,8 @@
                 });
         };
 
-        $scope.publish = function (page, preview) {
-            if (!validationService.isValid($scope.formPage.$invalid)) {
+        vm.publish = function (page, preview) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -148,18 +167,18 @@
         };
 
         // Cover Image - Upload
-        $scope.page_image = null;
+        vm.page_image = null;
 
-        $scope.$watch('page_image', function () {
-            if ($scope.page_image) {
-                $scope.upload([$scope.page_image]);
+        vm.$watch('page_image', function () {
+            if (vm.page_image) {
+                vm.upload([vm.page_image]);
             }
         });
 
         /**
          * Cover Image - Upload
          */
-        $scope.uploadCover = function () {
+        vm.uploadCover = function () {
             var moduleModal = $uibModal.open({
                 templateUrl: 'components/modal/upload-component.template.html',
                 controller: 'UploadComponentController as vm',
@@ -174,7 +193,7 @@
 
             // Insert into textarea
             moduleModal.result.then(function (data) {
-                $scope.page.image = {
+                vm.page.image = {
                     url: data.url,
                     id: data.id
                 };
@@ -184,27 +203,27 @@
         /**
          * Cover Image - Remove
          */
-        $scope.removeCover = function () {
+        vm.removeCover = function () {
             $timeout(function () {
-                $scope.page.image = '';
-                $scope.$apply();
+                vm.page.image = '';
+                vm.$apply();
             });
         };
 
         // Modal - Add/Edit Module
-        $scope.handleModule = function (column, idx) {
+        vm.handleModule = function (column, idx) {
             return PagesService.module().handle($scope, column, idx);
         };
 
-        $scope.removeModule = function (column, idx) {
-            $scope.confirmationModal('md', 'Você deseja excluir este módulo?');
-            $scope.removeConfirmationModal.result.then(function () {
-                $scope.page.widgets[column].splice(idx, 1);
+        vm.removeModule = function (column, idx) {
+            vm.confirmationModal('md', 'Você deseja excluir este módulo?');
+            vm.removeConfirmationModal.result.then(function () {
+                vm.page.widgets[column].splice(idx, 1);
             });
         };
 
-        $scope.confirmationModal = function (size, title) {
-            $scope.removeConfirmationModal = $uibModal.open({
+        vm.confirmationModal = function (size, title) {
+            vm.removeConfirmationModal = $uibModal.open({
                 templateUrl: 'components/modal/confirmation.modal.template.html',
                 controller: ConfirmationModalCtrl,
                 backdrop: 'static',
@@ -218,12 +237,12 @@
         };
 
         function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
+            vm.modal_title = title;
 
-            $scope.ok = function () {
+            vm.ok = function () {
                 $uibModalInstance.close();
             };
-            $scope.cancel = function () {
+            vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
         }
@@ -235,8 +254,8 @@
 
             page.tags = [];
 
-            $scope.title = 'Editar ' + page.title;
-            $scope.breadcrumb_active = page.title;
+            vm.title = 'Editar ' + page.title;
+            vm.breadcrumb_active = page.title;
 
 
             angular.forEach(tags, function (tag) {
@@ -250,15 +269,15 @@
             page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
             page.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
 
-            angular.extend($scope.page, page);
+            angular.extend(vm.page, page);
         });
 
         WidgetsService.getWidgets().then(function (data) {
-            $scope.widgets = data.data;
+            vm.widgets = data.data;
         });
 
 
-        $scope.findTags = function ($query) {
+        vm.findTags = function ($query) {
             return TagsService.findTags($query, allTags);
         };
 

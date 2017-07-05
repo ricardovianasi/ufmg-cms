@@ -39,17 +39,17 @@
 </div>
 <div class="row">
     <div class="col-xs-8 panel panel-default">
-        <form class="form" name="formNews" novalidate>
+        <form class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formNews.title.$error.required && !formNews.title.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
                         <label>Título</label>
                         <input type="text" class="form-control" ng-model="news.title" ng-maxlength="96" maxlength="97" name="title" required>
-                        <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
-                            <div ng-show="formNews.title.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.title.$error.required">Campo obrigatório</div>
                         </div>
-                        <div ng-show="!formNews.title.$valid" class="error-message" role="alert">
-                            <div ng-show="formNews.title.$error.maxlength">Tamanho máximo de 96 caracteres</div>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.title.$error.maxlength">Tamanho máximo de 96 caracteres</div>
                         </div>
                     </div>
                 </div>
@@ -104,12 +104,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formNews.category.$error.required && !formNews.category.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.category.$error.required && !formData.category.$valid}">
                         <label>Categoria</label>
                         <select class="form-control" ng-model="news.category" name="category" ng-options="category.id as category.name for category in categories.items"
                             required></select>
-                        <div ng-show="!formNews.category.$valid" class="error-message" role="alert">
-                            <div ng-show="formNews.category.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.category.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.category.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -164,12 +164,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formNews.text.$error.required && !formNews.text.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.text.$error.required && !formData.text.$valid}">
                         <label>Conteúdo</label>
                         <textarea cols="30" rows="30" class="form-control" ng-model="news.text" redactor imagencrop-options="imagencropOptions" audioUpload-options="audioUploadOptions"
                             uploadfiles-options="uploadfilesOptions" name="text" required></textarea>
-                        <div ng-show="!formNews.text.$valid" class="error-message" role="alert">
-                            <div ng-show="formNews.text.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.text.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.text.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>

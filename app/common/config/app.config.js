@@ -48,9 +48,10 @@
             .push('authInterceptorService');
     }
 
-    Router.$inject = ['$routeProvider'];
+    Router.$inject = ['$routeProvider', '$locationProvider'];
 
-    function Router($routeProvider) {
+    function Router($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix('');
         $routeProvider.otherwise({
             redirectTo: '/'
         });

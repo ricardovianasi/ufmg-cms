@@ -89,7 +89,8 @@
                                 <td>
                                     <div class="clearfix">
                                         {{ item.name|titleize }} ( {{ item.shift }} )
-                                        <span ng-if="item.subdivision_name">-</span> {{ item.modality }}
+                                        {{ item.modality }}
+                                        <span class="label label-primary" ng-hide="item.is_active">Desativado</span>
                                     </div>
                                 </td>
                             </tr>

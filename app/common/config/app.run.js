@@ -70,14 +70,14 @@
         }
 
         function getAuth() {
-            var timeToken = sessionService.getTokenTime();
-            var listenLoginTime = 20 / 0.001;
-            var timeTokenInMs = timeToken / 0.001;
-            var time = timeToken ? timeTokenInMs : listenLoginTime;
-            $log.info('Escutando Auth a cada: ' + time * 0.001 + ' segundos');
+            var timeTokenInSegunds = sessionService.getTokenTime();
+            var defaultListenLoginSegunds = 20;
+            var timeInSegunds = timeTokenInSegunds >= 20 ? timeTokenInSegunds : defaultListenLoginSegunds;
+            var timeInMillisegunds = timeInSegunds / 0.001;
+            $log.info('Escutando Auth a cada: ' + timeInSegunds + ' segundos');
             $timeout(function () {
                 get(false);
-            }, time);
+            }, timeInMillisegunds);
         }
 
         $rootScope.$on('$routeChangeSuccess', function () {

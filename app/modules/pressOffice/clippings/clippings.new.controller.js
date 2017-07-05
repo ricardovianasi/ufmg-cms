@@ -17,12 +17,13 @@
         $log) {
         $rootScope.shownavbar = true;
         $log.info('ClippingsNewController');
+        var vm = $scope;
 
-        $scope.canPermission = PermissionService.canPost('clipping');
+        vm.canPermission = PermissionService.canPost('clipping');
 
-        $scope.title = 'Nova Matéria';
-        $scope.breadcrumb = $scope.title;
-        $scope.clipping = {
+        vm.title = 'Nova Matéria';
+        vm.breadcrumb = vm.title;
+        vm.clipping = {
             title: '',
             date: {
                 year: (new Date()).getFullYear(),
@@ -35,14 +36,14 @@
         };
 
         // Time and Date
-        $scope.time_days = DateTimeHelper.getDays();
-        $scope.time_months = DateTimeHelper.getMonths();
-        $scope.time_years = DateTimeHelper.yearRange(5); // 5 year back and forth
-        $scope.time_hours = DateTimeHelper.getHours();
-        $scope.time_minutes = DateTimeHelper.getMinutes();
+        vm.time_days = DateTimeHelper.getDays();
+        vm.time_months = DateTimeHelper.getMonths();
+        vm.time_years = DateTimeHelper.yearRange(5); // 5 year back and forth
+        vm.time_hours = DateTimeHelper.getHours();
+        vm.time_minutes = DateTimeHelper.getMinutes();
 
-        $scope.publish = function (data) {
-            if (!validationService.isValid($scope.formClippings.$invalid)) {
+        vm.publish = function (data) {
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
