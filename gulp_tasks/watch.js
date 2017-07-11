@@ -5,7 +5,7 @@ gulp.task('watch', function (cb) {
     gulp.watch(['app/**/*.js', '!app/assets/**/*.js'], ['build-js-app']);
     gulp.watch(['app/assets/**/*.js'], ['build-js-vendor']);
     gulp.watch(['app/lang/**.*'], ['build-lang']);
-    gulp.watch(['app/assets/styles/**/*.{scss,sass}', 'app/assets/xenon/css/**/*.css'], ['build-sass']);
+    gulp.watch(['app/**/*.{scss,sass}', 'app/assets/xenon/css/**/*.css'], ['build-sass']);
     gulp.watch(['app/**/*.html'], ['build-html']);
 });
 
