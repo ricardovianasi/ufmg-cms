@@ -10,12 +10,12 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 
 gulp.task('css', function () {
-    gulp.src('./app/assets/styles/main.sass')
+    gulp.src('./app/assets/**/*.sass')
         .pipe(plumber())
         .pipe(cssGlobbing({
             extensions: ['.scss', '.css', '.sass']
         }))
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(sass.sync().on('error', function (error) {
             /*eslint-disable */
             console.log(error);
