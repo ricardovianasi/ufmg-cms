@@ -17,8 +17,13 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 	</thead>
 	<tbody>
 		<tr>
+			<td><a href="#2.1.0">2.1.0</a></td>
+			<td>26 Julho, 2017</td>
+			<td>Henrique Rodrigues</td>
+		</tr>
+		<tr>
 			<td><a href="#2.0.2">2.0.2</a></td>
-			<td>04 Junho, 2017</td>
+			<td>04 Julho, 2017</td>
 			<td>Henrique Rodrigues</td>
 		</tr>
 		<tr>
@@ -57,8 +62,18 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 #Para próxima versão
 - Refatorar e criar todos os widgets
 
+<a id="2.1.0"></a>
+##2.1.0 <sub>26/07/2017</sub>
+- estrutura: Correção do gulp watch para CSS
+- fix: fixado versão jQuery (erro no deploy)
+- new: Scripts para deploy
+- estrutura: Update dependências
+- estrutura: jshint atualizado
+- componente: Gerenciamento de arquivos
+- estrutura: Refatorações e padronizações
+
 <a id="2.0.2"></a>
-##2.0.2 <sub><sup>04/07/2017</sup></sub>
+##2.0.2 <sub>04/07/2017</sub>
 - estrutura: Atualizado todas as dependências. E isso inclui o angular.js :D
 - fix: Bug no modal login, não some, mas faz login.
 - otimize: Ordenar permissões em ordem alfabética.
@@ -74,7 +89,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - refactor: aceitar datas de eventos retroativos em eventos e calendário.
 
 <a id="2.0.1"></a>
-##2.0.1 <sub><sup>05/06/2017</sup></sub>
+##2.0.1 <sub>05/06/2017</sub>
 - Modulo News: Correção de tipos em permissão.
 - Layout: Add submenus Sidebar.
 - Modulo news: correção do typeNews.
@@ -83,7 +98,7 @@ Assumindo a última versão em 1.0.24 pelo Gitlab. Será assumido uma nova vers�
 - Estrutura: Troca de API Web Service
 
 <a id="2.0.0"></a>
-##2.0.0 <sub><sup>24/05/2017</sup></sub>
+##2.0.0 <sub>24/05/2017</sub>
 
 ###Principais refatorações
 - Modulo de usuários

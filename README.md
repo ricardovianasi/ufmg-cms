@@ -1,8 +1,8 @@
-UFMG CMS v2.0.2 <pre>[próxima versão](https://trello.com/b/PMHLmbFb/ufmg-cms)</pre>
+UFMG CMS v2.1.0 <pre>[próxima versão](https://trello.com/b/PMHLmbFb/ufmg-cms)</pre>
 ===============
 
 > **Alo! Alo! Seja Bem vindo ao repositório do UFMG CMS**
-Versão: 2.0.2 [changelogs](./docs/CHANGELOG_V2.md)
+Versão: 2.1.0 [changelogs](./docs/CHANGELOG_V2.md)
 
  - [Introdução](#introdução)
 	 - [Workflow](#workflow)

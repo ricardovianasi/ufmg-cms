@@ -48,19 +48,6 @@
         vm.edit = _edit;
         vm.filterTo = _filterTo;
         vm.isDescriptionTitle = _isDescriptionTitle;
-        vm.dzOptions = {
-            url: '/alt_upload_url',
-            paramName: 'photo',
-            maxFilesize: '10',
-            acceptedFiles: 'image/jpeg, images/jpg, image/png',
-            addRemoveLinks: true
-        };
-
-        vm.call = {
-            'addedfile': function (file) {
-                console.log(file);
-            }
-        }
 
         onInit();
 
