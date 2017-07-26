@@ -9,8 +9,6 @@
         $log.info('MediaService');
 
         var MEDIA_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'file');
-        var PAGE = 1;
-        var PAGE_SIZE = 30;
 
         return {
             getFile: function (id) {
@@ -19,18 +17,11 @@
             getIcons: function () {
                 return $http.get(apiUrl + '/file/icon');
             },
-            getMedia: function (page, page_size, search) {
-                var obj = {
-                    page: page || PAGE,
-                    page_size: page_size || PAGE_SIZE
-                };
-
-                if (typeof search !== 'undefined') {
-                    obj.search = search;
+            getMedia: function (params) {
+                if (angular.isUndefined(params)) {
+                    params = '';
                 }
-
-                var queryString = $filter('queryString')(obj);
-                var url = $filter('format')('{0}?{1}', MEDIA_ENDPOINT, queryString);
+                var url = $filter('format')('{0}{1}', MEDIA_ENDPOINT, params);
 
                 return $http.get(url);
             },

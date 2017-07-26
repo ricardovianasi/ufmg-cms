@@ -13,6 +13,7 @@
           GalleryService,
           MediaService,
           NotificationService,
+          ManagerFileService,
           $rootScope,
           $log,
           Util,
@@ -25,7 +26,7 @@
           var ConfirmationModalCtrl = _ConfirmationModalCtrl;
           var EditPhotosModalCtrl = _EditPhotosModalCtrl;
 
-           
+
           GalleryService.getGallery(parseInt($routeParams.id)).then(function (data) {
               $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPut('gallery', $routeParams.id);
               $scope.gallery = data.data;
@@ -186,32 +187,21 @@
               });
           };
 
-
           $scope.uploadImage = function () {
-              var uploadImageModal = $uibModal.open({
-                  templateUrl: 'components/modal/upload-component.template.html',
-                  controller: 'UploadComponentController as vm',
-                  backdrop: 'static',
-                  size: 'xl',
-                  resolve: {
-                      formats: function () {
-                          return ['galleryImage'];
-                      }
-                  }
-              });
+              ManagerFileService.imageFiles();
+              ManagerFileService
+                  .open('galleryImage')
+                  .then(function (data) {
+                      data.author = {
+                          name: data.author
+                      };
 
-              // Insert into textarea
-              uploadImageModal.result.then(function (data) {
-                  data.author = {
-                      name: data.author
-                  };
+                      var obj = {
+                          file: data
+                      };
 
-                  var obj = {
-                      file: data
-                  };
-
-                  $scope.gallery.photos.push(obj);
-              });
+                      $scope.gallery.photos.push(obj);
+                  });
           };
       }
   })();

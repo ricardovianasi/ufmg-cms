@@ -71,7 +71,6 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);

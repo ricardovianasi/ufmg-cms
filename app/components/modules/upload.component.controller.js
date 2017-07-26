@@ -10,80 +10,101 @@
         $timeout,
         MediaService,
         tabsService,
+        Util,
         formats,
         NotificationService,
         $log) {
-        $log.info('... UploadComponentController');
 
         var vm = this;
+        var availableFormats = {};
+        var countPage = 0;
 
-        vm.tabs = tabsService.getTabs();
-        vm.selector = {};
-        vm.formats = {};
-        vm.add_photos = null;
-        vm.image = null;
         vm.activeFormat = '';
+        vm.add_photos = null;
+        vm.formats = {};
+        vm.image = null;
+        vm.midia = [];
+        vm.selector = {};
+        vm.tabs = tabsService.getTabs();
         vm.zoomOut = false;
 
-        tabsService.selectTab('home');
-
-        var availableFormats = {
-            vertical: {
-                name: 'Vertical',
-                width: 352,
-                height: 540
-            },
-            medium: {
-                name: 'Horizontal',
-                width: 712,
-                height: 474
-            },
-            big: {
-                name: 'Grande',
-                width: 1192,
-                height: 744
-            },
-            wide: {
-                name: 'Widescreen',
-                width: 1920,
-                height: 504
-            },
-            pageCover: {
-                name: 'Capa da Página',
-                width: 1920,
-                height: 444
-            },
-            digitalizedCover: {
-                name: 'Capa Digitalizada',
-                width: 350,
-                height: 498
-            },
-            bigPageCover: {
-                name: 'Capa da publicação',
-                width: 1920,
-                height: 720
-            },
-            galleryImage: {
-                name: 'Imagem de galeria',
-                width: 952,
-                height: 600
-            }
-        };
-
-        formats = formats || ['vertical', 'medium', 'big', 'wide'];
-
-        angular.forEach(formats, function (item) {
-            vm.formats[item] = availableFormats[item];
-        });
-
-        vm.openMidia = _openMidia;
-        vm.changePage = _changePage;
-        vm.selectMidia = _selectMidia;
-        vm.updateMidia = _updateMidia;
-        vm.cancelUpdateMidia = _cancelUpdateMidia;
         vm.cancel = _cancel;
+        vm.cancelUpdateMidia = _cancelUpdateMidia;
+        vm.changePage = _changePage;
+        vm.openMidia = _openMidia;
         vm.save = _save;
+        vm.searchMidia = _searchMidia;
+        vm.selectMidia = _selectMidia;
         vm.setFormat = _setFormat;
+        vm.updateMidia = _updateMidia;
+
+        onInit();
+
+        function onInit() {
+            $log.info('UploadComponentController');
+            countPage = 0;
+            availableFormats = {
+                vertical: {
+                    name: 'Vertical',
+                    width: 352,
+                    height: 540
+                },
+                medium: {
+                    name: 'Horizontal',
+                    width: 712,
+                    height: 474
+                },
+                big: {
+                    name: 'Grande',
+                    width: 1192,
+                    height: 744
+                },
+                wide: {
+                    name: 'Widescreen',
+                    width: 1920,
+                    height: 504
+                },
+                pageCover: {
+                    name: 'Capa da Página',
+                    width: 1920,
+                    height: 444
+                },
+                digitalizedCover: {
+                    name: 'Capa Digitalizada',
+                    width: 350,
+                    height: 498
+                },
+                bigPageCover: {
+                    name: 'Capa da publicação',
+                    width: 1920,
+                    height: 720
+                },
+                galleryImage: {
+                    name: 'Imagem de galeria',
+                    width: 952,
+                    height: 600
+                }
+            };
+
+            formats = formats || ['vertical', 'medium', 'big', 'wide'];
+            _setFormatAvailable();
+            tabsService.selectTab('home');
+
+            $scope.$watch('vm.add_photos', function () {
+                if (vm.add_photos) {
+                    MediaService.newFile(vm.add_photos).then(function (data) {
+                        vm.currentFile = data;
+                        _loadMidia();
+                    });
+                }
+            });
+        }
+
+        function _setFormatAvailable() {
+            angular.forEach(formats, function (item) {
+                vm.formats[item] = availableFormats[item];
+            });
+        }
 
         function _setFormat(format, setCrop) {
             var obj = availableFormats[format];
@@ -101,25 +122,6 @@
             vm.aspectRatio = 1 / (obj.height / obj.width);
         }
 
-        /**
-         *  watch for vm.add_photos model
-         *
-         */
-        $scope.$watch('vm.add_photos', function () {
-            if (vm.add_photos) {
-                MediaService.newFile(vm.add_photos).then(function (data) {
-                    vm.currentFile = data;
-                    _loadMidia();
-                });
-            }
-        });
-
-        /**
-         *  _openMidia Function
-         * open tab media, and call _loadMidia function
-         *
-         * @private
-         */
         function _openMidia() {
             tabsService.selectTab('midia');
 
@@ -128,34 +130,37 @@
             _loadMidia();
         }
 
-        /**
-         *  _loadMidia Function
-         * get all media
-         *
-         * @private
-         */
-        function _loadMidia(page) {
-            var types = 'types=png,jpg,jpeg';
-            MediaService.getMedia(page, 35, types).then(function (result) {
-                vm.midia = result.data;
-            });
+        function _searchMidia(inputSearch) {
+            _loadMidia(inputSearch);
         }
 
-        /**
-         *  _changePage Function
-         *
-         */
+        function _loadMidia(inputSearch) {
+            // var types = 'types=png,jpg,jpeg';
+            var params = {
+                page: countPage,
+                page_size: 10,
+                order_by: {
+                    field: 'postDate',
+                    direction: 'ASC'
+                },
+                search: inputSearch
+            };
+            if (!params.search && countPage === 1) {
+                vm.currentElement = 0;
+            }
+            MediaService
+                .getMedia(Util.getParams(params))
+                .then(function (result) {
+                    countPage++;
+                    vm.currentElement += result.data.items.length;
+                    vm.midia = Object.assign(vm.midia, result.data);
+                });
+        }
+
         function _changePage() {
             _loadMidia(vm.currentPage);
         }
 
-        /**
-         * _selectMidia Function
-         *
-         * @param data
-         *
-         * @private
-         */
         function _selectMidia(data) {
             vm.zoomOut = false;
             vm.currentFile = data;
@@ -166,11 +171,6 @@
             }, 500);
         }
 
-        /**
-         * function _updateMidia
-         *
-         * @private
-         */
         function _updateMidia() {
             if (_validate(vm.currentFile.legend)) {
                 NotificationService.info('Legenda deve ser inserida obrigatoriamente.');
@@ -201,16 +201,10 @@
             vm.zoomOut = true;
         }
 
-        /**
-         * @private
-         */
         function _cancel() {
             $uibModalInstance.dismiss('cancel');
         }
 
-        /**
-         * @private
-         */
         function _save() {
             var obj = {
                 x: vm.selector.x1,
@@ -240,13 +234,6 @@
             });
         }
 
-        /**
-         * @param variable
-         *
-         * @returns {boolean}
-         *
-         * @private
-         */
         function _validate(variable) {
             return _.isEmpty(variable);
         }

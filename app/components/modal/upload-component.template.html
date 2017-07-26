@@ -27,8 +27,7 @@
 
         <div class="tab-content">
             <!-- Biblioteca de Midia -->
-            <div class="tab-pane text-center" id="home"
-                 ng-class="{active: vm.tabs.home}">
+            <div class="tab-pane text-center" id="home" ng-class="{active: vm.tabs.home}">
                 <a class="btn btn-secondary btn-lg btn-library" ng-click="vm.openMidia()">
                     <i class="fa fa-desktop"></i>
                     <h3>Biblioteca de Mídia</h3>
@@ -36,28 +35,23 @@
             </div>
 
             <!-- Lista de Imagens -->
-            <div class="tab-pane midia" id="midia"
-                 ng-class="{active: vm.tabs.midia}">
+            <div class="tab-pane midia" id="midia" ng-class="{active: vm.tabs.midia}">
                 <form>
                     <div class="form-group">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon" id="sizing-addon1"><i class="fa fa-search"></i></span>
-                            <input type="text" class="form-control" placeholder="Procurar..."
-                                   aria-describedby="sizing-addon1"
-                                   ng-model="vm.search">
+                            <input type="text" class="form-control" placeholder="Procurar..." aria-describedby="sizing-addon1" ng-model="vm.search">
                         </div>
                     </div>
                 </form>
 
-                <div class="row"
-                     ng-if="vm.currentFile.url && !vm.zoomOut">
+                <div class="row" ng-if="vm.currentFile.url && !vm.zoomOut">
                     <div class="col-md-12">
                         <div class="panel panel-border panel-edit">
                             <div class="panel-body">
                                 <div class="col-md-3">
                                     <h4>Pré-visualização</h4>
-                                    <img alt="" class="img-responsive"
-                                         ng-src="{{ vm.currentFile.url }}">
+                                    <img alt="" class="img-responsive" ng-src="{{ vm.currentFile.url }}">
                                 </div>
 
                                 <div class="col-md-9">
@@ -65,31 +59,25 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <h4>Autor</h4>
-                                                <input type="text" class="form-control" id="field-1"
-                                                       placeholder="Autor:"
-                                                       value="{{ vm.currentFile.author_name }}"
-                                                       ng-model="vm.currentFile.author_name">
+                                                <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ vm.currentFile.author_name }}" ng-model="vm.currentFile.author_name">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <h4>Legenda</h4>
-                                                <textarea name="" id="" cols="30" rows="10" class="form-control"
-                                                          ng-model="vm.currentFile.legend">{{ vm.currentFile.legend }}</textarea>
+                                                <textarea name="" id="" cols="30" rows="10" class="form-control" ng-model="vm.currentFile.legend">{{ vm.currentFile.legend }}</textarea>
                                             </div>
                                         </div>
                                     </form>
 
                                     <div class="row text-right">
                                         <div class="col-md-12" style="margin-top:20px">
-                                            <button type="button" class="btn btn-danger btn-lg"
-                                                    ng-click="vm.cancelUpdateMidia()">
+                                            <button type="button" class="btn btn-danger btn-lg" ng-click="vm.cancelUpdateMidia()">
                                                 <i class="fa fa-times"></i> Cancelar
                                             </button>
 
-                                            <button type="button" class="btn btn-secondary btn-lg"
-                                                    ng-click="vm.updateMidia()">
+                                            <button type="button" class="btn btn-secondary btn-lg" ng-click="vm.updateMidia()">
                                                 <i class="fa fa-check"></i> Confirmar
                                             </button>
                                         </div>
@@ -101,11 +89,8 @@
                 </div>
 
                 <div class="row lib-row">
-                    <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center"
-                       ngf-select
-                       ngf-accept="'image/*'"
-                       ng-model="vm.add_photos"
-                       ngf-multiple="false">
+                    <a href="#" class="col-md-1 lib-btn btn btn-xs btn-secondary flex-center" ngf-select ngf-accept="'image/*'" ng-model="vm.add_photos"
+                        ngf-multiple="false">
                         <div class="row">
                             <div class="col-md-12 btn-lg">
                                 <i class="fa fa-plus"></i><br/>Enviar
@@ -113,29 +98,15 @@
                         </div>
                     </a>
 
-                    <div class="col-md-1 img-lib"
-                         ng-repeat="midia in vm.midia.items|filter: vm.search"
-                         ng-click="vm.selectMidia(midia)"
-                         ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
-                        <img alt="" class="img-stretch"
-                             ng-src="{{ midia.url }}"
-                             ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
+                    <div class="col-md-1 img-lib" ng-repeat="midia in vm.midia.items|filter: vm.search" ng-click="vm.selectMidia(midia)" ng-class="{'dashed-green': midia.id == vm.currentFile.id}">
+                        <img alt="" class="img-stretch" ng-src="{{ midia.url }}" ng-click="vm.selectMidia(midia.id, midia.author.name, midia.legend, midia.url)">
                     </div>
                 </div>
 
-                <div class="row"
-                     ng-show="vm.midia.total > 36">
+                <div class="row" ng-show="vm.midia.total > 36">
                     <div class="col-md-12 flex-center">
-                        <uib-pagination class="pagination-sm"
-                                        boundary-links="true"
-                                        total-items="vm.midia.total"
-                                        items-per-page="vm.midia.page_size"
-                                        ng-model="vm.currentPage"
-                                        previous-text="‹"
-                                        next-text="›"
-                                        first-text="«"
-                                        last-text="»"
-                                        ng-change="vm.changePage()"></uib-pagination>
+                        <uib-pagination class="pagination-sm" boundary-links="true" total-items="vm.midia.total" items-per-page="vm.midia.page_size"
+                            ng-model="vm.currentPage" previous-text="‹" next-text="›" first-text="«" last-text="»" ng-change="vm.changePage()"></uib-pagination>
                     </div>
                 </div>
             </div>
@@ -145,9 +116,8 @@
                 <div class="row">
                     <div class="col-md-12  flex-center">
                         <div ng-repeat="(key, format) in vm.formats">
-                            <a href="javascript:void(0);" class="btn btn-primary btn-lg"
-                               ng-class="{'btn-secondary': vm.activeFormat == key, 'btn-click': format.name == 'Vertical'}"
-                               ng-click="vm.setFormat(key)">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-lg" ng-class="{'btn-secondary': vm.activeFormat == key, 'btn-click': format.name == 'Vertical'}"
+                                ng-click="vm.setFormat(key)">
                                 {{ format.name }} ({{ format.width }}x{{ format.height }})
                             </a>
                         </div>
@@ -155,23 +125,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 flex-center" ng-if="vm.currentFile.url">
-                        <div id="mrImageContainer"
-                             mr-image
-                             mr-src="vm.currentFile.url"
-                             mr-max-width="960"
-                             mr-selector="vm.selector"
-                             mr-aspect-ratio="vm.aspectRatio"></div>
+                        <div id="mrImageContainer" mr-image mr-src="vm.currentFile.url" mr-max-width="960" mr-selector="vm.selector" mr-aspect-ratio="vm.aspectRatio"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-lg"
-                            ng-click="vm.cancel()">
+                    <button type="button" class="btn btn-danger btn-lg" ng-click="vm.cancel()">
                         <i class="fa fa-times"></i> Cancelar
                     </button>
 
-                    <button type="button" class="btn btn-lg btn-secondary"
-                            ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1"
-                            ng-click="vm.save()">
+                    <button type="button" class="btn btn-lg btn-secondary" ng-show="vm.selector.x2 > 1 && vm.selector.y2 > 1" ng-click="vm.save()">
                         <i class="fa fa-check"></i> Inserir
                     </button>
                 </div>

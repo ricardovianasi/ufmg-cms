@@ -11,6 +11,7 @@
         $window,
         NotificationService,
         PagesService,
+        ManagerFileService,
         WidgetsService,
         StatusService,
         ModalService,
@@ -173,24 +174,15 @@
         }
 
         function _uploadCover() {
-            var moduleModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        return ['pageCover'];
-                    }
-                }
-            });
-
-            moduleModal.result.then(function (data) {
-                vm.page.image = {
-                    url: data.url,
-                    id: data.id
-                };
-            });
+            ManagerFileService
+                .imageFiles()
+                .open('pageCover')
+                .then(function (image) {
+                    vm.page.image = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
         }
 
         function _removeCover() {

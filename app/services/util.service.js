@@ -14,6 +14,7 @@
         var filterIndex = 0;
         var conditionsIndex = 0;
         var columnsHasOrder = [];
+        var typeParam = 'all';
 
         var mem = {};
 
@@ -23,6 +24,7 @@
             getParams: getParams,
             get: get,
             set: set,
+            setTypeParam: _setTypeParam,
             event: event
         };
 
@@ -44,6 +46,27 @@
             return mem[key];
         }
 
+        function _getTypeParam(paramType) {
+            if (!paramType || paramType === 'all') {
+                return '';
+            }
+            var array = paramType.split(',');
+            var resultProcessParamType = '';
+            for (var i = 0; i < array.length; i++) {
+                var type = array[i];
+                filterIndex++;
+                resultProcessParamType += '&query[filter][' + filterIndex + '][type]=eq' +
+                    '&query[filter][' + filterIndex + '][field]=type' +
+                    '&query[filter][' + filterIndex + '][value]=' + type.toLowerCase() +
+                    '&query[filter][' + filterIndex + '][where]=or';
+            }
+            return resultProcessParamType;
+        }
+
+        function _setTypeParam(type) {
+            typeParam = type;
+        }
+
         function getParams(params, elementSearch) {
             var parameters = '?';
             if (angular.isUndefined(elementSearch)) {
@@ -56,6 +79,11 @@
                 parameters += '&page_size=' + params.page_size;
             }
             parameters += hasAuthor();
+
+            if (typeParam) {
+                parameters += _getTypeParam(typeParam);
+            }
+
             if (params.filter) {
                 parameters += _getCustomParam(params.filter);
             }

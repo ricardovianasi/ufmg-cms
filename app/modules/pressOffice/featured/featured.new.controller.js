@@ -13,6 +13,7 @@
         featuredService,
         $timeout,
         NotificationService,
+        ManagerFileService,
         $location,
         $log,
         $rootScope,
@@ -20,7 +21,7 @@
         $log.info('featuredNewController');
         $rootScope.shownavbar = true;
 
-        var vm = this; // jshint ignore:line
+        var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
         vm.removeSpecialist = _removeSpecialist;
@@ -29,39 +30,31 @@
         vm.releases = {};
         vm.saveEspecialist = _saveEspecialist;
         vm.canPermission = PermissionService.canPost('highlighted_press');
-
-        // Cover Image - Upload
-        $scope.$watch('vm.featured.photo', function () {
-            _upload(vm.featured.photo);
-        });
+        vm.upload = _upload;
 
         ReleasesService.getReleases().then(function (data) {
             vm.releases = data.data;
         });
 
-        function _upload(file) {
-            MediaService.newFile(file).then(function (data) {
-                vm.featured.photo = {
-                    url: data.url,
-                    id: data.id
-                };
-            });
+        function _upload() {
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('digitalizedCover')
+                .then(function (image) {
+                    vm.featured.photo = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
         }
 
-        /**
-         * remove image function
-         */
         function _removeImage() {
             $timeout(function () {
                 vm.featured.photo = '';
-                $scope.$apply();
+                vm.$apply();
             });
         }
 
-        /**
-         *
-         * add specialists function
-         */
         function _addSpecialist() {
             if (vm.featured.specialists) {
                 vm.featured.specialists.push({
@@ -83,22 +76,16 @@
             }
 
             $timeout(function () {
-                $scope.$apply();
+                vm.$apply();
             });
         }
 
-        /**
-         * _removeSpecialist function
-         */
         function _removeSpecialist(idx) {
             vm.featured.specialists.splice(idx, 1);
         }
 
-        /**
-         * _saveFeatured function
-         */
         function _saveFeatured() {
-            if (!validationService.isValid($scope.formFeatured.$invalid)) {
+            if (!validationService.isValid(vm.formFeatured.$invalid)) {
                 return false;
             }
 
@@ -120,10 +107,9 @@
         }
 
         function _saveEspecialist(index) {
-            if (!validationService.isValid($scope.formEspecialist.$invalid)) {
+            if (!validationService.isValid(vm.formEspecialist.$invalid)) {
                 return false;
             }
-
             vm.featured.specialists[index].opened = false;
         }
     }
