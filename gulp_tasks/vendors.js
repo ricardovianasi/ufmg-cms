@@ -70,7 +70,6 @@ var STYLES = [
     'bower_components/v-accordion/dist/v-accordion.min.css',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
     'bower_components/nanoscroller/bin/css/nanoscroller.css',
-    'bower_components/fileicon.css/fileicon.css',
 
     // God Damn Xenon
     'app/assets/xenon/css/bootstrap.css',
@@ -78,7 +77,8 @@ var STYLES = [
     'app/assets/xenon/css/xenon-core.css',
     'app/assets/xenon/css/xenon-forms.css',
     'app/assets/xenon/css/xenon-components.css',
-    'app/assets/xenon/css/xenon-skins.css'
+    'app/assets/xenon/css/xenon-skins.css',
+    'app/assets/xenon/css/fileicon.css'
 ];
 
 var FONTS = [

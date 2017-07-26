@@ -62,8 +62,7 @@
         "angular-input-masks": "^2.5.0",
         "ng-scrollbars": "^0.0.11",
         "nanoscroller": "^0.8.7",
-        "ui-select-infinity": "^0.1.6",
-        "fileicon.css": "^0.1.0"
+        "ui-select-infinity": "^0.1.6"
     },
     "resolutions": {
         "jquery": "~2.1.4",
