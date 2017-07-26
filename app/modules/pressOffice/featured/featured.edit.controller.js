@@ -1,26 +1,27 @@
 (function () {
     'use strict';
 
+
     angular
         .module('featuredModule')
-        .controller('featuredNewController', featuredNewController);
+        .controller('featuredEditController', featuredEditController);
 
     /** ngInject */
-    function featuredNewController($scope,
-        PermissionService,
+    function featuredEditController($scope,
         ReleasesService,
+        PermissionService,
         MediaService,
+        ManagerFileService,
         featuredService,
         $timeout,
         NotificationService,
-        ManagerFileService,
         $location,
+        $routeParams,
         $log,
-        $rootScope,
-        validationService) {
-        $log.info('featuredNewController');
-        $rootScope.shownavbar = true;
+        $rootScope) {
+        $log.info('featuredEditController');
 
+        $rootScope.shownavbar = true;
         var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
@@ -28,9 +29,13 @@
         vm.saveFeatured = _saveFeatured;
         vm.featured = {};
         vm.releases = {};
-        vm.saveEspecialist = _saveEspecialist;
-        vm.canPermission = PermissionService.canPost('highlighted_press');
+        var _updateFeatured = {};
         vm.upload = _upload;
+
+        vm.canPermission = PermissionService.canPut('highlighted_press', $routeParams.id);
+        featuredService.getFeatured($routeParams.id).then(function (res) {
+            vm.featured = res.data;
+        });
 
         ReleasesService.getReleases().then(function (data) {
             vm.releases = data.data;
@@ -74,10 +79,6 @@
                     opened: true
                 });
             }
-
-            $timeout(function () {
-                vm.$apply();
-            });
         }
 
         function _removeSpecialist(idx) {
@@ -85,32 +86,22 @@
         }
 
         function _saveFeatured() {
-            if (!validationService.isValid(vm.formFeatured.$invalid)) {
-                return false;
-            }
-
-            if (!vm.featured.photo) {
-                validationService.isValid(true);
-                return false;
-            }
-
             _parseToSave();
-            featuredService.save(vm.featured).then(function () {
-                NotificationService.success('Destaque salvo com sucesso!');
+
+            featuredService.update(vm.featured.id, _updateFeatured).then(function () {
+                NotificationService.success('Destaque alterado com sucesso!');
                 $location.path('/featured');
             });
         }
 
         function _parseToSave() {
-            vm.featured.photo = vm.featured.photo.id;
-            // vm.featured.releases = vm.featured.releases.id;
-        }
-
-        function _saveEspecialist(index) {
-            if (!validationService.isValid(vm.formEspecialist.$invalid)) {
-                return false;
-            }
-            vm.featured.specialists[index].opened = false;
+            _updateFeatured = {
+                title: vm.featured.title,
+                description: vm.featured.description,
+                specialists: vm.featured.specialists,
+                photo: vm.featured.photo.id,
+                release: vm.featured.release.id
+            };
         }
     }
 })();

@@ -12,6 +12,7 @@
         VIEWER,
         GalleryService,
         MediaService,
+        ManagerFileService,
         NotificationService,
         PermissionService,
         $rootScope,
@@ -180,31 +181,20 @@
         };
 
         $scope.uploadImage = function () {
-            var uploadImageModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        return ['galleryImage'];
-                    }
-                }
-            });
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('galleryImage')
+                .then(function (data) {
+                    data.author = {
+                        name: data.author
+                    };
 
-            // Insert into textarea
-            uploadImageModal.result.then(function (data) {
+                    var obj = {
+                        file: data
+                    };
 
-                data.author = {
-                    name: data.author
-                };
-
-                var obj = {
-                    file: data
-                };
-
-                $scope.gallery.photos.push(obj);
-            });
+                    $scope.gallery.photos.push(obj);
+                });
         };
     }
 })();

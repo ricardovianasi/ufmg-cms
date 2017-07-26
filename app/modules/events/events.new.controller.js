@@ -12,6 +12,7 @@
         EventsService,
         MediaService,
         NotificationService,
+        ManagerFileService,
         StatusService,
         DateTimeHelper,
         ModalService,
@@ -21,12 +22,11 @@
         $window,
         PermissionService,
         validationService) {
+
         $rootScope.shownavbar = true;
-        $log.info('EventsNewController');
-
         var allTags = [];
-
-        var vm = this;
+        var vm = $scope;
+        vm.vm = vm;
 
         vm.title = 'Novo Evento';
         vm.breadcrumb = vm.title;
@@ -39,9 +39,23 @@
         vm.categories = [];
         vm.courses = [];
 
-        /**
-         * Controls event.courses array
-         **/
+        vm.addPoster = _addPoster;
+
+        onInit();
+
+        function onInit() {
+            $log.info('EventsNewController');
+        }
+
+        function _addPoster() {
+            ManagerFileService.allFiles();
+            ManagerFileService
+                .open('free')
+                .then(function (file) {
+                    vm.event.poster = file;
+                });
+        }
+
         vm.toggleSelection = function toggleSelection(courseId) {
             var idx = vm.event.courses.indexOf(courseId);
 
@@ -56,18 +70,11 @@
             vm.canPermission = PermissionService.canPost('events');
         }
 
-        /**
-         * Datepicker options
-         */
         vm.datepickerOpt = {
             initDate: DateTimeHelper.getDatepickerOpt(),
             endDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        /**
-         * Add status 'on the fly', according to requirements
-         *
-         */
         vm.datepickerOpt.initDate.status = {
             opened: false
         };
@@ -75,9 +82,6 @@
             opened: false
         };
 
-        /**
-         * Timepicker options
-         */
         vm.timepickerOpt = {
             initTime: DateTimeHelper.getTimepickerOpt(),
             endTime: DateTimeHelper.getTimepickerOpt()
@@ -93,18 +97,6 @@
             plugins: false,
         };
 
-        // Watch IMG elements to upload
-        $scope.$watch('vm.event.poster', function () {
-            if (vm.event.poster && vm.event.poster instanceof File) {
-                vm.imgHandler.upload('poster', [
-                    vm.event.poster
-                ]);
-            }
-        });
-
-        /**
-         * Handle img upload
-         */
         vm.imgHandler = {
             upload: function (elem, files) {
                 angular.forEach(files, function (file) {
@@ -117,32 +109,23 @@
                 });
             },
             uploadPhoto: function () {
-                var resolve = {
-                    formats: function () {
-                        return ['medium'];
-                    }
-                };
-
-                ModalService
-                    .uploadImage(resolve)
-                    .result
-                    .then(function (data) {
-                        vm.event.photo = {
-                            url: data.url,
-                            id: data.id
-                        };
+                ManagerFileService.imageFiles();
+                ManagerFileService
+                    .open('medium')
+                    .then(function (image) {
+                        vm.event.photo = image;
                     });
             },
             removeImage: function (elem) {
                 $timeout(function () {
                     vm.event[elem] = '';
-                    $scope.$apply();
+                    vm.$apply();
                 });
             }
         };
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formData.$invalid)){
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -159,18 +142,15 @@
             });
         };
 
-        // Undergraduate Courses
         CourseService.getCourses('graduation').then(function (data) {
             vm.courses = data.data;
             _permissions();
         });
 
-        // Events Categories
         EventsService.getEventsCategories().then(function (data) {
             vm.categories = data.data;
         });
 
-        // Statuses
         StatusService.getStatus().then(function (res) {
             vm.statuses = res.data;
         });
@@ -179,7 +159,7 @@
             allTags = data.data.items[0];
         });
 
-        $scope.findTags = function ($query) {
+        vm.findTags = function ($query) {
             return TagsService.findTags($query, allTags);
         };
     }

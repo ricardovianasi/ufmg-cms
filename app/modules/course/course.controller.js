@@ -13,6 +13,7 @@
         permission,
         $rootScope,
         $location,
+        ManagerFileService,
         Util,
         $log) {
         $rootScope.shownavbar = true;
@@ -104,17 +105,13 @@
         }
 
         function _uploadCover() {
-            var resolve = {
-                formats: function () {
-                    return ['pageCover'];
-                }
-            };
-            ModalService.uploadImage(resolve)
-                .result
-                .then(function (data) {
-                    vm.course.cover = data.id;
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('pageCover')
+                .then(function (image) {
+                    vm.course.cover = image.id;
                     vm.course.detail.cover = {};
-                    vm.course.detail.cover.url = data.url;
+                    vm.course.detail.cover.url = image.url;
                     _save();
                 });
         }

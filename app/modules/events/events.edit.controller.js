@@ -16,6 +16,7 @@
         NotificationService,
         StatusService,
         ModalService,
+        ManagerFileService,
         DateTimeHelper,
         $rootScope,
         PermissionService,
@@ -27,7 +28,19 @@
 
         var allTags = [];
 
-        var vm = this;
+        var vm = $scope;
+        vm.vm = vm;
+
+        vm.addPoster = _addPoster;
+
+        function _addPoster() {
+            ManagerFileService.allFiles();
+            ManagerFileService
+                .open('free')
+                .then(function (file) {
+                    vm.event.poster = file;
+                });
+        }
 
         vm.title = 'Editar Evento: ';
         vm.breadcrumb = vm.title;
@@ -39,10 +52,6 @@
         vm.categories = [];
         vm.courses = [];
 
-        /**
-         * Controls event.courses array
-         *
-         */
         vm.toggleSelection = function toggleSelection(courseId) {
             var idx = vm.event.courses.indexOf(courseId);
 
@@ -53,18 +62,11 @@
             }
         };
 
-        /**
-         * Datepicker options
-         */
         vm.datepickerOpt = {
             initDate: DateTimeHelper.getDatepickerOpt(),
             endDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        /**
-         * Add status 'on the fly', according to requirements
-         *
-         */
         vm.datepickerOpt.initDate.status = {
             opened: false
         };
@@ -72,9 +74,6 @@
             opened: false
         };
 
-        /**
-         * Timepicker options
-         */
         vm.timepickerOpt = {
             initTime: DateTimeHelper.getTimepickerOpt(),
             endTime: DateTimeHelper.getTimepickerOpt()
@@ -90,7 +89,7 @@
             plugins: false,
         };
 
-        $scope.$watch('event.photo', function () {
+        vm.$watch('event.photo', function () {
             if (vm.event.photo && vm.event.photo instanceof File) {
                 vm.imgHandler.upload('photo', [
                     vm.event.photo
@@ -98,9 +97,6 @@
             }
         });
 
-        /**
-         * Handle img upload
-         */
         vm.imgHandler = {
             upload: function (elem, files) {
                 angular.forEach(files, function (file) {
@@ -113,32 +109,23 @@
                 });
             },
             uploadPhoto: function () {
-                var resolve = {
-                    formats: function () {
-                        return ['medium'];
-                    }
-                };
-
-                ModalService
-                    .uploadImage(resolve)
-                    .result
-                    .then(function (data) {
-                        vm.event.photo = {
-                            url: data.url,
-                            id: data.id
-                        };
+                ManagerFileService.imageFiles();
+                ManagerFileService
+                    .open('medium')
+                    .then(function (image) {
+                        vm.event.photo = image;
                     });
             },
             removeImage: function (elem) {
                 $timeout(function () {
                     vm.event[elem] = '';
-                    $scope.$apply();
+                    vm.$apply();
                 });
             }
         };
 
         vm.publish = function (data, preview) {
-            if (!validationService.isValid($scope.formData.$invalid)){
+            if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
@@ -212,17 +199,14 @@
             vm.event = event;
         });
 
-        // Undergraduate Courses
         CourseService.getCourses('graduation').then(function (data) {
             vm.courses = data.data;
         });
 
-        // Events Categories
         EventsService.getEventsCategories().then(function (data) {
             vm.categories = data.data;
         });
 
-        // Statuses
         StatusService.getStatus().then(function (data) {
             vm.statuses = data.data;
         });
@@ -231,7 +215,7 @@
             allTags = data.data.items[0];
         });
 
-        $scope.findTags = function ($query) {
+        vm.findTags = function ($query) {
             return TagsService.findTags($query, allTags);
         };
     }

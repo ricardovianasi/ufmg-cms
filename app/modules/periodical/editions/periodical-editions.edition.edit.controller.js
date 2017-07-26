@@ -12,6 +12,7 @@
         $timeout,
         PeriodicalService,
         StatusService,
+        ManagerFileService,
         NotificationService,
         MediaService,
         DateTimeHelper,
@@ -223,34 +224,23 @@
         };
 
         vm.uploadImage = function (type) {
-            var moduleModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        var formats = {
-                            background: 'pageCover',
-                            cover: 'digitalizedCover'
-                        };
-
-                        return [formats[type]];
-                    }
-                }
-            });
-
-            moduleModal.result.then(function (data) {
-                vm.edition[type] = data.id;
-                vm.edition[type + '_url'] = data.url;
-            });
+            var formats = {
+                background: 'pageCover',
+                cover: 'digitalizedCover'
+            };
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open(formats[type])
+                .then(function (image) {
+                    vm.edition[type] = image.id;
+                    vm.edition[type + '_url'] = image.url;
+                });
         };
 
         vm.removeImage = function (type) {
             $timeout(function () {
                 vm.edition[type] = '';
                 vm.edition[type + '_url'] = '';
-
                 vm.$apply();
             });
         };

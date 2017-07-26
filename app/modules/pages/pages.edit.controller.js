@@ -14,6 +14,7 @@
         $window,
         NotificationService,
         PagesService,
+        ManagerFileService,
         WidgetsService,
         StatusService,
         DateTimeHelper,
@@ -166,7 +167,6 @@
                 });
         };
 
-        // Cover Image - Upload
         vm.page_image = null;
 
         vm.$watch('page_image', function () {
@@ -175,29 +175,16 @@
             }
         });
 
-        /**
-         * Cover Image - Upload
-         */
         vm.uploadCover = function () {
-            var moduleModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        return ['pageCover'];
-                    }
-                }
-            });
-
-            // Insert into textarea
-            moduleModal.result.then(function (data) {
-                vm.page.image = {
-                    url: data.url,
-                    id: data.id
-                };
-            });
+            ManagerFileService
+                .imageFiles()
+                .open('pageCover')
+                .then(function (image) {
+                    vm.page.image = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
         };
 
         /**
