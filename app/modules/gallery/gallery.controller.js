@@ -35,9 +35,6 @@
 
         function onInit() {
             _renderDataTable();
-            // StatusService.getStatus().then(function (data) {
-            //     vm.status = data.data;
-            // });
         }
 
         function _changeStatus(status) {
