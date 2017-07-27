@@ -1,1 +1,3 @@
 app/common/config/env.js
+app/modules/course/course.edit.controller.js
+app/modules/course/course.new.controller.js
