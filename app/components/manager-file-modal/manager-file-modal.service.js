@@ -129,6 +129,7 @@
             } else {
                 defer.reject(false);
             }
+            $('html').removeClass('full-modal');
             return;
         }
 
@@ -142,6 +143,7 @@
             } else {
                 formats = ['vertical', 'medium', 'big', 'wide'];
             }
+            $('html').addClass('full-modal');
             moduleModal.open({
                 template: '<manager-file-modal></manager-file-modal>',
                 backdrop: 'static',

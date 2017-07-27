@@ -191,6 +191,7 @@
             MODAL_SMALL: 'sm',
             MODAL_MEDIUM: 'md',
             MODAL_LARGE: 'lg',
+            FULL_SCREEN: 'full',
             confirm: _confirm,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,

@@ -1,10 +1,10 @@
 <div class="modal-header">
     <span class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="close()">
-            <i class="fa fa-times"></i>
-        </span>
-    <h4 class="modal-title" ng-if="whatStep === 'files'"><i class="fa fa-picture-o"></i> Inserir arquivos</h4>
-    <h4 class="modal-title" ng-if="whatStep === 'pos'"><i class="fa fa-edit"></i> Adicionar Legenda</h4>
-    <h4 class="modal-title" ng-if="whatStep === 'edit'"><i class="fa fa-edit"></i> Cortar imagem</h4>
+        <i class="fa fa-times"></i>
+    </span>
+    <h2 class="modal-title" ng-if="whatStep === 'files'"> Inserir arquivos</h2>
+    <h2 class="modal-title" ng-if="whatStep === 'pos'">Adicionar Legenda</h2>
+    <h2 class="modal-title" ng-if="whatStep === 'edit'">Cortar imagem</h2>
 </div>
 <div class="content-modal" ng-init="isActive = 'files'">
     <div class="sidebar" ng-class="{'sidebar-hidden': toggle}">
@@ -40,26 +40,26 @@
                     <ul class="list" ng-init="isShow = []">
                         <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
                             ng-mouseleave="isShow[$index] = false">
-                             <!-- <div class="remove btn btn-danger" ng-click="remove($event, file.id, $index)" ng-class="{'show': isShow[$index]}">
+                            <!-- <div class="remove btn btn-danger" ng-click="remove($event, file.id, $index)" ng-class="{'show': isShow[$index]}">
                                 <i class="fa fa-trash"></i>
                             </div> -->
                             <div class="actions" ng-class="{'show': isShow[$index]}">
-                                <a uib-tooltip="Abrir" class="btn btn-primary btn-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
+                                <a uib-tooltip="Abrir" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
                                     <i class="fa fa-external-link"></i>
                                 </a>
-                                <button uib-tooltip="Adicionar" class="btn btn-secondary btn-lg" ng-click="edit(file, true)">
+                                <span uib-tooltip="Adicionar" class="label label-secondary label-lg" ng-click="edit(file, true)">
                                     <i class="fa fa-plus"></i>
-                                </button>
-                                <button uib-tooltip="Editar" class="btn btn-warning btn-lg" ng-click="edit(file, false)">
+                                </span>
+                                <span uib-tooltip="Editar" class="label label-warning label-lg" ng-click="edit(file, false)">
                                     <i class="fa fa-pencil"></i>
-                                </button>
+                                </span>
                             </div>
                             <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
-                            <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index]}">
+                            <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg')}">
                                 <span class="text">{{file.legend}}</span>
                                 <span class="author">{{file.author_name}}</span>
                             </div>
-                            <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index]}">
+                            <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg')}">
                                 <span class="text">{{file.title}}</span>
                             </div>
                         </li>
@@ -69,12 +69,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="upload" ng-if="whatStep === 'files'">
-            <button class="btn btn-secondary pull-left btn-lg" ng-model="file" ngf-select ngf-accept="'file/*'" ngf-multiple="false">
-                <i class="fa fa-cloud-upload"></i> 
-                Enviar Arquivos
-            </button>
         </div>
         <div class="content-pos-upload" ng-if="currentFile.url && whatStep === 'pos'">
             <div class="row" ng-if="currentFile.url">
@@ -105,30 +99,36 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
-                        <i class="fa fa-times"></i> Voltar
-                    </button>
-                <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="updateMidia()">
-                        <i class="fa fa-check"></i> Continuar
-                    </button>
-            </div>
         </div>
         <div class="content-edit-for-post" ng-if="currentFile.url_without_thumbor && whatStep === 'edit'">
             <div class="actions">
                 <button class="btn btn-primary" ng-repeat="(key, format) in formats" ng-click="setFormat(key)" ng-class="{'btn-secondary': activeFormat === key, 'btn-click': format.name === 'Vertical'}">{{ format.name }} ({{ format.width }}x{{ format.height }})</button>
             </div>
-            <div id="mrImageContainer" mr-image mr-src="currentFile.url_without_thumbor" mr-max-width="380" mr-selector="selector"
-                mr-aspect-ratio="aspectRatio"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
+            <div id="mrImageContainer" mr-image mr-src="currentFile.url_without_thumbor" mr-max-width="380" mr-selector="selector" mr-aspect-ratio="aspectRatio"></div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer upload">
+    <div ng-if="currentFile.url && whatStep === 'pos'">
+        <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
+            <i class="fa fa-times"></i> Voltar
+        </button>
+        <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="updateMidia()">
+            <i class="fa fa-check"></i> Continuar
+        </button>
+    </div>
+    <div class="row" ng-if="whatStep === 'edit'">
+        <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
                         <i class="fa fa-times"></i> Voltar
                     </button>
-                <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="insert()">
+        <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="insert()">
                         <i class="fa fa-check"></i> Inserir
                     </button>
-            </div>
-        </div>
-
+    </div>
+    <div class="row" ng-if="whatStep === 'files'">
+        <button class="btn btn-secondary pull-right btn-lg" ng-model="file" ngf-select ngf-accept="'file/*'" ngf-multiple="false">
+                <i class="fa fa-cloud-upload"></i> 
+                Enviar Arquivos
+            </button>
     </div>
 </div>

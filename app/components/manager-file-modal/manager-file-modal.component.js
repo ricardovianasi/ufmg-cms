@@ -57,7 +57,7 @@
             _filterTo(vm.EXTENSION[0].files);
             vm.availableFormats = {
                 free: {
-                    name: 'Livre',
+                    name: 'Selecione a área',
                 },
                 vertical: {
                     name: 'Vertical',
