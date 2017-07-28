@@ -129,7 +129,6 @@
             } else {
                 defer.reject(false);
             }
-            $('html').removeClass('full-modal');
             return;
         }
 
@@ -144,17 +143,22 @@
                 formats = ['vertical', 'medium', 'big', 'wide'];
             }
             $('html').addClass('full-modal');
-            moduleModal.open({
-                template: '<manager-file-modal></manager-file-modal>',
-                backdrop: 'static',
-                size: 'xl',
-                controller: function ($uibModalInstance, $scope) {
-                    $scope.formats = formats;
-                    $scope.close = function () {
-                        $uibModalInstance.close();
-                    };
-                }
-            });
+            moduleModal
+                .open({
+                    template: '<manager-file-modal></manager-file-modal>',
+                    backdrop: 'static',
+                    size: 'xl',
+                    controller: function ($uibModalInstance, $scope) {
+                        $scope.formats = formats;
+                        $scope.close = function () {
+                            $uibModalInstance.close();
+                        };
+                    }
+                })
+                .result
+                .finally(function () {
+                    $('html').removeClass('full-modal');
+                });
             return defer.promise;
         }
     }
