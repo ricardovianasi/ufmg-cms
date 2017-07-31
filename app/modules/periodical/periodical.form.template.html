@@ -56,23 +56,17 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': !periodical.url}">
-                        <label>
-                            Logo <small>(A logomarca deve ser branca em PNG com fundo transparente com altura máxima de 72px)</small>:
-                        </label>
-                        <input type="file" class="form-control" ngf-select ng-model="add_photos" ngf-multiple="false" ng-if="!periodical.url" style="height:auto"
-                            name="img" required>
-                            <div class="clearfix form-control" ng-show="periodical.url">
-                                <div class="pull-left">{{ periodical.url }}</div>
-                                <div class="pull-right">
-                                    <span class="label label-danger remove-image-periodical" ng-show="periodical.url" ng-click="removeImage()">
-                                    <i class="fa fa-remove"></i> REMOVER
-                                </span>
-                                </div>
-                            </div>
-                            <div ng-show="!periodical.url" class="error-message" role="alert">
-                                <div ng-show="formPeriodicals.img.$error.required">Campo obrigatório</div>
-                            </div>
+                    <div class="pages-module add-module">
+                        <div class="chosen-cover">
+                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="periodical.url">
+                                <i class="fa fa-remove"></i> REMOVER IMAGEM
+                            </a>
+                        </div>
+                        <div class="add-title" ng-model="page_cover" ng-click="upload()" ng-show=!periodical.url>+ Adicionar Logo
+                        </div>
+                        <div class="uploaded-image" ng-show="periodical.url">
+                            <img class="img-responsive" ng-src="{{ periodical.url }}">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,11 +93,15 @@
                 <div class="col-xs-3">
                     <div class="form-group" ng-class="{'has-error': formPeriodicals.dateFormat.$error.required && !formPeriodicals.dateFormat.$valid}">
                         <label>Formato de Data:</label>
-                        <select class="form-control" ng-model="periodical.date_format" ng-options="item.format as item.label for item in date_formats track by item.format"
-                            name="dateFormat" required></select>
-                            <div ng-show="!formPeriodicals.dateFormat.$valid" class="error-message" role="alert">
-                                <div ng-show="formPeriodicals.dateFormat.$error.required">Campo obrigatório</div>
-                            </div>
+                        <ui-select name="dateFormat" ng-model="periodical.date_format" theme="bootstrap" class="ui-select" title="Formato: {{$select.selected.label}}">
+                            <ui-select-match placeholder="Selecione ou procure um formato">{{ $select.selected.label }}</ui-select-match>
+                            <ui-select-choices repeat="item.format as item in date_formats | filter: $select.search track by $index">
+                                <div ng-bind-html="item.label | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <div ng-show="!formPeriodicals.dateFormat.$valid" class="error-message" role="alert">
+                            <div ng-show="formPeriodicals.dateFormat.$error.required">Campo obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
