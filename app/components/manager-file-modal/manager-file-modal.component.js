@@ -59,6 +59,11 @@
                 free: {
                     name: 'Selecione a área',
                 },
+                logo: {
+                    name: 'Logo',
+                    width: 300,
+                    height: 72
+                },
                 vertical: {
                     name: 'Vertical',
                     width: 352,
