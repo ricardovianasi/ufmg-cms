@@ -80,15 +80,12 @@
             }
             if (params.isFiles) {
                 parameters += getUniqFiles();
+                parameters += _getTypeParam(typeParam);
             }
             if (params.page_size) {
                 parameters += '&page_size=' + params.page_size;
             }
             parameters += hasAuthor();
-
-            if (typeParam) {
-                parameters += _getTypeParam(typeParam);
-            }
 
             if (params.filter) {
                 parameters += _getCustomParam(params.filter);
@@ -102,6 +99,8 @@
 
             filterIndex = 0;
             conditionsIndex = 0;
+            typeParam = false;
+
             return parameters;
         }
 

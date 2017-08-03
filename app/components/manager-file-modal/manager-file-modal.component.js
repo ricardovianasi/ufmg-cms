@@ -5,7 +5,8 @@
         .module('componentsModule')
         .component('managerFileModal', {
             templateUrl: 'components/manager-file-modal/manager-file-modal.html',
-            controller: managerFileModalCtrl
+            controller: managerFileModalCtrl,
+            controllerAs: 'vm'
         });
 
     /** ngInject */
@@ -19,10 +20,11 @@
         $timeout) {
 
         var vm = $scope;
+        var vmForFileWatch = this;
         var countPage = 1;
         var hasRequest = false;
         var pageSize = 12;
-        var Formats = $scope.$parent.formats;
+        var Formats = vm.$parent.formats;
         var imageTempToDelete;
         var formatSelected = Formats[0] || 'free';
 
@@ -34,6 +36,7 @@
         vm.activeFormat = {};
         vm.aspectRatio = {};
         vm.files = {};
+        vmForFileWatch.file = {};
         vm.currentElement = 0;
         vm.filterType = 'all';
         vm.fileNotFound = false;
@@ -113,7 +116,7 @@
             if (imageTempToDelete) {
                 MediaService.removeMedia(imageTempToDelete.id);
             }
-            $scope.$parent.close();
+            vm.$parent.close();
         }
 
         function _back() {
@@ -141,8 +144,8 @@
         }
 
         function onEvents() {
-            $scope.$watch('$ctrl.file', function () {
-                if (vm.file) {
+            vm.$watch('vm.file', function () {
+                if (vmForFileWatch.file) {
                     watchFile();
                 }
             });
@@ -151,7 +154,7 @@
         function watchFile() {
             if (vm.whatStep === 'files') {
                 MediaService
-                    .newFile(vm.file)
+                    .newFile(vmForFileWatch.file)
                     .then(function (data) {
                         vm.currentFile = data;
                         vm.whatStep = 'pos';
@@ -205,7 +208,7 @@
                 .then(function (res) {
                     res.data.type = formatSelected;
                     ManagerFileService.close(res.data);
-                    $scope.$parent.close();
+                    vm.$parent.close();
                 });
         }
 
@@ -255,7 +258,7 @@
                 editImage();
             } else {
                 ManagerFileService.close(file);
-                $scope.$parent.close();
+                vm.$parent.close();
             }
         }
 

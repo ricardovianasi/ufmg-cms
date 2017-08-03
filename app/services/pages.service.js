@@ -123,7 +123,7 @@
                 cleanPage.widgets.side = [];
             }
 
-            cleanPage.parent = page.parent;
+            cleanPage.parent = page.parent.id ? page.parent.id : page.parent;
             cleanPage.page_type = page.page_type;
             cleanPage.slug = angular.isDefined(page.slug) ? page.slug.slug : '';
 
