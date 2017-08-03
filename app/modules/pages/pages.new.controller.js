@@ -4,7 +4,8 @@
     angular.module('pagesModule')
         .controller('PagesNewController', PagesNewController);
     /** ngInject */
-    function PagesNewController($scope,
+    function PagesNewController(
+        $scope,
         $uibModal,
         $location,
         $timeout,
@@ -22,83 +23,31 @@
         $q,
         validationService,
         UsersService,
-        $log) {
-        $rootScope.shownavbar = true;
-        $log.info('PagesNewController');
+        $log
+    ) {
+
         var allTags = [];
         var vm = $scope;
+        var hasRequest = false;
+        var countPage = 1;
+
+        vm.pagesParent = [];
+        vm.title = 'Nova página';
+
 
         vm.publish = _publish;
         vm.findTags = _findTags;
         vm.uploadCover = _uploadCover;
-        vm.removeCover = _removeCover;
+        vm.removeImage = _removeImage;
         vm.handleModule = _handleModule;
         vm.removeModule = _removeModule;
+        vm.loadMorePage = _loadMorePage;
+        vm.removeModuleMain = _removeModuleMain;
+        vm.removeModuleSide = _removeModuleSide;
 
-        var hasRequest = false;
-        var countPage = 1;
-        vm.pagesParent = [];
-
-        function loadMore(dataTemp, search) {
-            var defer = $q.defer();
-            var searchQuery = 'title';
-            if (search || !hasRequest) {
-                if (search) {
-                    countPage = 1;
-                    dataTemp = [];
-                } else {
-                    if (countPage === 1) {
-                        dataTemp = [];
-                    }
-                    hasRequest = true;
-                }
-                var params = {
-                    page: countPage,
-                    page_size: 10,
-                    order_by: {
-                        field: 'title',
-                        direction: 'ASC'
-                    },
-                    search: search
-                };
-                if (!params.search && countPage === 1) {
-                    vm.currentElement = 0;
-                }
-                PagesService
-                    .getPages(Util.getParams(params, searchQuery))
-                    .then(function (res) {
-                        countPage++;
-                        vm.currentElement += res.data.items.length;
-                        if (res.data.total > vm.currentElement && 10 >= res.data.items.length) {
-                            $timeout(function () {
-                                hasRequest = false;
-                            }, 100);
-                        }
-                        for (var index = 0; index < res.data.items.length; index++) {
-                            dataTemp.push(res.data.items[index]);
-                        }
-                        defer.resolve(dataTemp);
-                    });
-            }
-            return defer.promise;
-        }
-
-        vm.loadMore = function (search) {
-            reset(vm.pagesParent);
-            loadMore(vm.pagesParent, search)
-                .then(function (data) {
-                    vm.pagesParent = Object.assign(vm.pagesParent, data);
-                });
-        };
-
-        function reset(data) {
-            if (angular.isUndefined(data[0])) {
-                countPage = 1;
-                vm.currentElement = 0;
-            }
-        }
 
         function onInit() {
+            $log.info('PagesNewController');
             vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
@@ -151,6 +100,65 @@
                 });
         }
 
+        function loadMore(dataTemp, search) {
+            var defer = $q.defer();
+            var searchQuery = 'title';
+            if (search || !hasRequest) {
+                if (search) {
+                    countPage = 1;
+                    dataTemp = [];
+                } else {
+                    if (countPage === 1) {
+                        dataTemp = [];
+                    }
+                    hasRequest = true;
+                }
+                var params = {
+                    page: countPage,
+                    page_size: 10,
+                    order_by: {
+                        field: 'title',
+                        direction: 'ASC'
+                    },
+                    search: search
+                };
+                if (!params.search && countPage === 1) {
+                    vm.currentElement = 0;
+                }
+                PagesService
+                    .getPages(Util.getParams(params, searchQuery), true)
+                    .then(function (res) {
+                        countPage++;
+                        vm.currentElement += res.data.items.length;
+                        if (res.data.total > vm.currentElement && 10 >= res.data.items.length) {
+                            $timeout(function () {
+                                hasRequest = false;
+                            }, 100);
+                        }
+                        for (var index = 0; index < res.data.items.length; index++) {
+                            dataTemp.push(res.data.items[index]);
+                        }
+                        defer.resolve(dataTemp);
+                    });
+            }
+            return defer.promise;
+        }
+
+        function _loadMorePage(search) {
+            reset(vm.pagesParent);
+            loadMore(vm.pagesParent, search)
+                .then(function (data) {
+                    vm.pagesParent = Object.assign(vm.pagesParent, data);
+                });
+        }
+
+        function reset(data) {
+            if (angular.isUndefined(data[0])) {
+                countPage = 1;
+                vm.currentElement = 0;
+            }
+        }
+
         function _findTags($query) {
             return TagsService.findTags($query, allTags);
         }
@@ -185,26 +193,35 @@
                 });
         }
 
-        function _removeCover() {
+        function _removeImage() {
             $timeout(function () {
                 vm.page.image = '';
                 vm.$apply();
             });
         }
 
-        function _handleModule(column, idx) {
+        function _handleModule(column, index) {
             return PagesService
                 .module()
-                .handle($scope, column, idx);
+                .handle($scope, column, index);
         }
 
-        function _removeModule(column, idx) {
+        function _removeModule(column, index) {
             ModalService
-                .confirm('Você deseja excluir este módulo?')
+                .confirm('Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?', ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
-                    vm.page.widgets[column].splice(idx, 1);
+                    vm.page.widgets[column].splice(index, 1);
+                    NotificationService.success('Modulo removido com sucesso.');
                 });
+        }
+
+        function _removeModuleMain(index) {
+            _removeModule('main', index);
+        }
+
+        function _removeModuleSide(index) {
+            _removeModule('side', index);
         }
 
         onInit();

@@ -24,6 +24,7 @@
         var pageSize = 12;
         var Formats = $scope.$parent.formats;
         var imageTempToDelete;
+        var formatSelected = Formats[0] || 'free';
 
         vm.selector = {};
         vm.formats = {};
@@ -202,6 +203,7 @@
             MediaService
                 .cropImage(vm.currentFile.id, obj)
                 .then(function (res) {
+                    res.data.type = formatSelected;
                     ManagerFileService.close(res.data);
                     $scope.$parent.close();
                 });
@@ -266,6 +268,7 @@
         }
 
         function _setFormat(format, setCrop) {
+            formatSelected = format;
             var obj = vm.availableFormats[format];
             if (setCrop !== false) {
                 vm.selector = angular.extend(vm.selector, {
@@ -332,13 +335,14 @@
                         field: 'createdAt',
                         direction: 'DESC'
                     },
+                    isFiles: true,
                     search: search
                 };
                 if (!params.search && countPage === 1) {
                     vm.currentElement = 0;
                 }
                 MediaService
-                    .getMedia(Util.getParams(params, searchQuery))
+                    .getMedia(Util.getParams(params, searchQuery), true)
                     .then(function (res) {
                         countPage++;
                         vm.currentElement += res.data.items.length;

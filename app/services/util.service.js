@@ -50,16 +50,19 @@
             if (!paramType || paramType === 'all') {
                 return '';
             }
+            conditionsIndex = 0;
+            filterIndex++;
+            var resultProcessParamType = '&query[filter][' + filterIndex + '][type]=orx';
             var array = paramType.split(',');
-            var resultProcessParamType = '';
             for (var i = 0; i < array.length; i++) {
                 var type = array[i];
-                filterIndex++;
-                resultProcessParamType += '&query[filter][' + filterIndex + '][type]=eq' +
-                    '&query[filter][' + filterIndex + '][field]=type' +
-                    '&query[filter][' + filterIndex + '][value]=' + type.toLowerCase() +
-                    '&query[filter][' + filterIndex + '][where]=or';
+                conditionsIndex++;
+                resultProcessParamType += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=eq' +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=type' +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + type.toLowerCase() +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
             }
+            resultProcessParamType += '&query[filter][' + filterIndex + '][where]=and';
             return resultProcessParamType;
         }
 
@@ -74,6 +77,9 @@
             }
             if (params.page) {
                 parameters += 'page=' + params.page;
+            }
+            if (params.isFiles) {
+                parameters += getUniqFiles();
             }
             if (params.page_size) {
                 parameters += '&page_size=' + params.page_size;
@@ -97,6 +103,16 @@
             filterIndex = 0;
             conditionsIndex = 0;
             return parameters;
+        }
+
+        function getUniqFiles() {
+            var paramParent = '';
+            filterIndex++;
+            paramParent += '&query[filter][' + filterIndex + '][type]=isnull' +
+                '&query[filter][' + filterIndex + '][field]=parent' +
+                '&query[filter][' + filterIndex + '][where]=and';
+            return paramParent;
+
         }
 
         function hasAuthor() {

@@ -77,6 +77,7 @@
             vm.edition.slug = res.data.slug;
             vm.edition.post_date = res.data.post_date;
             vm.edition.publish_date = res.data.publish_date;
+            vm.edition.legend = res.data.file.legend;
 
             _getAllArticles(vm.edition.id);
 
@@ -205,23 +206,17 @@
             };
         }
 
-        // Upload
-        // PDF
-        vm.edition_file = null;
-
-        vm.$watch('edition_file', function () {
-            if (vm.edition_file) {
-                vm.uploadFile(vm.edition_file);
-            }
-        });
-
-        vm.uploadFile = function (file) {
-            MediaService.newFile(file).then(function (data) {
-                vm.edition.pdf = data.id;
-                vm.edition.file = data.id;
-                vm.edition.pdf_url = data.url;
-            });
-        };
+        vm.uploadPDF = function () {
+            ManagerFileService.pdfFiles();
+            ManagerFileService
+                .open('pdf')
+                .then(function (data) {
+                    vm.edition.pdf = data.id;
+                    vm.edition.file = data.id;
+                    vm.edition.pdf_url = data.url;
+                    vm.edition.legend = data.legend;
+                });
+        }
 
         vm.uploadImage = function (type) {
             var formats = {

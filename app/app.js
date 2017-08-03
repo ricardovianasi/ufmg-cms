@@ -2,7 +2,6 @@
     'use strict';
 
     angular.module('app', [
-        // Dependencies
         'as.sortable',
         'env',
         'ngAnimate',

@@ -88,7 +88,7 @@
                 mm = '0' + mm;
             }
             var yyyy = datePost.getFullYear();
-            
+
             cleanPage.post_date = dd + '/' + mm + '/' + yyyy + ' ' + page.scheduled_time;
 
             cleanPage.tags = _.map(page.tags, 'text');
@@ -123,18 +123,20 @@
                 cleanPage.widgets.side = [];
             }
 
-            cleanPage.parent = page.parent ? page.parent.id : undefined;
+            cleanPage.parent = page.parent;
             cleanPage.page_type = page.page_type;
             cleanPage.slug = angular.isDefined(page.slug) ? page.slug.slug : '';
 
             return cleanPage;
         };
 
-        var _getPages = function (params) {
+        var _getPages = function (params, ignoreLoadingBar) {
             if (angular.isUndefined(params)) {
                 params = '';
             }
-            return $http.get(apiUrl + '/page' + params);
+            return $http.get(apiUrl + '/page' + params, {
+                ignoreLoadingBar: ignoreLoadingBar
+            });
         };
 
         var _getTags = function ($scope) {

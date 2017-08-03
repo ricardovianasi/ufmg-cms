@@ -40,9 +40,6 @@
                     <ul class="list" ng-init="isShow = []">
                         <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
                             ng-mouseleave="isShow[$index] = false">
-                            <!-- <div class="remove btn btn-danger" ng-click="remove($event, file.id, $index)" ng-class="{'show': isShow[$index]}">
-                                <i class="fa fa-trash"></i>
-                            </div> -->
                             <div class="actions" ng-class="{'show': isShow[$index]}">
                                 <a uib-tooltip="Abrir" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
                                     <i class="fa fa-external-link"></i>
@@ -53,6 +50,9 @@
                                 <span uib-tooltip="Editar" class="label label-warning label-lg" ng-click="edit(file, false)">
                                     <i class="fa fa-pencil"></i>
                                 </span>
+                                <!-- <span class="label label-danger label-lg" ng-click="remove($event, file.id, $index)">
+                                    <i class="fa fa-trash"></i>
+                                </span> -->
                             </div>
                             <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
                             <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg')}">

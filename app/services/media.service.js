@@ -25,12 +25,14 @@
 
                 return $http.get(url);
             },
-            getMedias: function (params) {
+            getMedias: function (params, ignoreLoadingBar) {
                 if (angular.isUndefined(params)) {
                     params = '';
                 }
                 var url = $filter('format')('{0}{1}', MEDIA_ENDPOINT, params);
-                return $http.get(url);
+                return $http.get(url, {
+                    ignoreLoadingBar: ignoreLoadingBar
+                });
             },
             removeMedia: function (id) {
                 return $http.delete(apiUrl + '/file/' + id);

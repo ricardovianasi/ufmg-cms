@@ -112,26 +112,17 @@
                 });
         };
 
-        // Upload
-        // PDF
-        vm.edition_file = null;
-
-        vm.$watch('edition_file', function () {
-            if (vm.edition_file) {
-                vm.uploadFile(vm.edition_file);
-            }
-        });
-
-        /**
-         * Upload files like pdf, txt, doc, etc. Not for images
-         */
-        vm.uploadFile = function (file) {
-            MediaService.newFile(file).then(function (data) {
-                vm.edition.pdf = data.id;
-                vm.edition.file = data.id;
-                vm.edition.pdf_url = data.url;
-            });
-        };
+        vm.uploadPDF = function () {
+            ManagerFileService.pdfFiles();
+            ManagerFileService
+                .open('pdf')
+                .then(function (data) {
+                    vm.edition.pdf = data.id;
+                    vm.edition.file = data.id;
+                    vm.edition.pdf_url = data.url;
+                    vm.edition.legend = data.legend;
+                });
+        }
 
         vm.uploadImage = function (type) {
             var formats = {
