@@ -12,12 +12,29 @@
         $route,
         $log,
         permission,
-        $scope) {
+        RedactorPluginService,
+        $scope
+    ) {
 
         var vm = this; //jshint ignore: line
 
         $rootScope.shownavbar = true;
         $log.info('faNewController');
+
+        $scope.$watch('vm.newAsk.answer', function(){
+            console.dir(vm.newAsk.answer);
+        });
+
+        onInit();
+
+        function onInit() {
+            $scope.imagencropOptions = angular.extend({
+                formats: ['vertical', 'medium']
+            }, RedactorPluginService.getOptions('imagencrop'));
+
+            $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+            $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+        }
 
         var id = $routeParams.faqId;
         vm.canPermission = permission;
@@ -37,7 +54,7 @@
             items: []
         };
 
-        $scope.sortableOptions = {
+        vm.sortableOptions = {
             accept: function (sourceItemHandleScope, destSortableScope) {
                 return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
             },
