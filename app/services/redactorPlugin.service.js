@@ -19,6 +19,7 @@
 
         var _plugins = {
             imagencrop: function (options) {
+                console.dir(options);
                 return {
                     init: function () {
                         var button = this.button.add('imagencrop', 'Inserir Imagem');
@@ -31,7 +32,7 @@
 
                         ManagerFileService
                             .imageFiles()
-                            .open(options.formats || 'free')
+                            .open(options.formats || ['vertical', 'medium', 'big', 'wide'])
                             .then(function (image) {
                                 var data = {
                                     type: image.type,
