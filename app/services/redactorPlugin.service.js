@@ -10,6 +10,9 @@
 
         var _insertItemOnEditor = function (redactor, template, obj) {
             var html = _.template($(template).html()); // jshint ignore: line
+            console.log(redactor);
+            console.log(template);
+            console.log(obj);
 
             redactor.selection.restore();
             redactor.buffer.set();
@@ -32,13 +35,13 @@
                         ManagerFileService
                             .imageFiles()
                             .open(options.formats || ['vertical', 'medium', 'big', 'wide'])
-                            .then(function (image) {
+                            .then(function (file) {
                                 var data = {
-                                    type: image.type,
-                                    id: image.id,
-                                    legend: image.legend,
-                                    author: image.author_name,
-                                    url: image.url
+                                    type: file.type,
+                                    id: file.id,
+                                    legend: file.legend,
+                                    author: file.author_name,
+                                    url: file.url
                                 };
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
@@ -61,7 +64,14 @@
                         ManagerFileService
                             .audioFiles()
                             .open()
-                            .then(function (data) {
+                            .then(function (file) {
+                                var data = {
+                                    type: file.type,
+                                    id: file.id,
+                                    legend: file.legend,
+                                    author: file.author_name,
+                                    url: file.url
+                                };
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
                                 }
@@ -83,7 +93,14 @@
                         ManagerFileService
                             .allFiles()
                             .open()
-                            .then(function (data) {
+                            .then(function (file) {
+                                var data = {
+                                    type: file.type,
+                                    id: file.id,
+                                    legend: file.legend,
+                                    author: file.author_name,
+                                    url: file.url
+                                };
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
                                 }
