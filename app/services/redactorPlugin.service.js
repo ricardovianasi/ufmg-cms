@@ -9,16 +9,27 @@
         $log.info('RedactorPluginService');
 
         var _insertItemOnEditor = function (redactor, template, obj) {
-            var html = _.template($(template).html()); // jshint ignore: line
-            console.log(redactor);
-            console.log(template);
-            console.log(obj);
+            var html = _.template($(template).html());
 
             redactor.selection.restore();
             redactor.buffer.set();
             redactor.air.collapsed();
             redactor.insert.html(html(obj));
         };
+
+        function _getData(file) {
+            return new(function () {
+                return {
+                    type: file.type,
+                    url: file.url,
+                    legend: file.legend,
+                    author: file.author_name,
+                    title: file.title,
+                    isList: true,
+                    isIcon: false
+                }
+            })();
+        }
 
         var _plugins = {
             imagencrop: function (options) {
@@ -36,13 +47,7 @@
                             .imageFiles()
                             .open(options.formats || ['vertical', 'medium', 'big', 'wide'])
                             .then(function (file) {
-                                var data = {
-                                    type: file.type,
-                                    id: file.id,
-                                    legend: file.legend,
-                                    author: file.author_name,
-                                    url: file.url
-                                };
+                                var data = _getData(file);
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
                                 }
@@ -65,13 +70,7 @@
                             .audioFiles()
                             .open()
                             .then(function (file) {
-                                var data = {
-                                    type: file.type,
-                                    id: file.id,
-                                    legend: file.legend,
-                                    author: file.author_name,
-                                    url: file.url
-                                };
+                                var data = _getData(file);
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
                                 }
@@ -82,7 +81,7 @@
             uploadfiles: function (options) {
                 return {
                     init: function () {
-                        var button = this.button.add('uploadfiles', 'Inserir Arquivos');
+                        var button = this.button.add('uploadfiles', 'Inserir Arquivo');
                         this.button.setIcon(button, '<i class="fa-file-code-o"></i>');
                         this.button.addCallback(button, this.uploadfiles.show);
                     },
@@ -91,16 +90,10 @@
                         _this.selection.save();
 
                         ManagerFileService
-                            .allFiles()
+                            .files()
                             .open()
                             .then(function (file) {
-                                var data = {
-                                    type: file.type,
-                                    id: file.id,
-                                    legend: file.legend,
-                                    author: file.author_name,
-                                    url: file.url
-                                };
+                                var data = _getData(file);
                                 if (options.callback) {
                                     options.callback.call(null, _this, data);
                                 }

@@ -13,7 +13,6 @@
                     var success = function (data) {
                         deferred.resolve(data);
                     };
-
                     if (files && files.length) {
                         for (var i = 0; i < files.length; i++) {
                             var file = files[i];

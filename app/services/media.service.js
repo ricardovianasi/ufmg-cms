@@ -55,7 +55,7 @@
             },
             newFile: function (file) {
                 var deferred = $q.defer();
-
+                
                 Upload.upload({
                     url: apiUrl + '/file',
                     fields: {

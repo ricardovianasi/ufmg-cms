@@ -21,10 +21,6 @@
         $rootScope.shownavbar = true;
         $log.info('faNewController');
 
-        $scope.$watch('vm.newAsk.answer', function(){
-            console.dir(vm.newAsk.answer);
-        });
-
         onInit();
 
         function onInit() {
@@ -166,14 +162,13 @@
 
             if (id) {
                 faqService.update(vm.faq).then(function () {
-                    $route.reload();
-                    _getFaq();
                     NotificationService.success('FAQ alterado com sucesso!');
+                    $location.path('/faq');
                 });
             } else {
-                faqService.save(vm.faq).then(function (data) {
-                    $location.path('/faq/edit/' + data.data.id);
+                faqService.save(vm.faq).then(function () {
                     NotificationService.success('FAQ salvo com sucesso!');
+                    $location.path('/faq');
                 });
             }
         }

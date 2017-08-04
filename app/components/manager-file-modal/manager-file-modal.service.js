@@ -48,6 +48,17 @@
             open: open
         };
 
+        function files() {
+            EXTENSION = [];
+            EXTENSION.push(
+                PDF,
+                TEXT,
+                DATA,
+                APRESENTATION
+            );
+            return openModal;
+        }
+
         function allFiles() {
             EXTENSION = [];
             EXTENSION.push(
@@ -120,6 +131,7 @@
             dataFiles: dataFiles,
             audioFiles: audioFiles,
             videoFiles: videoFiles,
+            files: files,
             apresentationFiles: apresentationFiles
         };
 
