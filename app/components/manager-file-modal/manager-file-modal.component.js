@@ -36,7 +36,7 @@
         vm.activeFormat = {};
         vm.aspectRatio = {};
         vm.files = {};
-        vmForFileWatch.file = {};
+        vmForFileWatch.file = false;
         vm.currentElement = 0;
         vm.filterType = 'all';
         vm.fileNotFound = false;
