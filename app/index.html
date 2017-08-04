@@ -28,7 +28,7 @@
             <span class="text">Carregando</span>
         </div>
     </div>
-    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
+    <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="true">
         <div class="navbar-inner">
             <div class="navbar-brand ufmg">
                 <a href="#/" class="logo">
@@ -69,8 +69,8 @@
         </div>
     </nav>
     <div class="page-container row">
-        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar"></div>
-        <div class="main-content" ng-class="{'margin-sidebar': shownavbar}">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="true"></div>
+        <div class="main-content" ng-class="{'margin-sidebar': true}">
             <ng-view />
         </div>
     </div>
