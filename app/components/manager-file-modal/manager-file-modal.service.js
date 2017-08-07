@@ -6,9 +6,7 @@
         .factory('ManagerFileService', ManagerFileService);
 
     /** ngInject */
-    function ManagerFileService(
-        $uibModal,
-        $q) {
+    function ManagerFileService($uibModal, $q) {
         var moduleModal = $uibModal;
         var defer;
         var EXTENSION = [];
@@ -35,10 +33,6 @@
         var AUDIO = {
             name: 'Audio',
             files: 'AIF,IFF,M3U,M4A,MID,MP3,MPA,WAV,WMA'.toLowerCase()
-        };
-        var VIDEO = {
-            name: 'Video',
-            files: '3G2,3GP,ASF,AVI,FLV,M4V,MOV,MP4,MPG,RM,SRT,SWF,VOB,WMV'.toLowerCase()
         };
         var APRESENTATION = {
             name: 'Apresentação',
@@ -68,7 +62,6 @@
                 TEXT,
                 DATA,
                 AUDIO,
-                VIDEO,
                 APRESENTATION
             );
             return openModal;
@@ -104,12 +97,6 @@
             return openModal;
         }
 
-        function videoFiles() {
-            EXTENSION = [];
-            EXTENSION.push(VIDEO);
-            return openModal;
-        }
-
         function apresentationFiles() {
             EXTENSION = [];
             EXTENSION.push(APRESENTATION);
@@ -130,7 +117,6 @@
             textFiles: textFiles,
             dataFiles: dataFiles,
             audioFiles: audioFiles,
-            videoFiles: videoFiles,
             files: files,
             apresentationFiles: apresentationFiles
         };
