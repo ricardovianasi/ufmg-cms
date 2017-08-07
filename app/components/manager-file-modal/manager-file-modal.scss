@@ -1,11 +1,13 @@
 manager-file-modal {
     width: 100%;
     height: 100%;
+    position: absolute;
     .content-modal {
         background-color: #fff;
         color: rgb(51, 51, 51);
         width: 100%;
         display: flex;
+        height: calc(100% - 85px - 84px);
         flex-flow: row nowrap;
         align-content: space-between;
         justify-content: space-between;
@@ -116,11 +118,11 @@ manager-file-modal {
                 position: relative;
                 margin-bottom: 26px;
                 transition: all ease-in 0.3s;
+                height: 100%;
                 >.images {
                     overflow-x: hidden;
                     overflow-y: auto;
                     width: 100%;
-                    height: 500px;
                     >.dropdown-upload {
                         >.list {
                             list-style: none;

@@ -41,13 +41,13 @@
                         <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
                             ng-mouseleave="isShow[$index] = false">
                             <div class="actions" ng-class="{'show': isShow[$index]}">
-                                <a uib-tooltip="Abrir" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
-                                    <i class="fa fa-external-link"></i>
+                                <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <span uib-tooltip="Adicionar" class="label label-secondary label-lg" ng-click="edit(file, true)">
-                                    <i class="fa fa-plus"></i>
+                                <span uib-tooltip="Usar mídia" tooltip-placement="bottom" class="label label-secondary label-lg" ng-click="edit(file, true)">
+                                    <i class="fa fa-check"></i>
                                 </span>
-                                <span uib-tooltip="Editar" class="label label-warning label-lg" ng-click="edit(file, false)">
+                                <span uib-tooltip="Editar" tooltip-placement="bottom" class="label label-warning label-lg" ng-click="edit(file, false)">
                                     <i class="fa fa-pencil"></i>
                                 </span>
                                 <!-- <span class="label label-danger label-lg" ng-click="remove($event, file.id, $index)">
@@ -111,7 +111,7 @@
 <div class="modal-footer upload">
     <div ng-if="currentFile.url && whatStep === 'pos'">
         <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
-            <i class="fa fa-times"></i> Voltar
+            <i class="fa fa-chevron-left"></i> Voltar
         </button>
         <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="updateMidia()">
             <i class="fa fa-check"></i> Continuar
@@ -119,7 +119,7 @@
     </div>
     <div class="row" ng-if="whatStep === 'edit'">
         <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
-                        <i class="fa fa-times"></i> Voltar
+                        <i class="fa fa-chevron-left"></i> Voltar
                     </button>
         <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="insert()">
                         <i class="fa fa-check"></i> Inserir
