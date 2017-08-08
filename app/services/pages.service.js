@@ -73,6 +73,7 @@
         }
 
         var _parseData = function (page) {
+            console.log(page)
             var cleanPage = {};
 
             cleanPage.image = page.image ? page.image.id : null;
@@ -88,7 +89,7 @@
                 mm = '0' + mm;
             }
             var yyyy = datePost.getFullYear();
-            
+
             cleanPage.post_date = dd + '/' + mm + '/' + yyyy + ' ' + page.scheduled_time;
 
             cleanPage.tags = _.map(page.tags, 'text');
@@ -122,19 +123,24 @@
             if (page.columns === 1) {
                 cleanPage.widgets.side = [];
             }
-
-            cleanPage.parent = page.parent ? page.parent.id : undefined;
+            if (page.parent) {
+                cleanPage.parent = page.parent.id ? page.parent.id : page.parent;
+            } else {
+                cleanPage.parent = null;
+            }
             cleanPage.page_type = page.page_type;
             cleanPage.slug = angular.isDefined(page.slug) ? page.slug.slug : '';
 
             return cleanPage;
         };
 
-        var _getPages = function (params) {
+        var _getPages = function (params, ignoreLoadingBar) {
             if (angular.isUndefined(params)) {
                 params = '';
             }
-            return $http.get(apiUrl + '/page' + params);
+            return $http.get(apiUrl + '/page' + params, {
+                ignoreLoadingBar: ignoreLoadingBar
+            });
         };
 
         var _getTags = function ($scope) {
@@ -547,17 +553,9 @@
                     };
                 },
                 faq: function (widget) {
-                    var id;
-
-                    if (typeof widget.content.faq === 'object') {
-                        id = widget.content.faq.id;
-                    } else {
-                        id = widget.content.faq;
-                    }
-
                     return {
                         type: widget.type,
-                        faq: parseInt(id)
+                        faq: parseInt(widget.faq)
                     };
                 },
 

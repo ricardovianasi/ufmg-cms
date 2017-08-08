@@ -6,7 +6,9 @@ angular.module('componentsModule')
             link: function (scope, element, attrs) {
                 var raw = element[0];
                 element.bind('scroll', function () {
-                    if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                    var scrollHeightCallEvent = raw.scrollTop + raw.offsetHeight;
+                    var limitScroll = raw.scrollHeight - 50;
+                    if (scrollHeightCallEvent >= limitScroll) {
                         scope.$apply(attrs.scrollDetect);
                     }
                 });

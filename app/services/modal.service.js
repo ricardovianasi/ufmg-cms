@@ -146,7 +146,7 @@
 
                 if (vm.desenvMode) {
                     vm.credentials.username = 'portal@portal';
-                    vm.credentials.password = 'teste';
+                    vm.credentials.password = '12345';
                 }
 
                 function _login(isValid) {
@@ -191,6 +191,7 @@
             MODAL_SMALL: 'sm',
             MODAL_MEDIUM: 'md',
             MODAL_LARGE: 'lg',
+            FULL_SCREEN: 'full',
             confirm: _confirm,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,

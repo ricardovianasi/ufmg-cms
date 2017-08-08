@@ -24,7 +24,7 @@
         vm.credentials = {};
         if (vm.desenvMode) {
             vm.credentials.username = 'portal@portal';
-            vm.credentials.password = 'teste';
+            vm.credentials.password = '12345';
         }
         vm.login = _login;
 

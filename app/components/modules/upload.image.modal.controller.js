@@ -5,77 +5,194 @@
         .controller('UploadImageModalController', UploadImageModalController);
 
     /** ngInject */
-    function UploadImageModalController($log, $scope, $uibModalInstance, $timeout, Cropper, MediaService) {
-        $scope.upload_photo = null;
-        $scope.imageLink = '';
+    function UploadImageModalController(
+        $log,
+        $scope,
+        $uibModalInstance,
+        $timeout,
+        Cropper,
+        MediaService) {
 
-        var file, data;
+        var data = {};
+        var file = {};
+        var position = {};
+        var vm = $scope;
 
-        $scope.media = [];
+        vm.active_step = {};
+        vm.cropper = {};
+        vm.cropperProxy = 'cropper.first';
+        vm.hideEvent = 'hide';
+        vm.imageLink = '';
+        vm.media = [];
+        vm.selected_image = '';
+        vm.showEvent = 'show';
+        vm.steps = [];
+        vm.upload_photo = null;
 
-        $scope.steps = [{
-            step: 'Formato da Imagem',
-            slug: 'format'
-        }, {
-            step: 'Selecione a Biblioteca',
-            slug: 'selectlibrary'
-        }, {
-            step: 'Mídia',
-            slug: 'media'
-        }, {
-            step: 'Publicação da Imagem',
-            slug: 'published'
-        }];
+        vm.activeStep = _activeStep;
+        vm.clear = _clear;
+        vm.closeInsertImage = _closeInsertImage;
+        vm.hideCropper = _hideCropper;
+        vm.okInsertImage = _okInsertImage;
+        vm.onFile = _onFile;
+        vm.preview = _preview;
+        vm.scale = _scale;
+        vm.selectFormat = _selectFormat;
+        vm.selectImage = _selectImage;
+        vm.selectLibrary = _selectLibrary;
+        vm.showCropper = _showCropper;
 
-        $scope.active_step = $scope.steps[0];
+        function onInit() {
+            _onEvents();
+            vm.steps = [{
+                step: 'Formato da Imagem',
+                slug: 'format'
+            }, {
+                step: 'Selecione a Biblioteca',
+                slug: 'selectlibrary'
+            }, {
+                step: 'Mídia',
+                slug: 'media'
+            }, {
+                step: 'Publicação da Imagem',
+                slug: 'published'
+            }];
 
-        $scope.activeStep = function (idx) {
-            $scope.active_step = $scope.steps[idx];
-        };
+            vm.active_step = vm.steps[0];
 
-        $scope.selected_image = '';
+            vm.formats = [{
+                name: 'Vertical',
+                type: 'vertical',
+                size: '352x540',
+                width: 352,
+                height: 540,
+                cropWidth: 276,
+                cropHeight: 424
+            }, {
+                name: 'Horizontal',
+                type: 'medium',
+                size: '712x474',
+                width: 712,
+                height: 474,
+                cropWidth: 568,
+                cropHeight: 378
+            }, {
+                name: 'Grande',
+                type: 'big',
+                size: '1192x744',
+                width: 1192,
+                height: 744,
+                cropWidth: 568,
+                cropHeight: 355
+            }, {
+                name: 'Widescreen',
+                type: 'wide',
+                size: '1920x504',
+                width: 1920,
+                height: 504,
+                cropWidth: 568,
+                cropHeight: 149
+            }];
 
-        $scope.selectImage = function (image) {
-            if ($scope.selected_image !== image) {
-                $scope.selected_image = image;
+            vm.libraries = [{
+                name: 'Biblioteca de Imagens',
+                type: 'medialibrary',
+                enabled: true
+            }, {
+                name: 'ZUNI',
+                type: 'zuni',
+                enabled: false
+            }];
+
+            vm.selected_library = '';
+            vm.options = {
+                zoomable: true,
+                maximize: true,
+                cropBoxMovable: false,
+                cropBoxResizable: false,
+                dragCrop: false,
+                crop: function (e, dataNew) {
+                    data = dataNew;
+                    position.x = e.x;
+                    position.y = e.y;
+                    position.width = e.width;
+                    position.height = e.height;
+                }
+            };
+
+            vm.form = {
+                alt: '',
+                description: ''
+            };
+        }
+
+        onInit();
+
+        function _onEvents() {
+            vm.$watch('upload_photo', function () {
+                if (vm.upload_photo) {
+                    MediaService.newFile(vm.upload_photo).then(function (data) {
+                        var obj = {};
+
+                        obj.url = data.url;
+                        obj.id = data.id;
+                        vm.media.push(obj);
+                        vm.selectImage(obj);
+                    });
+                }
+            });
+
+            vm.$on('cropme:done', function (ev, result, canvasEl) {
+                $log.info(ev, result, canvasEl);
+            });
+        }
+
+        function _hideCropper() {
+            vm.dataUrl = '';
+            vm.$broadcast(vm.hideEvent);
+        }
+
+        function _activeStep(idx) {
+            vm.active_step = vm.steps[idx];
+        }
+
+        function _selectImage(image) {
+            if (vm.selected_image !== image) {
+                vm.selected_image = image;
             }
-        };
+        }
 
-        $scope.onFile = function (blob) {
+        function _onFile(blob) {
             file = blob;
             angular.forEach([blob], function (file) {
                 MediaService.newFile(file).then(function (data) {
-                    $scope.imageId = data.id;
+                    vm.imageId = data.id;
                     Cropper.encode((file = blob)).then(function (dataUrl) {
-                        $scope.dataUrl = dataUrl;
+                        vm.dataUrl = dataUrl;
                         $timeout(showCropper); // jshint ignore: line
                     });
                 });
             });
-        };
+        }
 
-        $scope.cropper = {};
-        $scope.cropperProxy = 'cropper.first';
-
-        $scope.preview = function () {
+        function _preview() {
             if (!file || !data) {
                 return;
             }
 
             Cropper.crop(file, data).then(Cropper.encode).then(function (dataUrl) {
-                ($scope.preview || ($scope.preview = {})).dataUrl = dataUrl;
+                (vm.preview || (vm.preview = {})).dataUrl = dataUrl;
             });
-        };
+        }
 
-        $scope.clear = function () {
-            if (!$scope.cropper.first) {
+        function _clear() {
+            if (!vm.cropper.first) {
                 return;
             }
+            vm.cropper.first('clear');
+        }
 
-            $scope.cropper.first('clear');
-        };
-
-        $scope.scale = function (width) {
+        function _scale(width) {
             Cropper.crop(file, data)
                 .then(function (blob) {
                     return Cropper.scale(blob, {
@@ -84,169 +201,70 @@
                 })
                 .then(Cropper.encode)
                 .then(function (dataUrl) {
-                    ($scope.preview || ($scope.preview = {})).dataUrl = dataUrl;
+                    (vm.preview || (vm.preview = {})).dataUrl = dataUrl;
                 });
-        };
+        }
 
-        var position = {};
+        function _selectLibrary(library) {
+            vm.selected_library = library;
+            vm.activeStep(2);
+        }
 
-        $scope.showEvent = 'show';
-        $scope.hideEvent = 'hide';
-
-        /**
-         *
-         */
-        $scope.hideCropper = function () {
-            $scope.dataUrl = '';
-            $scope.$broadcast($scope.hideEvent);
-        };
-
-        $scope.formats = [{
-            name: 'Vertical',
-            type: 'vertical',
-            size: '352x540',
-            width: 352,
-            height: 540,
-            cropWidth: 276,
-            cropHeight: 424
-        }, {
-            name: 'Horizontal',
-            type: 'medium',
-            size: '712x474',
-            width: 712,
-            height: 474,
-            cropWidth: 568,
-            cropHeight: 378
-        }, {
-            name: 'Grande',
-            type: 'big',
-            size: '1192x744',
-            width: 1192,
-            height: 744,
-            cropWidth: 568,
-            cropHeight: 355
-        }, {
-            name: 'Widescreen',
-            type: 'wide',
-            size: '1920x504',
-            width: 1920,
-            height: 504,
-            cropWidth: 568,
-            cropHeight: 149
-        }];
-
-        $scope.libraries = [{
-            name: 'Biblioteca de Imagens',
-            type: 'medialibrary',
-            enabled: true
-        }, {
-            name: 'ZUNI',
-            type: 'zuni',
-            enabled: false
-        }];
-
-        $scope.selected_library = '';
-
-        /**
-         * @param library
-         */
-        $scope.selectLibrary = function (library) {
-            $scope.selected_library = library;
-            $scope.activeStep(2);
-        };
-
-        $scope.options = {
-            zoomable: true,
-            maximize: true,
-            cropBoxMovable: false,
-            cropBoxResizable: false,
-            dragCrop: false,
-            crop: function (e, dataNew) {
-                data = dataNew;
-                position.x = e.x;
-                position.y = e.y;
-                position.width = e.width;
-                position.height = e.height;
-            }
-        };
-
-        $scope.selectFormat = function (format) {
-            $scope.selectedFormat = format;
+        function _selectFormat(format) {
+            vm.selectedFormat = format;
 
             var _ratio = 1 / (format.height / format.width);
 
-            $scope.options.aspectRatio = _ratio;
-            $scope.activeStep(1);
+            vm.options.aspectRatio = _ratio;
+            vm.activeStep(1);
 
-            if (!$scope.cropper.first) {
+            if (!vm.cropper.first) {
                 return;
             }
 
-            $scope.cropper.first('setAspectRatio', _ratio);
-            $scope.cropper.first('setCropBoxData', cropboxSize); // jshint ignore: line
-        };
+            vm.cropper.first('setAspectRatio', _ratio);
+            vm.cropper.first('setCropBoxData', cropboxSize); // jshint ignore: line
+        }
 
-        $scope.form = {
-            alt: '',
-            description: ''
-        };
-
-        $scope.showCropper = function () {
-            $scope.activeStep(3);
-            $scope.dataUrl = $scope.selected_image.url;
+        function _showCropper() {
+            vm.activeStep(3);
+            vm.dataUrl = vm.selected_image.url;
             $timeout(function () {
-                $scope.$broadcast($scope.showEvent);
+                vm.$broadcast(vm.showEvent);
             });
-        };
+        }
 
-        $scope.$watch('upload_photo', function () {
-            if ($scope.upload_photo) {
-                MediaService.newFile($scope.upload_photo).then(function (data) {
-                    var obj = {};
-
-                    obj.url = data.url;
-                    obj.id = data.id;
-                    $scope.media.push(obj);
-                    $scope.selectImage(obj);
-                });
-            }
-        });
-
-        $scope.okInsertImage = function (crop) {
+        function _okInsertImage(crop) {
             var obj = {
                 x: position.x,
                 y: position.y,
                 width: position.width,
                 height: position.height,
-                resize_width: $scope.selectedFormat.width,
-                resize_height: $scope.selectedFormat.height
+                resize_width: vm.selectedFormat.width,
+                resize_height: vm.selectedFormat.height
             };
 
             if (!crop) {
                 $uibModalInstance.close({
-                    type: $scope.selectedFormat.type,
-                    url: $scope.selected_image.url,
-                    legend: $scope.form.legend ? $scope.form.legend : '',
-                    author: $scope.form.author ? $scope.form.author : ''
+                    type: vm.selectedFormat.type,
+                    url: vm.selected_image.url,
+                    legend: vm.form.legend ? vm.form.legend : '',
+                    author: vm.form.author ? vm.form.author : ''
                 });
             } else {
-                MediaService.cropImage($scope.selected_image.id, obj).then(function (data) {
+                MediaService.cropImage(vm.selected_image.id, obj).then(function (data) {
                     $uibModalInstance.close({
-                        type: $scope.selectedFormat.type,
+                        type: vm.selectedFormat.type,
                         url: data.data.url,
-                        legend: $scope.form.legend ? $scope.form.legend : '',
-                        author: $scope.form.author ? $scope.form.author : ''
+                        legend: vm.form.legend ? vm.form.legend : '',
+                        author: vm.form.author ? vm.form.author : ''
                     });
                 });
             }
-        };
+        }
 
-        $scope.closeInsertImage = function () {
+        function _closeInsertImage() {
             $uibModalInstance.dismiss('cancel');
-        };
-
-        $scope.$on('cropme:done', function (ev, result, canvasEl) {
-            $log.info(ev, result, canvasEl);
-        });
+        }
     }
 })();

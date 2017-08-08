@@ -2,7 +2,7 @@
     <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Nova Página</h1>
+                <h1 class="title">{{ title }}</h1>
             </div>
         </div>
         <div class="col-md-6">
@@ -20,7 +20,7 @@
                     </li>
                     <li class="active">
                         <a href="#/pages">
-                            <strong>Nova Página</strong>
+                            <strong>{{ title }}</strong>
                         </a>
                     </li>
                 </ol>
@@ -73,7 +73,7 @@
                 <div class="col-xs-12">
                     <div class="pages-module add-module pages-module-cover">
                         <div class="chosen-cover">
-                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeCover()" ng-show="page.image">
+                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="page.image">
                                 <i class="fa fa-remove"></i> REMOVER IMAGEM
                             </a>
                         </div>
@@ -99,7 +99,7 @@
                                 <span class="label label-warning" ng-click="handleModule('main', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
-                                <span class="label label-danger" ng-click="removeModule('main', $index)">
+                                <span class="label label-danger" ng-click="removeModuleMain($index)">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
                                 <span class="label label-primary" as-sortable-item-handle>
@@ -125,7 +125,7 @@
                                 <span class="label label-warning" ng-click="handleModule('side', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
-                                <span class="label label-danger" ng-click="removeModule('side', $index)">
+                                <span class="label label-danger" ng-click="removeModuleSide($index)">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
                                 <span class="label label-primary" as-sortable-item-handle>
@@ -143,12 +143,12 @@
     </div>
     <div class="col-xs-4">
         <publishment-options route-model="page"></publishment-options>
-        <div class="panel panel-default" onload="loadMore()">
+        <div class="panel panel-default" onload="loadMorePage()">
             A página atual é filha de:
             <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
                 <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.title }}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in pagesParent | filter: $select.search track by $index" scroll-detect="loadMore()"
-                    refresh="loadMore($select.search)" refresh-delay="300">
+                <ui-select-choices repeat="item.id as item in pagesParent | filter: $select.search track by $index" scroll-detect="loadMorePage()"
+                    refresh="loadMorePage($select.search)" refresh-delay="300">
                     <div ng-bind-html="item.title | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>

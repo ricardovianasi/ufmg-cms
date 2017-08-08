@@ -168,7 +168,7 @@
 
             angular.extend(_obj, vm.widget);
 
-            $log.info(_obj);
+            $log.info('Widget Selecionado', _obj);
             $uibModalInstance.close(_obj);
             $scope.$destroy();
         }

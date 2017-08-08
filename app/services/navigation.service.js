@@ -118,13 +118,6 @@
                                 isOpen: false,
                                 enabled: true
                             }, {
-                                icon: 'fa fa-film',
-                                name: 'Mídia',
-                                location: 'media',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: true
-                            }, {
                                 icon: 'fa fa-bars',
                                 name: 'Menu',
                                 location: 'menu',

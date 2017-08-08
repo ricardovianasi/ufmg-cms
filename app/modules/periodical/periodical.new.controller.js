@@ -5,7 +5,8 @@
         .controller('PeriodicalNewController', PeriodicalNewController);
 
     /** ngInject */
-    function PeriodicalNewController($scope,
+    function PeriodicalNewController(
+        $scope,
         $location,
         $filter,
         PeriodicalService,
@@ -15,52 +16,66 @@
         PermissionService,
         $rootScope,
         validationService,
-        $log) {
-        $rootScope.shownavbar = true;
-        $log.info('PeriodicalNewController');
-        $scope.canPermission = PermissionService.canPost('periodical');
-        $scope.status = [];
-        $scope.periodical = {};
-        $scope.highlight_ufmg_visible = false;
+        ManagerFileService,
+        $log
+    ) {
 
-        StatusService.getStatus().then(function (res) {
-            $scope.status = res.data;
-        });
-
-        $scope.$watch('add_photos', function () {
-            if ($scope.add_photos) {
-                MediaService.newFile($scope.add_photos).then(function (res) {
-                    $scope.periodical.url = res.url;
-                    $scope.periodical.logo = res.id;
-                });
-            }
-        });
-
+        var vm = $scope;
         var date = new Date();
 
-        $scope.date_formats = [{
-            label: $filter('format')('ano ({0})', date.getFullYear()),
-            format: 'Y'
-        }, {
-            label: $filter('format')('mês/ano ({0}/{1})', date.getMonth() + 1, date.getFullYear()),
-            format: 'm/Y'
-        }, {
-            label: $filter('format')(
-                'dia/mês/ano ({0}/{1}/{2})',
-                date.getDate(),
-                date.getMonth() + 1,
-                date.getFullYear()
-            ),
-            format: 'd/m/Y'
-        }];
+        vm.status = [];
+        vm.periodical = {};
+        vm.highlight_ufmg_visible = false;
+        vm.canPermission = {};
+        vm.date_formats = [];
 
-        $scope.removeImage = function () {
-            $scope.periodical.logo = '';
-            $scope.periodical.url = '';
-        };
+        vm.removeImage = _removeImage;
+        vm.publish = _publish;
+        vm.upload = _upload;
 
-        $scope.publish = function (data) {
-            if (!validationService.isValid($scope.formPeriodicals.$invalid)) {
+        onInit();
+
+        function onInit() {
+            $log.info('PeriodicalNewController');
+            vm.canPermission = PermissionService.canPost('periodical');
+            setDateFormats();
+        }
+
+        function setDateFormats() {
+            vm.date_formats = [{
+                label: $filter('format')('ano ({0})', date.getFullYear()),
+                format: 'Y'
+            }, {
+                label: $filter('format')('mês/ano ({0}/{1})', date.getMonth() + 1, date.getFullYear()),
+                format: 'm/Y'
+            }, {
+                label: $filter('format')(
+                    'dia/mês/ano ({0}/{1}/{2})',
+                    date.getDate(),
+                    date.getMonth() + 1,
+                    date.getFullYear()
+                ),
+                format: 'd/m/Y'
+            }];
+        }
+
+        function _upload() {
+            ManagerFileService
+                .imageFiles()
+                .open(['logo', 'free'])
+                .then(function (image) {
+                    vm.periodical.url = image.url;
+                    vm.periodical.logo = image.id;
+                });
+        }
+
+        function _removeImage() {
+            vm.periodical.logo = '';
+            vm.periodical.url = '';
+        }
+
+        function _publish(data) {
+            if (!validationService.isValid(vm.formPeriodicals.$invalid)) {
                 return false;
             }
 
@@ -74,6 +89,6 @@
                     NotificationService.success('Publicação criada com sucesso.');
                     $location.path('/periodicals');
                 });
-        };
+        }
     }
 })();

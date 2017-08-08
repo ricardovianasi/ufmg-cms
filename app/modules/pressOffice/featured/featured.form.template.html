@@ -32,14 +32,14 @@
             <div class="col-md-9">
                 <div class="form-group" ng-class="{'has-error': formFeatured.title.$error.required && !formClippings.title.$valid}">
                     <label>Títutlo</label>
-                    <input class="form-control" ng-model="vm.featured.title" name="title" required>
+                    <input class="form-control" ng-model="featured.title" name="title" required>
                     <div ng-show="!formFeatured.title.$valid" class="error-message" role="alert">
                         <div ng-show="formFeatured.title.$error.required">Campo obrigatório</div>
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-error': formFeatured.description.$error.required && !formClippings.description.$valid}">
                     <label>Descri&ccedil;&atilde;o:</label>
-                    <textarea cols="30" rows="4" title="Descrição" class="form-control" ng-model="vm.featured.description" name="description"
+                    <textarea cols="30" rows="4" title="Descrição" class="form-control" ng-model="featured.description" name="description"
                         required>
                         </textarea>
                         <div ng-show="!formFeatured.description.$valid" class="error-message" role="alert">
@@ -48,30 +48,30 @@
                 </div>
                 <div class=form-group>
                     <label>Anexar release:</label>
-                    <select title="Status" ng-model="vm.featured.release.id" ng-options="release.id as release.title for release in vm.releases.items"
+                    <select title="Status" ng-model="featured.release.id" ng-options="release.id as release.title for release in releases.items"
                         class=form-control>
                         </select>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group" ng-class="{'has-error': !vm.featured.photo}">
+                <div class="form-group" ng-class="{'has-error': !featured.photo}">
                     <div class="pages-module add-module edition-cover-thumb pull-right">
-                        <div ng-show="!vm.featured.photo" ngf-accept="'image/*'" ngf-select ng-model=vm.featured.photo ngf-multiple=false class="add-title">
+                        <div ng-show="!featured.photo" class="add-title" ng-click="upload()">
                             + Adicionar Imagem
                             </span>
                         </div>
-                        <div ng-show="vm.featured.photo.url">
+                        <div ng-show="featured.photo.url">
                             <div class=chosen-cover>
-                                <span ng-click=vm.removeImage() class="label label-danger remove-image">
+                                <span ng-click=removeImage() class="label label-danger remove-image">
                             <i class="fa fa-remove"></i> REMOVER IMAGEM
                         </span>
                             </div>
                             <div class="uploaded-image edition-cover-image">
-                                <img class="img-responsive" ng-src="{{ vm.featured.photo.url }}">
+                                <img class="img-responsive" ng-src="{{ featured.photo.url }}">
                             </div>
                         </div>
                     </div>
-                    <div ng-show="!vm.featured.photo" class="error-message" role="alert">
+                    <div ng-show="!featured.photo" class="error-message" role="alert">
                         <div>Campo obrigatório</div>
                     </div>
                 </div>
@@ -83,10 +83,10 @@
             <div class=form-group>
                 <label>Especialistas:</label>
                 <form class="form" name="formEspecialist" novalidate>
-                    <div ng-repeat="specialist in vm.featured.specialists" class="well well-sm">
+                    <div ng-repeat="specialist in featured.specialists" class="well well-sm">
                         <div ng-click="specialist.opened = true" class="clearfix text-right">
                             <strong class="pull-left">{{ specialist.name }}</strong>
-                            <a ng-click="vm.removeSpecialist($index)" class="btn btn-danger">
+                            <a ng-click="removeSpecialist($index)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </div>
@@ -133,7 +133,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 text-right">
-                                    <a ng-click="vm.saveEspecialist($index)" class="btn btn-secondary">
+                                    <a ng-click="saveEspecialist($index)" class="btn btn-secondary">
                                         <i class="fa fa-check"></i> Inserir
                                     </a>
                                 </div>
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                 </form>
-                <a class="pages-module add-module" ng-click="vm.addSpecialist()" class="btn btn-primary btn-sm">
+                <a class="pages-module add-module" ng-click="addSpecialist()" class="btn btn-primary btn-sm">
                     <span class="add-title">+ Adicionar Especialista</span>
                 </a>
             </div>
@@ -150,7 +150,7 @@
     <div class="row">
         <div class="col-md-12 text-right">
             <a href="#/featured" class="btn btn-danger"><i class="fa fa-remove"></i> Cancelar</a>
-            <button type="button" ng-click="vm.saveFeatured()" class="btn btn-secondary">
+            <button type="button" ng-click="saveFeatured()" class="btn btn-secondary">
                 <i class="fa fa-check"></i> Salvar
             </button>
         </div>

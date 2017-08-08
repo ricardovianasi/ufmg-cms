@@ -5,13 +5,14 @@
     </div>
     <div class="form-group">
         <label for="">Resposta</label>
-        <textarea cols="30" rows="30" class="form-control" ng-model="vm.newAsk.answer" redactor>
-        </textarea>
+        <textarea cols="30" rows="30" class="form-control" ng-model="vm.newAsk.answer" redactor imagencrop-options="imagencropOptions"
+            audioUpload-options="audioUploadOptions" uploadfiles-options="uploadfilesOptions" name="text" required></textarea>
     </div>
     <div class="text-right">
         <hr/>
         <a href="" class="btn btn-primary" ng-click="vm.addAsk('ask', vm.newAsk)">Confirmar</a>
-    </d iv>
+    </div>
 </div>
 
 <div ng-show="vm.showAddAsk" class="pages-module add-module" ng-click="vm.controlFormView(false)"><span class="add-title">+ Inserir Pergunta</span></div>
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>

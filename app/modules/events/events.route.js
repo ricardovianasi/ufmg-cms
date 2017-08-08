@@ -7,13 +7,11 @@
             $routeProvider
                 .when('/events', {
                     templateUrl: 'modules/events/events.template.html',
-                    controller: 'EventsController as vm',
-                    controllerAs: 'ctrl'
+                    controller: 'EventsController'
                 })
                 .when('/events/new', {
                     templateUrl: 'modules/events/events.form.template.html',
-                    controller: 'EventsNewController as vm',
-                    controllerAs: 'ctrl',
+                    controller: 'EventsNewController',
                     resolve: {
                         permission: ['PermissionService', '$window',
                             function (PermissionService, $window) {
@@ -26,8 +24,7 @@
                 })
                 .when('/events/edit/:id', {
                     templateUrl: 'modules/events/events.form.template.html',
-                    controller: 'EventsEditController as vm',
-                    controllerAs: 'ctrl',
+                    controller: 'EventsEditController',
                     resolve: {
                         permission: ['PermissionService', '$window', '$routeParams',
                             function (PermissionService, $window, $routeParams) {

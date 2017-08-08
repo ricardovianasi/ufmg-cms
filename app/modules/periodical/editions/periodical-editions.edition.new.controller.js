@@ -14,6 +14,7 @@
         PeriodicalService,
         StatusService,
         NotificationService,
+        ManagerFileService,
         MediaService,
         ModalService,
         $rootScope,
@@ -45,6 +46,7 @@
                 initTime: DateTimeHelper.getTimepickerOpt()
             };
         }
+
         function _getYear() {
             vm.edition.year = new Date(vm.edition.publish_date).getFullYear();
         }
@@ -110,49 +112,30 @@
                 });
         };
 
-        // Upload
-        // PDF
-        vm.edition_file = null;
-
-        vm.$watch('edition_file', function () {
-            if (vm.edition_file) {
-                vm.uploadFile(vm.edition_file);
-            }
-        });
-
-        /**
-         * Upload files like pdf, txt, doc, etc. Not for images
-         */
-        vm.uploadFile = function (file) {
-            MediaService.newFile(file).then(function (data) {
-                vm.edition.pdf = data.id;
-                vm.edition.file = data.id;
-                vm.edition.pdf_url = data.url;
-            });
-        };
+        vm.uploadPDF = function () {
+            ManagerFileService.pdfFiles();
+            ManagerFileService
+                .open('pdf')
+                .then(function (data) {
+                    vm.edition.pdf = data.id;
+                    vm.edition.file = data.id;
+                    vm.edition.pdf_url = data.url;
+                    vm.edition.legend = data.legend;
+                });
+        }
 
         vm.uploadImage = function (type) {
-            var moduleModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        var formats = {
-                            background: 'pageCover',
-                            cover: 'digitalizedCover'
-                        };
-
-                        return [formats[type]];
-                    }
-                }
-            });
-
-            moduleModal.result.then(function (data) {
-                vm.edition[type] = data.id;
-                vm.edition[type + '_url'] = data.url;
-            });
+            var formats = {
+                background: 'pageCover',
+                cover: 'digitalizedCover'
+            };
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open(formats[type])
+                .then(function (image) {
+                    vm.edition[type] = image.id;
+                    vm.edition[type + '_url'] = image.url;
+                });
         };
 
         vm.removeImage = function (type) {

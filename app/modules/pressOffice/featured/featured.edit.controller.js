@@ -11,6 +11,7 @@
         ReleasesService,
         PermissionService,
         MediaService,
+        ManagerFileService,
         featuredService,
         $timeout,
         NotificationService,
@@ -21,7 +22,7 @@
         $log.info('featuredEditController');
 
         $rootScope.shownavbar = true;
-        var vm = this; // jshint ignore:line
+        var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
         vm.removeSpecialist = _removeSpecialist;
@@ -29,47 +30,36 @@
         vm.featured = {};
         vm.releases = {};
         var _updateFeatured = {};
-        $scope.canPermission = PermissionService.canPut('highlighted_press', $routeParams.id);
+        vm.upload = _upload;
+
+        vm.canPermission = PermissionService.canPut('highlighted_press', $routeParams.id);
         featuredService.getFeatured($routeParams.id).then(function (res) {
             vm.featured = res.data;
-        });
-
-        // Cover Image - Upload
-        $scope.$watch('vm.featured.photo', function () {
-            _upload(vm.featured.photo);
         });
 
         ReleasesService.getReleases().then(function (data) {
             vm.releases = data.data;
         });
 
-        /**
-         * upload function
-         * @param  {file} file
-         */
-        function _upload(file) {
-            MediaService.newFile(file).then(function (data) {
-                vm.featured.photo = {
-                    url: data.url,
-                    id: data.id
-                };
-            });
+        function _upload() {
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('digitalizedCover')
+                .then(function (image) {
+                    vm.featured.photo = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
         }
 
-        /**
-         * remove image function
-         */
         function _removeImage() {
             $timeout(function () {
                 vm.featured.photo = '';
-                $scope.$apply();
+                vm.$apply();
             });
         }
 
-        /**
-         *
-         * add specialists function
-         */
         function _addSpecialist() {
             if (vm.featured.specialists) {
                 vm.featured.specialists.push({
@@ -91,17 +81,10 @@
             }
         }
 
-        /**
-         * _removeSpecialist function
-         * @param  {int} idx index specialist in array
-         */
         function _removeSpecialist(idx) {
             vm.featured.specialists.splice(idx, 1);
         }
 
-        /**
-         * _saveFeatured function
-         */
         function _saveFeatured() {
             _parseToSave();
 

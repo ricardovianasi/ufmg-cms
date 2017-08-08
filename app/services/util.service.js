@@ -14,6 +14,7 @@
         var filterIndex = 0;
         var conditionsIndex = 0;
         var columnsHasOrder = [];
+        var typeParam = 'all';
 
         var mem = {};
 
@@ -23,6 +24,7 @@
             getParams: getParams,
             get: get,
             set: set,
+            setTypeParam: _setTypeParam,
             event: event
         };
 
@@ -44,6 +46,30 @@
             return mem[key];
         }
 
+        function _getTypeParam(paramType) {
+            if (!paramType || paramType === 'all') {
+                return '';
+            }
+            conditionsIndex = 0;
+            filterIndex++;
+            var resultProcessParamType = '&query[filter][' + filterIndex + '][type]=orx';
+            var array = paramType.split(',');
+            for (var i = 0; i < array.length; i++) {
+                var type = array[i];
+                conditionsIndex++;
+                resultProcessParamType += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=eq' +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=type' +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + type.toLowerCase() +
+                    '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+            }
+            resultProcessParamType += '&query[filter][' + filterIndex + '][where]=and';
+            return resultProcessParamType;
+        }
+
+        function _setTypeParam(type) {
+            typeParam = type;
+        }
+
         function getParams(params, elementSearch) {
             var parameters = '?';
             if (angular.isUndefined(elementSearch)) {
@@ -52,10 +78,15 @@
             if (params.page) {
                 parameters += 'page=' + params.page;
             }
+            if (params.isFiles) {
+                parameters += getUniqFiles();
+                parameters += _getTypeParam(typeParam);
+            }
             if (params.page_size) {
                 parameters += '&page_size=' + params.page_size;
             }
             parameters += hasAuthor();
+
             if (params.filter) {
                 parameters += _getCustomParam(params.filter);
             }
@@ -68,7 +99,19 @@
 
             filterIndex = 0;
             conditionsIndex = 0;
+            typeParam = false;
+
             return parameters;
+        }
+
+        function getUniqFiles() {
+            var paramParent = '';
+            filterIndex++;
+            paramParent += '&query[filter][' + filterIndex + '][type]=isnull' +
+                '&query[filter][' + filterIndex + '][field]=parent' +
+                '&query[filter][' + filterIndex + '][where]=and';
+            return paramParent;
+
         }
 
         function hasAuthor() {

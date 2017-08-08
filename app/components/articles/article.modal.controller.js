@@ -13,6 +13,7 @@
         MediaService,
         RedactorPluginService,
         TagsService,
+        ManagerFileService,
         $log,
         validationService) {
         $log.info('ArticleModalController');
@@ -77,22 +78,13 @@
         };
 
         $scope.uploadImage = function () {
-            var moduleModal = $uibModal.open({
-                templateUrl: 'components/modal/upload-component.template.html',
-                controller: 'UploadComponentController as vm',
-                backdrop: 'static',
-                size: 'xl',
-                resolve: {
-                    formats: function () {
-                        return ['bigPageCover'];
-                    }
-                }
-            });
-
-            moduleModal.result.then(function (data) {
-                $scope.article.cover = data.id;
-                $scope.article.cover_url = data.url;
-            });
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('bigPageCover')
+                .then(function (image) {
+                    $scope.article.cover = image.id;
+                    $scope.article.cover_url = image.url;
+                });
         };
 
         $scope.removeImage = function (type) {

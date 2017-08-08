@@ -12,12 +12,25 @@
         $route,
         $log,
         permission,
-        $scope) {
+        RedactorPluginService,
+        $scope
+    ) {
 
         var vm = this; //jshint ignore: line
 
         $rootScope.shownavbar = true;
         $log.info('faNewController');
+
+        onInit();
+
+        function onInit() {
+            $scope.imagencropOptions = angular.extend({
+                formats: ['vertical', 'medium']
+            }, RedactorPluginService.getOptions('imagencrop'));
+
+            $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+            $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+        }
 
         var id = $routeParams.faqId;
         vm.canPermission = permission;
@@ -37,7 +50,7 @@
             items: []
         };
 
-        $scope.sortableOptions = {
+        vm.sortableOptions = {
             accept: function (sourceItemHandleScope, destSortableScope) {
                 return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
             },
@@ -149,14 +162,13 @@
 
             if (id) {
                 faqService.update(vm.faq).then(function () {
-                    $route.reload();
-                    _getFaq();
                     NotificationService.success('FAQ alterado com sucesso!');
+                    $location.path('/faq');
                 });
             } else {
-                faqService.save(vm.faq).then(function (data) {
-                    $location.path('/faq/edit/' + data.data.id);
+                faqService.save(vm.faq).then(function () {
                     NotificationService.success('FAQ salvo com sucesso!');
+                    $location.path('/faq');
                 });
             }
         }

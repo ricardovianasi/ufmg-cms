@@ -119,21 +119,20 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class=col-xs-12>
-                        <div class=form-group>
-                            <label>Arquivo PDF:</label>
-
-                            <input type="file" class="form-control" ngf-select ng-show="!edition.pdf" ngf-accept="'application/pdf'" ng-model="edition_file"
-                                ngf-multiple="false">
-
-                            <div ng-show="edition.pdf" class="clearfix form-control over-scroll">
-                                <div class="pull-left">{{ edition.pdf_url }}</div>
-
-                                <div class=pull-right>
-                                    <span ng-show="edition.pdf" ng-click="removeImage('pdf')" class="label label-danger remove-image">
-                                    <i class="fa fa-remove"></i> REMOVER
-                                </span>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="pages-module add-module">
+                                <div class="chosen-cover">
+                                    <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage('pdf')" ng-show="edition.pdf">
+                                <i class="fa fa-remove"></i> REMOVER
+                            </a>
+                                </div>
+                                <div class="add-title" ng-click="uploadPDF()" ng-show=!edition.pdf>
+                                    + Adicionar PDF
+                                </div>
+                                <div class="uploaded-image" ng-show="edition.pdf">
+                                    <div class="file-icon file-icon-lg" data-type="pdf"></div>
+                                    <label>{{edition.legend}}</label>
                                 </div>
                             </div>
                         </div>

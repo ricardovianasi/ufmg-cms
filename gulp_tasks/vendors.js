@@ -48,6 +48,9 @@ var SCRIPTS = [
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
     'bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js',
     'bower_components/ng-scrollbars/dist/scrollbars.min.js'
+
+    // 'bower_components/pdfjs-bower/dist/compatibility.js',
+    // 'bower_components/pdfjs-bower/dist/pdf.js'
 ];
 
 var STYLES = [
@@ -74,7 +77,8 @@ var STYLES = [
     'app/assets/xenon/css/xenon-core.css',
     'app/assets/xenon/css/xenon-forms.css',
     'app/assets/xenon/css/xenon-components.css',
-    'app/assets/xenon/css/xenon-skins.css'
+    'app/assets/xenon/css/xenon-skins.css',
+    'app/assets/xenon/css/fileicon.css'
 ];
 
 var FONTS = [
