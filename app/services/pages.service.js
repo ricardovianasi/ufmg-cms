@@ -552,11 +552,12 @@
                         ]
                     };
                 },
+
                 faq: function (widget) {
                     $log.info('Widget FAQ to Save', widget);
                     return {
                         type: widget.type,
-                        faq: widget.id
+                        id: widget.id
                     };
                 },
 
@@ -910,16 +911,11 @@
 
                 faq: function (widget) {
                     var obj = {};
-
                     if (widget.content) {
-                        $log.info('widget.content', widget.content);
                         obj.id = widget.content.id;
                         obj.title = widget.title;
-                        obj.content = widget.content;
                     } else if (widget.selected) {
-                        $log.info('widget.selected', widget.selected);
                         obj.id = widget.selected.id;
-                        obj.content = widget.selected;
                         obj.title = widget.title;
                     }
                     return obj;

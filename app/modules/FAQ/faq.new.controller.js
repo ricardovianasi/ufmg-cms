@@ -121,13 +121,12 @@
 
         function _addAsk(type, ask) {
             if (type === 'ask') {
-
                 if (vm.idCurrentAskEdit === '') {
                     vm.faq.items.push(ask);
                 } else {
                     vm.faq.items.splice(vm.idCurrentAskEdit, 0, ask);
                 }
-
+                vm.newAsk = {};
                 vm.idCurrentAskEdit = '';
                 _controlFormView(false);
 
