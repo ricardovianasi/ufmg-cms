@@ -15,6 +15,7 @@
         ReleasesService,
         MediaService,
         NotificationService,
+        ManagerFileService,
         DateTimeHelper,
         $rootScope,
         PermissionService,
@@ -28,6 +29,7 @@
         var confirmationModal = _confirmationModal;
 
         vm.canPermission = PermissionService.canPut('release', $routeParams.id);
+        vm.upload = _upload;
 
         vm.title = 'Editar Release: ';
         vm.breadcrumb = vm.title;
@@ -40,20 +42,36 @@
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
 
-        /**
-         * Redactor config
-         */
         vm.redactorOptions = {
             plugins: false,
         };
 
-        vm.$watch('release.thumb', function () {
-            if (vm.release.thumb && vm.release.thumb instanceof File) {
-                vm.imgHandler.upload('thumb', [
-                    vm.release.thumb
-                ]);
-            }
-        });
+        vm.addFile = _addFile;
+
+        function _addFile(idx) {
+            ManagerFileService.allFiles();
+            ManagerFileService
+                .open('free')
+                .then(function (file) {
+                    vm.release.files[idx] = file;
+                    vm.release.files[idx].external_url = file.url;
+                    vm.release.files[idx].file = file.url;
+                    vm.release.files[idx].title = file.legend;
+                    vm.release.files[idx].isFile = true;
+                });
+        }
+
+        function _upload() {
+            ManagerFileService
+                .imageFiles()
+                .open(['logo', 'free'])
+                .then(function (image) {
+                    vm.release.thumb = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
+        }
 
         vm.removeReleasesFiles = function (idx) {
             vm.release.files[idx].file = '';
@@ -97,7 +115,7 @@
                             width: width,
                             height: height,
                             resize_width: 256,
-                            resize_height: 256,
+                            resize_height: 256
                         };
 
                         MediaService.cropImage(data.id, obj).then(function (data) {
@@ -237,6 +255,8 @@
                     fl.file = file.file.url;
                     fl.isFile = true;
                     fl.type = file.file.type;
+                    fl.thumb = file.file.thumb;
+                    fl.title = file.file.legend;
                 }
 
                 files.push(fl);

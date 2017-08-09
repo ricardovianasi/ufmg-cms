@@ -13,6 +13,7 @@
         $window,
         ReleasesService,
         MediaService,
+        ManagerFileService,
         NotificationService,
         StatusService,
         DateTimeHelper,
@@ -29,6 +30,7 @@
 
 
         vm.canPermission = PermissionService.canPost('release');
+        vm.upload = _upload;
 
         vm.title = 'Novo Release';
         vm.breadcrumb = vm.title;
@@ -39,9 +41,6 @@
             files: []
         };
 
-        /**
-         * Redactor config
-         */
         vm.redactorOptions = {
             plugins: false,
         };
@@ -53,13 +52,20 @@
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
 
-        vm.$watch('release.thumb', function () {
-            if (vm.release.thumb && vm.release.thumb instanceof File) {
-                vm.imgHandler.upload('thumb', [
-                    vm.release.thumb
-                ]);
-            }
-        });
+        vm.addFile = _addFile;
+
+        function _addFile(idx) {
+            ManagerFileService.allFiles();
+            ManagerFileService
+                .open('free')
+                .then(function (file) {
+                    vm.release.files[idx] = file;
+                    vm.release.files[idx].external_url = file.url;
+                    vm.release.files[idx].file = file.url;
+                    vm.release.files[idx].title = file.legend;
+                    vm.release.files[idx].isFile = true;
+                });
+        }
 
         var _addWatcher = function (idx) {
 
@@ -191,6 +197,18 @@
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
+        }
+
+        function _upload() {
+            ManagerFileService
+                .imageFiles()
+                .open(['logo', 'free'])
+                .then(function (image) {
+                    vm.release.thumb = {
+                        url: image.url,
+                        id: image.id
+                    };
+                });
         }
 
         vm.publish = function (data, preview) {
