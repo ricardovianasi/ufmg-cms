@@ -216,7 +216,7 @@
                     vm.edition.pdf_url = data.url;
                     vm.edition.legend = data.legend;
                 });
-        }
+        };
 
         vm.uploadImage = function (type) {
             var formats = {

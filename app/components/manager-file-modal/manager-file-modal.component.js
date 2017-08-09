@@ -20,7 +20,7 @@
         $timeout) {
 
         var vm = $scope;
-        var vmForFileWatch = this;
+        var vmForFileWatch = this; // jshint ignore: line
         var countPage = 1;
         var hasRequest = false;
         var pageSize = 12;

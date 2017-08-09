@@ -88,11 +88,10 @@
                             </span>
                         </div>
                         <div class="add-title" ng-show="!event.poster" ng-click="addPoster()">+ Adicionar Cartaz</div>
-                        <!-- <div class="add-title" ngf-select ngf-accept="'image/*'" ngf-multiple="false" ng-model="event.poster" ng-show="!event.poster">+ Adicionar Cartaz
-                        </div> -->
                         <div ng-if="event.poster">
-                            <div class="file-icon file-icon-lg" ng-if="!(event.poster.type === 'png' || event.poster.type === 'jpg')" data-type="{{event.poster.type}}"></div>
-                            <div class="uploaded-image" ng-if="event.poster.type === 'png' || event.poster.type === 'jpg'">
+                            <div class="file-icon file-icon-lg" ng-if="!(event.poster.type === 'png' || event.poster.type === 'jpg' || event.poster.type === 'free')"
+                                data-type="{{event.poster.type}}"></div>
+                            <div class="uploaded-image" ng-if="event.poster.type === 'png' || event.poster.type === 'jpg' || event.poster.type === 'free'">
                                 <img class="img-responsive" ng-src="{{ event.poster.thumb }}">
                             </div>
                         </div>

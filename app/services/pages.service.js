@@ -73,7 +73,6 @@
         }
 
         var _parseData = function (page) {
-            console.log(page)
             var cleanPage = {};
 
             cleanPage.image = page.image ? page.image.id : null;
@@ -553,9 +552,10 @@
                     };
                 },
                 faq: function (widget) {
+                    $log.info('Widget FAQ to Save', widget);
                     return {
                         type: widget.type,
-                        faq: parseInt(widget.faq)
+                        faq: widget.id
                     };
                 },
 
@@ -908,11 +908,20 @@
                 },
 
                 faq: function (widget) {
-                    widget.content.faq = widget.content.faq.id;
-                    return {
-                        title: widget.title,
-                        content: widget.content,
-                    };
+                    var obj = {};
+
+                    if (widget.content) {
+                        $log.info('widget.content', widget.content);
+                        obj.id = widget.content.id;
+                        obj.title = widget.title;
+                        obj.content = widget.content;
+                    } else if (widget.selected) {
+                        $log.info('widget.selected', widget.selected);
+                        obj.id = widget.selected.id;
+                        obj.content = widget.selected;
+                        obj.title = widget.title;
+                    }
+                    return obj;
                 },
 
                 tagcloud: function (widget) {

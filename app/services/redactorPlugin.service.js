@@ -18,7 +18,7 @@
         };
 
         function _getData(file) {
-            return new(function () {
+            return (function () {
                 return {
                     type: file.type,
                     url: file.url,
@@ -27,7 +27,7 @@
                     title: file.title,
                     isList: true,
                     isIcon: false
-                }
+                };
             })();
         }
 
