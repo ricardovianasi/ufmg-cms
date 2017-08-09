@@ -73,6 +73,7 @@
         }
 
         var _parseData = function (page) {
+            $log.info('parseData'.page);
             var cleanPage = {};
 
             cleanPage.image = page.image ? page.image.id : null;
