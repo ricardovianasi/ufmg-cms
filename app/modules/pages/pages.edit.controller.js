@@ -171,7 +171,7 @@
                             $location.path('/pages');
                         });
                 });
-        };
+        }
 
         function _publish(page, preview) {
             if (!validationService.isValid(vm.formData.$invalid)) {
@@ -188,7 +188,7 @@
                         $window.open(page.data.page_url, '_black');
                     }
                 });
-        };
+        }
 
         function _uploadCover() {
             ManagerFileService
@@ -200,7 +200,7 @@
                         id: image.id
                     };
                 });
-        };
+        }
 
         function _removeImage() {
             $timeout(function () {
@@ -210,12 +210,16 @@
         }
 
         function _handleModule(column, index) {
-            return PagesService.module().handle($scope, column, index);
+            return PagesService
+                .module()
+                .handle($scope, column, index);
         }
 
         function _removeModule(column, index) {
             ModalService
-                .confirm('Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir o modulo <b>' +
+                    vm.page.widgets[column][index].title + '</b>?',
+                    ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
                     vm.page.widgets[column].splice(index, 1);
@@ -267,7 +271,7 @@
 
         function _findTags($query) {
             return TagsService.findTags($query, allTags);
-        };
+        }
 
     }
 })();

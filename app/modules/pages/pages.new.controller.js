@@ -34,7 +34,6 @@
         vm.pagesParent = [];
         vm.title = 'Nova página';
 
-
         vm.publish = _publish;
         vm.findTags = _findTags;
         vm.uploadCover = _uploadCover;
@@ -45,7 +44,6 @@
         vm.removeModuleMain = _removeModuleMain;
         vm.removeModuleSide = _removeModuleSide;
 
-
         function onInit() {
             $log.info('PagesNewController');
             vm.pagesParent.push({
@@ -53,15 +51,12 @@
                 title: '- Página Normal -'
             });
 
-            WidgetsService.getWidgets().then(function (data) {
-                vm.widgets = data.data;
-            });
+            vm.widgets = [];
 
             vm.title = 'Nova Página';
             vm.breadcrumb_active = vm.title;
 
             vm.publishment = StatusService.STATUS_PUBLISHED;
-            vm.widgets = [];
             vm.columns = PagesService.COLUMNS;
 
             vm.time_days = DateTimeHelper.getDays();
@@ -76,6 +71,12 @@
                 },
                 containment: '#sort-main'
             };
+
+            WidgetsService
+                .getWidgets()
+                .then(function (data) {
+                    vm.widgets = data.data;
+                });
 
             vm.page_cover = null;
 
@@ -208,7 +209,9 @@
 
         function _removeModule(column, index) {
             ModalService
-                .confirm('Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir o modulo <b>' +
+                    vm.page.widgets[column][index].title + '</b>?',
+                    ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
                     vm.page.widgets[column].splice(index, 1);

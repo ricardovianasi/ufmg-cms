@@ -148,6 +148,10 @@
 
                 angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
 
+                if (module.type === 'faq') {
+                    vm.widget.id = module.id;
+                }
+
                 if (module.type === 'listnews') {
                     vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
                 }

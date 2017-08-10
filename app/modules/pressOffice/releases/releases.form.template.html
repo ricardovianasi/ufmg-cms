@@ -77,15 +77,17 @@
             <!--row-->
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group">
-                        <input type="file" class="form-control" ngf-select ng-model="release.thumb" ngf-multiple="false" ng-show="!release.thumb">
-                        <div class="clearfix form-control" ng-show="release.thumb" style="height:auto">
-                            <div class="pull-left">{{ release.thumb.url }}</div>
-                            <div class="pull-right">
-                                <span class="label label-danger remove-image" ng-show="release.thumb" ng-click="imgHandler.removeImage('thumb')">
-                                    <span class="fa fa-remove"></span> REMOVER
-                                </span>
-                            </div>
+                    <label for="subtitle">Thumb</label>
+                    <div class="pages-module add-module">
+                        <div class="chosen-cover">
+                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="imgHandler.removeImage('thumb')" ng-show="release.thumb">
+                                <i class="fa fa-remove"></i> REMOVER IMAGEM
+                            </a>
+                        </div>
+                        <div class="add-title" ng-model="page_cover" ng-click="upload()" ng-show=!release.thumb>+ Adicionar Thumb
+                        </div>
+                        <div class="uploaded-image" ng-show="release.thumb">
+                            <img class="img-responsive" ng-src="{{ release.thumb.url }}">
                         </div>
                     </div>
                 </div>
@@ -187,7 +189,7 @@
                     <div ng-repeat="(idx, file) in release.files" class="well well-sm">
                         <div ng-click="release.files[idx].opened = true" class="clearfix">
                             <div class="pull-left">
-                                <label>Arquivo {{ idx + 1 }}</label>
+                                <label style="cursor: pointer">Arquivo {{ idx + 1 }}</label>
                             </div>
                             <div class="pull-right">
                                 <button type="button" class="btn btn-danger btn-sm" ng-click="fileHandler.removeItem(idx)">
@@ -209,86 +211,54 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" ng-class="{ active: release.files[idx].isFile }" id="upload">
-                                        <input type="file" class="form-control" ngf-select ngf-accept="'*'" ngf-multiple="false" ng-model="release.files[idx].file"
-                                            ng-show="!release.files[idx].file">
-                                            <br>
-                                            <label class="text-left" ng-show="release.files[idx].file">Breve descrição</label>
-                                            <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].file">
-                                            <br><br>
-                                            <div class="clearfix" ng-show="release.files[idx].file" style="height:auto">
-                                                <div class="pull-left">{{ release.files[idx].file }}</div>
-                                                <div class="pull-right">
-                                                    <span class="label label-danger remove-image-releases" ng-show="release.files[idx].file" ng-click="removeReleasesFiles(idx)">
-                                                        <span class="fa fa-remove"></span>                                                    REMOVER
-                                                    </span>
+                                        <a style="margin-top: 20px" class="pages-module pages-module-cover add-module" ng-href="{{release.files[idx].external_url}}" target="__blank">
+                                            <div class="chosen-cover">
+                                                <span class="label label-danger remove-image" ng-click="removeReleasesFiles(idx)" ng-show="release.files[idx].file">
+                                <span class="fa fa-remove"></span> Remover
+                                                </span>
+                                            </div>
+                                            <div class="add-title" ng-show="!release.files[idx].file" ng-click="addFile(idx)">+ Adicionar Arquivo</div>
+                                            <div ng-if="release.files[idx].file">
+                                                <div class="file-icon file-icon-lg" ng-if="!(release.files[idx].type === 'png' || release.files[idx].type === 'jpg' || release.files[idx].type === 'free')"
+                                                    data-type="{{release.files[idx].type}}"></div>
+                                                <div class="uploaded-image" ng-if="release.files[idx].type === 'png' || release.files[idx].type === 'jpg' || release.files[idx].type === 'free'">
+                                                    <img class="img-responsive" ng-src="{{ release.files[idx].thumb }}">
                                                 </div>
                                             </div>
+                                        </a>
+                                        <br>
+                                        <label class="text-left" ng-show="release.files[idx].file">Breve descrição - {{release.files[idx].file.type}}</label>
+                                        <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].file">
+                                        <br>
                                     </div>
                                     <div class="tab-pane
                                         " ng-class="{ active: !release.files[idx].isFile }" id="video">
                                         <input type="text" placeholder="Inserir URL do Vídeo (Youtube ou Vimeo)..." ng-model="release.files[idx].external_url" class="form-control"
                                             ng-show="release.files[idx].isFile == false">
-                                            <br>
-                                            <label class="text-left">Breve descrição</label>
-                                            <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].isFile == false">
+                                        <br>
+                                        <label class="text-left">Breve descrição</label>
+                                        <input type="text" class="form-control" ng-model="release.files[idx].title" ng-show="release.files[idx].isFile == false">
+                                    </div>
                                 </div>
                             </div>
-                            <!--           <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-12">
-
-                                            <input  type="text"
-                                                    placeholder="Url do vídeo (youtube ou vimeo)"
-                                                    ng-model="release.files[idx].external_url"
-                                                    class="form-control"
-                                                    ng-show="release.files[idx].isFile == false">
-
-                                            <div class="form-group"  ng-show="release.files[idx].isFile">
-                                                <input  type="file"
-                                                        class="form-control"
-                                                        ngf-select
-                                                        ngf-accept="'*'"
-                                                        ngf-multiple="false"
-                                                        ng-model="release.files[idx].file"
-                                                        ng-show="!release.files[idx].file">
-
-                                                <div class="clearfix form-control"
-                                                     ng-show="release.files[idx].file" style="height:auto">
-                                                    <div class="pull-left">{{ release.files[idx].file }}</div>
-
-                                                    <div class="pull-right">
-                                                        <span class="label label-danger remove-image"
-                                                              ng-show="release.files[idx].file"
-                                                              ng-click="removeReleasesFiles(idx)">
-                                                            <span class="fa fa-remove"></span> REMOVER
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> -->
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a class="pages-module add-module" ng-click="fileHandler.addItem()">
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="pages-module add-module" ng-click="fileHandler.addItem()">
                 <span class="add-title">
                             + Novo Arquivo
                         </span>
             </a>
-        </div>
+                </div>
+            </div>
+        </form>
     </div>
-    </form>
-</div>
-<div class="col-xs-4">
-    <publishment-options route-model="release"></publishment-options>
-</div>
+    <div class="col-xs-4">
+        <publishment-options route-model="release"></publishment-options>
+    </div>
 </div>
 <br/>
 <br/>
