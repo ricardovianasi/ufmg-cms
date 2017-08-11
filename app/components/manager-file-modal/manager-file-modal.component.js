@@ -117,7 +117,7 @@
             var browser = Util.detectBrowser();
             if (browser === 'safari') {
                 $timeout(function () {
-                    $('.manager-file-modal-container').css('height', 'calc(100% - 85px - 84px)');
+                    $('.manager-file-modal-container').css('height', '85.5vh');
                 }, 200);
             }
         }
