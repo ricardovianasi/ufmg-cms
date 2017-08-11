@@ -23,7 +23,7 @@
         var vmForFileWatch = this; // jshint ignore: line
         var countPage = 1;
         var hasRequest = false;
-        var pageSize = 12;
+        var pageSize = 20;
         var Formats = vm.$parent.formats;
         var imageTempToDelete;
         var formatSelected = Formats[0] || 'free';
