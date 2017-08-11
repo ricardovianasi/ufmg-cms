@@ -110,6 +110,16 @@
                 }
             };
             _setFormatAvailable();
+            crossBrowser();
+        }
+
+        function crossBrowser() {
+            var browser = Util.detectBrowser();
+            if (browser === 'safari') {
+                $timeout(function () {
+                    $('.manager-file-modal-container').css('height', 'calc(100% - 85px - 84px)');
+                }, 200);
+            }
         }
 
         function _close() {

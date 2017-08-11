@@ -118,7 +118,7 @@ manager-file-modal {
                 position: relative;
                 margin-bottom: 26px;
                 transition: all ease-in 0.3s;
-                height: calc(100% - 85px - 84px);
+                height: 100%;
                 >.images {
                     overflow-x: hidden;
                     overflow-y: auto;
