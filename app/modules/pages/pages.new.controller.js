@@ -168,16 +168,15 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
-
             PagesService
                 .addPage(page)
                 .then(function (page) {
-                    NotificationService.success('Página criada com sucesso.');
-                    if (!preview) {
-                        $location.path('/pages');
-                    } else {
+                    if (preview) {
+                        NotificationService.success('Página salva como rascunho.');
                         $window.open(page.data.page_url, '_black');
-                        $location.path('/pages/edit/' + page.data.id);
+                    } else {
+                        NotificationService.success('Página criada com sucesso.');
+                        $location.path('/pages');
                     }
                 });
         }

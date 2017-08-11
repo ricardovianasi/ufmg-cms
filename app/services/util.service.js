@@ -9,7 +9,9 @@
         $log,
         $rootScope,
         $timeout,
-        $q) {
+        $window,
+        $q
+    ) {
         $log.info('Util');
         var filterIndex = 0;
         var conditionsIndex = 0;
@@ -25,7 +27,8 @@
             get: get,
             set: set,
             setTypeParam: _setTypeParam,
-            event: event
+            event: event,
+            detectBrowser: detectBrowser
         };
 
         function event(event, data) {
@@ -68,6 +71,25 @@
 
         function _setTypeParam(type) {
             typeParam = type;
+        }
+
+        function detectBrowser() {
+            var userAgent = $window.navigator.userAgent;
+
+            var browsers = {
+                chrome: /chrome/i,
+                safari: /safari/i,
+                firefox: /firefox/i,
+                ie: /internet explorer/i
+            };
+
+            for (var key in browsers) {
+                if (browsers[key].test(userAgent)) {
+                    return key;
+                }
+            }
+
+            return 'unknown';
         }
 
         function getParams(params, elementSearch) {

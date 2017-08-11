@@ -73,24 +73,14 @@
         }
 
         var _parseData = function (page) {
-            $log.info('parseData'.page);
+            $log.info('parseData', page);
             var cleanPage = {};
 
             cleanPage.image = page.image ? page.image.id : null;
             cleanPage.status = page.status;
 
-            var datePost = new Date(page.scheduled_date);
-            var dd = datePost.getDate();
-            var mm = datePost.getMonth() + 1;
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            var yyyy = datePost.getFullYear();
 
-            cleanPage.post_date = dd + '/' + mm + '/' + yyyy + ' ' + page.scheduled_time;
+            cleanPage.post_date = postDateToSave(page.scheduled_date, page.scheduled_time);
 
             cleanPage.tags = _.map(page.tags, 'text');
             cleanPage.title = page.title;
@@ -133,6 +123,40 @@
 
             return cleanPage;
         };
+
+        function postDateToSave(scheduled_date, scheduled_time) {
+            if (!scheduled_date) {
+                return undefined;
+            }
+            var datePost = new Date(scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var yyyy = datePost.getFullYear();
+
+            if (!scheduled_time) {
+                var date = new Date();
+                var hh = date.getHours();
+                var MM = date.getMinutes();
+                if (hh < 10) {
+                    hh = '0' + hh;
+                }
+                if (MM < 10) {
+                    MM = '0' + MM;
+                }
+                scheduled_time = hh + ':' + MM;
+            }
+
+            return dd + '/' + mm + '/' + yyyy + ' ' + scheduled_time;
+        }
 
         var _getPages = function (params, ignoreLoadingBar) {
             if (angular.isUndefined(params)) {
@@ -555,10 +579,11 @@
 
                 faq: function (widget) {
                     $log.info('Widget FAQ to Save', widget);
-                    return {
+                    var obj = {
                         type: widget.type,
-                        id: widget.id
+                        faq: widget.id
                     };
+                    return obj;
                 },
 
                 tagcloud: function (widget) {
@@ -913,9 +938,11 @@
                     var obj = {};
                     if (widget.content) {
                         obj.id = widget.content.id;
+                        obj.faq = widget.content.id;
                         obj.title = widget.title;
                     } else if (widget.selected) {
                         obj.id = widget.selected.id;
+                        obj.faq = widget.selected.id;
                         obj.title = widget.title;
                     }
                     return obj;
@@ -1330,7 +1357,11 @@
                         obj.title = widget.title;
 
                         angular.extend(obj, this.parseWidgetToSave(widget));
+                        if (widget.type === 'faq') {
+                            delete widget.id;
+                        }
                     }
+                    console.log('makeWidget', widget);
 
                     return obj;
                 }
@@ -1349,7 +1380,7 @@
             getPages: _getPages,
             addPage: function (page) {
                 page = _parseData(page);
-
+                console.log(page);
                 return $http.post(apiUrl + '/page', page);
             },
             getPage: function (id) {

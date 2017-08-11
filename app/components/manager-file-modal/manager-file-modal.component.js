@@ -23,7 +23,7 @@
         var vmForFileWatch = this; // jshint ignore: line
         var countPage = 1;
         var hasRequest = false;
-        var pageSize = 12;
+        var pageSize = 20;
         var Formats = vm.$parent.formats;
         var imageTempToDelete;
         var formatSelected = Formats[0] || 'free';
@@ -110,6 +110,16 @@
                 }
             };
             _setFormatAvailable();
+            crossBrowser();
+        }
+
+        function crossBrowser() {
+            var browser = Util.detectBrowser();
+            if (browser === 'safari') {
+                $timeout(function () {
+                    $('.manager-file-modal-container').css('height', '85.5vh');
+                }, 200);
+            }
         }
 
         function _close() {

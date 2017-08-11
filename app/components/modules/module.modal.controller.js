@@ -150,6 +150,7 @@
 
                 if (module.type === 'faq') {
                     vm.widget.id = module.id;
+                    vm.widget.faq = module.id;
                 }
 
                 if (module.type === 'listnews') {

@@ -180,12 +180,12 @@
             PagesService
                 .updatePage($routeParams.id, page)
                 .then(function (page) {
-                    NotificationService.success('Página atualizada com sucesso.');
-
-                    if (!preview) {
-                        $location.path('/pages');
-                    } else {
+                    if (preview) {
+                        NotificationService.success('Página salva como rascunho.');
                         $window.open(page.data.page_url, '_black');
+                    } else {
+                        NotificationService.success('Página atualizada com sucesso.');
+                        $location.path('/pages');
                     }
                 });
         }
