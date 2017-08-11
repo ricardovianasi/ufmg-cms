@@ -78,35 +78,9 @@
 
             cleanPage.image = page.image ? page.image.id : null;
             cleanPage.status = page.status;
-            if (!page.scheduled_date) {
-                $log.warn('populando data', page.scheduled_date);
-                page.scheduled_date = new Date();
-            }
-            var datePost = new Date(page.scheduled_date);
-            var dd = datePost.getDate();
-            var mm = datePost.getMonth() + 1;
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            var yyyy = datePost.getFullYear();
 
-            if (!page.scheduled_time) {
-                var date = new Date();
-                var hh = date.getHours();
-                var MM = date.getMinutes();
-                if (hh < 10) {
-                    hh = '0' + hh;
-                }
-                if (MM < 10) {
-                    MM = '0' + MM;
-                }
-                page.scheduled_time = hh + ':' + MM;
-            }
 
-            cleanPage.post_date = dd + '/' + mm + '/' + yyyy + ' ' + page.scheduled_time;
+            cleanPage.post_date = postDateToSave(page.scheduled_date, page.scheduled_time);
 
             cleanPage.tags = _.map(page.tags, 'text');
             cleanPage.title = page.title;
@@ -149,6 +123,40 @@
 
             return cleanPage;
         };
+
+        function postDateToSave(scheduled_date, scheduled_time) {
+            if (!scheduled_date) {
+                return undefined;
+            }
+            var datePost = new Date(scheduled_date);
+            var dd = datePost.getDate();
+            var mm = datePost.getMonth() + 1;
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var yyyy = datePost.getFullYear();
+
+            if (!scheduled_time) {
+                var date = new Date();
+                var hh = date.getHours();
+                var MM = date.getMinutes();
+                if (hh < 10) {
+                    hh = '0' + hh;
+                }
+                if (MM < 10) {
+                    MM = '0' + MM;
+                }
+                scheduled_time = hh + ':' + MM;
+            }
+
+            return dd + '/' + mm + '/' + yyyy + ' ' + scheduled_time;
+        }
 
         var _getPages = function (params, ignoreLoadingBar) {
             if (angular.isUndefined(params)) {
