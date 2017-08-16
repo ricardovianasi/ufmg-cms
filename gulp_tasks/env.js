@@ -9,7 +9,7 @@ var knownOptions = {
     string: 'env',
     default: {
         // Default environment is production
-        env: process.env.APPLICATION_ENV || 'test'
+        env: process.env.APPLICATION_ENV || 'production'
     }
 };
 
