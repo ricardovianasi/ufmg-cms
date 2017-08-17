@@ -937,13 +937,13 @@
                 faq: function (widget) {
                     var obj = {};
                     if (widget.content) {
-                        obj.id = widget.content.id;
-                        obj.faq = widget.content.id;
+                        obj.faq = widget.content.faq.id;
                         obj.title = widget.title;
+                        obj.type = 'faq';
                     } else if (widget.selected) {
-                        obj.id = widget.selected.id;
                         obj.faq = widget.selected.id;
                         obj.title = widget.title;
+                        obj.type = 'faq';
                     }
                     return obj;
                 },
@@ -988,7 +988,6 @@
                                 post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
                             };
                         }
-
                     } else {
                         return {
                             id: widget.id,
@@ -1296,10 +1295,11 @@
                     }
                 },
                 parseWidgetToLoad: function (widget) {
-
+                    var obj = {};
                     if (typeof _parseToLoad[widget.type] !== 'undefined') {
-                        return _parseToLoad[widget.type](widget);
+                        obj = _parseToLoad[widget.type](widget);
                     }
+                    return obj;
                 },
                 preparePartial: function ($scope) {
                     if (_preparing[$scope.widget.type]) {
@@ -1358,11 +1358,9 @@
 
                         angular.extend(obj, this.parseWidgetToSave(widget));
                         if (widget.type === 'faq') {
-                            delete widget.id;
+                            delete obj.id;
                         }
                     }
-                    console.log('makeWidget', widget);
-
                     return obj;
                 }
             };
@@ -1380,7 +1378,6 @@
             getPages: _getPages,
             addPage: function (page) {
                 page = _parseData(page);
-                console.log(page);
                 return $http.post(apiUrl + '/page', page);
             },
             getPage: function (id) {
@@ -1388,7 +1385,6 @@
             },
             updatePage: function (id, page) {
                 page = _parseData(page);
-
                 return $http.put(apiUrl + '/page/' + id, page);
             },
             removePage: function (id) {
