@@ -88,6 +88,9 @@
         }
 
         function setTokenTime(time) {
+            if(time === 20 || time === '20'){
+                time = 7180;
+            }
             return store.setItem('token_Time', time);
         }
 
