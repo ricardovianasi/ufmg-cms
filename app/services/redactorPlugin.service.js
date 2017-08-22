@@ -15,7 +15,22 @@
             redactor.buffer.set();
             redactor.air.collapsed();
             redactor.insert.html(html(obj));
+            redactor.insert.html('<p></p>');
+            actionsText();
         };
+
+        function actionsText() {
+            $('.redactor-editor').on('keyup', function (event) {
+                var elements = $(this).children('.figure-removable');
+                if (elements) {
+                    elements.each(function (index, element) {
+                        if (element.tagName !== 'FIGURE') {
+                            element.remove();
+                        }
+                    });
+                }
+            });
+        }
 
         function _getData(file) {
             return (function () {
