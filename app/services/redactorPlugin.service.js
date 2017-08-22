@@ -1,4 +1,3 @@
-var oi;
 (function () {
     'use strict';
 
