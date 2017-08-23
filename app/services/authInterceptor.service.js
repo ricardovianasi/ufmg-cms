@@ -19,8 +19,8 @@
                 path: '/',
                 domain: $location.host(),
                 expires: tenMinutusLater,
-                secure: false,
-            }
+                secure: false
+            };
             $cookies.putObject('isLoggedCMS', true, options);
         };
 

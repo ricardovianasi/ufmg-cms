@@ -20,7 +20,7 @@
         };
 
         function actionsText() {
-            $('.redactor-editor').on('keyup', function (event) {
+            $('.redactor-editor').on('keyup', function () {
                 var elements = $(this).children('.figure-removable');
                 if (elements) {
                     elements.each(function (index, element) {
