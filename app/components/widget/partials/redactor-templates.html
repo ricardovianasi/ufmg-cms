@@ -1,5 +1,5 @@
 <script type="text/x-lodash-template" id="redactor-template-figure-vertical">
-    <figure class="figure-removable  vertical">
+    <figure class="figure-removable  vertical figure-image">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
@@ -9,7 +9,7 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-figure-medium">
-    <figure class="figure-removable medium">
+    <figure class="figure-removable medium figure-image">
         <img src="<%= url %>" title="<%= author %>" alt="<%= legend %>">
         <figcaption>
             <%= legend %>
@@ -19,7 +19,7 @@
 </script>
 
 <script type="text/x-lodash-template" id="redactor-template-audio">
-    <figure class="figure-removable">
+    <figure class="figure-removable figure-audio">
         <audio controls data-url="<%= url %>" data-title="<%= title %>">
             <source src="<%= url %>" type="audio/mpeg">
         </audio>
@@ -32,7 +32,7 @@
 <script type="text/x-lodash-template" id="redactor-template-files">
 
     <% if (isList == true)  { %>
-        <figure class="figure-removable">
+        <figure class="figure-removable figure-files">
             <img class="file-list-img" src="assets/img/file-icon.png" data-file="<%= url %>|<%= type %>|list" title="<%=title %>" alt="<%=title %>">
             <figcaption class="file-list-caption">
                 <%= title %> -
@@ -41,7 +41,7 @@
         </figure>
         <% } %>
             <% if (isIcon == true)   { %>
-                <figure class="figure-removable">
+                <figure class="figure-removable figure-file">
                     <img class="file-icon-img" src="assets/img/file-icon.png" data-file="<%=url %>|<%=type %>|icon" title="<%=title %>" alt="<%=title %>">
                     <figcaption class="file-icon-caption">
                         <%= title %> -
