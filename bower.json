@@ -16,7 +16,7 @@
   ],
   "private": true,
   "dependencies": {
-    "angular": "^1.6.4",
+    "angular": "1.6.5",
     "angular-animate": "^1.4.8",
     "angular-bootstrap": "^1.1.2",
     "angular-bootstrap-calendar": "^0.18.4",
@@ -69,7 +69,7 @@
     "jquery": "~2.1.4",
     "moment": "^2.11.1",
     "bootstrap": "~3.3.4",
-    "angular": "^1.6.5",
+    "angular": "1.6.5",
     "angular-ui-calendar": "~1.0.2"
   }
 }
