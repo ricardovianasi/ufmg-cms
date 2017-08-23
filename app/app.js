@@ -26,6 +26,7 @@
         'checklist-model',
         'ui.utils.masks',
         'ngScrollbars',
+        'ngCookies',
 
         // App Modules
         'calendarModule',

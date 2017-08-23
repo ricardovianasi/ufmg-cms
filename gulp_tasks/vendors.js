@@ -42,6 +42,7 @@ var SCRIPTS = [
     'bower_components/angular-ui-sortable/sortable.min.js',
     'bower_components/moment/min/moment.min.js',
     'bower_components/angular-loading-bar/build/loading-bar.min.js',
+    'bower_components/angular-cookies/angular-cookies.min.js',
     'bower_components/v-accordion/dist/v-accordion.min.js',
     'bower_components/checklist-model/checklist-model.js',
     'bower_components/angular-input-masks/angular-input-masks-standalone.min.js',

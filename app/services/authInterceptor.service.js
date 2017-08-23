@@ -6,10 +6,22 @@
         .factory('authInterceptorService', authInterceptorService);
 
     /** ngInject */
-    function authInterceptorService(sessionService, $q, $location, client_id_auth, apiUrl, $log, $rootScope) {
+    function authInterceptorService(sessionService, $q, $location, $cookies, client_id_auth, apiUrl, $log, $rootScope) {
         return {
             request: _request,
             responseError: _responseError
+        };
+
+
+        function _setCookieIsLoggedCMS() {
+            var tenMinutusLater = new Date((new Date()).getTime() + 10000 * 60);
+            var options = {
+                path: '/',
+                domain: $location.host(),
+                expires: tenMinutusLater,
+                secure: false,
+            }
+            $cookies.putObject('isLoggedCMS', true, options);
         };
 
         function _request(config) {
@@ -18,6 +30,7 @@
                 config.headers = config.headers || {};
                 config.headers.Authorization = 'Bearer ' + token;
             }
+            _setCookieIsLoggedCMS();
             return config;
         }
 
