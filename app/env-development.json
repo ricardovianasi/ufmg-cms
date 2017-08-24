@@ -1,5 +1,5 @@
 {
-    "apiUrl": "http://150.164.80.212:9999/webservice",
+    "apiUrl": "http://150.164.180.61:9999/webservice",
     "grant_type_auth": "password",
     "client_id_auth": "cms",
     "ENV": "development"
