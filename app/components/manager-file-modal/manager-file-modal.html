@@ -55,11 +55,11 @@
                                 </span> -->
                             </div>
                             <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
-                            <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg')}">
+                            <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
                                 <span class="text">{{file.legend}}</span>
                                 <span class="author">{{file.author_name}}</span>
                             </div>
-                            <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg')}">
+                            <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
                                 <span class="text">{{file.title}}</span>
                             </div>
                         </li>
@@ -74,14 +74,14 @@
             <div class="row" ng-if="currentFile.url">
                 <div class="col-md-12">
                     <div class="col-md-3">
-                        <div class="file-icon file-icon-lg" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg')" data-type="{{currentFile.type}}">
+                        <div class="file-icon file-icon-lg" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')" data-type="{{currentFile.type}}">
                         </div>
-                        <div class="actions" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg')">
+                        <div class="actions" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')">
                             <a class="btn btn-primary" ng-href="{{currentFile.url_without_thumbor}}" target="__blank">
                                 <i class="fa fa-external-link"></i>
                             </a>
                         </div>
-                        <img class="img-responsive" ng-src="{{currentFile.url_without_thumbor}}" ng-if="currentFile.type === 'png' || currentFile.type === 'jpg'">
+                        <img class="img-responsive" ng-src="{{currentFile.url_without_thumbor}}" ng-if="currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg'">
                     </div>
                     <div class="col-md-9">
                         <form class="form-horizontal">
