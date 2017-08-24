@@ -10,6 +10,7 @@
         var moduleModal = $uibModal;
         var defer;
         var EXTENSION = [];
+        var title = '';
         var PDF = {
             name: 'PDF',
             files: 'pdf'.toLowerCase()
@@ -43,6 +44,7 @@
         };
 
         function files() {
+            title = 'Inserir arquivos';
             EXTENSION = [];
             EXTENSION.push(
                 PDF,
@@ -54,6 +56,7 @@
         }
 
         function allFiles() {
+            title = 'Inserir arquivos';
             EXTENSION = [];
             EXTENSION.push(
                 ALL,
@@ -68,36 +71,42 @@
         }
 
         function pdfFiles() {
+            title = 'Inserir arquivos de leitura (pdf)';
             EXTENSION = [];
             EXTENSION.push(PDF);
             return openModal;
         }
 
         function imageFiles() {
+            title = 'Inserir imagens';
             EXTENSION = [];
             EXTENSION.push(IMAGE);
             return openModal;
         }
 
         function textFiles() {
+            title = 'Inserir arquivos de texto';
             EXTENSION = [];
             EXTENSION.push(TEXT);
             return openModal;
         }
 
         function dataFiles() {
+            title = 'Inserir planilhas (ex: Excel)';
             EXTENSION = [];
             EXTENSION.push(DATA);
             return openModal;
         }
 
         function audioFiles() {
+            title = 'Inserir arquivos de audio';
             EXTENSION = [];
             EXTENSION.push(AUDIO);
             return openModal;
         }
 
         function apresentationFiles() {
+            title = 'Inserir arquivos de apresentação (ex: Power Point)';
             EXTENSION = [];
             EXTENSION.push(APRESENTATION);
             return openModal;
@@ -148,6 +157,7 @@
                     size: 'xl',
                     controller: function ($uibModalInstance, $scope) {
                         $scope.formats = formats;
+                        $scope.title = title;
                         $scope.close = function () {
                             $uibModalInstance.close();
                         };

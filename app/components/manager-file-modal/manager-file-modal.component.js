@@ -28,6 +28,7 @@
         var imageTempToDelete;
         var formatSelected = Formats[0] || 'free';
 
+        vm.title = vm.$parent.title;
         vm.selector = {};
         vm.formats = {};
         vm.whatStep = 'files';
