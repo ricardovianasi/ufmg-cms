@@ -41,7 +41,8 @@
                         <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
                             ng-mouseleave="isShow[$index] = false">
                             <div class="actions" ng-class="{'show': isShow[$index]}">
-                                <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}" target="__blank">
+                                <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}"
+                                    target="__blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 <span uib-tooltip="Usar mídia" tooltip-placement="bottom" class="label label-secondary label-lg" ng-click="edit(file, true)">
@@ -74,10 +75,12 @@
             <div class="row" ng-if="currentFile.url">
                 <div class="col-md-12">
                     <div class="col-md-3">
-                        <div class="file-icon file-icon-lg" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')" data-type="{{currentFile.type}}">
+                        <div class="file-icon file-icon-lg" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')"
+                            data-type="{{currentFile.type}}">
                         </div>
                         <div class="actions" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')">
-                            <a class="btn btn-primary" ng-href="{{currentFile.url_without_thumbor}}" target="__blank">
+                            <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="btn btn-primary" ng-href="{{currentFile.url_without_thumbor}}"
+                                target="__blank">
                                 <i class="fa fa-external-link"></i>
                             </a>
                         </div>
