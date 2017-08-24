@@ -87,7 +87,14 @@
                         <img class="img-responsive" ng-src="{{currentFile.url_without_thumbor}}" ng-if="currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg'">
                     </div>
                     <div class="col-md-9">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" style="margin-top: 85px;" ng-if="!(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Título do arquivo" value="{{ currentFile.title }}" ng-model="currentFile.title">
+                                </div>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" ng-if="(currentFile.type === 'png' || currentFile.type === 'jpg' || currentFile.type === 'jpeg')">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" id="field-1" placeholder="Autor:" value="{{ currentFile.author_name }}" ng-model="currentFile.author_name">
