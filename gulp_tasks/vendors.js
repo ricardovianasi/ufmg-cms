@@ -14,6 +14,7 @@ var SCRIPTS = [
     'app/assets/scripts/redactor-plugins/video.js',
     'app/assets/scripts/redactor-plugins/audio.js',
     'app/assets/scripts/redactor-actions.js',
+    'app/assets/scripts/global.js',
     'bower_components/lodash/dist/lodash.min.js',
     'bower_components/angular/angular.min.js',
     'bower_components/angular-route/angular-route.min.js',

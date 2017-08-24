@@ -57,7 +57,7 @@
                             </div>
                             <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
                             <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
-                                <span class="text">{{file.legend}}</span>
+                                <span class="text">{{file.legend.addEllipsis()}}</span>
                                 <span class="author">{{file.author_name}}</span>
                             </div>
                             <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">

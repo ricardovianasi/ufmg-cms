@@ -222,6 +222,10 @@ manager-file-modal {
                                         text-shadow: 0 1px 3px rgba(0, 0, 0, .8);
                                         color: #fff;
                                         margin: 0;
+                                        margin-bottom: 1px;
+                                        max-height: 98px;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
                                     }
                                     >.author {
                                         display: block;
