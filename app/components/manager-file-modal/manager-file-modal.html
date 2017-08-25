@@ -6,6 +6,19 @@
     <h2 class="modal-title" ng-if="whatStep === 'pos'">Adicionar Legenda</h2>
     <h2 class="modal-title" ng-if="whatStep === 'edit'">Cortar imagem</h2>
 </div>
+<div class="bar-actions" ng-if="whatStep === 'files'">
+    <div class="dataTables_filter">
+        <label>
+            <i class="fa fa-search"></i>
+            <input type="search" class="form-control input-sm" ng-model="search" placeholder="Pesquisar por..." ng-change="loadMoreImages(search)" ng-model-options="{debounce: 400}">
+        </label>
+    </div>
+    <div ng-if="EXTENSION.length !== 1" class="filter-label">
+        <strong>Filtor por: </strong>
+        <span style="margin-left:3px;" class="label label-primary" ng-repeat="ext in EXTENSION" ng-class="{'label-success': filterType === ext.files}"
+            ng-click="filterTo(ext.files)">{{ext.name}}</span>
+    </div>
+</div>
 <div class="content-modal" ng-init="isActive = 'files'">
     <div class="sidebar" ng-class="{'sidebar-hidden': toggle}">
         <div class="content" ng-class="{'content-hidden': toggle}">
@@ -26,49 +39,38 @@
     </div>
     <div class="wrapper-images" ng-if="isActive === 'files'" ng-class="{'wrapper-images-expand': toggle}">
         <div class="container manager-file-modal-container" ng-if="whatStep === 'files'" ng-init="loadMoreImages()">
-            <div class="form-group dataTables_filter">
-                <label>
-                    <i class="fa fa-search"></i>
-                    <input type="search" class="form-control input-sm" ng-model="search" placeholder="Pesquisar por..." ng-change="loadMoreImages(search)" ng-model-options="{debounce: 400}">
-                    <div class="pull-right" style="margin-top:5px;">
-                        <span style="margin-left:3px;" class="label label-primary" ng-repeat="ext in EXTENSION" ng-class="{'label-success': filterType === ext.files}" ng-click="filterTo(ext.files)">{{ext.name}}</span>
-                    </div>
-                </label>
-            </div>
             <div class="images" scroll-detect="loadMoreImages()">
-                <div class="dropdown-upload">
-                    <ul class="list" ng-init="isShow = []">
-                        <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
-                            ng-mouseleave="isShow[$index] = false">
-                            <div class="actions" ng-class="{'show': isShow[$index]}">
-                                <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}"
-                                    target="__blank">
+                <ul class="list" ng-init="isShow = []">
+                    <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
+                        ng-mouseleave="isShow[$index] = false">
+                        <div class="actions" ng-class="{'show': isShow[$index]}">
+                            <a uib-tooltip="Visualizar" tooltip-placement="bottom" class="label label-primary label-lg" ng-href="{{file.url_without_thumbor}}"
+                                target="__blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <span uib-tooltip="Usar mídia" tooltip-placement="bottom" class="label label-secondary label-lg" ng-click="edit(file, true)">
+                            <span uib-tooltip="Usar mídia" tooltip-placement="bottom" class="label label-secondary label-lg" ng-click="edit(file, true)">
                                     <i class="fa fa-check"></i>
                                 </span>
-                                <span uib-tooltip="Editar" tooltip-placement="bottom" class="label label-warning label-lg" ng-click="edit(file, false)">
+                            <span uib-tooltip="Editar" tooltip-placement="bottom" class="label label-warning label-lg" ng-click="edit(file, false)">
                                     <i class="fa fa-pencil"></i>
                                 </span>
-                                <!-- <span class="label label-danger label-lg" ng-click="remove($event, file.id, $index)">
+                            <!-- <span class="label label-danger label-lg" ng-click="remove($event, file.id, $index)">
                                     <i class="fa fa-trash"></i>
                                 </span> -->
-                            </div>
-                            <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
-                            <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
-                                <span class="text">{{file.legend.addEllipsis()}}</span>
-                                <span class="author">{{file.author_name}}</span>
-                            </div>
-                            <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
-                                <span class="text">{{file.title}}</span>
-                            </div>
-                        </li>
-                        <li class="not-found" ng-if="fileNotFound">
-                            <h1>Não há nenhum arquivo</h1>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                        <div class="file-icon file-icon-lg" ng-if="!file.thumb" data-type="{{file.type}}"></div>
+                        <div class="description" ng-if="file.author_name || file.legend" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
+                            <span class="text">{{file.legend.addEllipsis()}}</span>
+                            <span class="author">{{file.author_name}}</span>
+                        </div>
+                        <div class="description" ng-if="!(file.author_name || file.legend)" ng-class="{'show': isShow[$index] || !(file.type === 'png' || file.type === 'jpg' || file.type === 'jpeg')}">
+                            <span class="text">{{file.title}}</span>
+                        </div>
+                    </li>
+                    <li class="not-found" ng-if="fileNotFound">
+                        <h1>Não há nenhum arquivo</h1>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="content-pos-upload" ng-if="currentFile.url && whatStep === 'pos'">
@@ -118,7 +120,7 @@
         </div>
     </div>
 </div>
-<div class="modal-footer upload">
+<div class="modal-footer upload" ng-if="whatStep !== 'files'">
     <div ng-if="currentFile.url && whatStep === 'pos'">
         <button type="button" class="btn btn-danger btn-lg pull-left" ng-click="back()">
             <i class="fa fa-chevron-left"></i> Voltar
@@ -134,11 +136,5 @@
         <button type="button" class="btn btn-lg btn-secondary pull-right" ng-click="insert()">
                         <i class="fa fa-check"></i> Inserir
                     </button>
-    </div>
-    <div class="row" ng-if="whatStep === 'files'">
-        <button class="btn btn-secondary pull-right btn-lg" ng-model="vm.file" ngf-select ngf-accept="'file/*'" ngf-multiple="false">
-                <i class="fa fa-cloud-upload"></i>
-                Enviar Arquivos
-            </button>
     </div>
 </div>
