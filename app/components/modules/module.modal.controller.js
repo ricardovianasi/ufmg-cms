@@ -46,9 +46,10 @@
             $scope.$watch('widget.selected', function () {
                 if (vm.widget.selected) {
                     vm.widget.type = vm.widget.selected.type;
-                } else {
-                    vm.widget.type
-                }
+                } 
+                // else {
+                //     vm.widget.type;
+                // }
             });
 
             if (module) {

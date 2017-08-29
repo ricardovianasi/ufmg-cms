@@ -22,7 +22,7 @@
                 secure: false
             };
             $cookies.putObject('isLoggedCMS', true, options);
-        };
+        }
 
         function _request(config) {
             var token = sessionService.getToken();

@@ -70,7 +70,6 @@
     "jquery": "~2.1.4",
     "moment": "^2.11.1",
     "bootstrap": "~3.3.4",
-    "angular": "1.6.5",
-    "angular-ui-calendar": "~1.0.2"
+    "angular": "1.6.5"
   }
 }

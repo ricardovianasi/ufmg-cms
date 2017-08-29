@@ -5,7 +5,6 @@ var dir = requireDir('./gulp_tasks', {
 });
 
 var gulp = require('gulp');
-var spawn = require('child_process').spawn;
 var runSequence = require('run-sequence');
 
 // Taks default gulp!
@@ -37,6 +36,8 @@ gulp.task('serve', function () {
 gulp.task('production', function () {
     /*eslint-disable */
     console.log('MODE: production');
+    var execSync = require('child_process').execSync;
+    execSync('bower i');
     /*eslint-enable */
     return runSequence(['build', 'imagemin']);
 });
