@@ -27,6 +27,7 @@
         'ui.utils.masks',
         'ngScrollbars',
         'ngCookies',
+        'thatisuday.dropzone',
 
         // App Modules
         'calendarModule',

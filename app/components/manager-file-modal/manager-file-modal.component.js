@@ -42,6 +42,10 @@
         vm.filterType = 'all';
         vm.fileNotFound = false;
         vm.EXTENSION = ManagerFileService.getExtension();
+        vm.dzMethods = {};
+        vm.loadingImageEdit = false;
+        vm.imageOriginal = null;
+        vm.imageMaxWidth = 380;
 
         vm.setFormat = _setFormat;
         vm.close = _close;
@@ -53,16 +57,17 @@
         vm.edit = _edit;
         vm.filterTo = _filterTo;
         vm.isDescriptionTitle = _isDescriptionTitle;
+        vm.dzCallbacks = _dzCallbacks();
+        vm.dzOptions = _dzOptions();
 
         onInit();
 
         function onInit() {
-            onEvents();
             Util.setTypeParam(vm.filterType);
             _filterTo(vm.EXTENSION[0].files);
             vm.availableFormats = {
                 free: {
-                    name: 'Selecione a área',
+                    name: 'Editar',
                 },
                 logo: {
                     name: 'Logo',
@@ -111,15 +116,84 @@
                 }
             };
             _setFormatAvailable();
-            crossBrowser();
+            _crossBrowser();
         }
 
-        function crossBrowser() {
+        function _crossBrowser() {
             var browser = Util.detectBrowser();
             if (browser === 'safari') {
                 $timeout(function () {
                     $('.manager-file-modal-container').css('height', '80vh');
-                }, 200);
+                }, 300);
+            }
+        }
+
+        function _getAcceptedFiles() {
+            var acceptedFiles = '';
+            for (var index = 0; index < vm.EXTENSION.length; index += 1) {
+                var element = vm.EXTENSION[index];
+                if (element.files !== 'all') {
+                    acceptedFiles += ',.' + element.files.split(',').join(',.');
+                }
+            }
+            return acceptedFiles;
+        }
+
+        function _dzOptions() {
+            return {
+                url: '/',
+                acceptedFiles: _getAcceptedFiles(),
+                method: 'files',
+                maxFiles: '1',
+                dictDefaultMessage: '<button class="btn btn-secondary btn-lg">' +
+                '<i class="fa fa-cloud-upload"></i> Enviar Arquivos'+
+                '</button><br /> Arraste e solte o arquivo aqui para enviar',
+                dictResponseError: 'Erro ao enviar arquivo!',
+            };
+        }
+
+        function _isValidFile(file) {
+            var currentExtension = file.type.split('/')[1];
+            for (var j = 0; j < vm.EXTENSION.length; j += 1) {
+                var extensions = vm.EXTENSION[j].files;
+                if (extensions === 'all') {
+                    return true;
+                }
+                extensions = extensions.split(',');
+                for (var index = 0; index < extensions.length; index += 1) {
+                    if (currentExtension === extensions[index]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function _dzCallbacks() {
+            return {
+                addedfile: function (file) {
+                    if (file.type && _isValidFile(file)) {
+                        _addMidia(file);
+                    } else {
+                        NotificationService.error('Arquivo inválido!', vm.title);
+                        vm.dzMethods.removeAllFiles();
+                    }
+                }
+            };
+        }
+
+        function _addMidia(file) {
+            if (vm.whatStep === 'files') {
+                MediaService
+                    .newFile(file)
+                    .then(function (data) {
+                        vm.currentFile = data;
+                        vm.whatStep = 'pos';
+                        imageTempToDelete = data;
+                    })
+                    .catch(function () {
+                        NotificationService.error('Arquivo inválido!', vm.title);
+                    });
             }
         }
 
@@ -140,38 +214,48 @@
             vm.whatStep = 'files';
         }
 
+        function waitLoadImage() {
+            var defer = $q.defer();
+            vm.imageOriginal = null;
+
+            function recursiveGetImage() {
+                $timeout(function () {
+                    vm.imageOriginal = $('img#mrImageContainer')[0];
+                    if (vm.imageOriginal) {
+                        vm.loadingImageEdit = true;
+                        defer.resolve();
+                        return;
+                    }
+                    recursiveGetImage();
+                }, 100);
+            }
+
+            recursiveGetImage();
+            return defer.promise;
+        }
+
+        function radioSizeImage() {
+            var radio = vm.imageOriginal.naturalHeight / vm.imageOriginal.naturalWidth;
+            if (radio < 1) {
+                vm.imageMaxWidth = 600;
+            } else {
+                vm.imageMaxWidth = 380;
+            }
+        }
+
         function _setDefaultFormat() {
-            $timeout(function () {
-                if (Formats[0]) {
+            radioSizeImage();
+            if (Formats[0] && Formats[0] !== 'free') {
+                $timeout(function () {
                     _setFormat(Formats[0]);
-                }
-            }, 300);
+                }, 300);
+            }
         }
 
         function _setFormatAvailable() {
             angular.forEach(Formats, function (item) {
                 vm.formats[item] = vm.availableFormats[item];
             });
-        }
-
-        function onEvents() {
-            vm.$watch('vm.file', function () {
-                if (vmForFileWatch.file) {
-                    watchFile();
-                }
-            });
-        }
-
-        function watchFile() {
-            if (vm.whatStep === 'files') {
-                MediaService
-                    .newFile(vmForFileWatch.file)
-                    .then(function (data) {
-                        vm.currentFile = data;
-                        vm.whatStep = 'pos';
-                        imageTempToDelete = data;
-                    });
-            }
         }
 
         function _edit(file, forceEdit) {
@@ -181,6 +265,7 @@
             vm.currentFile = file;
             if ((!file.legend || file.legend === '') || !forceEdit) {
                 vm.whatStep = 'pos';
+
             } else {
                 verifyFile(file);
             }
@@ -265,7 +350,7 @@
         }
 
         function verifyFile(file) {
-            if (vm.currentFile.type === 'png' || vm.currentFile.type === 'jpg') {
+            if (vm.currentFile.type === 'png' || vm.currentFile.type === 'jpg' || vm.currentFile.type === 'jpeg') {
                 editImage();
             } else {
                 ManagerFileService.close(file);
@@ -274,27 +359,42 @@
         }
 
         function editImage() {
-            _setDefaultFormat();
-            $timeout(function () {
-                vm.imageOriginal = $('img', '#mrImageContainer')[0];
-            }, 300);
             vm.whatStep = 'edit';
+            vm.imageMaxWidth = null;
+            waitLoadImage()
+                .then(function () {
+                    _setDefaultFormat();
+                });
+        }
+
+        function _fullImageEdit() {
+            vm.selector = angular.extend(vm.selector, {
+                x1: 0,
+                y1: 0,
+                x2: vm.imageOriginal.naturalWidth,
+                y2: vm.imageOriginal.naturalHeight
+            });
+            vm.aspectRatio = 1 / (vm.imageOriginal.naturalHeight / vm.imageOriginal.naturalWidth);
         }
 
         function _setFormat(format, setCrop) {
-            formatSelected = format;
-            var obj = vm.availableFormats[format];
-            if (setCrop !== false) {
-                vm.selector = angular.extend(vm.selector, {
-                    x1: 0,
-                    y1: 0,
-                    x2: obj.width,
-                    y2: obj.height
-                });
-            }
-
             vm.activeFormat = format;
-            vm.aspectRatio = 1 / (obj.height / obj.width);
+            if (format === 'free') {
+                _fullImageEdit();
+            } else {
+                formatSelected = format;
+                var obj = vm.availableFormats[format];
+                if (setCrop !== false) {
+                    vm.selector = angular.extend(vm.selector, {
+                        x1: 0,
+                        y1: 0,
+                        x2: obj.width,
+                        y2: obj.height
+                    });
+                }
+                vm.aspectRatio = 1 / (obj.height / obj.width);
+            }
+            vm.imageOriginal = $('img','#mrImageContainerEdit')[0];
         }
 
         function _loadMoreImages(search) {

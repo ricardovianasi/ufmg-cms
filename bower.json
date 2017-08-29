@@ -63,7 +63,8 @@
     "ng-scrollbars": "^0.0.11",
     "nanoscroller": "^0.8.7",
     "ui-select-infinity": "^0.1.6",
-    "angular-cookies": "^1.6.6"
+    "angular-cookies": "^1.6.6",
+    "ng-dropzone": "ngdropzone#^2.0.2"
   },
   "resolutions": {
     "jquery": "~2.1.4",

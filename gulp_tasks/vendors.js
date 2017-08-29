@@ -49,7 +49,9 @@ var SCRIPTS = [
     'bower_components/angular-input-masks/angular-input-masks-standalone.min.js',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
     'bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js',
-    'bower_components/ng-scrollbars/dist/scrollbars.min.js'
+    'bower_components/ng-scrollbars/dist/scrollbars.min.js',
+    'bower_components/dropzone/dist/min/dropzone.min.js',
+    'bower_components/ng-dropzone/dist/ng-dropzone.min.js',
 
     // 'bower_components/pdfjs-bower/dist/compatibility.js',
     // 'bower_components/pdfjs-bower/dist/pdf.js'
@@ -72,6 +74,9 @@ var STYLES = [
     'bower_components/v-accordion/dist/v-accordion.min.css',
     'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
     'bower_components/nanoscroller/bin/css/nanoscroller.css',
+    'bower_components/dropzone/dist/min/dropzone.min.css',
+    'bower_components/dropzone/dist/min/basic.min.css',
+    'bower_components/ng-dropzone/dist/ng-dropzone.min.css',
 
     // God Damn Xenon
     'app/assets/xenon/css/bootstrap.css',

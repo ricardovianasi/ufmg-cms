@@ -1,3 +1,11 @@
+setTimeout(function () {
+    asyncLoad();
+}, 100);
+
+function asyncLoad() {
+    Dropzone.autoDiscover = false;
+}
+
 String.prototype.addEllipsis = function () {
     var newString = this;
     if (this.length > 200) {
