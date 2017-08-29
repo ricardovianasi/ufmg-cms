@@ -36,8 +36,6 @@ gulp.task('serve', function () {
 gulp.task('production', function () {
     /*eslint-disable */
     console.log('MODE: production');
-    var execSync = require('child_process').execSync;
-    execSync('bower i');
     /*eslint-enable */
     return runSequence(['build', 'imagemin']);
 });

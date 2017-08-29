@@ -19,6 +19,8 @@ var env = options.env;
 gulp.task('env', function () {
     var file = 'env-' + env + '.json';
 
+    var execSync = require('child_process').execSync;
+    execSync('bower i');
 
     /*eslint-disable */
     console.log(options);
