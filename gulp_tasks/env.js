@@ -19,9 +19,6 @@ var env = options.env;
 gulp.task('env', function () {
     var file = 'env-' + env + '.json';
 
-    var execSync = require('child_process').execSync;
-    execSync('sudo bower i');
-
     /*eslint-disable */
     console.log(options);
     /*eslint-enable */
