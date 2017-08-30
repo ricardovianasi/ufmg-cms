@@ -41,7 +41,12 @@
         <div class="container manager-file-modal-container" ng-if="whatStep === 'files'" ng-init="loadMoreImages()">
             <div class="images" scroll-detect="loadMoreImages()">
                 <ul class="list" ng-init="isShow = []">
-                    <li class="dropzone" methods="dzMethods" options="dzOptions" callbacks="dzCallbacks" ng-dropzone></li>
+                    <li ng-hide="waterTofile" class="dropzone" methods="dzMethods" options="dzOptions" callbacks="dzCallbacks" ng-dropzone ng-click="waitTofile()"></li>
+                    <li ng-show="waterTofile" class="dropzone">
+                        <div class="dz-default dz-message">
+                            Carregando...
+                        </div>
+                    </li>
                     <li class="empty"></li>
                     <li class="item" ng-repeat="file in files" style="background-image: url({{file.thumb}})" ng-mouseenter="isShow[$index] = true"
                         ng-mouseleave="isShow[$index] = false">
@@ -119,8 +124,8 @@
             <div class="actions">
                 <button class="btn btn-primary" ng-repeat="(key, format) in formats" ng-click="setFormat(key)" ng-class="{'btn-secondary': activeFormat === key, 'btn-click': format.name === 'Vertical'}">{{ format.name }} ({{ format.width }}x{{ format.height }})</button>
             </div>
-            <div ng-if="loadingImageEdit && imageMaxWidth" id="mrImageContainerEdit" mr-image mr-src="currentFile.url_without_thumbor" mr-max-width="imageMaxWidth" mr-selector="selector"
-                mr-aspect-ratio="aspectRatio"></div>
+            <div ng-if="loadingImageEdit && imageMaxWidth" id="mrImageContainerEdit" mr-image mr-src="currentFile.url_without_thumbor"
+                mr-max-width="imageMaxWidth" mr-selector="selector" mr-aspect-ratio="aspectRatio"></div>
             <img ng-hide="true" id="mrImageContainer" ng-src="{{currentFile.url_without_thumbor}}">
             <div ng-if="!loadingImageEdit">
                 Carregando...

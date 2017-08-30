@@ -15,6 +15,7 @@
         $q,
         ManagerFileService,
         Util,
+        $window,
         ModalService,
         NotificationService,
         $timeout) {
@@ -59,6 +60,7 @@
         vm.isDescriptionTitle = _isDescriptionTitle;
         vm.dzCallbacks = _dzCallbacks();
         vm.dzOptions = _dzOptions();
+        vm.waitTofile = _waitTofile;
 
         onInit();
 
@@ -117,6 +119,32 @@
             };
             _setFormatAvailable();
             _crossBrowser();
+            _getCancelDialogUpload();
+        }
+
+        function _getCancelDialogUpload() {
+            var dialogs = [];
+            $timeout(function () {
+                $('.dz-hidden-input').each(function (index, element) {
+                    element.onclick = function () {
+                        $window.document.body.onfocus = focusDialogUpload;
+                    };
+                    dialogs.push(element);
+                });
+            });
+
+            function focusDialogUpload() {
+                dialogs.forEach(function (element) {
+                    if (element.value === '') {
+                        vm.waterTofile = false;
+                    }
+                });
+            }
+        }
+
+        function _waitTofile() {
+            vm.waterTofile = true;
+            _getCancelDialogUpload();
         }
 
         function _crossBrowser() {
@@ -146,8 +174,8 @@
                 method: 'files',
                 maxFiles: '1',
                 dictDefaultMessage: '<button class="btn btn-secondary btn-lg">' +
-                '<i class="fa fa-cloud-upload"></i> Enviar Arquivos'+
-                '</button><br /> Arraste e solte o arquivo aqui para enviar',
+                    '<i class="fa fa-cloud-upload"></i> Enviar Arquivos' +
+                    '</button><br /> Arraste e solte o arquivo aqui para enviar',
                 dictResponseError: 'Erro ao enviar arquivo!',
             };
         }
@@ -175,6 +203,7 @@
                     if (file.type && _isValidFile(file)) {
                         _addMidia(file);
                     } else {
+                        vm.waterTofile = false;
                         NotificationService.error('Arquivo inválido!', vm.title);
                         vm.dzMethods.removeAllFiles();
                     }
@@ -190,9 +219,12 @@
                         vm.currentFile = data;
                         vm.whatStep = 'pos';
                         imageTempToDelete = data;
+                        vm.waterTofile = false;
                     })
                     .catch(function () {
-                        NotificationService.error('Arquivo inválido!', vm.title);
+                        vm.waterTofile = false;
+                        NotificationService.error('Erro ao enviar arquivo.');
+                        vm.dzMethods.removeAllFiles();
                     });
             }
         }
@@ -276,10 +308,15 @@
                 x: vm.selector.x1,
                 y: vm.selector.y1,
                 width: vm.selector.x2 - vm.selector.x1,
-                height: vm.selector.y2 - vm.selector.y1,
-                resize_width: vm.availableFormats[vm.activeFormat].width,
-                resize_height: vm.availableFormats[vm.activeFormat].height
+                height: vm.selector.y2 - vm.selector.y1
             };
+            if (angular.isUndefined(vm.availableFormats[vm.activeFormat])) {
+                obj.resize_width = vm.imageOriginal.naturalWidth;
+                obj.resize_height = vm.imageOriginal.naturalHeight;
+            } else {
+                obj.resize_width = vm.availableFormats[vm.activeFormat].width;
+                obj.resize_height = vm.availableFormats[vm.activeFormat].height;
+            }
 
             if (vm.imageOriginal.naturalWidth !== vm.imageOriginal.width) {
                 obj.x = ((vm.imageOriginal.naturalWidth * vm.selector.x1) / vm.imageOriginal.width);
@@ -329,9 +366,16 @@
         }
 
         function _updateMidia() {
-            if (_validate(vm.currentFile.legend)) {
-                NotificationService.info('Legenda deve ser inserida obrigatoriamente.');
-                return false;
+            if (!(vm.currentFile.type === 'png' || vm.currentFile.type === 'jpg' || vm.currentFile.type === 'jpeg')) {
+                if (_validate(vm.currentFile.title)) {
+                    NotificationService.info('Título deve ser inserida obrigatoriamente.');
+                    return false;
+                }
+            } else {
+                if (_validate(vm.currentFile.legend)) {
+                    NotificationService.info('Legenda deve ser inserida obrigatoriamente.');
+                    return false;
+                }
             }
 
             var obj = {
@@ -394,7 +438,7 @@
                 }
                 vm.aspectRatio = 1 / (obj.height / obj.width);
             }
-            vm.imageOriginal = $('img','#mrImageContainerEdit')[0];
+            vm.imageOriginal = $('img', '#mrImageContainerEdit')[0];
         }
 
         function _loadMoreImages(search) {

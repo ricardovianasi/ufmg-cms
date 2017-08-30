@@ -55,7 +55,7 @@
             },
             newFile: function (file) {
                 var deferred = $q.defer();
-                
+
                 Upload.upload({
                     url: apiUrl + '/file',
                     fields: {
@@ -67,6 +67,8 @@
                     file: file
                 }).success(function (data) {
                     deferred.resolve(data);
+                }).error(function (error) {
+                    deferred.reject(error);
                 });
 
                 return deferred.promise;
