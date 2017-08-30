@@ -280,7 +280,7 @@
             if (Formats[0] && Formats[0] !== 'free') {
                 $timeout(function () {
                     _setFormat(Formats[0]);
-                }, 300);
+                }, 400);
             }
         }
 
