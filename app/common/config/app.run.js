@@ -71,10 +71,8 @@
 
         function getAuth() {
             var timeTokenInSegunds = sessionService.getTokenTime();
-            var defaultListenLoginSegunds = 20;
-            var timeInSegunds = timeTokenInSegunds >= 20 ? timeTokenInSegunds : defaultListenLoginSegunds;
-            var timeInMillisegunds = timeInSegunds / 0.001;
-            $log.info('Escutando Auth a cada: ' + timeInSegunds + ' segundos');
+            var timeInMillisegunds = timeTokenInSegunds / 0.001;
+            $log.info('Escutando Auth a cada: ' + timeTokenInSegunds + ' segundos');
             $timeout(function () {
                 get(false);
             }, timeInMillisegunds);

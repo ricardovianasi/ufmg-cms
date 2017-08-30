@@ -9,6 +9,7 @@
     function sessionService($location, $window) {
         var store = $window.localStorage;
         var SAFETY_TIME = 20;
+        var DEFAULT_TIME = 7180;
         var key = 'token';
 
         return {
@@ -84,13 +85,12 @@
         }
 
         function getTokenTime() {
-            return Number(store.getItem('token_Time')) - SAFETY_TIME;
+            var time = Number(store.getItem('token_Time'));
+            return time ? time : DEFAULT_TIME;
         }
 
-        function setTokenTime(time) {
-            if(time === 20 || time === '20'){
-                time = 7180;
-            }
+        function setTokenTime(tokenTime) {
+            var time = Number(tokenTime) - SAFETY_TIME;
             return store.setItem('token_Time', time);
         }
 
