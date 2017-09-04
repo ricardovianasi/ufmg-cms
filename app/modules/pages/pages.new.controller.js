@@ -46,6 +46,7 @@
 
         function onInit() {
             $log.info('PagesNewController');
+
             vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
@@ -71,6 +72,8 @@
                 },
                 containment: '#sort-main'
             };
+
+            _getType();
 
             WidgetsService
                 .getWidgets()
@@ -100,6 +103,15 @@
                     allTags = data.data.items[0];
                 });
         }
+
+
+        function _getType() {
+            PagesService.getType()
+                .then(function (res) {
+                    vm.typesData = res.data;
+                });
+        }
+
 
         function loadMore(dataTemp, search) {
             var defer = $q.defer();

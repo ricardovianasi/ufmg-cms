@@ -153,6 +153,16 @@
                 </ui-select-choices>
             </ui-select>
         </div>
+        <div class="panel panel-default" ng-if="User.is_administrator">
+            Tipo da página:
+            <ui-select ng-model="page.page_type" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
+                <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.name }}</ui-select-match>
+                <ui-select-choices repeat="type.id as type in typesData.items | filter: $select.search track by $index">
+                    <div ng-bind-html="type.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
     </div>
 </div>
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>

@@ -936,7 +936,7 @@
 
                 faq: function (widget) {
                     var obj = {};
-                    if (widget.content) {
+                    if (widget.content && widget.content.faq) {
                         obj.faq = widget.content.faq.id;
                         obj.title = widget.title;
                         obj.type = 'faq';
@@ -1366,6 +1366,10 @@
             };
         })(_getPages, $uibModal);
 
+        function parseFaq(page) {
+
+        }
+
         return {
             // Columns defaults
             COLUMNS: [{
@@ -1389,6 +1393,9 @@
             },
             removePage: function (id) {
                 return $http.delete(apiUrl + '/page/' + id);
+            },
+            getType: function () {
+                return $http.get(apiUrl + '/page/type');
             },
             module: function () {
                 return _module;

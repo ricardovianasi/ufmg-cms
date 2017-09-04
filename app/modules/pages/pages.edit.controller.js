@@ -34,6 +34,7 @@
         var vm = $scope;
 
         vm.pagesParent = [];
+        vm.typesData = {};
 
         vm.loadMorePage = _loadMorePage;
         vm.findTags = _findTags;
@@ -81,6 +82,14 @@
             _getPage();
             _getTags();
             _getWidgets();
+            _getType();
+        }
+
+        function _getType() {
+            PagesService.getType()
+                .then(function (res) {
+                    vm.typesData = res.data;
+                });
         }
 
         function _getTags() {
