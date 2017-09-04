@@ -1,6 +1,6 @@
 <div class=form-group>
     <label>Selecione o Faq</label>
-    <ui-select ng-model="widget.id" theme="bootstrap" class="ui-select">
+    <ui-select ng-model="widget.content.faq" theme="bootstrap" class="ui-select">
         <ui-select-match placeholder="Buscar FAQ">{{ $select.selected.title }}</ui-select-match>
         <ui-select-choices repeat="item.id as item in dataFaq | filter: $select.search track by $index" scroll-detect="loadMoreFaq()"
             refresh="loadMoreFaq($select.search)" refresh-delay="300">

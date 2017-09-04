@@ -44,12 +44,7 @@
             };
 
             $scope.$watch('widget.selected', function () {
-                if (vm.widget.selected) {
-                    vm.widget.type = vm.widget.selected.type;
-                } 
-                // else {
-                //     vm.widget.type;
-                // }
+                vm.widget.type = vm.widget.selected.type;
             });
 
             if (module) {
@@ -58,15 +53,14 @@
                 vm.widget.type = module.type;
                 vm.widget.title = module.title;
                 vm.widget.selected.type = module.type;
+
                 angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
-                if (module.type === 'faq') {
-                    vm.widget.id = vm.widget.faq;
-                }
 
                 if (module.type === 'listnews') {
                     vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
                 }
             }
+
             vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
 
             vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');

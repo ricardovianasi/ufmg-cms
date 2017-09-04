@@ -578,12 +578,18 @@
                 },
 
                 faq: function (widget) {
-                    $log.info('Widget FAQ to Save', widget);
-                    var obj = {
+                    var id;
+
+                    if (typeof widget.content.faq === 'object') {
+                        id = widget.content.faq.id;
+                    } else {
+                        id = widget.content.faq;
+                    }
+
+                    return {
                         type: widget.type,
-                        faq: widget.id
+                        faq: parseInt(id)
                     };
-                    return obj;
                 },
 
                 tagcloud: function (widget) {
@@ -935,17 +941,11 @@
                 },
 
                 faq: function (widget) {
-                    var obj = {};
-                    if (widget.content && widget.content.faq) {
-                        obj.faq = widget.content.faq.id;
-                        obj.title = widget.title;
-                        obj.type = 'faq';
-                    } else if (widget.selected) {
-                        obj.faq = widget.selected.id;
-                        obj.title = widget.title;
-                        obj.type = 'faq';
-                    }
-                    return obj;
+                    widget.content.faq = widget.content.faq.id;
+                    return {
+                        title: widget.title,
+                        content: widget.content,
+                    };
                 },
 
                 tagcloud: function (widget) {
@@ -1330,6 +1330,7 @@
                     });
 
                     moduleModal.result.then(function (data) {
+                        $log.warn('Widget pos modal', data);
                         if (typeof idx !== 'undefined') {
                             if ($scope.page) {
                                 $scope.page.widgets[column][idx] = data;
