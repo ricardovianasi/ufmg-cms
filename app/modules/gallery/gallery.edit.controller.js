@@ -126,14 +126,15 @@
 
               EditPhotosModal.result.then(function (data) {
                   angular.forEach(data, function (files) {
-                      var obj = {
-                          title: files.file.title ? files.file.title : '',
-                          description: files.file.description ? files.file.description : '',
-                          altText: files.file.alt_text ? files.file.alt_text : '',
-                          legend: files.file.legend ? files.file.legend : ''
-                      };
+                        var obj = {
+                            title: files.file.title ? files.file.title : '',
+                            author_name: files.file.author_name ? files.file.author_name : '',
+                            description: files.file.description ? files.file.description : '',
+                            altText: files.file.alt_text ? files.file.alt_text : '',
+                            legend: files.file.legend ? files.file.legend : ''
+                        };
 
-                      MediaService.updateFile(files.file.id, obj);
+                        MediaService.updateFile(files.file.id, obj);
                   });
 
                   NotificationService.success('Ediçao realizada com sucesso!');
