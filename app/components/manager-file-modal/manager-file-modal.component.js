@@ -61,11 +61,11 @@
         vm.dzCallbacks = _dzCallbacks();
         vm.dzOptions = _dzOptions();
         vm.waitTofile = _waitTofile;
+        vm.filterType = vm.EXTENSION[0].files;
 
         onInit();
 
         function onInit() {
-            Util.setTypeParam(vm.filterType);
             _filterTo(vm.EXTENSION[0].files);
             vm.availableFormats = {
                 free: {
@@ -499,6 +499,7 @@
                 if (!params.search && countPage === 1) {
                     vm.currentElement = 0;
                 }
+                Util.setTypeParam(vm.filterType);
                 MediaService
                     .getMedia(Util.getParams(params, searchQuery), true)
                     .then(function (res) {
