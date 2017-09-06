@@ -13,6 +13,15 @@
                 getParams();
             });
 
+            vm.calcNumberEnables = function(menuItems){
+                if(!menuItems){
+                    return [];
+                }
+                return menuItems.filter(function(a){
+                    return a.enabled === true;
+                });
+            };
+
             function onInit() {
                 NavigationService.get()
                     .then(function (menu) {

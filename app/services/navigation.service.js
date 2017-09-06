@@ -15,6 +15,7 @@
                             var hasPermissionUser = PermissionService.hasPermission('user');
                             var hasPermissionMenu = PermissionService.hasPermission('menu');
                             var hasPermissionNewsAgency = PermissionService.hasPermission('news_agencia_de_agencia');
+                            var hasPermissionNewsFiqueAtento = PermissionService.hasPermission('news_fique_atento');
                             var hasPermissionNewsTV = PermissionService.hasPermission('news_tv');
                             var hasPermissionNewsRadio = PermissionService.hasPermission('news_radio');
                             defer.resolve([{
@@ -66,7 +67,7 @@
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionNewsAgency || hasPermissionNewsTV || hasPermissionNewsRadio,
+                                enabled: hasPermissionNewsAgency || hasPermissionNewsTV || hasPermissionNewsRadio || hasPermissionNewsFiqueAtento,
                                 menuItems: [{
                                     icon: 'fa fa-file-text',
                                     name: 'Agência',
@@ -74,6 +75,13 @@
                                     isActive: false,
                                     isOpen: false,
                                     enabled: hasPermissionNewsAgency,
+                                }, {
+                                    icon: 'fa fa-eye',
+                                    name: 'Fique Atento',
+                                    location: 'news/news_fique_atento',
+                                    isActive: false,
+                                    isOpen: false,
+                                    enabled: hasPermissionNewsFiqueAtento,
                                 }, {
                                     icon: 'fa fa-play-circle-o',
                                     name: 'TV',

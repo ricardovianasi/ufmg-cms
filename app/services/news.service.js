@@ -82,6 +82,8 @@
                 type = 'radio';
             } else if (type === 'news_tv') {
                 type = 'tv';
+            } else if (type === 'news_fique_atento') {
+                type = 'fique-atento';
             }
             return '&query[filter][' + 98 + '][type]=innerjoin' +
                 '&query[filter][' + 98 + '][field]=type' +

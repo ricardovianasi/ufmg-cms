@@ -13,9 +13,10 @@
     </script>
 
     <script type="text/ng-template" id="menu-items-tpl">
-        <li ng-repeat="item in navigation | filter: {enabled: true} track by $index" ng-class="{'opened': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
+        <li ng-repeat="item in navigation | filter: {enabled: true} track by $index" ng-init="numberEnables = calcNumberEnables(item.menuItems)" ng-style="item.isOpen && {'height': ((numberEnables.length+1) * 45) + 'px'}"
+         ng-class="{'opened': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
             <a ng-if="item.menuItems.length" ng-click="item.isOpen = !item.isOpen" ng-include="'menu-item-link-tpl'"></a>
-            <a ng-if="!item.menuItems.length" href="#/{{item.location}}" ng-include="'menu-item-link-tpl'" ng-click=""></a>
+            <a ng-if="!item.menuItems.length" href="#/{{item.location}}" ng-include="'menu-item-link-tpl'"></a>
             <ul ng-if="item.menuItems.length" ng-init="subItems = item.menuItems" class="main-menu" ng-include="'menu-items-recursive-tpl'"></ul>
         </li>
     </script>

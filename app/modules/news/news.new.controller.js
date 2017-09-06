@@ -106,6 +106,10 @@
                         vm.news.type = element.id;
                         break;
                     }
+                    if (element.slug === 'fique-atento' && vm.typeNews === 'news_fique_atento') {
+                        vm.news.type = element.id;
+                        break;
+                    }
                 }
             });
 
