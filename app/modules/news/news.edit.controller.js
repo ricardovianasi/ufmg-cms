@@ -30,12 +30,16 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
+        
         vm.news = {};
         vm.categories = [];
         vm.status = [];
         vm.types = [];
         vm.highlight_ufmg_visible = true;
-
+        
+        updateRedactor = function () {
+            vm.news.text = $('.redactor-editor.redactor-in').html();
+        }
 
         vm.datepickerOpt = {
             initDate: DateTimeHelper.getDatepickerOpt()

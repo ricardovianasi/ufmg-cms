@@ -13,3 +13,5 @@ String.prototype.addEllipsis = function () {
     }
     return newString;
 };
+
+var updateRedactor = undefined;
