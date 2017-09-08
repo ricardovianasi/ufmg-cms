@@ -26,6 +26,13 @@
             restrict: 'A',
             require: 'ngModel',
             link: function ($scope, elem, attrs, ngModel) {
+                updateRedactor = function () {
+                    $timeout(function () {
+                        $scope.$apply(function () {
+                            ngModel.$setViewValue($('.redactor-editor.redactor-in').html());
+                        });
+                    });
+                }
                 var _options = {
                     lang: 'pt_br',
                     plugins: ['video', 'soundcloud', 'uploadfiles', 'imagencrop', 'audioUpload'],
