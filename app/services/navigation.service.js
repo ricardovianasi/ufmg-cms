@@ -14,10 +14,11 @@
                         .then(function () {
                             var hasPermissionUser = PermissionService.hasPermission('user');
                             var hasPermissionMenu = PermissionService.hasPermission('menu');
-                            var hasPermissionNewsAgency = PermissionService.hasPermission('news_agencia_de_agencia');
-                            var hasPermissionNewsFiqueAtento = PermissionService.hasPermission('news_fique_atento');
-                            var hasPermissionNewsTV = PermissionService.hasPermission('news_tv');
-                            var hasPermissionNewsRadio = PermissionService.hasPermission('news_radio');
+                            var hasPNAA = PermissionService.hasPermission('news_agencia_de_agencia');
+                            var hasPNFA = PermissionService.hasPermission('news_fique_atento');
+                            var hasPNT = PermissionService.hasPermission('news_tv');
+                            var hasPNR = PermissionService.hasPermission('news_radio');
+                            var hasPer = hasPNAA || hasPNT || hasPNR || hasPNFA;
                             defer.resolve([{
                                 icon: 'fa fa-file-o',
                                 name: 'Páginas',
@@ -67,35 +68,35 @@
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionNewsAgency || hasPermissionNewsTV || hasPermissionNewsRadio || hasPermissionNewsFiqueAtento,
+                                enabled: hasPer,
                                 menuItems: [{
                                     icon: 'fa fa-file-text',
                                     name: 'Agência',
                                     location: 'news/news_agencia_de_agencia',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPermissionNewsAgency,
+                                    enabled: hasPNAA,
                                 }, {
                                     icon: 'fa fa-eye',
                                     name: 'Fique Atento',
                                     location: 'news/news_fique_atento',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPermissionNewsFiqueAtento,
+                                    enabled: hasPNFA,
                                 }, {
                                     icon: 'fa fa-play-circle-o',
                                     name: 'TV',
                                     location: 'news/news_tv',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPermissionNewsTV
+                                    enabled: hasPNT
                                 }, {
                                     icon: 'fa fa-volume-up',
                                     name: 'Radio',
                                     location: 'news/news_radio',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPermissionNewsRadio
+                                    enabled: hasPNR
                                 }]
                             }, {
                                 icon: 'fa fa-circle-o',

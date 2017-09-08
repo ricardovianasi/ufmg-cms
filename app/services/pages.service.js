@@ -1367,10 +1367,6 @@
             };
         })(_getPages, $uibModal);
 
-        function parseFaq(page) {
-
-        }
-
         return {
             // Columns defaults
             COLUMNS: [{
