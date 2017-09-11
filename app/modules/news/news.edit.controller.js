@@ -30,7 +30,7 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-        
+
         vm.news = {};
         vm.categories = [];
         vm.status = [];
@@ -61,7 +61,7 @@
         });
 
         NewsService.getNew($routeParams.id).then(function (data) {
-            vm.canPermission = PermissionService.canPut('news', $routeParams.id);
+            vm.canPermission = PermissionService.canPut($routeParams.typeNews, $routeParams.id);
 
             vm.obj = {};
 

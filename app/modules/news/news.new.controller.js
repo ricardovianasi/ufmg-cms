@@ -28,7 +28,7 @@
 
         $rootScope.shownavbar = true;
         $log.info('NoticiasNovoController');
-        vm.canPermission = PermissionService.canPost('news');
+        vm.canPermission = PermissionService.canPost(vm.typeNews);
 
         var allTags = [];
 

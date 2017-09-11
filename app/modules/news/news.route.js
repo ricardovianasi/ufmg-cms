@@ -13,10 +13,11 @@
                     templateUrl: 'modules/news/news.form.template.html',
                     controller: 'NewsNewController',
                     resolve: {
-                        permission: ['PermissionService', '$window',
-                            function (PermissionService, $window) {
-                                if (!PermissionService.canPut('news')) {
-                                    $window.location.href = '#/news';
+                        permission: ['PermissionService', '$window', '$routeParams',
+                            function (PermissionService, $window, $routeParams) {
+                                var hasAllow = PermissionService.canPost($routeParams.typeNews);
+                                if (!hasAllow) {
+                                    $window.location.href = '#/news/' + $routeParams.typeNews;
                                 }
                             }
                         ]
@@ -28,8 +29,8 @@
                     resolve: {
                         permission: ['PermissionService', '$window', '$routeParams',
                             function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('news', $routeParams.id)) {
-                                    $window.location.href = '#/news';
+                                if (!PermissionService.canPut($routeParams.typeNews, $routeParams.id)) {
+                                    $window.location.href = '#/news/' + $routeParams.typeNews;
                                 }
                             }
                         ]
