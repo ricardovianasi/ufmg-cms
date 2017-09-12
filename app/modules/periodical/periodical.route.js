@@ -13,7 +13,7 @@
                     controller: 'PeriodicalNewController',
                     resolve: {
                         permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPost('periodicals')) {
+                            if (!PermissionService.canPost('periodical')) {
                                 $window.location.href = '#/periodicals';
                             }
                         }]
@@ -25,7 +25,7 @@
                     resolve: {
                         permission: ['PermissionService', '$window', '$routeParams',
                             function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('periodicals', $routeParams.id)) {
+                                if (!PermissionService.canPut('periodical', $routeParams.id)) {
                                     $window.location.href = '#/periodicals';
                                 }
                             }
