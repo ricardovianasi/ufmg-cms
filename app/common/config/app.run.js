@@ -20,7 +20,6 @@
         $log,
         $location,
         authService,
-        PermissionService,
         NotificationService,
         sessionService,
         $timeout
@@ -104,8 +103,8 @@
         ModalService,
         DTDefaultOptions,
         $timeout,
-        $location,
-        PermissionService) {
+        $location
+        ) {
 
         $rootScope.ngScrollbarsConfig = {
             autoHideScrollbar: true,
@@ -115,8 +114,6 @@
             },
             scrollInertia: 0
         };
-        PermissionService.initService();
-
 
         $rootScope.$on('$routeChangeSuccess', function () {
             // Reset status

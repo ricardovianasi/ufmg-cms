@@ -49,11 +49,14 @@
                                 var user = dataUser.data;
                                 if (user.status) {
                                     $rootScope.dataUser = dataUser;
-                                    PermissionService.initService(user);
-                                    $rootScope.modalLoginIsDisabled = true;
-                                    sessionService.setIsLogged();
-                                    changePassword(user);
-                                    $location.path('/');
+                                    PermissionService
+                                        .initService(user)
+                                        .then(function () {
+                                            $rootScope.modalLoginIsDisabled = true;
+                                            sessionService.setIsLogged();
+                                            changePassword(user);
+                                            $location.path('/');
+                                        });
                                 } else {
                                     NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
                                 }

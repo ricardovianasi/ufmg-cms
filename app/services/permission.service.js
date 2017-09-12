@@ -6,7 +6,14 @@
         .factory('PermissionService', PermissionService);
 
     /** ngInject */
-    function PermissionService(authService, $log, NotificationService, $timeout, $rootScope) {
+    function PermissionService(
+        authService,
+        $log,
+        NotificationService,
+        $timeout,
+        $q,
+        $rootScope
+    ) {
         $rootScope.User = null;
         var showMessage = null;
         var service = {
@@ -15,6 +22,7 @@
             canDelete: canDelete,
             canPost: canPost,
             canPut: canPut,
+            canGet: canGet,
             hasPermission: hasPermission
         };
 
@@ -70,13 +78,14 @@
         }
 
         function verifyRole(hasPrivilege, id) {
-            if (angular.isUndefined(hasPrivilege) || !hasPrivilege) { // Sem permissão
+            var noHavePermission = angular.isUndefined(hasPrivilege) || !hasPrivilege;
+            var withPermission = angular.isUndefined(id) || id === null;
+            if (noHavePermission) {
                 return false;
             }
-            if (angular.isUndefined(id) || id === null) { // Com permissão
+            if (withPermission) {
                 return true;
             }
-            // Permissão específica
             var posts = hasPrivilege.posts;
             if (!posts) {
                 return true;
@@ -84,19 +93,38 @@
             return hasId(id, posts);
         }
 
+        function noHavePermission() {
+            if ($rootScope.User.is_administrator) {
+                return false;
+            }
+            var isEmptyPermission = angular.equals([], $rootScope.User.permissions);
+            if (!$rootScope.User.permissions || isEmptyPermission) {
+                return true;
+            }
+            var noKey = true;
+            for (var key in $rootScope.User.permissions) {
+                if ($rootScope.User.permissions.hasOwnProperty(key)) {
+                    var resource = $rootScope.User.permissions[key].resource;
+                    var permissions = getPermissions(resource);
+                    for (var i = 0; i < permissions.length; i++) {
+                        var privilege = permissions[i];
+                        if (privilege.privilege !== '') {
+                            noKey = false;
+                        }
+                    }
+                }
+            }
+            return noKey;
+        }
+
         function check(context, id, role) {
             if (!$rootScope.User) {
                 return false;
             }
+            var isAdmin = $rootScope.User.is_administrator;
             try {
-                // permission admin
-                if ($rootScope.User.is_administrator) {
+                if (isAdmin) {
                     return true;
-                }
-                // no permission
-                if (!$rootScope.User.permissions || angular.equals([], $rootScope.User.permissions)) {
-                    messageWarn();
-                    return false;
                 }
                 var hasPrivilege = getPrivilege(context, role);
                 return verifyRole(hasPrivilege, id);
@@ -110,10 +138,13 @@
             return check(context, id, 'POST');
         }
 
+        function canGet(context, id) {
+            return check(context, id, 'GET');
+        }
+
         function messageWarn() {
             if (!showMessage) {
-                NotificationService.warning('ATENÇÃO',
-                    'Você não possui permissões, entre com contato com CEDECOM/WEB');
+                NotificationService.warning('Você não possui permissões, entre com contato com CEDECOM/WEB', 'ATENÇÃO');
                 showMessage = true;
             }
             $timeout(function () {
@@ -130,27 +161,53 @@
         }
 
         function hasPermission(context) {
-            return canPut(context) || canPost(context) || canDelete(context);
+            return canPut(context) || canPost(context) || canDelete(context) || canGet(context);
+        }
+
+        function messagesUserStatus() {
+            if (noHavePermission()) {
+                messageWarn();
+                return false;
+            }
+            if (!$rootScope.User.status) {
+                NotificationService
+                    .error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                $rootScope.logout();
+                return false;
+            }
+            return true;
         }
 
         function initService(user) {
+            var defer = $q.defer();
             if (angular.isDefined(user)) {
                 $rootScope.User = user;
+                if (messagesUserStatus()) {
+                    defer.resolve();
+                }
             } else {
                 authService
                     .account()
                     .then(function (res) {
                         $rootScope.User = res.data;
+                        if (noHavePermission()) {
+                            messageWarn();
+                            defer.reject();
+                        }
                         if (!$rootScope.User.status) {
                             NotificationService
                                 .error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                            defer.reject();
                             $rootScope.logout();
                         }
+                        defer.resolve();
                     })
                     .catch(function (err) {
+                        defer.reject(err);
                         $log.error(err);
                     });
             }
+            return defer.promise;
         }
         return service;
     }

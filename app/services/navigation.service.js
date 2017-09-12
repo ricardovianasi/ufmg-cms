@@ -2,65 +2,131 @@
     'use strict';
 
     angular.module('serviceModule')
-        .factory('NavigationService',
+        .service('NavigationService',
             /** ngInject */
             function ($log, PermissionService, authService, $q) {
                 $log.info('NavigationService');
+
+                var hasPermissionCalendar;
+                var hasPermissionClipping;
+                var hasPermissionCourseDoc;
+                var hasPermissionCourseGra;
+                var hasPermissionCourseMas;
+                var hasPermissionCourseSpe;
+                var hasPermissionEditions;
+                var hasPermissionEvents;
+                var hasPermissionFaq;
+                var hasPermissionGallery;
+                var hasPermissionGlossary;
+                var hasPermissionHighlightedPress;
+                var hasPermissionMenu;
+                var hasPermissionNewsAgencia;
+                var hasPermissionNewsFiqueAtento;
+                var hasPermissionNewsTv;
+                var hasPermissionNewsRadio;
+                var hasPermissionPage;
+                var hasPermissionPeriodical;
+                var hasPermissionRector;
+                var hasPermissionRelease;
+                var hasPermissionUser;
+
+                function loadPermission() {
+                    hasPermissionCalendar = hasPermission('calendar');
+                    hasPermissionClipping = hasPermission('clipping');
+                    hasPermissionCourseDoc = hasPermission('course_doctorate');
+                    hasPermissionCourseGra = hasPermission('course_graduation');
+                    hasPermissionCourseMas = hasPermission('course_master');
+                    hasPermissionCourseSpe = hasPermission('course_specialization');
+                    hasPermissionEditions = hasPermission('editions');
+                    hasPermissionEvents = hasPermission('events');
+                    hasPermissionFaq = hasPermission('faq');
+                    hasPermissionGallery = hasPermission('gallery');
+                    hasPermissionGlossary = hasPermission('glossary');
+                    hasPermissionHighlightedPress = hasPermission('highlighted_press');
+                    hasPermissionMenu = hasPermission('menu');
+                    hasPermissionNewsAgencia = hasPermission('news_agencia_de_agencia');
+                    hasPermissionNewsFiqueAtento = hasPermission('news_fique_atento');
+                    hasPermissionNewsTv = hasPermission('news_tv');
+                    hasPermissionNewsRadio = hasPermission('news_radio');
+                    hasPermissionPage = hasPermission('page');
+                    hasPermissionPeriodical = hasPermission('periodical');
+                    hasPermissionRector = hasPermission('rector');
+                    hasPermissionRelease = hasPermission('release');
+                    hasPermissionUser = hasPermission('user');
+                }
+
+                function hasPermissionCourse() {
+                    return hasPermissionCourseDoc ||
+                        hasPermissionCourseGra ||
+                        hasPermissionCourseMas ||
+                        hasPermissionCourseSpe;
+                }
+
+                function hasPermission(context) {
+                    return PermissionService.hasPermission(context);
+                }
+
+                function hasPermissionNews() {
+                    return hasPermissionNewsAgencia ||
+                        hasPermissionNewsFiqueAtento ||
+                        hasPermissionNewsTv ||
+                        hasPermissionNewsRadio;
+                }
+
+                function hasPermissionAccessory() {
+                    return hasPermissionRelease ||
+                        hasPermissionClipping ||
+                        hasPermissionHighlightedPress;
+                }
 
                 function get() {
                     var defer = $q.defer();
                     authService
                         .account()
                         .then(function () {
-                            var hasPermissionUser = PermissionService.hasPermission('user');
-                            var hasPermissionMenu = PermissionService.hasPermission('menu');
-                            var hasPNAA = PermissionService.hasPermission('news_agencia_de_agencia');
-                            var hasPNFA = PermissionService.hasPermission('news_fique_atento');
-                            var hasPNT = PermissionService.hasPermission('news_tv');
-                            var hasPNR = PermissionService.hasPermission('news_radio');
-                            var hasPer = hasPNAA || hasPNT || hasPNR || hasPNFA;
+                            loadPermission();
                             defer.resolve([{
                                 icon: 'fa fa-file-o',
                                 name: 'Páginas',
                                 location: 'pages',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionPage
                             }, {
                                 icon: 'fa fa-book',
                                 name: 'Publicações Jornalísticas',
                                 location: 'periodicals',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionPeriodical
                             }, {
                                 icon: 'fa fa-group',
                                 name: 'Assessoria',
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true,
+                                enabled: hasPermissionAccessory(),
                                 menuItems: [{
                                     icon: 'fa fa-bullhorn',
                                     name: 'Releases',
                                     location: 'releases',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: true
+                                    enabled: hasPermissionRelease
                                 }, {
                                     icon: 'fa fa-thumb-tack',
                                     name: 'Clippings',
                                     location: 'clippings',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: true
+                                    enabled: hasPermissionClipping
                                 }, {
                                     icon: 'fa fa-star',
                                     name: 'Destaque',
                                     location: 'featured',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: true
+                                    enabled: hasPermissionHighlightedPress
                                 }]
                             }, {
                                 icon: 'fa fa-newspaper-o',
@@ -68,35 +134,35 @@
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPer,
+                                enabled: hasPermissionNews(),
                                 menuItems: [{
                                     icon: 'fa fa-file-text',
                                     name: 'Agência',
                                     location: 'news/news_agencia_de_agencia',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPNAA,
+                                    enabled: hasPermissionNewsAgencia,
                                 }, {
                                     icon: 'fa fa-eye',
                                     name: 'Fique Atento',
                                     location: 'news/news_fique_atento',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPNFA,
+                                    enabled: hasPermissionNewsFiqueAtento,
                                 }, {
                                     icon: 'fa fa-play-circle-o',
                                     name: 'TV',
                                     location: 'news/news_tv',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPNT
+                                    enabled: hasPermissionNewsTv
                                 }, {
                                     icon: 'fa fa-volume-up',
                                     name: 'Radio',
                                     location: 'news/news_radio',
                                     isActive: false,
                                     isOpen: false,
-                                    enabled: hasPNR
+                                    enabled: hasPermissionNewsRadio
                                 }]
                             }, {
                                 icon: 'fa fa-circle-o',
@@ -104,28 +170,28 @@
                                 location: 'course',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionCourse()
                             }, {
                                 icon: 'glyphicon glyphicon-time',
                                 name: 'Eventos',
                                 location: 'events',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionEvents
                             }, {
                                 icon: 'fa fa-picture-o',
                                 name: 'Galerias',
                                 location: 'galleries',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionGallery
                             }, {
                                 icon: 'fa fa-calendar',
                                 name: 'Calendário Acadêmico',
                                 location: 'calendar',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionCalendar
                             }, {
                                 icon: 'fa fa-bars',
                                 name: 'Menu',
@@ -139,7 +205,7 @@
                                 location: 'faq',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: true
+                                enabled: hasPermissionFaq
                             }, {
                                 icon: 'fa fa-users',
                                 name: 'Usuários',
