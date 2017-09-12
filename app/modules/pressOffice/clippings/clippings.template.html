@@ -62,7 +62,7 @@
                         <tr role="row" ng-repeat="clipping in clippings.items track by clipping.id" class="odd">
                             <td>
                                 <span ng-if="!canPut">{{ clipping.title }}</span>
-                                <a ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>
+                                <a ng-if="canPut" ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>
                             </td>
                             <td>{{ clipping.author.name }}</td>
                             <td>
