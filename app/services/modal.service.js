@@ -6,6 +6,36 @@
 
     /** ngInject */
     function ModalService($uibModal) {
+
+        function dialog(title, text, size) {
+            size = size || ModalService.MODAL_MEDIUM;
+
+            return $uibModal.open({
+                templateUrl: 'components/modal/dialog.modal.template.html',
+                controller: DialogCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    title: function () {
+                        return title;
+                    },
+                    text: function () {
+                        return text;
+                    }
+                }
+            });
+
+            function DialogCtrl($scope, $uibModalInstance, title, text) {
+
+                $scope.title = title;
+                $scope.text = text;
+
+                $scope.confirm = function () {
+                    $uibModalInstance.close();
+                };
+            };
+        }
+
         function _confirm(title, size) {
             size = size || ModalService.MODAL_MEDIUM;
 
@@ -193,6 +223,7 @@
             MODAL_LARGE: 'lg',
             FULL_SCREEN: 'full',
             confirm: _confirm,
+            dialog: dialog,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,
             uploadFiles: _uploadFiles,

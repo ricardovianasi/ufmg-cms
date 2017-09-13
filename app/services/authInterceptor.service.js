@@ -6,7 +6,16 @@
         .factory('authInterceptorService', authInterceptorService);
 
     /** ngInject */
-    function authInterceptorService(sessionService, $q, $location, $cookies, client_id_auth, apiUrl, $log, $rootScope) {
+    function authInterceptorService(
+        sessionService,
+        $q,
+        $location,
+        $cookies,
+        client_id_auth,
+        apiUrl,
+        $log,
+        $rootScope
+    ) {
         return {
             request: _request,
             responseError: _responseError
@@ -35,8 +44,14 @@
         }
 
         function _responseError(response) {
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 $rootScope.$broadcast('AuthenticateResponseError');
+            } else if (response.status === 403) {
+                $rootScope.$broadcast('Error403');
+            } else if (response.status >= 500) {
+                $rootScope.$broadcast('Error5xx');
+            } else {
+                $rootScope.$broadcast('ErrorUnknown');
             }
             return $q.reject(response);
         }

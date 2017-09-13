@@ -20,7 +20,6 @@
         $log,
         $location,
         authService,
-        NotificationService,
         sessionService,
         $timeout
     ) {
@@ -86,9 +85,21 @@
 
         $rootScope.$on('AuthenticateResponseError', function () {
             if ($location.path() !== '/login' && $rootScope.modalLoginIsDisabled) {
-                $log.info('Erro 401 | 403 Request auth');
+                $log.info('Erro 401 Request auth');
                 get(true);
             }
+        });
+
+        $rootScope.$on('Error403', function () {
+            ModalService.dialog('Acesso negado', 'Você não tem permissão para executar esta ação');
+        });
+
+        $rootScope.$on('Error5xx', function () {
+            ModalService.dialog('Servidor com problemas', 'Erro ao acessar o servidor, por favor tente mais tarde');
+        });
+
+        $rootScope.$on('ErrorUnknown', function () {
+            ModalService.dialog('Erro desconhecido', 'Erro ao acessar o servidor, por favor tente mais tarde');
         });
 
         getAuth();
@@ -104,7 +115,7 @@
         DTDefaultOptions,
         $timeout,
         $location
-        ) {
+    ) {
 
         $rootScope.ngScrollbarsConfig = {
             autoHideScrollbar: true,
