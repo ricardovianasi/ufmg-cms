@@ -88,14 +88,14 @@
                             defer.resolve([{
                                 icon: 'fa fa-file-o',
                                 name: 'Páginas',
-                                location: 'pages',
+                                location: 'page',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionPage
                             }, {
                                 icon: 'fa fa-book',
                                 name: 'Publicações Jornalísticas',
-                                location: 'periodicals',
+                                location: 'periodical',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionPeriodical
@@ -109,21 +109,21 @@
                                 menuItems: [{
                                     icon: 'fa fa-bullhorn',
                                     name: 'Releases',
-                                    location: 'releases',
+                                    location: 'release',
                                     isActive: false,
                                     isOpen: false,
                                     enabled: hasPermissionRelease
                                 }, {
                                     icon: 'fa fa-thumb-tack',
                                     name: 'Clippings',
-                                    location: 'clippings',
+                                    location: 'clipping',
                                     isActive: false,
                                     isOpen: false,
                                     enabled: hasPermissionClipping
                                 }, {
                                     icon: 'fa fa-star',
                                     name: 'Destaque',
-                                    location: 'featured',
+                                    location: 'highlighted_press',
                                     isActive: false,
                                     isOpen: false,
                                     enabled: hasPermissionHighlightedPress
@@ -181,7 +181,7 @@
                             }, {
                                 icon: 'fa fa-picture-o',
                                 name: 'Galerias',
-                                location: 'galleries',
+                                location: 'gallery',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionGallery
@@ -209,7 +209,7 @@
                             }, {
                                 icon: 'fa fa-users',
                                 name: 'Usuários',
-                                location: 'users',
+                                location: 'user',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionUser
