@@ -53,7 +53,7 @@
     function Router($routeProvider, $locationProvider) {
         $locationProvider.hashPrefix('');
         $routeProvider.otherwise({
-            redirectTo: '/'
+            redirectTo: '/page-not-found'
         });
     }
 
