@@ -12,47 +12,17 @@
                 .when('/course/list/:type', {
                     templateUrl: 'modules/course/course.template.html',
                     controller: 'CourseController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
-                                var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
-                                if (canPost || canPut) {
-                                    return true;
-                                }
-                                return false;
-                            }
-                        ]
-                    }
+                    controllerAs: 'vm'
                 })
                 .when('/course/edit/:type/:courseId', {
                     templateUrl: 'modules/course/course.form.template.html',
                     controller: 'CourseController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                var canPut = PermissionService.canPut('course_' + $routeParams.type, $routeParams.courseId);
-                                var canPost = PermissionService.canPost('course_' + $routeParams.type, $routeParams.courseId);
-                                if (canPost || canPut) {
-                                    return true;
-                                }
-                                $window.location.href = '#/course/list/' + $routeParams.type;
-                                return false;
-                            }
-                        ]
-                    }
+                    controllerAs: 'vm'
                 })
                 .when('/course/view/:type/:courseId', {
                     templateUrl: 'modules/course/course.form.template.html',
                     controller: 'CourseController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        permission: function () {
-                            return false;
-                        }
-                    }
+                    controllerAs: 'vm'
                 })
                 .when('/course/sidebar/:type', {
                     templateUrl: 'modules/course/course.sidebar.template.html',

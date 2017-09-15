@@ -4,63 +4,29 @@
     angular.module('periodicalModule')
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/periodicals', {
+                .when('/periodical', {
                     templateUrl: 'modules/periodical/periodical.template.html',
                     controller: 'PeriodicalController'
                 })
-                .when('/periodicals/new', {
+                .when('/periodical/new', {
                     templateUrl: 'modules/periodical/periodical.form.template.html',
-                    controller: 'PeriodicalNewController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPost('periodical')) {
-                                $window.location.href = '#/periodicals';
-                            }
-                        }]
-                    }
+                    controller: 'PeriodicalNewController'
                 })
-                .when('/periodicals/edit/:id', {
+                .when('/periodical/edit/:id', {
                     templateUrl: 'modules/periodical/periodical.form.template.html',
-                    controller: 'PeriodicalEditController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('periodical', $routeParams.id)) {
-                                    $window.location.href = '#/periodicals';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'PeriodicalEditController'
                 })
-                .when('/periodicals/:id/editions', {
+                .when('/periodical/:id/editions', {
                     templateUrl: 'modules/periodical/editions/periodical-editions.template.html',
                     controller: 'PeriodicalEditionsController'
                 })
-                .when('/periodicals/:id/editions/edit/:edition', {
+                .when('/periodical/:id/editions/edit/:id', {
                     templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
-                    controller: 'PeriodicalEditionEditController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('editions', $routeParams.id)) {
-                                    $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'PeriodicalEditionEditController'
                 })
-                .when('/periodicals/:id/editions/new', {
+                .when('/periodical/:id/editions/new', {
                     templateUrl: 'modules/periodical/editions/periodical-editions.edition.form.template.html',
-                    controller: 'PeriodicalEditionNewController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPost('editions', $routeParams.id)) {
-                                    $window.location.href = '#/periodicals/' + $routeParams.id + '/editions';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'PeriodicalEditionNewController'
                 });
         }]);
 })();

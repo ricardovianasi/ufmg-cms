@@ -20,7 +20,9 @@
         $log,
         $location,
         authService,
+        NotificationService,
         sessionService,
+        PermissionService,
         $timeout
     ) {
         var hasRequired = true;
@@ -36,6 +38,7 @@
                         return authService
                             .refresh(refreshToken)
                             .then(function (res) {
+                                $log.info(res);
                                 if (reload) {
                                     $window.location.reload();
                                 }
@@ -76,11 +79,169 @@
             }, timeInMillisegunds);
         }
 
-        $rootScope.$on('$routeChangeSuccess', function () {
+        function getActionModule(uri) {
+            var path = uri ? uri : $location.path();
+            var lastElement = getLastElement(path);
+            var isNotNumberLastElement = typeof parseFloat(lastElement) !== 'number';
+            var isEditions = lastElement === 'editions';
+            var isActionNew = lastElement === 'new';
+            var isNews = path.match(new RegExp('news'));
+
+            if (isActionNew) {
+                return 'new';
+            }
+            if (isNotNumberLastElement && (isEditions || isNews)) {
+                return false;
+            }
+            var action = path.match(new RegExp('edit'));
+
+            if (action) {
+                return action.toString();
+            }
+            return false;
+        }
+
+        function getLastElement(value) {
+            if (typeof value === 'string') {
+                var array = value.split('/');
+                var lastIndex = array.length - 1;
+                return array[lastIndex];
+            }
+        }
+
+        function getId(context) {
+            var hash = $location.path();
+            var id = '';
+            var lastElement = getLastElement(hash);
+            if (context === 'edit') {
+                return lastElement;
+            }
+            if (typeof parseInt(lastElement) !== 'number') {
+                var numberOfHash = hash.match(/\d+/g);
+                id = numberOfHash ? parseInt(numberOfHash.toString()) : false;
+                if (typeof id === 'number') {
+                    return id;
+                }
+            }
+            return false;
+        }
+
+        function getModule(hash) {
+            var pathThree = hash.split('/')[3];
+            if (
+                pathThree === 'editions'
+            ) {
+                return pathThree === 'editions' ? pathThree : 'course_' + pathThree;
+            }
+
+            if (pathThree === ':type') {
+                pathThree = $location.path().split('/')[3];
+                if (
+                    pathThree === 'doctorate' ||
+                    pathThree === 'graduation' ||
+                    pathThree === 'master' ||
+                    pathThree === 'specialization'
+                ) {
+                    return 'course_' + pathThree;
+                }
+            }
+
+            var pathTwo = hash.split('/')[2];
+
+            if (pathTwo === ':typeNews') {
+                pathTwo = $location.path().split('/')[2];
+                if (
+                    pathTwo === 'news_agencia_de_agencia' ||
+                    pathTwo === 'news_fique_atento' ||
+                    pathTwo === 'news_tv' ||
+                    pathTwo === 'news_radio'
+                ) {
+                    return pathTwo;
+                }
+            }
+
+
+            var pathOne = hash.split('/')[1];
+
+            if (
+                pathOne === 'calendar' ||
+                pathOne === 'clipping' ||
+                pathOne === 'events' ||
+                pathOne === 'faq' ||
+                pathOne === 'gallery' ||
+                pathOne === 'highlighted_press' ||
+                pathOne === 'menu' ||
+                pathOne === 'page' ||
+                pathOne === 'periodical' ||
+                pathOne === 'release' ||
+                pathOne === 'user'
+            ) {
+                return pathOne;
+            }
+            return;
+        }
+
+        function verifyPermission(event, next, current) {
+            var hash = next.originalPath || $location.path();
+            var module = getModule(hash);
+            if (module) {
+                var noHasPermissionModule = !PermissionService.hasPermission(module);
+                var idModule = module ? getId(module) : false;
+                $log.info('MODULE', module);
+                $log.info('MODULE ID', idModule);
+                $log.info('MODULE PERMISSION', !noHasPermissionModule);
+
+                if (noPermissionAction(event, current, noHasPermissionModule)) {
+                    return;
+                }
+
+                if (idModule) {
+                    var noHasPermissionId = !PermissionService.hasPermissionId(module, idModule);
+                    if (noPermissionAction(event, current, noHasPermissionId)) {
+                        return;
+                    }
+                }
+
+                var action = getActionModule();
+                var idAction = action ? getId(action) : false;
+                $log.info('ACTION', action);
+                $log.info('ACTION ID', idAction);
+                if (action && action === 'new') {
+                    var noHasPermissionPost = !PermissionService.canPost(module, idAction);
+                    $log.info('ACTION PERMISSION', !noHasPermissionPost);
+                    noPermissionAction(event, current, noHasPermissionPost);
+                } else if (action && action === 'edit') {
+                    var noHasPermissionPut = !PermissionService.canPut(module, idAction);
+                    $log.info('ACTION PERMISSION', !noHasPermissionPut);
+                    noPermissionAction(event, current, noHasPermissionPut);
+                }
+            }
+        }
+
+        function noPermissionAction(event, current, noPermission) {
+            if (sessionService.getIsLogged() && noPermission) {
+                NotificationService.warn('Você não possui acesso a está página.', 'ATENÇÃO');
+                if (current) {
+                    event.preventDefault();
+                } else {
+                    $location.path('/');
+                }
+                return true;
+            }
+            return false;
+        }
+
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
             if (!sessionService.getIsLogged()) {
                 $location.path('/login');
                 return;
             }
+            if ($rootScope.User) {
+                verifyPermission(event, next, current);
+            }
+            $rootScope.$on('PERMISSION_ROUTER', function () {
+                verifyPermission(event, next, current);
+            });
         });
 
         $rootScope.$on('AuthenticateResponseError', function () {
@@ -114,8 +275,15 @@
         ModalService,
         DTDefaultOptions,
         $timeout,
-        $location
+        $location,
+        PermissionService
     ) {
+        $rootScope.shownavbar = true;
+
+        $rootScope.canPost = PermissionService.canPost;
+        $rootScope.canPut = PermissionService.canPut;
+        $rootScope.canDelete = PermissionService.canDelete;
+        $rootScope.canGet = PermissionService.canGet;
 
         $rootScope.ngScrollbarsConfig = {
             autoHideScrollbar: true,

@@ -5,34 +5,17 @@
         /** ngInject */
         .config(function ($routeProvider) {
             $routeProvider
-                .when('/pages', {
+                .when('/page', {
                     templateUrl: 'modules/pages/pages.template.html',
-                    controller: 'PagesController',
-                    controllerAs: 'vm'
+                    controller: 'PagesController'
                 })
-                .when('/pages/new', {
+                .when('/page/new', {
                     templateUrl: 'modules/pages/pages.form.template.html',
-                    controller: 'PagesNewController',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPost('page')) {
-                                $window.location.href = '#/pages';
-                            }
-                        }]
-                    }
+                    controller: 'PagesNewController'
                 })
-                .when('/pages/edit/:id', {
+                .when('/page/edit/:id', {
                     templateUrl: 'modules/pages/pages.form.template.html',
-                    controller: 'PagesEditController',
-                    controllerAs: 'ctrl',
-                    resolve: {
-                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPut('page')) {
-                                $window.location.href = '#/pages';
-                            }
-                        }]
-                    }
+                    controller: 'PagesEditController'
                 });
         });
 })();

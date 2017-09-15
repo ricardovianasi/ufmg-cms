@@ -11,29 +11,11 @@
                 })
                 .when('/events/new', {
                     templateUrl: 'modules/events/events.form.template.html',
-                    controller: 'EventsNewController',
-                    resolve: {
-                        permission: ['PermissionService', '$window',
-                            function (PermissionService, $window) {
-                                if (!PermissionService.canPut('events')) {
-                                    $window.location.href = '#/events';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'EventsNewController'
                 })
                 .when('/events/edit/:id', {
                     templateUrl: 'modules/events/events.form.template.html',
-                    controller: 'EventsEditController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('events', $routeParams.id)) {
-                                    $window.location.href = '#/events';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'EventsEditController'
                 });
         });
 })();

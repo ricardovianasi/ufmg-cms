@@ -32,7 +32,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="canGet('course_graduation')">
         <a href="#/course/list/graduation">
             <div class="panel panel-course">
                 <span class="big-letter">G</span> Graduação
@@ -41,7 +41,7 @@
         </a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="canGet('course_master')">
         <a href="#/course/list/master">
             <div class="panel panel-course">
                 <span class="big-letter">M</span> Mestrado
@@ -50,7 +50,7 @@
         </a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="canGet('course_doctorate')">
         <a href="#/course/list/doctorate">
             <div class="panel panel-course">
                 <span class="big-letter">D</span> Doutorado
@@ -59,7 +59,7 @@
         </a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="canGet('course_specialization')">
         <a href="#/course/list/specialization">
             <div class="panel panel-course">
                 <span class="big-letter">E</span> Especialização

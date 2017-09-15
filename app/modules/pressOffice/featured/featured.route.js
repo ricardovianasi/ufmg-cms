@@ -7,33 +7,17 @@
         .config(function ($routeProvider) {
 
             $routeProvider
-                .when('/featured', {
+                .when('/highlighted_press', {
                     templateUrl: 'modules/pressOffice/featured/featured.template.html',
                     controller: 'FeaturedController'
                 })
-                .when('/featured/new', {
+                .when('/highlighted_press/new', {
                     templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
-                    controller: 'featuredNewController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', function (PermissionService, $window) {
-                            if (!PermissionService.canPost('highlighted_press')) {
-                                $window.location.href = '#/featured';
-                            }
-                        }]
-                    }
+                    controller: 'featuredNewController'
                 })
-                .when('/featured/edit/:id', {
+                .when('/highlighted_press/edit/:id', {
                     templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
-                    controller: 'featuredEditController',
-                    resolve: {
-                        permission: ['PermissionService', '$window', '$routeParams',
-                            function (PermissionService, $window, $routeParams) {
-                                if (!PermissionService.canPut('highlighted_press', $routeParams.id)) {
-                                    $window.location.href = '#/featured';
-                                }
-                            }
-                        ]
-                    }
+                    controller: 'featuredEditController'
                 });
         });
 })();

@@ -12,8 +12,11 @@
         NotificationService,
         $timeout,
         $q,
+        $location,
         $rootScope
     ) {
+        $log.info('PermissionService');
+        initService();
         $rootScope.User = null;
         var showMessage = null;
         var service = {
@@ -23,7 +26,9 @@
             canPost: canPost,
             canPut: canPut,
             canGet: canGet,
-            hasPermission: hasPermission
+            run: initService,
+            hasPermission: hasPermission,
+            hasPermissionId: hasPermissionId
         };
 
         function hasContext(permission, context) {
@@ -146,6 +151,7 @@
             if (!showMessage) {
                 NotificationService.warning('Você não possui permissões, entre com contato com CEDECOM/WEB', 'ATENÇÃO');
                 showMessage = true;
+                $location.path('/login');
             }
             $timeout(function () {
                 showMessage = false;
@@ -158,6 +164,10 @@
 
         function canPut(context, id) {
             return check(context, id, 'PUT');
+        }
+
+        function hasPermissionId(context, id) {
+            return canPut(context, id) || canPost(context, id) || canDelete(context, id) || canGet(context, id);
         }
 
         function hasPermission(context) {
@@ -184,6 +194,7 @@
                 $rootScope.User = user;
                 if (messagesUserStatus()) {
                     defer.resolve();
+                    $rootScope.$broadcast('PERMISSION_ROUTER');
                 }
             } else {
                 authService
@@ -200,6 +211,7 @@
                             defer.reject();
                             $rootScope.logout();
                         }
+                        $rootScope.$broadcast('PERMISSION_ROUTER');
                         defer.resolve();
                     })
                     .catch(function (err) {
