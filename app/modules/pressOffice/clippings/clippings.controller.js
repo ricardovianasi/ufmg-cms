@@ -5,7 +5,8 @@
         .controller('ClippingsController', ClippingsController);
 
     /** ngInject */
-    function ClippingsController($scope,
+    function ClippingsController(
+        $scope,
         $uibModal,
         $filter,
         $route,
@@ -16,8 +17,8 @@
         NotificationService,
         $rootScope,
         Util,
-        $log) {
-        $rootScope.shownavbar = true;
+        $log
+    ) {
         $log.info('ClippingsController');
 
         var vm = $scope;
@@ -30,6 +31,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
 
         function onInit() {

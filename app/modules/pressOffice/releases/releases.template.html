@@ -14,7 +14,7 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="#/releases">
+                        <a href="#/release">
                             <strong>Assessoria/Releases</strong>
                         </a>
                     </li>
@@ -43,7 +43,7 @@
                     </a>
                 </div>
                 <div class="pull-right">
-                    <a ng-if="canPost" ng-href="#/releases/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/release/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> NOVO RELEASE
                     </a>
                 </div>
@@ -55,7 +55,7 @@
                             <th class="col-xs-5">Título</th>
                             <th class="col-xs-2">Usuário</th>
                             <th class="col-xs-3">Data da Publicação</th>
-                            <th class="col-xs-2" ng-show="canPut">Ações</th>
+                            <th class="col-xs-2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +64,7 @@
                                 <a target="_blank" ng-href="{{ release.release_url }}" ng-if="!canPut">
                                     {{ release.title }}
                                 </a>
-                                <a can-put context="release" context-id="release.id" ng-href="#/releases/edit/{{ release.id }}">
+                                <a can-put context="release" context-id="release.id" ng-href="#/release/edit/{{ release.id }}">
                                     {{ release.title }}
                                 </a>
                             </td>
@@ -78,7 +78,7 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ release.release_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="release" context-id="release.id" ng-href="#/releases/edit/{{ release.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" can-put context="release" context-id="release.id" ng-href="#/release/edit/{{ release.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">

@@ -10,13 +10,12 @@
         dataTableConfigService,
         NotificationService,
         ModalService,
-        permission,
+        PermissionService,
         $rootScope,
         $location,
         ManagerFileService,
         Util,
         $log) {
-        $rootScope.shownavbar = true;
         $log.info('CourseController');
 
         var vm = this;
@@ -101,7 +100,7 @@
         }
 
         function _permissions() {
-            vm.canPermission = permission;
+            vm.canPermission = PermissionService.hasPermission('course_' + vm.type);
         }
 
         function _uploadCover() {

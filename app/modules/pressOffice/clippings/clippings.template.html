@@ -14,7 +14,7 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="#/clippings">
+                        <a href="#/clipping">
                             <strong>Clippings</strong>
                         </a>
                     </li>
@@ -43,7 +43,7 @@
                     </a>
                 </div>
                 <div class="pull-right">
-                    <a ng-if="canPost" ng-href="#/clippings/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/clipping/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> INSERIR NOVA MATÉRIA
                     </a>
                 </div>
@@ -62,7 +62,7 @@
                         <tr role="row" ng-repeat="clipping in clippings.items track by clipping.id" class="odd">
                             <td>
                                 <span ng-if="!canPut">{{ clipping.title }}</span>
-                                <a ng-if="canPut" ng-href="#/clippings/edit/{{ clipping.id }}">{{ clipping.title }}</a>
+                                <a ng-if="canPut" ng-href="#/clipping/edit/{{ clipping.id }}">{{ clipping.title }}</a>
                             </td>
                             <td>{{ clipping.author.name }}</td>
                             <td>
@@ -71,7 +71,7 @@
                                 <small>{{ clipping.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clippings/edit/{{ clipping.id }}"
+                                <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clipping/edit/{{ clipping.id }}"
                                     class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                     </a>

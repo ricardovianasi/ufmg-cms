@@ -6,7 +6,8 @@
         .controller('UsersController', UsersController);
 
     /** ngInject */
-    function UsersController($rootScope,
+    function UsersController(
+        $rootScope,
         UsersService,
         ModalService,
         NotificationService,
@@ -15,14 +16,14 @@
         Util,
         authService,
         ENV,
-        $log) {
+        $log
+    ) {
         $log.info('UsersController');
 
         var vm = this;
         vm.normalize = _normalize;
         vm.activate = _activate;
         vm.reset = _reset;
-        $rootScope.shownavbar = true;
 
         vm.dtInstance = {};
 

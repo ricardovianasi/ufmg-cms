@@ -5,7 +5,8 @@
         .controller('ReleasesEditController', ReleasesEditController);
 
     /** ngInject */
-    function ReleasesEditController($scope,
+    function ReleasesEditController(
+        $scope,
         $timeout,
         $location,
         $routeParams,
@@ -20,8 +21,8 @@
         $rootScope,
         PermissionService,
         $log,
-        validationService) {
-        $rootScope.shownavbar = true;
+        validationService
+    ) {
         $log.info('ReleasesEditController');
         var vm = $scope;
         var removeConfirmationModal = {};
@@ -217,7 +218,7 @@
                 NotificationService.success('Release salvo com sucesso.');
 
                 if (!preview) {
-                    $location.path('/releases');
+                    $location.path('/release');
                 } else {
                     $window.open(release.data.release_url);
                 }
@@ -230,7 +231,7 @@
             removeConfirmationModal.result.then(function () {
                 ReleasesService.destroy($routeParams.id).then(function () {
                     NotificationService.success('Release removido com sucesso.');
-                    $location.path('/releases');
+                    $location.path('/release');
                 });
             });
         };

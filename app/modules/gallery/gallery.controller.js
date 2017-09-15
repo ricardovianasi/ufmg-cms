@@ -17,7 +17,6 @@
         Util,
         $log) {
         $log.info('GaleriasController');
-        $rootScope.shownavbar = true;
 
         var vm = $scope;
 
@@ -30,6 +29,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         onInit();
 

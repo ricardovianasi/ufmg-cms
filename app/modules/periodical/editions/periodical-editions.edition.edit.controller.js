@@ -5,7 +5,8 @@
         .controller('PeriodicalEditionEditController', PeriodicalEditionEditController);
 
     /** ngInject */
-    function PeriodicalEditionEditController($scope,
+    function PeriodicalEditionEditController(
+        $scope,
         $uibModal,
         $routeParams,
         $location,
@@ -19,8 +20,8 @@
         $rootScope,
         $window,
         $log,
-        validationService) {
-        $rootScope.shownavbar = true;
+        validationService
+    ) {
         $log.info('PeriodicalEditionEditController');
 
         var removeConfirmationModal = {};
@@ -146,7 +147,7 @@
                     NotificationService.success('Edição atualizada com sucesso.');
 
                     if (!preview) {
-                        $location.path('/periodicals/' + $routeParams.id + '/editions');
+                        $location.path('/periodical/' + $routeParams.id + '/editions');
                     } else {
                         $window.open(res.data.edition_url);
                     }

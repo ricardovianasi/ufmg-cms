@@ -87,7 +87,7 @@
                 .newPeriodical(_data)
                 .then(function () {
                     NotificationService.success('Publicação criada com sucesso.');
-                    $location.path('/periodicals');
+                    $location.path('/periodical');
                 });
         }
     }

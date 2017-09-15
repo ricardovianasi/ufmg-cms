@@ -6,7 +6,8 @@
         .controller('ClippingsEditController', ClippingsEditController);
 
     /** ngInject */
-    function ClippingsEditController($scope,
+    function ClippingsEditController(
+        $scope,
         $location,
         $routeParams,
         $filter,
@@ -16,8 +17,8 @@
         DateTimeHelper,
         $rootScope,
         validationService,
-        $log) {
-        $rootScope.shownavbar = true;
+        $log
+    ) {
         $log.info('ClippingsEditController');
 
         var vm = $scope;
@@ -52,7 +53,7 @@
 
             ClippingsService.update(data, $routeParams.id).then(function () {
                 NotificationService.success('Clipping salvo com sucesso.');
-                $location.path('/clippings');
+                $location.path('/clipping');
             });
         };
     }

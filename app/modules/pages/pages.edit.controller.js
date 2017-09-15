@@ -177,7 +177,7 @@
                         .removePage($routeParams.id)
                         .then(function () {
                             NotificationService.success('Página removida com sucesso.');
-                            $location.path('/pages');
+                            $location.path('/page');
                         });
                 });
         }
@@ -194,7 +194,7 @@
                         $window.open(page.data.page_url, '_black');
                     } else {
                         NotificationService.success('Página atualizada com sucesso.');
-                        $location.path('/pages');
+                        $location.path('/page');
                     }
                 });
         }

@@ -19,7 +19,6 @@
           Util,
           VIEWER,
           PermissionService) {
-          $rootScope.shownavbar = true;
           $log.info('GalleryEditController');
 
           $scope.categories = [];
@@ -53,7 +52,7 @@
 
               GalleryService.updateGallery($scope.gallery.id, obj).then(function () {
                   NotificationService.success('Galeria atualizada com sucesso!');
-                  $location.path('/galleries');
+                  $location.path('/gallery');
               });
           };
 
@@ -183,7 +182,7 @@
               removeConfirmationModal.result.then(function () {
                   GalleryService.removeGallery(id).then(function () {
                       NotificationService.success('Galeria removida com sucesso.');
-                      $location.path('/galleries');
+                      $location.path('/gallery');
                   });
               });
           };

@@ -116,7 +116,7 @@
                 .updatePeriodical($routeParams.id, _data)
                 .then(function () {
                     NotificationService.success('Publicação atualizada com sucesso.');
-                    $location.path('/periodicals');
+                    $location.path('/periodical');
                 });
         }
     }

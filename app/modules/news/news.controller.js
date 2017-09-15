@@ -16,7 +16,6 @@
         $routeParams,
         Util,
         $log) {
-        $rootScope.shownavbar = true;
         $log.info('NoticiasController');
 
         var vm = $scope;
@@ -28,6 +27,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         function onInit() {
             _renderDataTable();

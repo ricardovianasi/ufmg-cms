@@ -188,7 +188,7 @@
                         $window.open(page.data.page_url, '_black');
                     } else {
                         NotificationService.success('Página criada com sucesso.');
-                        $location.path('/pages');
+                        $location.path('/page');
                     }
                 });
         }

@@ -5,7 +5,8 @@
         .controller('PagesController', PagesController);
 
     /** ngInject */
-    function PagesController($scope,
+    function PagesController(
+        $scope,
         dataTableConfigService,
         PermissionService,
         PagesService,
@@ -15,10 +16,10 @@
         DateTimeHelper,
         $rootScope,
         Util,
-        $log) {
+        $log
+    ) {
         $log.info('PagesController');
-        $rootScope.shownavbar = true;
-        var vm = this;
+        var vm = $scope;
         vm.dtColumns = {};
         vm.dtOptions = {};
         vm.pages = null;
@@ -29,7 +30,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
-        vm.canPut = false;
+        vm.canPut = canPut;
 
         function onInit() {
             _renderDataTable();
@@ -93,7 +94,6 @@
         function _permissions() {
             _canDelete();
             _canPost();
-            _canPut();
         }
 
         function _canPost() {
@@ -104,8 +104,8 @@
             vm.canDelete = PermissionService.canDelete('page');
         }
 
-        function _canPut() {
-            vm.canPut = PermissionService.canPut('page');
+        function canPut(context, id) {
+            return PermissionService.canPut('page', id);
         }
 
         onInit();

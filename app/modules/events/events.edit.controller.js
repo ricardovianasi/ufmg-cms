@@ -23,7 +23,6 @@
         TagsService,
         $log,
         validationService) {
-        $rootScope.shownavbar = true;
         $log.info('EventsEditController');
 
         var allTags = [];

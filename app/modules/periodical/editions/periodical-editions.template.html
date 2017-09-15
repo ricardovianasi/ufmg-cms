@@ -14,12 +14,12 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="#/periodicals">
+                        <a href="#/periodical">
                            Publicações Jornalísticas
                        </a>
                     </li>
                     <li class="active">
-                        <a href="#/periodicals/{{ periodical.id }}/editions">
+                        <a href="#/periodical/{{ periodical.id }}/editions">
                             <strong>{{ periodical.name }}</strong>
                         </a>
                     </li>
@@ -32,9 +32,9 @@
     <div class=col-xs-12>
         <div class="panel panel-default">
             <div class="btn-toolbar">
-                <a ng-href="#/periodicals" class="btn btn-gray"><i class="fa fa-angle-left"></i> &nbsp;Voltar para Publicações Jornalísticas</a>
+                <a ng-href="#/periodical" class="btn btn-gray"><i class="fa fa-angle-left"></i> &nbsp;Voltar para Publicações Jornalísticas</a>
                 <div class=pull-right>
-                    <a ng-if="canPost" ng-href="#/periodicals/{{ periodical.id }}/editions/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA EDIÇÃO</a>
+                    <a ng-if="canPost" ng-href="#/periodical/{{ periodical.id }}/editions/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA EDIÇÃO</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -69,7 +69,7 @@
                                 <a href="{{ item.edition_url }}" target="_blank" ng-if="!canPut">
                                     <strong>Nº: {{ item.number }}</strong> - {{ item.theme }}
                                 </a>
-                                <a ng-if="canPut" href="#/periodicals/{{ periodical.id }}/editions/edit/{{ item.id }}">
+                                <a ng-if="canPut" href="#/periodical/{{ periodical.id }}/editions/edit/{{ item.id }}">
                                     <strong>Nº: {{ item.number }}</strong> - {{ item.theme }}
                                 </a>
                                 <br>
@@ -84,7 +84,7 @@
                                 <a uib-tooltip="Visualizar" class="btn btn-primary" href="{{ item.edition_url }}" target="_blank">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" ng-if="canPut" class="btn btn-warning" ng-href="#/periodicals/{{ periodical.id }}/editions/edit/{{ item.id }}">
+                                <a uib-tooltip="Editar" ng-if="canPut('editions', periodical.id)" class="btn btn-warning" ng-href="#/periodical/{{ periodical.id }}/editions/edit/{{ item.id }}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeEdition(item.id, item.theme)" class="btn btn-danger">

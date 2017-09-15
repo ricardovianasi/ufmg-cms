@@ -4,7 +4,8 @@
     angular.module('releasesModule')
         .controller('ReleasesController', ReleasesController);
 
-    function ReleasesController($scope,
+    function ReleasesController(
+        $scope,
         $uibModal,
         $filter,
         dataTableConfigService,
@@ -12,11 +13,9 @@
         ReleasesService,
         DateTimeHelper,
         PermissionService,
-        $log,
-        Util,
-        $rootScope) {
+        $log
+    ) {
 
-        $rootScope.shownavbar = true;
         $log.info('ReleasesController');
         var vm = $scope;
 

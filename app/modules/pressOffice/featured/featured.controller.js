@@ -5,19 +5,16 @@
         .controller('FeaturedController', featuredNewController);
 
     /** ngInject */
-    function featuredNewController(featuredService,
+    function featuredNewController(
+        featuredService,
         PermissionService,
         DateTimeHelper,
         dataTableConfigService,
         $filter,
         $uibModal,
         $scope,
-        NotificationService,
-        $location,
-        $route,
-        Util,
-        $rootScope) {
-        $rootScope.shownavbar = true;
+        NotificationService
+    ) {
 
         var vm = $scope;
         var removeConfirmationModal;
@@ -28,6 +25,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         function onInit() {
             _renderDataTable();

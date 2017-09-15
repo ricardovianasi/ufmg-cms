@@ -5,7 +5,8 @@
         .controller('PeriodicalEditionsController', PeriodicalEditionsController);
 
     /** ngInject */
-    function PeriodicalEditionsController($scope,
+    function PeriodicalEditionsController(
+        $scope,
         $routeParams,
         $uibModal,
         PeriodicalService,
@@ -17,8 +18,8 @@
         ModalService,
         Util,
         $log,
-        PermissionService) {
-        $rootScope.shownavbar = true;
+        PermissionService
+    ) {
         $log.info('PeriodicalEditionsController');
 
         var vm = $scope;
@@ -32,6 +33,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         function onInit() {
             vm.periodical.name = PeriodicalService.getPeriodicalName();
@@ -129,11 +131,6 @@
         function _permissions() {
             _canDelete();
             _canPost();
-            _canPut();
-        }
-
-        function _canPut() {
-            vm.canPut = PermissionService.canPut('editions', $routeParams.id);
         }
 
         function _canPost() {

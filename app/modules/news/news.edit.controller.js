@@ -23,7 +23,6 @@
         PermissionService,
         $log,
         validationService) {
-        $rootScope.shownavbar = true;
         $log.info('NoticiasEditController');
 
         var allTags = [];

@@ -5,7 +5,8 @@
         .controller('ClippingsNewController', ClippingsNewController);
 
     /** ngInject */
-    function ClippingsNewController($scope,
+    function ClippingsNewController(
+        $scope,
         $location,
         ClippingsService,
         NotificationService,
@@ -14,8 +15,8 @@
         $rootScope,
         PermissionService,
         validationService,
-        $log) {
-        $rootScope.shownavbar = true;
+        $log
+    ) {
         $log.info('ClippingsNewController');
         var vm = $scope;
 
@@ -49,7 +50,7 @@
 
             ClippingsService.store(data).then(function () {
                 NotificationService.success('Clipping criado com sucesso.');
-                $location.path('/clippings');
+                $location.path('/clipping');
             });
         };
     }

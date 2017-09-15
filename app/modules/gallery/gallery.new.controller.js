@@ -18,7 +18,6 @@
         $rootScope,
         Util,
         $log) {
-        $rootScope.shownavbar = true;
         $log.info('GaleriasNovoController');
 
         $scope.categories = [];
@@ -176,7 +175,7 @@
             };
 
             GalleryService.newGallery(obj).then(function () {
-                $location.path('/galleries');
+                $location.path('/gallery');
             });
         };
 

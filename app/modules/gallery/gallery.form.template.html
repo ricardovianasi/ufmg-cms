@@ -13,7 +13,7 @@
                             <a href="#/"><i class="fa-home"></i>Home</a>
                         </li>
                         <li>
-                            <a href="#/galleries">
+                            <a href="#/gallery">
                                 <strong>Galerias</strong>
                             </a>
                         </li>
@@ -92,8 +92,8 @@
     <div class="col-xs-12">
         <hr>
         <div class="pull-right">
-            <a ng-href="#/galleries" ng-if="!canPermission" class="btn btn-danger pull-left spacer-right">Fechar</a>
-            <a ng-href="#/galleries" ng-if="canPermission" class="btn btn-danger pull-left spacer-right">Cancelar</a>
+            <a ng-href="#/gallery" ng-if="!canPermission" class="btn btn-danger pull-left spacer-right">Fechar</a>
+            <a ng-href="#/gallery" ng-if="canPermission" class="btn btn-danger pull-left spacer-right">Cancelar</a>
             <a ng-click="publish(page)" ng-if="canPermission" class="btn btn-success pull-left">Salvar</a>
         </div>
     </div>

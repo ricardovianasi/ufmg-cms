@@ -5,7 +5,8 @@
         .controller('PeriodicalController', PeriodicalController);
 
     /** ngInject */
-    function PeriodicalController($scope,
+    function PeriodicalController(
+        $scope,
         dataTableConfigService,
         PeriodicalService,
         DateTimeHelper,
@@ -17,8 +18,8 @@
         DTColumnDefBuilder,
         $rootScope,
         Util,
-        $log) {
-        $rootScope.shownavbar = true;
+        $log
+    ) {
         $log.info('PeriodicalController');
 
         var vm = $scope;
@@ -32,6 +33,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         onInit();
 
@@ -129,7 +131,6 @@
         function _permissions() {
             _canDelete();
             _canPost();
-            _canPut();
         }
 
         function _canPost() {
@@ -138,10 +139,6 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('periodical');
-        }
-
-        function _canPut() {
-            vm.canPut = PermissionService.canPut('periodical');
         }
     }
 })();

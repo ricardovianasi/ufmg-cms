@@ -25,8 +25,6 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-
-        $rootScope.shownavbar = true;
         $log.info('NoticiasNovoController');
         vm.canPermission = PermissionService.canPost(vm.typeNews);
 

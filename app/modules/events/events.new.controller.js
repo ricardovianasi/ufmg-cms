@@ -22,8 +22,6 @@
         $window,
         PermissionService,
         validationService) {
-
-        $rootScope.shownavbar = true;
         var allTags = [];
         var vm = $scope;
         vm.vm = vm;

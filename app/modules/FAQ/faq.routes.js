@@ -16,10 +16,11 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            permission: ['PermissionService', '$window',
-                                function (PermissionService, $window) {
+                            permission: ['NotificationService','PermissionService', '$window',
+                                function (NotificationService, PermissionService, $window) {
                                     if (!PermissionService.canPost('faq')) {
                                         $window.location.href = '#/faq';
+                                        NotificationService.warn('Você não possui acesso a está página.', 'ATENÇÃO');
                                     }
                                     return true;
                                 }
@@ -31,10 +32,11 @@
                         controller: 'faqNewController',
                         controllerAs: 'vm',
                         resolve: {
-                            permission: ['PermissionService', '$window', '$routeParams',
-                                function (PermissionService, $window, $routeParams) {
+                            permission: ['NotificationService','PermissionService', '$window', '$routeParams',
+                                function (NotificationService, PermissionService, $window, $routeParams) {
                                     if (!PermissionService.canPut('faq', $routeParams.faqId)) {
                                         $window.location.href = '#/faq';
+                                        NotificationService.warn('Você não possui acesso a está página.', 'ATENÇÃO');
                                     }
                                     return true;
                                 }

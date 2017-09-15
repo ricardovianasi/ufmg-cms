@@ -12,7 +12,7 @@
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
                     <li class="active">
-                        <a href="#/featured">
+                        <a href="#/highlighted_press">
                             <strong>Destaques</strong>
                         </a>
                     </li>
@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div class="pull-right">
-                    <a ng-if="canPost" ng-href="#/featured/new" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPost" ng-href="#/highlighted_press/new" class="btn btn-secondary btn-lg pull-left">
                         <span class="fa fa-plus"></span> NOVO DESTAQUE
                     </a>
                 </div>
@@ -58,7 +58,7 @@
                                 <span ng-if="!canPut">
                                     {{ featured.title }}
                                 </span>
-                                <a can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}">
+                                <a can-put context="highlighted_press" context-id="featured.id" ng-href="#/highlighted_press/edit/{{ featured.id }}">
                                     {{ featured.title }}
                                 </a>
                             </td>
@@ -69,7 +69,7 @@
                                 <small>{{ featured.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/featured/edit/{{ featured.id }}"
+                                <a uib-tooltip="Editar" can-put context="highlighted_press" context-id="featured.id" ng-href="#/highlighted_press/edit/{{ featured.id }}"
                                     class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                     </a>

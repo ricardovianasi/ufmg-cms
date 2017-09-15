@@ -15,7 +15,7 @@
                             </a>
                         </li>
                         <li class="active">
-                            <a href="#/periodicals">
+                            <a href="#/periodical">
                                 <strong>Publicações Jornalísticas</strong>
                             </a>
                         </li>
@@ -40,7 +40,10 @@
                         </a>
                     </div>
                     <div class="pull-right">
-                        <a ng-if="canPost" ng-href="#/periodicals/new" class="btn btn-secondary btn-lg pull-left"><i class="fa fa-plus"></i> NOVA PUBLICAÇÃO</a>
+                        <a ng-if="canPost" ng-href="#/periodical/new" class="btn btn-secondary btn-lg pull-left">
+                            <i class="fa fa-plus"></i>
+                            NOVA PUBLICAÇÃO
+                        </a>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -50,13 +53,13 @@
                                 <th class="col-xs-5">Título</th>
                                 <th class="col-xs-2">Usuário</th>
                                 <th class="col-xs-3">Data da Publicação</th>
-                                <th class="col-xs-2">Ações</th>
+                                <th class="col-xs-2" ng-show="canPut('periodical', item.id) || canDelete">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr role="row" ng-repeat="item in periodicals.items track by item.id" class="odd">
                                 <td>
-                                    <a ng-href="#/periodicals/{{item.id}}/editions" ng-click="setNamePeriodical(item.name)">{{ item.name }}</a>
+                                    <a ng-href="#/periodical/{{item.id}}/editions" ng-click="setNamePeriodical(item.name)">{{ item.name }}</a>
                                 </td>
                                 <td>{{ item.author.name }}</td>
                                 <td>
@@ -64,8 +67,8 @@
                                     <br>
                                     <small>{{ item.status|translate|titleize }}</small>
                                 </td>
-                                <td class="table-fit">
-                                    <a uib-tooltip="Editar" can-put context="periodical" context-id="item.id" ng-href="#/periodicals/edit/{{ item.id }}" class="btn btn-warning">
+                                <td class="table-fit" ng-show="canPut('periodical', item.id) || canDelete">
+                                    <a uib-tooltip="Editar" ng-if="canPut('periodical', item.id)" ng-href="#/periodical/edit/{{ item.id }}" class="btn btn-warning">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removePeriodical(item.id, item.name)" class="btn btn-danger">

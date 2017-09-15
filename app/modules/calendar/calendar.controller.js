@@ -4,7 +4,8 @@
     angular.module('calendarModule')
         .controller('CalendarController', CalendarController);
     /** ngInject */
-    function CalendarController($scope,
+    function CalendarController(
+        $scope,
         CalendarService,
         $uibModal,
         PermissionService,
@@ -12,9 +13,8 @@
         $timeout,
         dataTableConfigService,
         NotificationService,
-        DateTimeHelper,
-        $rootScope) {
-        $rootScope.shownavbar = true;
+        DateTimeHelper
+    ) {
         $log.info('CalendarController');
         var _view = false;
         var vm = $scope;
@@ -23,6 +23,7 @@
         var ModalCalendarSchoolDaysCtrl = _ModalCalendarSchoolDaysCtrl;
         var ModalCalendarioNovoCtrl = _ModalCalendarioNovoCtrl;
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
+        vm.canPost = false;
 
         onInit();
 

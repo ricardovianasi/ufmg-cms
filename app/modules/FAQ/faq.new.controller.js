@@ -18,7 +18,6 @@
 
         var vm = this; //jshint ignore: line
 
-        $rootScope.shownavbar = true;
         $log.info('faNewController');
 
         onInit();

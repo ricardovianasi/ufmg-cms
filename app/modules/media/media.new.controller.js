@@ -5,15 +5,15 @@
         .controller('MediaNewController', MediaNewController);
 
     /** ngInject */
-    function MediaNewController($scope,
+    function MediaNewController(
+        $scope,
         $uibModal,
         $location,
         $timeout,
         StatusService,
         MediaService,
-        $log,
-        $rootScope) {
-        $rootScope.shownavbar = true;
+        $log
+    ) {
         $log.info('GalleryEditController');
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 

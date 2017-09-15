@@ -14,7 +14,6 @@
         Util,
         NotificationService,
         PermissionService) {
-        $rootScope.shownavbar = true;
         $log.info('faqController');
         var vm = this; // jshint ignore: line
         vm.dtInstance = {};

@@ -17,7 +17,6 @@
         $rootScope,
         $filter) {
 
-        $rootScope.shownavbar = true;
         $log.info('NoticiasController');
 
         var vm = this;

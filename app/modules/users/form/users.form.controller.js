@@ -196,14 +196,14 @@
                 UsersService
                     .updateUser(vm.user)
                     .then(function () {
-                        $location.path('/users');
+                        $location.path('/user');
                         NotificationService.success('Usuário alterado com sucesso!');
                     });
             } else {
                 UsersService
                     .saveUser(vm.user)
                     .then(function () {
-                        $location.path('/users');
+                        $location.path('/user');
                         NotificationService.success('Usuário salvo com sucesso!');
                     });
             }

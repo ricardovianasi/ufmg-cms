@@ -16,7 +16,6 @@
         $rootScope,
         Util,
         $log) {
-        $rootScope.shownavbar = true;
         $log.info('EventsController');
 
         var vm = $scope;
@@ -28,6 +27,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         onInit();
 
@@ -70,7 +70,7 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-                         
+
                     });
             }
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getEvents);

@@ -5,7 +5,8 @@
         .controller('MediaEditController', MediaEditController);
 
     /** ngInject */
-    function MediaEditController($scope,
+    function MediaEditController(
+        $scope,
         $uibModal,
         $log,
         $location,
@@ -13,9 +14,8 @@
         $routeParams,
         $timeout,
         StatusService,
-        MediaService,
-        $rootScope) {
-        $rootScope.shownavbar = true;
+        MediaService
+    ) {
         $log.info('GalleryEditController');
         var removeConfirmationModal = {};
         var EditPhotosModal = {};

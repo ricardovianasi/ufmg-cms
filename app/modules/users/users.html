@@ -12,7 +12,7 @@
                         <a href="#/"><i class="fa-home"></i>Home</a>
                     </li>
                     <li class="active">
-                        <a href="#/users">
+                        <a href="#/user">
                             <strong>Usuários</strong>
                         </a>
                     </li>
@@ -27,7 +27,7 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="pull-right">
-                    <a ng-if="vm.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/users/new"><i class="fa fa-plus"></i> NOVO USUÁRIO</a>
+                    <a ng-if="vm.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/user/new"><i class="fa fa-plus"></i> NOVO USUÁRIO</a>
                 </div>
             </div>
             <div class="panel-body">
@@ -38,7 +38,7 @@
                             <th class="col-xs-2">Unidade/Setor</th>
                             <th class="col-xs-3">Cargo/Função</th>
                             <th class="col-xs-3">Email</th>
-                            <th class="col-xs-1">Ações</th>
+                            <th class="col-xs-1" ng-show="canPut('user')">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +47,7 @@
                             <td>{{vm.normalize(user.unit,user.sector)}}</td>
                             <td>{{vm.normalize(user.occupation,user.function)}}</td>
                             <td><a href="mailto:{{user.email}}">{{user.email}}</a></td>
-                            <td class="table-fit-single">
+                            <td class="table-fit-single" ng-show="canPut('user')">
                                 <a uib-tooltip="Resetar Senha" can-put context="user" context-id="item.id" ng-click="vm.reset(user)" class="btn btn-default">
                                     <i class="fa fa-eraser"></i>
                                 </a>

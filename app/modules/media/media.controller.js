@@ -5,7 +5,8 @@
         .controller('MediaController', MediaController);
 
     /** ngInject */
-    function MediaController($scope,
+    function MediaController(
+        $scope,
         $uibModal,
         $route,
         MediaService,
@@ -15,10 +16,8 @@
         StatusService,
         NotificationService,
         DateTimeHelper,
-        ModalService,
-        Util,
-        $rootScope) {
-        $rootScope.shownavbar = true;
+        ModalService
+    ) {
         $log.info('MediaController');
 
         var vm = $scope;

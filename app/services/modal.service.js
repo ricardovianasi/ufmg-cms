@@ -33,7 +33,7 @@
                 $scope.confirm = function () {
                     $uibModalInstance.close();
                 };
-            };
+            }
         }
 
         function _confirm(title, size) {

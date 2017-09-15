@@ -6,7 +6,8 @@
         .controller('featuredNewController', featuredNewController);
 
     /** ngInject */
-    function featuredNewController($scope,
+    function featuredNewController(
+        $scope,
         PermissionService,
         ReleasesService,
         MediaService,
@@ -17,10 +18,10 @@
         $location,
         $log,
         $rootScope,
-        validationService) {
-        $log.info('featuredNewController');
-        $rootScope.shownavbar = true;
+        validationService
+    ) {
 
+        $log.info('featuredNewController');
         var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
@@ -97,7 +98,7 @@
             _parseToSave();
             featuredService.save(vm.featured).then(function () {
                 NotificationService.success('Destaque salvo com sucesso!');
-                $location.path('/featured');
+                $location.path('/highlighted_press');
             });
         }
 

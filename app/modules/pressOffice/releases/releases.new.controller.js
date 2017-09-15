@@ -20,8 +20,8 @@
         $rootScope,
         $log,
         PermissionService,
-        validationService) {
-        $rootScope.shownavbar = true;
+        validationService
+    ) {
         $log.info('ReleasesNewController');
         var vm = $scope;
         var removeConfirmationModal = {};
@@ -220,7 +220,7 @@
                 NotificationService.success('Release criado com sucesso.');
 
                 if (!preview) {
-                    $location.path('/releases');
+                    $location.path('/release');
                 } else {
                     $window.open(release.data.release_url);
                 }

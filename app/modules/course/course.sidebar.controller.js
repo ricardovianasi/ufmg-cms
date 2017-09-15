@@ -14,7 +14,6 @@
         NotificationService,
         $rootScope,
         $location) {
-        $rootScope.shownavbar = true;
         var vm = this;
 
         vm.type = $routeParams.type;

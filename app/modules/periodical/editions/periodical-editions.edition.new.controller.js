@@ -25,7 +25,6 @@
         vm.vm = $scope;
         vm.getYear = _getYear;
 
-        $rootScope.shownavbar = true;
         $log.info('PeriodicalEditionNewController');
 
         vm.edition = {};
@@ -82,10 +81,10 @@
                 NotificationService.success('Edição criada com sucesso.');
 
                 if (!preview) {
-                    $location.path('/periodicals/' + $routeParams.id + '/editions');
+                    $location.path('/periodical/' + $routeParams.id + '/editions');
                 } else {
                     $window.open(data.data.edition_url);
-                    $location.path('/periodicals/' + $routeParams.id + '/edition/edit/' + data.data.id);
+                    $location.path('/periodical/' + $routeParams.id + '/edition/edit/' + data.data.id);
                 }
             });
         };

@@ -7,7 +7,8 @@
         .controller('featuredEditController', featuredEditController);
 
     /** ngInject */
-    function featuredEditController($scope,
+    function featuredEditController(
+        $scope,
         ReleasesService,
         PermissionService,
         MediaService,
@@ -17,11 +18,10 @@
         NotificationService,
         $location,
         $routeParams,
-        $log,
-        $rootScope) {
+        $log
+    ) {
         $log.info('featuredEditController');
 
-        $rootScope.shownavbar = true;
         var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
@@ -90,7 +90,7 @@
 
             featuredService.update(vm.featured.id, _updateFeatured).then(function () {
                 NotificationService.success('Destaque alterado com sucesso!');
-                $location.path('/featured');
+                $location.path('/highlighted_press');
             });
         }
 
