@@ -13,8 +13,16 @@
                 obj: '=routeModel',
                 publishMethod: '=?publishMethod'
             },
-            link: linkController
+            link: linkController,
+            controller: PublishmentController
         };
+
+        /** ngInject */
+        function PublishmentController($scope, $window) {
+            $scope.back = function () {
+                $window.history.back();
+            };
+        }
 
         function linkController($scope, element, attrs) {
             $log.info('PublishmentDirective');
@@ -32,7 +40,7 @@
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.publish = _publish;
             vm.remove = vm.$parent.remove;
-            vm.back = vm.$parent.back || _back;
+            // vm.back = vm.$parent.back || _back;
             vm.publisher = vm.$parent.publish || vm.publishMethod;
 
             vm.saveDraft = _saveDraft;
@@ -126,15 +134,6 @@
                     }
                 }
                 $log.info('objeto status salvo: ', vm.obj.status);
-            }
-
-            function _back() {
-                var back = $filter('format')('/{0}', inflection.pluralize(attrs.routeModel)); // jshint ignore: line
-                $log.info('Backing to', angular.isDefined(attrs.back), attrs.back);
-                if (angular.isDefined(attrs.back)) {
-                    back = attrs.back;
-                }
-                $location.path(back);
             }
 
             function _publishEdit() {
