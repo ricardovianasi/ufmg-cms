@@ -93,10 +93,17 @@
             if (isNotNumberLastElement || isEditions) {
                 return false;
             }
-            var action = path.match(new RegExp('edit|view'));
 
-            if (action) {
-                return action.toString();
+            var actionView = path.match(new RegExp('view'));
+
+            if (actionView) {
+                return actionView.toString();
+            }
+
+            var actionEdit = path.match(new RegExp('edit'));
+
+            if (actionEdit) {
+                return actionEdit.toString();
             }
             if (isNews) {
                 return false;
