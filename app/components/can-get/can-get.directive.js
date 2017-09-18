@@ -55,10 +55,12 @@
                     if (elem.id === 'btn-back') {
                         return;
                     }
-                    $(elem).off("click");
+
+                    $(elem).off('click');
+
                     $(elem).css({
                         'cursor': 'default'
-                    })
+                    });
                 }
             }
         };
