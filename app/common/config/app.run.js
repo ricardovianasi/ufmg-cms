@@ -79,8 +79,8 @@
             }, timeInMillisegunds);
         }
 
-        function getActionModule(uri) {
-            var path = uri ? uri : $location.path();
+        function getActionModule() {
+            var path = $location.path();
             var lastElement = getLastElement(path);
             var isNotNumberLastElement = typeof parseFloat(lastElement) !== 'number';
             var isEditions = lastElement === 'editions';
@@ -90,13 +90,16 @@
             if (isActionNew) {
                 return 'new';
             }
-            if (isNotNumberLastElement && (isEditions || isNews)) {
+            if (isNotNumberLastElement || isEditions) {
                 return false;
             }
-            var action = path.match(new RegExp('edit'));
+            var action = path.match(new RegExp('edit|view'));
 
             if (action) {
                 return action.toString();
+            }
+            if (isNews) {
+                return false;
             }
             return false;
         }
@@ -114,9 +117,9 @@
             var id = '';
             var lastElement = getLastElement(hash);
             if (context === 'edit') {
-                return lastElement;
+                return parseInt(lastElement);
             }
-            if (typeof parseInt(lastElement) !== 'number') {
+            if (typeof lastElement === 'string') {
                 var numberOfHash = hash.match(/\d+/g);
                 id = numberOfHash ? parseInt(numberOfHash.toString()) : false;
                 if (typeof id === 'number') {
@@ -182,6 +185,7 @@
         }
 
         function verifyPermission(event, next, current) {
+            $rootScope.viewOnly = false;
             var hash = next.originalPath || $location.path();
             var module = getModule(hash);
             if (module) {
@@ -206,14 +210,18 @@
                 var idAction = action ? getId(action) : false;
                 $log.info('ACTION', action);
                 $log.info('ACTION ID', idAction);
+                var noHasPermissionCustom;
                 if (action && action === 'new') {
-                    var noHasPermissionPost = !PermissionService.canPost(module, idAction);
-                    $log.info('ACTION PERMISSION', !noHasPermissionPost);
-                    noPermissionAction(event, current, noHasPermissionPost);
+                    noHasPermissionCustom = !PermissionService.canPost(module, idAction);
                 } else if (action && action === 'edit') {
-                    var noHasPermissionPut = !PermissionService.canPut(module, idAction);
-                    $log.info('ACTION PERMISSION', !noHasPermissionPut);
-                    noPermissionAction(event, current, noHasPermissionPut);
+                    noHasPermissionCustom = !PermissionService.canPut(module, idAction);
+                } else if (action && action === 'view') {
+                    noHasPermissionCustom = !PermissionService.canGet(module, idAction);
+                    $rootScope.viewOnly = true;
+                }
+                if (noHasPermissionCustom) {
+                    $log.info('ACTION PERMISSION', !noHasPermissionCustom);
+                    noPermissionAction(event, current, noHasPermissionCustom);
                 }
             }
         }
@@ -252,7 +260,9 @@
         });
 
         $rootScope.$on('Error403', function () {
-            ModalService.dialog('Acesso negado', 'Você não tem permissão para executar esta ação');
+            if ($location.path() !== '/login') {
+                ModalService.dialog('Acesso negado', 'Você não tem permissão para executar esta ação');
+            }
         });
 
         $rootScope.$on('Error5xx', function () {
@@ -279,6 +289,7 @@
         PermissionService
     ) {
         $rootScope.shownavbar = true;
+        $rootScope.viewOnly = false;
 
         $rootScope.canPost = PermissionService.canPost;
         $rootScope.canPut = PermissionService.canPut;

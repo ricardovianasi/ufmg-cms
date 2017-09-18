@@ -5,7 +5,15 @@
         .directive('publishmentOptions', PublishmentOptions);
 
     /** ngInject */
-    function PublishmentOptions($location, $filter, validationService, StatusService, $log, DateTimeHelper) {
+    function PublishmentOptions(
+        $location,
+        $filter,
+        validationService,
+        StatusService,
+        $log,
+        DateTimeHelper,
+        $timeout
+    ) {
         return {
             restrict: 'E',
             templateUrl: 'components/publishment/publishment.template.html',
@@ -20,6 +28,7 @@
         /** ngInject */
         function PublishmentController($scope, $window) {
             $scope.back = function () {
+                $scope.showLoad = false;
                 $window.history.back();
             };
         }
@@ -54,6 +63,9 @@
             onInit();
 
             function onInit() {
+                $timeout(function () {
+                    vm.showLoad = true;
+                }, 500);
                 vm.$watch('vm.obj.scheduled_time', function () {
                     if (vm.obj.scheduled_time === '' && vm.todayDiferentHour) {
                         vm.todayDiferentHour = false;

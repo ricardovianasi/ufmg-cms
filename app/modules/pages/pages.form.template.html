@@ -28,7 +28,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" can-get>
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="row">
@@ -71,14 +71,19 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="pages-module add-module pages-module-cover">
+                    <div class="pages-module add-module pages-module-cover" ng-if="!viewOnly">
                         <div class="chosen-cover">
                             <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="page.image">
-                                <i class="fa fa-remove"></i> REMOVER IMAGEM
-                            </a>
+                                    <i class="fa fa-remove"></i> REMOVER IMAGEM
+                                </a>
                         </div>
                         <div class="add-title" ng-model="page_cover" ng-click="uploadCover()" ng-show=!page.image>+ Adicionar Capa
                         </div>
+                        <div class="uploaded-image" ng-show="page.image">
+                            <img class="img-responsive" ng-src="{{ page.image.url }}">
+                        </div>
+                    </div>
+                    <div class="pages-module add-module pages-module-cover" ng-if="viewOnly && page.image.url">
                         <div class="uploaded-image" ng-show="page.image">
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
@@ -95,7 +100,7 @@
                                 </h4>
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2" ng-if="!viewOnly">
                                 <span class="label label-warning" ng-click="handleModule('main', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
@@ -108,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pages-module add-module" ng-click="handleModule('main')">
+                    <div ng-if="!viewOnly" class="pages-module add-module" ng-click="handleModule('main')">
                         <span class="add-title">+ Adicionar Módulo</span>
                     </div>
                 </div>
@@ -121,7 +126,7 @@
                                 </h4>
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" ng-if="!viewOnly">
                                 <span class="label label-warning" ng-click="handleModule('side', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
                                 </span>
@@ -134,7 +139,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pages-module add-module" ng-click="handleModule('side')">
+                    <div ng-if="!viewOnly" class="pages-module add-module" ng-click="handleModule('side')">
                         <span class="add-title">+ Adicionar Módulo</span>
                     </div>
                 </div>

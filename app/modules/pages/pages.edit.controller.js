@@ -253,7 +253,7 @@
 
                     page.tags = [];
 
-                    vm.title = 'Editar ' + page.title;
+                    vm.title = page.title;
                     vm.breadcrumb_active = page.title;
 
 

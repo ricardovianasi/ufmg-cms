@@ -16,6 +16,10 @@
                 .when('/page/edit/:id', {
                     templateUrl: 'modules/pages/pages.form.template.html',
                     controller: 'PagesEditController'
+                })
+                .when('/page/view/:id', {
+                    templateUrl: 'modules/pages/pages.form.template.html',
+                    controller: 'PagesEditController'
                 });
         });
 })();

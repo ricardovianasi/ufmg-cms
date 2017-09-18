@@ -58,7 +58,7 @@
                     <tbody>
                         <tr dt-rows role="row" class="odd" ng-repeat="item in pages.items track by item.id">
                             <td>
-                                <a target="_blank" ng-href="{{ item.page_url }}" ng-if="!canPut('page', item.id)">{{ item.title }}</a>
+                                <a ng-if="!canPut('page', item.id)" ng-href="#/page/view/{{ item.id }}">{{ item.title }}</a>
                                 <a ng-if="canPut('page', item.id)" ng-href="#/page/edit/{{ item.id }}">{{ item.title }}</a>
                             </td>
                             <td>{{ item.author.name }}</td>
@@ -70,6 +70,9 @@
                             <td class="table-fit">
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.page_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
+                                </a>
+                                <a uib-tooltip="Visualizar Edição" ng-if="!canPut('page', item.id)" ng-href="#/page/view/{{ item.id }}" class="btn btn-orange">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="page" context-id="item.id" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
