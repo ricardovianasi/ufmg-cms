@@ -71,7 +71,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="pages-module add-module pages-module-cover" ng-if="!viewOnly">
+                    <div class="pages-module add-module pages-module-cover" ng-show="!viewOnly">
                         <div class="chosen-cover">
                             <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="page.image">
                                     <i class="fa fa-remove"></i> REMOVER IMAGEM
@@ -83,7 +83,7 @@
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
                     </div>
-                    <div class="pages-module add-module pages-module-cover" ng-if="viewOnly && page.image.url">
+                    <div class="pages-module add-module pages-module-cover" ng-show="viewOnly && page.image.url">
                         <div class="uploaded-image" ng-show="page.image">
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
