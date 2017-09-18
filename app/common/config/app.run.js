@@ -202,6 +202,7 @@
                 if (idModule) {
                     var noHasPermissionId = !PermissionService.hasPermissionId(module, idModule);
                     if (noPermissionAction(event, current, noHasPermissionId)) {
+                        console.log('ROLE ACCESS');
                         return;
                     }
                 }
@@ -214,7 +215,11 @@
                 if (action && action === 'new') {
                     noHasPermissionCustom = !PermissionService.canPost(module, idAction);
                 } else if (action && action === 'edit') {
-                    noHasPermissionCustom = !PermissionService.canPut(module, idAction);
+                    if (module === 'editions') {
+                        noHasPermissionCustom = !PermissionService.canPut(module, idModule);
+                    } else {
+                        noHasPermissionCustom = !PermissionService.canPut(module, idAction);
+                    }
                 } else if (action && action === 'view') {
                     noHasPermissionCustom = !PermissionService.canGet(module, idAction);
                     $rootScope.viewOnly = true;
