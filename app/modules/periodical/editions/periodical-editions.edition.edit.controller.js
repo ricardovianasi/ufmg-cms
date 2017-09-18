@@ -78,7 +78,7 @@
             vm.edition.slug = res.data.slug;
             vm.edition.post_date = res.data.post_date;
             vm.edition.publish_date = res.data.publish_date;
-            vm.edition.legend = res.data.file.legend;
+            vm.edition.legend = res.data.file ? res.data.file.legend : '';
 
             _getAllArticles(vm.edition.id);
 

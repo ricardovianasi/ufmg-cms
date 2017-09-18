@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-<div class=row>
+<div class=row can-get>
     <div class="col-xs-12 panel panel-default">
         <form class="form" name="formPeriodicals" novalidate>
             <div class="row">
@@ -58,7 +58,7 @@
                 <div class="col-xs-12">
                     <div class="pages-module add-module">
                         <div class="chosen-cover">
-                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="periodical.url">
+                            <a href="javascript:void(0);" ng-if="!viewOnly" class="label label-danger remove-image" ng-click="removeImage()" ng-show="periodical.url">
                                 <i class="fa fa-remove"></i> REMOVER IMAGEM
                             </a>
                         </div>
@@ -108,9 +108,14 @@
             <hr>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="pull-right">
+                    <div class="pull-right" ng-if="!viewOnly">
                         <a ng-click class="btn btn-danger pull-left spacer-right" href="#/periodical">Cancelar</a>
-                        <a ng-click="publish(periodical)" class="btn btn-success pull-left">Salvar</a></div>
+                        <a ng-click="publish(periodical)" class="btn btn-success pull-left">Salvar</a>
+                    </div>
+
+                    <button id="btn-back" ng-if="viewOnly" type="button" class="btn btn-lg" ng-click="backHistory()">
+                    <i class="fa fa-back"></i> Voltar
+                </button>
                 </div>
             </div>
         </form>

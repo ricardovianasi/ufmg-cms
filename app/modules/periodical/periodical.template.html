@@ -53,7 +53,7 @@
                                 <th class="col-xs-5">Título</th>
                                 <th class="col-xs-2">Usuário</th>
                                 <th class="col-xs-3">Data da Publicação</th>
-                                <th class="col-xs-2" ng-show="canPut('periodical', item.id) || canDelete">Ações</th>
+                                <th class="col-xs-2">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,8 +67,11 @@
                                     <br>
                                     <small>{{ item.status|translate|titleize }}</small>
                                 </td>
-                                <td class="table-fit" ng-show="canPut('periodical', item.id) || canDelete">
-                                    <a uib-tooltip="Editar" ng-if="canPut('periodical', item.id)" ng-href="#/periodical/edit/{{ item.id }}" class="btn btn-warning">
+                                <td class="table-fit">
+                                    <a uib-tooltip="Editar" ng-if="canPut('periodical')" ng-href="#/periodical/edit/{{ item.id }}" class="btn btn-warning">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a uib-tooltip="Editar" ng-if="canGet('periodical')" ng-href="#/periodical/view/{{ item.id }}" class="btn btn-orange">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removePeriodical(item.id, item.name)" class="btn btn-danger">

@@ -17,7 +17,7 @@
                 $timeout(function () {
                     if ($rootScope.viewOnly) {
                         disableAll();
-                        NotificationService.warn('Acesso negado', 'Você não tem permissão para editar.');
+                        NotificationService.warn('Acesso negado', 'Você não tem permissão para editar e executar ações.');
                     }
                 }, 600);
 
@@ -41,11 +41,11 @@
                 }
 
                 function disableInputs(elem) {
-                    if (elem.nodeName === 'INPUT') {
-                        elem.disabled = true;
-                        return;
-                    }
-                    if (elem.nodeName === 'SELECT') {
+                    if (
+                        elem.nodeName === 'INPUT' ||
+                        elem.nodeName === 'TEXTAREA' ||
+                        elem.nodeName === 'SELECT'
+                    ) {
                         elem.disabled = true;
                         return;
                     }

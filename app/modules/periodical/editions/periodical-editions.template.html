@@ -87,6 +87,9 @@
                                 <a uib-tooltip="Editar" ng-if="canPut('editions', periodical.id)" class="btn btn-warning" ng-href="#/periodical/{{ periodical.id }}/editions/edit/{{ item.id }}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
+                                <a uib-tooltip="Editar" ng-if="!canPut('editions', periodical.id)" class="btn btn-orange" ng-href="#/periodical/{{ periodical.id }}/editions/view/{{ item.id }}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeEdition(item.id, item.theme)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
