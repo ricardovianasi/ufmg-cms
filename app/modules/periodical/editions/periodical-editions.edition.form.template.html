@@ -130,10 +130,10 @@
                                 <div class="add-title" ng-click="uploadPDF()" ng-show="!edition.pdf">
                                     + Adicionar PDF
                                 </div>
-                                <div class="uploaded-image" ng-show="edition.pdf">
+                                <a ng-href="{{edition.pdf.url}}" target="__blank" class="uploaded-image" ng-show="edition.pdf">
                                     <div class="file-icon file-icon-lg" data-type="pdf"></div>
                                     <label>{{edition.legend}}</label>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -175,6 +175,12 @@
                                                     </div>
                                                     <div class="article-summary-number"><strong>Pág. {{ article.page_number }}</strong></div>
                                                 </div>
+                                            </div>
+
+                                            <div class="col-md-2" ng-if="viewOnly">
+                                                <span ng-click="openArticle(this, $index, article)" class="label label-primary">
+                                                    <i class="fa fa-eye"></i> Visualizar
+                                                </span>
                                             </div>
                                             <div class="col-md-2" ng-if="!viewOnly">
                                                 <span ng-click="openArticle(this, $index, article)" class="label label-warning">

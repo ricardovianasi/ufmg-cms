@@ -1,6 +1,5 @@
 <label>Conteúdo</label>
-<textarea cols="30" rows="10" title="Texto" ng-model="widget.text" redactor imagencrop-options="imagencropOptions" audioUpload-options="audioUploadOptions"
+<div ng-if="viewOnly" id="redactor-only"></div>
+<textarea ng-if="!viewOnly" cols="30" rows="10" title="Texto" ng-model="widget.text" redactor imagencrop-options="imagencropOptions" audioUpload-options="audioUploadOptions"
     uploadfiles-options="uploadfilesOptions"></textarea>
-
-
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>

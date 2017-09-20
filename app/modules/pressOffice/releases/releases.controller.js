@@ -26,6 +26,7 @@
         vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
+        vm.canPost = false;
 
         function onInit() {
             _renderDataTable();
@@ -114,7 +115,6 @@
         function _permissions() {
             _canDelete();
             _canPost();
-            _canPut();
         }
 
         function _canPost() {
@@ -123,10 +123,6 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('release');
-        }
-
-        function _canPut() {
-            vm.canPut = PermissionService.canPut('release');
         }
 
         onInit();

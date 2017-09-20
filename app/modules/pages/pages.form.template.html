@@ -100,6 +100,11 @@
                                 </h4>
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
                             </div>
+                            <div class="col-md-2" ng-if="viewOnly">
+                                <span class="label label-primary" ng-click="handleModule('main', $index)">
+                                    <i class="fa fa-pencil"></i> Visualisar
+                                </span>
+                            </div>
                             <div class="col-md-2" ng-if="!viewOnly">
                                 <span class="label label-warning" ng-click="handleModule('main', $index)">
                                     <i class="fa fa-pencil"></i> EDITAR
@@ -125,6 +130,12 @@
                                     {{ item.title }}
                                 </h4>
                                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
+                            </div>
+
+                            <div class="col-md-4" ng-if="viewOnly">
+                                <span class="label label-primary view-permission" ng-click="handleModule('side', $index)">
+                                    <i class="fa fa-pencil"></i> Visualisar
+                                </span>
                             </div>
                             <div class="col-md-4" ng-if="!viewOnly">
                                 <span class="label label-warning" ng-click="handleModule('side', $index)">

@@ -18,6 +18,10 @@
                 .when('/highlighted_press/edit/:id', {
                     templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
                     controller: 'featuredEditController'
+                })
+                .when('/highlighted_press/view/:id', {
+                    templateUrl: 'modules/pressOffice/featured/featured.form.template.html',
+                    controller: 'featuredEditController'
                 });
         });
 })();

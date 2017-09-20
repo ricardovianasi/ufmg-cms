@@ -12,7 +12,7 @@
             <div class="clearfix">
                 <div class=pull-left>Link {{ $index + 1 }}</div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeItem($index)">
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeItem($index)" ng-if="!viewOnly">
                     <i class="fa fa-trash"></i>
                 </button>
                     <button type="button" as-sortable-item-handle class="btn btn-primary btn-sm">

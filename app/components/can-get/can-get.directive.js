@@ -6,18 +6,18 @@
         .directive('canGet', CanGetCtrl);
 
     /** ngInject */
-    function CanGetCtrl(PermissionService, $rootScope, $timeout, NotificationService) {
+    function CanGetCtrl(PermissionService, $rootScope, $timeout) {
         return {
             restrict: 'A',
             scope: {
                 context: '@',
-                contextId: '='
+                contextId: '=',
+                canGet: '='
             },
             link: function ($scope, element) {
                 $timeout(function () {
-                    if ($rootScope.viewOnly) {
+                    if ($rootScope.viewOnly || $scope.canGet) {
                         disableAll();
-                        NotificationService.warn('Acesso negado', 'Você não tem permissão para editar e executar ações.');
                     }
                 }, 600);
 
@@ -37,7 +37,8 @@
                         }
                     }
                     disableInputs(elem);
-                    removeEventClick(elem);
+                    removeEvents(elem);
+                    addCss(elem);
                 }
 
                 function disableInputs(elem) {
@@ -51,16 +52,29 @@
                     }
                 }
 
-                function removeEventClick(elem) {
-                    if (elem.id === 'btn-back') {
+                function addCss(elem){
+                    $(elem).css({
+                        'cursor': 'default'
+                    });
+                    if(elem.nodeName === 'IMG'){
+                        $(elem).css({
+                            'width': '100%'
+                        });
+                    }
+                }
+
+                function removeEvents(elem) {
+                    if (elem.id === 'btn-back' || $(elem).hasClass('view-permission')) {
                         return;
                     }
 
                     $(elem).off('click');
+                    
+                    $(document).off('mouseenter');
 
-                    $(elem).css({
-                        'cursor': 'default'
-                    });
+                    $(elem).off('mouseenter');
+
+                    $(elem).off('dragenter');
                 }
             }
         };

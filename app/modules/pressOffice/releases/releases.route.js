@@ -18,6 +18,10 @@
                 .when('/release/edit/:id', {
                     templateUrl: 'modules/pressOffice/releases/releases.form.template.html',
                     controller: 'ReleasesEditController'
+                })
+                .when('/release/view/:id', {
+                    templateUrl: 'modules/pressOffice/releases/releases.form.template.html',
+                    controller: 'ReleasesEditController'
                 });
         });
 })();

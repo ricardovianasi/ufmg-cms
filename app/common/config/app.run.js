@@ -193,6 +193,7 @@
 
         function verifyPermission(event, next, current) {
             $rootScope.viewOnly = false;
+            widgetButtonRemove(); //jshint ignore: line
             var hash = next.originalPath || $location.path();
             var module = getModule(hash);
             if (module) {
@@ -230,6 +231,7 @@
                 } else if (action && action === 'view') {
                     noHasPermissionCustom = !PermissionService.canGet(module, idAction);
                     $rootScope.viewOnly = true;
+                    NotificationService.warn('Acesso negado', 'Você não tem permissão para editar e executar ações.');
                 }
                 if (noHasPermissionCustom) {
                     $log.info('ACTION PERMISSION', !noHasPermissionCustom);
@@ -240,7 +242,7 @@
 
         function noPermissionAction(event, current, noPermission) {
             if (sessionService.getIsLogged() && noPermission) {
-                NotificationService.warn('Você não possui acesso a está página.', 'ATENÇÃO');
+                NotificationService.warn('ATENÇÃO', 'Você não possui acesso a está página.');
                 if (current) {
                     event.preventDefault();
                 } else {

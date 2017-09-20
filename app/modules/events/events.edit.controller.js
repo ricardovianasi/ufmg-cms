@@ -196,6 +196,14 @@
             event.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
 
             vm.event = event;
+
+            $timeout(function () {
+                var html = $.parseHTML(vm.event.description);
+                $('#redactor-only').append(html);
+
+                var html2 = $.parseHTML(vm.event.datasheet);
+                $('#redactor-only-2').append(html2);
+            }, 300);
         });
 
         CourseService.getCourses('graduation').then(function (data) {

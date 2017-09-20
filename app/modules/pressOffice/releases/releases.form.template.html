@@ -37,7 +37,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" can-get>
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="row">
@@ -97,7 +97,8 @@
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formData.content.$error.required && !formData.content.$valid}">
                         <label for="content">Conteúdo</label>
-                        <textarea id="content" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorOptions" required></textarea>
+                        <div ng-if="viewOnly" id="redactor-only"></div>
+                        <textarea id="content" ng-if="!viewOnly" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorOptions" required></textarea>
                         <div ng-show="!formData.content.$valid" class="error-message" role="alert">
                             <div ng-show="formData.content.$error.required">Campo obrigatório</div>
                         </div>

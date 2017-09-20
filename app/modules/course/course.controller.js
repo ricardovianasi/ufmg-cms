@@ -51,7 +51,6 @@
                         if (!vm.course.detail) {
                             vm.course.detail = {};
                         }
-                        _permissions();
                     });
             } else {
                 _renderDataTable();
@@ -71,7 +70,6 @@
                     .getCourses(vm.type, false, dataTableConfigService.getParams(params))
                     .then(function (res) {
                         vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                        _permissions();
                         vm.courses = res.data;
                         var records = {
                             'draw': params.draw,
@@ -97,10 +95,6 @@
                         $location.path('/course/list/' + vm.type);
                     }
                 });
-        }
-
-        function _permissions() {
-            vm.canPermission = PermissionService.hasPermission('course_' + vm.type);
         }
 
         function _uploadCover() {

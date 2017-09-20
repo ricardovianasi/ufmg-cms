@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" can-get>
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="btn-toolbar">
@@ -44,7 +44,7 @@
                     <i class="fa fa-angle-left"></i> &nbsp;Voltar para Cursos
                 </a>
                 <div class="pull-right">
-                    <a ng-if="vm.canPermission" ng-href="#/course/sidebar/{{ vm.type }}/{{ vm.courseId }}" class="btn btn-secondary btn-lg pull-left">
+                    <a ng-if="canPut('course_'+vm.type, item.id)" ng-href="#/course/sidebar/{{ vm.type }}/{{ vm.courseId }}" class="btn btn-secondary btn-lg pull-left">
                         Personalizar Sidebar
                     </a>
                 </div>
@@ -52,15 +52,15 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="pages-module add-module edition-bg-thumb">
-                        <div ng-if="(!vm.course.detail.cover.url && vm.canPermission)" class="add-title add-module" ng-model="vm.course_cover" ng-click="vm.uploadCover()">
+                        <div ng-if="(!vm.course.detail.cover.url && canPut('course_'+vm.type, item.id))" class="add-title add-module" ng-model="vm.course_cover" ng-click="vm.uploadCover()">
                             + Adicionar Capa
                         </div>
-                        <div ng-if="(!vm.course.detail.cover.url && !vm.canPermission)" class="add-title add-module">
+                        <div ng-if="(!vm.course.detail.cover.url && !canPut('course_'+vm.type, item.id))" class="add-title add-module">
                             Sem Capa
                         </div>
                         <div>
                             <div class="chosen-cover">
-                                <span ng-if="vm.canPermission" ng-click="vm.removeImage()" class="label label-danger remove-image" ng-if="vm.course.detail.cover.url">
+                                <span ng-if="canPut('course_'+vm.type, item.id)" ng-click="vm.removeImage()" class="label label-danger remove-image" ng-if="vm.course.detail.cover.url">
                                     <i class="fa fa-remove"></i> REMOVER IMAGEM
                                 </span>
                             </div>
@@ -73,8 +73,8 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label>Descrição</label>
-                        <textarea class="form-control" cols="50" rows="10" ng-if="vm.canPermission" ng-model="vm.course.detail.description" redactor="redactorConfig"></textarea>
-                        <div ng-if="!vm.canPermission" data-ng-bind-html="vm.course.detail.description"></div>
+                        <textarea class="form-control" cols="50" rows="10" ng-if="canPut('course_'+vm.type, item.id)" ng-model="vm.course.detail.description" redactor="redactorConfig"></textarea>
+                        <div ng-if="!canPut('course_'+vm.type, item.id)" data-ng-bind-html="vm.course.detail.description"></div>
                     </div>
                 </div>
                 <div class="col-xs-12">
@@ -104,7 +104,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-12" ng-if="vm.canPermission">
+                <div class="col-xs-12" ng-if="canPut('course_'+vm.type, item.id)">
                     <div class="pull-left">
                         <a class="btn btn-danger pull-left spacer-right" href="#/course/list/{{ vm.type }}">
                             <i class="fa fa-remove"></i> Cancelar

@@ -59,7 +59,15 @@
             vm.status = data.data;
         });
 
-        NewsService.getNew($routeParams.id).then(function (data) {
+        NewsService
+            .getNew($routeParams.id)
+            .then(function (data) {
+
+            $timeout(function(){
+                var html = $.parseHTML(vm.news.text);
+                $('#redactor-only').append(html);
+            }, 300);
+
             vm.canPermission = PermissionService.canPut($routeParams.typeNews, $routeParams.id);
 
             vm.obj = {};

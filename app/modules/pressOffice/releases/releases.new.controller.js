@@ -28,8 +28,6 @@
         var confirmationModal = _confirmationModal;
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
 
-
-        vm.canPermission = PermissionService.canPost('release');
         vm.upload = _upload;
 
         vm.title = 'Novo Release';

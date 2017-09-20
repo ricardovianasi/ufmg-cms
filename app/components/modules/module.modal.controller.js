@@ -4,16 +4,19 @@
     angular.module('componentsModule')
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
-    function ModuleModalController($scope,
+    function ModuleModalController(
+        $scope,
         $uibModalInstance,
         PagesService,
         module,
         widgets,
         $rootScope,
         RedactorPluginService,
+        $timeout,
         Util,
         $q,
-        $log) {
+        $log
+    ) {
         $log.info('ModuleModalController');
 
         var vm = $scope;
@@ -55,6 +58,11 @@
                 vm.widget.selected.type = module.type;
 
                 angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
+
+                $timeout(function () {
+                        var html = $.parseHTML(vm.widget.text);
+                        $('#redactor-only').append(html);
+                    }, 300);
 
                 if (module.type === 'listnews') {
                     vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;

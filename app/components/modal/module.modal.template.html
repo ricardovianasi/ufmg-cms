@@ -1,7 +1,7 @@
 <div class="modal-header">
-    <h3 class="modal-title">Widget - {{ widget.type|translate|titleize }}</h3>
+    <h3 class="modal-title">{{ widget.type|translate|titleize }}</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" can-get>
     <form>
         <fieldset ng-init="resetVariables()">
             <div class="form-group">
@@ -21,9 +21,14 @@
         </fieldset>
     </form>
 </div>
-<div class=modal-footer>
+<div class="modal-footer" ng-if="!viewOnly">
     <button type="button" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
     <button type="button" class="btn btn-success" ng-disabled="widget.title == '' || widget.type == ''" ng-click="ok()">
         <i class="fa fa-check"></i> Inserir
+    </button>
+</div>
+<div class="modal-footer" ng-if="viewOnly">
+    <button id="btn-back" type="button" class="btn btn-md" ng-click="cancel()">
+        <i class="fa fa-back"></i> Fechar
     </button>
 </div>

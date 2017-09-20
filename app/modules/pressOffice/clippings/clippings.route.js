@@ -18,6 +18,10 @@
                 .when('/clipping/edit/:id', {
                     templateUrl: 'modules/pressOffice/clippings/clippings.form.template.html',
                     controller: 'ClippingsEditController'
+                })
+                .when('/clipping/view/:id', {
+                    templateUrl: 'modules/pressOffice/clippings/clippings.form.template.html',
+                    controller: 'ClippingsEditController'
                 });
         });
 })();

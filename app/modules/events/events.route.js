@@ -16,6 +16,10 @@
                 .when('/events/edit/:id', {
                     templateUrl: 'modules/events/events.form.template.html',
                     controller: 'EventsEditController'
+                })
+                .when('/events/view/:id', {
+                    templateUrl: 'modules/events/events.form.template.html',
+                    controller: 'EventsEditController'
                 });
         });
 })();

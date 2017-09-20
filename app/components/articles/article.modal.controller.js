@@ -52,6 +52,11 @@
                     $scope.article.tags.push(tag);
                 }
             });
+
+            $timeout(function () {
+                    var html = $.parseHTML($scope.article.content);
+                    $('#redactor-only').append(html);
+                }, 300);
         }
 
         $scope.imagencropOptions = RedactorPluginService.getOptions('imagencrop');

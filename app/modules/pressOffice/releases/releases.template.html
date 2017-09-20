@@ -61,12 +61,12 @@
                     <tbody>
                         <tr class="odd" role="row" ng-repeat="release in releases.items track by release.id">
                             <td>
-                                <a target="_blank" ng-href="{{ release.release_url }}" ng-if="!canPut">
-                                    {{ release.title }}
-                                </a>
-                                <a can-put context="release" context-id="release.id" ng-href="#/release/edit/{{ release.id }}">
-                                    {{ release.title }}
-                                </a>
+                                <a ng-if="canPut('release')" ng-href="#/release/edit/{{ release.id }}">
+                                        {{ release.title }}
+                                    </a>
+                                <a ng-if="!canPut('release')" ng-href="#/release/view/{{ release.id }}">
+                                        {{ release.title }}
+                                    </a>
                             </td>
                             <td>{{ release.author.name }}</td>
                             <td>
@@ -78,7 +78,10 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ release.release_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="release" context-id="release.id" ng-href="#/release/edit/{{ release.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" ng-if="canPut('release')" ng-href="#/release/edit/{{ release.id }}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a uib-tooltip="Editar" ng-if="!canPut('release')" ng-href="#/release/view/{{ release.id }}" class="btn btn-orange">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeRelease(release.id, release.title)" class="btn btn-danger">

@@ -29,7 +29,6 @@
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
         var confirmationModal = _confirmationModal;
 
-        vm.canPermission = PermissionService.canPut('release', $routeParams.id);
         vm.upload = _upload;
 
         vm.title = 'Editar Release: ';
@@ -278,6 +277,11 @@
             angular.forEach('vm.release.files', function (value, key) {
                 _addWatcher(key);
             });
+
+            $timeout(function () {
+                var html = $.parseHTML(vm.release.content);
+                $('#redactor-only').append(html);
+            }, 300);
 
         });
     }

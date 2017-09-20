@@ -68,8 +68,8 @@
                                 <small>{{ gallery.status|translate|titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Visualizar" ng-click="editEvent('lg', item)" class="btn btn-primary" ng-href="#/gallery/view/{{ gallery.id }}">
-                                    <i class="fa fa-eye"></i>
+                                <a uib-tooltip="Editar" ng-click="editEvent('lg', item)" class="btn btn-orange" ng-href="#/gallery/view/{{ gallery.id }}">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="gallery" context-id="gallery.id" ng-href="#/gallery/edit/{{ gallery.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>

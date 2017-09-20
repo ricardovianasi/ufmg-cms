@@ -28,7 +28,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" can-get>
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="row">
@@ -94,7 +94,7 @@
             </div>
             <!--row-->
             <hr>
-            <div class="row">
+            <div class="row" ng-if="!viewOnly">
                 <div class="col-xs-12">
                     <div class="pull-right">
                         <a class="btn btn-danger pull-left spacer-right" href="#/clipping">Cancelar</a>
@@ -102,6 +102,10 @@
                     </div>
                 </div>
             </div>
+
+            <button id="btn-back" ng-if="!!viewOnly" type="button" class="btn btn-md" ng-click="backHistory()">
+                    <i class="fa fa-back"></i> Voltar
+                </button>
             <!--row-->
         </form>
     </div>

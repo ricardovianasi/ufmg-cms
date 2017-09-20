@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" can-get>
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="row">
@@ -83,7 +83,7 @@
                 <div class="col-xs-4">
                     <div style="margin-top: 20px" class="pages-module pages-module-cover add-module">
                         <div class="chosen-cover">
-                            <span class="label label-danger remove-image" ng-click="imgHandler.removeImage('poster')" ng-show="event.poster">
+                            <span ng-if="!viewOnly" class="label label-danger remove-image" ng-click="imgHandler.removeImage('poster')" ng-show="event.poster">
                                 <span class="fa fa-remove"></span> Remover Cartaz
                             </span>
                         </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="uploaded-image" ng-show="event.photo">
                             <div class="form-img-label">
-                                <span class="label label-danger remove-image-news" ng-show="event.photo" ng-click="imgHandler.removeImage('photo')">
+                                <span ng-if="!viewOnly" class="label label-danger remove-image-news" ng-show="event.photo" ng-click="imgHandler.removeImage('photo')">
                                     <i class="fa fa-remove"></i> REMOVER
                                 </span>
                             </div>
@@ -130,6 +130,7 @@
                                     <label for="course-{{ course.id }}">
                                         <input type="checkbox" value="{{ course.id }}" name="courses[]"
                                                id="course-{{ course.id }}"
+                                               ng-disabled="viewOnly"
                                                ng-checked="event.courses.indexOf(course.id) !== -1"
                                                ng-click="toggleSelection(course.id)"> {{ course.name|titleize }}
                                     </label>
@@ -157,7 +158,8 @@
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formData.description.$error.required && !formPage.description.$valid}">
                         <label for="description">Descrição</label>
-                        <textarea id="description" name="description" cols="30" rows="5" class="form-control" redactor="redactorOptions" ng-model="event.description"
+                        <div ng-if="viewOnly" id="redactor-only"></div>
+                        <textarea id="description" ng-if="!viewOnly" name="description" cols="30" rows="5" class="form-control" redactor="redactorOptions" ng-model="event.description"
                             required></textarea>
                         <div ng-show="!formData.description.$valid" class="error-message" role="alert">
                             <div ng-show="formData.description.$error.required">Campo obrigatório</div>
@@ -169,7 +171,8 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="datasheet">Ficha Técnica</label>
-                        <textarea id="datasheet" name="datasheet" cols="30" rows="5" redactor="redactorOptions" ng-model="event.datasheet"></textarea>
+                        <div ng-if="viewOnly" id="redactor-only-2"></div>
+                        <textarea id="datasheet" ng-if="!viewOnly" name="datasheet" cols="30" rows="5" redactor="redactorOptions" ng-model="event.datasheet"></textarea>
                     </div>
                 </div>
             </div>

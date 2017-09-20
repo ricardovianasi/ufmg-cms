@@ -84,7 +84,10 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.event_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="events" context-id="item.id" ng-href="#/events/edit/{{ item.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" ng-if="canPut('events', item.id)" ng-href="#/events/edit/{{ item.id }}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a uib-tooltip="Editar" ng-if="!canPut('events', item.id)" ng-href="#/events/view/{{ item.id }}" class="btn btn-orange">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="remove(item.id, item.name)" class="btn btn-danger">

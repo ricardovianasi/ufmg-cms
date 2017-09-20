@@ -61,8 +61,8 @@
                     <tbody>
                         <tr role="row" ng-repeat="clipping in clippings.items track by clipping.id" class="odd">
                             <td>
-                                <span ng-if="!canPut">{{ clipping.title }}</span>
-                                <a ng-if="canPut" ng-href="#/clipping/edit/{{ clipping.id }}">{{ clipping.title }}</a>
+                                    <a ng-if="canPut('clipping', clipping.id)" ng-href="#/clipping/edit/{{ clipping.id }}">{{ clipping.title }}</a>
+                                    <a ng-if="!canPut('clipping', clipping.id)" ng-href="#/clipping/view/{{ clipping.id }}">{{ clipping.title }}</a>
                             </td>
                             <td>{{ clipping.author.name }}</td>
                             <td>
@@ -71,11 +71,13 @@
                                 <small>{{ clipping.status | translate | titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clipping/edit/{{ clipping.id }}"
-                                    class="btn btn-warning">
-                                    <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeClipping(clipping.id, clipping.title)" class="btn btn-danger">
+                                <a uib-tooltip="Editar" can-put context="clipping" context-id="clipping.id" ng-href="#/clipping/edit/{{ clipping.id }}" class="btn btn-warning">
+                                        <i class="fa fa-pencil"></i>
+                                        </a>
+                                <a uib-tooltip="Editar" ng-if="!canPut('clipping', clipping.id)" ng-href="#/clipping/view/{{ clipping.id }}" class="btn btn-orange">
+                                            <i class="fa fa-pencil"></i>
+                                            </a>
+                                <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeClipping(clipping.id, clipping.title)" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                             </td>

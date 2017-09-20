@@ -71,7 +71,7 @@
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.page_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a uib-tooltip="Visualizar Edição" ng-if="!canPut('page', item.id)" ng-href="#/page/view/{{ item.id }}" class="btn btn-orange">
+                                <a uib-tooltip="Editar" ng-if="!canPut('page', item.id)" ng-href="#/page/view/{{ item.id }}" class="btn btn-orange">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="page" context-id="item.id" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">

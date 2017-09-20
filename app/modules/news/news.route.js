@@ -16,6 +16,10 @@
                 .when('/news/:typeNews/edit/:id', {
                     templateUrl: 'modules/news/news.form.template.html',
                     controller: 'NewsEditController'
+                })
+                .when('/news/:typeNews/view/:id', {
+                    templateUrl: 'modules/news/news.form.template.html',
+                    controller: 'NewsEditController'
                 });
         });
 })();
