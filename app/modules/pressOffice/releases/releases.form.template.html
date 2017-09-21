@@ -38,8 +38,8 @@
     </div>
 </div>
 <div class="row" can-get>
-    <div class="col-xs-8 panel panel-default">
-        <form class="form" name="formData" novalidate>
+    <form class="form" name="formData" novalidate>
+        <div class="col-xs-8 panel panel-default">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
@@ -98,7 +98,8 @@
                     <div class="form-group" ng-class="{'has-error': formData.content.$error.required && !formData.content.$valid}">
                         <label for="content">Conteúdo</label>
                         <div ng-if="viewOnly" id="redactor-only"></div>
-                        <textarea id="content" ng-if="!viewOnly" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorOptions" required></textarea>
+                        <textarea id="content" ng-if="!viewOnly" name="content" cols="30" rows="5" ng-model="release.content" redactor="redactorOptions"
+                            required></textarea>
                         <div ng-show="!formData.content.$valid" class="error-message" role="alert">
                             <div ng-show="formData.content.$error.required">Campo obrigatório</div>
                         </div>
@@ -110,11 +111,11 @@
             <h3>Fonte</h3>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': formRelease.name.$error.required && !formRelease.name.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.name.$error.required && !formData.name.$valid}">
                         <label for="name">Nome</label>
                         <input id="name" name="name" type="text" ng-model="release.source.name" class="form-control" required>
-                        <div ng-show="!formRelease.name.$valid" class="error-message" role="alert">
-                            <div ng-show="formRelease.name.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.name.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.name.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -122,11 +123,11 @@
             <!--row-->
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group" ng-class="{'has-error': formRelease.email.$error.required && !formRelease.email.$valid}">
+                    <div class="form-group" ng-class="{'has-error': formData.email.$error.required && !formData.email.$valid}">
                         <label for="email">E-mail</label>
                         <input id="email" type="text" name="email" ng-model="release.source.email" class="form-control" required>
-                        <div ng-show="!formRelease.email.$valid" class="error-message" role="alert">
-                            <div ng-show="formRelease.email.$error.required">Campo obrigatório</div>
+                        <div ng-show="!formData.email.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.email.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
                 </div>
@@ -212,7 +213,8 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" ng-class="{ active: release.files[idx].isFile }" id="upload">
-                                        <a style="margin-top: 20px" class="pages-module pages-module-cover add-module" ng-href="{{release.files[idx].external_url}}" target="__blank">
+                                        <a style="margin-top: 20px" class="pages-module pages-module-cover add-module" ng-href="{{release.files[idx].external_url}}"
+                                            target="__blank">
                                             <div class="chosen-cover">
                                                 <span class="label label-danger remove-image" ng-click="removeReleasesFiles(idx)" ng-show="release.files[idx].file">
                                 <span class="fa fa-remove"></span> Remover
@@ -255,11 +257,11 @@
             </a>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="col-xs-4">
-        <publishment-options route-model="release"></publishment-options>
-    </div>
+        </div>
+        <div class="col-xs-4">
+            <publishment-options route-model="release"></publishment-options>
+        </div>
+    </form>
 </div>
 <br/>
 <br/>
