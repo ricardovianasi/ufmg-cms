@@ -71,7 +71,7 @@
                                     <a uib-tooltip="Editar" ng-if="canPut('periodical')" ng-href="#/periodical/edit/{{ item.id }}" class="btn btn-warning">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a uib-tooltip="Editar" ng-if="canGet('periodical')" ng-href="#/periodical/view/{{ item.id }}" class="btn btn-orange">
+                                    <a uib-tooltip="Editar" ng-if="!canPut('periodical')" ng-href="#/periodical/view/{{ item.id }}" class="btn btn-orange">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removePeriodical(item.id, item.name)" class="btn btn-danger">
