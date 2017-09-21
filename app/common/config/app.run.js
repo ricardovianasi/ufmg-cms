@@ -231,7 +231,7 @@
                 } else if (action && action === 'view') {
                     noHasPermissionCustom = !PermissionService.canGet(module, idAction);
                     $rootScope.viewOnly = true;
-                    NotificationService.warn('Acesso negado', 'Você não tem permissão para editar e executar ações.');
+                    NotificationService.warn('Você não tem permissão para editar e executar ações.', 'Acesso negado');
                 }
                 if (noHasPermissionCustom) {
                     $log.info('ACTION PERMISSION', !noHasPermissionCustom);
