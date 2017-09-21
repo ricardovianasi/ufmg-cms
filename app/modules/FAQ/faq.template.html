@@ -44,8 +44,8 @@
                                 <a ng-href="#/faq/edit/{{ item.id }}">{{ item.title }}</a>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Visualizar" ng-href="#/faq/view/{{ item.id }}" class="btn btn-primary">
-                                    <i class="fa fa-eye"></i>
+                                <a uib-tooltip="Editar" ng-if="!canPut('faq', item.id)" ng-href="#/faq/view/{{ item.id }}" class="btn btn-orange">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Editar" can-put context="faq" context-id="item.id" ng-href="#/faq/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
