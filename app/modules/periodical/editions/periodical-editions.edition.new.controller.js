@@ -32,6 +32,11 @@
 
         onInit();
 
+
+        vm.openArticle = function (self, idx, article) {
+            PeriodicalService.handleArticle(self, idx, article);
+        };
+
         function onInit() {
             vm.datepickerOpt = {
                 initDate: DateTimeHelper.getDatepickerOpt()
