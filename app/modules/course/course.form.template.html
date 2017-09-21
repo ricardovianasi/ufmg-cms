@@ -59,8 +59,8 @@
                             Sem Capa
                         </div>
                         <div>
-                            <div class="chosen-cover">
-                                <span ng-if="canPut('course_'+vm.type, item.id)" ng-click="vm.removeImage()" class="label label-danger remove-image" ng-if="vm.course.detail.cover.url">
+                            <div class="chosen-cover" ng-if="!viewOnly">
+                                <span ng-click="vm.removeImage()" class="label label-danger remove-image" ng-if="vm.course.detail.cover.url">
                                     <i class="fa fa-remove"></i> REMOVER IMAGEM
                                 </span>
                             </div>
