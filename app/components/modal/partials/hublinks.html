@@ -33,19 +33,18 @@
                         <select title="Destino do link" class="form-control" ng-model="link.link_type" ng-change="changeType($index)">
                         <option value="page"
                                 ng-selected="link.link_type === 'page';">
-                            P&aacute;ginas internas
+                            Páginas internas
                         </option>
 
-                        <option value="link"
-                                ng-selected="link.link_type === 'link';">
-                            Url externa
+                        <option value="link" ng-selected="link.link_type === 'link';">
+                            URL externa
                         </option>
                     </select>
                     </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group" ng-show="link.link_type === 'page'" onload="loadMorePage()">
-                        <label>P&aacute;gina:</label>
+                        <label>Página:</label>
                         <ui-select ng-model="link.page">
                             <ui-select-match placeholder="Buscar Página">
                                 {{ $select.selected.title }}
@@ -54,11 +53,11 @@
                                 refresh="loadMorePage($select.search)" refresh-delay="300">
                                 <div ng-bind-html="item.title | highlight: $select.search">
                                 </div>
-                                </ui-select-choices>
+                            </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="form-group" ng-show="link.link_type === 'link'">
-                        <label>Url do link:</label>
+                        <label>URL do link:</label>
                         <input type="text" title="Url do link" class="form-control" ng-model="link.external_url">
                     </div>
                 </div>

@@ -890,7 +890,9 @@
                             widget.content.links[k].link_type = 'link';
                         } else {
                             widget.content.links[k].link_type = 'page';
-                            widget.content.links[k].page = widget.content.links[k].page.id;
+                            widget.content.links[k].page = widget.content.links[k].page ?
+                                widget.content.links[k].page :
+                                false;
                         }
                     });
 
