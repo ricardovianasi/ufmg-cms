@@ -56,7 +56,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr role=row ng-repeat="gallery in galleries.items"
+                        <tr role="row" ng-repeat="gallery in galleries.items"
                             class="odd">
                             <td>
                                 {{ gallery.title }}
@@ -68,10 +68,10 @@
                                 <small>{{ gallery.status|translate|titleize }}</small>
                             </td>
                             <td class="table-fit">
-                                <a uib-tooltip="Editar" ng-click="editEvent('lg', item)" class="btn btn-orange" ng-href="#/gallery/view/{{ gallery.id }}">
+                                <a uib-tooltip="Editar" ng-if="!canPut('gallery', gallery.id)" ng-click="editEvent('lg', item)" class="btn btn-orange" ng-href="#/gallery/view/{{ gallery.id }}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a uib-tooltip="Editar" can-put context="gallery" context-id="gallery.id" ng-href="#/gallery/edit/{{ gallery.id }}" class="btn btn-warning">
+                                <a uib-tooltip="Editar" ng-if="canPut('gallery', gallery.id)" ng-href="#/gallery/edit/{{ gallery.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a uib-tooltip="Excluir" ng-if="canDelete" ng-click="removeGallery(gallery.id, gallery.title)" class="btn btn-danger">
