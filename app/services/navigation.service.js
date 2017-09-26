@@ -25,7 +25,6 @@
                 var hasPermissionNewsTv;
                 var hasPermissionNewsRadio;
                 var hasPermissionPage;
-                var hasPermissionPeriodical;
                 var hasPermissionRector;
                 var hasPermissionRelease;
                 var hasPermissionUser;
@@ -49,7 +48,6 @@
                     hasPermissionNewsTv = hasPermission('news_tv');
                     hasPermissionNewsRadio = hasPermission('news_radio');
                     hasPermissionPage = hasPermission('page');
-                    hasPermissionPeriodical = hasPermission('periodical');
                     hasPermissionRector = hasPermission('rector');
                     hasPermissionRelease = hasPermission('release');
                     hasPermissionUser = hasPermission('user');
@@ -60,6 +58,11 @@
                         hasPermissionCourseGra ||
                         hasPermissionCourseMas ||
                         hasPermissionCourseSpe;
+                }
+
+                function hasPermissionPeriodical() {
+                    return hasPermission('periodical') ||
+                        hasPermissionEditions;
                 }
 
                 function hasPermission(context) {
@@ -98,7 +101,7 @@
                                 location: 'periodical',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionPeriodical
+                                enabled: hasPermissionPeriodical()
                             }, {
                                 icon: 'fa fa-group',
                                 name: 'Assessoria',
