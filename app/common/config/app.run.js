@@ -285,7 +285,7 @@
         });
 
         $rootScope.$on('Error5xx', function () {
-            ModalService.dialog('Servidor com problemas', 'Erro ao acessar o servidor, por favor tente mais tarde');
+            // ModalService.dialog('Servidor com problemas', 'Erro ao acessar o servidor, por favor tente mais tarde');
         });
 
         $rootScope.$on('ErrorUnknown', function () {
