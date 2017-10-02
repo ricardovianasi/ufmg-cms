@@ -265,6 +265,7 @@
 
                 listnews: function (widget) {
                     var tags = [];
+                    var highlightUfmg = false;
 
                     if (widget.content) {
                         if ('tags' in widget.content && widget.content.tags.length > 0) {
@@ -275,6 +276,7 @@
                         } else {
                             tags = widget.tags || (widget.content ? widget.content.tags.id : null);
                         }
+                        highlightUfmg = widget.content.highlight_ufmg;
                     } else {
                         if ('tags' in widget && widget.tags.length > 0) {
                             if (typeof widget.tags[0].text !== 'undefined') {
@@ -284,6 +286,7 @@
                         } else {
                             tags = widget.tags || (widget.content ? widget.content.tags.id : null);
                         }
+                        highlightUfmg = widget.highlight_ufmg;
                     }
 
                     var res = {
@@ -292,7 +295,7 @@
                         typeNews: widget.typeNews || (widget.content ?
                             (widget.content.typeNews ? widget.content.typeNews.id : '') :
                             null),
-                        highlight_ufmg: widget.highlight_ufmg ? 1 : null,
+                        highlight_ufmg: highlightUfmg,
                         tags: tags,
                     };
 
@@ -692,7 +695,7 @@
                     var typeNews = '';
                     var tagsForTagsInput = [];
 
-                    if (widget.typeNews) {
+                    if (widget.typeNews || widget.typeNews === '') {
                         typeNews = widget.typeNews;
                         if (widget.tags) {
                             parseTags(widget.tags);
@@ -724,7 +727,7 @@
                         category: widget.category || (widget.content ? widget.content.category : null),
                         limit: widget.limit || (widget.content ? widget.content.limit : null),
                         typeNews: typeNews,
-                        highlight_ufmg: widget.content.highlight_ufmg ? 1 : null,
+                        highlight_ufmg: widget.highlight_ufmg ? widget.highlight_ufmg : widget.content.highlight_ufmg || false,
                         tags: tagsForTagsInput
                     };
 
