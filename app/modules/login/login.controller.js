@@ -69,7 +69,7 @@
 
             function changePassword(user) {
                 if (user.required_password_change) {
-                    ModalService.changePassword();
+                    ModalService.loginChangePassword();
                 }
             }
         }

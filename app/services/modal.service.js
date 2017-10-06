@@ -98,7 +98,11 @@
             });
         };
 
-        function _changePassword() {
+        function _loginChangePassword() {
+            _changePassword(true);
+        }
+
+        function _changePassword(isLogin) {
             return $uibModal.open({
                 templateUrl: 'components/modal/message-password-change.template.html',
                 controller: changePasswordController,
@@ -113,6 +117,7 @@
                 vm.cancel = cancel;
                 vm.password = '';
                 vm.passwordCheck = '';
+                vm.isLogin = isLogin;
                 var user = {};
 
                 function onInit() {
@@ -228,6 +233,7 @@
             uploadAudio: _uploadAudio,
             uploadFiles: _uploadFiles,
             changePassword: _changePassword,
+            loginChangePassword: _loginChangePassword,
             login: _login
         };
     }
