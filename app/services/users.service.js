@@ -13,7 +13,7 @@
             getUsers: _getUsers,
             getUser: _getUser,
             saveUser: _saveUser,
-            updateUser: _updateUser,
+            updateUser: _updateUser
         };
 
         function _getUsers(params) {

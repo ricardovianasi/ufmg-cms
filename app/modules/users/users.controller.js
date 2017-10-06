@@ -81,9 +81,86 @@
                     ModalService.MODAL_SMALL)
                 .result
                 .then(function () {
-                    user.password = '12345';
-                    UsersService.updateUser(_normalizeUser(user));
+                    UsersService
+                        .getUser(user.id)
+                        .then(function (res) {
+                            res.data.password = '12345';
+                            res.data.temp_password = '12345';
+                            res.data.required_password_change = true;
+                            _normalizeUser(res.data);
+                            _convertPrivilegesToLoad(res.data);
+                            _convertPrivilegesToSave(res.data);
+                            UsersService.updateUser(res.data);
+                        });
                 });
+        }
+
+        function _normalizeUser(user) {
+            // moderator
+            var moderator = user.moderator;
+            if (moderator) {
+                user.moderator = moderator.id;
+            }
+
+            // status
+            user.status = user.status ? '1' : '0';
+
+            // Administrator
+            user.is_administrator = user.is_administrator ? '1' : '0';
+
+        }
+
+        function _convertPrivilegesToLoad(user) {
+            if (angular.isUndefined(user.resources_perms)) {
+                return;
+            }
+            var convertedPerms = {};
+            var permsToConvert = user.resources_perms;
+            Object.keys(permsToConvert).forEach(function (key) {
+                permsToConvert[key].split(';').forEach(function (value) {
+                    var item = value.split(':');
+                    var permsToConvert = convertedPerms[key] || {};
+
+                    if (item.length > 1) {
+                        permsToConvert[item[0]] = item[1];
+                        convertedPerms[key] = permsToConvert;
+                    } else {
+                        permsToConvert[item[0]] = [item[0]];
+                        convertedPerms[key] = permsToConvert;
+                    }
+                });
+            });
+            user.resources_perms = convertedPerms;
+        }
+
+        function _convertPrivilegesToSave(user) {
+            if (angular.isUndefined(user.resources_perms)) {
+                return;
+            }
+
+            function cloneObject(obj) {
+                if (obj === null || typeof obj !== 'object') {
+                    return obj;
+                }
+                var temp = obj.constructor();
+                for (var key in obj) {
+                    temp[key] = cloneObject(obj[key]);
+                }
+                return temp;
+            }
+            var clonedPerms = (cloneObject(user.resources_perms));
+            Object.keys(clonedPerms).forEach(function (k) {
+                var innerKeys = Object.keys(clonedPerms[k]),
+                    items = [];
+                innerKeys.forEach(function (key) {
+                    if (clonedPerms[k][key][0]) {
+                        var permission = (Array.isArray(clonedPerms[k][key])) ? key : key + ':' + clonedPerms[k][key];
+                        items.push(permission);
+                    }
+                });
+                clonedPerms[k] = items.join(';');
+            });
+            user.permissions = clonedPerms;
         }
 
         function _activate(user) {
@@ -92,17 +169,17 @@
                 .confirm('Você deseja ' + status + ' o usuário <b>' + user.name + '</b>?', ModalService.MODAL_SMALL)
                 .result
                 .then(function () {
-                    user.status = !user.status;
-                    UsersService.updateUser(_normalizeUser(user));
+                    UsersService
+                        .getUser(user.id)
+                        .then(function (res) {
+                            user.status = !user.status;
+                            res.data.status = !res.data.status;
+                            _normalizeUser(res.data);
+                            _convertPrivilegesToLoad(res.data);
+                            _convertPrivilegesToSave(res.data);
+                            UsersService.updateUser(res.data);
+                        });
                 });
-        }
-
-        function _normalizeUser(user) {
-            var moderator = user.moderator;
-            if (moderator) {
-                user.moderator = moderator.id;
-            }
-            return user;
         }
 
         function _normalize(value, value2) {
