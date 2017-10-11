@@ -57,9 +57,11 @@ publishment-options {
                         height: 100%!important;
                         opacity: 1!important;
                     }
-                    >.form-group {
+                    >.form-group-disable {
                         opacity: 0;
                         height: 0;
+                    }
+                    >.form-group {
                         transition: all 0.4s;
                         >.form-control {
                             border: none;
@@ -72,6 +74,7 @@ publishment-options {
                         }
                         >.select-date {
                             justify-content: flex-start;
+                            margin-bottom: 0;
                             >.select-date-item {
                                 margin-right: 15px!important;
                             }
