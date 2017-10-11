@@ -807,24 +807,10 @@
 
                     var newsToSelect = [];
                     var tagsForTagsInput = [];
-
-                    function parseTags(tags) {
-                        if (widget.tag) {
-                            angular.forEach(tags, function (v, k) {
-                                tagsForTagsInput.push({
-                                    text: tags[k].text
-                                });
-                            });
-                        } else if (widget.content.tag) {
-                            angular.forEach(tags, function (v, k) {
-                                tagsForTagsInput.push({
-                                    text: tags[k].name
-                                });
-                            });
-                        }
-                    }
-
-                    parseTags(widget.tag);
+                    var tagText = widget.tag ? widget.tag[0].text : widget.content.tag.name;
+                    tagsForTagsInput.push({
+                        text: tagText
+                    });
 
                     if (widget.origin) {
                         if (widget.origin === '1' && widget.news) {
