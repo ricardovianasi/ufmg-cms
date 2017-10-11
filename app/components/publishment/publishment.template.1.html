@@ -1,0 +1,91 @@
+<form name="formPub" ng-submit="publish()" novalidate>
+    <div class="panel panel-default publishment-options" ng-show="showLoad">
+        <h4 class="publishment-title">Opções de Publicação</h4>
+        <div class="publishment-body">
+            <div class="status">
+                <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
+                    <label>Status:</label>
+                    <ui-select name="pickStatus" ng-model="vm.preSaveStatus" theme="bootstrap" class="ui-select" title="Formato: {{$select.selected}}"
+                        required>
+                        <ui-select-match placeholder="Selecione o status da publicação">{{ $select.selected | translate }}</ui-select-match>
+                        <ui-select-choices repeat="item as item in ['draft', 'published', 'scheduled'] | filter: $select.search track by $index">
+                            <div ng-bind-html="item | translate"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <div ng-show="formPub.$submitted || formPub.pickStatus.$touched" class="error-message" role="alert">
+                        <div ng-show="formPub.pickStatus.$error.required">Campo obrigatório</div>
+                    </div>
+                </div>
+            </div>
+            <div class="date">
+                <div ng-if="obj.id && !editDate" class="form-group" ng-class="{'form-group-active': obj.id && !editDate}">
+                    <label>Publicação</label>
+                    <a class="form-control" uib-tooltip="Editar" tooltip-placement="top" ng-click="editDate = true;">
+                        {{obj.scheduled_date | date:'dd/MM/yyyy'}} às {{obj.scheduled_time}}
+                    </a>
+                </div>
+                <div ng-if="!obj.id || editDate" class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.initDate.$touched) && formPub.initDate.$error.required, 'form-group-active': !obj.id || editDate}">
+                    <label>Data e horário:</label>
+                    <div class="select-date">
+                        <div class="form-group select-date-item">
+                            <div class="input-group input-group-sm" ng-class="{'has-error':(formPub.$submitted || formPub.initDate.$touched) && (formPub.initDate.$error.required || errorInvalidDate)}">
+                                <label for="initDate" class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </label>
+                                <input id="initDate" ui-mask="99/99/9999" ng-blur="isDateValid()" ng-change="datePost()" type="text" name="initDate" class="form-control"
+                                    ng-model="obj.scheduled_date" ng-click="datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
+                                    datepicker-options="datepickerOpt.initDate.dateOptions" is-open="datepickerOpt.initDate.status.opened"
+                                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true">
+                            </div>
+                            <div ng-show="formPub.$submitted || formPub.initDate.$touched" class="error-message" role="alert">
+                                <div ng-show="formPub.initDate.$error.required">Campo obrigatório</div>
+                                <div ng-show="errorInvalidDate && !formPub.initDate.$error.required">Data inválida</div>
+                            </div>
+                        </div>
+                        <div class="form-group select-hour-item" ng-class="{'has-error':(formPub.$submitted || formPub.initHour.$touched) && (formPub.initHour.$error.required || errorInvalidHour)}">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                <input type="text" ng-change="datePostValidateHour()" name="initHour" title="Hora" class="form-control" ng-model="obj.scheduled_time"
+                                    ui-mask="99:99" model-view-value="true" required>
+                            </div>
+                            <div ng-show="formPub.$submitted || formPub.initHour.$touched" class="error-message" role="alert">
+                                <div ng-show="formPub.initHour.$error.required && !formPub.initDate.$error.required">Campo obrigatório</div>
+                                <div ng-show="errorInvalidHour && !formPub.initHour.$error.required">Data inválida</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="publishment-message" ng-class="{'publishment-message-active': showMessage}">
+            <div class="icon">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <div class="text">
+                {{messageText}}
+            </div>
+        </div>
+        <div class="publishment-footer">
+            <div class="actions">
+                <div class="col">
+                    <button ng-if="!$parent.viewOnly" id="publish-button" type="submit" class="btn btn-secondary">
+                        <i class="fa fa-check"></i>
+                        Salvar
+                    </button>
+                </div>
+                <div class="col">
+                    <!-- <button class="btn btn-gray" ng-click="preview(obj, true)">
+                        <i class="fa fa-eye"></i>
+                        Visualizar
+                    </button> -->
+                </div>
+                <div class="col">
+                    <button ng-if="!$parent.viewOnly" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
+                        <i class="fa fa-close"></i>
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

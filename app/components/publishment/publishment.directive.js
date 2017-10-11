@@ -16,7 +16,7 @@
     ) {
         return {
             restrict: 'E',
-            templateUrl: 'components/publishment/publishment.template.html',
+            templateUrl: 'components/publishment/publishment.template.1.html',
             scope: {
                 obj: '=routeModel',
                 publishMethod: '=?publishMethod'
@@ -36,15 +36,13 @@
         function linkController($scope, element, attrs) {
             $log.info('PublishmentDirective');
             var vm = $scope;
-            var preSaveStatus = StatusService.STATUS_DRAFT;
             var nowDate;
             var dateChoice;
             vm.vm = $scope;
-            vm.statuses = [];
-            vm.obj.scheduled_date = undefined;
-            vm.obj.scheduled_time = undefined;
-            vm.immediately = true;
-            vm.obj.status = StatusService.STATUS_DRAFT;
+            vm.obj.scheduled_date = '';
+            vm.obj.scheduled_time = '';
+            vm.obj.status = '';
+            vm.preSaveStatus = '';
 
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.publish = _publish;
@@ -52,26 +50,41 @@
             // vm.back = vm.$parent.back || _back;
             vm.publisher = vm.$parent.publish || vm.publishMethod;
 
-            vm.saveDraft = _saveDraft;
-            vm.status = _status;
             vm.publishEdit = _publishEdit;
             vm.cancelSelectDate = _cancelSelectDate;
             vm.datePost = datePost;
+            vm.datePostValidateHour = datePostValidateHour;
             vm.clearFildHour = _clearFildHour;
             vm.preview = _preview;
+            vm.isDateValid = function () {
+                if (!vm.obj.scheduled_date) {
+                    vm.errorInvalidDate = true;
+                } else {
+                    vm.errorInvalidDate = false;
+                }
+            }
 
             onInit();
 
             function onInit() {
                 $timeout(function () {
                     vm.showLoad = true;
+                    vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                 }, 500);
-                vm.$watch('vm.obj.scheduled_time', function () {
-                    if (vm.obj.scheduled_time === '' && vm.todayDiferentHour) {
-                        vm.todayDiferentHour = false;
-                        vm.immediately = true;
+
+                vm.$watch('vm.preSaveStatus', function () {
+                    vm.errorInvalidStatus = false;
+                    if (vm.preSaveStatus === 'scheduled' && !vm.obj.id) {
+                        vm.showMessage = true;
+                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas entre 10 minutos e 6 meses após a criação delas.'
+                    } else if (vm.preSaveStatus === 'scheduled' && vm.obj.status === 'published' && vm.obj.id) {
+                        vm.showMessage = true;
+                        vm.messageText = 'Está publicação já está publicada.';
+                    } else {
+                        vm.showMessage = false;
                     }
                 });
+
                 vm.$watch('vm.obj.post_date', function () {
                     if (vm.obj.scheduled_date) {
                         var date = new Date(vm.obj.post_date);
@@ -87,6 +100,7 @@
                         vm.obj.scheduled_time = hh + ':' + MM;
                         vm.immediately = false;
                     }
+
                     if (vm.obj.publish_date) {
                         var publishDate = new Date(vm.obj.publish_date);
                         vm.obj.publish_date = publishDate;
@@ -104,48 +118,10 @@
                 vm.timepickerOpt = {
                     initTime: DateTimeHelper.getTimepickerOpt()
                 };
-
-                StatusService
-                    .getStatus()
-                    .then(function (data) {
-                        vm.statuses = data.data;
-                    });
             }
 
             function _clearFildHour(event) {
                 event.target.value = '';
-            }
-
-            function _saveDraft($event) {
-                $event.stopPropagation();
-                vm.obj.status = StatusService.STATUS_DRAFT;
-                vm.obj.saveDraftClicked = true;
-                vm.publisher(vm.obj);
-            }
-
-            function _status(status) {
-                $log.info('Status: ', status);
-                if (status !== StatusService.STATUS_PUBLISHED) {
-                    if (!vm.isScheduled && status === StatusService.STATUS_SCHEDULED) {
-                        vm.obj.status = StatusService.STATUS_PUBLISHED;
-                        vm.obj.scheduled_date = '';
-                        vm.obj.scheduled_time = '';
-                    } else if (vm.isScheduled) {
-                        vm.obj.status = StatusService.STATUS_SCHEDULED;
-                    } else {
-                        vm.obj.status = status;
-                    }
-                    $log.info('objeto status: ', vm.obj.status);
-                } else {
-                    if (vm.obj.scheduled_date === '' && vm.obj.scheduled_time === '') {
-                        vm.obj.status = StatusService.STATUS_PUBLISHED;
-                    } else {
-                        vm.obj.scheduled_date = '';
-                        vm.obj.scheduled_time = '';
-                        vm.obj.status = StatusService.STATUS_PUBLISHED;
-                    }
-                }
-                $log.info('objeto status salvo: ', vm.obj.status);
             }
 
             function _publishEdit() {
@@ -160,76 +136,36 @@
             }
 
             function _preview() {
-                vm.obj.status = StatusService.STATUS_DRAFT;
                 vm.publisher(vm.obj, true);
             }
 
-            function _publish() {
+            function _publish(isValid) {
+                if (!vm.preSaveStatus) {
+                    vm.$parent.formData.$invalid = true;
+                    vm.errorInvalidStatus = true;
+                }
                 if (!validationService.isValid(vm.$parent.formData.$invalid)) {
                     return false;
                 }
-                if (preSaveStatus === StatusService.STATUS_DRAFT) {
-                    vm.obj.status = StatusService.STATUS_PUBLISHED;
-                } else {
-                    vm.obj.status = preSaveStatus;
-                }
+                vm.obj.status = vm.preSaveStatus;
                 vm.publisher(vm.obj);
             }
 
-            function datePostValidateHour(isHour) {
+            function datePostValidateHour() {
                 var isValidHour = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(vm.obj.scheduled_time);
                 if (!isValidHour && !!vm.obj.scheduled_time) {
-                    vm.errorInvalid = true;
+                    vm.errorInvalidHour = true;
                     return true;
                 }
-                if (isHour && !vm.obj.scheduled_time) {
+                if (!vm.obj.scheduled_time) {
                     return true;
                 }
-                vm.errorInvalid = false;
-                return false;
-            }
-
-            function datePostImmediately() {
-                if (!vm.obj.scheduled_date) {
-                    vm.immediately = true;
-                    preSaveStatus = StatusService.STATUS_PUBLISHED;
-                    vm.obj.scheduled_date = '';
-                    vm.obj.scheduled_time = '';
-                    return true;
-                }
-                return false;
-            }
-
-            function datePostTodayDiferentHour() {
-                nowDate = new Date();
-                dateChoice = new Date(vm.obj.scheduled_date);
-                if (dateChoice.toDateString() === nowDate.toDateString()) {
-                    if (vm.obj.scheduled_time) {
-                        vm.todayDiferentHour = true;
-                        var hh = Number(vm.obj.scheduled_time.split(':')[0]);
-                        var mm = Number(vm.obj.scheduled_time.split(':')[1]);
-                        var isHourRetro = hh < dateChoice.getHours();
-                        var isHourEqualRetro = hh === dateChoice.getHours();
-                        var isMinutesRetro = mm < dateChoice.getMinutes();
-                        var isRetro = isHourRetro || (isHourEqualRetro && isMinutesRetro);
-                        if (isRetro) {
-                            vm.retroactive = true;
-                            preSaveStatus = StatusService.STATUS_DRAFT;
-                        } else {
-                            preSaveStatus = StatusService.STATUS_PUBLISHED;
-                        }
-                    } else {
-                        vm.immediately = true;
-                    }
-                    return true;
-                }
+                vm.errorInvalidHour = false;
                 return false;
             }
 
             function datePostRetroactive() {
                 if (dateChoice.valueOf() < nowDate.valueOf()) {
-                    vm.retroactive = true;
-                    preSaveStatus = StatusService.STATUS_DRAFT;
                     var datePost = new Date(vm.obj.scheduled_date);
                     if (vm.obj.scheduled_time) {
                         datePost.setHours(Number(vm.obj.scheduled_time.split(':')[0]));
@@ -247,45 +183,38 @@
                 return false;
             }
 
-            function datePostTomorrow() {
-                var tommorowDate = new Date();
-                tommorowDate.setDate(tommorowDate.getDate() + 1);
-                if (tommorowDate.toDateString() === dateChoice.toDateString()) {
+            function datePostScheduled() {
+                if (!vm.obj.scheduled_time) {
+                    vm.obj.scheduled_time = '08:00';
+                }
+                // vm.obj.status = StatusService.STATUS_SCHEDULED;
+                return true;
+            }
+
+            function datePostToday() {
+                nowDate = new Date();
+                dateChoice = new Date(vm.obj.scheduled_date);
+                if (dateChoice.toDateString() === nowDate.toDateString()) {
                     if (!vm.obj.scheduled_time) {
-                        vm.obj.scheduled_time = '08:00';
+                        var date = new Date();
+                        var hh = date.getHours();
+                        var MM = date.getMinutes();
+                        if (hh < 10) {
+                            hh = '0' + hh;
+                        }
+                        if (MM < 10) {
+                            MM = '0' + MM;
+                        }
+                        vm.obj.scheduled_time = hh + ':' + MM;
                     }
-                    vm.tomorrow = true;
-                    preSaveStatus = StatusService.STATUS_PUBLISHED;
+                    // vm.obj.status = StatusService.STATUS_DRAFT;
                     return true;
                 }
                 return false;
             }
 
-            function datePostScheduled() {
-                vm.scheduled = true;
-                if (!vm.obj.scheduled_time) {
-                    vm.obj.scheduled_time = '08:00';
-                }
-                preSaveStatus = StatusService.STATUS_PUBLISHED;
-            }
-
-            function datePost(isHour) {
-                if (datePostValidateHour(isHour)) {
-                    return;
-                }
-                vm.obj.status = StatusService.STATUS_DRAFT;
-                vm.retroactive = false;
-                vm.immediately = false;
-                vm.todayDiferentHour = false;
-                vm.tomorrow = false;
-                vm.scheduled = false;
-                if (datePostImmediately()) {
-                    return;
-                }
-                if (datePostTodayDiferentHour()) {
-                    return;
-                }
-                if (datePostTomorrow()) {
+            function datePost() {
+                if (datePostToday()) {
                     return;
                 }
                 if (datePostRetroactive()) {

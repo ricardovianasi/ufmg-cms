@@ -1,0 +1,101 @@
+$space: 10px;
+$fontSize: 14px;
+publishment-options {
+    >form {
+        >.panel {
+            min-width: 360px;
+            >.publishment-body,
+            .publishment-footer {
+                font-size: $fontSize!important;
+            }
+            >.publishment-message-active {
+                height: 100%!important;
+                opacity: 1!important;
+                margin-bottom: 15px!important;
+            }
+            >.publishment-message {
+                font-size: 12px;
+                border: 1px solid #cc3f44;
+                border-radius: 4px;
+                width: 100%;
+                overflow: hidden;
+                margin-bottom: 0;
+                opacity: 0;
+                height: 0;
+                transition: all 0.4s;
+                >.icon {
+                    display: table-cell;
+                    padding: 15px;
+                    background-color: #cc3f44;
+                    vertical-align: middle;
+                    text-align: center;
+                    >i {
+                        color: #fff;
+                    }
+                }
+                >.text {
+                    padding: 7px;
+                    display: table-cell;
+                }
+            }
+            >.publishment-body {
+                >.status {
+                    >.form-group {
+                        >.ui-select {
+                            >.ui-select-match {
+                                font-size: $fontSize!important;
+                                >.ui-select-toggle {
+                                    padding: 10px 16px;
+                                    height: 38px;
+                                }
+                            }
+                        }
+                    }
+                }
+                >.date {
+                    >.form-group-active {
+                        height: 100%!important;
+                        opacity: 1!important;
+                    }
+                    >.form-group {
+                        opacity: 0;
+                        height: 0;
+                        transition: all 0.4s;
+                        >.form-control {
+                            border: none;
+                            cursor: pointer;
+                            display: table-cell !important;
+                        }
+                        >.form-control:hover {
+                            text-decoration: underline;
+                            font-weight: bolder;
+                        }
+                        >.select-date {
+                            justify-content: flex-start;
+                            >.select-date-item {
+                                margin-right: 15px!important;
+                            }
+                            >.select-hour-item {
+                                width: 28%!important;
+                            }
+                        }
+                    }
+                }
+            }
+            >.publishment-footer {
+                >.actions {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    align-content: space-between;
+                    justify-content: space-between;
+                    >.col {
+                        min-width: 90px;
+                        >.btn {
+                            font-size: $fontSize!important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

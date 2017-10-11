@@ -1,12 +1,12 @@
 {
   // Status
-  "published": "publicado",
-  "publish": "publicado",
-  "draft": "rascunho",
+  "published": "Publicado",
+  "publish": "Publicado",
+  "draft": "Não publicado",
   "auto_draft": "auto publicado",
   "trash": "excluído",
   "pending_review": "revisão pendente",
-  "scheduled": "agendado",
+  "scheduled": "Agendado",
 
   // Widgets
   "comevents": "Comunicação - Evento Destaque e próximos",
