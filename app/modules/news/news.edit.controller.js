@@ -143,10 +143,6 @@
                 return false;
             }
 
-            if (!data.saveDraftClicked && data.status !== 'scheduled') {
-                data.status = 'published';
-            }
-
             var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
 
             var _obj = {

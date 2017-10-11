@@ -160,7 +160,6 @@
             }
 
             function _preview() {
-                vm.obj.status = StatusService.STATUS_DRAFT;
                 vm.publisher(vm.obj, true);
             }
 
