@@ -8,8 +8,6 @@
         .config(Tags)
         .config(http);
 
-
-
     Debug.$inject = ['$logProvider', '$provide'];
 
     function Debug($logProvider, $provide) {

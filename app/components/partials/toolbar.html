@@ -17,7 +17,7 @@
         <a class="btn"
            ng-class="{ 'btn-gray': itemStatus == StatusService.STATUS_DRAFT}"
            ng-click="itemStatus = StatusService.STATUS_DRAFT">
-            <span ng-class="{ 'strong': itemStatus == StatusService.STATUS_DRAFT}">Rascunho</span>
+            <span ng-class="{ 'strong': itemStatus == StatusService.STATUS_DRAFT}">Não publicado</span>
             <span class=small>({{ (pages.items | filter: {status: StatusService.STATUS_DRAFT}).length }})</span>
         </a>
     </div>
