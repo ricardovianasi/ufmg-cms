@@ -401,30 +401,18 @@
                 /* jshint ignore:start */
                 editorialnews: function (widget) {
                     var newsToSelect = [];
-                    var tag = [];
+                    var tagText = false;
+                    var tagForSave = [];
 
-
-                    if (widget.content) {
-                        if (widget.content.tag) {
-                            if ('tag' in widget.content && widget.content.tag.length > 0) {
-                                if (typeof widget.content.tag[0].text !== 'undefined')
-                                    widget.content.tag = _.map(widget.content.tag, 'text');
-                                tag = widget.content.tag;
-                            } else {
-                                tag = widget.tag || (widget.content ? widget.content.tag.id : null);
-                            }
-                        }
-                    } else {
-                        if ('tag' in widget && widget.tag.length > 0) {
-                            if (typeof widget.tag[0].text !== 'undefined') {
-                                widget.tag = _.map(widget.tag, 'text');
-                            }
-                            tag = widget.tag;
-                        } else {
-                            tag = widget.tag || (widget.content ? widget.content.tag.id : null);
-                        }
+                    if (widget.tag && widget.tag[0]) {
+                        tagText = widget.tag[0].text;
+                    } else if (widget.content && widget.content.tag) {
+                        tagText = widget.content.tag.name;
                     }
 
+                    if (tagText) {
+                        tagForSave = [tagText];
+                    }
                     if (widget.origin) {
                         if (widget.origin === '1' && widget.news) {
                             newsToSelect = [];
@@ -436,13 +424,13 @@
                             return {
                                 news: newsToSelect,
                                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                                tag: widget.tag || (widget.content ? widget.content.tag : null)
+                                tag: tagForSave
                             };
                         } else if (widget.origin === '0') {
                             return {
                                 news: null,
                                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                                tag: widget.tag || (widget.content ? widget.content.tag : null)
+                                tag: tagForSave
                             };
                         }
                     } else if (widget.content.origin !== null) {
@@ -456,13 +444,13 @@
                             return {
                                 news: newsToSelect,
                                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                                tag: widget.tag || (widget.content ? widget.content.tag : null)
+                                tag: tagForSave
                             };
                         } else if (widget.content.origin === '0') {
                             return {
                                 news: null,
                                 origin: widget.origin || (widget.content ? widget.content.origin : null),
-                                tag: widget.tag || (widget.content ? widget.content.tag : null)
+                                tag: tagForSave
                             };
                         }
                     }
