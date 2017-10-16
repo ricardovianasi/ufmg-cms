@@ -807,10 +807,19 @@
 
                     var newsToSelect = [];
                     var tagsForTagsInput = [];
-                    var tagText = widget.tag ? widget.tag[0].text : widget.content.tag.name;
-                    tagsForTagsInput.push({
-                        text: tagText
-                    });
+                    var tagText = false;
+
+                    if (widget.tag && widget.tag[0]) {
+                        tagText = widget.tag[0].text;
+                    } else if (widget.content && widget.content.tag) {
+                        tagText = widget.content.tag.name;
+                    }
+
+                    if (tagText) {
+                        tagsForTagsInput.push({
+                            text: tagText
+                        });
+                    }
 
                     if (widget.origin) {
                         if (widget.origin === '1' && widget.news) {
