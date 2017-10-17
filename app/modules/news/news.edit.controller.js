@@ -29,7 +29,6 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-
         vm.news = {};
         vm.categories = [];
         vm.status = [];

@@ -203,7 +203,7 @@
                 if (module === 'periodical' && noHasPermissionModule) {
                     noHasPermissionModule = !PermissionService.hasPermission('editions');
                 }
-
+                $rootScope.moduleCurrent = module;
                 $log.info('MODULE', module);
                 $log.info('MODULE ID', idModule);
                 $log.info('MODULE PERMISSION', !noHasPermissionModule);
@@ -309,6 +309,7 @@
     ) {
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
+        $rootScope.moduleCurrent = false;
 
         $rootScope.canPost = PermissionService.canPost;
         $rootScope.canPut = PermissionService.canPut;
