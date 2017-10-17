@@ -29,7 +29,6 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-
         vm.news = {};
         vm.categories = [];
         vm.status = [];
@@ -141,10 +140,6 @@
         vm.publish = function (data, preview) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
-            }
-
-            if (!data.saveDraftClicked && data.status !== 'scheduled') {
-                data.status = 'published';
             }
 
             var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';

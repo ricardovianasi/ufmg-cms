@@ -74,6 +74,7 @@
             function onInit() {
                 $timeout(function () {
                     vm.showLoad = true;
+                    dateChoice = new Date(vm.obj.scheduled_date);
                     vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                     dateCurrent = new Date(vm.obj.scheduled_date);
                     vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
@@ -87,26 +88,40 @@
                     if (vm.preSaveStatus === 'scheduled' && !vm.obj.id) {
                         vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
                         vm.showMessageWarn = true;
-                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas entre 10 minutos e 6 meses após a criação delas.'
+                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas entre 10 minutos e 6 meses após a criação delas.';
+                        if (verifyHourFuture()) {
+                            vm.obj.post_date = '';
+                            vm.obj.scheduled_time = '';
+                        }
                     } else if (vm.preSaveStatus === 'scheduled' && vm.obj.status === 'published' && vm.obj.id) {
                         vm.showMessageError = true;
                         vm.messageText = 'Está publicação já está publicada.';
-                    } else if (vm.preSaveStatus === 'scheduled' && vm.obj.id) {
+                        vm.isScheduledRetroactive = true;
+                    } else if (vm.preSaveStatus === 'scheduled' && vm.obj.id && vm.obj.status !== 'published') {
                         vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
-                        if (datePostRetroactive()) {
+                        if (verifyHourFuture()) {
                             vm.showMessageError = true;
-                            vm.messageText = 'São permitidas datas futuras.';
-                            vm.isScheduledRetroactive = true;
+                            vm.messageText = 'São permitidas apenas datas futuras.';
                         }
                     } else if (vm.preSaveStatus === 'published' && vm.obj.id) {
                         vm.showMessageError = false;
                         var yesterdayDate = new Date();
-                        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                        yesterdayDate.setDate(yesterdayDate.getDate());
                         vm.datepickerOpt.initDate.dateOptions.maxDate = yesterdayDate;
                         if (vm.obj.status === 'published' && dateChoice.valueOf() > yesterdayDate.valueOf()) {
                             vm.showMessageError = true;
-                            vm.messageText = 'Este já está publicado, datas futuras não são válidas. Altere a data.'
+                            vm.messageText = 'Este já está publicado, datas futuras não são válidas. Altere a data.';
+                        } else if (vm.obj.status === 'scheduled' && dateChoice.valueOf() > yesterdayDate.valueOf()) {
+                            vm.showMessageError = true;
+                            vm.messageText = 'Este está agendado, altere a data para publicação';
+                            vm.obj.post_date = '';
+                            vm.obj.scheduled_time = '';
                         }
+                    } else if (vm.preSaveStatus === 'published' && !vm.obj.id && vm.obj.post_date) {
+                        if (!verifyHourFuture()) {
+                            datePostScheduled();
+                        }
+                        datePost();
                     } else {
                         vm.showMessageError = false;
                         vm.showMessageWarn = false;
@@ -159,6 +174,27 @@
                 }
             }
 
+            function verifyHourFuture() {
+                if (!isDateFuture()) {
+                    return true;
+                }
+                var dateNow = new Date();
+                var hh = dateNow.getHours();
+                var MM = dateNow.getMinutes();
+                var hhScheduled = parseInt(vm.obj.scheduled_time.split(':')[0]);
+                var mmScheduled = parseInt(vm.obj.scheduled_time.split(':')[1]);
+                if (hh > hhScheduled) {
+                    vm.obj.scheduled_time = '';
+                    return false;
+                } else if (vm.preSaveStatus === 'published') {
+                    return false;
+                } else if (hh <= hhScheduled && MM > mmScheduled) {
+                    vm.obj.scheduled_time = '';
+                    return false;
+                }
+                return true;
+            }
+
             function _cancelSelectDate() {
                 vm.selectDate = !vm.selectDate;
             }
@@ -167,7 +203,26 @@
                 vm.publisher(vm.obj, true);
             }
 
-            function _publish(isInvalid) {
+            function _publish(formPub) {
+                if (formPub.$error['dateDisabled']) {
+                    var count = 0;
+                    var hasDateDisabled = false;
+                    for (var key in formPub.$error) {
+                        if (key === 'dateDisabled') {
+                            delete formPub.$error['dateDisabled'];
+                            hasDateDisabled = true;
+                        }
+                        count = +1;
+                    }
+                    if (count === 1 && hasDateDisabled) {
+                        formPub.$invalid = false;
+                    }
+                }
+                var isInvalid = formPub.$invalid;
+                if (vm.errorInvalidHour || vm.errorInvalidDate) {
+                    validationService.isValid(true);
+                    return false;
+                }
                 if (!validationService.isValid(isInvalid)) {
                     return false;
                 }
@@ -183,11 +238,40 @@
                 if (!isValidHour && !!vm.obj.scheduled_time) {
                     vm.errorInvalidHour = true;
                     return true;
+                } else if (!vm.obj.scheduled_time) {
+                    return true;
+                } else if (vm.preSaveStatus === 'scheduled' && !isDateFuture()) {
+                    if (verifyHourFuture()) {
+                        vm.showMessageError = true;
+                        vm.messageText = 'A hora deve ser maior que a hora atual';
+                    } else {
+                        vm.showMessageError = false;
+                    }
+                } else if (vm.preSaveStatus === 'published' && isDateFuture()) {
+                    if (verifyHourFuture()) {
+                        vm.showMessageWarn = false;
+                    } else {
+                        vm.showMessageWarn = true;
+                        vm.messageText = 'Data futura. Esta publicação será agendada.';
+                    }
+                } else {
+                    vm.showMessageWarn = false;
+                    vm.showMessageError = false;
+                    vm.errorInvalidHour = false;
                 }
-                if (!vm.obj.scheduled_time) {
+                return false;
+            }
+
+            function isDateFuture() {
+                dateChoice = new Date(vm.obj.scheduled_date);
+                var dateNow = new Date();
+                if (vm.obj.scheduled_time) {
+                    dateChoice.setHours(Number(vm.obj.scheduled_time.split(':')[0]));
+                    dateChoice.setMinutes(Number(vm.obj.scheduled_time.split(':')[1]));
+                }
+                if (dateChoice.valueOf() > dateNow.valueOf()) {
                     return true;
                 }
-                vm.errorInvalidHour = false;
                 return false;
             }
 
@@ -218,6 +302,9 @@
             }
 
             function datePostRetroactive() {
+                if (dateCurrent.toDateString() === 'Invalid Date') {
+                    dateCurrent = new Date();
+                }
                 if (dateChoice.valueOf() < dateCurrent.valueOf()) {
                     vm.retroactive = true;
                     var datePost = new Date(vm.obj.scheduled_date);
@@ -232,8 +319,13 @@
                     datePost.setSeconds(0);
                     datePost.setMilliseconds(0);
                     vm.obj.post_date = datePost.toISOString();
-                    vm.showMessageWarn = true;
-                    vm.messageText = 'Publicação retrocedida.';
+                    if (!vm.obj.id && vm.preSaveStatus === 'published') {
+                        vm.showMessageWarn = true;
+                        vm.messageText = 'Esta publicação será publicada com data retrocedida.';
+                    } else if (vm.preSaveStatus === 'published') {
+                        vm.showMessageWarn = true;
+                        vm.messageText = 'Publicação retrocedida.';
+                    }
                     return true;
                 }
                 return false;
@@ -257,6 +349,15 @@
                 if (!vm.obj.scheduled_time) {
                     vm.obj.scheduled_time = '08:00';
                 }
+                if (!vm.preSaveStatus) {
+                    vm.showMessageWarn = true;
+                    vm.messageText = 'Status alterado para Agendado.';
+                    vm.preSaveStatus = 'scheduled';
+                }
+                if (vm.preSaveStatus && vm.preSaveStatus === 'published') {
+                    vm.showMessageWarn = true;
+                    vm.messageText = 'Data futura. Esta publicação será agendada.';
+                }
                 // vm.obj.status = StatusService.STATUS_SCHEDULED;
                 return true;
             }
@@ -265,7 +366,7 @@
                 nowDate = new Date();
                 dateChoice = new Date(vm.obj.scheduled_date);
                 if (dateChoice.toDateString() === nowDate.toDateString()) {
-                    if (!vm.obj.scheduled_time) {
+                    if (!vm.obj.scheduled_time || vm.obj.scheduled_time === 'NaN:NaN') {
                         var date = new Date();
                         var hh = date.getHours();
                         var MM = date.getMinutes();
@@ -277,6 +378,7 @@
                         }
                         vm.obj.scheduled_time = hh + ':' + MM;
                     }
+                    datePostValidateHour();
                     // vm.obj.status = StatusService.STATUS_DRAFT;
                     return true;
                 }
@@ -284,8 +386,12 @@
             }
 
             function datePost() {
-                vm.showMessageError = false;
-                vm.showMessageWarn = false;
+                if (!vm.obj.id && vm.preSaveStatus === 'scheduled') {
+                    vm.showMessageError = false;
+                } else {
+                    vm.showMessageError = false;
+                    vm.showMessageWarn = false;
+                }
                 if (datePostToday()) {
                     return;
                 }
