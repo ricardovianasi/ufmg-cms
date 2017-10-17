@@ -1,4 +1,4 @@
-<form name="formPub" ng-submit="publish(formPub.$invalid)" novalidate>
+<form name="formPub" ng-submit="publish(formPub)" novalidate>
     <div class="panel panel-default publishment-options" ng-show="showLoad">
         <h4 class="publishment-title">Opções de Publicação</h4>
         <div class="publishment-body">
@@ -29,7 +29,7 @@
                                 <input id="initDate" ui-mask="99/99/9999" ng-blur="isDateValid()" ng-change="datePost()" type="text" name="initDate" class="form-control"
                                     ng-model="obj.scheduled_date" ng-click="datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
                                     datepicker-options="datepickerOpt.initDate.dateOptions" is-open="datepickerOpt.initDate.status.opened"
-                                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true" ng-disabled="(preSaveStatus === 'scheduled' && showMessageError) || isScheduledRetroactive">
+                                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true" ng-disabled="isScheduledRetroactive">
                             </div>
                             <div ng-show="formPub.$submitted" class="error-message" role="alert">
                                 <div ng-show="formPub.initDate.$error.required">Campo obrigatório</div>
@@ -40,7 +40,7 @@
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 <input type="text" ng-change="datePostValidateHour()" name="initHour" title="Hora" class="form-control" ng-model="obj.scheduled_time"
-                                    ui-mask="99:99" model-view-value="true" required ng-disabled="(preSaveStatus === 'scheduled' && showMessageError) || isScheduledRetroactive">
+                                    ui-mask="99:99" model-view-value="true" required ng-disabled="isScheduledRetroactive">
                             </div>
                             <div ng-show="formPub.$submitted || formPub.initHour.$touched" class="error-message" role="alert">
                                 <div ng-show="formPub.initHour.$error.required && !formPub.initDate.$error.required">Campo obrigatório</div>

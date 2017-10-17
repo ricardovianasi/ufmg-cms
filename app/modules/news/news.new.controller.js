@@ -137,15 +137,13 @@
                 has_video: data.has_video,
                 tv_program: data.tv_program,
                 gallery: data.gallery,
-                slug: slug
+                slug: slug,
+                scheduled_date: data.scheduled_date,
+                scheduled_time: data.scheduled_time
             };
 
             _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
-
-            if (_obj.status === 'scheduled') {
-                _obj.post_date = data.scheduled_date + ' ' + data.scheduled_time;
-            }
             NewsService.postNews(_obj).then(function (news) {
                 NotificationService.success('Notícia criada com sucesso.');
                 $log.info('Objeto salvo', news);
