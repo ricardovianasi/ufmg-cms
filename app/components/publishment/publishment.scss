@@ -15,7 +15,6 @@ publishment-options {
             }
             >.publishment-message {
                 font-size: 12px;
-                border: 1px solid #cc3f44;
                 border-radius: 4px;
                 width: 100%;
                 overflow: hidden;
@@ -26,7 +25,6 @@ publishment-options {
                 >.icon {
                     display: table-cell;
                     padding: 15px;
-                    background-color: #cc3f44;
                     vertical-align: middle;
                     text-align: center;
                     >i {
@@ -35,7 +33,20 @@ publishment-options {
                 }
                 >.text {
                     padding: 7px;
+                    vertical-align: middle;
                     display: table-cell;
+                }
+            }
+            >.publishment-message-warn {
+                border: 1px solid #ffba00;
+                >.icon {
+                    background-color: #ffba00;
+                }
+            }
+            >.publishment-message-error {
+                border: 1px solid #cc3f44;
+                >.icon {
+                    background-color: #cc3f44;
                 }
             }
             >.publishment-body {
@@ -53,16 +64,9 @@ publishment-options {
                     }
                 }
                 >.date {
-                    >.form-group-active {
-                        height: 100%!important;
-                        opacity: 1!important;
-                    }
-                    >.form-group-disable {
-                        opacity: 0;
-                        height: 0;
-                    }
                     >.form-group {
-                        transition: all 0.4s;
+                        position: relative;
+                        top: 0;
                         >.form-control {
                             border: none;
                             cursor: pointer;
