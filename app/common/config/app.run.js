@@ -190,7 +190,7 @@
             }
             return;
         }
-
+        
         function verifyPermission(event, next, current) {
             $rootScope.viewOnly = false;
             widgetButtonRemove(); //jshint ignore: line
