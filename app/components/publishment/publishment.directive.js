@@ -67,7 +67,7 @@
                 } else {
                     vm.errorInvalidDate = false;
                 }
-            }
+            };
 
             onInit();
 
@@ -88,7 +88,8 @@
                     if (vm.preSaveStatus === 'scheduled' && !vm.obj.id) {
                         vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
                         vm.showMessageWarn = true;
-                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas entre 10 minutos e 6 meses após a criação delas.';
+                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas' +
+                            'entre 10 minutos e 6 meses após a criação delas.';
                         if (verifyHourFuture()) {
                             vm.obj.post_date = '';
                             vm.obj.scheduled_time = '';
@@ -275,32 +276,6 @@
                 return false;
             }
 
-            function datePostTodayDiferentHour() {
-                nowDate = new Date();
-                dateChoice = new Date(vm.obj.scheduled_date);
-                if (dateChoice.toDateString() === nowDate.toDateString()) {
-                    if (vm.obj.scheduled_time) {
-                        vm.todayDiferentHour = true;
-                        var hh = Number(vm.obj.scheduled_time.split(':')[0]);
-                        var mm = Number(vm.obj.scheduled_time.split(':')[1]);
-                        var isHourRetro = hh < dateChoice.getHours();
-                        var isHourEqualRetro = hh === dateChoice.getHours();
-                        var isMinutesRetro = mm < dateChoice.getMinutes();
-                        var isRetro = isHourRetro || (isHourEqualRetro && isMinutesRetro);
-                        if (isRetro) {
-                            vm.retroactive = true;
-                            preSaveStatus = StatusService.STATUS_DRAFT;
-                        } else {
-                            preSaveStatus = StatusService.STATUS_PUBLISHED;
-                        }
-                    } else {
-                        vm.immediately = true;
-                    }
-                    return true;
-                }
-                return false;
-            }
-
             function datePostRetroactive() {
                 if (dateCurrent.toDateString() === 'Invalid Date') {
                     dateCurrent = new Date();
@@ -326,20 +301,6 @@
                         vm.showMessageWarn = true;
                         vm.messageText = 'Publicação retrocedida.';
                     }
-                    return true;
-                }
-                return false;
-            }
-
-            function datePostTomorrow() {
-                var tommorowDate = new Date();
-                tommorowDate.setDate(tommorowDate.getDate() + 1);
-                if (tommorowDate.toDateString() === dateChoice.toDateString()) {
-                    if (!vm.obj.scheduled_time) {
-                        vm.obj.scheduled_time = '08:00';
-                    }
-                    vm.tomorrow = true;
-                    preSaveStatus = StatusService.STATUS_PUBLISHED;
                     return true;
                 }
                 return false;
