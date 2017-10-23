@@ -59,7 +59,7 @@
         <div class="publishment-footer">
             <div class="actions">
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly || canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
+                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
                         <i class="fa fa-close"></i>
                         Excluir
                     </button>
@@ -88,7 +88,7 @@
                 </a>
         </div>
         <div class="col">
-            <a class="btn btn-default" ng-href="{{new()}}" ng-if="obj.id">
+            <a class="btn btn-default" ng-href="{{new()}}" ng-show="obj.id" ng-if="!$parent.viewOnly && canPost">
                     <i class="fa fa-plus"></i> Novo
                 </a>
         </div>
