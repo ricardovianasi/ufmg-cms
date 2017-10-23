@@ -1,10 +1,33 @@
 <div class="form-group" onload="loadMoreEvents()">
     <label>Selecione o evento:</label>
-    <ui-select ng-model="widget.content.event" theme="bootstrap" class="ui-select">
-        <ui-select-match placeholder="Buscar Evento">{{ $select.selected.name }}</ui-select-match>
-        <ui-select-choices repeat="event in events | filter: $select.search track by $index" scroll-detect="loadMoreEvents()" refresh="loadMoreEvents($select.search)"
-            refresh-delay="300">
-            <div ng-bind-html="event.name | highlight: $select.search"></div>
-            </ui-select-choices>
-    </ui-select>
+    <ul class="dashed-list">
+        <li ng-repeat="event in widget.events track by $index" class="as-sortable-item clearfix">
+            <div class="gal-list-left pull-left">
+                <strong>{{ event.name }}</strong>
+            </div>
+            <div class="pull-right">
+                <button type="button" ng-click="removeItem($index, 'events')" class="btn btn-success">Excluir</button>
+            </div>
+        </li>
+        <li ng-hide="widget.events.length &gt;= 4" class="as-sortable-item clearfix">
+            <div>+ Inserir Eventos</div>
+            <div class="clearfix">
+                <div class="pull-left gal-list-select-container" onload="loadMoreEvents()">
+                    <ui-select ng-model="widget.event_selected">
+                        <ui-select-match placeholder="Buscar eventos">
+                            {{ $select.selected.name }}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in events | filter: $select.search track by $index" scroll-detect="loadMoreEvents()" refresh="loadMoreEvents($select.search)"
+                            refresh-delay="300">
+                            <div ng-bind-html="item.name | highlight: $select.search">
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" ng-disabled="!widget.event_selected" ng-click="addItem(widget.event_selected, 'events')">OK</button>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>

@@ -214,13 +214,18 @@
                 },
 
                 highlightedevents: function (widget) {
+                    var eventsToSelect = [];
                     if (widget.events) {
+
+                        angular.forEach(widget.events, function (event) {
+                            eventsToSelect.push(event.id);
+                        });
+
                         return {
-                            events: widget.events,
+                            events: eventsToSelect,
                         };
                     } else {
                         if (widget.content.events) {
-                            var eventsToSelect = [];
 
                             angular.forEach(widget.content.events, function (event) {
                                 eventsToSelect.push(event.id);
@@ -621,14 +626,8 @@
                         };
                     } else {
                         if (widget.content.events) {
-                            var eventsToSelect = [];
-
-                            angular.forEach(widget.content.events, function (event) {
-                                eventsToSelect.push(event.id);
-                            });
-
                             return {
-                                events: eventsToSelect,
+                                events: widget.content.events,
                             };
                         }
                     }
@@ -790,7 +789,6 @@
                         }
                     }
                 },
-
                 editorialnews: function (widget) {
 
                     var newsToSelect = [];
@@ -1034,7 +1032,8 @@
                 });
             };
 
-            var _preparingEvents = function () {
+            var _preparingEvents = function ($scope) {
+                _prepareItems($scope);
                 request('LoadMoreEvents', EventsService.getEvents, {
                     field: 'initDate',
                     direction: 'DESC'
