@@ -209,14 +209,13 @@
 
                 highlightedevent: function (widget) {
                     return {
-                        event: widget.event_id || (widget.content ? widget.content.event.id : null),
+                        event: (widget.event ? widget.event.id : null) || (widget.content ? widget.content.event.id : null),
                     };
                 },
 
                 highlightedevents: function (widget) {
                     var eventsToSelect = [];
                     if (widget.events) {
-
                         angular.forEach(widget.events, function (event) {
                             eventsToSelect.push(event.id);
                         });
@@ -615,7 +614,7 @@
 
                 highlightedevent: function (widget) {
                     return {
-                        event: widget.event_id || (widget.content ? widget.content.event.id : null),
+                        event: widget.event || (widget.content ? widget.content.event : null),
                     };
                 },
 
