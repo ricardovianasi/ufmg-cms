@@ -182,20 +182,14 @@
                 });
         }
 
-        function _publish(page, preview) {
+        function _publish(page) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
             PagesService
                 .updatePage($routeParams.id, page)
-                .then(function (page) {
-                    if (preview) {
-                        NotificationService.success('Página salva como rascunho.');
-                        $window.open(page.data.page_url, '_black');
-                    } else {
-                        NotificationService.success('Página atualizada com sucesso.');
-                        $location.path('/page');
-                    }
+                .then(function () {
+                    NotificationService.success('Página atualizada com sucesso.');
                 });
         }
 
@@ -266,8 +260,7 @@
                     }
 
                     page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
-                    page.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
-
+                    page.scheduled_time = moment(data.data.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
                 });
         }

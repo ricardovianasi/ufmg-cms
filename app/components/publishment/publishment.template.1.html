@@ -5,13 +5,9 @@
             <div class="status">
                 <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
                     <label>Status:</label>
-                    <ui-select name="pickStatus" ng-model="vm.preSaveStatus" theme="bootstrap" class="ui-select" title="Formato: {{$select.selected}}"
-                        required>
-                        <ui-select-match placeholder="Selecione o status da publicação">{{ $select.selected | translate }}</ui-select-match>
-                        <ui-select-choices repeat="item as item in ['draft', 'published', 'scheduled'] | filter: $select.search track by $index">
-                            <div ng-bind-html="item | translate"></div>
-                        </ui-select-choices>
-                    </ui-select>
+                    <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
+                        <option ng-repeat="item in ['draft', 'published', 'scheduled'] track by $index" ng-value="item">{{item | translate}}</option>
+                    </select>
                     <div ng-show="formPub.$submitted || formPub.pickStatus.$touched" class="error-message" role="alert">
                         <div ng-show="formPub.pickStatus.$error.required">Campo obrigatório</div>
                     </div>
@@ -29,7 +25,8 @@
                                 <input id="initDate" ui-mask="99/99/9999" ng-blur="isDateValid()" ng-change="datePost()" type="text" name="initDate" class="form-control"
                                     ng-model="obj.scheduled_date" ng-click="datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
                                     datepicker-options="datepickerOpt.initDate.dateOptions" is-open="datepickerOpt.initDate.status.opened"
-                                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true" ng-disabled="isScheduledRetroactive">
+                                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true"
+                                    ng-disabled="isScheduledRetroactive">
                             </div>
                             <div ng-show="formPub.$submitted" class="error-message" role="alert">
                                 <div ng-show="formPub.initDate.$error.required">Campo obrigatório</div>
@@ -62,24 +59,38 @@
         <div class="publishment-footer">
             <div class="actions">
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError" type="submit" class="btn btn-secondary">
-                        <i class="fa fa-check"></i>
-                        Salvar
-                    </button>
-                </div>
-                <div class="col">
-                    <!-- <button class="btn btn-gray" ng-click="preview(obj, true)">
-                        <i class="fa fa-eye"></i>
-                        Visualizar
-                    </button> -->
-                </div>
-                <div class="col">
                     <button ng-if="!$parent.viewOnly || canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
                         <i class="fa fa-close"></i>
                         Excluir
+                    </button>
+                </div>
+                <div class="col" ng-if="obj.id">
+                    <a class="btn btn-gray" ng-href="{{obj.page_url}}" target="__blank">
+                        <i class="fa fa-eye"></i>
+                        Visualizar
+                    </a>
+                </div>
+                <div class="col">
+                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError" type="submit" class="btn btn-secondary">
+                        <i class="fa fa-check"></i>
+                        Salvar
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </form>
+<div class="panel panel-default actions-context">
+    <div class="actions">
+        <div class="col">
+            <a class="btn btn-link" ng-href="{{back()}}">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+        </div>
+        <div class="col">
+            <a class="btn btn-default" ng-href="{{new()}}" ng-if="obj.id">
+                    <i class="fa fa-plus"></i> Novo
+                </a>
+        </div>
+    </div>
+</div>

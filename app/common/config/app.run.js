@@ -170,7 +170,6 @@
                 }
             }
 
-
             var pathOne = hash.split('/')[1];
 
             if (
@@ -190,7 +189,7 @@
             }
             return;
         }
-        
+
         function verifyPermission(event, next, current) {
             $rootScope.viewOnly = false;
             widgetButtonRemove(); //jshint ignore: line

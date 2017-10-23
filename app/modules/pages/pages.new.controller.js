@@ -176,20 +176,15 @@
             return TagsService.findTags($query, allTags);
         }
 
-        function _publish(page, preview) {
+        function _publish(page) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
             PagesService
                 .addPage(page)
                 .then(function (page) {
-                    if (preview) {
-                        NotificationService.success('Página salva como rascunho.');
-                        $window.open(page.data.page_url, '_black');
-                    } else {
-                        NotificationService.success('Página criada com sucesso.');
-                        $location.path('/page');
-                    }
+                    NotificationService.success('Página criada com sucesso.');
+                    $location.path('/page/edit/' + page.data.id);
                 });
         }
 

@@ -1,5 +1,20 @@
 $space: 10px;
 $fontSize: 14px;
+.actions-context {
+    >.actions {
+        display: flex;
+        flex-flow: row nowrap;
+        align-content: space-between;
+        justify-content: space-between;
+        >.col {
+            min-width: 90px;
+            >.btn {
+                font-size: $fontSize!important;
+            }
+        }
+    }
+}
+
 publishment-options {
     >form {
         >.panel {

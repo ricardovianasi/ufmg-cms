@@ -23,17 +23,8 @@
                 obj: '=routeModel',
                 publishMethod: '=?publishMethod'
             },
-            link: linkController,
-            controller: PublishmentController
+            link: linkController
         };
-
-        /** ngInject */
-        function PublishmentController($scope, $window) {
-            $scope.back = function () {
-                $scope.showLoad = false;
-                $window.history.back();
-            };
-        }
 
         function linkController($scope, element, attrs) {
             $log.info('PublishmentDirective');
@@ -51,7 +42,6 @@
 
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.remove = vm.$parent.remove;
-            // vm.back = vm.$parent.back || _back;
             vm.publisher = vm.$parent.publish || vm.publishMethod;
 
             vm.publish = _publish;
@@ -61,6 +51,32 @@
             vm.datePostValidateHour = datePostValidateHour;
             vm.clearFildHour = _clearFildHour;
             vm.preview = _preview;
+            vm.back = function () {
+                var forceBreak = false;
+                var url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
+                    if (currentValue === 'new' || currentValue === 'edit') {
+                        forceBreak = true;
+                    }
+                    if (forceBreak) {
+                        return accumulator;
+                    }
+                    return accumulator += '/' + currentValue;
+                });
+                return url;
+            };
+            vm.new = function () {
+                var forceBreak = false;
+                var url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
+                    if (currentValue === 'new' || currentValue === 'edit') {
+                        forceBreak = true;
+                    }
+                    if (forceBreak) {
+                        return accumulator;
+                    }
+                    return accumulator += '/' + currentValue;
+                }) + '/new';
+                return url;
+            };
             vm.isDateValid = function () {
                 if (!vm.obj.scheduled_date) {
                     vm.errorInvalidDate = true;
@@ -100,7 +116,7 @@
                         vm.isScheduledRetroactive = true;
                     } else if (vm.preSaveStatus === 'scheduled' && vm.obj.id && vm.obj.status !== 'published') {
                         vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
-                        if (verifyHourFuture()) {
+                        if (verifyHourFuture() && !vm.showLoad) {
                             vm.showMessageError = true;
                             vm.messageText = 'São permitidas apenas datas futuras.';
                         }
@@ -184,12 +200,12 @@
                 var MM = dateNow.getMinutes();
                 var hhScheduled = parseInt(vm.obj.scheduled_time.split(':')[0]);
                 var mmScheduled = parseInt(vm.obj.scheduled_time.split(':')[1]);
-                if (hh > hhScheduled) {
+                if (hh > hhScheduled && !vm.showLoad) {
                     vm.obj.scheduled_time = '';
                     return false;
                 } else if (vm.preSaveStatus === 'published') {
                     return false;
-                } else if (hh <= hhScheduled && MM > mmScheduled) {
+                } else if (hh <= hhScheduled && MM > mmScheduled && !vm.showLoad) {
                     vm.obj.scheduled_time = '';
                     return false;
                 }
@@ -230,7 +246,7 @@
                 if (!validationService.isValid(vm.$parent.formData.$invalid)) {
                     return false;
                 }
-                vm.obj.status = vm.preSaveStatus;
+                vm.obj.status = vm.preSaveStatus === 'scheduled' ? 'published' : vm.preSaveStatus;
                 vm.publisher(vm.obj);
             }
 
