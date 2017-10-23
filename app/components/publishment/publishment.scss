@@ -67,13 +67,10 @@ publishment-options {
             >.publishment-body {
                 >.status {
                     >.form-group {
-                        >.ui-select {
-                            >.ui-select-match {
-                                font-size: $fontSize!important;
-                                >.ui-select-toggle {
-                                    padding: 10px 16px;
-                                    height: 38px;
-                                }
+                        >select {
+                            >option {
+                                font-size: 15px!important;
+                                padding: 5px!important;
                             }
                         }
                     }
