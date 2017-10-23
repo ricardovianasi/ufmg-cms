@@ -50,6 +50,7 @@
                             <th class="col-xs-5">Título</th>
                             <th class="col-xs-2">Usuário</th>
                             <th class="col-xs-2">Data da Publicação</th>
+                            <th class="col-xs-2">Categoria</th>
                             <th class="col-xs-2">Ações</th>
                         </tr>
                     </thead>
@@ -80,6 +81,7 @@
                                 <br>
                                 <small>{{ item.status|translate|titleize }}</small>
                             </td>
+                            <td>{{ item.type.name }}</td>
                             <td class="table-fit">
                                 <a uib-tooltip="Visualizar" target="_blank" ng-href="{{ item.event_url }}" class="btn btn-primary">
                                     <i class="fa fa-eye"></i>

@@ -42,8 +42,8 @@
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
+            var numberOfColumns = 5;
+            var columnsHasNotOrder = [4];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'name'
@@ -54,6 +54,10 @@
             }, {
                 index: 2,
                 name: 'postDate'
+            }, {
+                index: 3,
+                filter: 'type',
+                name: 'name'
             }]);
 
             function getEvents(params, fnCallback) {

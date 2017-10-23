@@ -29,10 +29,28 @@
             filterIndex++;
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
+                if (element.filter === 'type') {
+                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
+                        '&query[filter][' + filterIndex + '][field]=type' +
+                        '&query[filter][' + filterIndex + '][alias]=type';
+                }
                 if (element.filter === 'author') {
                     return '&query[filter][' + filterIndex + '][type]=innerjoin' +
                         '&query[filter][' + filterIndex + '][field]=author' +
                         '&query[filter][' + filterIndex + '][alias]=author';
+                }
+            }
+            return '';
+        }
+
+        function hasFilter() {
+            filterIndex++;
+            for (var i = 0; i < columnsHasOrder.length; i++) {
+                var element = columnsHasOrder[i];
+                if (element.filter === 'type') {
+                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
+                        '&query[filter][' + filterIndex + '][field]=type' +
+                        '&query[filter][' + filterIndex + '][alias]=type';
                 }
             }
             return '';
@@ -50,6 +68,7 @@
                 parameters += '&page_size=' + params.page_size;
             }
             parameters += hasAuthor();
+            parameters += hasFilter();
             if (paramStatus) {
                 parameters += _getStatusParam(paramStatus);
             }
@@ -152,6 +171,12 @@
                     '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
                     '&query[order_by][' + filterIndex + '][alias]=author';
             }
+            if (order.filter === 'type') {
+                return '&query[order_by][' + filterIndex + '][type]=field' +
+                    '&query[order_by][' + filterIndex + '][field]=' + order.field +
+                    '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
+                    '&query[order_by][' + filterIndex + '][alias]=type';
+            }
             return '&query[order_by][' + filterIndex + '][type]=field' +
                 '&query[order_by][' + filterIndex + '][field]=' + order.field +
                 '&query[order_by][' + filterIndex + '][direction]=' + order.direction;
@@ -203,6 +228,13 @@
                         '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
                         '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
                         '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=author' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                } else if (element.filter === 'type') {
+                    conditionsIndex++;
+                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
+                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=type' +
                         '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
                 } else {
                     conditionsIndex++;
