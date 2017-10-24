@@ -28,23 +28,23 @@
                 </div>
             </div>
             <div class="date">
-                <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDate.$error.required}">
+                <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDatea.$error.required}">
                     <label>Data e horário:</label>
                     <div class="select-date">
                         <div class="form-group select-date-item">
-                            <div class="input-group input-group-sm" ng-class="{'has-error':(formPub.$submitted) && (formPub.initDate.$error.required || errorInvalidDate)}">
-                                <label for="initDate" class="input-group-addon">
+                            <div class="input-group input-group-sm" ng-class="{'has-error':(formPub.$submitted) && (formPub.initDatea.$error.required || errorInvalidDate)}">
+                                <label for="initDatea" class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </label>
-                                <input id="initDate" ui-mask="99/99/9999" ng-blur="isDateValid()" ng-change="datePost()" type="text" name="initDate" class="form-control"
-                                    ng-model="obj.scheduled_date" ng-click="datepickerOpt.initDate.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDate.format }}"
-                                    datepicker-options="datepickerOpt.initDate.dateOptions" is-open="datepickerOpt.initDate.status.opened"
+                                <input id="initDatea" ui-mask="99/99/9999" ng-blur="isDateValid()" ng-change="datePost()" type="text" name="initDatea" class="form-control"
+                                    ng-model="obj.scheduled_date" ng-click="datepickerOpt.initDatea.open(vm, $event)" uib-datepicker-popup="{{ datepickerOpt.initDatea.format }}"
+                                    datepicker-options="datepickerOpt.initDatea.dateOptions" is-open="datepickerOpt.initDatea.status.opened"
                                     clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true"
                                     ng-disabled="isScheduledRetroactive">
                             </div>
                             <div ng-show="formPub.$submitted" class="error-message" role="alert">
-                                <div ng-show="formPub.initDate.$error.required">Campo obrigatório</div>
-                                <div ng-show="errorInvalidDate && !formPub.initDate.$error.required">Data inválida</div>
+                                <div ng-show="formPub.initDatea.$error.required">Campo obrigatório</div>
+                                <div ng-show="errorInvalidDate && !formPub.initDatea.$error.required">Data inválida</div>
                             </div>
                         </div>
                         <div class="form-group select-hour-item" ng-class="{'has-error':(formPub.$submitted || formPub.initHour.$touched) && (formPub.initHour.$error.required || errorInvalidHour)}">
@@ -54,7 +54,7 @@
                                     ui-mask="99:99" model-view-value="true" required ng-disabled="isScheduledRetroactive">
                             </div>
                             <div ng-show="formPub.$submitted || formPub.initHour.$touched" class="error-message" role="alert">
-                                <div ng-show="formPub.initHour.$error.required && !formPub.initDate.$error.required">Campo obrigatório</div>
+                                <div ng-show="formPub.initHour.$error.required && !formPub.initDatea.$error.required">Campo obrigatório</div>
                                 <div ng-show="errorInvalidHour && !formPub.initHour.$error.required">Data inválida</div>
                             </div>
                         </div>

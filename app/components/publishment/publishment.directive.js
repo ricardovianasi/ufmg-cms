@@ -99,11 +99,11 @@
 
                 vm.$watch('vm.preSaveStatus', function () {
                     vm.errorInvalidStatus = false;
-                    vm.datepickerOpt.initDate.dateOptions.minDate = null;
-                    vm.datepickerOpt.initDate.dateOptions.maxDate = null;
+                    vm.datepickerOpt.initDatea.dateOptions.minDate = null;
+                    vm.datepickerOpt.initDatea.dateOptions.maxDate = null;
                     vm.isScheduledRetroactive = false;
                     if (vm.preSaveStatus === 'scheduled' && !vm.obj.id) {
-                        vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
+                        vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         vm.showMessageWarn = true;
                         vm.messageText = 'As publicações agendadas precisam ser compartilhadas' +
                             'entre 10 minutos e 6 meses após a criação delas.';
@@ -116,7 +116,7 @@
                         vm.messageText = 'Está publicação já está publicada.';
                         vm.isScheduledRetroactive = true;
                     } else if (vm.preSaveStatus === 'scheduled' && vm.obj.id && vm.obj.status !== 'published') {
-                        vm.datepickerOpt.initDate.dateOptions.minDate = new Date();
+                        vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         if (verifyHourFuture() && !vm.showLoad) {
                             vm.showMessageError = true;
                             vm.messageText = 'São permitidas apenas datas futuras.';
@@ -125,7 +125,7 @@
                         vm.showMessageError = false;
                         var yesterdayDate = new Date();
                         yesterdayDate.setDate(yesterdayDate.getDate());
-                        vm.datepickerOpt.initDate.dateOptions.maxDate = yesterdayDate;
+                        vm.datepickerOpt.initDatea.dateOptions.maxDate = yesterdayDate;
                         if (vm.obj.status === 'published' && dateChoice.valueOf() > yesterdayDate.valueOf()) {
                             vm.showMessageError = true;
                             vm.messageText = 'Este já está publicado, datas futuras não são válidas. Altere a data.';
@@ -143,6 +143,16 @@
                     } else {
                         vm.showMessageError = false;
                         vm.showMessageWarn = false;
+                        vm.obj.scheduled_date = new Date();
+                        var hh = vm.obj.scheduled_date.getHours();
+                        var MM = vm.obj.scheduled_date.getMinutes();
+                        if (hh < 10) {
+                            hh = '0' + hh;
+                        }
+                        if (MM < 10) {
+                            MM = '0' + MM;
+                        }
+                        vm.obj.scheduled_time = hh + ':' + MM;
                     }
                 });
 
@@ -169,10 +179,10 @@
                 });
 
                 vm.datepickerOpt = {
-                    initDate: DateTimeHelper.getDatepickerOpt()
+                    initDatea: DateTimeHelper.getDatepickerOpt()
                 };
 
-                vm.datepickerOpt.initDate.status = {
+                vm.datepickerOpt.initDatea.status = {
                     opened: false
                 };
 
