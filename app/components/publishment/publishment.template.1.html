@@ -79,7 +79,7 @@
                     </button>
                 </div>
                 <div class="col" ng-if="obj.id">
-                    <a class="btn btn-gray" ng-href="{{obj.page_url}}" target="__blank">
+                    <a class="btn btn-gray" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
                         <i class="fa fa-eye"></i>
                         Visualizar
                     </a>

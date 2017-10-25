@@ -209,20 +209,16 @@
                 });
         }
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
-
-            ReleasesService.store(data).then(function (release) {
-                NotificationService.success('Release criado com sucesso.');
-
-                if (!preview) {
-                    $location.path('/release');
-                } else {
-                    $window.open(release.data.release_url);
-                }
-            });
+            ReleasesService
+                .store(data)
+                .then(function (release) {
+                    NotificationService.success('Release criado com sucesso.');
+                    $location.path('/release/edit/' + release.data.id);
+                });
         };
 
         vm.removeReleasesFiles = function (idx) {

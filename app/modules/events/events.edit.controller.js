@@ -123,22 +123,18 @@
             }
         };
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
             vm.setEndDefault();
 
-            EventsService.update(data, $routeParams.id).then(function (event) {
-                NotificationService.success('Evento atualizado com sucesso.');
-
-                if (!preview) {
-                    $location.path('/events');
-                } else {
-                    $window.open(event.data.event_url);
-                }
-            });
+            EventsService
+                .update(data, $routeParams.id)
+                .then(function () {
+                    NotificationService.success('Evento atualizado com sucesso.');
+                });
         };
 
         vm.remove = function () {

@@ -62,52 +62,52 @@
             .getNew($routeParams.id)
             .then(function (data) {
 
-            $timeout(function(){
-                var html = $.parseHTML(vm.news.text);
-                $('#redactor-only').append(html);
-            }, 300);
+                $timeout(function () {
+                    var html = $.parseHTML(vm.news.text);
+                    $('#redactor-only').append(html);
+                }, 300);
 
-            vm.canPermission = PermissionService.canPut($routeParams.typeNews, $routeParams.id);
+                vm.canPermission = PermissionService.canPut($routeParams.typeNews, $routeParams.id);
 
-            vm.obj = {};
+                vm.obj = {};
 
-            vm.news = {
-                id: data.data.id,
-                title: data.data.title || '',
-                subtitle: data.data.subtitle || '',
-                author: data.data.author_name || '',
-                category: data.data.category ? data.data.category.id : '',
-                text: data.data.text || '',
-                status: data.data.status || '',
-                type: data.data.type ? data.data.type.id : '',
-                post_date: data.data.post_date,
-                thumb: data.data.thumb ? data.data.thumb.id : '',
-                thumb_name: data.data.thumb ? data.data.thumb.title : '',
-                highlight: data.data.highlight,
-                highlight_ufmg: data.data.highlight_ufmg,
-                news_url: data.data.news_url,
-                has_video: data.data.has_video,
-                /* jshint ignore:start */
-                tv_program: data.data.tv_program === null ? data.data.tv_program : data.data.tv_program.id,
-                gallery: data.data.gallery === null ? '' : data.data.gallery.id,
-                /* jshint ignore:end */
-                slug: {
-                    slug: data.data.slug.slug
-                }
-            };
+                vm.news = {
+                    id: data.data.id,
+                    title: data.data.title || '',
+                    subtitle: data.data.subtitle || '',
+                    author: data.data.author_name || '',
+                    category: data.data.category ? data.data.category.id : '',
+                    text: data.data.text || '',
+                    status: data.data.status || '',
+                    type: data.data.type ? data.data.type.id : '',
+                    post_date: data.data.post_date,
+                    thumb: data.data.thumb ? data.data.thumb.id : '',
+                    thumb_name: data.data.thumb ? data.data.thumb.title : '',
+                    highlight: data.data.highlight,
+                    highlight_ufmg: data.data.highlight_ufmg,
+                    news_url: data.data.news_url,
+                    has_video: data.data.has_video,
+                    /* jshint ignore:start */
+                    tv_program: data.data.tv_program === null ? data.data.tv_program : data.data.tv_program.id,
+                    gallery: data.data.gallery === null ? '' : data.data.gallery.id,
+                    /* jshint ignore:end */
+                    slug: {
+                        slug: data.data.slug.slug
+                    }
+                };
 
-            vm.news.tags = [];
+                vm.news.tags = [];
 
-            angular.forEach(data.data.tags, function (tag) {
-                vm.news.tags.push(tag.name);
+                angular.forEach(data.data.tags, function (tag) {
+                    vm.news.tags.push(tag.name);
+                });
+
+                vm.title = 'Editar "' + vm.news.title + '"';
+                vm.breadcrumb_active = vm.news.title;
+
+                vm.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+                vm.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
             });
-
-            vm.title = 'Editar "' + vm.news.title + '"';
-            vm.breadcrumb_active = vm.news.title;
-
-            vm.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
-            vm.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
-        });
 
         NewsService.getTvProgram().then(function (data) {
             vm.tvPrograms = data.data.items;
@@ -137,7 +137,7 @@
                 });
         };
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
@@ -168,15 +168,11 @@
 
             _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
-            NewsService.updateNews(data.id, _obj).then(function (news) {
-                NotificationService.success('Notícia atualizada com sucesso.');
-
-                if (!preview) {
-                    $location.path('/news/' + vm.typeNews);
-                } else {
-                    $window.open(news.data.news_url);
-                }
-            });
+            NewsService
+                .updateNews(data.id, _obj)
+                .then(function () {
+                    NotificationService.success('Notícia atualizada com sucesso.');
+                });
         };
 
         // Cover Image - Upload

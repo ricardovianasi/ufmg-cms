@@ -115,7 +115,7 @@
             vm.status = data.data;
         });
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
@@ -146,12 +146,7 @@
 
             NewsService.postNews(_obj).then(function (news) {
                 NotificationService.success('Notícia criada com sucesso.');
-                $log.info('Objeto salvo', news);
-                if (!preview) {
-                    $location.path('/news/' + vm.typeNews);
-                } else {
-                    $window.open(news.data.news_url);
-                }
+                $location.path('/news/' + vm.typeNews + '/edit/' + news.data.id);
             });
         };
 

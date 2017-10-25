@@ -13,6 +13,7 @@
         $timeout,
         PeriodicalService,
         StatusService,
+        ModalService,
         ManagerFileService,
         NotificationService,
         MediaService,
@@ -79,6 +80,7 @@
             vm.edition.post_date = res.data.post_date;
             vm.edition.publish_date = res.data.publish_date;
             vm.edition.legend = res.data.file ? res.data.file.legend : '';
+            vm.edition.edition_url = res.data.edition_url;
 
             _getAllArticles(vm.edition.id);
 
@@ -120,7 +122,7 @@
             });
         }
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
@@ -143,14 +145,8 @@
 
             PeriodicalService
                 .updateEdition($routeParams.id, $routeParams.edition, data)
-                .then(function (res) {
+                .then(function () {
                     NotificationService.success('Edição atualizada com sucesso.');
-
-                    if (!preview) {
-                        $location.path('/periodical/' + $routeParams.id + '/editions');
-                    } else {
-                        $window.open(res.data.edition_url);
-                    }
                 });
         };
 
@@ -169,9 +165,23 @@
             containment: '#sort-main'
         };
 
+        vm.remove = function () {
+            ModalService
+                .confirm('Você deseja excluir esta edição?')
+                .result
+                .then(function () {
+                    PeriodicalService
+                    .removeEdition($routeParams.id, $routeParams.edition)
+                    .then(function () {
+                        NotificationService.success('Edição removida com sucesso.');
+                        $location.path('/periodical/' + $routeParams.id + '/editions');
+                    });
+                });
+        };
+
         vm.removeArticle = function (idx) {
-            vm.confirmationModal('md', 'Você deseja excluir este artigo?');
-            removeConfirmationModal
+            ModalService
+                .confirm('Você deseja excluir este artigo?')
                 .result
                 .then(function () {
                     vm.edition.articles.splice(idx, 1);

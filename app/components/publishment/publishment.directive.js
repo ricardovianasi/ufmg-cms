@@ -93,6 +93,7 @@
                     dateChoice = new Date(vm.obj.scheduled_date);
                     vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                     dateCurrent = new Date(vm.obj.scheduled_date);
+                    vm.moduleCurrent = $rootScope.moduleCurrent;
                     vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
                     vm.canPost = PermissionService.canPost($rootScope.moduleCurrent, vm.obj.id);
                     vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';

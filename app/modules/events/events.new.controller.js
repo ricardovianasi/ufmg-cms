@@ -122,22 +122,19 @@
             }
         };
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
 
             vm.setEndDefault();
 
-            EventsService.store(data).then(function (event) {
-                NotificationService.success('Evento criado com sucesso.');
-
-                if (!preview) {
-                    $location.path('/events');
-                } else {
-                    $window.open(event.data.event_url);
-                }
-            });
+            EventsService
+                .store(data)
+                .then(function (event) {
+                    NotificationService.success('Evento criado com sucesso.');
+                    $location.path('/events/edit/' + event.data.id);
+                });
         };
 
         CourseService.getCourses('graduation').then(function (data) {

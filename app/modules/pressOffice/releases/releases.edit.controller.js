@@ -209,20 +209,15 @@
             };
         }
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
-
-            ReleasesService.update(data, $routeParams.id).then(function (release) {
-                NotificationService.success('Release salvo com sucesso.');
-
-                if (!preview) {
-                    $location.path('/release');
-                } else {
-                    $window.open(release.data.release_url);
-                }
-            });
+            ReleasesService
+                .update(data, $routeParams.id)
+                .then(function () {
+                    NotificationService.success('Release salvo com sucesso.');
+                });
         };
 
         vm.remove = function () {

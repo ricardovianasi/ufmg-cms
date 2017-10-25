@@ -73,7 +73,7 @@
         vm.edition.status = StatusService.STATUS_DRAFT;
         vm.edition.articles = [];
 
-        vm.publish = function (data, preview) {
+        vm.publish = function (data) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
@@ -82,16 +82,12 @@
                 data.post_date = data.scheduled_date + ' ' + data.scheduled_time;
             }
 
-            PeriodicalService.newEdition($routeParams.id, data).then(function (data) {
-                NotificationService.success('Edição criada com sucesso.');
-
-                if (!preview) {
-                    $location.path('/periodical/' + $routeParams.id + '/editions');
-                } else {
-                    $window.open(data.data.edition_url);
-                    $location.path('/periodical/' + $routeParams.id + '/edition/edit/' + data.data.id);
-                }
-            });
+            PeriodicalService
+                .newEdition($routeParams.id, data)
+                .then(function (edition) {
+                    NotificationService.success('Edição criada com sucesso.');
+                    $location.path('/periodical/' + $routeParams.id + '/editions/edit/' + edition.data.id);
+                });
         };
 
         vm.handleArticle = PeriodicalService.handleArticle;
