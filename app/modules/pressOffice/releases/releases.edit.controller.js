@@ -15,6 +15,7 @@
         $window,
         ReleasesService,
         MediaService,
+        ModalService,
         NotificationService,
         ManagerFileService,
         DateTimeHelper,
@@ -225,14 +226,18 @@
         };
 
         vm.remove = function () {
-            confirmationModal('md', 'Você deseja excluir este release?');
-
-            removeConfirmationModal.result.then(function () {
-                ReleasesService.destroy($routeParams.id).then(function () {
-                    NotificationService.success('Release removido com sucesso.');
-                    $location.path('/release');
+            ModalService
+                .confirm('Você deseja excluir este release?',
+                    ModalService.MODAL_MEDIUM)
+                .result
+                .then(function () {
+                    ReleasesService
+                        .destroy($routeParams.id)
+                        .then(function () {
+                            NotificationService.success('Release removido com sucesso.');
+                            $location.path('/release');
+                        });
                 });
-            });
         };
 
         ReleasesService.getRelease($routeParams.id).then(function (data) {
