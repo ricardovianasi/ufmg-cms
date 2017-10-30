@@ -306,6 +306,9 @@
         PermissionService
     ) {
         $rootScope.shownavbar = true;
+
+        $rootScope.isMobile = $window.screen.availWidth > 768;
+        $rootScope.isActiveSidebar = angular.copy($rootScope.isMobile);
         $rootScope.viewOnly = false;
         $rootScope.moduleCurrent = false;
 
@@ -313,6 +316,10 @@
         $rootScope.canPut = PermissionService.canPut;
         $rootScope.canDelete = PermissionService.canDelete;
         $rootScope.canGet = PermissionService.canGet;
+
+        $rootScope.sidebarToggle = function () {
+            $rootScope.isActiveSidebar = !$rootScope.isActiveSidebar;
+        };
 
         $rootScope.ngScrollbarsConfig = {
             autoHideScrollbar: true,

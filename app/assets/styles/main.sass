@@ -9,6 +9,9 @@
 body, html
   overflow-x: hidden
 
+.overflow-off
+  overflow: hidden
+
 .radio-inline, .checkbox-inline 
   margin-bottom: 3px
 
@@ -37,18 +40,47 @@ body, html
 .row-content 
   margin: 0 !important
 
-.margin-sidebar
-  margin-left: 290px
-  width: calc(100% - 290px) !important
+@media screen and (max-width: 768px)
+  .page-container .sidebar-menu
+    width: 0
+    &.is-active
+      width: 290px
+  .margin-sidebar
+    margin-left: 0!important
+    width: 100% !important
+  .page-container .sidebar-menu .sidebar-menu-inner
+    position: fixed
+  .navbar.horizontal-menu .navbar-inner
+    padding: 0!important
+  .sidebar-menu .main-menu>li.opened>ul
+    display: block!important
+  .page-container .sidebar-menu .sidebar-menu-inner #main-menu
+    display: block
+  .navbar.horizontal-menu.navbar-fixed-top+.page-container>.sidebar-menu.fixed .sidebar-menu-inner
+    top: 85px
+  publishment-options>form>.panel>.publishment-footer>.actions>.col
+    margin: 0
 
+.off-target
+  width: 100%
+  height: 100%
+  z-index: 1
+  position: absolute
+
+.main-content
+  margin-left: 0
+  &.is-active
+    margin-left: 290px
+    width: calc(100% - 290px) !important
 
 .sidebar-menu
   display: block
   float: left
-
-.sidebar-menu, .sidebar-menu-inner
-  min-width: 290px
-  max-width: 290px
+  width: 0
+  transition: all 100ms ease-in-out
+  z-index: 2
+  &.is-active
+    width: 290px
 
 .btn-widget-remove
   position: absolute
@@ -112,12 +144,12 @@ form .form-group.has-error .input-group-addon
 
 .select-date
   display: flex
-  flex-flow: row nowrap
+  flex-flow: row wrap
   justify-content: space-around
   align-items: flex-start
   margin-bottom: 10px
   & .select-date-item
-    width: 40%
+    width: 115px
 
 
 .redactor-dropdown-box-format .redactor-dropdown-blockquote
@@ -185,6 +217,9 @@ form .form-group.has-error .input-group-addon
   cursor: pointer
   height: 45px
   transition: all linear .2s
+
+#main-menu li
+  min-width: 210px
 
 .main-menu li.active
   background-color: lighten(#2c2e2f, 1%)
