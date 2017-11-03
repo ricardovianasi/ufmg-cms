@@ -73,9 +73,9 @@
         <div class="publishment-footer">
             <div class="actions">
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
-                        <i class="fa fa-close"></i>
-                        Excluir
+                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError" type="submit" class="btn btn-secondary">
+                        <i class="fa fa-check"></i>
+                        Salvar
                     </button>
                 </div>
                 <div class="col" ng-if="obj.id">
@@ -85,9 +85,9 @@
                     </a>
                 </div>
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError" type="submit" class="btn btn-secondary">
-                        <i class="fa fa-check"></i>
-                        Salvar
+                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
+                        <i class="fa fa-close"></i>
+                        Excluir
                     </button>
                 </div>
             </div>
