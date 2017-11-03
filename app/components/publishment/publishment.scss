@@ -3,7 +3,7 @@ $fontSize: 14px;
 .actions-context {
     >.actions {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
         align-content: space-between;
         justify-content: space-between;
         >.col {
@@ -18,6 +18,7 @@ $fontSize: 14px;
 publishment-options {
     >form {
         >.panel {
+            min-width: 360px;
             >.publishment-body,
             .publishment-footer {
                 font-size: $fontSize!important;
@@ -94,7 +95,7 @@ publishment-options {
                                 margin-right: 15px!important;
                             }
                             >.select-hour-item {
-                                width: 88px!important;
+                                width: 28%!important;
                             }
                         }
                     }
@@ -103,10 +104,11 @@ publishment-options {
             >.publishment-footer {
                 >.actions {
                     display: flex;
-                    flex-flow: row wrap;
+                    flex-flow: row nowrap;
                     align-content: space-between;
                     justify-content: space-between;
                     >.col {
+                        min-width: 90px;
                         >.btn {
                             font-size: $fontSize!important;
                         }

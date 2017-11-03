@@ -5,12 +5,7 @@
         .module('componentsModule')
 
         /** ngInject */
-        .controller('SidebarController', function (
-            $scope,
-            NavigationService,
-            $log,
-            $window
-        ) {
+        .controller('SidebarController', function ($scope, NavigationService, $log, $window) {
             $log.info('SidebarController');
             var vm = $scope;
 
@@ -18,11 +13,11 @@
                 getParams();
             });
 
-            vm.calcNumberEnables = function (menuItems) {
-                if (!menuItems) {
+            vm.calcNumberEnables = function(menuItems){
+                if(!menuItems){
                     return [];
                 }
-                return menuItems.filter(function (a) {
+                return menuItems.filter(function(a){
                     return a.enabled === true;
                 });
             };

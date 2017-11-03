@@ -13,196 +13,12 @@
     <link rel="stylesheet" href="assets/css/main.min.css">
 </head>
 <style>
-    #button-wrapper {
-        -webkit-appearance: none;
-        background: none;
-        border: 0;
-        height: 48px;
-        width: 48px;
-    }
-
-    #button-wrapper:focus {
-        outline: 2px dotted #444;
-    }
-    .menu-button {
-        text-decoration: none;
-        width: 24px;
-        height: 3px;
-        background: #444;
-        display: inline-block;
-        position: relative;
-        border: 0px;
-        transition: 250ms ease;
-    }
-
-    .menu-button:before,
-    .menu-button:after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        display: block;
-        height: 3px;
-        left: 0px;
-        background: #444;
-        transition: 250ms ease-out;
-    }
-
-    .menu-button:before {
-        transform: translateY(-6px);
-    }
-
-    .menu-button:after {
-        transform: translateY(6px);
-    }
-
-    .button-transform {
-        animation: b-anim 1s;
-        transform: rotate(45deg);
-    }
-
-    .button-transform:before,
-    .button-transform:after {
-        transform: translateY(0px);
-    }
-
-    .button-transform:before {
-        transform: rotate(-90deg);
-    }
-
-    .button-transform:after {
-        opacity: 0;
-    }
-
-    .menu-active {
-        visibility: visible;
-        opacity: 1;
-        transform: translateX(50%);
-    }
-
-    .menu-active a {
-        transform: skewX(-13deg);
-    }
-
-    .menu-active a:nth-child(2) {
-        transform: translateX(-7px) skewX(-13deg);
-    }
-
-    .menu-active a:nth-child(3) {
-        transform: translateX(-20px) skewX(-13deg);
-    }
-
-    .menu-active a:nth-child(4) {
-        transform: translateX(-25px) skewX(-13deg);
-    }
-
-    .menu-active a:nth-child(5) {
-        transform: translateX(-30px) skewX(-13deg);
-    }
-
-    .menu-active a:hover,
-    .menu-active a:focus {
-        transform: translateX(30px) skewX(-13deg);
-        color: #5e5e5e;
-        position: relative;
-    }
-
-    .menu-active a:hover:before {
-        width: 2px;
-        height: 100%;
-        left: -13px;
-        position: absolute;
-        content: "";
-        background: #5e5e5e;
-        display: inline;
-    }
-
-    @keyframes b-anim {
-        100% {
-            transform: rotate(45deg);
-        }
-    }
-
-    .loading,
-    .loading .spinner {
-        margin: 0 auto;
-        position: relative
-    }
-
-    .fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        background: #eee;
-        z-index: 99999;
-        opacity: 1;
-        transition: opacity 1.3s ease-in-out;
-        -moz-transition: opacity 1.3s ease-in-out;
-        -webkit-transition: opacity 1.3s ease-in-out
-    }
-
-    .loading {
-        top: 40%;
-        display: table
-    }
-
-    .loading .spinner {
-        width: 45px;
-        height: 45px;
-        animation: Loading 2s linear infinite
-    }
-
-    .loading .box-loading {
-        margin-top: 30px
-    }
-
-    .loading .text {
-        font-size: 11px;
-        margin: 0 auto;
-        position: relative;
-        top: 20px;
-        text-transform: uppercase;
-        color: #777;
-        font-weight: 600
-    }
-
-    .loading .bubble-1,
-    .loading .bubble-2 {
-        position: absolute;
-        top: 0;
-        width: 18px;
-        height: 18px;
-        border-radius: 100%;
-        background-color: #ef3f4a;
-        animation: Rotate 2s ease-in-out infinite
-    }
-
-    .loading .bubble-2 {
-        top: auto;
-        bottom: 0;
-        animation-delay: -1s
-    }
-
-    @keyframes Loading {
-        100% {
-            transform: rotate(360deg)
-        }
-    }
-
-    @keyframes Rotate {
-        0%,
-        100% {
-            transform: scale(0)
-        }
-        50% {
-            transform: scale(1)
-        }
-    }
+    .loading,.loading .spinner{margin:0 auto;position:relative}.fullscreen{position:fixed;top:0;left:0;bottom:0;right:0;width:100%;background:#eee;z-index:99999;opacity:1;transition:opacity 1.3s ease-in-out;-moz-transition:opacity 1.3s ease-in-out;-webkit-transition:opacity 1.3s ease-in-out}.loading{top:40%;display:table}.loading .spinner{width:45px;height:45px;animation:Loading 2s linear infinite}.loading .box-loading{margin-top:30px}.loading .text{font-size:11px;margin:0 auto;position:relative;top:20px;text-transform:uppercase;color:#777;font-weight:600}.loading .bubble-1,.loading .bubble-2{position:absolute;top:0;width:18px;height:18px;border-radius:100%;background-color:#ef3f4a;animation:Rotate 2s ease-in-out infinite}.loading .bubble-2{top:auto;bottom:0;animation-delay:-1s}
+    @keyframes Loading{100%{transform:rotate(360deg)}}
+    @keyframes Rotate{0%,100%{transform:scale(0)}50%{transform:scale(1)}}
 </style>
 
-<body class="page-body" scroll-detect-close-ui-select ng-class="{'overflow-off': isActiveSidebar && !isMobile}">
+<body class="page-body" scroll-detect-close-ui-select>
     <div class="fullscreen" app-load>
         <div class="loading">
             <div class="spinner">
@@ -214,11 +30,6 @@
     </div>
     <nav class="navbar horizontal-menu navbar-fixed-top" ng-if="shownavbar">
         <div class="navbar-inner">
-            <div class="navbar-brand toggle">
-                <button id="button-wrapper" ng-click="sidebarToggle()">
-                    <span id="button" class="menu-button" role="button" ng-class="{'button-transform':isActiveSidebar}"></span>
-                </button>
-            </div>
             <div class="navbar-brand ufmg">
                 <a href="#/" class="logo">
                     <img src="assets/img/ufmg-logo.svg" alt="UFMG">
@@ -258,9 +69,8 @@
         </div>
     </nav>
     <div class="page-container row">
-        <div ng-if="!!User" class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-class="{'is-active': isActiveSidebar}"></div>
-        <div class="off-target" ng-click="sidebarToggle()" ng-if="isActiveSidebar && !isMobile"></div>
-        <div class="main-content" ng-class="{'is-active': isActiveSidebar && isMobile && !!User}">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar"></div>
+        <div class="main-content" ng-class="{'margin-sidebar': shownavbar}">
             <ng-view />
         </div>
     </div>
