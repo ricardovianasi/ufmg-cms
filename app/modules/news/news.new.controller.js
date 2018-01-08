@@ -42,6 +42,8 @@
         vm.types = [];
         vm.highlight_ufmg_visible = true;
 
+        vm.isLoading = false;
+
         onInit();
 
         function onInit() {
@@ -144,9 +146,14 @@
 
             _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
+            vm.isLoading = true;
             NewsService.postNews(_obj).then(function (news) {
                 NotificationService.success('Notícia criada com sucesso.');
                 $location.path('/news/' + vm.typeNews + '/edit/' + news.data.id);
+            })
+            .catch(console.error)
+            .then(function() {
+                vm.isLoading = false;
             });
         };
 

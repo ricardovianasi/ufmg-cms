@@ -168,10 +168,14 @@
 
             _obj.tags = _.map(_obj.tags, 'text'); // jshint ignore: line
 
+            vm.isLoading = true;
             NewsService
                 .updateNews(data.id, _obj)
                 .then(function () {
                     NotificationService.success('Notícia atualizada com sucesso.');
+                }).catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;
                 });
         };
 

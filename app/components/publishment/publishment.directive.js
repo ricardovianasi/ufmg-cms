@@ -21,7 +21,8 @@
             templateUrl: 'components/publishment/publishment.template.1.html',
             scope: {
                 obj: '=routeModel',
-                publishMethod: '=?publishMethod'
+                isLoading: '=?isLoading',
+                publishMethod: '=?publishMethod',
             },
             link: linkController
         };
@@ -392,6 +393,10 @@
                     return;
                 }
                 return true;
+            }
+
+            function initListenerLoading() {
+
             }
         }
     }

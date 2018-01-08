@@ -1,3 +1,4 @@
+<div class="loading-spiner" ng-show="isLoading" data-loading ><div class="spiner"></div></div>
 <div class="panel panel-default actions-context">
     <div class="actions">
         <div class="col">
@@ -73,9 +74,9 @@
         <div class="publishment-footer">
             <div class="actions">
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError" type="submit" class="btn btn-secondary">
+                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit" class="btn btn-secondary">
                         <i class="fa fa-check"></i>
-                        Salvar
+                        {{ isLoading ? 'Salvando...' : 'Salvar'}}
                     </button>
                 </div>
                 <div class="col" ng-if="obj.id">

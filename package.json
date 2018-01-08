@@ -45,9 +45,9 @@
     "jshint-stylish": "^1.0.0",
     "minimist": "^1.2.0",
     "node-sass": "^3.3.3",
-    "require-dir": "~0.1.0",
+    "require-dir": "^0.3.2",
     "run-sequence": "^1.2.2"
-      },
+  },
   "jshintConfig": {
     "expr": true
   }
