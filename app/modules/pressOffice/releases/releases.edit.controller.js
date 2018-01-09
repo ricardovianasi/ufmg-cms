@@ -213,10 +213,14 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
+            vm.isLoading = true;
             ReleasesService
                 .update(data, $routeParams.id)
                 .then(function () {
                     NotificationService.success('Release salvo com sucesso.');
+                }).catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;
                 });
         };
 
@@ -226,11 +230,15 @@
                     ModalService.MODAL_MEDIUM)
                 .result
                 .then(function () {
+                    vm.isLoading = true;
                     ReleasesService
                         .destroy($routeParams.id)
                         .then(function () {
                             NotificationService.success('Release removido com sucesso.');
                             $location.path('/release');
+                        }).catch(console.error)
+                        .then(function() {
+                            vm.isLoading = false;
                         });
                 });
         };

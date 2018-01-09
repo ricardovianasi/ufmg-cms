@@ -87,10 +87,13 @@
 
         function _saveFeatured() {
             _parseToSave();
-
+            vm.isLoading = true;
             featuredService.update(vm.featured.id, _updateFeatured).then(function () {
                 NotificationService.success('Destaque alterado com sucesso!');
                 $location.path('/highlighted_press');
+            }).catch(console.error)
+            .then(function() {
+                vm.isLoading = false;
             });
         }
 

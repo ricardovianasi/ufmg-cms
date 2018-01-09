@@ -213,11 +213,15 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
+            vm.isLoading = true;
             ReleasesService
                 .store(data)
                 .then(function (release) {
                     NotificationService.success('Release criado com sucesso.');
                     $location.path('/release/edit/' + release.data.id);
+                }).catch(console.error)
+                .then(function () {
+                    vm.isLoading = false;
                 });
         };
 

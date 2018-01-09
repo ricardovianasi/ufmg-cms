@@ -50,10 +50,13 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
-
+            vm.isLoading = true;
             ClippingsService.update(data, $routeParams.id).then(function () {
                 NotificationService.success('Clipping salvo com sucesso.');
                 $location.path('/clipping');
+            }).catch(console.error)
+            .then(function () {
+                vm.isLoading = false;
             });
         };
     }

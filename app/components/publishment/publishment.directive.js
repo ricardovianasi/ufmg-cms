@@ -394,10 +394,6 @@
                 }
                 return true;
             }
-
-            function initListenerLoading() {
-
-            }
         }
     }
 })();

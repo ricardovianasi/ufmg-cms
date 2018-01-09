@@ -130,9 +130,14 @@
                 .confirm('Você deseja excluir esta notícia?')
                 .result
                 .then(function () {
+                    vm.isLoading = true;
                     NewsService.removeNews($routeParams.id).then(function () {
                         NotificationService.success('Notícia removida com sucesso.');
                         $location.path('/news/' + vm.typeNews);
+                    })
+                    .catch(console.error)
+                    .then(function() {
+                        vm.isLoading = false;
                     });
                 });
         };

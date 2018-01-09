@@ -128,12 +128,15 @@
             }
 
             vm.setEndDefault();
-
+            vm.isLoading = true;
             EventsService
                 .store(data)
                 .then(function (event) {
                     NotificationService.success('Evento criado com sucesso.');
                     $location.path('/events/edit/' + event.data.id);
+                }).catch(console.error)
+                .then(function () {
+                    vm.isLoading = false;
                 });
         };
 

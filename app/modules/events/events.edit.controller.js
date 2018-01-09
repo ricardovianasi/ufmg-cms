@@ -129,11 +129,14 @@
             }
 
             vm.setEndDefault();
-
+            vm.isLoading = true;
             EventsService
                 .update(data, $routeParams.id)
                 .then(function () {
                     NotificationService.success('Evento atualizado com sucesso.');
+                }).catch(console.error)
+                .then(function () {
+                    vm.isLoading = false;
                 });
         };
 
