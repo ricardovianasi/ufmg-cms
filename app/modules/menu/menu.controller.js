@@ -175,13 +175,17 @@
             idx.editTitle = true;
         }
 
-        function _save(type) {
+        function _save(type, loadingType) {
+            vm[loadingType] = true;
+            console.log(loadingType, vm[loadingType]);
             MenuService
                 .update(inflection.underscore(type), $scope.menus[type]) // jshint ignore: line
                 .then(function () {
                     NotificationService.success('Menu salvo com sucesso!');
                     vm.dtInstance.DataTable.draw();
-                });
+                })
+                .catch(function() {console.error})
+                .then(function() { vm[loadingType] = false; })
         }
 
         function _newGroup(type) {

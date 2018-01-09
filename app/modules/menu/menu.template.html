@@ -80,7 +80,9 @@
             <div class="panel-footer" ng-if="vm.canPut">
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-secondary btn-lg pull-right" ng-click="vm.save('mainMenu')"><i class="fa fa-check"></i> Salvar Menu Principal</button>
+                        <button class="btn btn-secondary btn-lg pull-right" ng-disabled="vm.isLoadingMainMenu" ng-click="vm.save('mainMenu', 'isLoadingMainMenu')"><i class="fa fa-check"></i> 
+                            {{ vm.isLoadingMainMenu ? 'Salvando ...' : 'Salvar Menu Principal'}}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -139,7 +141,10 @@
             <div class="panel-footer" ng-if="vm.canPut">
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-secondary btn-lg pull-right" ng-click="vm.save('quickAccess')"><i class="fa fa-check"></i> Salvar Acesso Rápido</button>
+                        <button class="btn btn-secondary btn-lg pull-right" ng-disabled="vm.isLoadingQuick" ng-click="vm.save('quickAccess', 'isLoadingQuick')">
+                            <i class="fa fa-check"></i> 
+                            {{ vm.isLoadingQuick ? 'Salvando ...' : 'Salvar Acesso Rápido' }}
+                        </button>
                     </div>
                 </div>
             </div>
