@@ -69,5 +69,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
-    <button class="btn btn-success" ng-click="ok()"><i class="fa fa-check"></i> Salvar</button>
+    <button class="btn btn-success" ng-disabled="isLoading" ng-click="ok()"><i class="fa fa-check"></i> 
+        {{ isLoading ? 'Salvando ...' : 'Salvar' }}
+    </button>
 </div>

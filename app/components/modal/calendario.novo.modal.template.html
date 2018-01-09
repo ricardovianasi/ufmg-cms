@@ -68,8 +68,8 @@
 <div class=modal-footer>
     <button ng-if="!canPermission" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Fechar</button>
     <button ng-if="canPermission" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
-    <button ng-if="canPermission" class="btn btn-success" ng-disabled="!newRegister.regional && !newRegister.description && !newRegister.init_date"
+    <button ng-if="canPermission" class="btn btn-success" ng-disabled="!canSave() || isLoading"
         ng-click="ok()">
-        <i class="fa fa-check"></i> Salvar
+        <i class="fa fa-check"></i> {{ isLoading ? 'Salvando ...' : 'Salvar'}}
         </button>
 </div>

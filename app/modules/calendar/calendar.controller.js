@@ -278,18 +278,26 @@
 
                     vm.newRegister.regional = newRegional;
                 }
+                vm.isLoading = true;
+
                 CalendarService.updateCalendar(vm.newRegister).then(function (data) {
                     if (data.status === '200') {
                         NotificationService.success('Evento atualizado com sucesso.');
                         vm.dtInstance.DataTable.draw();
                     }
                     $uibModalInstance.close();
-                });
+                })
+                .catch(function (){console.error})
+                .then(function() { vm.isLoading = false; });
             };
 
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
+
+            vm.canSave = function() {
+                return _canSaveCalendar(vm.newRegister);
+            }
         }
 
         function _ModalCalendarSchoolDaysCtrl($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
@@ -348,17 +356,21 @@
                 if (!validationService.isValid(vm.formDays.$invalid)) {
                     return false;
                 }
+                vm.isLoading = true;
 
                 if (vm.hasPeriod === true) {
                     CalendarService.updatePeriod(vm.period).then(function () {
                         $uibModalInstance.close();
-                    });
+                    })
+                    .catch(console.error)
+                    .then(function() { vm.isLoading = false; });
                 } else {
                     CalendarService.newPeriod(vm.period).then(function () {
                         $uibModalInstance.close();
-                    });
+                    })
+                    .catch(console.error)
+                    .then(function() { vm.isLoading = false; });
                 }
-
             };
 
             vm.cancel = function () {
@@ -384,7 +396,6 @@
             } else {
                 vm.canPermission = PermissionService.canPost('calendar');
             }
-
             vm.type = type;
             vm.regional = regional;
             vm.newRegister = {
@@ -408,16 +419,28 @@
 
                     vm.newRegister.regional = newRegional;
                 }
+                vm.isLoading = true;
 
                 CalendarService.postCalendar(vm.newRegister).then(function () {
                     $route.reload();
                     $uibModalInstance.close();
-                });
+                })
+                .catch(console.error)
+                .then(function() { vm.isLoading = false; });
             };
 
             vm.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
             };
+
+            vm.canSave = function() {
+                return _canSaveCalendar(vm.newRegister);
+            }
+        }
+
+        function _canSaveCalendar(newRegister) {
+            return newRegister.regional && newRegister.description 
+                && newRegister.init_date && newRegister.end_date;
         }
 
         function _permissions() {

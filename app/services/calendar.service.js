@@ -35,7 +35,6 @@
                         return n;
                     },
                     updateCalendar: function (calendar) {
-                        // put
                         var new_calendar = {
                             description: calendar.description,
                             regional: calendar.regional,
@@ -44,29 +43,13 @@
                             highlight: calendar.highlight
                         };
 
-                        var deferred = $q.defer();
-
-                        $http.put(apiUrl + '/calendar/' + calendar.id, new_calendar)
-                            .then(function (data) {
-                                deferred.resolve(data);
-                            });
-                        return deferred.promise;
+                        return $http.put(apiUrl + '/calendar/' + calendar.id, new_calendar);
                     },
                     postCalendar: function (data) {
-                        // post
-                        var deferred = $q.defer();
-                        $http.post(apiUrl + '/calendar', data).then(function (data) {
-                            deferred.resolve(data);
-                        });
-                        return deferred.promise;
+                        return $http.post(apiUrl + '/calendar', data);
                     },
                     removeCalendar: function (id) {
-                        // del
-                        var deferred = $q.defer();
-                        $http.delete(apiUrl + '/calendar' + '/' + id).then(function (data) {
-                            deferred.resolve(data);
-                        });
-                        return deferred.promise;
+                        return $http.delete(apiUrl + '/calendar' + '/' + id);
                     },
                     convertMonthStr: function (period) {
                         var months = [
@@ -121,13 +104,8 @@
                             regional: parseInt(period.regional)
                         };
                         //var serializeObject = new SerializeService(new_period);
-                        var deferred = $q.defer();
 
-                        $http.put(apiUrl + '/period/' + period.id, new_period).then(function (data) {
-                            deferred.resolve(data);
-                        });
-
-                        return deferred.promise;
+                        return $http.put(apiUrl + '/period/' + period.id, new_period);
                     },
                     newPeriod: function (period) {
 
@@ -138,14 +116,7 @@
                             year: period.year,
                             regional: parseInt(period.regional)
                         };
-                        //var serializeObject = new SerializeService(new_period);
-                        var deferred = $q.defer();
-
-                        $http.post(apiUrl + '/period/', new_period).then(function (data) {
-                            deferred.resolve(data);
-                        });
-
-                        return deferred.promise;
+                        return $http.post(apiUrl + '/period/', new_period);
                     }
                 };
             });
