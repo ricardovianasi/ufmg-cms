@@ -216,6 +216,13 @@
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionUser
+                            }, {
+                                icon: 'fa fa-bars',
+                                name: 'Novo Menu',
+                                location: 'new-menu',
+                                isActive: false,
+                                isOpen: false,
+                                enabled: hasPermissionMenu
                             }]);
                         });
                     return defer.promise;

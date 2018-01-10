@@ -42,6 +42,7 @@
         'indexModule',
         'mediaModule',
         'menuModule',
+        'newMenuModule',
         'newsModule',
         'pagesModule',
         'periodicalModule',
