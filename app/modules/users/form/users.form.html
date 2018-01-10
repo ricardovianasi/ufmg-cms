@@ -38,7 +38,7 @@
         </a>
     </li>
 </ul>
-<form class="form" name="formUsers" novalidate ng-submit="vm.save(formUsers.$valid)">
+<form class="form" name="formUsers" ng-submit="vm.save(formUsers.$valid)" novalidate>
     <div class="tab-pane tab-content" ng-if="vm.isActive(1)">
         <div class="row">
             <ng-include src="'modules/users/form/information/users.information.html'">
@@ -60,8 +60,9 @@
                 </a>
             </div>
             <div class="col-md-2 col-md-offset-8">
-                <button type="submit" class="btn btn-secondary btn-lg">
-                    <i class="fa fa-check"></i> Salvar Usuário
+                <button type="submit" ng-disabled="vm.isLoading" class="btn btn-secondary btn-lg">
+                    <i class="fa fa-check"></i> 
+                    {{vm.isLoading ? 'Salvando ...' : 'Salvar Usuário'}}
                 </button>
             </div>
         </div>

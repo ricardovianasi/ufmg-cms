@@ -191,13 +191,17 @@
             }
 
             _convertPrivilegesToSave();
-
+            vm.isLoading = true;
             if (userId) {
                 UsersService
                     .updateUser(vm.user)
                     .then(function () {
                         $location.path('/user');
                         NotificationService.success('Usuário alterado com sucesso!');
+                    })
+                    .catch(console.error)
+                    .then(function () {
+                        vm.isLoading = false;
                     });
             } else {
                 UsersService
@@ -205,6 +209,10 @@
                     .then(function () {
                         $location.path('/user');
                         NotificationService.success('Usuário salvo com sucesso!');
+                    })
+                    .catch(console.error)
+                    .then(function () {
+                        vm.isLoading = false;
                     });
             }
         }

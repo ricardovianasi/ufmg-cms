@@ -158,15 +158,25 @@
         function _save() {
             _verifyType();
 
+            vm.isLoading = true;
+
             if (id) {
                 faqService.update(vm.faq).then(function () {
                     NotificationService.success('FAQ alterado com sucesso!');
                     $location.path('/faq');
+                })
+                .catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;                    
                 });
             } else {
                 faqService.save(vm.faq).then(function () {
                     NotificationService.success('FAQ salvo com sucesso!');
                     $location.path('/faq');
+                })
+                .catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;                    
                 });
             }
         }
