@@ -287,7 +287,7 @@
                     }
                     $uibModalInstance.close();
                 })
-                .catch(function (){console.error})
+                .catch(console.error)
                 .then(function() { vm.isLoading = false; });
             };
 
@@ -297,7 +297,7 @@
 
             vm.canSave = function() {
                 return _canSaveCalendar(vm.newRegister);
-            }
+            };
         }
 
         function _ModalCalendarSchoolDaysCtrl($scope, $http, $uibModalInstance, schoolDays, regional, validationService) {
@@ -435,12 +435,12 @@
 
             vm.canSave = function() {
                 return _canSaveCalendar(vm.newRegister);
-            }
+            };
         }
 
         function _canSaveCalendar(newRegister) {
-            return newRegister.regional && newRegister.description 
-                && newRegister.init_date && newRegister.end_date;
+            return newRegister.regional && newRegister.description && 
+            newRegister.init_date && newRegister.end_date;
         }
 
         function _permissions() {

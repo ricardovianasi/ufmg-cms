@@ -184,8 +184,8 @@
                     NotificationService.success('Menu salvo com sucesso!');
                     vm.dtInstance.DataTable.draw();
                 })
-                .catch(function() {console.error})
-                .then(function() { vm[loadingType] = false; })
+                .catch(console.error)
+                .then(function() { vm[loadingType] = false; });
         }
 
         function _newGroup(type) {
