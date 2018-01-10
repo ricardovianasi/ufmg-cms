@@ -34,7 +34,7 @@ postConfig () {
     gulp dev
 }
 
-REPOSITORY_UFMG_CMS='http://cajuri.bu.ufmg.br:8789/web/ufmg-cms.git';
+REPOSITORY_UFMG_CMS='http://150.164.180.61:8789/web/ufmg-cms.git';
 FOLDER_UFMG_CMS='ufmg-cms';
 
 gitClone
