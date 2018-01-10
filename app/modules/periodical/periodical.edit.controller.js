@@ -111,12 +111,16 @@
             delete _data.url;
             delete _data.scheduled_date;
             delete _data.scheduled_time;
-
+            vm.isLoading = true;
             PeriodicalService
                 .updatePeriodical($routeParams.id, _data)
                 .then(function () {
                     NotificationService.success('Publicação atualizada com sucesso.');
                     $location.path('/periodical');
+                })
+                .catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;
                 });
         }
     }

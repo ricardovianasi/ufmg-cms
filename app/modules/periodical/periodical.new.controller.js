@@ -82,12 +82,16 @@
             var _data = angular.copy(data);
 
             delete _data.url;
-
+            vm.isLoading = true;
             PeriodicalService
                 .newPeriodical(_data)
                 .then(function () {
                     NotificationService.success('Publicação criada com sucesso.');
                     $location.path('/periodical');
+                })
+                .catch(console.error)
+                .then(function() {
+                    vm.isLoading = false;
                 });
         }
     }
