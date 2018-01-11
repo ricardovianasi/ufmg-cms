@@ -1,3 +1,9 @@
+$primary-background: rgba(44, 46, 47, .1);
+$secondary-background: rgba(44, 46, 47, .3);
+$tertiary-background: rgba(44, 46, 47, .6);
+
+$border-item: 1px solid rgba(44, 46, 47, 0.52);
+
 .panel-main
     border: 1px solid rgba(0, 0, 0, .34)
     margin-bottom: 30px;
@@ -16,17 +22,30 @@
             &.main
                 padding: 0;
         .list .name
-            border: 1px solid rgba(44, 46, 47, 0.52);
+            border: $border-item;
             padding: 1em;
-            cursor: move;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
         .list > .item
             &.primary > .name
-                background-color: rgba(44, 46, 47, .1);
+                background-color: $primary-background;
             &.secondary > .name
-                background-color: rgba(44, 46, 47, .3);
+                background-color: $secondary-background;
             &.tertiary > .name
-                background-color: rgba(44, 46, 47, .6);
+                background-color: $tertiary-background;
 
+.placeholder-primary
+    background-color: $primary-background;
+    border: $border-item;
+    height: 30px;
+    
+.placeholder-secondary
+    background-color: $secondary-background;
+    border: $border-item;
+    height: 30px;
 
+.placeholder-tertiary
+    background-color: $tertiary-background;
+    border: $border-item;
+    height: 30px;

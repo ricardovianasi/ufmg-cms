@@ -16,17 +16,43 @@
         , PermissionService
         , MenuService
         ) {
-        var vm = this;
-        
+        var vm = this;        
 
         activate();
 
         ////////////////
 
-        function initConfigSortable() {
-            vm.sortableOptions = {
-                connectWith: '.list'
+        function _baseConfigSortable() {
+            return {
+                connectWith: '.list',
+                dropOnEmpty: true,
+                cursor: 'move'
+            };
+        }
+
+        function _setOptionsSortable(placeholder) {
+            var options = _baseConfigSortable();
+            if(placeholder) {
+                options.placeholder = placeholder;
             }
+            console.log(options);
+            return options;
+        }
+
+        function _setOptions() {
+            vm.optionsSortable = _setOptionsSortable();
+        }
+
+        function _setOptionsPrimary() {
+            vm.optionsSortablePrimary = _setOptionsSortable('placeholder-primary');
+        }
+
+        function _setOptionsSecondary() {
+            vm.optionsSortableSecondary = _setOptionsSortable('placeholder-secondary');
+        }
+
+        function _setOptionsTertiary() {
+            vm.optionsSortableTertiary = _setOptionsSortable('placeholder-tertiary');
         }
 
         function initMock() {
@@ -127,9 +153,13 @@
             console.log(vm.items);
         }
 
+        
         function activate() {
             initMock();
-            initConfigSortable();
+            _setOptions();
+            _setOptionsPrimary();
+            _setOptionsSecondary();
+            _setOptionsTertiary();
         }
     }
 })();

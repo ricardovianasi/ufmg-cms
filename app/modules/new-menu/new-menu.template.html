@@ -35,19 +35,19 @@
                 </h2>
             </div>
             <div class="menu-content">
-                <ul ui-sortable="newMenu.sortableOptions" class="list main" ng-model="newMenu.items">
+                <ul ui-sortable="newMenu.optionsSortablePrimary" class="list main" ng-model="newMenu.items">
                     <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id">
                         <h4 class="name">
                             {{ itemPrimary.label }}
                             <i class="fa fa-th" aria-hidden="true"></i>
                         </h4>
-                        <ul ui-sortable="newMenu.sortableOptions" class="list" ng-model="itemPrimary.children">
+                        <ul ui-sortable="newMenu.optionsSortableSecondary" class="list" ng-model="itemPrimary.children">
                             <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
                                 <h4 class="name">
                                     {{ itemSecondary.label }}
                                     <i class="fa fa-th" aria-hidden="true"></i>
                                 </h4>
-                                <ul ui-sortable="newMenu.sortableOptions" class="list" ng-model="itemSecondary.children">
+                                <ul ui-sortable="newMenu.optionsSortableTertiary" class="list" ng-model="itemSecondary.children">
                                     <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
                                         <h4 class="name">
                                             {{ itemTertiary.label }}
