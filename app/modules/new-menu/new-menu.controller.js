@@ -58,7 +58,7 @@
 
         function _updateSortable(event, ui) {
             console.log('_update', event, ui);
-            console.log('model', vm.items);
+            console.log('model', vm.items, vm.pages);
         }
 
         function initMock() {

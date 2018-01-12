@@ -37,22 +37,58 @@
                 <div class="info">Altere as ordens arrastando os itens.</div>                
                 <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list main list-no-style-type" ng-model="newMenu.items">
                     <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id">
-                        <h4 class="name">
-                            <i class="fa fa-th" aria-hidden="true"></i>
-                            {{ itemPrimary.label }}
-                        </h4>
+                        <div class="name">
+                            <span class="text">
+                                <i class="fa fa-th" aria-hidden="true"></i>
+                                {{ itemPrimary.label }}
+                            </span>
+                            <span class="actions">
+                                <button class="btn btn-link">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-link btn-remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <button class="btn btn-link">
+                                    <i class="fa fa-arrow-down"></i>
+                                </button>
+                            </span>
+                        </div>
                         <ul ui-sortable="newMenu.optionsSortableSecondary" class="list list-no-style-type" ng-model="itemPrimary.children">
                             <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
-                                <h4 class="name">
-                                    <i class="fa fa-th" aria-hidden="true"></i>
-                                    {{ itemSecondary.label }}
-                                </h4>
+                                <div class="name">
+                                    <span class="text">
+                                        <i class="fa fa-th" aria-hidden="true"></i>
+                                        <span class="text">{{ itemSecondary.label }}</span>
+                                    </span>
+                                    <span class="actions">
+                                        <button class="btn btn-link">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-link btn-remove">
+                                            <i class="fa fa-times"></i>                                    
+                                        </button>
+                                        <button class="btn btn-link">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </button>
+                                    </span>
+                                </div>
                                 <ul ui-sortable="newMenu.optionsSortableTertiary" class="list list-no-style-type" ng-model="itemSecondary.children">
                                     <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
-                                        <h4 class="name">
-                                            <i class="fa fa-th" aria-hidden="true"></i>
-                                            {{ itemTertiary.label }}
-                                        </h4>
+                                        <div class="name">
+                                            <span class="text">
+                                                <i class="fa fa-th" aria-hidden="true"></i>
+                                                {{ itemTertiary.label }}
+                                            </span>
+                                            <span class="actions">
+                                                <button class="btn btn-link">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-link btn-remove">
+                                                    <i class="fa fa-times"></i>                                    
+                                                </button>
+                                            </span>
+                                        </div>
                                     </li>
                                 </ul>
                             </li>
@@ -67,12 +103,35 @@
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
                     <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false">
                 </div>
-                <ul ui-sortable="newMenu.optionsSortable" class="container-list list-page-add list-no-style-type" ng-model="newMenu.pages">
+                <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list-page-add list-no-style-type" ng-model="newMenu.pages">
                     <li class="page" ng-repeat="page in newMenu.pages track by page.id">
                         {{ page.label }}
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="menu-footer">
+            <button class="btn btn-success btn-lg">
+                <i class="fa fa-check"></i> 
+                Salvar Alterações
+            </button>
+        </div>
+    </div>
+    <div class="panel-main">
+        <div class="menu-header">
+            <h2 class="title">
+                <i class="fa fa-location-arrow"></i>
+                Menu de Acesso Rápido
+            </h2>
+        </div>
+        <div class="menu-content">
+
+        </div>
+        <div class="menu-footer">
+            <button class="btn btn-success btn-lg">
+                <i class="fa fa-check"></i> 
+                Salvar Alterações
+            </button>
         </div>
     </div>
 </div>

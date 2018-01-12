@@ -19,6 +19,16 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
         padding: 5px;
         display: flex;
         justify-content: space-around;
+    .menu-footer
+        display: flex;
+        background-color: rgba(44, 46, 47, .1);
+        padding: 5px;
+        margin-top: 5px;
+        justify-content: center;
+    
+    .menu-footer > .btn
+        margin: 0;
+
 
     .menu-content > .items-main
         border: 1px solid #c5c0c0;
@@ -27,16 +37,24 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
         .list
             min-height: 5px;
         .list .name
+            display: flex;
+            justify-content: space-between;
             border: $border-item;
             padding: 1em;
             padding-left: 0.2em;
             cursor: pointer;
-            display: flex;
+            font-size: 1em;            
+            .fa, .text, .actions
+                align-self: center;
+            .btn
+                margin: 0;
+            .btn-remove
+                &:hover
+                    color: #65171c;
         .list .name > .fa
             padding-right: 5px;
         .list > .item
-            .name
-                font-size: 1em;
+            margin: 10px 0;
             &.primary > .name
                 background-color: $primary-background;
             &.secondary > .name
@@ -61,7 +79,7 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
 
 
 .container-list
-    max-height: 80vh;
+    max-height: 70vh;
     overflow: overlay;
     padding: 0 20px 0 0;
 
