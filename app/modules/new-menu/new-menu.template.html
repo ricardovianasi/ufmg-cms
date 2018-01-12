@@ -36,7 +36,7 @@
             <div class="items-main">
                 <div class="info">Altere as ordens arrastando os itens.</div>                
                 <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list main list-no-style-type" ng-model="newMenu.items">
-                    <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id">
+                    <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
                         <div class="name">
                             <span class="text">
                                 <i class="fa fa-th" aria-hidden="true"></i>
@@ -49,12 +49,13 @@
                                 <button class="btn btn-link btn-remove">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                <button class="btn btn-link">
-                                    <i class="fa fa-arrow-down"></i>
+                                <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link">
+                                    <i ng-show="!newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-down"></i>
+                                    <i ng-show="newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-up"></i>
                                 </button>
                             </span>
                         </div>
-                        <ul ui-sortable="newMenu.optionsSortableSecondary" class="list list-no-style-type" ng-model="itemPrimary.children">
+                        <ul ng-show="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" ui-sortable="newMenu.optionsSortableSecondary" class="list list-no-style-type" ng-model="itemPrimary.children">
                             <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
                                 <div class="name">
                                     <span class="text">

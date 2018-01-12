@@ -16,7 +16,12 @@
         , PermissionService
         , MenuService
         ) {
-        var vm = this;        
+        var vm = this;
+
+        vm.isEmpty = _isEmpty;
+        vm.listCanShow = _listCanShow;
+        vm.toggle = _toggle;
+        vm.isOpen = _isOpen;
 
         activate();
 
@@ -169,8 +174,25 @@
             ]
         }
 
-        
+        function _isEmpty(list) {
+            return list ? !list.length : true;
+        }
+
+        function _listCanShow(parentId, list) {
+            return vm.stateToggles[parentId] || _isEmpty(list);
+        }
+
+        function _toggle(id) {
+            vm.stateToggles[id] = !vm.stateToggles[id];
+            console.log(vm.stateToggles);
+        }
+
+        function _isOpen(id) {
+            return vm.stateToggles[id];
+        }
+
         function activate() {
+            vm.stateToggles = {};
             initMock();
             initMockPages();
             _setOptions();
