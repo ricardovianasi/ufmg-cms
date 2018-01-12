@@ -70,7 +70,7 @@
                                     ng-model="pageFilter">
                             </div>
                             <ul class="menu-side selectable" ui-sortable="vm.sortableOptions" ng-model="vm.pages">
-                                <li class="list-group-item" ng-repeat="item in vm.pages">{{ item.label }}
+                                <li class="list-group-item" ng-repeat="item in vm.pages track by $index">{{ item.label }}
                                 </li>
                             </ul>
                         </div>

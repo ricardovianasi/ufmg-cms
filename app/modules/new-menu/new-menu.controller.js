@@ -26,7 +26,8 @@
             return {
                 connectWith: '.list',
                 dropOnEmpty: true,
-                cursor: 'move'
+                cursor: 'move',
+                update: _updateSortable
             };
         }
 
@@ -53,6 +54,11 @@
 
         function _setOptionsTertiary() {
             vm.optionsSortableTertiary = _setOptionsSortable('placeholder-tertiary');
+        }
+
+        function _updateSortable(event, ui) {
+            console.log('_update', event, ui);
+            console.log('model', vm.items);
         }
 
         function initMock() {
@@ -153,9 +159,20 @@
             console.log(vm.items);
         }
 
+        function initMockPages() {
+            vm.pages = [
+                { label: 'Belo Horizonte', id: 1, children: [] },
+                { label: 'Contato', id: 2, children: [] },
+                { label: 'Restaurantes', id: 3, children: [] },
+                { label: 'Segurança nos Campi', id: 4, children: [] },
+                { label: 'Auditórios', id: 5, children: [] }
+            ]
+        }
+
         
         function activate() {
             initMock();
+            initMockPages();
             _setOptions();
             _setOptionsPrimary();
             _setOptionsSecondary();

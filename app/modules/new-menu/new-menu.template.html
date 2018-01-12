@@ -25,33 +25,33 @@
 </div>
 <!-- can-get="!canPut('menu')" -->
 <div id="new-menu-panel" class="row" >
-
-    <div class="col-xs-12">
-        <div class="panel-main">
-            <div class="menu-header">
-                <h2 class="title">
-                    <i class="fa fa-bars"></i>
-                    Menu Principal
-                </h2>
-            </div>
-            <div class="menu-content">
-                <ul ui-sortable="newMenu.optionsSortablePrimary" class="list main" ng-model="newMenu.items">
+    <div class="panel-main">
+        <div class="menu-header">
+            <h2 class="title">
+                <i class="fa fa-bars"></i>
+                Menu Principal
+            </h2>
+        </div>
+        <div class="menu-content">
+            <div class="items-main">
+                <div class="info">Altere as ordens arrastando os itens.</div>                
+                <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list main list-no-style-type" ng-model="newMenu.items">
                     <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id">
                         <h4 class="name">
-                            {{ itemPrimary.label }}
                             <i class="fa fa-th" aria-hidden="true"></i>
+                            {{ itemPrimary.label }}
                         </h4>
-                        <ul ui-sortable="newMenu.optionsSortableSecondary" class="list" ng-model="itemPrimary.children">
+                        <ul ui-sortable="newMenu.optionsSortableSecondary" class="list list-no-style-type" ng-model="itemPrimary.children">
                             <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
                                 <h4 class="name">
-                                    {{ itemSecondary.label }}
                                     <i class="fa fa-th" aria-hidden="true"></i>
+                                    {{ itemSecondary.label }}
                                 </h4>
-                                <ul ui-sortable="newMenu.optionsSortableTertiary" class="list" ng-model="itemSecondary.children">
+                                <ul ui-sortable="newMenu.optionsSortableTertiary" class="list list-no-style-type" ng-model="itemSecondary.children">
                                     <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
                                         <h4 class="name">
-                                            {{ itemTertiary.label }}
                                             <i class="fa fa-th" aria-hidden="true"></i>
+                                            {{ itemTertiary.label }}
                                         </h4>
                                     </li>
                                 </ul>
@@ -59,58 +59,20 @@
                         </ul>
                     </li>
                 </ul>
-
-                <!-- <ul class="list main">
-                    <li class="item primary">
-                        <h4 class="name">A Universidade <i class="fa fa-th" aria-hidden="true"></i></h4>
-                        <ul class="list">
-                            <li class="item secondary">
-                                <h4 class="name">Apresentação <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                <ul class="list">
-                                    <li class="item tertiary">
-                                        <h4 class="name">UFMG e a Cidade <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                    </li>
-                                </ul>                               
-                            </li>
-                        </ul>
+            </div>
+            <div class="triangle-left"></div>
+            <div class="search-page">
+                <div class="info">Arraste a pagina para a esquerda.</div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false">
+                </div>
+                <ul ui-sortable="newMenu.optionsSortable" class="container-list list-page-add list-no-style-type" ng-model="newMenu.pages">
+                    <li class="page" ng-repeat="page in newMenu.pages track by page.id">
+                        {{ page.label }}
                     </li>
-                    <li class="item primary">
-                        <h4 class="name">Cursos <i class="fa fa-th" aria-hidden="true"></i></h4>
-                        <ul class="list">
-                            <li class="item secondary">
-                                <h4 class="name">Graduação <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                <ul class="list"></ul>
-                            </li>
-                            <li class="item secondary">
-                                <h4 class="name">Pós Graduação <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                <ul class="list">
-                                    <li class="item tertiary">
-                                        <h4 class="name">Especialização <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                    </li>
-                                    <li class="item tertiary">
-                                        <h4 class="name">Mestrado <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                    </li>
-                                </ul>                                  
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item primary">
-                        <h4 class="name">Pesquisa e Inovação <i class="fa fa-th" aria-hidden="true"></i></h4>
-                        <ul class="list">
-                            <li class="item secondary">
-                                <h4 class="name">Extensão <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                <ul class="list">
-                                    <li class="item tertiary">
-                                        <h4 class="name">Especialização e Produção Científica <i class="fa fa-th" aria-hidden="true"></i></h4>
-                                    </li>
-                                </ul>                             
-                            </li>
-                        </ul>
-                    </li>
-                </ul> -->
+                </ul>
             </div>
         </div>
     </div>
-
-
 </div>

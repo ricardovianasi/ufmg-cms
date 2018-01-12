@@ -16,24 +16,61 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
             margin-top: 0;
             font-size: 1.5em;
     .menu-content
-        padding: 5px
+        padding: 5px;
+        display: flex;
+        justify-content: space-around;
+
+    .menu-content > .items-main
+        border: 1px solid #c5c0c0;
+        padding: 5px;
+        flex: 0.6;
         .list
-            list-style-type: none;
-            &.main
-                padding: 0;
+            min-height: 5px;
         .list .name
             border: $border-item;
             padding: 1em;
+            padding-left: 0.2em;
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
+        .list .name > .fa
+            padding-right: 5px;
         .list > .item
+            .name
+                font-size: 1em;
             &.primary > .name
                 background-color: $primary-background;
             &.secondary > .name
                 background-color: $secondary-background;
             &.tertiary > .name
                 background-color: $tertiary-background;
+
+    .menu-content > .search-page
+        border: 1px solid #c5c0c0;
+        .list-page-add
+            padding: 0;
+            margin: 0 5px;
+            .page
+                margin: 5px;
+                border-radius: 5px;
+                padding: 5px;
+                font-weight: bold;
+                background-color: #d7d9e0;
+                &:hover
+                    background-color: #b0b2bd;
+                    cursor: pointer;
+
+
+.container-list
+    max-height: 80vh;
+    overflow: overlay;
+    padding: 0 20px 0 0;
+
+.info
+    padding: 5px;
+    color: #979898;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
 
 .placeholder-primary
     background-color: $primary-background;

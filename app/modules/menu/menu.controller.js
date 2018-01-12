@@ -52,6 +52,8 @@
         };
 
         function _updateSortable(event, ui) {
+            console.log('_updateSortable', event, ui);
+            console.log('_updateSortable', vm.pages);
             if (!ui.item.sortable.received) {
                 var originNgModel = ui.item.sortable.sourceModel;
                 var itemModel = originNgModel[ui.item.sortable.index];
