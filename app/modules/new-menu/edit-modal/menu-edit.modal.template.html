@@ -18,7 +18,7 @@
             <label for="">Aninhado em: </label>            
             <select ng-disabled="!vm.isNested" name="" id="" class="form-control" ng-model="vm.idSelectedParent">
                 <option ng-show="vm.isNested" ng-value="null">Selecione um nivel para aninhar</option>
-                <option ng-disabled="optionItem.level === 3" ng-repeat="optionItem in vm.listOptions track by optionItem.id" ng-value="optionItem.id">
+                <option ng-disabled="!vm.canNested(optionItem)" ng-repeat="optionItem in vm.listOptions track by optionItem.id" ng-value="optionItem.id">
                     {{ optionItem.level === 2 ? '&nbsp; &nbsp;' : '' }}
                     {{ optionItem.level === 3 ? '&nbsp; &nbsp; &nbsp; &nbsp;' : '' }}
                     {{ optionItem.label }}

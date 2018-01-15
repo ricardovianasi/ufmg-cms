@@ -12,6 +12,7 @@
         vm.dismiss = _dismiss;
         vm.changeCheckBox = _changeCheckBox;
         vm.saveItem = _saveItem;
+        vm.canNested = _canNested;
 
         activate();
 
@@ -19,6 +20,10 @@
 
         function _dismiss() {
             $uibModalInstance.dismiss('Canceled');
+        }
+
+        function _canNested(optionItem) {
+            return optionItem.level !== 3 && optionItem.id !== item.id;
         }
 
         function _saveItem() {
