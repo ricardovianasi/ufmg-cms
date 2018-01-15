@@ -28,7 +28,7 @@
 
         function _saveItem() {
             _updateList();
-            _clearListParamsNotUsed();
+            // _clearListParamsNotUsed();
             $uibModalInstance.close(listSelect);
         }
 
@@ -46,12 +46,27 @@
             }
             var parentSelected = _getItemFromListOptions(vm.idSelectedParent);
             var itemFromOptions = _getItemFromListOptions(item.id);
+
+            _checkParentBecameChild(parentSelected);
+
             if(parentSelected) {
                 parentSelected.children.push(item);
             } else {
                 listSelect.push(itemFromOptions);
             }
             _removeItem(itemFromOptions);
+        }
+
+        function _checkParentBecameChild(parentSelected) {
+            var child = item.children.find(function(child) {
+                return child.id === parentSelected.id;
+            });
+            var indexChild = item.children.indexOf(child);
+            var isParentBecameChild = indexChild !== -1;
+            if(isParentBecameChild) {
+                item.children.splice(indexChild, 1);
+                listSelect.push(parentSelected);
+            }
         }
 
         function _clearListParamsNotUsed() {
