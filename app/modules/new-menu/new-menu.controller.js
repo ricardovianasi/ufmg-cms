@@ -24,6 +24,7 @@
         vm.toggle = _toggle;
         vm.isOpen = _isOpen;
         vm.editItem = _editItem;
+        vm.removeItem = _removeItemDialog;
 
         activate();
 
@@ -173,7 +174,27 @@
                 { label: 'Restaurantes', id: 3, children: [] },
                 { label: 'Segurança nos Campi', id: 4, children: [] },
                 { label: 'Auditórios', id: 5, children: [] }
-            ]
+            ];
+        }
+
+        function _removeItemDialog(item, parent) {
+            var title = 'Confirmar exclusão dos itens e seus subitens do menu?';
+            ModalService.confirm(title)
+            .result
+            .then(function() {
+                _removeItem(item, parent);
+            }).catch(function(error) { });
+        }
+
+        function _removeItem(item, parent) {
+            if(parent) {
+                var idxItem = parent.children.indexOf(item);
+                parent.children.splice(idxItem, 1);
+            } else {
+                var idxItem = vm.items.indexOf(item);
+                vm.items.splice(idxItem, 1);
+            }
+
         }
 
         function _editItem(item, parent) {

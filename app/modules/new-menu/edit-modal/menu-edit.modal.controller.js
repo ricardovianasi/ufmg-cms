@@ -44,7 +44,7 @@
             if(parentSelected) {
                 parentSelected.children.push(item);
             } else {
-                listSelect.push(itemFromOptions)
+                listSelect.push(itemFromOptions);
             }
             _removeItem(itemFromOptions);
         }
@@ -58,7 +58,7 @@
 
         function _getItemFromListOptions(idItem) {
             return vm.listOptions.find(function (value) {
-                return value.id == idItem;
+                return value.id === idItem;
             });
         }
 
@@ -93,11 +93,11 @@
         function _initSelect() {
             vm.listOptions = [];
             listSelect.forEach(function (optPrimary) {
-                _addItem(optPrimary, 1)
+                _addItem(optPrimary, 1);
                 optPrimary.children.forEach(function (optSecondary) {
-                    _addItem(optSecondary, 2, optPrimary)
+                    _addItem(optSecondary, 2, optPrimary);
                     optSecondary.children.forEach(function (optTertiary) {
-                        _addItem(optTertiary, 3, optSecondary)
+                        _addItem(optTertiary, 3, optSecondary);
                     });
                 });
             });
