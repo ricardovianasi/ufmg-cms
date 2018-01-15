@@ -43,7 +43,7 @@
                                 {{ itemPrimary.label }}
                             </span>
                             <span class="actions">
-                                <button class="btn btn-link">
+                                <button class="btn btn-link" ng-click="newMenu.editItem(itemPrimary)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
                                 <button class="btn btn-link btn-remove">
@@ -63,14 +63,11 @@
                                         <span class="text">{{ itemSecondary.label }}</span>
                                     </span>
                                     <span class="actions">
-                                        <button class="btn btn-link">
+                                        <button class="btn btn-link" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
                                             <i class="fa fa-pencil"></i>
                                         </button>
                                         <button class="btn btn-link btn-remove">
                                             <i class="fa fa-times"></i>                                    
-                                        </button>
-                                        <button class="btn btn-link">
-                                            <i class="fa fa-arrow-down"></i>
                                         </button>
                                     </span>
                                 </div>
@@ -82,7 +79,7 @@
                                                 {{ itemTertiary.label }}
                                             </span>
                                             <span class="actions">
-                                                <button class="btn btn-link">
+                                                <button class="btn btn-link" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
                                                     <i class="fa fa-pencil"></i>
                                                 </button>
                                                 <button class="btn btn-link btn-remove">

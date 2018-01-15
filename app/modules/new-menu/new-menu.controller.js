@@ -15,6 +15,7 @@
         , ModalService
         , PermissionService
         , MenuService
+        , $uibModal
         ) {
         var vm = this;
 
@@ -22,6 +23,7 @@
         vm.listCanShow = _listCanShow;
         vm.toggle = _toggle;
         vm.isOpen = _isOpen;
+        vm.editItem = _editItem;
 
         activate();
 
@@ -174,6 +176,28 @@
             ]
         }
 
+        function _editItem(item, parent) {
+            _openEditMenu(item, parent);
+        }
+
+        function _openEditMenu(itemMenu, itemParent) {
+            var instanceModal = $uibModal.open({
+                templateUrl: 'modules/new-menu/edit-modal/menu-edit.modal.template.html',
+                controller: 'MenuEditController as vm',
+                scope: $scope,
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                    listSelect: function() { return angular.copy(vm.items) },
+                    item: function() { return angular.copy(itemMenu) },
+                    parent: function() { return angular.copy(itemParent) },
+                }
+            });
+            instanceModal.result.then(function(res) {
+                vm.items = res;
+            }).catch(function() {});
+        }
+
         function _isEmpty(list) {
             return list ? !list.length : true;
         }
@@ -184,7 +208,6 @@
 
         function _toggle(id) {
             vm.stateToggles[id] = !vm.stateToggles[id];
-            console.log(vm.stateToggles);
         }
 
         function _isOpen(id) {

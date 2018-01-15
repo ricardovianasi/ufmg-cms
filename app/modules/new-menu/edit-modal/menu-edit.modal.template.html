@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3 class=modal-title>Edição de Menu</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label for="">Nome: </label>
+            <input type="text" ng-model="vm.item.label" class="form-control">
+        </div>
+        <div class="col-md-12 form-group">
+            <div class="checkbox">
+                <label>
+                    <input ng-model="vm.isNested" ng-change="vm.changeCheckBox()" type="checkbox"> Aninhar
+                </label>
+            </div>
+        </div>
+        <div class="col-md-12 form-group">
+            <label for="">Aninhado em: </label>            
+            <select ng-disabled="!vm.isNested" name="" id="" class="form-control" ng-model="vm.idSelectedParent">
+                <option ng-show="vm.isNested" ng-value="null">Selecione um nivel para aninhar</option>
+                <option ng-disabled="optionItem.level === 3" ng-repeat="optionItem in vm.listOptions track by optionItem.id" ng-value="optionItem.id">
+                    {{ optionItem.level === 2 ? '&nbsp; &nbsp;' : '' }}
+                    {{ optionItem.level === 3 ? '&nbsp; &nbsp; &nbsp; &nbsp;' : '' }}
+                    {{ optionItem.label }}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="vm.dismiss()"><i class="fa fa-times"></i> Cancelar
+    </button>
+    <button class="btn btn-success" ng-click="vm.saveItem()"><i class="fa fa-check"></i> Alterar
+    </button>
+</div>
