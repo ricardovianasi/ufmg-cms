@@ -6,7 +6,7 @@
         .controller('MenuEditController', MenuEditController);
 
     /** ngInject */
-    function MenuEditController($scope, $uibModalInstance, listSelect, item, parent) {
+    function MenuEditController($uibModalInstance, listSelect, item, parent, isQuick) {
         var vm = this;
 
         vm.dismiss = _dismiss;
@@ -29,7 +29,7 @@
         function _saveItem() {
             _updateList();
             // _clearListParamsNotUsed();
-            $uibModalInstance.close(listSelect);
+            $uibModalInstance.close({list: listSelect, item: item});
         }
 
         function _changeCheckBox() {
@@ -41,15 +41,15 @@
         }
 
         function _updateList() {
-            if(parent && vm.idSelectedParent ===  parent.id) {
+            let hasModfied = (parent && vm.idSelectedParent !==  parent.id) || (!parent && vm.idSelectedParent);
+            if(!hasModfied || isQuick) {
                 return;
             }
             var parentSelected = _getItemFromListOptions(vm.idSelectedParent);
             var itemFromOptions = _getItemFromListOptions(item.id);
 
-            _checkParentBecameChild(parentSelected);
-
             if(parentSelected) {
+                _checkParentBecameChild(parentSelected);
                 parentSelected.children.push(item);
             } else {
                 listSelect.push(itemFromOptions);
@@ -125,9 +125,12 @@
 
         function activate() {
             vm.item = item;
-            _initSelect();
-            _setIsNested();
-            _setSelectParent();
+            vm.isQuick = isQuick;
+            if(!isQuick) {
+                _initSelect();
+                _setIsNested();
+                _setSelectParent();
+            }
         }
     }
 })();

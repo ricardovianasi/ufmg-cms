@@ -7,14 +7,14 @@
             <label for="">Nome: </label>
             <input type="text" ng-model="vm.item.label" class="form-control">
         </div>
-        <div class="col-md-12 form-group">
+        <div class="col-md-12 form-group" ng-show="!vm.isQuick">
             <div class="checkbox">
                 <label>
                     <input ng-model="vm.isNested" ng-change="vm.changeCheckBox()" type="checkbox"> Aninhar
                 </label>
             </div>
         </div>
-        <div class="col-md-12 form-group">
+        <div class="col-md-12 form-group" ng-show="!vm.isQuick">
             <label for="">Aninhado em: </label>            
             <select ng-disabled="!vm.isNested" name="" id="" class="form-control" ng-model="vm.idSelectedParent">
                 <option ng-show="vm.isNested" ng-value="null">Selecione um nivel para aninhar</option>

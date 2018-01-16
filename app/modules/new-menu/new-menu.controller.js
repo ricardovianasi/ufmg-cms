@@ -14,6 +14,7 @@
         , NotificationService
         , ModalService
         , PermissionService
+        , PagesService
         , MenuService
         , $uibModal
         ) {
@@ -30,151 +31,9 @@
 
         ////////////////
 
-        function _baseConfigSortable() {
-            return {
-                connectWith: '.list',
-                dropOnEmpty: true,
-                cursor: 'move',
-                update: _updateSortable
-            };
-        }
-
-        function _setOptionsSortable(placeholder) {
-            var options = _baseConfigSortable();
-            if(placeholder) {
-                options.placeholder = placeholder;
-            }
-            console.log(options);
-            return options;
-        }
-
-        function _setOptions() {
-            vm.optionsSortable = _setOptionsSortable();
-        }
-
-        function _setOptionsPrimary() {
-            vm.optionsSortablePrimary = _setOptionsSortable('placeholder-primary');
-        }
-
-        function _setOptionsSecondary() {
-            vm.optionsSortableSecondary = _setOptionsSortable('placeholder-secondary');
-        }
-
-        function _setOptionsTertiary() {
-            vm.optionsSortableTertiary = _setOptionsSortable('placeholder-tertiary');
-        }
-
         function _updateSortable(event, ui) {
             console.log('_update', event, ui);
             console.log('model', vm.items, vm.pages);
-        }
-
-        function initMock() {
-            vm.items = [
-                {
-                    id: 10,
-                    label: 'A Universidade',
-                    children: [
-                        {
-                            id: 11,
-                            label: 'Apresentação',
-                            children: [
-                                {
-                                    id: 111,
-                                    label: 'UFMG e a Cidade',
-                                    children: []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 20,
-                    label: 'Cursos',
-                    children: [
-                        {
-                            id: 21,
-                            label: 'Graduação',
-                            children: [ ]
-                        },
-                        {
-                            id: 22,
-                            label: 'Pós Graduação',
-                            children: [
-                                {
-                                    id: 221,
-                                    label: 'Especialização',
-                                    children: []
-                                },
-                                {
-                                    id: 222,
-                                    label: 'Mestrado',
-                                    children: []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 30,
-                    label: 'Pesquisa e Inovação',
-                    children: [
-                        {
-                            id: 31,
-                            label: 'Extensão',
-                            children: [
-                                {
-                                    id: 311,
-                                    label: 'Especialização e Produção Científica',
-                                    children: []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 40,
-                    label: 'Formas de Ingresso',
-                    children: [
-                        {
-                            id: 41,
-                            label: 'Ingresso em Graduação',
-                            children: []
-                        },
-                        {
-                            id: 42,
-                            label: 'Ingresso em Pós Graduação',
-                            children: []
-                        },
-                        {
-                            id: 43,
-                            label: 'Ingresso no Ensino Médio e Técnico',
-                            children: []
-                        },
-                        {
-                            id: 44,
-                            label: 'Ingresso no Ensino Fundamental',
-                            children: []
-                        },
-                        {
-                            id: 45,
-                            label: 'Ingresso na Educação de Jovens e Adultos',
-                            children: []
-                        }
-                    ]
-                }
-            ];
-            console.log(vm.items);
-        }
-
-        function initMockPages() {
-            vm.pages = [
-                { label: 'Belo Horizonte', id: 1, children: [] },
-                { label: 'Contato', id: 2, children: [] },
-                { label: 'Restaurantes', id: 3, children: [] },
-                { label: 'Segurança nos Campi', id: 4, children: [] },
-                { label: 'Auditórios', id: 5, children: [] }
-            ];
         }
 
         function _removeItemDialog(item, parent) {
@@ -197,26 +56,41 @@
 
         }
 
-        function _editItem(item, parent) {
-            _openEditMenu(item, parent);
+        function _editItem(item, parent, isQuickAccess) {
+            var instanceModal = _openEditMenu(item, parent, isQuickAccess);
+            instanceModal.result.then(function(res) {
+                let idxItem;
+                if(isQuickAccess) {
+                    _changeItemFromList(vm.itemsQuickAccess, res.item);
+                } else {
+                    vm.items = res.list;
+                    _changeItemFromList(vm.items, res.item);
+                }
+            }).catch(function() {});
         }
+        
 
-        function _openEditMenu(itemMenu, itemParent) {
+        function _openEditMenu(itemMenu, itemParent, isQuickAccess) {
             var instanceModal = $uibModal.open({
                 templateUrl: 'modules/new-menu/edit-modal/menu-edit.modal.template.html',
                 controller: 'MenuEditController as vm',
-                scope: $scope,
                 keyboard: false,
                 size: 'md',
                 resolve: {
-                    listSelect: function() { return angular.copy(vm.items) },
+                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm.items) },
                     item: function() { return angular.copy(itemMenu) },
                     parent: function() { return angular.copy(itemParent) },
+                    isQuick: function() { return isQuickAccess },
                 }
             });
-            instanceModal.result.then(function(res) {
-                vm.items = res;
-            }).catch(function() {});
+            return instanceModal;
+        }
+
+        function _changeItemFromList(list, item) {
+            let idxItem = list.findIndex(function(val) {
+                return val.id === item.id;
+            });
+            list[idxItem] = item;
         }
 
         function _isEmpty(list) {
@@ -235,14 +109,92 @@
             return vm.stateToggles[id];
         }
 
+        function _loadData(type) {
+            return MenuService.get(type);
+        }
+
+        function _loadQuickAccess() {
+            return _loadData('quickAccess')
+                .then(function (res) {
+                    vm.itemsQuickAccess = res.data.items;
+                    console.log('_loadQuickAccess', res);
+                });
+        }
+
+        function _loadMainMenu() {
+            return _loadData('mainMenu')
+                .then(function (res) {
+                    vm.items = res.data.items;
+                    console.log('_loadMainMenu', vm.items);
+                });
+        }
+
+        function _loadPages() {
+            PagesService.getPages()
+                .then(function(res) {
+                    let pagesMod = _preparePages(res.data.items);
+                    vm.pages = _filterPagesNotIndexed(vm.items, pagesMod);
+                    vm.pagesQuick = _filterPagesNotIndexed(vm.itemsQuickAccess, pagesMod);
+                    console.log(vm.pages, vm.pagesQuick);
+                });
+        }
+
+        function _preparePages(pagesItems) {
+            return pagesItems.map(function(value) {
+                return _cretateItemFromPage(value);
+            });
+        }
+        
+        function _filterPagesNotIndexed(listTo, pagesMod) {
+            return pagesMod.filter(function (val) {
+                return !_hasIndexed(listTo, val.page.id);
+            });
+        }
+
+        function _hasIndexed(listTo, idPage) {
+            let idx = listTo.findIndex(function (item) {
+                return item.page.id === idPage;
+            });
+            return idx === -1 ? false : true;
+        }
+
+        function _cretateItemFromPage(value) {
+            return {
+                children: [],
+                label: value.title,
+                page: value,
+                target_blank: null,
+                external_url: null,
+                id: Date.now().toString() + value.id
+            };
+        }
+
+        function _setOptionsSortable(placeholder) {
+            var options = _baseConfigSortable();
+            if(placeholder) {
+                options.placeholder = placeholder;
+            }
+            return options;
+        }
+
+        function _baseConfigSortable() {
+            return {
+                connectWith: '.list',
+                dropOnEmpty: true,
+                cursor: 'move',
+                update: _updateSortable
+            };
+        }
+
         function activate() {
             vm.stateToggles = {};
-            initMock();
-            initMockPages();
-            _setOptions();
-            _setOptionsPrimary();
-            _setOptionsSecondary();
-            _setOptionsTertiary();
+            vm.optionsSortable = _setOptionsSortable();
+            vm.optionsSortablePrimary = _setOptionsSortable('placeholder-primary');
+            vm.optionsSortableSecondary = _setOptionsSortable('placeholder-secondary');
+            vm.optionsSortableTertiary = _setOptionsSortable('placeholder-tertiary');
+            $q.all([_loadMainMenu(), _loadQuickAccess()]).then(function() {
+                _loadPages();
+            });
         }
     }
 })();

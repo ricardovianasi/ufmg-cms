@@ -202,6 +202,7 @@
 
         function _populateMenus() {
             angular.forEach(menus, function (value, type) {
+                console.log('_populateMenus', value, type);
                 MenuService.get(type).then(function (data) {
                     menus[type] = data.data.items;
                     $scope.menus[type] = [];

@@ -34,9 +34,9 @@
         </div>
         <div class="menu-content">
             <div class="items-main">
-                <div class="info">Altere as ordens arrastando os itens.</div>                
+                <div class="info">Altere a ordem arrastando os itens.</div>                
                 <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list main list-no-style-type" ng-model="newMenu.items">
-                    <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by itemPrimary.id" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
+                    <li class="item primary" ng-repeat="itemPrimary in newMenu.items track by $index" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
                         <div class="name">
                             <span class="text">
                                 <i class="fa fa-th" aria-hidden="true"></i>
@@ -56,7 +56,7 @@
                             </span>
                         </div>
                         <ul ng-show="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" ui-sortable="newMenu.optionsSortableSecondary" class="list list-no-style-type" ng-model="itemPrimary.children">
-                            <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
+                            <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by $index" ng-init="newMenu.stateToggle[itemSecondary.id] = false">
                                 <div class="name">
                                     <span class="text">
                                         <i class="fa fa-th" aria-hidden="true"></i>
@@ -69,10 +69,14 @@
                                         <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem(itemSecondary, itemPrimary)">
                                             <i class="fa fa-times"></i>                                    
                                         </button>
+                                        <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link">
+                                            <i ng-show="!newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-down"></i>
+                                            <i ng-show="newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-up"></i>
+                                        </button>
                                     </span>
                                 </div>
-                                <ul ui-sortable="newMenu.optionsSortableTertiary" class="list list-no-style-type" ng-model="itemSecondary.children">
-                                    <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
+                                <ul ng-show="newMenu.listCanShow(itemSecondary.id, itemSecondary.children)" ui-sortable="newMenu.optionsSortableTertiary" class="list list-no-style-type" ng-model="itemSecondary.children">
+                                    <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by $index">
                                         <div class="name">
                                             <span class="text">
                                                 <i class="fa fa-th" aria-hidden="true"></i>
@@ -99,10 +103,10 @@
                 <div class="info">Arraste a pagina para a esquerda.</div>
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Procurar..." ng-trim="false">
+                    <input type="text" ng-model="qPagesQuick.label" class="form-control" placeholder="Procurar..." ng-trim="false">
                 </div>
                 <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list-page-add list-no-style-type" ng-model="newMenu.pages">
-                    <li class="page" ng-repeat="page in newMenu.pages track by page.id">
+                    <li class="page" ng-repeat="page in newMenu.pages | filter:qPagesQuick track by $index">
                         {{ page.label }}
                     </li>
                 </ul>
@@ -123,7 +127,40 @@
             </h2>
         </div>
         <div class="menu-content">
-
+            <div class="items-main">
+                <div class="info">Altere as ordens arrastando os itens.</div>
+                <ul class="container-list list main list-no-style-type">
+                    <li class="item primary" ng-repeat="itemQuick in newMenu.itemsQuickAccess track by $index" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
+                        <div class="name">
+                            <span class="text">
+                                <i class="fa fa-th" aria-hidden="true"></i>
+                                {{ itemQuick.label }}
+                            </span>
+                            <span class="actions">
+                                <button class="btn btn-link" ng-click="newMenu.editItem(itemQuick, null, true)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem(itemQuick)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="triangle-left"></div>
+            <div class="search-page">
+                <div class="info">Arraste a pagina para a esquerda.</div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input type="text" ng-model="qPagesQuick.label" class="form-control" placeholder="Procurar..." ng-trim="false">
+                </div>
+                <ul ui-sortable="newMenu.optionsSortablePrimary" class="container-list list-page-add list-no-style-type" ng-model="newMenu.pages">
+                    <li class="page" ng-repeat="page in newMenu.pagesQuick | filter:qPagesQuick track by $index">
+                        {{ page.label }}
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="menu-footer">
             <button class="btn btn-success btn-lg">
