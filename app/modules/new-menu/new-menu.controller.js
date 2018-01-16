@@ -36,24 +36,47 @@
             console.log('model', vm.items, vm.pages);
         }
 
-        function _removeItemDialog(item, parent) {
-            var title = 'Confirmar exclusão dos itens e seus subitens do menu?';
+        function _removeItemDialog(type, item, parent) {
+            var title = 'Confirmar exclusão do <b>' + item.label + '</b> e seus subitens do menu?';
             ModalService.confirm(title)
             .result
             .then(function() {
-                _removeItem(item, parent);
+                _removeItem(type, item, parent);
             }).catch(function(error) { });
         }
 
-        function _removeItem(item, parent) {
+        function _removeItem(type, item, parent) {
+            let listToRemove = vm[type];
             if(parent) {
                 var idxItem = parent.children.indexOf(item);
                 parent.children.splice(idxItem, 1);
             } else {
-                var idxItem = vm.items.indexOf(item);
-                vm.items.splice(idxItem, 1);
+                var idxItem = listToRemove.indexOf(item);
+                listToRemove.splice(idxItem, 1);
             }
+            _backToPages(type, item);
+            if(item.children.length) {
+                _backDeepToPages(type, item.children);
+                item.children = [];
+            }
+        }
 
+        function _backToPages(type, item) {
+            if(type === 'items') {
+                vm.pages.unshift(item);
+            } else {
+                vm.pagesQuick.unshift(item);
+            }
+        }
+
+        function _backDeepToPages(type, listChildren) {
+            listChildren.forEach(function(val) {
+                _backToPages(type, val);
+                if (val.children.length) {
+                    _backDeepToPages(type, val.children);
+                    val.children = [];
+                }
+            });
         }
 
         function _editItem(item, parent, isQuickAccess) {
@@ -90,6 +113,11 @@
             let idxItem = list.findIndex(function(val) {
                 return val.id === item.id;
             });
+            let isChangeName = list[idxItem].label !== item.label;
+            if(isChangeName && !item.oldLabel) {
+                item.oldLabel = list[idxItem].label;
+            }
+            item.oldLabel = item.oldLabel === item.label ? '' : item.oldLabel;
             list[idxItem] = item;
         }
 
@@ -152,10 +180,8 @@
         }
 
         function _hasIndexed(listTo, idPage) {
-            let idx = listTo.findIndex(function (item) {
-                return item.page.id === idPage;
-            });
-            return idx === -1 ? false : true;
+            let listToStr = JSON.stringify(listTo);
+            return listToStr.includes('"page":{"id":' + idPage);
         }
 
         function _cretateItemFromPage(value) {
@@ -169,29 +195,26 @@
             };
         }
 
-        function _setOptionsSortable(placeholder) {
-            var options = _baseConfigSortable();
+        function _setOptionsSortable(type, placeholder) {
+            var options = _baseConfigSortable(type);
             if(placeholder) {
                 options.placeholder = placeholder;
             }
             return options;
         }
 
-        function _baseConfigSortable() {
+        function _baseConfigSortable(type) {
             return {
-                connectWith: '.list',
+                connectWith: '.connect-' + type,
                 dropOnEmpty: true,
-                cursor: 'move',
-                update: _updateSortable
+                cursor: 'move'
             };
         }
 
         function activate() {
             vm.stateToggles = {};
-            vm.optionsSortable = _setOptionsSortable();
-            vm.optionsSortablePrimary = _setOptionsSortable('placeholder-primary');
-            vm.optionsSortableSecondary = _setOptionsSortable('placeholder-secondary');
-            vm.optionsSortableTertiary = _setOptionsSortable('placeholder-tertiary');
+            vm.optionsSortableItems = _setOptionsSortable('items', 'placeholder-primary');
+            vm.optionsSortableQuick = _setOptionsSortable('quick', 'placeholder-primary');
             $q.all([_loadMainMenu(), _loadQuickAccess()]).then(function() {
                 _loadPages();
             });
