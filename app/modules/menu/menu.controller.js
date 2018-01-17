@@ -179,7 +179,6 @@
 
         function _save(type, loadingType) {
             vm[loadingType] = true;
-            console.log(loadingType, vm[loadingType]);
             MenuService
                 .update(inflection.underscore(type), $scope.menus[type]) // jshint ignore: line
                 .then(function () {

@@ -28,7 +28,7 @@
 
         function _saveItem() {
             _updateList();
-            // _clearListParamsNotUsed();
+            _clearListParamsNotUsed();
             $uibModalInstance.close({list: listSelect, item: item});
         }
 
@@ -92,12 +92,6 @@
             }
         }
 
-        function _addItem(opt, level, optParent) {
-            opt.level = level;
-            opt.parent = optParent;
-            vm.listOptions.push(opt);
-        }
-
         function _setSelectParent() {
             if (angular.isUndefined(parent)) {
                 vm.idSelectedParent = null;
@@ -121,6 +115,12 @@
                     });
                 });
             });
+        }
+
+        function _addItem(opt, level, optParent) {
+            opt.level = level;
+            opt.parent = optParent;
+            vm.listOptions.push(opt);
         }
 
         function activate() {
