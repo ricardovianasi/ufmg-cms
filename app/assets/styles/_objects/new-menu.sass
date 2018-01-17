@@ -1,6 +1,7 @@
 $primary-background: rgba(44, 46, 47, .1);
 $secondary-background: rgba(44, 46, 47, .3);
 $tertiary-background: rgba(44, 46, 47, .6);
+$placeholder-background: rgba(239, 63, 74, .4);
 
 $border-item: 1px solid rgba(44, 46, 47, 0.52);
 
@@ -35,7 +36,7 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
         padding: 5px;
         flex: 0.6;
         .list
-            min-height: 5px;
+            min-height: 10px;
         .list .name
             display: flex;
             justify-content: space-between;
@@ -90,17 +91,8 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
     text-align: center;
     font-size: 1.1em;
 
-.placeholder-primary
-    background-color: $primary-background;
+.placeholder-main
+    background-color: $placeholder-background;
     border: $border-item;
-    height: 30px;
-    
-.placeholder-secondary
-    background-color: $secondary-background;
-    border: $border-item;
-    height: 30px;
-
-.placeholder-tertiary
-    background-color: $tertiary-background;
-    border: $border-item;
-    height: 30px;
+    height: 50px;
+    border-style: dashed;

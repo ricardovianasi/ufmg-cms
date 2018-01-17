@@ -70,6 +70,9 @@
         }
 
         function _clearListParamsNotUsed() {
+            if(!vm.listOptions) {
+                return;
+            }
             vm.listOptions.forEach(function(item) {
                 delete item.level;
                 delete item.parent;

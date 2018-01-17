@@ -59,16 +59,38 @@
         }
 
         function editItem(item, parent, isQuickAccess) {
-            var instanceModal = _openEditMenu(item, parent, isQuickAccess);
+            let type = isQuickAccess ? vm.types.quickAccess : vm.types.mainMenu;
+            let instanceModal = _openEditMenu(item, parent, isQuickAccess);
             instanceModal.result.then(function(res) {
-                let idxItem;
-                if(isQuickAccess) {
-                    _changeItemFromList(vm[vm.types.quickAccess], res.item);
-                } else {
-                    vm[vm.types.mainMenu] = res.list;
-                    _changeItemFromList(vm[vm.types.mainMenu], res.item);
-                }
+                vm[type] = res.list || vm[type];
+                _changeItemFromList(vm[type], res.item);
             }).catch(function(error) {console.error});
+        }
+
+        function _changeItemFromList(list, item) {
+            let itemModel = _searchDeep(list, item.id);
+            let isChangeName = itemModel.label !== item.label;
+            if(isChangeName && !item.oldLabel) {
+                itemModel.oldLabel = itemModel.label;
+            }
+            itemModel.oldLabel = itemModel.oldLabel === item.label ? '' : itemModel.oldLabel;
+            itemModel.label = item.label;
+        }
+
+        function _openEditMenu(itemMenu, itemParent, isQuickAccess) {
+            var instanceModal = $uibModal.open({
+                templateUrl: 'modules/new-menu/edit-modal/menu-edit.modal.template.html',
+                controller: 'MenuEditController as vm',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]) },
+                    item: function() { return angular.copy(itemMenu) },
+                    parent: function() { return angular.copy(itemParent) },
+                    isQuick: function() { return isQuickAccess },
+                }
+            });
+            return instanceModal;
         }
 
         function removeItemDialog(type, item, parent) {
@@ -114,32 +136,20 @@
             });
         }
 
-        function _openEditMenu(itemMenu, itemParent, isQuickAccess) {
-            var instanceModal = $uibModal.open({
-                templateUrl: 'modules/new-menu/edit-modal/menu-edit.modal.template.html',
-                controller: 'MenuEditController as vm',
-                keyboard: false,
-                size: 'md',
-                resolve: {
-                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]) },
-                    item: function() { return angular.copy(itemMenu) },
-                    parent: function() { return angular.copy(itemParent) },
-                    isQuick: function() { return isQuickAccess },
+        function _searchDeep(list, id) {
+            let found;
+            for(var i = 0; i < list.length; i++) {
+                if(list[i].id === id) {
+                    return list[i];
                 }
-            });
-            return instanceModal;
-        }
-
-        function _changeItemFromList(list, item) {
-            let idxItem = list.findIndex(function(val) {
-                return val.id === item.id;
-            });
-            let isChangeName = list[idxItem].label !== item.label;
-            if(isChangeName && !item.oldLabel) {
-                item.oldLabel = list[idxItem].label;
+                if (list[i].children.length) {
+                    found = _searchDeep(list[i].children, id);
+                }
+                if(found) {
+                    return found;
+                }
             }
-            item.oldLabel = item.oldLabel === item.label ? '' : item.oldLabel;
-            list[idxItem] = item;
+            return null;
         }
 
         function _loadData(type) {
@@ -226,8 +236,8 @@
             _initKeyType();
             vm.loading = {};
             vm.stateToggles = {};
-            vm.optionsSortableItems = _setOptionsSortable(vm.types.mainMenu, 'placeholder-primary');
-            vm.optionsSortableQuick = _setOptionsSortable(vm.types.quickAccess, 'placeholder-primary');
+            vm.optionsSortableItems = _setOptionsSortable(vm.types.mainMenu, 'placeholder-main');
+            vm.optionsSortableQuick = _setOptionsSortable(vm.types.quickAccess, 'placeholder-main');
             $q.all([_loadData(vm.types.mainMenu), _loadData(vm.types.quickAccess)]).then(function() {
                 _loadPages();
                 _permissions();

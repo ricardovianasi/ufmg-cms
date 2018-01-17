@@ -61,7 +61,8 @@
                                 <div class="name">
                                     <span class="text">
                                         <i class="fa fa-th" aria-hidden="true"></i>
-                                        <span class="text">{{ itemSecondary.label }}</span>
+                                        {{ itemSecondary.label }}
+                                        <span ng-show="itemSecondary.oldLabel">( {{ itemSecondary.oldLabel }} )</span>
                                     </span>
                                     <span class="actions">
                                         <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
@@ -82,6 +83,7 @@
                                             <span class="text">
                                                 <i class="fa fa-th" aria-hidden="true"></i>
                                                 {{ itemTertiary.label }}
+                                                <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>                                                
                                             </span>
                                             <span class="actions">
                                                 <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
@@ -137,6 +139,7 @@
                             <span class="text">
                                 <i class="fa fa-th" aria-hidden="true"></i>
                                 {{ itemQuick.label }}
+                                <span ng-show="itemQuick.oldLabel">( {{ itemQuick.oldLabel }} )</span>                                
                             </span>
                             <span class="actions">
                                 <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemQuick, null, true)">
