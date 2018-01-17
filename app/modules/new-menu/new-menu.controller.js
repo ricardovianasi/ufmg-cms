@@ -155,7 +155,6 @@
                     let pagesMod = _preparePages(res.data.items);
                     vm.pages = _filterPagesNotIndexed(vm[vm.types.mainMenu], pagesMod);
                     vm.pagesQuick = _filterPagesNotIndexed(vm[vm.types.quickAccess], pagesMod);
-                    console.log(vm.pages, vm.pagesQuick);
                 });
         }
 
@@ -215,6 +214,14 @@
             };
         }
 
+        function _canPut() {
+            vm.canPut = PermissionService.canPut('menu');
+        }
+
+        function _permissions() {
+            _canPut();
+        }
+
         function activate() {
             _initKeyType();
             vm.loading = {};
@@ -223,6 +230,7 @@
             vm.optionsSortableQuick = _setOptionsSortable(vm.types.quickAccess, 'placeholder-primary');
             $q.all([_loadData(vm.types.mainMenu), _loadData(vm.types.quickAccess)]).then(function() {
                 _loadPages();
+                _permissions();
             });
         }
     }

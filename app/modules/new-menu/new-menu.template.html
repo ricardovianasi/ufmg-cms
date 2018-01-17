@@ -44,10 +44,10 @@
                                 <span ng-show="itemPrimary.oldLabel">( {{ itemPrimary.oldLabel }} )</span>
                             </span>
                             <span class="actions">
-                                <button class="btn btn-link" ng-click="newMenu.editItem(itemPrimary)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemPrimary)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
                                     <i class="fa fa-times"></i>
                                 </button>
                                 <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link">
@@ -64,10 +64,10 @@
                                         <span class="text">{{ itemSecondary.label }}</span>
                                     </span>
                                     <span class="actions">
-                                        <button class="btn btn-link" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
+                                        <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
                                             <i class="fa fa-pencil"></i>
                                         </button>
-                                        <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
+                                        <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
                                             <i class="fa fa-times"></i>                                    
                                         </button>
                                         <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link">
@@ -84,10 +84,10 @@
                                                 {{ itemTertiary.label }}
                                             </span>
                                             <span class="actions">
-                                                <button class="btn btn-link" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
+                                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
                                                     <i class="fa fa-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
+                                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
                                                     <i class="fa fa-times"></i>                                    
                                                 </button>
                                             </span>
@@ -114,9 +114,9 @@
             </div>
         </div>
         <div class="menu-footer">
-            <button ng-disabled="vm.loading.mainMenu" ng-click="newMenu.save(newMenu.types.mainMenu)" class="btn btn-success btn-lg">
+            <button ng-if="newMenu.canPut" ng-disabled="newMenu.loading.mainMenu" ng-click="newMenu.save(newMenu.types.mainMenu)" class="btn btn-success btn-lg">
                 <i class="fa fa-check"></i>
-                {{ vm.loading.mainMenu ? 'Salvando ...' : 'Salvar Alterações' }}
+                {{ newMenu.loading.mainMenu ? 'Salvando ...' : 'Salvar Alterações' }}
             </button>
         </div>
     </div>
@@ -139,10 +139,10 @@
                                 {{ itemQuick.label }}
                             </span>
                             <span class="actions">
-                                <button class="btn btn-link" ng-click="newMenu.editItem(itemQuick, null, true)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemQuick, null, true)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button class="btn btn-link btn-remove" ng-click="newMenu.removeItem('quickAccess', itemQuick)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('quickAccess', itemQuick)">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </span>
@@ -166,9 +166,9 @@
             </div>
         </div>
         <div class="menu-footer">
-            <button ng-disabled="vm.loading.quickAccess" ng-click="newMenu.save(newMenu.types.quickAccess)" class="btn btn-success btn-lg">
+            <button ng-if="newMenu.canPut" ng-disabled="newMenu.loading.quickAccess" ng-click="newMenu.save(newMenu.types.quickAccess)" class="btn btn-success btn-lg">
                 <i class="fa fa-check"></i>
-                {{ vm.loading.quickAccess ? 'Salvando ...' : 'Salvar Alterações' }}
+                {{ newMenu.loading.quickAccess ? 'Salvando ...' : 'Salvar Alterações' }}
             </button>
         </div>
     </div>
