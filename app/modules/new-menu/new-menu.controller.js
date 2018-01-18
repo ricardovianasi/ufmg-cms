@@ -27,6 +27,7 @@
         vm.toggle = toggle;
         vm.isOpen = isOpen;
         vm.removeItem = removeItemDialog;
+        vm.searchPage = searchPage;
 
         activate();
 
@@ -46,6 +47,12 @@
 
         function isOpen(id) {
             return vm.stateToggles[id];
+        }
+
+        function searchPage(typePage, query) {
+            let result = $filter('filter')(vm.all[typePage], {label: query});
+            vm[typePage] = result;
+            console.log('searchPage', typePage, query, result);
         }
 
         function save(type) {
@@ -121,8 +128,10 @@
         function _backToPages(type, item) {
             if(type === vm.types.mainMenu) {
                 vm.pages.unshift(item);
+                vm.all.pages.unshift(item);
             } else {
                 vm.pagesQuick.unshift(item);
+                vm.all.pagesQuick.unshift(item);
             }
         }
 
@@ -165,7 +174,14 @@
                     let pagesMod = _preparePages(res.data.items);
                     vm.pages = _filterPagesNotIndexed(vm[vm.types.mainMenu], pagesMod);
                     vm.pagesQuick = _filterPagesNotIndexed(vm[vm.types.quickAccess], pagesMod);
+                    _setCopyPagesToFilter();
                 });
+        }
+
+        function _setCopyPagesToFilter() {
+            vm.all = {};
+            vm.all.pages = angular.copy(vm.pages);
+            vm.all.pagesQuick = angular.copy(vm.pagesQuick);
         }
 
         function _preparePages(pagesItems) {
@@ -204,17 +220,32 @@
             return options;
         }
 
+        function _itemRemoved(e, ui) {
+            let itemRemoved = ui.item[0];
+            let isRemovedPage = itemRemoved.dataset && 
+                (itemRemoved.dataset.type === 'pagesQuick' || itemRemoved.dataset.type === 'pages');
+            if(isRemovedPage) {
+                _whenRemovePage(itemRemoved.dataset.type, Number.parseInt(itemRemoved.dataset.id));
+            }
+        }
+        
+        function _whenRemovePage(typePage, id) {
+            let listAllPages = vm.all[typePage];
+            let index = listAllPages.findIndex(function (pg) {
+                return pg.page.id === id;
+            });
+            if(index >= 0) {
+                listAllPages.splice(index, 1);
+            }
+        }
+
         function _baseConfigSortable(type) {
             return {
                 connectWith: '.connect-' + type,
                 dropOnEmpty: true,
-                cursor: 'move'
+                cursor: 'move',
+                remove: _itemRemoved
             };
-        }
-
-        function _updateSortable(event, ui) {
-            console.log('_update', event, ui);
-            console.log('model', vm.items, vm.pages);
         }
 
         function _initKeyType() {

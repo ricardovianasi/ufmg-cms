@@ -108,10 +108,10 @@
                 <div class="info">Arraste a pagina para a esquerda.</div>
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" ng-model="qPages.label" class="form-control" placeholder="Procurar..." ng-trim="false">
+                    <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPages.label" ng-change="newMenu.searchPage('pages', qPages.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
                 </div>
                 <ul ui-sortable="newMenu.optionsSortableItems" class="container-list list connect-mainMenu list-page-add list-no-style-type" ng-model="newMenu.pages">
-                    <li class="page" ng-repeat="page in newMenu.pages | filter:qPages track by page.id">
+                    <li data-type="pages" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pages track by page.id">
                         {{ page.label }}
                     </li>
                 </ul>
@@ -160,11 +160,11 @@
                 <div class="info">Arraste a pagina para a esquerda.</div>
                 <div class="input-group input-group-lg">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" ng-model="qPagesQuick.label" class="form-control" placeholder="Procurar..." ng-trim="false">
+                    <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPagesQuick.label" ng-change="newMenu.searchPage('pagesQuick', qPagesQuick.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
                 </div>
                 <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list list-page-add list-no-style-type" 
                     ng-model="newMenu.pagesQuick">
-                    <li class="page" ng-repeat="page in newMenu.pagesQuick | filter:qPagesQuick track by page.id">
+                    <li data-type="pagesQuick" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pagesQuick track by page.id">
                         {{ page.label }}
                     </li>
                 </ul>
