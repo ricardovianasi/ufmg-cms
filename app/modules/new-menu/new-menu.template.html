@@ -104,17 +104,29 @@
                 </ul>
             </div>
             <div class="triangle-left"></div>
-            <div class="search-page">
-                <div class="info">Arraste a pagina para a esquerda.</div>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPages.label" ng-change="newMenu.searchPage('pages', qPages.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
-                </div>
-                <ul ui-sortable="newMenu.optionsSortableItems" class="container-list list connect-mainMenu list-page-add list-no-style-type" ng-model="newMenu.pages">
-                    <li data-type="pages" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pages track by page.id">
-                        {{ page.label }}
-                    </li>
+            <div class="side-panel">
+                <ul class="tab-panel" ng-init="tabIdxMain = 1">
+                    <li class="item-panel" ng-click="tabIdxMain = 1" ng-class="{'active': tabIdxMain === 1}">Paginas</li>
+                    <li class="item-panel" ng-click="tabIdxMain = 2" ng-class="{'active': tabIdxMain === 2}">Links</li>
                 </ul>
+                <div class="search-page" ng-show="tabIdxMain === 1">
+                    <div class="info">Arraste a pagina para a esquerda.</div>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPages.label" ng-change="newMenu.searchPage('pages', qPages.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
+                    </div>
+                    <ul ui-sortable="newMenu.optionsSortableItems" class="container-list list connect-mainMenu list-page-add list-no-style-type" ng-model="newMenu.pages">
+                        <li data-type="pages" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pages track by page.id">
+                            {{ page.label }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="link-area" ng-show="tabIdxMain === 2">
+                    <ng-include src="'modules/new-menu/partials/new-menu.link.html'"></ng-include>
+                    <div class="buttons text-center">
+                            <button class="btn btn-success btn-large" ng-click="newMenu.addLink('mainMenu')">Adicionar Link</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="menu-footer">
@@ -156,18 +168,30 @@
                 </ul>
             </div>
             <div class="triangle-left"></div>
-            <div class="search-page">
-                <div class="info">Arraste a pagina para a esquerda.</div>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPagesQuick.label" ng-change="newMenu.searchPage('pagesQuick', qPagesQuick.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
-                </div>
-                <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list list-page-add list-no-style-type" 
-                    ng-model="newMenu.pagesQuick">
-                    <li data-type="pagesQuick" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pagesQuick track by page.id">
-                        {{ page.label }}
-                    </li>
+            <div class="side-panel">
+                <ul class="tab-panel" ng-init="tabIdx = 1">
+                    <li class="item-panel" ng-click="tabIdx = 1" ng-class="{'active': tabIdx === 1}">Paginas</li>
+                    <li class="item-panel" ng-click="tabIdx = 2" ng-class="{'active': tabIdx === 2}">Links</li>
                 </ul>
+                <div class="search-page" ng-show="tabIdx === 1">
+                    <div class="info">Arraste a pagina para a esquerda.</div>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPagesQuick.label" ng-change="newMenu.searchPage('pagesQuick', qPagesQuick.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
+                    </div>
+                    <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list list-page-add list-no-style-type" 
+                        ng-model="newMenu.pagesQuick">
+                        <li data-type="pagesQuick" data-id="{{ page.page.id }}" class="page" ng-repeat="page in newMenu.pagesQuick track by page.id">
+                            {{ page.label }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="link-area" ng-show="tabIdx === 2">
+                    <ng-include src="'modules/new-menu/partials/new-menu.link.html'"></ng-include>
+                    <div class="buttons text-center">
+                            <button class="btn btn-success btn-large" ng-click="newMenu.addLink('quickAccess')">Adicionar Link</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="menu-footer">

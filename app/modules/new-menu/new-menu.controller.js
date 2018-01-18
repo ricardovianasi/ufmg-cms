@@ -29,9 +29,27 @@
         vm.removeItem = removeItemDialog;
         vm.searchPage = searchPage;
 
+        vm.addLink = addLink;
+        vm.hasErrorLink = hasErrorLink;
+    
         activate();
 
         ////////////////
+
+        function addLink(type) {
+            vm.submit = true;
+            let isValid = vm.link && vm.link.label && vm.link['external_url'];
+            if(isValid) {
+                vm.submit = false;
+                vm.link.id = Number.parseInt(Date.now().toString());
+                vm[type].unshift(vm.link);
+            }
+            _createLink();
+        }
+
+        function hasErrorLink(field) {
+            return vm.submit && !(vm.link && vm.link[field]);
+        }
 
         function isEmpty(list) {
             return list ? !list.length : true;
@@ -81,7 +99,10 @@
                 itemModel.oldLabel = itemModel.label;
             }
             itemModel.oldLabel = itemModel.oldLabel === item.label ? '' : itemModel.oldLabel;
-            itemModel.label = item.label;
+            delete item.oldLabel;
+            for(let key in item) {
+                itemModel[key] = item[key];
+            }
         }
 
         function _openEditMenu(itemMenu, itemParent, isQuickAccess) {
@@ -263,8 +284,15 @@
             _canPut();
         }
 
+        function _createLink() {
+            vm.link = {
+                children: [],
+            };
+        }
+
         function activate() {
             _initKeyType();
+            _createLink();
             vm.loading = {};
             vm.stateToggles = {};
             vm.optionsSortableItems = _setOptionsSortable(vm.types.mainMenu, 'placeholder-main');

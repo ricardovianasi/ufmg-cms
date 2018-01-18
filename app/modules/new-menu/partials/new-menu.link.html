@@ -1,0 +1,13 @@
+<div class="form-group" ng-class="{'has-error': newMenu.hasErrorLink('label')}">
+    <label for="">Titulo</label>
+    <input ng-model="newMenu.link.label" maxlength="50" class="form-control" type="text" required>
+</div>
+<div class="form-group" ng-class="{'has-error': newMenu.hasErrorLink('external_url')}">
+    <label for="">URL</label>
+    <input class="form-control" ng-model="newMenu.link['external_url']" type="text" required>
+</div>
+<div class="checkbox">
+    <label>
+        <input ng-model="newMenu.link['target_blank']" type="checkbox"> <b>Abrir em outra aba</b>
+    </label>
+</div>

@@ -4,8 +4,19 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12 form-group" ng-class="{'has-error': !vm.item.label}">
-            <label for="">Nome: </label>
-            <input type="text" ng-model="vm.item.label" class="form-control">
+            <label for="name">Nome: </label>
+            <input id="name" type="text" ng-model="vm.item.label" class="form-control">
+        </div>
+        <div class="col-md-12 form-group"  ng-if="vm.item['external_url']" >
+            <div class="checkbox">
+                <label>
+                    <input ng-model="vm.item['target_blank']" type="checkbox"> Abrir em outra aba
+                </label>
+            </div>
+        </div>
+        <div class="col-md-12 form-group" ng-if="vm.item['external_url']">
+            <label for="url">URL: </label>
+            <input id="url" type="text" ng-model="vm.item['external_url']" class="form-control">
         </div>
         <div class="col-md-12 form-group" ng-show="!vm.isQuick">
             <div class="checkbox">

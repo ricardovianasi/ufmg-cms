@@ -62,22 +62,48 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
                 background-color: $secondary-background;
             &.tertiary > .name
                 background-color: $tertiary-background;
-
-    .menu-content > .search-page
-        border: 1px solid #c5c0c0;
-        .list-page-add
-            padding: 0;
-            margin: 0 5px;
-            .page
-                margin: 5px;
-                border-radius: 5px;
-                padding: 5px;
-                font-weight: bold;
+    
+    .menu-content >.side-panel .tab-panel
+        list-style-type: none;
+        padding-left: 0;
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 1px solid #c5c0c0;
+        .item-panel
+            display: inline-block;
+            width: 100%;
+            padding: 1.2em;
+            font-size: 1.5em;
+            text-align: center;
+            color: #979898;
+            font-weight: bold;
+            &:hover, &.active
                 background-color: #d7d9e0;
-                &:hover
-                    background-color: #b0b2bd;
-                    cursor: pointer;
+                cursor: pointer;
+                color: #666b6b;
+            &:first-child
+                border-right: 1px solid #c5c0c0;
+                    
 
+    .menu-content >.side-panel
+        border: 1px solid #c5c0c0;
+        width: 310px;
+        .search-page
+            .list-page-add
+                padding: 0;
+                margin: 0 5px;
+                height: calc(70vh - 75px);
+                .page
+                    margin: 5px;
+                    border-radius: 5px;
+                    padding: 5px;
+                    font-weight: bold;
+                    background-color: #d7d9e0;
+                    &:hover
+                        background-color: #b0b2bd;
+                        cursor: pointer;
+        .link-area
+            margin: 0 5px;
 
 .container-list
     height: 70vh;
