@@ -9,30 +9,33 @@
     function MenuEditController($uibModalInstance, listSelect, item, parent, isQuick) {
         var vm = this;
 
-        vm.dismiss = _dismiss;
-        vm.changeCheckBox = _changeCheckBox;
-        vm.saveItem = _saveItem;
-        vm.canNested = _canNested;
+        vm.dismiss = dismiss;
+        vm.changeCheckBox = changeCheckBox;
+        vm.saveItem = saveItem;
+        vm.canNested = canNested;
 
         activate();
 
         ////////////////
 
-        function _dismiss() {
+        function dismiss() {
             $uibModalInstance.dismiss('Canceled');
         }
 
-        function _canNested(optionItem) {
+        function canNested(optionItem) {
             return optionItem.level !== 3 && optionItem.id !== item.id;
         }
 
-        function _saveItem() {
+        function saveItem() {
+            if (!vm.item.label) {
+                return;
+            }
             _updateList();
             _clearListParamsNotUsed();
             $uibModalInstance.close({list: listSelect, item: item});
         }
 
-        function _changeCheckBox() {
+        function changeCheckBox() {
             if(!vm.isNested) {
                 vm.idSelectedParent = null;
             } else if(vm.isNested && parent) {
