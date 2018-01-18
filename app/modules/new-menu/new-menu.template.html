@@ -23,8 +23,7 @@
         </div>
     </div>
 </div>
-<!-- can-get="!canPut('menu')" -->
-<div id="new-menu-panel" class="row" >
+<div id="new-menu-panel" class="row" can-get="!canPut('menu')">
     <div class="panel-main">
         <div class="menu-header">
             <h2 class="title">
@@ -56,8 +55,8 @@
                                 </button>
                             </span>
                         </div>
-                        <ul ng-show="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemPrimary.children">
-                            <li class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id" ng-init="newMenu.stateToggle[itemSecondary.id] = false">
+                        <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemPrimary.children">
+                            <li ng-if="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id" ng-init="newMenu.stateToggle[itemSecondary.id] = false">
                                 <div class="name">
                                     <span class="text">
                                         <i class="fa fa-th" aria-hidden="true"></i>
@@ -77,8 +76,8 @@
                                         </button>
                                     </span>
                                 </div>
-                                <ul ng-show="newMenu.listCanShow(itemSecondary.id, itemSecondary.children)" ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemSecondary.children">
-                                    <li class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
+                                <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemSecondary.children">
+                                    <li ng-if="newMenu.listCanShow(itemSecondary.id, itemSecondary.children)" class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
                                         <div class="name">
                                             <span class="text">
                                                 <i class="fa fa-th" aria-hidden="true"></i>
@@ -91,6 +90,9 @@
                                                 </button>
                                                 <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
                                                     <i class="fa fa-times"></i>                                    
+                                                </button>
+                                                <button disabled class="btn btn-link">
+                                                    <i class="fa fa-arrow-down"></i>
                                                 </button>
                                             </span>
                                         </div>
