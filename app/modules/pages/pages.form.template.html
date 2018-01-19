@@ -158,7 +158,7 @@
         </form>
     </div>
     <div class="col-xs-4">
-        <publishment-options route-model="page"></publishment-options>
+        <publishment-options is-loading="isLoading" route-model="page"></publishment-options>
         <div class="panel panel-default" onload="loadMorePage()">
             A página atual é filha de:
             <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">

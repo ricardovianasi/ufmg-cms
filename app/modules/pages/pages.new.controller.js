@@ -180,12 +180,15 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
+            vm.isLoading = true; 
             PagesService
                 .addPage(page)
                 .then(function (page) {
                     NotificationService.success('Página criada com sucesso.');
                     $location.path('/page/edit/' + page.data.id);
-                });
+                })
+                .catch(function(error) { console.error(error); })
+                .then(function() {vm.isLoading = false;})
         }
 
         function _uploadCover() {

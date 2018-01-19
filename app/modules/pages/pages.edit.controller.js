@@ -186,11 +186,15 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
+            vm.isLoading = true;
             PagesService
                 .updatePage($routeParams.id, page)
                 .then(function () {
                     NotificationService.success('Página atualizada com sucesso.');
-                });
+                })
+                .catch(function(error) {console.error(error);})
+                .then(function() {vm.isLoading = false;});
+
         }
 
         function _uploadCover() {
