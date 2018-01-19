@@ -188,7 +188,7 @@
                     $location.path('/page/edit/' + page.data.id);
                 })
                 .catch(function(error) { console.error(error); })
-                .then(function() {vm.isLoading = false;})
+                .then(function() {vm.isLoading = false;});
         }
 
         function _uploadCover() {
