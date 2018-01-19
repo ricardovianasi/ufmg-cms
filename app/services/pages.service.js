@@ -343,17 +343,16 @@
                 },
 
                 highlightednews: function (widget) {
-
                     var newsToSelect = [];
                     let resultWidget = {};
-                    resultWidget.tag = [];
                     if(widget.tag && widget.tag.length > 0) {
                         if (typeof widget.tag[0].text !== 'undefined') {
                             widget.tag = _.map(widget.tag, 'text');
                         }
-                        resultWidget.tag = widget.tag;
+                    } else if(widget.content && widget.content.tag) {
+                        widget.tag = [widget.content.tag.name];
                     }
-                    console.log('new highlight', resultWidget);
+                    resultWidget.tag = widget.tag || [];
 
                     if (widget.news) {
                         angular.forEach(widget.news, function (news) {
