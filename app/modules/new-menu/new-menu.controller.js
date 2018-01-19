@@ -253,7 +253,10 @@
         function _whenRemovePage(typePage, id) {
             let listAllPages = vm.all[typePage];
             let index = listAllPages.findIndex(function (pg) {
-                return pg.page.id === id;
+                if(pg.page && pg.page.id) {
+                    return pg.page.id === id;
+                }
+                return pg.id === id;
             });
             if(index >= 0) {
                 listAllPages.splice(index, 1);
