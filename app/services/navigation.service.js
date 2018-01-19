@@ -197,7 +197,14 @@
                                 enabled: hasPermissionCalendar
                             }, {
                                 icon: 'fa fa-bars',
-                                name: 'Menu',
+                                name: 'Novo Menu',
+                                location: 'new-menu',
+                                isActive: false,
+                                isOpen: false,
+                                enabled: hasPermissionMenu
+                            }, {
+                                icon: 'fa fa-bars',
+                                name: 'Antigo Menu',
                                 location: 'menu',
                                 isActive: false,
                                 isOpen: false,
@@ -216,13 +223,6 @@
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionUser
-                            }, {
-                                icon: 'fa fa-bars',
-                                name: 'Novo Menu',
-                                location: 'new-menu',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionMenu
                             }]);
                         });
                     return defer.promise;

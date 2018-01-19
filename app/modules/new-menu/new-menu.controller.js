@@ -6,18 +6,9 @@
         .controller('NewMenuController', MenuController);
     
         /** ngInject */
-    function MenuController($scope
-        , $log
-        , $q
-        , $rootScope
-        , $filter
-        , NotificationService
-        , ModalService
-        , PermissionService
-        , PagesService
-        , MenuService
-        , $uibModal
-        ) {
+    function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
+        PermissionService, PagesService, MenuService, $uibModal) {
+
         var vm = this;
 
         vm.save = save;
@@ -89,7 +80,7 @@
             instanceModal.result.then(function(res) {
                 vm[type] = res.list || vm[type];
                 _changeItemFromList(vm[type], res.item);
-            }).catch(function(error) {console.error});
+            }).catch(function(error) {console.error(error);});
         }
 
         function _changeItemFromList(list, item) {
@@ -112,10 +103,10 @@
                 keyboard: false,
                 size: 'md',
                 resolve: {
-                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]) },
-                    item: function() { return angular.copy(itemMenu) },
-                    parent: function() { return angular.copy(itemParent) },
-                    isQuick: function() { return isQuickAccess },
+                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]); },
+                    item: function() { return angular.copy(itemMenu); },
+                    parent: function() { return angular.copy(itemParent); },
+                    isQuick: function() { return isQuickAccess; },
                 }
             });
             return instanceModal;
@@ -127,18 +118,14 @@
             .result
             .then(function() {
                 _removeItem(type, item, parent);
-            }).catch(function(error) { });
+            }).catch(function(error) { console.error(error); });
         }
 
         function _removeItem(type, item, parent) {
-            let listToRemove = vm[type];
-            if(parent) {
-                var idxItem = parent.children.indexOf(item);
-                parent.children.splice(idxItem, 1);
-            } else {
-                var idxItem = listToRemove.indexOf(item);
-                listToRemove.splice(idxItem, 1);
-            }
+            let listToRemove = parent ? parent.children : vm[type];
+            var idxItem = listToRemove.indexOf(item);
+            listToRemove.splice(idxItem, 1);
+
             _backToPages(type, item);
             if(item.children.length) {
                 _backDeepToPages(type, item.children);
