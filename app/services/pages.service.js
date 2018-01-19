@@ -345,33 +345,30 @@
                 highlightednews: function (widget) {
 
                     var newsToSelect = [];
+                    let resultWidget = {};
+                    resultWidget.tag = [];
                     if(widget.tag && widget.tag.length > 0) {
                         if (typeof widget.tag[0].text !== 'undefined') {
                             widget.tag = _.map(widget.tag, 'text');
                         }
+                        resultWidget.tag = widget.tag;
                     }
+                    console.log('new highlight', resultWidget);
 
                     if (widget.news) {
                         angular.forEach(widget.news, function (news) {
                             newsToSelect.push(news.id);
                         });
-
-                        return {
-                            news: newsToSelect,
-                            tag: widget.tag
-                        };
-                    } else if (widget.content.news) {
+                        resultWidget.news = newsToSelect;
+                    } else if (widget.content && widget.content.news) {
                         newsToSelect = [];
 
                         angular.forEach(widget.content.news, function (news) {
                             newsToSelect.push(news.id);
                         });
-
-                        return {
-                            news: newsToSelect,
-                            tag: widget.tag
-                        };
+                        resultWidget.news = newsToSelect;
                     }
+                    return resultWidget;
                 },
 
                 highlightedradionews: function (widget) {
@@ -776,11 +773,13 @@
 
                 highlightednews: function (widget) {
                     let resultWidget = {};
+                    var tagHighlightednews = widget.tag || [];
+                    resultWidget.tag = [];                    
                     if (widget.news) {
-                        resultWidget.new = widget.news;
+                        resultWidget.news = widget.news;
                     } else if(widget.content) {
                         if (widget.content.tag) {
-                            resultWidget.tag = [widget.content.tag.name];
+                            tagHighlightednews = widget.content.tag;
                         }
                         if (widget.content.news) {
                             var newsToSelect = [];
@@ -793,6 +792,9 @@
                             });
                             resultWidget.news = newsToSelect;
                         }
+                    }
+                    if(tagHighlightednews && (tagHighlightednews[0] || tagHighlightednews.name)) {
+                        resultWidget.tag = [tagHighlightednews[0] ? tagHighlightednews[0] : tagHighlightednews.name];
                     }
                     return resultWidget;
                 },

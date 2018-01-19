@@ -17,6 +17,6 @@ function widgetButtonRemove() {
 
     $(document).on('click', '.remove-button', function (event) {
         $(this).closest('.figure-removable').remove();
-        updateRedactor();
+        // updateRedactor();
     });
 }
