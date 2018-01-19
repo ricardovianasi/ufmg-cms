@@ -94,7 +94,8 @@
 
             // Insert each widget into main and side columns
             angular.forEach(page.widgets.main, function (widget) {
-                cleanPage.widgets.main.push(_module.makeWidget(widget));
+                let widgetMake = _module.makeWidget(widget);
+                cleanPage.widgets.main.push(widgetMake);
             });
 
             angular.forEach(page.widgets.side, function (widget) {
@@ -344,6 +345,11 @@
                 highlightednews: function (widget) {
 
                     var newsToSelect = [];
+                    if(widget.tag && widget.tag.length > 0) {
+                        if (typeof widget.tag[0].text !== 'undefined') {
+                            widget.tag = _.map(widget.tag, 'text');
+                        }
+                    }
 
                     if (widget.news) {
                         angular.forEach(widget.news, function (news) {
@@ -352,6 +358,7 @@
 
                         return {
                             news: newsToSelect,
+                            tag: widget.tag
                         };
                     } else if (widget.content.news) {
                         newsToSelect = [];
@@ -362,6 +369,7 @@
 
                         return {
                             news: newsToSelect,
+                            tag: widget.tag
                         };
                     }
                 },
@@ -767,11 +775,13 @@
                 },
 
                 highlightednews: function (widget) {
+                    let resultWidget = {};
                     if (widget.news) {
-                        return {
-                            news: widget.news,
-                        };
-                    } else {
+                        resultWidget.new = widget.news;
+                    } else if(widget.content) {
+                        if (widget.content.tag) {
+                            resultWidget.tag = [widget.content.tag.name];
+                        }
                         if (widget.content.news) {
                             var newsToSelect = [];
 
@@ -781,12 +791,10 @@
                                     title: news.title
                                 });
                             });
-
-                            return {
-                                news: newsToSelect,
-                            };
+                            resultWidget.news = newsToSelect;
                         }
                     }
+                    return resultWidget;
                 },
                 editorialnews: function (widget) {
 

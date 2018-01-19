@@ -33,7 +33,15 @@
         </div>
         <div class="menu-content">
             <div class="items-main">
-                <div class="info">Altere a ordem arrastando os itens.</div>                
+                <div class="info">
+                    <span class="help">Altere a ordem arrastando os itens.</span>
+                    <div class="tools">
+                        <button class="btn btn-link">
+                            <i class="fa fa-arrow-down"></i>
+                            <i class="fa fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>                
                 <ul ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
                     <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
                         <div class="name">
@@ -43,13 +51,13 @@
                                 <span ng-show="itemPrimary.oldLabel">( {{ itemPrimary.oldLabel }} )</span>
                             </span>
                             <span class="actions">
-                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemPrimary)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemPrimary)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
-                                    <i class="fa fa-times"></i>
+                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
+                                    <i class="fa fa-trash"></i>
                                 </button>
-                                <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link">
+                                <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link">
                                     <i ng-show="!newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-down"></i>
                                     <i ng-show="newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-up"></i>
                                 </button>
@@ -64,13 +72,13 @@
                                         <span ng-show="itemSecondary.oldLabel">( {{ itemSecondary.oldLabel }} )</span>
                                     </span>
                                     <span class="actions">
-                                        <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
+                                        <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
                                             <i class="fa fa-pencil"></i>
                                         </button>
-                                        <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
-                                            <i class="fa fa-times"></i>                                    
+                                        <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
+                                            <i class="fa fa-trash"></i>                                    
                                         </button>
-                                        <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link">
+                                        <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link">
                                             <i ng-show="!newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-down"></i>
                                             <i ng-show="newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-up"></i>
                                         </button>
@@ -85,11 +93,11 @@
                                                 <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>                                                
                                             </span>
                                             <span class="actions">
-                                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
+                                                <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
                                                     <i class="fa fa-pencil"></i>
                                                 </button>
-                                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
-                                                    <i class="fa fa-times"></i>                                    
+                                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
+                                                    <i class="fa fa-trash"></i>                                    
                                                 </button>
                                                 <button disabled class="btn btn-link">
                                                     <i class="fa fa-arrow-down"></i>
@@ -156,11 +164,11 @@
                                 <span ng-show="itemQuick.oldLabel">( {{ itemQuick.oldLabel }} )</span>                                
                             </span>
                             <span class="actions">
-                                <button ng-if="newMenu.canPut" class="btn btn-link" ng-click="newMenu.editItem(itemQuick, null, true)">
+                                <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemQuick, null, true)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
-                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" ng-click="newMenu.removeItem('quickAccess', itemQuick)">
-                                    <i class="fa fa-times"></i>
+                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('quickAccess', itemQuick)">
+                                    <i class="fa fa-trash"></i>
                                 </button>
                             </span>
                         </div>
