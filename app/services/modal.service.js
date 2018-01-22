@@ -7,6 +7,16 @@
     /** ngInject */
     function ModalService($uibModal) {
 
+        function openModal(templateUrl, controller, resolve, size, backdrop) {
+            return $uibModal.open({
+                templateUrl: templateUrl,
+                controller: controller,
+                backdrop: backdrop || 'static',
+                size: size || 'md',
+                resolve: resolve
+            });
+        }
+
         function dialog(title, text, size) {
             size = size || ModalService.MODAL_MEDIUM;
 
@@ -227,6 +237,7 @@
             MODAL_MEDIUM: 'md',
             MODAL_LARGE: 'lg',
             FULL_SCREEN: 'full',
+            openModal: openModal,
             confirm: _confirm,
             dialog: dialog,
             uploadImage: _uploadImage,

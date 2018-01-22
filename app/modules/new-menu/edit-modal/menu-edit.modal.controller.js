@@ -6,7 +6,7 @@
         .controller('MenuEditController', MenuEditController);
 
     /** ngInject */
-    function MenuEditController($uibModalInstance, listSelect, item, parent, isQuick) {
+    function MenuEditController($uibModalInstance, listSelect, item, parent, isQuick, MenuService) {
         var vm = this;
 
         vm.dismiss = dismiss;
@@ -53,9 +53,9 @@
 
             if(parentSelected) {
                 _checkParentBecameChild(parentSelected);
-                parentSelected.children.push(item);
+                parentSelected.children.unshift(item);
             } else {
-                listSelect.push(itemFromOptions);
+                listSelect.unshift(itemFromOptions);
             }
             _removeItem(itemFromOptions);
         }
@@ -68,7 +68,7 @@
             var isParentBecameChild = indexChild !== -1;
             if(isParentBecameChild) {
                 item.children.splice(indexChild, 1);
-                listSelect.push(parentSelected);
+                listSelect.unshift(parentSelected);
             }
         }
 
@@ -111,22 +111,7 @@
         }
 
         function _initSelect() {
-            vm.listOptions = [];
-            listSelect.forEach(function (optPrimary) {
-                _addItem(optPrimary, 1);
-                optPrimary.children.forEach(function (optSecondary) {
-                    _addItem(optSecondary, 2, optPrimary);
-                    optSecondary.children.forEach(function (optTertiary) {
-                        _addItem(optTertiary, 3, optSecondary);
-                    });
-                });
-            });
-        }
-
-        function _addItem(opt, level, optParent) {
-            opt.level = level;
-            opt.parent = optParent;
-            vm.listOptions.push(opt);
+            vm.listOptions = MenuService.parseMenuToMenuFlat(listSelect);
         }
 
         function activate() {

@@ -20,12 +20,21 @@
         vm.removeItem = removeItemDialog;
         vm.searchPage = searchPage;
 
+        vm.allShow = allShow;
+        vm.allHide = allHide;
+        vm.showHierarchy = showHierarchy;
+
         vm.addLink = addLink;
         vm.hasErrorLink = hasErrorLink;
     
         activate();
 
         ////////////////
+
+        function showHierarchy() {
+            ModalService.openModal('modules/new-menu/hierarchy-modal/menu-hierarchy.modal.template.html',
+            'MenuHierarchyController as vm', { mainMenu: function() {return vm[vm.types.mainMenu];}});
+        }
 
         function addLink(type) {
             vm.submit = true;
@@ -36,6 +45,20 @@
                 vm[type].unshift(vm.link);
             }
             _createLink();
+        }
+
+        function allHide() {
+            _setAllToggles(false);
+        }
+
+        function allShow() {
+            _setAllToggles(true);
+        }
+
+        function _setAllToggles(value) {
+            for(let id in vm.stateToggles) {
+                vm.stateToggles[id] = value;
+            }
         }
 
         function hasErrorLink(field) {
@@ -84,7 +107,7 @@
         }
 
         function _changeItemFromList(list, item) {
-            let itemModel = _searchDeep(list, item.id);
+            let itemModel = MenuService.searchDeep(list, item.id);
             let isChangeName = itemModel.label !== item.label;
             if(isChangeName && !item.oldLabel) {
                 itemModel.oldLabel = itemModel.label;
@@ -97,19 +120,14 @@
         }
 
         function _openEditMenu(itemMenu, itemParent, isQuickAccess) {
-            var instanceModal = $uibModal.open({
-                templateUrl: 'modules/new-menu/edit-modal/menu-edit.modal.template.html',
-                controller: 'MenuEditController as vm',
-                keyboard: false,
-                size: 'md',
-                resolve: {
-                    listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]); },
-                    item: function() { return angular.copy(itemMenu); },
-                    parent: function() { return angular.copy(itemParent); },
-                    isQuick: function() { return isQuickAccess; },
-                }
-            });
-            return instanceModal;
+            let resolve = {
+                listSelect: function() { return isQuickAccess ? null : angular.copy(vm[vm.types.mainMenu]); },
+                item: function() { return angular.copy(itemMenu); },
+                parent: function() { return angular.copy(itemParent); },
+                isQuick: function() { return isQuickAccess; },
+            };
+            return ModalService.openModal('modules/new-menu/edit-modal/menu-edit.modal.template.html',
+            'MenuEditController as vm', resolve);
         }
 
         function removeItemDialog(type, item, parent) {
@@ -151,22 +169,6 @@
                     val.children = [];
                 }
             });
-        }
-
-        function _searchDeep(list, id) {
-            let found;
-            for(var i = 0; i < list.length; i++) {
-                if(list[i].id === id) {
-                    return list[i];
-                }
-                if (list[i].children.length) {
-                    found = _searchDeep(list[i].children, id);
-                }
-                if(found) {
-                    return found;
-                }
-            }
-            return null;
         }
 
         function _loadData(type) {

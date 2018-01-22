@@ -36,14 +36,19 @@
                 <div class="info">
                     <span class="help">Altere a ordem arrastando os itens.</span>
                     <div class="tools">
-                        <button class="btn btn-link">
+                        <button class="btn btn-link" uib-tooltip="Exibir Todos" ng-click="newMenu.allShow()">
                             <i class="fa fa-arrow-down"></i>
+                        </button>
+                        <button class="btn btn-link" uib-tooltip="Esconder Todos" ng-click="newMenu.allHide()">
                             <i class="fa fa-arrow-up"></i>
+                        </button>
+                        <button class="btn btn-link" uib-tooltip="Visualizar Hierarquia" ng-click="newMenu.showHierarchy()">
+                            <i class="fa fa-eye"></i>
                         </button>
                     </div>
                 </div>                
                 <ul ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
-                    <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id" ng-init="newMenu.stateToggle[itemPrimary.id] = false">
+                    <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id" ng-init="newMenu.stateToggles[itemPrimary.id] = true">
                         <div class="name">
                             <span class="text">
                                 <i class="fa fa-th" aria-hidden="true"></i>
@@ -64,7 +69,7 @@
                             </span>
                         </div>
                         <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemPrimary.children">
-                            <li ng-if="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id" ng-init="newMenu.stateToggle[itemSecondary.id] = false">
+                            <li ng-if="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id" ng-init="newMenu.stateToggles[itemSecondary.id] = true">
                                 <div class="name">
                                     <span class="text">
                                         <i class="fa fa-th" aria-hidden="true"></i>

@@ -114,11 +114,21 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
     padding: 5px;
     color: #979898;
     font-weight: bold;
-    text-align: center;
-    font-size: 1.1em;
-
+    display: flex;
+    justify-content: space-between;
+    .help
+        font-size: 1.1em;
 .placeholder-main
     background-color: $placeholder-background;
     border: $border-item;
     height: 50px;
     border-style: dashed;
+
+@media screen and (max-width: 1335px) 
+    .info
+        flex-direction: column;
+        justify-content: center;
+    .tools, .help
+        align-self: center;
+    .list .name
+        flex-direction: column;

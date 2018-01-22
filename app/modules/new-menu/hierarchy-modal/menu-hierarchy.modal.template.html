@@ -1,0 +1,17 @@
+<div class="modal-header">
+        <h3 class=modal-title>Visualização do Menu</h3>
+</div>
+<div class="hierarchy modal-body">
+    <div class="item-hierarchy menu-hierarchy" ng-repeat="itemMain in vm.mainMenu">
+        {{ itemMain.label }}
+        <div class="subitem menu-hierarchy" ng-repeat="subitem in itemMain.children">
+            {{ subitem.label }}
+            <div class="thirditem menu-hierarchy" ng-repeat="thirditem in subitem.children">
+                {{ thirditem.label }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="vm.dismiss()"><i class="fa fa-check"></i> Ok </button>
+</div>

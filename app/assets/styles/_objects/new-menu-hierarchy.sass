@@ -1,0 +1,22 @@
+.menu-hierarchy
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    box-sizing: content-box;
+    &:hover
+        border-color: #979898
+        cursor: pointer;
+
+.item-hierarchy
+    font-size: 2.5rem;
+
+.item-hierarchy > .subitem
+    font-size: 2rem;
+
+.item-hierarchy > .subitem > .thirditem
+    font-size: 1.5rem;
+
+.hierarchy
+    &.modal-body
+    overflow: overlay;
+    height: 75vh;
