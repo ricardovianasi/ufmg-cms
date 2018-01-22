@@ -77,7 +77,7 @@
             obj.items = _buildMenuItems(data);
 
             return obj;
-        };
+        }
 
         function _buildMenuItems(items) {
             var menu = [];
@@ -104,7 +104,7 @@
             });
 
             return menu;
-        };
+        }
 
     }
 })();

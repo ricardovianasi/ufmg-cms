@@ -7,7 +7,7 @@
     
         /** ngInject */
     function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
-        PermissionService, PagesService, MenuService, $uibModal) {
+        PermissionService, PagesService, MenuService) {
 
         var vm = this;
 
