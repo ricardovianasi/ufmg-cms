@@ -43,6 +43,7 @@
                 vm.submit = false;
                 vm.link.id = Number.parseInt(Date.now().toString());
                 vm[type].unshift(vm.link);
+                _addItemToggle(vm.link.id, false);
             }
             _createLink();
         }
@@ -185,6 +186,7 @@
                     vm.pages = _filterPagesNotIndexed(vm[vm.types.mainMenu], pagesMod);
                     vm.pagesQuick = _filterPagesNotIndexed(vm[vm.types.quickAccess], pagesMod);
                     _setCopyPagesToFilter();
+                    _loadToggles(false);                    
                 });
         }
 
@@ -231,20 +233,28 @@
         }
 
         function _itemRemoved(e, ui) {
+            console.log('itemRemoved', e, ui.item[0].dataset);            
             let itemRemoved = ui.item[0];
             let isRemovedPage = itemRemoved.dataset && 
                 (itemRemoved.dataset.type === 'pagesQuick' || itemRemoved.dataset.type === 'pages');
             if(isRemovedPage) {
-                _whenRemovePage(itemRemoved.dataset.type, Number.parseInt(itemRemoved.dataset.id));
+                _whenRemovePage(itemRemoved.dataset.type, itemRemoved.dataset.id);
+            }
+        }
+
+
+        function _itemReceive(e, ui) {
+            console.log('_itemReceive', e, ui.item[0].dataset);
+            let itemReceived = ui.item[0];
+            let isReceivedPage = itemReceived.dataset && itemReceived.dataset.type === 'pages';
+            if(isReceivedPage) {
+                _addItemToggle(itemReceived.dataset.id, false);
             }
         }
         
         function _whenRemovePage(typePage, id) {
             let listAllPages = vm.all[typePage];
             let index = listAllPages.findIndex(function (pg) {
-                if(pg.page && pg.page.id) {
-                    return pg.page.id === id;
-                }
                 return pg.id === id;
             });
             if(index >= 0) {
@@ -257,7 +267,8 @@
                 connectWith: '.connect-' + type,
                 dropOnEmpty: true,
                 cursor: 'move',
-                remove: _itemRemoved
+                remove: _itemRemoved,
+                receive: _itemReceive
             };
         }
 
@@ -280,6 +291,17 @@
             vm.link = {
                 children: [],
             };
+        }
+
+        function _addItemToggle(id, valueInit) {
+            vm.stateToggles[id] = valueInit; 
+        }
+
+        function _loadToggles(valueInit) {
+            MenuService.parseMenuToMenuFlat(vm[vm.types.mainMenu])
+                .forEach(function(item) {
+                    _addItemToggle(item.id, valueInit);
+                });
         }
 
         function activate() {
