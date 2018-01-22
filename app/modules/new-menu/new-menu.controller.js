@@ -9,7 +9,7 @@
     function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
         PermissionService, PagesService, MenuService) {
 
-        var vm = this;
+        let vm = this;
 
         vm.save = save;
         vm.editItem = editItem;
@@ -132,7 +132,7 @@
         }
 
         function removeItemDialog(type, item, parent) {
-            var title = 'Confirmar exclusão do <b>' + item.label + '</b> e seus subitens do menu?';
+            let title = 'Confirmar exclusão do <b>' + item.label + '</b> e seus subitens do menu?';
             ModalService.confirm(title)
             .result
             .then(function() {
@@ -142,7 +142,7 @@
 
         function _removeItem(type, item, parent) {
             let listToRemove = parent ? parent.children : vm[type];
-            var idxItem = listToRemove.indexOf(item);
+            let idxItem = listToRemove.indexOf(item);
             listToRemove.splice(idxItem, 1);
 
             _backToPages(type, item);
@@ -225,11 +225,39 @@
         }
 
         function _setOptionsSortable(type, placeholder) {
-            var options = _baseConfigSortable(type);
+            let options = _baseConfigSortable(type);
             if(placeholder) {
                 options.placeholder = placeholder;
             }
             return options;
+        }
+
+        function _whenRemovePage(typePage, id) {
+            let listAllPages = vm.all[typePage];
+            let index = listAllPages.findIndex(function (pg) {
+                return pg.id === id;
+            });
+            if(index >= 0) {
+                listAllPages.splice(index, 1);
+            }
+        }
+
+        function _baseConfigSortable(type) {
+            return {
+                connectWith: '.connect-' + type,
+                dropOnEmpty: true,
+                cursor: 'move',
+                'ui-floating': false,
+                remove: _itemRemoved,
+                receive: _itemReceive,
+                sort: _sort
+            };
+        }
+
+        function _sort(event, ui) {
+            let $target = $(event.target);
+            let top = event.pageY - $target.offsetParent().offset().top - (ui.helper.outerHeight(true) / 2);
+            ui.helper.css({'top' : top + 'px'});
         }
 
         function _itemRemoved(e, ui) {
@@ -250,26 +278,6 @@
             if(isReceivedPage) {
                 _addItemToggle(itemReceived.dataset.id, false);
             }
-        }
-        
-        function _whenRemovePage(typePage, id) {
-            let listAllPages = vm.all[typePage];
-            let index = listAllPages.findIndex(function (pg) {
-                return pg.id === id;
-            });
-            if(index >= 0) {
-                listAllPages.splice(index, 1);
-            }
-        }
-
-        function _baseConfigSortable(type) {
-            return {
-                connectWith: '.connect-' + type,
-                dropOnEmpty: true,
-                cursor: 'move',
-                remove: _itemRemoved,
-                receive: _itemReceive
-            };
         }
 
         function _initKeyType() {
