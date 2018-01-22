@@ -47,7 +47,7 @@
                         </button>
                     </div>
                 </div>                
-                <ul ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
+                <ul id="itens-main" ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
                     <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id">
                         <div class="name">
                             <span class="text">
@@ -116,14 +116,14 @@
                     </li>
                 </ul>
             </div>
-            <div class="triangle-left"></div>
+            <div class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
             <div class="side-panel">
                 <ul class="tab-panel" ng-init="tabIdxMain = 1">
                     <li class="item-panel" ng-click="tabIdxMain = 1" ng-class="{'active': tabIdxMain === 1}">Paginas</li>
                     <li class="item-panel" ng-click="tabIdxMain = 2" ng-class="{'active': tabIdxMain === 2}">Links</li>
                 </ul>
                 <div class="search-page" ng-show="tabIdxMain === 1">
-                    <div class="info">Arraste a pagina para a esquerda.</div>
+                    <div class="info"><span class="help">Arraste a pagina para a esquerda.</span></div>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPages.label" ng-change="newMenu.searchPage('pages', qPages.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
@@ -137,7 +137,7 @@
                 <div class="link-area" ng-show="tabIdxMain === 2">
                     <ng-include src="'modules/new-menu/partials/new-menu.link.html'"></ng-include>
                     <div class="buttons text-center">
-                            <button class="btn btn-success btn-large" ng-click="newMenu.addLink('mainMenu')">Adicionar Link</button>
+                            <button class="btn btn-success btn-lg" ng-click="newMenu.addLink('mainMenu')">Adicionar Link</button>
                     </div>
                 </div>
             </div>
@@ -158,8 +158,10 @@
         </div>
         <div class="menu-content">
             <div class="items-main">
-                <div class="info">Altere as ordens arrastando os itens.</div>
-                <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list main list-no-style-type" 
+                <div class="info">
+                    <span class="help">Altere as ordens arrastando os itens.</span>
+                </div>
+                <ul id="itens-quick" ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list main list-no-style-type" 
                     ng-model="newMenu.quickAccess">
                     <li class="item primary" ng-repeat="itemQuick in newMenu.quickAccess track by itemQuick.id">
                         <div class="name">
@@ -180,14 +182,14 @@
                     </li>
                 </ul>
             </div>
-            <div class="triangle-left"></div>
+            <div class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
             <div class="side-panel">
                 <ul class="tab-panel" ng-init="tabIdx = 1">
                     <li class="item-panel" ng-click="tabIdx = 1" ng-class="{'active': tabIdx === 1}">Paginas</li>
                     <li class="item-panel" ng-click="tabIdx = 2" ng-class="{'active': tabIdx === 2}">Links</li>
                 </ul>
                 <div class="search-page" ng-show="tabIdx === 1">
-                    <div class="info">Arraste a pagina para a esquerda.</div>
+                    <div class="info"><span class="help">Arraste a pagina para a esquerda.</span></div>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPagesQuick.label" ng-change="newMenu.searchPage('pagesQuick', qPagesQuick.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
@@ -202,7 +204,7 @@
                 <div class="link-area" ng-show="tabIdx === 2">
                     <ng-include src="'modules/new-menu/partials/new-menu.link.html'"></ng-include>
                     <div class="buttons text-center">
-                            <button class="btn btn-success btn-large" ng-click="newMenu.addLink('quickAccess')">Adicionar Link</button>
+                            <button class="btn btn-success btn-lg" ng-click="newMenu.addLink('quickAccess')">Adicionar Link</button>
                     </div>
                 </div>
             </div>

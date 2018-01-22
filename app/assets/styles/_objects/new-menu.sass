@@ -2,11 +2,12 @@ $primary-background: rgba(44, 46, 47, .1);
 $secondary-background: rgba(44, 46, 47, .3);
 $tertiary-background: rgba(44, 46, 47, .6);
 $placeholder-background: rgba(239, 63, 74, .4);
+$container-border-color: rgba(0, 0, 0, .34);
 
 $border-item: 1px solid rgba(44, 46, 47, 0.52);
 
 .panel-main
-    border: 1px solid rgba(0, 0, 0, .34)
+    border: 1px solid $container-border-color;
     margin-bottom: 30px;
     .menu-header
         text-align: center;
@@ -33,7 +34,6 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
 
     .menu-content > .items-main
         border: 1px solid #c5c0c0;
-        padding: 5px;
         flex: 0.6;
         .list
             min-height: 10px;
@@ -66,6 +66,7 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
     .menu-content >.side-panel .tab-panel
         list-style-type: none;
         padding-left: 0;
+        margin-bottom: 0;
         display: flex;
         justify-content: space-around;
         border-bottom: 1px solid #c5c0c0;
@@ -86,9 +87,11 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
                     
 
     .menu-content >.side-panel
-        border: 1px solid #c5c0c0;
+        border: 1px 1px 0 1px solid #c5c0c0;
         width: 310px;
         .search-page
+            .info
+                height: 40px;
             .list-page-add
                 padding: 0;
                 margin: 0 5px;
@@ -111,13 +114,19 @@ $border-item: 1px solid rgba(44, 46, 47, 0.52);
     padding: 0 20px 0 20px;
 
 .info
-    padding: 5px;
+    border-bottom: 1px solid $container-border-color;
     color: #979898;
     font-weight: bold;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    height: 75px;
     .help
         font-size: 1.1em;
+    .help, .tools
+        align-self: center;
+    .tools > .btn
+        margin-bottom: 0;
+
 .placeholder-main
     background-color: $placeholder-background;
     border: $border-item;

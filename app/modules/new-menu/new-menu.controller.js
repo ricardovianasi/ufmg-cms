@@ -45,6 +45,7 @@
                 vm[type].unshift(vm.link);
                 _addItemToggle(vm.link.id, false);
             }
+            _scrollTop(type === vm.types.mainMenu ? '#itens-main' : '#itens-quick');
             _createLink();
         }
 
@@ -54,6 +55,10 @@
 
         function allShow() {
             _setAllToggles(true);
+        }
+        
+        function _scrollTop(id) {
+            angular.element( document.querySelector(id))[0].scrollTop = 0;
         }
 
         function _setAllToggles(value) {
