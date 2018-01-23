@@ -43,7 +43,7 @@
 
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.remove = vm.$parent.remove;
-            vm.publisher = vm.$parent.publish || vm.publishMethod;
+            vm.publisher = vm.publishMethod || vm.$parent.publish;
 
             vm.publish = _publish;
             vm.publishEdit = _publishEdit;
