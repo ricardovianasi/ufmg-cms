@@ -1374,14 +1374,14 @@
             getPages: _getPages,
             addPage: function (page) {
                 page = _parseData(page);
-                return $http.post(apiUrl + '/page', page);
+                return $http.post(apiUrl + '/page', page, { ignoreLoadingBar: true });
             },
             getPage: function (id) {
                 return $http.get(apiUrl + '/page/' + id);
             },
             updatePage: function (id, page) {
                 page = _parseData(page);
-                return $http.put(apiUrl + '/page/' + id, page);
+                return $http.put(apiUrl + '/page/' + id, page, { ignoreLoadingBar: true });
             },
             removePage: function (id) {
                 return $http.delete(apiUrl + '/page/' + id);

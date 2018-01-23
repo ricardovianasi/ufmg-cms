@@ -45,11 +45,11 @@
             },
             postNews: function (data) {
                 data.post_date = convertPostDateToSend(data);
-                return $http.post(apiUrl + '/news', data);
+                return $http.post(apiUrl + '/news', data, { ignoreLoadingBar: true });
             },
             updateNews: function (id, data) {
                 data.post_date = convertPostDateToSend(data);
-                return $http.put(apiUrl + '/news/' + id, data);
+                return $http.put(apiUrl + '/news/' + id, data, { ignoreLoadingBar: true });
             },
             removeNews: function (id) {
                 return $http.delete(apiUrl + '/news/' + id);

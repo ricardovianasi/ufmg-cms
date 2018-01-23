@@ -48,10 +48,12 @@
                 return false;
             }
 
+            vm.isLoading = true;
             ClippingsService.store(data).then(function () {
                 NotificationService.success('Clipping criado com sucesso.');
                 $location.path('/clipping');
-            });
+            }).catch(console.error)
+            .then(function() {vm.isLoading = false});
         };
     }
 })();

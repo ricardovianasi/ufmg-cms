@@ -33,27 +33,13 @@
                     return $http.get(apiUrl + '/clipping' + params);
                 },
                 store: function (data) {
-                    var deferred = $q.defer();
-
                     data = _parseData(data);
-
-                    $http.post(CLIPPING_ENDPOINT, data).then(function (data) {
-                        deferred.resolve(data);
-                    });
-
-                    return deferred.promise;
+                    return $http.post(CLIPPING_ENDPOINT, data, { ignoreLoadingBar: true });
                 },
                 update: function (data, id) {
-                    var deferred = $q.defer();
                     var url = $filter('format')('{0}/{1}', CLIPPING_ENDPOINT, id);
-
                     data = _parseData(angular.copy(data));
-
-                    $http.put(url, data).then(function (data) {
-                        deferred.resolve(data);
-                    });
-
-                    return deferred.promise;
+                    return $http.put(url, data, { ignoreLoadingBar: true });
                 },
                 destroy: function (id) {
                     var deferred = $q.defer();

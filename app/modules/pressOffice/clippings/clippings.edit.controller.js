@@ -54,6 +54,7 @@
             ClippingsService.update(data, $routeParams.id).then(function () {
                 NotificationService.success('Clipping salvo com sucesso.');
                 $location.path('/clipping');
+                vm.isLoading = false;                
             }).catch(console.error)
             .then(function () {
                 vm.isLoading = false;

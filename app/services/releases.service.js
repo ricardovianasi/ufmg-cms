@@ -70,14 +70,14 @@
             store: function (data) {
                 data = _parseData(data);
 
-                return $http.post(RELEASE_ENDPOINT, data);
+                return $http.post(RELEASE_ENDPOINT, data, { ignoreLoadingBar: true });
             },
             update: function (data, id) {
                 var url = $filter('format')('{0}/{1}', RELEASE_ENDPOINT, id);
 
                 data = _parseData(data);
 
-                return $http.put(url, data);
+                return $http.put(url, data, { ignoreLoadingBar: true });
             },
             destroy: function (id) {
                 var url = $filter('format')('{0}/{1}', RELEASE_ENDPOINT, id);
