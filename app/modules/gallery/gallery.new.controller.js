@@ -178,7 +178,7 @@
                 $location.path('/gallery');
                 $scope.isLoading = false;
             }).catch(console.error)
-            .then(function () { $scope.isLoading = false });
+            .then(function () { $scope.isLoading = false; });
         };
 
         $scope.uploadImage = function () {
