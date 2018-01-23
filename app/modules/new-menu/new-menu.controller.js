@@ -45,7 +45,7 @@
                 vm[type].unshift(vm.link);
                 _addItemToggle(vm.link.id, false);
             }
-            _scrollTop(type === vm.types.mainMenu ? '#itens-main' : '#itens-quick');
+            _scrollTop(type === vm.types.mainMenu ? '#items-main' : '#itens-quick');
             _createLink();
         }
 

@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-<div id="new-menu-panel" class="row" can-get="!canPut('menu')">
+<div id="new-menu-panel" class="row">
     <div class="panel-main">
         <div class="menu-header">
             <h2 class="title">
@@ -46,78 +46,80 @@
                             <i class="fa fa-eye"></i>
                         </button>
                     </div>
-                </div>                
-                <ul id="itens-main" ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
-                    <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id">
-                        <div class="name">
-                            <span class="text">
-                                <i class="fa fa-th" aria-hidden="true"></i>
-                                {{ itemPrimary.label }}
-                                <span ng-show="itemPrimary.oldLabel">( {{ itemPrimary.oldLabel }} )</span>
-                            </span>
-                            <span class="actions">
-                                <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemPrimary)">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
-                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link">
-                                    <i ng-show="!newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-down"></i>
-                                    <i ng-show="newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-up"></i>
-                                </button>
-                            </span>
-                        </div>
-                        <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemPrimary.children">
-                            <li ng-if="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
-                                <div class="name">
-                                    <span class="text">
-                                        <i class="fa fa-th" aria-hidden="true"></i>
-                                        {{ itemSecondary.label }}
-                                        <span ng-show="itemSecondary.oldLabel">( {{ itemSecondary.oldLabel }} )</span>
-                                    </span>
-                                    <span class="actions">
-                                        <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                        <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
-                                            <i class="fa fa-trash"></i>                                    
-                                        </button>
-                                        <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link">
-                                            <i ng-show="!newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-down"></i>
-                                            <i ng-show="newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-up"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemSecondary.children">
-                                    <li ng-if="newMenu.listCanShow(itemSecondary.id, itemSecondary.children)" class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
-                                        <div class="name">
-                                            <span class="text">
-                                                <i class="fa fa-th" aria-hidden="true"></i>
-                                                {{ itemTertiary.label }}
-                                                <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>                                                
-                                            </span>
-                                            <span class="actions">
-                                                <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
-                                                    <i class="fa fa-pencil"></i>
-                                                </button>
-                                                <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
-                                                    <i class="fa fa-trash"></i>                                    
-                                                </button>
-                                                <button disabled class="btn btn-link">
-                                                    <i class="fa fa-arrow-down"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                </div>
+                <div can-get="!canPut('menu')">
+                    <ul id="items-main" ui-sortable="newMenu.optionsSortableItems" class="container-list connect-mainMenu list main list-no-style-type" ng-model="newMenu.mainMenu">
+                        <li class="item primary" ng-repeat="itemPrimary in newMenu.mainMenu track by itemPrimary.id">
+                            <div class="name">
+                                <span class="text">
+                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                    {{ itemPrimary.label }}
+                                    <span ng-show="itemPrimary.oldLabel">( {{ itemPrimary.oldLabel }} )</span>
+                                </span>
+                                <span class="actions">
+                                    <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemPrimary)">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemPrimary)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    <button ng-disabled="newMenu.isEmpty(itemPrimary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemPrimary.id)" class="btn btn-link view-permission">
+                                        <i ng-show="!newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-down"></i>
+                                        <i ng-show="newMenu.isOpen(itemPrimary.id)" class="fa fa-arrow-up"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemPrimary.children">
+                                <li ng-if="newMenu.listCanShow(itemPrimary.id, itemPrimary.children)" class="item secondary" ng-repeat="itemSecondary in itemPrimary.children track by itemSecondary.id">
+                                    <div class="name">
+                                        <span class="text">
+                                            <i class="fa fa-th" aria-hidden="true"></i>
+                                            {{ itemSecondary.label }}
+                                            <span ng-show="itemSecondary.oldLabel">( {{ itemSecondary.oldLabel }} )</span>
+                                        </span>
+                                        <span class="actions">
+                                            <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemSecondary, itemPrimary)">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
+                                                <i class="fa fa-trash"></i>                                    
+                                            </button>
+                                            <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link view-permission">
+                                                <i ng-show="!newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-down"></i>
+                                                <i ng-show="newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-up"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <ul ui-sortable="newMenu.optionsSortableItems" class="list connect-mainMenu list-no-style-type" ng-model="itemSecondary.children">
+                                        <li ng-if="newMenu.listCanShow(itemSecondary.id, itemSecondary.children)" class="item tertiary" ng-repeat="itemTertiary in itemSecondary.children track by itemTertiary.id">
+                                            <div class="name">
+                                                <span class="text">
+                                                    <i class="fa fa-th" aria-hidden="true"></i>
+                                                    {{ itemTertiary.label }}
+                                                    <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>                                                
+                                                </span>
+                                                <span class="actions">
+                                                    <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
+                                                        <i class="fa fa-trash"></i>                                    
+                                                    </button>
+                                                    <button disabled class="btn btn-link">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
-            <div class="side-panel">
+            <div ng-if="canPut('menu')" class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
+            <div ng-if="canPut('menu')" class="side-panel">
                 <ul class="tab-panel" ng-init="tabIdxMain = 1">
                     <li class="item-panel" ng-click="tabIdxMain = 1" ng-class="{'active': tabIdxMain === 1}">Paginas</li>
                     <li class="item-panel" ng-click="tabIdxMain = 2" ng-class="{'active': tabIdxMain === 2}">Links</li>
@@ -182,8 +184,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
-            <div class="side-panel">
+            <div ng-if="canPut('menu')" class="triangle-left" uib-tooltip="Arraste as páginas da direita para a esquerda para adicionar ao menu."></div>
+            <div ng-if="canPut('menu')" class="side-panel">
                 <ul class="tab-panel" ng-init="tabIdx = 1">
                     <li class="item-panel" ng-click="tabIdx = 1" ng-class="{'active': tabIdx === 1}">Paginas</li>
                     <li class="item-panel" ng-click="tabIdx = 2" ng-class="{'active': tabIdx === 2}">Links</li>

@@ -53,9 +53,11 @@
                 }
 
                 function addCss(elem){
-                    $(elem).css({
-                        'cursor': 'default'
-                    });
+                    if(!noRemoveEvents(elem)) {
+                        $(elem).css({
+                            'cursor': 'default'
+                        });
+                    }
                     if(elem.nodeName === 'IMG'){
                         $(elem).css({
                             'width': '100%'
@@ -64,7 +66,7 @@
                 }
 
                 function removeEvents(elem) {
-                    if (elem.id === 'btn-back' || $(elem).hasClass('view-permission')) {
+                    if (noRemoveEvents(elem)) {
                         return;
                     }
 
@@ -75,6 +77,10 @@
                     $(elem).off('mouseenter');
 
                     $(elem).off('dragenter');
+                }
+
+                function noRemoveEvents(elem) {
+                    return elem.id === 'btn-back' || $(elem).hasClass('view-permission');
                 }
             }
         };
