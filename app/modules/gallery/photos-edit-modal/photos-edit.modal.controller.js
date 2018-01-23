@@ -27,7 +27,7 @@
                     $scope.$apply();
                 }, 0);
             }
-        };
+        }
 
         function previousPhoto(index) {
             if (index !== 0) {
@@ -37,15 +37,15 @@
                     $scope.$apply();
                 });
             }
-        };
+        }
 
         function ok() {
             $uibModalInstance.close(vm.photos);
-        };
+        }
 
         function cancel() {
             $uibModalInstance.dismiss();
-        };
+        }
 
         function _initVariables() {
             vm.photos = photos;

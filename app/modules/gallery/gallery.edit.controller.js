@@ -37,7 +37,7 @@
                 vm.isLoading = false;
             }).catch(console.error)
             .then(function() { vm.isLoading = false; });
-        };
+        }
 
         function removePhoto(id) {
             var idx = _.findIndex(vm.gallery.photos, function (files) { // jshint ignore: line
@@ -48,7 +48,7 @@
             modalConfirm.result.then(function () {
                 vm.gallery.photos.splice(idx, 1);
             });
-        };
+        }
 
         function editPhotos(index) {
             let editPhotosModal = _openEditPhotos(index);
@@ -68,7 +68,7 @@
 
                 NotificationService.success('Ediçao realizada com sucesso!');
             });
-        };
+        }
 
         function _openEditPhotos(index) {
             return $uibModal.open({
@@ -102,7 +102,7 @@
 
                     vm.gallery.photos.push(obj);
                 });
-        };
+        }
 
         function _initVariables() {
             vm.categories = [];
