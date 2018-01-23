@@ -5,56 +5,71 @@
         .controller('GalleryNewController', GalleryNewController);
 
     /** ngInject */
-    function GalleryNewController($scope,
-        $location,
-        $uibModal,
-        StatusService,
-        VIEWER,
-        GalleryService,
-        MediaService,
-        ManagerFileService,
-        NotificationService,
-        PermissionService,
-        $rootScope,
-        Util,
-        $log) {
-        $log.info('GaleriasNovoController');
+    function GalleryNewController($location, $uibModal, StatusService, VIEWER, GalleryService, MediaService,
+        ManagerFileService, NotificationService, PermissionService, $rootScope, Util, $log, ModalService) {
 
-        $scope.categories = [];
-        $scope.gallery = {};
-        var EditPhotosModalCtrl = _EditPhotosModalCtrl;
-        var ConfirmationModalCtrl = _ConfirmationModalCtrl;
+        let vm = this;
 
+        vm.publish = publish;
+        vm.editPhotos = editPhotos;
+        vm.removePhoto = removePhoto;
+        vm.uploadImage = uploadImage;
 
-        GalleryService.getCategories().then(function (res) {
-            $scope.categories = res.data.items;
-            $scope.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
+        activate();
 
-        });
+        function publish() {
+            let _photos = [];
 
-        $scope.gallery.title = '';
-        $scope.gallery.category = '';
-        $scope.gallery.photos = [];
-
-        var EditPhotosModal;
-        var removeConfirmationModal;
-
-        $scope.editPhotos = function () {
-            EditPhotosModal = $uibModal.open({
-                templateUrl: 'components/modal/photos-edit.modal.template.html',
-                controller: EditPhotosModalCtrl,
-                backdrop: 'static',
-                size: 'lg',
-                resolve: {
-                    photos: function () {
-                        return $scope.gallery.photos;
-                    }
-                }
+            angular.forEach(vm.gallery.photos, function (photo) {
+                _photos.push(photo.file.id);
             });
 
-            EditPhotosModal.result.then(function (data) {
+            let obj = {
+                title: vm.gallery.title,
+                category: parseInt(vm.gallery.category),
+                photos: _photos
+            };
+            vm.isLoading = true;
+            GalleryService.newGallery(obj).then(function () {
+                $location.path('/gallery');
+                vm.isLoading = false;
+            }).catch(console.error)
+            .then(function () { vm.isLoading = false; });
+        };
+
+        function removePhoto(id) {
+            let idx = vm.gallery.photos.findIndex(function(photo) {
+                return photo.file.id === id;
+            });
+            let modalConfirm = ModalService.confirm('Você deseja remover esta imagem da galeria?', 'md');
+            modalConfirm.result.then(function () {
+                vm.gallery.photos.splice(idx, 1);
+            });
+        };
+
+        function uploadImage() {
+            ManagerFileService.imageFiles();
+            ManagerFileService
+                .open('galleryImage')
+                .then(function (data) {
+                    data.author = {
+                        name: data.author
+                    };
+
+                    let obj = {
+                        file: data
+                    };
+
+                    vm.gallery.photos.push(obj);
+                });
+        };
+
+        function editPhotos() {
+            let editPhotosModal = _openEditPhotos();
+
+            editPhotosModal.result.then(function (data) {
                 angular.forEach(data, function (file) {
-                    var obj = {
+                    let obj = {
                         title: file.title ? file.title : '',
                         description: file.description ? file.description : '',
                         altText: file.alt_text ? file.alt_text : '',
@@ -66,136 +81,37 @@
             });
         };
 
-        $scope.$watch('add_photos', function () {
-            if ($scope.add_photos) {
-                angular.forEach($scope.add_photos, function (file, idx) {
-                    MediaService.newFile(file).then(function (data) {
-                        var _file = {
-                            url: data.url,
-                            id: data.id
-                        };
-
-                        $scope.gallery.photos.push(_file);
-                        NotificationService.success('"' + data.title + '"' + ' enviado para Biblioteca de Mídia.');
-                    });
-
-                    if (idx + 1 === $scope.add_photos.length) {
-                        setTimeout(function () {
-                            $scope.editPhotos();
-                        }, 250);
-                    }
-                });
-            }
-        });
-
-        $scope.removePhoto = function (id) {
-            var idx = _.findIndex($scope.gallery.photos, { // jshint ignore: line
-                id: id
-            });
-
-            $scope.confirmationModal('md', 'Você deseja remover esta imagem da galeria?');
-            removeConfirmationModal.result.then(function () {
-                $scope.gallery.photos.splice(idx, 1);
-            });
-        };
-
-        $scope.confirmationModal = function (size, title) {
-            removeConfirmationModal = $uibModal.open({
-                templateUrl: 'components/modal/confirmation.modal.template.html',
-                controller: ConfirmationModalCtrl,
+        function _openEditPhotos() {
+            return $uibModal.open({
+                templateUrl: 'modules/gallery/photos-edit-modal/photos-edit.modal.template.html',
+                controller: 'PhotosEditModalController as vm',
                 backdrop: 'static',
-                size: size,
+                size: 'lg',
                 resolve: {
-                    title: function () {
-                        return title;
-                    }
+                    photos: function () { return vm.gallery.photos; },
+                    index: function () { return 0; }
                 }
             });
-        };
-
-        function _EditPhotosModalCtrl($scope, $uibModalInstance, photos) {
-            $scope.photos = photos;
-
-            $scope.currentPhoto = $scope.photos[0];
-            $scope.currentPhotoIdx = 0;
-
-            $scope.nextPhoto = function (index) {
-                // não é o último
-                if (index !== $scope.photos.length - 1) {
-                    $scope.currentPhoto = $scope.photos[index + 1];
-                    $scope.currentPhotoIdx = index + 1;
-                    setTimeout(function () {
-                        $scope.$apply();
-                    });
-                }
-            };
-
-            $scope.previousPhoto = function (index) {
-                if (index !== 0) {
-                    $scope.currentPhoto = $scope.photos[index - 1];
-                    $scope.currentPhotoIdx = index - 1;
-                    setTimeout(function () {
-                        $scope.$apply();
-                    });
-                }
-            };
-
-            $scope.ok = function () {
-                $uibModalInstance.close($scope.photos);
-            };
-
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss();
-            };
         }
 
-        function _ConfirmationModalCtrl($scope, $uibModalInstance, title) {
-            $scope.modal_title = title;
-
-            $scope.ok = function () {
-                $uibModalInstance.close();
-            };
-
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
-        }
-
-        $scope.publish = function () {
-            var _photos = [];
-
-            angular.forEach($scope.gallery.photos, function (photo) {
-                _photos.push(photo.file.id);
+        function _loadCategories() {
+            GalleryService.getCategories().then(function (res) {
+                vm.categories = res.data.items;
+                vm.canPermission = !VIEWER ? VIEWER : PermissionService.canPost('gallery');
             });
+        }
 
-            var obj = {
-                title: $scope.gallery.title,
-                category: parseInt($scope.gallery.category),
-                photos: _photos
-            };
-            $scope.isLoading = true;
-            GalleryService.newGallery(obj).then(function () {
-                $location.path('/gallery');
-                $scope.isLoading = false;
-            }).catch(console.error)
-            .then(function () { $scope.isLoading = false; });
-        };
+        function _initVariables() {
+            vm.categories = [];
+            vm.gallery = {};
+            vm.gallery.title = '';
+            vm.gallery.category = '';
+            vm.gallery.photos = [];
+        }
 
-        $scope.uploadImage = function () {
-            ManagerFileService.imageFiles();
-            ManagerFileService
-                .open('galleryImage')
-                .then(function (data) {
-                    data.author = {
-                        name: data.author
-                    };
-
-                    var obj = {
-                        file: data
-                    };
-
-                    $scope.gallery.photos.push(obj);
-                });
-        };
+        function activate() {
+            _initVariables();
+            _loadCategories();
+        }
     }
 })();

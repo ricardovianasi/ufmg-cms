@@ -46,7 +46,7 @@
             }
         }
 
-        function _confirm(title, size) {
+        function confirm(title, size) {
             size = size || ModalService.MODAL_MEDIUM;
 
             var ConfirmationModalController = function ($scope, $uibModalInstance, title) {
@@ -238,7 +238,7 @@
             MODAL_LARGE: 'lg',
             FULL_SCREEN: 'full',
             openModal: openModal,
-            confirm: _confirm,
+            confirm: confirm,
             dialog: dialog,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,

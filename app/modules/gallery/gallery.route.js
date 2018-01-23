@@ -11,6 +11,7 @@
                 .when('/gallery/new', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryNewController',
+                    controllerAs: 'galleryCtrl',
                     resolve: {
                         VIEWER: function () {
                             return true;
@@ -20,6 +21,7 @@
                 .when('/gallery/edit/:id', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryEditController',
+                    controllerAs: 'galleryCtrl',
                     resolve: {
                         VIEWER: function () {
                             return true;
