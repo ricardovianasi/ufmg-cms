@@ -49,11 +49,13 @@
                   photos: _photos,
                   status: $scope.gallery.status
               };
-
+              $scope.isLoading = true;
               GalleryService.updateGallery($scope.gallery.id, obj).then(function () {
                   NotificationService.success('Galeria atualizada com sucesso!');
                   $location.path('/gallery');
-              });
+                  $scope.isLoading = false;
+              }).catch(console.error)
+              .then(function() { $scope.isLoading = false });
           };
 
           var removeConfirmationModal, EditPhotosModal;

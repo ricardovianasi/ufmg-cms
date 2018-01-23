@@ -22,10 +22,10 @@
                 return $http.get(apiUrl + '/gallery/' + id);
             },
             newGallery: function (gallery) {
-                return $http.post(apiUrl + '/gallery', gallery);
+                return $http.post(apiUrl + '/gallery', gallery, { ignoreLoadingBar: true });
             },
             updateGallery: function (id, gallery) {
-                return $http.put(apiUrl + '/gallery/' + id, gallery);
+                return $http.put(apiUrl + '/gallery/' + id, gallery, { ignoreLoadingBar: true });
             },
             removeGallery: function (id) {
                 return $http.delete(apiUrl + '/gallery/' + id);

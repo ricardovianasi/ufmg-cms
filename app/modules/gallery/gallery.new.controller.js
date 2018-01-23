@@ -173,10 +173,12 @@
                 category: parseInt($scope.gallery.category),
                 photos: _photos
             };
-
+            $scope.isLoading = true;
             GalleryService.newGallery(obj).then(function () {
                 $location.path('/gallery');
-            });
+                $scope.isLoading = false;
+            }).catch(console.error)
+            .then(function () { $scope.isLoading = false });
         };
 
         $scope.uploadImage = function () {
