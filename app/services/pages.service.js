@@ -215,27 +215,17 @@
                 },
 
                 highlightedevents: function (widget) {
-                    var eventsToSelect = [];
+                    let objLoad = {events: []};
                     if (widget.events) {
                         angular.forEach(widget.events, function (event) {
-                            eventsToSelect.push(event.id);
+                            objLoad.events.push(event.id);
                         });
-
-                        return {
-                            events: eventsToSelect,
-                        };
-                    } else {
-                        if (widget.content.events) {
-
-                            angular.forEach(widget.content.events, function (event) {
-                                eventsToSelect.push(event.id);
-                            });
-
-                            return {
-                                events: eventsToSelect,
-                            };
-                        }
+                    } else if(widget.content && widget.content.events) {
+                        angular.forEach(widget.content.events, function (event) {
+                            objLoad.events.push(event.id);
+                        });
                     }
+                    return objLoad;
                 },
 
                 gallery: function (widget) {
@@ -623,17 +613,13 @@
                 },
 
                 highlightedevents: function (widget) {
+                    let objLoad = { events: [] };
                     if (widget.events) {
-                        return {
-                            events: widget.events,
-                        };
-                    } else {
-                        if (widget.content.events) {
-                            return {
-                                events: widget.content.events,
-                            };
-                        }
+                        objLoad.events = widget.events;
+                    } else if(widget.content && widget.content.events) {
+                        objLoad.events = widget.content.events;
                     }
+                    return objLoad;
                 },
 
                 highlightednewsvideo: function (widget) {
@@ -994,12 +980,16 @@
             };
 
             var _prepareItems = function ($scope) {
-                $scope.addItem = function (item, type) {
+                $scope.addItem = function (item, type, prop) {
                     if ($scope.widget[type]) {
                         $scope.widget[type].push(item);
                     } else {
                         $scope.widget[type] = [];
                         $scope.widget[type].push(item);
+                    }
+                    if(prop) {
+                        $scope.widget[prop]  = null;
+
                     }
                 };
 
