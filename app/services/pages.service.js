@@ -41,9 +41,9 @@
             });
 
             function _getDatarequest() {
-                var params = {
+                let params = {
                     page: countPage,
-                    page_size: 15,
+                    page_size: 30,
                     order_by: order_by,
                     search: search,
                     filter: customFilter
@@ -57,7 +57,7 @@
                         countPage++;
                         dataReturn = res.data.items;
                         currentElement += dataReturn.length;
-                        if (res.data.total > currentElement && 15 >= res.data.items.length) {
+                        if (res.data.total > currentElement && res.data.items.length <= params.page_size) {
                             hasRequest = false;
                         }
                         $timeout(function () {
