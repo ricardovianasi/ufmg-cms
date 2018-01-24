@@ -525,21 +525,20 @@
                 },
 
                 highlightedrelease: function (widget) {
-                    var obj = {
+                    let objToSave = {
                         title: widget.title,
                         description: widget.content.description,
                         release: widget.content.release,
                         specialists: [],
-                        image: widget.content.image.id,
+                        image: widget.content.image ? widget.content.image.id : null,
                     };
 
                     angular.forEach(widget.content.specialists, function (specialist) {
                         delete specialist.opened;
-
-                        obj.specialists.push(specialist);
+                        objToSave.specialists.push(specialist);
                     });
 
-                    return obj;
+                    return objToSave;
                 },
 
                 lasttvprograms: function (widget) {
@@ -550,20 +549,19 @@
                 },
 
                 comevents: function (widget) {
-                    return {
-                        type: widget.type,
-                        event: widget.content.event.id,
-                    };
+                    let objToSave = { type: widget.type, event: {} };
+                    if(widget.content && widget.content.event) {
+                        objToSave.event = widget.content.event.id;
+                    }
+                    return objToSave;
                 },
 
                 comhighlightnews: function (widget) {
-                    return {
-                        type: widget.type,
-                        news: [
-                            widget.content.news[0].id,
-                            widget.content.news[1].id,
-                        ]
-                    };
+                    let objToSave = { type: widget.type, news: [] };
+                    if(widget.content && widget.content.news) {
+                        objToSave.news = widget.content.news.map(function (news) { return news.id; }); 
+                    }
+                    return objToSave;
                 },
 
                 faq: function (widget) {
