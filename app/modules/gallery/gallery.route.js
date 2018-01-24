@@ -6,7 +6,8 @@
             $routeProvider
                 .when('/gallery', {
                     templateUrl: 'modules/gallery/gallery.template.html',
-                    controller: 'GalleryController'
+                    controller: 'GalleryController',
+                    controllerAs: 'galleryCtrl'
                 })
                 .when('/gallery/new', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
@@ -31,6 +32,7 @@
                 .when('/gallery/view/:id', {
                     templateUrl: 'modules/gallery/gallery.form.template.html',
                     controller: 'GalleryEditController',
+                    controllerAs: 'galleryCtrl',
                     resolve: {
                         VIEWER: function () {
                             return false;

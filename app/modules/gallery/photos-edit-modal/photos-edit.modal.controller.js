@@ -54,7 +54,7 @@
         }
 
         function activate() {
-            _initVariables()
+            _initVariables();
         }
     }
 })();

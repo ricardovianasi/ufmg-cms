@@ -5,47 +5,36 @@
         .controller('GalleryController', GalleryController);
 
     /** ngInject */
-    function GalleryController($scope,
-        dataTableConfigService,
-        GalleryService,
-        StatusService,
-        NotificationService,
-        ModalService,
-        DateTimeHelper,
-        $rootScope,
-        PermissionService,
-        Util,
-        $log) {
-        $log.info('GaleriasController');
+    function GalleryController(dataTableConfigService, GalleryService, StatusService, NotificationService,
+        ModalService, DateTimeHelper, PermissionService) {
 
-        var vm = $scope;
+        let vm = this;
 
-        vm.galleries = [];
-        vm.status = [];
-        vm.currentPage = 1;
         vm.DateTimeHelper = DateTimeHelper;
-        vm.removeGallery = _removeGallery;
-
-        vm.changeStatus = _changeStatus;
-        vm.itemStatus = 'all';
-        vm.dtInstance = {};
-        vm.canPost = false;
+        vm.removeGallery = removeGallery;
+        vm.changeStatus = changeStatus;
 
         onInit();
 
-        function onInit() {
-            _renderDataTable();
+        function removeGallery(id, name) {
+            ModalService
+                .confirm('Você deseja excluir a galeria "' + name + '"?')
+                .result
+                .then(function () {
+                    GalleryService.removeGallery(id).then(function () {
+                        NotificationService.success('Galeria removida com sucesso.');
+                        vm.dtInstance.DataTable.draw();
+                    });
+                });
         }
 
-        function _changeStatus(status) {
+        function changeStatus(status) {
             vm.itemStatus = status;
             dataTableConfigService.setParamStatus(status);
             vm.dtInstance.DataTable.draw();
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -57,36 +46,25 @@
                 index: 2,
                 name: 'postDate'
             }]);
-
-            function getGalleries(params, fnCallback) {
-                GalleryService
-                    .getGalleries(dataTableConfigService.getParams(params))
-                    .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                        _permissions();
-                        vm.galleries = res.data;
-                        var records = {
-                            'draw': params.draw,
-                            'recordsTotal': res.data.total,
-                            'data': [],
-                            'recordsFiltered': res.data.total
-                        };
-                        fnCallback(records);
-                         
-                    });
-            }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getGalleries);
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_getGalleries);
         }
-
-        function _removeGallery(id, name) {
-            ModalService
-                .confirm('Você deseja excluir a galeria "' + name + '"?')
-                .result
-                .then(function () {
-                    GalleryService.removeGallery(id).then(function () {
-                        NotificationService.success('Galeria removida com sucesso.');
-                        vm.dtInstance.DataTable.draw();
-                    });
+        
+        function _getGalleries(params, fnCallback) {
+            let numberOfColumns = 4;
+            let columnsHasNotOrder = [3];
+            GalleryService
+                .getGalleries(dataTableConfigService.getParams(params))
+                .then(function (res) {
+                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                    _permissions();
+                    vm.galleries = res.data;
+                    let records = {
+                        'draw': params.draw,
+                        'recordsTotal': res.data.total,
+                        'data': [],
+                        'recordsFiltered': res.data.total
+                    };
+                    fnCallback(records);
                 });
         }
 
@@ -101,6 +79,20 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('gallery');
+        }
+
+        function _initVariables() {
+            vm.galleries = [];
+            vm.status = [];
+            vm.currentPage = 1;
+            vm.itemStatus = 'all';
+            vm.dtInstance = {};
+            vm.canPost = false;
+        }
+
+        function onInit() {
+            _initVariables();
+            _renderDataTable();
         }
     }
 })();
