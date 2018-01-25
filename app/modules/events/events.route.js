@@ -7,7 +7,8 @@
             $routeProvider
                 .when('/events', {
                     templateUrl: 'modules/events/events.template.html',
-                    controller: 'EventsController'
+                    controller: 'EventsController',
+                    controllerAs: 'eventsCtrl'
                 })
                 .when('/events/new', {
                     templateUrl: 'modules/events/events.form.template.html',

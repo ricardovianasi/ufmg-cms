@@ -5,45 +5,31 @@
         .controller('EventsController', EventsController);
 
     /** ngInject */
-    function EventsController($scope,
-        $route,
-        PermissionService,
-        dataTableConfigService,
-        EventsService,
-        DateTimeHelper,
-        ModalService,
-        NotificationService,
-        $rootScope,
-        Util,
-        $log) {
-        $log.info('EventsController');
+    function EventsController(PermissionService, dataTableConfigService, EventsService, DateTimeHelper,
+        ModalService, NotificationService) {
 
-        var vm = $scope;
+        let vm = this;
 
         vm.title = 'Eventos';
         vm.convertDate = DateTimeHelper.convertDate;
         vm.events = [];
         vm.currentPage = 1;
-        vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
-        vm.dtInstance = {};
+        vm.dtInstance = { };
         vm.canPost = false;
+        
+        vm.changeStatus = changeStatus;
+        vm.remove = remove;
 
-        onInit();
+        activate();
 
-        function onInit() {
-            _renderDataTable();
-        }
-
-        function _changeStatus(status) {
+        function changeStatus(status) {
             vm.itemStatus = status;
             dataTableConfigService.setParamStatus(status);
             vm.dtInstance.DataTable.draw();
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 5;
-            var columnsHasNotOrder = [4];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'name'
@@ -59,30 +45,31 @@
                 filter: 'type',
                 name: 'name'
             }]);
-
-            function getEvents(params, fnCallback) {
-                EventsService
-                    .getEvents(dataTableConfigService.getParams(params))
-                    .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                        _permissions();
-                        vm.events = res.data;
-                        var records = {
-                            'draw': params.draw,
-                            'recordsTotal': res.data.total,
-                            'data': [],
-                            'recordsFiltered': res.data.total
-                        };
-                        fnCallback(records);
-
-                    });
-            }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getEvents);
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadEvents);
         }
 
-        vm.remove = function (id, title) {
+        function _loadEvents(params, fnCallback) {
+            let numberOfColumns = 5;
+            let columnsHasNotOrder = [4];
+            EventsService
+                .getEvents(dataTableConfigService.getParams(params))
+                .then(function (res) {
+                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                    _permissions();
+                    vm.events = res.data;
+                    var records = {
+                        'draw': params.draw,
+                        'recordsTotal': res.data.total,
+                        'data': [],
+                        'recordsFiltered': res.data.total
+                    };
+                    fnCallback(records);
+                });
+        }
+
+        function remove(id, title) {
             ModalService
-                .confirm('Deseja remover o evento <b>' + title + '</b>', ModalService.MODAL_MEDIUM)
+                .confirm('Deseja remover o evento <b>' + title + '</b>?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     EventsService.destroy(id).then(function () {
@@ -90,7 +77,7 @@
                         vm.dtInstance.DataTable.draw();
                     });
                 });
-        };
+        }
 
         function _permissions() {
             _canDelete();
@@ -103,6 +90,10 @@
 
         function _canDelete() {
             vm.canDelete = PermissionService.canDelete('events');
+        }
+
+        function activate() {
+            _renderDataTable();
         }
     }
 })();
