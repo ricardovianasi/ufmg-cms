@@ -9,7 +9,8 @@
             $routeProvider
                 .when('/clipping', {
                     templateUrl: 'modules/pressOffice/clippings/clippings.template.html',
-                    controller: 'ClippingsController'
+                    controller: 'ClippingsController',
+                    controllerAs: 'clippingsCtrl'
                 })
                 .when('/clipping/new', {
                     templateUrl: 'modules/pressOffice/clippings/clippings.form.template.html',
