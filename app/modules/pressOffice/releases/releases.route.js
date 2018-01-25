@@ -9,7 +9,8 @@
             $routeProvider
                 .when('/release', {
                     templateUrl: 'modules/pressOffice/releases/releases.template.html',
-                    controller: 'ReleasesController'
+                    controller: 'ReleasesController',
+                    controllerAs: 'releasesCtrl'
                 })
                 .when('/release/new', {
                     templateUrl: 'modules/pressOffice/releases/releases.form.template.html',

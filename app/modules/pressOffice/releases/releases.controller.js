@@ -4,43 +4,31 @@
     angular.module('releasesModule')
         .controller('ReleasesController', ReleasesController);
 
-    function ReleasesController(
-        $scope,
-        $uibModal,
-        $filter,
-        dataTableConfigService,
-        NotificationService,
-        ReleasesService,
-        DateTimeHelper,
-        PermissionService,
-        $log
-    ) {
+    function ReleasesController($filter, dataTableConfigService, NotificationService, ReleasesService,
+        DateTimeHelper, PermissionService, ModalService) {
 
-        $log.info('ReleasesController');
-        var vm = $scope;
+        let vm = this;
 
         vm.title = 'Releases';
         vm.releases = [];
         vm.DateTimeHelper = DateTimeHelper;
         vm.currentPage = 1;
-        vm.changeStatus = _changeStatus;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
         vm.canPost = false;
+        
+        vm.changeStatus = changeStatus;
+        vm.removeRelease = removeRelease;
 
-        function onInit() {
-            _renderDataTable();
-        }
+        activate();
 
-        function _changeStatus(status) {
+        function changeStatus(status) {
             vm.itemStatus = status;
             dataTableConfigService.setParamStatus(status);
             vm.dtInstance.DataTable.draw();
         }
 
         function _renderDataTable() {
-            var numberOfColumns = 3;
-            var columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -52,65 +40,38 @@
                 index: 2,
                 name: 'postDate'
             }]);
-
-            function getReleases(params, fnCallback) {
-                ReleasesService
-                    .getReleases(dataTableConfigService.getParams(params))
-                    .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                        _permissions();
-                        vm.releases = res.data;
-                        var records = {
-                            'draw': params.draw,
-                            'recordsTotal': res.data.total,
-                            'data': [],
-                            'recordsFiltered': res.data.total
-                        };
-                        fnCallback(records);
-
-                    });
-            }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getReleases);
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadReleases);
+        }
+        
+        function _loadReleases(params, fnCallback) {
+            let numberOfColumns = 3;
+            let columnsHasNotOrder = [];
+            ReleasesService
+            .getReleases(dataTableConfigService.getParams(params))
+            .then(function (res) {
+                vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+                _permissions();
+                vm.releases = res.data;
+                var records = {
+                    'draw': params.draw,
+                    'recordsTotal': res.data.total,
+                    'data': [],
+                    'recordsFiltered': res.data.total
+                };
+                fnCallback(records);
+            });
         }
 
-        var removeConfirmationModal;
-
-        var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
-            var vm = $scope;
-            vm.modal_title = title;
-
-            vm.ok = function () {
-                $uibModalInstance.close();
-            };
-            vm.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
-        };
-
-        vm.confirmationModal = function (size, title) {
-            removeConfirmationModal = $uibModal.open({
-                templateUrl: 'components/modal/confirmation.modal.template.html',
-                controller: ConfirmationModalCtrl,
-                backdrop: 'static',
-                size: size,
-                resolve: {
-                    title: function () {
-                        return title;
-                    }
-                }
-            });
-        };
-
-        vm.removeRelease = function (id, title) {
-            vm.confirmationModal('md', $filter('format')('Você deseja excluir o release "{0}"?', title));
-
-            removeConfirmationModal.result.then(function () {
+        function removeRelease(id, title) {
+            let titleModal = $filter('format')('Você deseja excluir o release <b>"{0}"</b>?', title);
+            let modal = ModalService.confirm(titleModal, ModalService.MODAL_MEDIUM, { isDanger: true });
+            modal.result.then(function () {
                 ReleasesService.destroy(id).then(function () {
                     vm.dtInstance.DataTable.draw();
                     NotificationService.success('Release removido com sucesso.');
                 });
             });
-        };
+        }
 
         function _permissions() {
             _canDelete();
@@ -125,6 +86,8 @@
             vm.canDelete = PermissionService.canDelete('release');
         }
 
-        onInit();
+        function activate() {
+            _renderDataTable();
+        }
     }
 })();
