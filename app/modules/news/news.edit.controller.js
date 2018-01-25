@@ -127,7 +127,7 @@
 
         vm.remove = function () {
             ModalService
-                .confirm('Você deseja excluir esta notícia?')
+                .confirm('Você deseja excluir esta notícia?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     vm.isLoading = true;

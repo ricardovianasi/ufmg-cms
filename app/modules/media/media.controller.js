@@ -79,7 +79,7 @@
 
         vm.removeMedia = function (id) {
             ModalService
-                .confirm('Você deseja excluir a mídia selecionada?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir a mídia selecionada?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result.then(function () {
                     MediaService.removeMedia(id).then(function () {
                         NotificationService.success('Mídia removida com sucesso.');

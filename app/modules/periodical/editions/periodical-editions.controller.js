@@ -90,7 +90,7 @@
 
         function _removeEdition(id, description) {
             ModalService
-                .confirm('Você deseja excluir a edição "' + description + '"?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir a edição "' + description + '"?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     PeriodicalService

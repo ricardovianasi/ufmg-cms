@@ -167,7 +167,7 @@
 
         vm.remove = function () {
             ModalService
-                .confirm('Você deseja excluir esta edição?')
+                .confirm('Você deseja excluir esta edição?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     PeriodicalService

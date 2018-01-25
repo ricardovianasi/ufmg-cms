@@ -79,7 +79,7 @@
 
         function _remove(id, title) {
             ModalService
-                .confirm('Você deseja excluir a página <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir a página <b>' + title + '</b>?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     PagesService

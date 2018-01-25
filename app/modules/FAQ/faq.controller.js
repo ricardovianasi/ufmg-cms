@@ -55,7 +55,7 @@
 
         vm.removeFaq = function (id, title) {
             ModalService
-                .confirm('Você deseja excluir o FAQ <b>' + title + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir o FAQ <b>' + title + '</b>?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     faqService.remove(id).then(function () {

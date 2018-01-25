@@ -227,7 +227,7 @@
         vm.remove = function () {
             ModalService
                 .confirm('Você deseja excluir este release?',
-                    ModalService.MODAL_MEDIUM)
+                    ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     vm.isLoading = true;

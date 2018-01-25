@@ -142,7 +142,8 @@
 
         vm.remove = function () {
             ModalService
-                .confirm('Você deseja excluir o evento <b>' + vm.event.name + '</b>?', ModalService.MODAL_MEDIUM)
+                .confirm('Você deseja excluir o evento <b>' + vm.event.name + '</b>?', 
+                    ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     EventsService.destroy($routeParams.id).then(function () {

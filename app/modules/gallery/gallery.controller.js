@@ -18,7 +18,7 @@
 
         function removeGallery(id, name) {
             ModalService
-                .confirm('Você deseja excluir a galeria "' + name + '"?')
+                .confirm('Você deseja excluir a galeria "' + name + '"?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {
                     GalleryService.removeGallery(id).then(function () {
