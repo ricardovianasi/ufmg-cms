@@ -37,6 +37,9 @@
         vm.dataHighlightedrelease = [];
         vm.dataPage = [];
 
+        vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
+            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery'];
+
         onInit();
 
         function onInit() {
@@ -75,6 +78,11 @@
             vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
             vm.preparePartial = PagesService.module().preparePartial;
         }
+
+        vm.isDevelopment = function (typeWidget) {
+            let index = vm.widgetsInDevelopment.findIndex(function(typeInDev) { return typeInDev === typeWidget; });
+            return index >= 0;
+        };
 
         vm.loadMoreEvents = function (search) {
             reset(vm.events);
