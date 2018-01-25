@@ -8,13 +8,15 @@
     function PublishmentOptions(
         $location,
         $filter,
+        $q,
         validationService,
         StatusService,
         $log,
         DateTimeHelper,
         PermissionService,
         $rootScope,
-        $timeout
+        $timeout,
+        ModalService
     ) {
         return {
             restrict: 'E',
@@ -28,7 +30,6 @@
         };
 
         function linkController($scope, element, attrs) {
-            $log.info('PublishmentDirective');
             var vm = $scope;
             var nowDate;
             var dateChoice;
@@ -40,6 +41,12 @@
             vm.preSaveStatus = '';
             vm.showMessageWarn = false;
             vm.showMessageError = false;
+
+            vm.statusLabel = {
+                draft: 'Não Publicado',
+                published: 'Publicado',
+                scheduled: 'Agendado'
+            };
 
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.remove = vm.$parent.remove;
@@ -234,7 +241,18 @@
                 vm.publisher(vm.obj, true);
             }
 
-            function _publish(formPub) {
+            function _verifyChangeStatus() {
+                if(vm.preSaveStatus !== vm.obj.status && vm.obj.id) {
+                    let textConfirm = 'Atenção, o status de publicação foi alterado para <b class="text-danger">' +
+                        vm.statusLabel[vm.preSaveStatus] + '</b>. Deseja prosseguir?';
+                    return ModalService.confirm(textConfirm, 'md', true).result;
+                }
+                let defer = $q.defer();
+                defer.resolve();
+                return defer.promise;
+            }
+
+            function _validateDate(formPub) {
                 if (formPub.$error['dateDisabled']) {
                     var count = 0;
                     var hasDateDisabled = false;
@@ -249,7 +267,11 @@
                         formPub.$invalid = false;
                     }
                 }
-                var isInvalid = formPub.$invalid;
+            }
+
+            function _validate(formPub) {
+                _validateDate(formPub);
+                var isInvalid = formPub.$invalid;                
                 if (vm.errorInvalidHour || vm.errorInvalidDate) {
                     validationService.isValid(true);
                     return false;
@@ -260,8 +282,16 @@
                 if (!validationService.isValid(vm.$parent.formData.$invalid)) {
                     return false;
                 }
-                vm.obj.status = vm.preSaveStatus === 'scheduled' ? 'published' : vm.preSaveStatus;
-                vm.publisher(vm.obj);
+                return true;
+            }
+
+            function _publish(formPub) {
+                if(_validate(formPub)) {
+                    _verifyChangeStatus().then(function() {
+                        vm.obj.status = vm.preSaveStatus === 'scheduled' ? 'published' : vm.preSaveStatus;
+                        vm.publisher(vm.obj);
+                    }).catch(function() {});
+                }
             }
 
             function datePostValidateHour() {

@@ -19,7 +19,8 @@
         <div class="publishment-body">
             <div class="status">
                 <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
-                    <label>Status:</label>
+                        <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
+                    <label>Status: </label>
                     <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
                         <option ng-repeat="item in ['draft', 'published', 'scheduled'] track by $index" ng-value="item">{{item | translate}}</option>
                     </select>

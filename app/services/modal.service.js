@@ -46,11 +46,12 @@
             }
         }
 
-        function confirm(title, size) {
+        function confirm(title, size, isDanger) {
             size = size || ModalService.MODAL_MEDIUM;
 
-            var ConfirmationModalController = function ($scope, $uibModalInstance, title) {
+            var ConfirmationModalController = function ($scope, $uibModalInstance, title, isDanger) {
                 $scope.modal_title = title;
+                $scope.isDanger = isDanger;
 
                 $scope.ok = function () {
                     $uibModalInstance.close();
@@ -69,6 +70,9 @@
                 resolve: {
                     title: function () {
                         return title;
+                    },
+                    isDanger: function() {
+                        return isDanger;
                     }
                 }
             });

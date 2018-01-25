@@ -6,8 +6,19 @@
     <p ng-bind-html="modal_title"></p>
 </div>
 
-<div class="modal-footer">
-    <button class="btn btn-danger"
+
+<div ng-if="isDanger" class="modal-footer">
+    <button class="btn btn-default"
+            ng-click="ok()"><i class="fa fa-check"></i> Sim
+    </button>
+
+    <button class="btn btn-primary"
+            ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar
+    </button>
+</div>
+
+<div ng-if="!isDanger" class="modal-footer">
+    <button class="btn btn-default"
             ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar
     </button>
 
