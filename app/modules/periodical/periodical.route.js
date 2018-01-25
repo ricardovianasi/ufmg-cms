@@ -6,7 +6,8 @@
             $routeProvider
                 .when('/periodical', {
                     templateUrl: 'modules/periodical/periodical.template.html',
-                    controller: 'PeriodicalController'
+                    controller: 'PeriodicalController',
+                    controllerAs: 'periodicalCtrl'
                 })
                 .when('/periodical/new', {
                     templateUrl: 'modules/periodical/periodical.form.template.html',

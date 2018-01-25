@@ -29,17 +29,17 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a ng-click="releasesCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'all'}">
-                        <span ng-class="{ 'strong': itemStatus === 'all' || itemStatus === undefined }">Tudo</span>
+                    <a ng-click="releasesCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': releasesCtrl.itemStatus === 'all'}">
+                        <span ng-class="{ 'strong': releasesCtrl.itemStatus === 'all' || releasesCtrl.itemStatus === undefined }">Tudo</span>
                     </a>
-                    <a ng-click="releasesCtrl.changeStatus('published')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'published'}">
-                        <span ng-class="{ 'strong': itemStatus === 'published'}">Publicados</span>
+                    <a ng-click="releasesCtrl.changeStatus('published')" class="btn" ng-class="{ 'btn-gray': releasesCtrl.itemStatus === 'published'}">
+                        <span ng-class="{ 'strong': releasesCtrl.itemStatus === 'published'}">Publicados</span>
                     </a>
-                    <a ng-click="releasesCtrl.changeStatus('draft')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'draft'}">
-                        <span ng-class="{ 'strong': itemStatus === 'draft'}">Não publicado</span>
+                    <a ng-click="releasesCtrl.changeStatus('draft')" class="btn" ng-class="{ 'btn-gray': releasesCtrl.itemStatus === 'draft'}">
+                        <span ng-class="{ 'strong': releasesCtrl.itemStatus === 'draft'}">Não publicado</span>
                     </a>
-                    <a ng-click="releasesCtrl.changeStatus('scheduled')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'scheduled'}">
-                        <span ng-class="{ 'strong': itemStatus === 'scheduled'}">Agendado</span>
+                    <a ng-click="releasesCtrl.changeStatus('scheduled')" class="btn" ng-class="{ 'btn-gray': releasesCtrl.itemStatus === 'scheduled'}">
+                        <span ng-class="{ 'strong': releasesCtrl.itemStatus === 'scheduled'}">Agendado</span>
                     </a>
                 </div>
                 <div class="pull-right">

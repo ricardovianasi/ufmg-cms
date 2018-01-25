@@ -29,17 +29,17 @@
         <div class="panel panel-default">
             <div class="btn-toolbar">
                 <div class="btn-group focus-btn-group">
-                    <a ng-click="clippingsCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'all'}">
-                        <span ng-class="{ 'strong': itemStatus === 'all' || itemStatus === undefined }">Tudo</span>
+                    <a ng-click="clippingsCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': clippingsCtrl.itemStatus === 'all'}">
+                        <span ng-class="{ 'strong': clippingsCtrl.itemStatus === 'all' || clippingsCtrl.itemStatus === undefined }">Tudo</span>
                     </a>
-                    <a ng-click="clippingsCtrl.changeStatus('published')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'published'}">
-                        <span ng-class="{ 'strong': itemStatus === 'published'}">Publicados</span>
+                    <a ng-click="clippingsCtrl.changeStatus('published')" class="btn" ng-class="{ 'btn-gray': clippingsCtrl.itemStatus === 'published'}">
+                        <span ng-class="{ 'strong': clippingsCtrl.itemStatus === 'published'}">Publicados</span>
                     </a>
-                    <a ng-click="clippingsCtrl.changeStatus('draft')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'draft'}">
-                        <span ng-class="{ 'strong': itemStatus === 'draft'}">Não publicado</span>
+                    <a ng-click="clippingsCtrl.changeStatus('draft')" class="btn" ng-class="{ 'btn-gray': clippingsCtrl.itemStatus === 'draft'}">
+                        <span ng-class="{ 'strong': clippingsCtrl.itemStatus === 'draft'}">Não publicado</span>
                     </a>
-                    <a ng-click="clippingsCtrl.changeStatus('scheduled')" class="btn" ng-class="{ 'btn-gray': itemStatus === 'scheduled'}">
-                        <span ng-class="{ 'strong': itemStatus === 'scheduled'}">Agendado</span>
+                    <a ng-click="clippingsCtrl.changeStatus('scheduled')" class="btn" ng-class="{ 'btn-gray': clippingsCtrl.itemStatus === 'scheduled'}">
+                        <span ng-class="{ 'strong': clippingsCtrl.itemStatus === 'scheduled'}">Agendado</span>
                     </a>
                 </div>
                 <div class="pull-right">
