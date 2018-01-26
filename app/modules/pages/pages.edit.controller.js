@@ -25,8 +25,7 @@
         TagsService,
         validationService,
         Util,
-        ChangeLeavePageService,
-        $log
+        ChangeLeavePageService
     ) {
 
         var allTags = [];
@@ -47,16 +46,9 @@
         vm.removeModuleMain = _removeModuleMain;
         vm.removeModuleSide = _removeModuleSide;
 
-        vm.keyOnChange = 'PagesEditController-Change';
-
-        vm.test = function() {
-            $scope.$broadcast(vm.keyOnChange, true);
-        }
-
         onInit();
 
         function onInit() {
-            $log.info('PaginasEditarController');
 
             vm.widgets = [];
             vm.status = [];
@@ -90,13 +82,45 @@
             _getTags();
             _getWidgets();
             _getType();
+
+            ChangeLeavePageService.registerWhenLeavePage('/page/', 'PUT', $scope, 'page', _evenedObj);
         }
 
-        function _registerOnChangePage() {
-            vm.$watch('page', function(value) {
-                console.log('_registerOnChangePage', value);
-                $scope.$broadcast(vm.keyOnChange, true);
-            }, true);
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            obj.tags = _evenedTag(obj.tags, 'text');
+            obj.widgets.main = _evenedTagWidget(obj.widgets.main);
+            obj.widgets.side = _evenedTagWidget(obj.widgets.side);
+            return obj;
+        }
+
+        function _evenedTag(tags, label) {
+            if(!tags) {
+                return [];
+            }
+            return tags.map(function(tag) { return tag[label] ? tag[label] : tag; } );
+        }
+
+        function _evenedTagWidget(widgets) {
+            if(widgets && widgets.length) {
+                console.log(widgets);
+                return widgets.map(function(widget) {
+                    if(widget.tag && widget.tag.id) {
+                        widget.tag = [widget.tag.name];
+                    } else {
+                        if(widget.content && widget.content.tag) {
+                            widget.tag = _evenedTag(widget.content.tag, 'name');
+                        } else {
+                            widget.tag = _evenedTag(widget.tag, 'name');
+                        }
+                    }
+                    return widget;
+                });
+            } else {
+                return [];
+            }
         }
 
         function _getType() {
@@ -279,9 +303,6 @@
                     page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
                     page.scheduled_time = moment(data.data.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
-
-                    _registerOnChangePage();
-                    ChangeLeavePageService.registerWhenLeavePage('PagesEditController', $scope, vm.keyOnChange);
                 });
         }
 

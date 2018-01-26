@@ -8,7 +8,8 @@
     /** ngInject */
     function ChangeLeavePageService(ModalService, $rootScope, $location) {
         let service = {
-            registerWhenLeavePage: registerWhenLeavePage
+            registerWhenLeavePage: registerWhenLeavePage,
+            setHasChanged: setHasChanged
         };
 
         let vm = this;
@@ -19,38 +20,74 @@
 
         ////////////////
 
-        function registerWhenLeavePage(nameCtrl, scope, keyOnChange) {
-            _registerPage(nameCtrl);
-            _registerOnChange(nameCtrl, scope, keyOnChange);
+        function setHasChanged(value) {
+            if(vm.currentPage) {
+                vm.currentPage.hasChanged = value;
+            }
+        }
+
+        function registerWhenLeavePage(url, method, scope, nameObj, evenedObj) {
+            _registerPage(url, method);
+            _registerOnChangePage(scope, nameObj, evenedObj);
         }
         
-        function _registerPage(nameCtrl) {
-            vm.pagesRegistered[nameCtrl] = {
+        function _registerPage(url, method) {
+            vm.currentPage = {
                 hasIntercept: true,
-                hasChanged: false
+                hasChanged: false,
+                url: url,
+                method: method
             };
         }
 
-        function _registerOnChange(nameCtrl, scope, keyOnChange) {
-            scope.$on(keyOnChange, function() {
-                console.log('change aaa');
-                vm.pagesRegistered[nameCtrl].hasChanged = true;
-            })
+        function _registerOnChangePage(scope, nameObj, evenedObj) {
+            scope.$watch(nameObj, function(newValue, oldValue) {
+                if(vm.currentPage.hasChanged) {
+                    return;
+                }
+                let newValueCopy = evenedObj(angular.copy(newValue));
+                let oldValueCopy = evenedObj(angular.copy(oldValue));
+                let hasChange = !angular.equals(newValueCopy, oldValueCopy) && oldValueCopy.id;
+                console.log('setHasChanged true', newValueCopy, oldValueCopy);
+                if(hasChange) {
+                    setHasChanged(true);
+                }
+            }, true);
         }
 
-        function _initListener() {
+        function _initListeners() {
+            _initListenerRoute();
+            _initListenerHttp();
+        }
+
+        function _initListenerHttp() {
+            $rootScope.$on('httpRequest', function(event, data) {
+                _handleInterceptHttp(data);
+            });
+            
+        }
+        
+        function _handleInterceptHttp(data) {
+            let canIntercept = vm.currentPage && data.method !== 'GET' &&
+            data.method === vm.currentPage.method && data.url.includes(vm.currentPage.url);
+            if(canIntercept) {
+                setHasChanged(false);
+                console.log('_initListenerHttp', data, vm.currentPage);
+            }
+        }
+
+        function _initListenerRoute() {
             $rootScope.$on('$routeChangeStart', function (event, next, current) {
-                let nameCtrlCurrent = current.$$route.controller;
                 let pathNext = next.$$route.originalPath;
-                _handleIntercept(nameCtrlCurrent, pathNext, event);
+                _handleInterceptRouter(pathNext, event);
             });
         }
 
-        function _handleIntercept(nameCtrlCurrent, pathNext, event) {
-            if(_canShowModal(vm.pagesRegistered[nameCtrlCurrent])) {
+        function _handleInterceptRouter(pathNext, event) {
+            if(_canShowModal(vm.currentPage)) {
                 event.preventDefault();
                 _openModalConfirm().then(function() {
-                    vm.pagesRegistered[nameCtrlCurrent].hasIntercept = false;
+                    vm.currentPage.hasIntercept = false;
                     _goRoute(pathNext);
                 }).catch(function () { });
             }
@@ -70,8 +107,8 @@
         }
 
         function onInit() {
-            vm.pagesRegistered = {};
-            _initListener();
+            vm.currentPage = {};
+            _initListeners();
         }
     }
 })();

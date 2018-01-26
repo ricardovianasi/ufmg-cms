@@ -40,6 +40,7 @@
                 config.headers.Authorization = 'Bearer ' + token;
             }
             _setCookieIsLoggedCMS();
+            $rootScope.$broadcast('httpRequest', config);
             return config;
         }
 
