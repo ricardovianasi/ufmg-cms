@@ -25,6 +25,7 @@
         TagsService,
         validationService,
         Util,
+        ChangeLeavePageService,
         $log
     ) {
 
@@ -45,6 +46,12 @@
         vm.handleModule = _handleModule;
         vm.removeModuleMain = _removeModuleMain;
         vm.removeModuleSide = _removeModuleSide;
+
+        vm.keyOnChange = 'PagesEditController-Change';
+
+        vm.test = function() {
+            $scope.$broadcast(vm.keyOnChange, true);
+        }
 
         onInit();
 
@@ -83,6 +90,13 @@
             _getTags();
             _getWidgets();
             _getType();
+        }
+
+        function _registerOnChangePage() {
+            vm.$watch('page', function(value) {
+                console.log('_registerOnChangePage', value);
+                $scope.$broadcast(vm.keyOnChange, true);
+            }, true);
         }
 
         function _getType() {
@@ -254,7 +268,6 @@
                     vm.title = page.title;
                     vm.breadcrumb_active = page.title;
 
-
                     angular.forEach(tags, function (tag) {
                         page.tags.push(tag.name);
                     });
@@ -266,6 +279,9 @@
                     page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
                     page.scheduled_time = moment(data.data.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
+
+                    _registerOnChangePage();
+                    ChangeLeavePageService.registerWhenLeavePage('PagesEditController', $scope, vm.keyOnChange);
                 });
         }
 

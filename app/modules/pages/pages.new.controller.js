@@ -21,6 +21,7 @@
         TagsService,
         Util,
         $q,
+        ChangeLeavePageService,
         validationService,
         UsersService,
         $log
@@ -46,6 +47,8 @@
 
         function onInit() {
             $log.info('PagesNewController');
+
+            ChangeLeavePageService.registerWhenLeavePage('PagesNewController', $scope)
 
             vm.pagesParent.push({
                 id: null,

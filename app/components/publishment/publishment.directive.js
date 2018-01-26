@@ -245,7 +245,7 @@
                 if(vm.preSaveStatus !== vm.obj.status && vm.obj.id) {
                     let textConfirm = 'Atenção, o status de publicação foi alterado para <b class="text-danger">' +
                         vm.statusLabel[vm.preSaveStatus] + '</b>. Deseja prosseguir?';
-                    return ModalService.confirm(textConfirm, 'md', true).result;
+                    return ModalService.confirm(textConfirm, ModalService.MODAL_MEDIUM, { isDanger: true }).result;
                 }
                 let defer = $q.defer();
                 defer.resolve();
