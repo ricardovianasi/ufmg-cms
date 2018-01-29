@@ -22,6 +22,7 @@
         GalleryService,
         PermissionService,
         $log,
+        HandleChangeService,
         validationService) {
         $log.info('NoticiasEditController');
 
@@ -34,6 +35,32 @@
         vm.status = [];
         vm.types = [];
         vm.highlight_ufmg_visible = true;
+
+        HandleChangeService.registerHandleChange('/news', ['PUT', 'DELETE'], $scope, ['news'], _evenedObj, _hasLoaded);
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue.id);
+        }
+
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            delete obj.id;
+            obj.tags = _evenedTags(obj.tags);
+            return obj;
+        }
+
+        function _evenedTags(tags) {
+            if(!tags) {
+                return [];
+            }
+            return tags.map(function(tag) {
+                if(tag.text) { return tag.text; } 
+                else if(tag.name) { return tag.name; } 
+                else { return tag; }
+            });
+        }
 
         vm.datepickerOpt = {
             initDate: DateTimeHelper.getDatepickerOpt()

@@ -75,7 +75,6 @@
         function _handleInterceptHttp(data) {
             if(_canIntercept(data)) {
                 setHasChanged(false);
-                console.log('_initListenerHttp', data, vm.currentPage);
             }
         }
 

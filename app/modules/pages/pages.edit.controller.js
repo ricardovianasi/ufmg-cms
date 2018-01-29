@@ -114,7 +114,6 @@
 
         function _evenedTagWidget(widgets) {
             if(widgets && widgets.length) {
-                console.log(widgets);
                 return widgets.map(function(widget) {
                     if(widget.tag) {
                         widget.tag = widget.tag.id ? 

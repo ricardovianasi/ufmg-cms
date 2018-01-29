@@ -20,6 +20,7 @@
         TagsService,
         GalleryService,
         PermissionService,
+        HandleChangeService,
         $log,
         validationService) {
         var vm = $scope;
@@ -50,6 +51,28 @@
             if (vm.typeNews === 'news_agencia_de_agencia') {
                 vm.news.highlight_ufmg = 1;
             }
+            HandleChangeService.registerHandleChange('/news', ['POST'], $scope, ['news'], _evenedObj);
+        }
+
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            delete obj.id;
+            delete obj.type;
+            return obj;
+        }
+
+
+        function _evenedTags(tags) {
+            if(!tags) {
+                return [];
+            }
+            return tags.map(function(tag) {
+                if(tag.text) { return tag.text; } 
+                else if(tag.name) { return tag.name; } 
+                else { return tag; }
+            });
         }
 
         NewsService.getTvProgram().then(function (data) {

@@ -17,6 +17,7 @@
         DateTimeHelper,
         $rootScope,
         validationService,
+        HandleChangeService,
         $log
     ) {
         $log.info('ClippingsEditController');
@@ -33,6 +34,12 @@
         vm.time_years = ['2015', '2016', '2017'];
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
+
+        HandleChangeService.registerHandleChange('/clipping', ['PUT'], $scope, ['clipping'], undefined, _hasLoaded);
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue.id);
+        }
 
         ClippingsService.getClipping($routeParams.id).then(function (data) {
             var clipping = data.data;
