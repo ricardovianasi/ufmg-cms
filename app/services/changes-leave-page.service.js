@@ -26,29 +26,30 @@
             }
         }
 
-        function registerWhenLeavePage(url, method, scope, nameObj, evenedObj) {
-            _registerPage(url, method);
-            _registerOnChangePage(scope, nameObj, evenedObj);
+        function registerWhenLeavePage(url, methods, scope, nameObj, evenedObj, hasLoaded) {
+            _registerPage(url, methods);
+            hasLoaded = hasLoaded ? hasLoaded : function () { return true };
+            _registerOnChangePage(scope, nameObj, evenedObj, hasLoaded);
         }
         
-        function _registerPage(url, method) {
+        function _registerPage(url, methods) {
             vm.currentPage = {
                 hasIntercept: true,
                 hasChanged: false,
                 url: url,
-                method: method
+                methods: methods
             };
         }
 
-        function _registerOnChangePage(scope, nameObj, evenedObj) {
+        function _registerOnChangePage(scope, nameObj, evenedObj, hasLoaded) {
             scope.$watch(nameObj, function(newValue, oldValue) {
                 if(vm.currentPage.hasChanged) {
                     return;
                 }
                 let newValueCopy = evenedObj(angular.copy(newValue));
                 let oldValueCopy = evenedObj(angular.copy(oldValue));
-                let hasChange = !angular.equals(newValueCopy, oldValueCopy) && oldValueCopy.id;
-                console.log('setHasChanged true', newValueCopy, oldValueCopy);
+                let hasChange = !angular.equals(newValueCopy, oldValueCopy) && hasLoaded(oldValue);
+                console.log('setHasChanged ?', newValueCopy, oldValueCopy, hasChange);
                 if(hasChange) {
                     setHasChanged(true);
                 }
@@ -68,12 +69,18 @@
         }
         
         function _handleInterceptHttp(data) {
-            let canIntercept = vm.currentPage && data.method !== 'GET' &&
-            data.method === vm.currentPage.method && data.url.includes(vm.currentPage.url);
-            if(canIntercept) {
+            if(_canIntercept(data)) {
                 setHasChanged(false);
                 console.log('_initListenerHttp', data, vm.currentPage);
             }
+        }
+
+        function _canIntercept(data) {
+            let isNotGet = data.method !== 'GET'; 
+            let isMethodIntercept = vm.currentPage.methods.findIndex(function (method) { return method === data.method }) !== -1;
+            let isUrlIntercept = data.url.includes(vm.currentPage.url);
+            let can = vm.currentPage && isNotGet && isMethodIntercept && isUrlIntercept;
+            return can;
         }
 
         function _initListenerRoute() {

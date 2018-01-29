@@ -83,13 +83,18 @@
             _getWidgets();
             _getType();
 
-            ChangeLeavePageService.registerWhenLeavePage('/page/', 'PUT', $scope, 'page', _evenedObj);
+            ChangeLeavePageService.registerWhenLeavePage('/page/', ['PUT', 'DELETE'], $scope, 'page', _evenedObj, _hasLoaded);
+        }
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue.id);
         }
 
         function _evenedObj(obj) {
             delete obj.scheduled_date;
             delete obj.scheduled_time;
             delete obj.status;
+            delete obj.id;
             obj.tags = _evenedTag(obj.tags, 'text');
             obj.widgets.main = _evenedTagWidget(obj.widgets.main);
             obj.widgets.side = _evenedTagWidget(obj.widgets.side);

@@ -48,8 +48,6 @@
         function onInit() {
             $log.info('PagesNewController');
 
-            ChangeLeavePageService.registerWhenLeavePage('PagesNewController', $scope)
-
             vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
@@ -105,6 +103,15 @@
                 .then(function (data) {
                     allTags = data.data.items[0];
                 });
+
+            ChangeLeavePageService.registerWhenLeavePage('/page', ['POST'], $scope, 'page', _evenedObj);
+        }
+
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            return obj;
         }
 
 
