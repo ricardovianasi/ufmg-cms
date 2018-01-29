@@ -25,7 +25,7 @@
         TagsService,
         validationService,
         Util,
-        ChangeLeavePageService
+        HandleChangeService
     ) {
 
         var allTags = [];
@@ -83,7 +83,7 @@
             _getWidgets();
             _getType();
 
-            ChangeLeavePageService.registerWhenLeavePage('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
+            HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
 
         function _hasLoaded(oldValue) {

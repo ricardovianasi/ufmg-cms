@@ -7,7 +7,7 @@
     
         /** ngInject */
     function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
-        PermissionService, PagesService, MenuService, ChangeLeavePageService) {
+        PermissionService, PagesService, MenuService, HandleChangeService) {
 
         let vm = this;
 
@@ -332,7 +332,7 @@
                 _loadPages();
                 _permissions();
             });
-            ChangeLeavePageService.registerWhenLeavePage('/menu/', ['PUT'], $scope,
+            HandleChangeService.registerHandleChange('/menu/', ['PUT'], $scope,
                 ['newMenu.quickAccess', 'newMenu.mainMenu'], undefined, _hasLoaded);
         }
     }

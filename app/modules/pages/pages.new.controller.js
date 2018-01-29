@@ -21,7 +21,7 @@
         TagsService,
         Util,
         $q,
-        ChangeLeavePageService,
+        HandleChangeService,
         validationService,
         UsersService,
         $log
@@ -104,7 +104,7 @@
                     allTags = data.data.items[0];
                 });
 
-            ChangeLeavePageService.registerWhenLeavePage('/page', ['POST'], $scope, ['page'], _evenedObj);
+                HandleChangeService.registerHandleChange('/page', ['POST'], $scope, ['page'], _evenedObj);
         }
 
         function _evenedObj(obj) {

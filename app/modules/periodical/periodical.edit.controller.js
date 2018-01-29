@@ -20,7 +20,7 @@
         validationService,
         ManagerFileService,
         $log,
-        ChangeLeavePageService
+        HandleChangeService
     ) {
 
         var vm = $scope;
@@ -41,7 +41,7 @@
             $log.info('PeriodicalEditController');
             getPeriodicals();
             setDateFormats();
-            ChangeLeavePageService.registerWhenLeavePage('/periodical/', ['PUT', 'DELETE'], $scope, 
+            HandleChangeService.registerHandleChange('/periodical/', ['PUT', 'DELETE'], $scope, 
                 ['periodical'], undefined, _hasLoaded);
         }
 

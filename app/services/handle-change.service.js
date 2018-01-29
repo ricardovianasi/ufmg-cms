@@ -3,12 +3,12 @@
 
     angular
         .module('serviceModule')
-        .factory('ChangeLeavePageService', ChangeLeavePageService);
+        .factory('HandleChangeService', HandleChangeService);
 
     /** ngInject */
-    function ChangeLeavePageService(ModalService, $rootScope, $location) {
+    function HandleChangeService(ModalService, $rootScope, $location) {
         let service = {
-            registerWhenLeavePage: registerWhenLeavePage,
+            registerHandleChange: registerHandleChange,
             setHasChanged: setHasChanged
         };
 
@@ -26,7 +26,7 @@
             }
         }
 
-        function registerWhenLeavePage(url, methods, scope, nameObjs, evenedObj, hasLoaded) {
+        function registerHandleChange(url, methods, scope, nameObjs, evenedObj, hasLoaded) {
             _registerPage(url, methods);
             hasLoaded = hasLoaded ? hasLoaded : function () { return true; };
             evenedObj = evenedObj ? evenedObj : function (obj) { return obj; };
@@ -43,7 +43,7 @@
         }
 
         function _registerWatchsOnChange(scope, nameObjs, evenedObj, hasLoaded) {
-            nameObjs.forEach(function (name) { _registerObjWatch(scope, name, evenedObj, hasLoaded) });
+            nameObjs.forEach(function (name) { _registerObjWatch(scope, name, evenedObj, hasLoaded); });
         }
         
         function _registerObjWatch(scope, nameObj, evenedObj, hasLoaded) {
