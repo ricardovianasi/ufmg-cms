@@ -7,7 +7,7 @@
     
         /** ngInject */
     function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
-        PermissionService, PagesService, MenuService) {
+        PermissionService, PagesService, MenuService, ChangeLeavePageService) {
 
         let vm = this;
 
@@ -311,10 +311,14 @@
         }
 
         function _loadToggles(valueInit) {
-            MenuService.parseMenuToMenuFlat(vm[vm.types.mainMenu])
+            MenuService.parseMenuToMenuFlat(angular.copy(vm[vm.types.mainMenu]))
                 .forEach(function(item) {
                     _addItemToggle(item.id, valueInit);
                 });
+        }
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue);
         }
 
         function activate() {
@@ -328,6 +332,8 @@
                 _loadPages();
                 _permissions();
             });
+            ChangeLeavePageService.registerWhenLeavePage('/menu/', ['PUT'], $scope,
+                ['newMenu.quickAccess', 'newMenu.mainMenu'], undefined, _hasLoaded);
         }
     }
 })();

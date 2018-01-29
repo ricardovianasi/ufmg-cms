@@ -26,11 +26,11 @@
             }
         }
 
-        function registerWhenLeavePage(url, methods, scope, nameObj, evenedObj, hasLoaded) {
+        function registerWhenLeavePage(url, methods, scope, nameObjs, evenedObj, hasLoaded) {
             _registerPage(url, methods);
             hasLoaded = hasLoaded ? hasLoaded : function () { return true; };
             evenedObj = evenedObj ? evenedObj : function (obj) { return obj; };
-            _registerOnChangePage(scope, nameObj, evenedObj, hasLoaded);
+            _registerWatchsOnChange(scope, nameObjs, evenedObj, hasLoaded);
         }
         
         function _registerPage(url, methods) {
@@ -42,7 +42,11 @@
             };
         }
 
-        function _registerOnChangePage(scope, nameObj, evenedObj, hasLoaded) {
+        function _registerWatchsOnChange(scope, nameObjs, evenedObj, hasLoaded) {
+            nameObjs.forEach(function (name) { _registerObjWatch(scope, name, evenedObj, hasLoaded) });
+        }
+        
+        function _registerObjWatch(scope, nameObj, evenedObj, hasLoaded) {
             scope.$watch(nameObj, function(newValue, oldValue) {
                 if(vm.currentPage.hasChanged) {
                     return;
@@ -50,7 +54,6 @@
                 let newValueCopy = evenedObj(angular.copy(newValue));
                 let oldValueCopy = evenedObj(angular.copy(oldValue));
                 let hasChange = !angular.equals(newValueCopy, oldValueCopy) && hasLoaded(oldValue);
-                console.log('setHasChanged ?', newValueCopy, oldValueCopy, hasChange);
                 if(hasChange) {
                     setHasChanged(true);
                 }

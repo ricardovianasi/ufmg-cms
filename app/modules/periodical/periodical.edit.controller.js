@@ -42,7 +42,7 @@
             getPeriodicals();
             setDateFormats();
             ChangeLeavePageService.registerWhenLeavePage('/periodical/', ['PUT', 'DELETE'], $scope, 
-                'periodical', undefined, _hasLoaded);
+                ['periodical'], undefined, _hasLoaded);
         }
 
         function _hasLoaded(oldValue) {

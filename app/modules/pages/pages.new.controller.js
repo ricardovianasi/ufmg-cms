@@ -104,7 +104,7 @@
                     allTags = data.data.items[0];
                 });
 
-            ChangeLeavePageService.registerWhenLeavePage('/page', ['POST'], $scope, 'page', _evenedObj);
+            ChangeLeavePageService.registerWhenLeavePage('/page', ['POST'], $scope, ['page'], _evenedObj);
         }
 
         function _evenedObj(obj) {

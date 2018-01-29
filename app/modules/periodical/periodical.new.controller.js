@@ -40,7 +40,7 @@
             $log.info('PeriodicalNewController');
             vm.canPermission = PermissionService.canPost('periodical');
             setDateFormats();
-            ChangeLeavePageService.registerWhenLeavePage('/periodical', ['POST'], $scope, 'periodical');
+            ChangeLeavePageService.registerWhenLeavePage('/periodical', ['POST'], $scope, ['periodical']);
         }
 
         function setDateFormats() {

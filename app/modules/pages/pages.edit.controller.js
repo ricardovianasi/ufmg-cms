@@ -83,7 +83,7 @@
             _getWidgets();
             _getType();
 
-            ChangeLeavePageService.registerWhenLeavePage('/page/', ['PUT', 'DELETE'], $scope, 'page', _evenedObj, _hasLoaded);
+            ChangeLeavePageService.registerWhenLeavePage('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
 
         function _hasLoaded(oldValue) {
