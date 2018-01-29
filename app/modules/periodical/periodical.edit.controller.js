@@ -19,7 +19,8 @@
         $rootScope,
         validationService,
         ManagerFileService,
-        $log
+        $log,
+        ChangeLeavePageService
     ) {
 
         var vm = $scope;
@@ -40,6 +41,12 @@
             $log.info('PeriodicalEditController');
             getPeriodicals();
             setDateFormats();
+            ChangeLeavePageService.registerWhenLeavePage('/periodical/', ['PUT', 'DELETE'], $scope, 
+                'periodical', undefined, _hasLoaded);
+        }
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue.id);
         }
 
         function _upload() {

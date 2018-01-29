@@ -17,7 +17,8 @@
         $rootScope,
         validationService,
         ManagerFileService,
-        $log
+        $log,
+        ChangeLeavePageService
     ) {
 
         var vm = $scope;
@@ -39,6 +40,7 @@
             $log.info('PeriodicalNewController');
             vm.canPermission = PermissionService.canPost('periodical');
             setDateFormats();
+            ChangeLeavePageService.registerWhenLeavePage('/periodical', ['POST'], $scope, 'periodical');
         }
 
         function setDateFormats() {

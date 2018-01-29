@@ -28,7 +28,8 @@
 
         function registerWhenLeavePage(url, methods, scope, nameObj, evenedObj, hasLoaded) {
             _registerPage(url, methods);
-            hasLoaded = hasLoaded ? hasLoaded : function () { return true };
+            hasLoaded = hasLoaded ? hasLoaded : function () { return true; };
+            evenedObj = evenedObj ? evenedObj : function (obj) { return obj; };
             _registerOnChangePage(scope, nameObj, evenedObj, hasLoaded);
         }
         
@@ -76,15 +77,18 @@
         }
 
         function _canIntercept(data) {
-            let isNotGet = data.method !== 'GET'; 
-            let isMethodIntercept = vm.currentPage.methods.findIndex(function (method) { return method === data.method }) !== -1;
+            let isGet = data.method === 'GET';
+            if(isGet) {
+                return false;
+            }
+            let isMethodIntercept = vm.currentPage.methods.findIndex(function (method) { return method === data.method; }) !== -1;
             let isUrlIntercept = data.url.includes(vm.currentPage.url);
-            let can = vm.currentPage && isNotGet && isMethodIntercept && isUrlIntercept;
+            let can = vm.currentPage && isMethodIntercept && isUrlIntercept;
             return can;
         }
 
         function _initListenerRoute() {
-            $rootScope.$on('$routeChangeStart', function (event, next, current) {
+            $rootScope.$on('$routeChangeStart', function (event, next) {
                 let pathNext = next.$$route.originalPath;
                 _handleInterceptRouter(pathNext, event);
             });
@@ -105,7 +109,8 @@
         }
 
         function _openModalConfirm() {
-            let titleModal = 'Existe alterações <b> não salvas </b> nesta página, se você sair elas serão perdidas. Você tem certeza?'
+            let titleModal = 'Existem alterações <b> não salvas </b> nesta página, ' + 
+                'se você sair elas serão perdidas. Você tem certeza?';
             return ModalService.confirm(titleModal, ModalService.MODAL_MEDIUM, { isDanger: true }).result;
         }
 
