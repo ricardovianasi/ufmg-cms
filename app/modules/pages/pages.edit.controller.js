@@ -98,23 +98,24 @@
 
         function _evenedTag(tags, label) {
             if(!tags) {
-                return [];
+                return '';
             }
-            return tags.map(function(tag) { return tag[label] ? tag[label] : tag; } );
+            if(tags.length) {
+                return tags.map(function(tag) { return tag[label] ? tag[label] : tag; } );
+            } else {
+                return tags[label] ? [tags[label]] : [tags];
+            }
         }
 
         function _evenedTagWidget(widgets) {
             if(widgets && widgets.length) {
                 console.log(widgets);
                 return widgets.map(function(widget) {
-                    if(widget.tag && widget.tag.id) {
-                        widget.tag = [widget.tag.name];
-                    } else {
-                        if(widget.content && widget.content.tag) {
-                            widget.tag = _evenedTag(widget.content.tag, 'name');
-                        } else {
-                            widget.tag = _evenedTag(widget.tag, 'name');
-                        }
+                    if(widget.tag) {
+                        widget.tag = widget.tag.id ? 
+                            _evenedTag(widget.content.tag, 'name') : _evenedTag(widget.tag, 'text');
+                    } else if (widget.content && widget.content.tag) {
+                        widget.tag = _evenedTag(widget.content.tag, 'name');
                     }
                     return widget;
                 });

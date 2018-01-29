@@ -4,6 +4,7 @@
   "description": "CMS Novo Portal UFMG",
   "main": "public/index.js",
   "scripts": {
+    "serve": "export APPLICATION_ENV=development && gulp serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
