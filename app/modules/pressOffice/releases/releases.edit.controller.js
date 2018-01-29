@@ -22,7 +22,8 @@
         $rootScope,
         PermissionService,
         $log,
-        validationService
+        validationService,
+        HandleChangeService
     ) {
         $log.info('ReleasesEditController');
         var vm = $scope;
@@ -43,11 +44,25 @@
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
 
+        HandleChangeService.registerHandleChange('/release', ['PUT', 'DELETE'], $scope, ['release'], _evenedObj, _hasLoaded);
+
         vm.redactorOptions = {
             plugins: false,
         };
 
         vm.addFile = _addFile;
+
+        function _hasLoaded(oldValue) {
+            return angular.isDefined(oldValue.id);
+        }
+
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            delete obj.id;
+            return obj;
+        }
 
         function _addFile(idx) {
             ManagerFileService.allFiles();

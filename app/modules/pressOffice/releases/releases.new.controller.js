@@ -20,7 +20,8 @@
         $rootScope,
         $log,
         PermissionService,
-        validationService
+        validationService,
+        HandleChangeService
     ) {
         $log.info('ReleasesNewController');
         var vm = $scope;
@@ -51,6 +52,15 @@
         vm.time_minutes = DateTimeHelper.getMinutes();
 
         vm.addFile = _addFile;
+
+        HandleChangeService.registerHandleChange('/release', ['POST'], $scope, ['release'], _evenedObj);
+
+        function _evenedObj(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            return obj;
+        }
 
         function _addFile(idx) {
             ManagerFileService.allFiles();
