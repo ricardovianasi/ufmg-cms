@@ -379,7 +379,7 @@
         }
 
         vm.checkListContext = function (context, permission) {
-            if (vm.resources[context].select[0] === permission) {
+            if (vm.resources[context] && vm.resources[context].select && vm.resources[context].select[0] === permission) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
                 }
