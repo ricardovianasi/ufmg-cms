@@ -57,11 +57,7 @@
         }
 
         function _evenedObj(obj) {
-            delete obj.scheduled_date;
-            delete obj.scheduled_time;
-            delete obj.status;
-            delete obj.id;
-            return obj;
+            return HandleChangeService.removePropsCommon(obj);
         }
 
         function _addFile(idx) {

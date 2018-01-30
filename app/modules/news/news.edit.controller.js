@@ -43,10 +43,7 @@
         }
 
         function _evenedObj(obj) {
-            delete obj.scheduled_date;
-            delete obj.scheduled_time;
-            delete obj.status;
-            delete obj.id;
+            obj = HandleChangeService.removePropsCommon(obj);
             obj.tags = _evenedTags(obj.tags);
             return obj;
         }

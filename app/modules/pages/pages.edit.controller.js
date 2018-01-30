@@ -91,10 +91,7 @@
         }
 
         function _evenedObj(obj) {
-            delete obj.scheduled_date;
-            delete obj.scheduled_time;
-            delete obj.status;
-            delete obj.id;
+            obj = HandleChangeService.removePropsCommon(obj);
             obj.tags = _evenedTag(obj.tags, 'text');
             obj.widgets.main = _evenedTagWidget(obj.widgets.main);
             obj.widgets.side = _evenedTagWidget(obj.widgets.side);

@@ -55,24 +55,9 @@
         }
 
         function _evenedObj(obj) {
-            delete obj.scheduled_date;
-            delete obj.scheduled_time;
-            delete obj.status;
-            delete obj.id;
+            obj = HandleChangeService.removePropsCommon(obj);
             delete obj.type;
             return obj;
-        }
-
-
-        function _evenedTags(tags) {
-            if(!tags) {
-                return [];
-            }
-            return tags.map(function(tag) {
-                if(tag.text) { return tag.text; } 
-                else if(tag.name) { return tag.name; } 
-                else { return tag; }
-            });
         }
 
         NewsService.getTvProgram().then(function (data) {

@@ -20,6 +20,7 @@
         TagsService,
         $log,
         $window,
+        HandleChangeService,
         PermissionService,
         validationService) {
         var allTags = [];
@@ -43,6 +44,11 @@
 
         function onInit() {
             $log.info('EventsNewController');
+            HandleChangeService.registerHandleChange('/event', ['POST'], $scope, ['event'], _evenedObj);
+        }
+
+        function _evenedObj(obj) {
+            return HandleChangeService.removePropsCommon(obj);
         }
 
         function _addPoster() {

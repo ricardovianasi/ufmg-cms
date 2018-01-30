@@ -9,7 +9,8 @@
     function HandleChangeService(ModalService, $rootScope, $location) {
         let service = {
             registerHandleChange: registerHandleChange,
-            setHasChanged: setHasChanged
+            setHasChanged: setHasChanged,
+            removePropsCommon: removePropsCommon
         };
 
         let vm = this;
@@ -19,6 +20,14 @@
         return service;
 
         ////////////////
+
+        function removePropsCommon(obj) {
+            delete obj.scheduled_date;
+            delete obj.scheduled_time;
+            delete obj.status;
+            delete obj.id;
+            return obj;
+        }
 
         function setHasChanged(value) {
             if(vm.currentPage) {

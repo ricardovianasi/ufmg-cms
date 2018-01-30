@@ -108,10 +108,7 @@
         }
 
         function _evenedObj(obj) {
-            delete obj.scheduled_date;
-            delete obj.scheduled_time;
-            delete obj.status;
-            return obj;
+            return HandleChangeService.removePropsCommon(obj);
         }
 
 
