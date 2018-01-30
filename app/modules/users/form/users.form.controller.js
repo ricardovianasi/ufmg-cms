@@ -6,22 +6,11 @@
         .controller('UsersFormController', UsersFormController);
 
     /** ngInject */
-    function UsersFormController($routeParams,
-        $log,
-        $q,
-        UsersService,
-        ResourcesService,
-        PagesService,
-        $uibModal,
-        PeriodicalService,
-        CourseService,
-        Util,
-        $timeout,
-        $location,
-        $scope,
-        NotificationService) {
+    function UsersFormController($routeParams, $log, $q, UsersService, ResourcesService, PagesService, $uibModal,
+        PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService) {
+
         var vm = this;
-        var userId = null;
+        var userId = undefined;
         var hasRequest = false;
         var countPage = 1;
         var isLoadAccordion = {};
@@ -45,7 +34,7 @@
         function onInit() {
             $log.info('UsersFormController');
             _getResources();
-            userId = $routeParams.userId ? $routeParams.userId : null;
+            userId = $routeParams.userId ? $routeParams.userId : undefined;
             if (userId) {
                 UsersService
                     .getUser(userId)
@@ -55,6 +44,8 @@
                         _convertPrivilegesToLoad();
                     });
             }
+            HandleChangeService
+                .registerHandleChange('/user', ['POST', 'PUT'], $scope, ['vm.user'], undefined, _hasLoaded);
         }
 
         vm.loadMoreUser = function (search) {
@@ -64,6 +55,10 @@
                     vm.moderators = Object.assign(vm.moderators, data);
                 });
         };
+
+        function _hasLoaded(oldValue) {
+            return (oldValue && angular.isDefined(oldValue.id)) || angular.isUndefined(userId);
+        }
 
         function reset(data) {
             if (angular.isUndefined(data[0])) {
@@ -154,34 +149,22 @@
             vm.user.resources_perms = convertedPerms;
         }
 
-        function _convertPrivilegesToSave() {
-            if (angular.isUndefined(vm.user.resources_perms)) {
+        function _convertPrivilegesToSave(resourcesPerms) {
+            if (angular.isUndefined(resourcesPerms)) {
                 return;
             }
-
-            function cloneObject(obj) {
-                if (obj === null || typeof obj !== 'object') {
-                    return obj;
-                }
-                var temp = obj.constructor();
-                for (var key in obj) {
-                    temp[key] = cloneObject(obj[key]);
-                }
-                return temp;
-            }
-            var clonedPerms = (cloneObject(vm.user.resources_perms));
-            Object.keys(clonedPerms).forEach(function (k) {
-                var innerKeys = Object.keys(clonedPerms[k]),
+            Object.keys(resourcesPerms).forEach(function (k) {
+                var innerKeys = Object.keys(resourcesPerms[k]),
                     items = [];
                 innerKeys.forEach(function (key) {
-                    if (clonedPerms[k][key][0]) {
-                        var permission = (Array.isArray(clonedPerms[k][key])) ? key : key + ':' + clonedPerms[k][key];
+                    if (resourcesPerms[k][key][0]) {
+                        var permission = (Array.isArray(resourcesPerms[k][key])) ? key : key + ':' + resourcesPerms[k][key];
                         items.push(permission);
                     }
                 });
-                clonedPerms[k] = items.join(';');
+                resourcesPerms[k] = items.join(';');
             });
-            vm.user.permissions = clonedPerms;
+            return resourcesPerms;
         }
 
         function _save(isValid) {
@@ -190,11 +173,12 @@
                 return;
             }
 
-            _convertPrivilegesToSave();
+            let userToSave = angular.copy(vm.user);
+            userToSave.permissions = _convertPrivilegesToSave(userToSave.resources_perms);
             vm.isLoading = true;
             if (userId) {
                 UsersService
-                    .updateUser(vm.user)
+                    .updateUser(userToSave)
                     .then(function () {
                         $location.path('/user');
                         NotificationService.success('Usuário alterado com sucesso!');
@@ -205,7 +189,7 @@
                     });
             } else {
                 UsersService
-                    .saveUser(vm.user)
+                    .saveUser(userToSave)
                     .then(function () {
                         $location.path('/user');
                         NotificationService.success('Usuário salvo com sucesso!');
