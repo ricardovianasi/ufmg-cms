@@ -13,12 +13,16 @@
         CourseService,
         NotificationService,
         $rootScope,
-        $location) {
+        $location,
+        HandleChangeService) {
         var vm = this;
 
         vm.type = $routeParams.type;
         vm.courseId = $routeParams.courseId;
         vm.save = _save;
+
+        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
+            ['course'], undefined, _hasLoaded);
 
         $scope.course = {
             widgets: {
@@ -35,6 +39,10 @@
         WidgetsService.getWidgets().then(function (data) {
             $scope.widgets = data.data;
         });
+
+        function _hasLoaded(oldValue) {
+            return oldValue.widgets.sidebar.length > 0 || !vm.courseId;
+        }
 
         function _getCourses() {
             CourseService.getCourses(vm.type, true).then(function (data) {

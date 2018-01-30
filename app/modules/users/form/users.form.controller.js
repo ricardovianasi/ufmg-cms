@@ -10,7 +10,7 @@
         PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService) {
 
         var vm = this;
-        var userId = undefined;
+        var userId;
         var hasRequest = false;
         var countPage = 1;
         var isLoadAccordion = {};

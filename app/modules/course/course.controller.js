@@ -11,10 +11,12 @@
         NotificationService,
         ModalService,
         PermissionService,
+        $scope,
         $rootScope,
         $location,
         ManagerFileService,
         Util,
+        HandleChangeService,
         $log) {
         $log.info('CourseController');
 
@@ -38,6 +40,8 @@
                 return;
             }
             if (vm.courseId) {
+                HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
+                    ['vm.course'], undefined, _hasLoaded);
                 CourseService
                     .getCourseRoutes(vm.type, vm.courseId)
                     .then(function (res) {
@@ -55,6 +59,10 @@
             } else {
                 _renderDataTable();
             }
+        }
+
+        function _hasLoaded(oldValue) {
+            return oldValue && angular.isDefined(oldValue.id) || !vm.courseId;
         }
 
         function _renderDataTable() {
