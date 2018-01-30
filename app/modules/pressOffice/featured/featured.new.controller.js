@@ -18,7 +18,8 @@
         $location,
         $log,
         $rootScope,
-        validationService
+        validationService,
+        HandleChangeService
     ) {
 
         $log.info('featuredNewController');
@@ -32,6 +33,9 @@
         vm.saveEspecialist = _saveEspecialist;
         vm.canPermission = PermissionService.canPost('highlighted_press');
         vm.upload = _upload;
+
+        HandleChangeService.registerHandleChange('/highlighted-press', ['POST'], $scope, ['featured']);
+
 
         ReleasesService.getReleases().then(function (data) {
             vm.releases = data.data;
