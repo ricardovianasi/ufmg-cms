@@ -13,7 +13,8 @@
         $log,
         permission,
         RedactorPluginService,
-        $scope
+        $scope,
+        HandleChangeService
     ) {
 
         var vm = this; //jshint ignore: line
@@ -29,6 +30,8 @@
 
             $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
             $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+            HandleChangeService.registerHandleChange('faq', ['POST', 'PUT'], $scope, 
+                ['vm.faq', 'vm.newAsk', 'vm.currentNewCategoryAsk'], undefined, _hasLoaded);
         }
 
         var id = $routeParams.faqId;
@@ -66,6 +69,10 @@
         vm.editCategory = _editCategory;
         vm.editCategoryAsk = _editCategoryAsk;
         vm.editAsk = _editAsk;
+
+        function _hasLoaded(oldValue) {
+            return oldValue && angular.isDefined(oldValue.id) || angular.isUndefined(id);
+        }
 
         function _getFaq() {
             if (id) {
@@ -161,7 +168,7 @@
             vm.isLoading = true;
 
             if (id) {
-                faqService.update(vm.faq).then(function () {
+                faqService.update(angular.copy(vm.faq)).then(function () {
                     NotificationService.success('FAQ alterado com sucesso!');
                     $location.path('/faq');
                 })
@@ -170,7 +177,7 @@
                     vm.isLoading = false;                    
                 });
             } else {
-                faqService.save(vm.faq).then(function () {
+                faqService.save(angular.copy(vm.faq)).then(function () {
                     NotificationService.success('FAQ salvo com sucesso!');
                     $location.path('/faq');
                 })

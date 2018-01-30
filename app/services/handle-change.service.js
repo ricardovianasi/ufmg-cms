@@ -22,6 +22,9 @@
         ////////////////
 
         function removePropsCommon(obj) {
+            if(!obj) {
+                return obj;
+            }
             delete obj.scheduled_date;
             delete obj.scheduled_time;
             delete obj.status;
