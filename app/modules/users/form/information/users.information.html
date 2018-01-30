@@ -23,7 +23,7 @@
         </div>
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.password.$touched) && (formUsers.password.$error.required)}">
             <label for="password">Senha:</label>
-            <input id="password" name="password" type="password" class="form-control" ng-model="vm.user.password" ng-required="formUsers.password.$touched && vm.user.password === ''">
+            <input id="password" name="password" type="password" class="form-control" ng-model="vm.user.password">
             <div><small>Lembre-se: Senha em branco é definida para 12345</small></div>
             <div class="error-message" ng-show="formUsers.$submitted || formUsers.password.$touched">
                 <span ng-show="formUsers.password.$error.required">Campo nome é obrigatório.</span>
@@ -34,7 +34,7 @@
             <input id="passwordCheck" name="passwordCheck" type="password" ng-model="vm.passwordCheck" class="form-control" ng-required="formUsers.password.$touched && vm.user.password === ''">
             <div class="error-message" ng-show="formUsers.$submitted || formUsers.passwordCheck.$touched">
                 <span ng-show="formUsers.passwordCheck.$error.required">Campo nome é obrigatório.</span>
-                <span ng-show="vm.passwordCheck != vm.user.password">Essas senhas não coincidem. Tentar novamente.</span>
+                <span ng-show="vm.passwordCheck !== vm.user.password">Essas senhas não coincidem. Tentar novamente.</span>
             </div>
         </div>
         <div class="form-group" ng-class="{'has-error':(formUsers.$submitted || formUsers.email.$touched) && (formUsers.email.$error.required || formUsers.email.$error.email)}">
