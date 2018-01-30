@@ -5,8 +5,9 @@
         .controller('GalleryNewController', GalleryNewController);
 
     /** ngInject */
-    function GalleryNewController($location, $uibModal, StatusService, VIEWER, GalleryService, MediaService,
-        ManagerFileService, NotificationService, PermissionService, $rootScope, Util, $log, ModalService) {
+    function GalleryNewController($scope, $location, $uibModal, StatusService, VIEWER, GalleryService, MediaService,
+        ManagerFileService, NotificationService, PermissionService, $rootScope, Util, $log, ModalService,
+        HandleChangeService) {
 
         let vm = this;
 
@@ -112,6 +113,7 @@
         function activate() {
             _initVariables();
             _loadCategories();
+            HandleChangeService.registerHandleChange('/gallery', ['POST'], $scope, ['galleryCtrl.gallery']);
         }
     }
 })();

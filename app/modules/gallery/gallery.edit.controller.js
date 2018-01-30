@@ -5,8 +5,9 @@
           .controller('GalleryEditController', GalleryEditController);
 
       /** ngInject */
-    function GalleryEditController($uibModal, $location, $routeParams, StatusService, GalleryService, MediaService,
-        NotificationService, ManagerFileService, $rootScope, $log, Util, VIEWER, PermissionService, ModalService) {
+    function GalleryEditController($scope, $uibModal, $location, $routeParams, StatusService, GalleryService, MediaService,
+        NotificationService, ManagerFileService, $rootScope, $log, Util, VIEWER, PermissionService, ModalService, 
+        HandleChangeService) {
 
         let vm = this;
 
@@ -125,10 +126,16 @@
             });
         }
 
+        function _hasLoaded(oldValue) {
+            return oldValue && angular.isDefined(oldValue.id);
+        }
+
         function activate() {
             _initVariables();
             _loadGallery();
             _loadCategories();
+            HandleChangeService.registerHandleChange('/gallery/', ['PUT'], $scope, 
+                ['galleryCtrl.gallery'], undefined, _hasLoaded);
         }
     }
 })();
