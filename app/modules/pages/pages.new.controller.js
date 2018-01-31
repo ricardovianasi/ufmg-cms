@@ -4,28 +4,9 @@
     angular.module('pagesModule')
         .controller('PagesNewController', PagesNewController);
     /** ngInject */
-    function PagesNewController(
-        $scope,
-        $uibModal,
-        $location,
-        $timeout,
-        $window,
-        NotificationService,
-        PagesService,
-        ManagerFileService,
-        WidgetsService,
-        StatusService,
-        ModalService,
-        DateTimeHelper,
-        $rootScope,
-        TagsService,
-        Util,
-        $q,
-        HandleChangeService,
-        validationService,
-        UsersService,
-        $log
-    ) {
+    function PagesNewController($scope, $uibModal, $location, $timeout, $window, NotificationService, PagesService,
+        ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope, TagsService,
+        Util, $q, HandleChangeService, validationService, UsersService) {
 
         var allTags = [];
         var vm = $scope;
@@ -46,7 +27,6 @@
         vm.removeModuleSide = _removeModuleSide;
 
         function onInit() {
-            $log.info('PagesNewController');
 
             vm.pagesParent.push({
                 id: null,
@@ -98,13 +78,12 @@
                 }
             };
 
-            TagsService
-                .getTags()
+            TagsService.getTags()
                 .then(function (data) {
                     allTags = data.data.items[0];
                 });
 
-                HandleChangeService.registerHandleChange('/page', ['POST'], $scope, ['page'], _evenedObj);
+            HandleChangeService.registerHandleChange('/page', ['POST'], $scope, ['page'], _evenedObj);
         }
 
         function _evenedObj(obj) {

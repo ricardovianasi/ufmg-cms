@@ -301,7 +301,7 @@
                 var html = $.parseHTML(vm.release.content);
                 $('#redactor-only').append(html);
             }, 300);
-
+            $scope.$broadcast('objPublishLoaded');
         });
     }
 

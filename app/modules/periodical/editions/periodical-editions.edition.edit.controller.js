@@ -5,25 +5,9 @@
         .controller('PeriodicalEditionEditController', PeriodicalEditionEditController);
 
     /** ngInject */
-    function PeriodicalEditionEditController(
-        $scope,
-        $uibModal,
-        $routeParams,
-        $location,
-        $timeout,
-        PeriodicalService,
-        StatusService,
-        ModalService,
-        ManagerFileService,
-        NotificationService,
-        MediaService,
-        DateTimeHelper,
-        $rootScope,
-        $window,
-        $log,
-        validationService
-    ) {
-        $log.info('PeriodicalEditionEditController');
+    function PeriodicalEditionEditController($scope, $uibModal, $routeParams, $location, $timeout, PeriodicalService, 
+        StatusService, ModalService, ManagerFileService, NotificationService, MediaService, DateTimeHelper,
+        $rootScope, $window, validationService) {
 
         var removeConfirmationModal = {};
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
@@ -55,6 +39,7 @@
                 .getEdition($routeParams.id, $routeParams.edition)
                 .then(function (res) {
                     setEdition(res);
+                    $scope.$broadcast('objPublishLoaded');
                 });
         }
 

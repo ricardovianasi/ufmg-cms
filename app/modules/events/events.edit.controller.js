@@ -228,6 +228,9 @@
                 var html2 = $.parseHTML(vm.event.datasheet);
                 $('#redactor-only-2').append(html2);
             }, 300);
+
+            $scope.$broadcast('objPublishLoaded');
+
         });
 
         CourseService.getCourses('graduation').then(function (data) {

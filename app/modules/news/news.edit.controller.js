@@ -5,26 +5,9 @@
         .controller('NewsEditController', NewsEditController);
 
     /**ngInject */
-    function NewsEditController($scope,
-        $routeParams,
-        $location,
-        $timeout,
-        $window,
-        NewsService,
-        NotificationService,
-        StatusService,
-        MediaService,
-        DateTimeHelper,
-        ModalService,
-        RedactorPluginService,
-        $rootScope,
-        TagsService,
-        GalleryService,
-        PermissionService,
-        $log,
-        HandleChangeService,
-        validationService) {
-        $log.info('NoticiasEditController');
+    function NewsEditController($scope, $routeParams, $location, $timeout, $window, NewsService, NotificationService,
+        StatusService, MediaService, DateTimeHelper, ModalService, RedactorPluginService, $rootScope, TagsService,
+        GalleryService, PermissionService, HandleChangeService, validationService) {
 
         var allTags = [];
         var vm = $scope;
@@ -131,6 +114,7 @@
 
                 vm.news.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
                 vm.news.scheduled_time = moment(data.data.post_date, 'YYYY-DD-MM hh:mm').format('hh:mm');
+                $scope.$broadcast('objPublishLoaded');
             });
 
         NewsService.getTvProgram().then(function (data) {

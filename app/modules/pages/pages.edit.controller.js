@@ -31,44 +31,6 @@
 
         activate();
 
-        function activate() {
-
-            vm.widgets = [];
-            vm.status = [];
-            vm.columns = PagesService.COLUMNS;
-            vm.title = 'Edição de página';
-
-            vm.page = {
-                image: null,
-                status: StatusService.STATUS_PUBLISHED,
-                columns: 2,
-                tags: [],
-                parent: null,
-                title: null,
-                widgets: {
-                    main: [],
-                    side: []
-                }
-            };
-            vm.time_days = DateTimeHelper.getDays();
-            vm.time_months = DateTimeHelper.getMonths();
-            vm.time_years = DateTimeHelper.yearRange();
-            vm.time_hours = DateTimeHelper.getHours();
-            vm.time_minutes = DateTimeHelper.getMinutes();
-            vm.sortableOptions = {
-                accept: function (sourceItemHandleScope, destSortableScope) {
-                    return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
-                },
-                containment: '#sort-main'
-            };
-            _getPage();
-            _getTags();
-            _getWidgets();
-            _getType();
-
-            HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
-        }
-
         function _hasLoaded(oldValue) {
             return angular.isDefined(oldValue.id);
         }
@@ -272,11 +234,12 @@
                     vm.title = page.title;
                     vm.breadcrumb_active = page.title;
 
-                    page.tags = TagsService.convertTagsInput(tags)
+                    page.tags = TagsService.convertTagsInput(tags);
                     page.columns = !page.widgets.side.length ? 1 : page.columns;
-                    page.scheduled_date = moment(page.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+                    page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
+                    $scope.$broadcast('objPublishLoaded');
                 });
         }
 
@@ -288,6 +251,37 @@
 
         function findTags($query) {
             return TagsService.findTags($query, allTags);
+        }
+
+        function activate() {
+            vm.title = 'Edição de página';
+            vm.widgets = [];
+            vm.columns = PagesService.COLUMNS;
+
+            vm.page = {
+                image: null,
+                status: StatusService.STATUS_PUBLISHED,
+                columns: 2,
+                tags: [],
+                parent: null,
+                title: null,
+                widgets: {
+                    main: [],
+                    side: []
+                }
+            };
+            vm.sortableOptions = {
+                accept: function (sourceItemHandleScope, destSortableScope) {
+                    return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+                },
+                containment: '#sort-main'
+            };
+            _getPage();
+            _getTags();
+            _getWidgets();
+            _getType();
+
+            HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
 
     }

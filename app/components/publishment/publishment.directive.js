@@ -5,19 +5,9 @@
         .directive('publishmentOptions', PublishmentOptions);
 
     /** ngInject */
-    function PublishmentOptions(
-        $location,
-        $filter,
-        $q,
-        validationService,
-        StatusService,
-        $log,
-        DateTimeHelper,
-        PermissionService,
-        $rootScope,
-        $timeout,
-        ModalService
-    ) {
+    function PublishmentOptions( $location, $filter, $q, validationService, StatusService, $log, DateTimeHelper,
+        PermissionService, $rootScope, $timeout, ModalService) {
+
         return {
             restrict: 'E',
             templateUrl: 'components/publishment/publishment.template.1.html',
@@ -95,57 +85,101 @@
 
             onInit();
 
+            function isPublished(value) {
+                return value === 'published';
+            }
+
+            function isScheduled(value) {
+                return value === 'scheduled';
+            }
+
             function onInit() {
                 $timeout(function () {
-                    vm.showLoad = true;
-                    dateChoice = new Date(vm.obj.scheduled_date);
-                    vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
-                    dateCurrent = new Date(vm.obj.scheduled_date);
-                    vm.moduleCurrent = $rootScope.moduleCurrent;
-                    vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
-                    vm.canPost = PermissionService.canPost($rootScope.moduleCurrent, vm.obj.id);
-                    vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';
-                }, 500);
+                    _initDirective();
+                }, 600);
+                _initListenerObjLoaded();
+                _initListenerChangeStatus();
+                _initListenerChangePostDate();
 
+                vm.datepickerOpt = {
+                    initDatea: DateTimeHelper.getDatepickerOpt()
+                };
+
+                vm.datepickerOpt.initDatea.status = {
+                    opened: false
+                };
+
+                vm.timepickerOpt = {
+                    initTime: DateTimeHelper.getTimepickerOpt()
+                };
+            }
+
+            function _initListenerObjLoaded() {
+                vm.$on('objPublishLoaded', function() {
+                    _initDirective();
+                });
+            }
+
+            function _initDirective() {
+                console.log('_initDirective', vm.obj);
+                vm.showLoad = true;
+                vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
+                vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';
+                dateChoice = new Date(vm.obj.scheduled_date);
+                dateCurrent = new Date(vm.obj.scheduled_date);
+                vm.moduleCurrent = $rootScope.moduleCurrent;
+                vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
+                vm.canPost = PermissionService.canPost($rootScope.moduleCurrent, vm.obj.id);
+            }
+
+            function _initListenerChangeStatus() {
                 vm.$watch('vm.preSaveStatus', function () {
+
+                    let isEdit = angular.isDefined(vm.obj.id);
+                    let isChangePublished = isPublished(vm.preSaveStatus);
+                    let isChangeScheduled = isScheduled(vm.preSaveStatus);
+                    let isPublishedObj = isPublished(vm.obj.status);
+                    let isScheduledObj = isScheduled(vm.obj.status);
+
                     vm.errorInvalidStatus = false;
                     vm.datepickerOpt.initDatea.dateOptions.minDate = null;
                     vm.datepickerOpt.initDatea.dateOptions.maxDate = null;
                     vm.isScheduledRetroactive = false;
-                    if (vm.preSaveStatus === 'scheduled' && !vm.obj.id) {
+
+                    if (isChangeScheduled && !isEdit) {
                         vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         vm.showMessageWarn = true;
-                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas' +
+                        vm.messageText = 'As publicações agendadas precisam ser compartilhadas ' +
                             'entre 10 minutos e 6 meses após a criação delas.';
                         if (verifyHourFuture()) {
                             vm.obj.post_date = '';
                             vm.obj.scheduled_time = '';
                         }
-                    } else if (vm.preSaveStatus === 'scheduled' && vm.obj.status === 'published' && vm.obj.id) {
+                    } else if (isChangeScheduled && isPublishedObj && isEdit) {
                         vm.showMessageError = true;
                         vm.messageText = 'Está publicação já está publicada.';
                         vm.isScheduledRetroactive = true;
-                    } else if (vm.preSaveStatus === 'scheduled' && vm.obj.id && vm.obj.status !== 'published') {
+                    } else if (isChangeScheduled && !isPublishedObj && isEdit) {
                         vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         if (verifyHourFuture() && !vm.showLoad) {
                             vm.showMessageError = true;
                             vm.messageText = 'São permitidas apenas datas futuras.';
                         }
-                    } else if (vm.preSaveStatus === 'published' && vm.obj.id) {
+                    } else if (isChangePublished && isEdit) {
                         vm.showMessageError = false;
                         var yesterdayDate = new Date();
                         yesterdayDate.setDate(yesterdayDate.getDate());
                         vm.datepickerOpt.initDatea.dateOptions.maxDate = yesterdayDate;
-                        if (vm.obj.status === 'published' && dateChoice.valueOf() > yesterdayDate.valueOf()) {
+                        if (isPublishedObj && dateChoice.valueOf() > yesterdayDate.valueOf()) {
                             vm.showMessageError = true;
                             vm.messageText = 'Este já está publicado, datas futuras não são válidas. Altere a data.';
-                        } else if (vm.obj.status === 'scheduled' && dateChoice.valueOf() > yesterdayDate.valueOf()) {
+                        } else if (isScheduledObj && dateChoice.valueOf() > yesterdayDate.valueOf()) {
                             vm.showMessageError = true;
                             vm.messageText = 'Este está agendado, altere a data para publicação';
                             vm.obj.post_date = '';
                             vm.obj.scheduled_time = '';
                         }
-                    } else if (vm.preSaveStatus === 'published' && !vm.obj.id && vm.obj.post_date) {
+                    } else if (isChangePublished && !isEdit && vm.obj.post_date) {
                         if (!verifyHourFuture()) {
                             datePostScheduled();
                         }
@@ -165,13 +199,15 @@
                         vm.obj.scheduled_time = hh + ':' + MM;
                     }
                 });
+            }
 
+            function _initListenerChangePostDate() {
                 vm.$watch('vm.obj.post_date', function () {
                     if (vm.obj.scheduled_date) {
-                        var date = new Date(vm.obj.post_date);
+                        let date = new Date(vm.obj.post_date);
                         vm.obj.scheduled_date = date;
-                        var hh = date.getHours();
-                        var MM = date.getMinutes();
+                        let hh = date.getHours();
+                        let MM = date.getMinutes();
                         if (hh < 10) {
                             hh = '0' + hh;
                         }
@@ -183,22 +219,10 @@
                     }
 
                     if (vm.obj.publish_date) {
-                        var publishDate = new Date(vm.obj.publish_date);
+                        let publishDate = new Date(vm.obj.publish_date);
                         vm.obj.publish_date = publishDate;
                     }
                 });
-
-                vm.datepickerOpt = {
-                    initDatea: DateTimeHelper.getDatepickerOpt()
-                };
-
-                vm.datepickerOpt.initDatea.status = {
-                    opened: false
-                };
-
-                vm.timepickerOpt = {
-                    initTime: DateTimeHelper.getTimepickerOpt()
-                };
             }
 
             function _clearFildHour(event) {
@@ -224,7 +248,7 @@
                 if (hh > hhScheduled && !vm.showLoad) {
                     vm.obj.scheduled_time = '';
                     return false;
-                } else if (vm.preSaveStatus === 'published') {
+                } else if (isPublished(vm.preSaveStatus)) {
                     return false;
                 } else if (hh <= hhScheduled && MM > mmScheduled && !vm.showLoad) {
                     vm.obj.scheduled_time = '';
@@ -301,14 +325,14 @@
                     return true;
                 } else if (!vm.obj.scheduled_time) {
                     return true;
-                } else if (vm.preSaveStatus === 'scheduled' && !isDateFuture()) {
+                } else if (isScheduled(vm.preSaveStatus) && !isDateFuture()) {
                     if (verifyHourFuture()) {
                         vm.showMessageError = true;
                         vm.messageText = 'A hora deve ser maior que a hora atual';
                     } else {
                         vm.showMessageError = false;
                     }
-                } else if (vm.preSaveStatus === 'published' && isDateFuture()) {
+                } else if (isPublished(vm.preSaveStatus) && isDateFuture()) {
                     if (verifyHourFuture()) {
                         vm.showMessageWarn = false;
                     } else {
@@ -354,10 +378,10 @@
                     datePost.setSeconds(0);
                     datePost.setMilliseconds(0);
                     vm.obj.post_date = datePost.toISOString();
-                    if (!vm.obj.id && vm.preSaveStatus === 'published') {
+                    if (!vm.obj.id && isPublished(vm.preSaveStatus)) {
                         vm.showMessageWarn = true;
                         vm.messageText = 'Esta publicação será publicada com data retrocedida.';
-                    } else if (vm.preSaveStatus === 'published') {
+                    } else if (isPublished(vm.preSaveStatus)) {
                         vm.showMessageWarn = true;
                         vm.messageText = 'Publicação retrocedida.';
                     }
@@ -375,7 +399,7 @@
                     vm.messageText = 'Status alterado para Agendado.';
                     vm.preSaveStatus = 'scheduled';
                 }
-                if (vm.preSaveStatus && vm.preSaveStatus === 'published') {
+                if (isPublished(vm.preSaveStatus)) {
                     vm.showMessageWarn = true;
                     vm.messageText = 'Data futura. Esta publicação será agendada.';
                 }
@@ -407,7 +431,7 @@
             }
 
             function datePost() {
-                if (!vm.obj.id && vm.preSaveStatus === 'scheduled') {
+                if (!vm.obj.id && isScheduled(vm.preSaveStatus)) {
                     vm.showMessageError = false;
                 } else {
                     vm.showMessageError = false;

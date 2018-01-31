@@ -11,7 +11,7 @@
             getTags: getTags,
             findTags: findTags,
             convertTagsInput: convertTagsInput
-        }
+        };
 
         return service;
 
