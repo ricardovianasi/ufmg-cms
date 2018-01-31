@@ -42,10 +42,6 @@
                 initDate: DateTimeHelper.getDatepickerOpt()
             };
 
-            vm.datepickerOpt.initDate.status = {
-                opened: false
-            };
-
             vm.timepickerOpt = {
                 initTime: DateTimeHelper.getTimepickerOpt()
             };

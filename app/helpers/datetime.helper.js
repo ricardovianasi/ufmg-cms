@@ -83,7 +83,8 @@
                         dateOptions: {
                             formatYear: 'yyyy',
                             startingDay: 0,
-                            showWeeks: false
+                            showWeeks: false,
+                            status: { opened: false }
                         },
                         toggleMin: function ($scope, elem, source) {
                             var minDate = null;

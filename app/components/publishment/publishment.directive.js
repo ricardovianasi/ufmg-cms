@@ -5,7 +5,7 @@
         .directive('publishmentOptions', PublishmentOptions);
 
     /** ngInject */
-    function PublishmentOptions( $location, $filter, $q, validationService, StatusService, $log, DateTimeHelper,
+    function PublishmentOptions( $location, $filter, $q, validationService, StatusService, DateTimeHelper,
         PermissionService, $rootScope, $timeout, ModalService) {
 
         return {
@@ -32,12 +32,6 @@
             vm.showMessageWarn = false;
             vm.showMessageError = false;
 
-            vm.statusLabel = {
-                draft: 'Não Publicado',
-                published: 'Publicado',
-                scheduled: 'Agendado'
-            };
-
             vm.obj = vm.$parent.$eval(attrs.routeModel);
             vm.remove = vm.$parent.remove;
             vm.publisher = vm.publishMethod || vm.$parent.publish;
@@ -49,39 +43,9 @@
             vm.datePostValidateHour = datePostValidateHour;
             vm.clearFildHour = _clearFildHour;
             vm.preview = _preview;
-            vm.back = function () {
-                var forceBreak = false;
-                var url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
-                    if (currentValue === 'new' || currentValue === 'edit') {
-                        forceBreak = true;
-                    }
-                    if (forceBreak) {
-                        return accumulator;
-                    }
-                    return accumulator += '/' + currentValue;
-                });
-                return url;
-            };
-            vm.new = function () {
-                var forceBreak = false;
-                var url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
-                    if (currentValue === 'new' || currentValue === 'edit') {
-                        forceBreak = true;
-                    }
-                    if (forceBreak) {
-                        return accumulator;
-                    }
-                    return accumulator += '/' + currentValue;
-                }) + '/new';
-                return url;
-            };
-            vm.isDateValid = function () {
-                if (!vm.obj.scheduled_date) {
-                    vm.errorInvalidDate = true;
-                } else {
-                    vm.errorInvalidDate = false;
-                }
-            };
+            vm.goBack = goBack;
+            vm.goNew = goNew;
+            vm.isDateValid = isDateValid;
 
             onInit();
 
@@ -93,22 +57,61 @@
                 return value === 'scheduled';
             }
 
+            function goBack() {
+                let forceBreak = false;
+                let url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
+                    if (currentValue === 'new' || currentValue === 'edit') {
+                        forceBreak = true;
+                    }
+                    if (forceBreak) {
+                        return accumulator;
+                    }
+                    return accumulator += '/' + currentValue;
+                });
+                return url;
+            }
+
+            function goNew() {
+                let forceBreak = false;
+                let url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
+                    if (currentValue === 'new' || currentValue === 'edit') {
+                        forceBreak = true;
+                    }
+                    if (forceBreak) {
+                        return accumulator;
+                    }
+                    return accumulator += '/' + currentValue;
+                }) + '/new';
+                return url;
+            }
+
+            function isDateValid() {
+                if (!vm.obj.scheduled_date) {
+                    vm.errorInvalidDate = true;
+                } else {
+                    vm.errorInvalidDate = false;
+                }
+            }
+
             function onInit() {
+                vm.statusLabel = {
+                    draft: 'Não Publicado',
+                    published: 'Publicado',
+                    scheduled: 'Agendado'
+                };
                 $timeout(function () {
                     _initDirective();
                 }, 600);
                 _initListenerObjLoaded();
                 _initListenerChangeStatus();
                 _initListenerChangePostDate();
+                _initDateTimePickerOptions();
+            }
 
+            function _initDateTimePickerOptions() {
                 vm.datepickerOpt = {
                     initDatea: DateTimeHelper.getDatepickerOpt()
-                };
-
-                vm.datepickerOpt.initDatea.status = {
-                    opened: false
-                };
-
+                }
                 vm.timepickerOpt = {
                     initTime: DateTimeHelper.getTimepickerOpt()
                 };

@@ -82,16 +82,6 @@
             endDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        /**
-         * Add status 'on the fly', according to requirements
-         */
-        vm.datepickerOpt.initDate.status = {
-            opened: false
-        };
-        vm.datepickerOpt.endDate.status = {
-            opened: false
-        };
-
         NewsService.getNewsCategories().then(function (data) {
             vm.categories = data.data;
         });

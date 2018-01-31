@@ -79,13 +79,6 @@
             endDate: DateTimeHelper.getDatepickerOpt()
         };
 
-        vm.datepickerOpt.initDate.status = {
-            opened: false
-        };
-        vm.datepickerOpt.endDate.status = {
-            opened: false
-        };
-
         vm.timepickerOpt = {
             initTime: DateTimeHelper.getTimepickerOpt(),
             endTime: DateTimeHelper.getTimepickerOpt()
