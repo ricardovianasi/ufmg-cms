@@ -6,49 +6,32 @@
         .controller('PagesEditController', PagesEditController);
 
     /** ngInject */
-    function PagesEditController(
-        $scope,
-        $uibModal,
-        $location,
-        $routeParams,
-        $timeout,
-        $window,
-        NotificationService,
-        PagesService,
-        ManagerFileService,
-        WidgetsService,
-        StatusService,
-        DateTimeHelper,
-        $q,
-        ModalService,
-        $rootScope,
-        TagsService,
-        validationService,
-        Util,
-        HandleChangeService
-    ) {
+    function PagesEditController($scope, $uibModal, $location, $routeParams, $timeout, $window, NotificationService,
+        PagesService, ManagerFileService, WidgetsService, StatusService, DateTimeHelper, $q, ModalService,
+        $rootScope, TagsService, validationService, Util, HandleChangeService) {
 
-        var allTags = [];
-        var hasRequest = false;
-        var countPage = 1;
-        var vm = $scope;
+        let vm = $scope;
+
+        let allTags = [];
+        let hasRequest = false;
+        let countPage = 1;
 
         vm.pagesParent = [];
         vm.typesData = {};
 
-        vm.loadMorePage = _loadMorePage;
-        vm.findTags = _findTags;
-        vm.remove = _remove;
-        vm.publish = _publish;
-        vm.uploadCover = _uploadCover;
-        vm.removeImage = _removeImage;
-        vm.handleModule = _handleModule;
-        vm.removeModuleMain = _removeModuleMain;
-        vm.removeModuleSide = _removeModuleSide;
+        vm.loadMorePage = loadMorePage;
+        vm.findTags = findTags;
+        vm.remove = remove;
+        vm.publish = publish;
+        vm.uploadCover = uploadCover;
+        vm.removeImage = removeImage;
+        vm.handleModule = handleModule;
+        vm.removeModuleMain = removeModuleMain;
+        vm.removeModuleSide = removeModuleSide;
 
-        onInit();
+        activate();
 
-        function onInit() {
+        function activate() {
 
             vm.widgets = [];
             vm.status = [];
@@ -133,8 +116,7 @@
         }
 
         function _getTags() {
-            TagsService
-                .getTags()
+            TagsService.getTags()
                 .then(function (data) {
                     allTags = data.data.items[0];
                 });
@@ -192,7 +174,7 @@
             return defer.promise;
         }
 
-        function _loadMorePage(search) {
+        function loadMorePage(search) {
             _reset(vm.pagesParent);
             _loadMore(vm.pagesParent, search)
                 .then(function (data) {
@@ -207,22 +189,23 @@
             }
         }
 
-        function _remove() {
-            ModalService
-                .confirm('Você deseja excluir a página <b>' + vm.page.title + '</b>?',
-                    ModalService.MODAL_MEDIUM, { isDanger: true })
-                .result
-                .then(function () {
-                    PagesService
-                        .removePage($routeParams.id)
-                        .then(function () {
-                            NotificationService.success('Página removida com sucesso.');
-                            $location.path('/page');
-                        });
+        function remove() {
+            let msgModal = 'Você deseja excluir a página <b>' + vm.page.title + '</b>?';
+            ModalService.confirm(msgModal, ModalService.MODAL_MEDIUM, { isDanger: true })
+                .result.then(function () {
+                    _removePage($routeParams.id);
                 });
         }
 
-        function _publish(page) {
+        function _removePage(id) {
+            PagesService.removePage(id)
+                .then(function () {
+                    NotificationService.success('Página removida com sucesso.');
+                    $location.path('/page');
+                });
+        }
+
+        function publish(page) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
@@ -237,7 +220,7 @@
 
         }
 
-        function _uploadCover() {
+        function uploadCover() {
             ManagerFileService
                 .imageFiles()
                 .open('pageCover')
@@ -249,36 +232,33 @@
                 });
         }
 
-        function _removeImage() {
+        function removeImage() {
             $timeout(function () {
                 vm.page.image = '';
                 vm.$apply();
             });
         }
 
-        function _handleModule(column, index) {
+        function handleModule(column, index) {
             return PagesService
                 .module()
                 .handle($scope, column, index);
         }
 
         function _removeModule(column, index) {
-            ModalService
-                .confirm('Você deseja excluir o modulo <b>' +
-                    vm.page.widgets[column][index].title + '</b>?',
-                    ModalService.MODAL_MEDIUM)
-                .result
+            let msgModal = 'Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?';
+            ModalService .confirm(msgModal, ModalService.MODAL_MEDIUM).result
                 .then(function () {
                     vm.page.widgets[column].splice(index, 1);
                     NotificationService.success('Modulo removido com sucesso.');
                 });
         }
 
-        function _removeModuleMain(index) {
+        function removeModuleMain(index) {
             _removeModule('main', index);
         }
 
-        function _removeModuleSide(index) {
+        function removeModuleSide(index) {
             _removeModule('side', index);
         }
 
@@ -286,24 +266,16 @@
             PagesService
                 .getPage(parseInt($routeParams.id))
                 .then(function (data) {
-                    var page = data.data;
-                    var tags = page.tags;
-
-                    page.tags = [];
-
+                    let page = data.data;
+                    let tags = page.tags;
+                    
                     vm.title = page.title;
                     vm.breadcrumb_active = page.title;
 
-                    angular.forEach(tags, function (tag) {
-                        page.tags.push(tag.name);
-                    });
-
-                    if (!page.widgets.side.length) {
-                        page.columns = 1;
-                    }
-
-                    page.scheduled_date = moment(data.data.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
-                    page.scheduled_time = moment(data.data.post_date).format('hh:mm');
+                    page.tags = TagsService.convertTagsInput(tags)
+                    page.columns = !page.widgets.side.length ? 1 : page.columns;
+                    page.scheduled_date = moment(page.post_date, 'YYYY-DD-MM').format('DD/MM/YYYY');
+                    page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
                 });
         }
@@ -314,7 +286,7 @@
             });
         }
 
-        function _findTags($query) {
+        function findTags($query) {
             return TagsService.findTags($query, allTags);
         }
 

@@ -5,39 +5,31 @@
         .factory('TagsService', TagsService);
 
     /** ngInjetc */
-    function TagsService($http, $q, apiUrl, $filter, $log) {
-        $log.info('TagsService');
+    function TagsService($http, apiUrl, $filter) {
 
-        function _tagsForTagsInput(tags) {
-            var tagsForTagsInput = [];
-
-            angular.forEach(tags, function (v, k) {
-                tagsForTagsInput.push({
-                    text: tags[k].name
-                });
-            });
-
-            return tagsForTagsInput;
+        let service = {
+            getTags: getTags,
+            findTags: findTags,
+            convertTagsInput: convertTagsInput
         }
 
-        return {
-            getTags: function (params) {
-                var deferred = $q.defer();
-                if (angular.isUndefined(params)) {
-                    $http.get(apiUrl + '/tag').then(function (data) {
-                        deferred.resolve(data);
-                    });
-                } else {
-                    $http.get(apiUrl + '/tag' + params).then(function (data) {
-                        deferred.resolve(data);
-                    });
-                }
-                return deferred.promise;
-            },
-            findTags: function ($query, tags) {
-                var allTags = _tagsForTagsInput(tags);
-                return $filter('filter')(allTags, $query);
-            }
-        };
+        return service;
+
+        function getTags(params) {
+            let url = apiUrl + '/tag' + (params || '');
+            return $http.get(url);
+        }
+
+        function findTags($query, tags) {
+            var allTags = convertTagsInput(tags);
+            return $filter('filter')(allTags, $query);
+        }
+
+        function convertTagsInput(tags) {
+            tags = tags ? tags : [];
+            return tags.map(function(tag) {
+                return { text: tag.name };
+            });
+        }
     }
 })();
