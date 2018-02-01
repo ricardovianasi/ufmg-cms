@@ -235,7 +235,7 @@
                     vm.breadcrumb_active = page.title;
 
                     page.tags = TagsService.convertTagsInput(tags);
-                    page.columns = !page.widgets.side.length ? 1 : page.columns;
+                    page.columns = !page.widgets.side.length ? 1 : 2;
                     page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
