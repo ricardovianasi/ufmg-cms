@@ -88,6 +88,7 @@
                     thumb_name: data.data.thumb ? data.data.thumb.title : '',
                     highlight: data.data.highlight,
                     highlight_ufmg: data.data.highlight_ufmg,
+                    highlight_home: angular.isDefined(data.data.highlight_home) ? data.data.highlight_home : false,
                     news_url: data.data.news_url,
                     has_video: data.data.has_video,
                     /* jshint ignore:start */
@@ -165,6 +166,7 @@
                 thumb: data.thumb,
                 highlight: data.highlight,
                 highlight_ufmg: data.highlight_ufmg || false,
+                highlight_home: data.highlight_home || false,
                 has_video: data.has_video,
                 /* jshint ignore:start */
                 tv_program: data.tv_program,

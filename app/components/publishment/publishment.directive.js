@@ -111,7 +111,7 @@
             function _initDateTimePickerOptions() {
                 vm.datepickerOpt = {
                     initDatea: DateTimeHelper.getDatepickerOpt()
-                }
+                };
                 vm.timepickerOpt = {
                     initTime: DateTimeHelper.getTimepickerOpt()
                 };
@@ -124,7 +124,6 @@
             }
 
             function _initDirective() {
-                console.log('_initDirective', vm.obj);
                 vm.showLoad = true;
                 vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                 vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';
@@ -218,7 +217,6 @@
                             MM = '0' + MM;
                         }
                         vm.obj.scheduled_time = hh + ':' + MM;
-                        vm.immediately = false;
                     }
 
                     if (vm.obj.publish_date) {
