@@ -6,7 +6,6 @@
 
     /** ngInject */
     function RedactorPluginService(ModalService, ManagerFileService, $log) {
-        $log.info('RedactorPluginService');
 
         var _insertItemOnEditor = function (redactor, template, obj) {
             var html = _.template($(template).html());

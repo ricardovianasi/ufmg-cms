@@ -4,150 +4,114 @@
     angular.module('componentsModule')
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
-    function ModuleModalController(
-        $scope,
-        $uibModalInstance,
-        PagesService,
-        module,
-        widgets,
-        $rootScope,
-        RedactorPluginService,
-        $timeout,
-        Util,
-        $q,
-        $log
-    ) {
-        $log.info('ModuleModalController');
+    function ModuleModalController($scope, $uibModalInstance, PagesService, module, widgets,
+        $rootScope, RedactorPluginService, $timeout, Util, $q, $log) {
 
-        var vm = $scope;
+        let vm = $scope;
+        let hasRequest = false;
+        let countPage = 1;
 
-        vm.widgets = widgets;
-        vm.ok = _ok;
-        vm.cancel = _cancel;
+        vm.ok = ok;
+        vm.cancel = cancel;
+        vm.isDevelopment = isDevelopment;
+        vm.loadMoreEvents = loadMoreEvents;
+        vm.loadMoreNews  = loadMoreNews;
+        vm.loadMoreTag = loadMoreTag;
+        vm.loadMoreFaq = loadMoreFaq;
+        vm.loadHighlightednewsvideo = loadHighlightednewsvideo;
+        vm.loadHighlightedrelease = loadHighlightedrelease;
+        vm.loadMorePage = loadMorePage;
 
-        var hasRequest = false;
-        var countPage = 1;
-        vm.currentElement = 0;
+        activate();
 
-        vm.events = [];
-        vm.dataNews = [];
-        vm.dataTags = [];
-        vm.dataFaq = [];
-        vm.dataHighlightednewsvideo = [];
-        vm.dataHighlightedrelease = [];
-        vm.dataPage = [];
-
-        vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
-            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery'];
-
-        onInit();
-
-        function onInit() {
-            vm.widget = {
-                selected: {},
-                type: '',
-                title: ''
+        function ok() {
+            let _obj = {
+                id: vm.widget.id || null,
+                title: vm.widget.title || null,
+                type: vm.widget.type
             };
 
-            $scope.$watch('widget.selected', function () {
-                vm.widget.type = vm.widget.selected.type;
-            });
+            angular.extend(_obj, vm.widget);
 
-            if (module) {
-                vm.module = angular.copy(module);
-                vm.widget.id = module.id;
-                vm.widget.type = module.type;
-                vm.widget.title = module.title;
-                vm.widget.selected.type = module.type;
-
-                angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
-
-                $timeout(function () {
-                        var html = $.parseHTML(vm.widget.text);
-                        $('#redactor-only').append(html);
-                    }, 300);
-
-                if (module.type === 'listnews') {
-                    vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
-                }
-            }
-
-            vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
-
-            vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
-            vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
-            vm.preparePartial = PagesService.module().preparePartial;
+            $log.info('Widget Selecionado', _obj);
+            $uibModalInstance.close(_obj);
+            $scope.$destroy();
         }
 
-        vm.isDevelopment = function (typeWidget) {
+        function cancel() {
+            $uibModalInstance.dismiss('cancel');
+            $scope.$destroy();
+        }
+
+        function isDevelopment(typeWidget) {
             let index = vm.widgetsInDevelopment.findIndex(function(typeInDev) { return typeInDev === typeWidget; });
             return index >= 0;
         };
 
-        vm.loadMoreEvents = function (search) {
-            reset(vm.events);
-            loadMore('LoadMoreEvents', vm.events, search)
+        function loadMoreEvents(search) {
+            _reset(vm.events);
+            _loadMore('LoadMoreEvents', vm.events, search)
                 .then(function (data) {
                     vm.events = Object.assign(vm.events, data);
                 });
         };
 
-        vm.loadMoreNews = function (search) {
-            reset(vm.dataNews);
-            loadMore('LoadMoreNews', vm.dataNews, search)
+        function loadMoreNews(search) {
+            _reset(vm.dataNews);
+            _loadMore('LoadMoreNews', vm.dataNews, search)
                 .then(function (data) {
                     vm.dataNews = Object.assign(vm.dataNews, data);
                 });
         };
 
-        vm.loadMoreTag = function (search) {
-            reset(vm.dataTags);
-            loadMore('LoadMoreTag', vm.dataTags, search)
+        function loadMoreTag(search) {
+            _reset(vm.dataTags);
+            _loadMore('LoadMoreTag', vm.dataTags, search)
                 .then(function (data) {
                     vm.dataTags = Object.assign(vm.dataTags, data[0]);
                 });
         };
 
-        vm.loadMoreFaq = function (search) {
-            reset(vm.dataFaq);
-            loadMore('LoadMoreFaq', vm.dataFaq, search)
+        function loadMoreFaq(search) {
+            _reset(vm.dataFaq);
+            _loadMore('LoadMoreFaq', vm.dataFaq, search)
                 .then(function (data) {
                     vm.dataFaq = Object.assign(vm.dataFaq, data);
                 });
         };
 
-        vm.loadHighlightednewsvideo = function (search) {
-            reset(vm.dataHighlightednewsvideo);
-            loadMore('EventHighlightednewsvideo', vm.dataHighlightednewsvideo, search)
+        function loadHighlightednewsvideo(search) {
+            _reset(vm.dataHighlightednewsvideo);
+            _loadMore('EventHighlightednewsvideo', vm.dataHighlightednewsvideo, search)
                 .then(function (data) {
                     vm.dataHighlightednewsvideo = Object.assign(vm.dataHighlightednewsvideo, data);
                 });
         };
 
-        vm.loadHighlightedrelease = function (search) {
-            reset(vm.dataHighlightedrelease);
-            loadMore('EventHighlightedrelease', vm.dataHighlightedrelease, search)
+        function loadHighlightedrelease(search) {
+            _reset(vm.dataHighlightedrelease);
+            _loadMore('EventHighlightedrelease', vm.dataHighlightedrelease, search)
                 .then(function (data) {
                     vm.dataHighlightedrelease = Object.assign(vm.dataHighlightedrelease, data);
                 });
         };
 
-        vm.loadMorePage = function (search) {
-            reset(vm.dataPage);
-            loadMore('LoadMorePage', vm.dataPage, search)
+        function loadMorePage(search) {
+            _reset(vm.dataPage);
+            _loadMore('LoadMorePage', vm.dataPage, search)
                 .then(function (data) {
                     vm.dataPage = Object.assign(vm.dataPage, data);
                 });
         };
 
-        function reset(data) {
+        function _reset(data) {
             if (angular.isUndefined(data[0])) {
                 countPage = 1;
                 vm.currentElement = 0;
             }
         }
 
-        function loadMore(eventMonitor, dataTemp, search) {
+        function _loadMore(eventMonitor, dataTemp, search) {
             var defer = $q.defer();
             if (search || !hasRequest) {
                 if (search) {
@@ -178,23 +142,60 @@
             return defer.promise;
         }
 
-        function _ok() {
-            var _obj = {
-                id: vm.widget.id || null,
-                title: vm.widget.title || null,
-                type: vm.widget.type
-            };
+        function _loadModule() {
+            if (module) {
+                vm.module = angular.copy(module);
+                vm.widget.id = module.id;
+                vm.widget.type = module.type;
+                vm.widget.title = module.title;
+                vm.widget.selected.type = module.type;
 
-            angular.extend(_obj, vm.widget);
+                angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
 
-            $log.info('Widget Selecionado', _obj);
-            $uibModalInstance.close(_obj);
-            $scope.$destroy();
+                $timeout(function () {
+                        var html = $.parseHTML(vm.widget.text);
+                        $('#redactor-only').append(html);
+                    }, 300);
+
+                if (module.type === 'listnews') {
+                    vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
+                }
+            }
         }
 
-        function _cancel() {
-            $uibModalInstance.dismiss('cancel');
-            $scope.$destroy();
+        function _initRedactorOptions() {
+            vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
+            vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+            vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
+        }
+
+        function _initProps() {
+            vm.widgets = widgets;
+            vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
+            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery'];
+            vm.currentElement = 0;
+            vm.widget = { selected: {}, type: '', title: '' };
+            vm.preparePartial = PagesService.module().preparePartial;
+
+            vm.events = [];
+            vm.dataNews = [];
+            vm.dataTags = [];
+            vm.dataFaq = [];
+            vm.dataHighlightednewsvideo = [];
+            vm.dataHighlightedrelease = [];
+            vm.dataPage = [];
+        }
+
+        function activate() {
+            console.log('module', module);
+            _initProps();
+
+            $scope.$watch('widget.selected', function () {
+                vm.widget.type = vm.widget.selected.type;
+            });
+
+            _loadModule();
+            _initRedactorOptions();
         }
     }
 })();
