@@ -3,19 +3,28 @@
 
     angular
         .module('serviceModule')
-        .factory('CommonWidgetSerivce', CommonWidgetSerivce);
+        .factory('CommonWidgetService', CommonWidgetService);
 
     /** ngInject */
-    function CommonWidgetSerivce($rootScope, $timeout, Util, NewsService, TagsService) {
+    function CommonWidgetService($rootScope, $timeout, Util, NewsService, TagsService, EventsService) {
         var service = {
             request: request,
             preparingNews: preparingNews,
-            prepareItems: prepareItems
+            prepareItems: prepareItems,
+            preparingEvents: preparingEvents
         };
         
         return service;
 
         ////////////////
+
+        function preparingEvents(scope) {
+            prepareItems(scope);
+            request('LoadMoreEvents', EventsService.getEvents, {
+                field: 'initDate',
+                direction: 'DESC'
+            }, 'name');
+        }
 
         function preparingNews(scope) {
             request('LoadMoreNews', NewsService.getNews, {

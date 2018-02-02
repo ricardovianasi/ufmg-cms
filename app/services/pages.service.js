@@ -7,8 +7,11 @@
     /** ngInject */
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout,
-        Util, HighlightedNewsService, $q, $log) {
-        $log.info('PagesService');
+        Util, $q, $log,
+        HighlightedNewsService,
+        ComEventsService) {
+
+            $log.info('PagesService');
 
         function request(event, fnResquest, order_by, searchQuery, customFilter) {
             var dataReturn = [];
@@ -511,11 +514,7 @@
                 },
 
                 comevents: function (widget) {
-                    let objToSave = { type: widget.type, event: {} };
-                    if(widget.content && widget.content.event) {
-                        objToSave.event = widget.content.event.id;
-                    }
-                    return objToSave;
+                    return ComEventsService.parseToSave(widget);
                 },
 
                 comhighlightnews: function (widget) {
@@ -837,12 +836,7 @@
                 },
 
                 comevents: function (widget) {
-                    return {
-                        content: widget.content,
-                        event: {
-                            selected: widget.content.event
-                        },
-                    };
+                    return ComEventsService.parseToLoad(widget);
                 },
 
                 comhighlightnews: function (widget) {
@@ -1128,8 +1122,6 @@
                 },
                 highlightednews: function ($scope) {
                     HighlightedNewsService.load($scope);
-                    // _preparingNews($scope);
-                    // _prepareItems($scope);
                 },
                 highlightedgalleries: _preparingGalleries,
                 highlightedgallery: _preparingGalleries,
@@ -1143,10 +1135,7 @@
                 },
 
                 comevents: function ($scope) {
-                    $scope.event = {};
-                    $scope.widget.content = $scope.widget.content || {};
-
-                    _preparingEvents($scope);
+                    ComEventsService.load($scope);
                 },
                 comhighlightnews: function ($scope) {
                     $scope.news = [];

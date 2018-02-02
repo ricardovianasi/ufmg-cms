@@ -6,7 +6,7 @@
         .factory('HighlightedNewsService', HighlightedNewsService);
 
     /** ngInject */
-    function HighlightedNewsService(CommonWidgetSerivce) {
+    function HighlightedNewsService(CommonWidgetService) {
         var service = {
             load: load,
             parseToLoad: parseToLoad,
@@ -18,8 +18,8 @@
         ////////////////
         function load(scope) {
             console.log('load', scope);
-            CommonWidgetSerivce.preparingNews(scope);
-            CommonWidgetSerivce.prepareItems(scope);
+            CommonWidgetService.preparingNews(scope);
+            CommonWidgetService.prepareItems(scope);
         }
 
         function parseToLoad(widget) {
