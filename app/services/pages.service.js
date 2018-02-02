@@ -5,23 +5,9 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($http,
-        $filter,
-        $uibModal,
-        apiUrl,
-        EventsService,
-        GalleryService,
-        MediaService,
-        NewsService,
-        ReleasesService,
-        TagsService,
-        faqService,
-        PostTypeService,
-        $rootScope,
-        $timeout,
-        Util,
-        $q,
-        $log) {
+    function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
+        NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout,
+        Util, HighlightedNewsService, $q, $log) {
         $log.info('PagesService');
 
         function request(event, fnResquest, order_by, searchQuery, customFilter) {
@@ -333,31 +319,7 @@
                 },
 
                 highlightednews: function (widget) {
-                    var newsToSelect = [];
-                    let resultWidget = {};
-                    if(widget.tag && widget.tag.length > 0) {
-                        if (typeof widget.tag[0].text !== 'undefined') {
-                            widget.tag = _.map(widget.tag, 'text');
-                        }
-                    } else if(widget.content && widget.content.tag) {
-                        widget.tag = [widget.content.tag.name];
-                    }
-                    resultWidget.tag = widget.tag || [];
-
-                    if (widget.news) {
-                        angular.forEach(widget.news, function (news) {
-                            newsToSelect.push(news.id);
-                        });
-                        resultWidget.news = newsToSelect;
-                    } else if (widget.content && widget.content.news) {
-                        newsToSelect = [];
-
-                        angular.forEach(widget.content.news, function (news) {
-                            newsToSelect.push(news.id);
-                        });
-                        resultWidget.news = newsToSelect;
-                    }
-                    return resultWidget;
+                    return HighlightedNewsService.parseToSave(widget)
                 },
 
                 highlightedradionews: function (widget) {
@@ -755,31 +717,7 @@
                 },
 
                 highlightednews: function (widget) {
-                    let resultWidget = {};
-                    var tagHighlightednews = widget.tag || [];
-                    resultWidget.tag = [];                    
-                    if (widget.news) {
-                        resultWidget.news = widget.news;
-                    } else if(widget.content) {
-                        if (widget.content.tag) {
-                            tagHighlightednews = widget.content.tag;
-                        }
-                        if (widget.content.news) {
-                            var newsToSelect = [];
-
-                            angular.forEach(widget.content.news, function (news) {
-                                newsToSelect.push({
-                                    id: news.id,
-                                    title: news.title
-                                });
-                            });
-                            resultWidget.news = newsToSelect;
-                        }
-                    }
-                    if(tagHighlightednews && (tagHighlightednews[0] || tagHighlightednews.name)) {
-                        resultWidget.tag = [tagHighlightednews[0] ? tagHighlightednews[0] : tagHighlightednews.name];
-                    }
-                    return resultWidget;
+                    return HighlightedNewsService.parseToLoad(widget);
                 },
                 editorialnews: function (widget) {
 
@@ -987,7 +925,6 @@
                     }
                     if(prop) {
                         $scope.widget[prop]  = null;
-
                     }
                 };
 
@@ -1190,8 +1127,9 @@
                     _prepareItems($scope);
                 },
                 highlightednews: function ($scope) {
-                    _preparingNews($scope);
-                    _prepareItems($scope);
+                    HighlightedNewsService.load($scope);
+                    // _preparingNews($scope);
+                    // _prepareItems($scope);
                 },
                 highlightedgalleries: _preparingGalleries,
                 highlightedgallery: _preparingGalleries,
@@ -1285,14 +1223,17 @@
                     return obj;
                 },
                 preparePartial: function ($scope) {
-                    if (_preparing[$scope.widget.type]) {
-                        _preparing[$scope.widget.type]($scope);
+                    console.log('preparePartial', $scope);
+                    let currentWidget = $scope.$parent.ctrlModal.widget;
+                    if (_preparing[currentWidget.type]) {
+                        _preparing[currentWidget.type]($scope.$parent.ctrlModal);
                     }
                 },
                 handle: function ($scope, column, idx) {
                     var moduleModal = $uibModal.open({
                         templateUrl: 'components/modal/module.modal.template.html',
                         controller: 'ModuleModalController',
+                        controllerAs: 'ctrlModal',
                         backdrop: 'static',
                         size: 'lg',
                         resolve: {

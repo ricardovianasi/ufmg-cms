@@ -1,35 +1,35 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{ widget.type|translate|titleize }}</h3>
+    <h3 class="modal-title">{{ ctrlModal.widget.type|translate|titleize }}</h3>
 </div>
 <div class="modal-body" can-get>
     <form>
-        <fieldset ng-init="resetVariables()">
+        <fieldset>
             <div class="form-group">
                 <label>T&iacute;tulo do Widget:</label>
-                <input ng-disabled="isDevelopment(widget.type)" type="text" title="Título do Widget" class="form-control" ng-model="widget.title">
+                <input ng-disabled="ctrlModal.isDevelopment()" type="text" title="Título do Widget" class="form-control" ng-model="ctrlModal.widget.title">
             </div>
-            <div ng-if="!module" class="form-group">
+            <div ng-if="!ctrlModal.module" class="form-group">
                 <label>Selecionar Widget:</label>
-                <ui-select ng-model="widget.selected" class="ui-select">
+                <ui-select ng-model="ctrlModal.widget.selected" on-select="ctrlModal.onWidgetSelected($item)" class="ui-select">
                     <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
-                    <ui-select-choices repeat="widget in widgets.items|filter: $select.search" group-by="'group'">
+                    <ui-select-choices repeat="widget in ctrlModal.widgets.items|filter: $select.search" group-by="'group'">
                         <div ng-bind-html="widget.label|highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <div onload="preparePartial(this, $event)" ng-if="widget.type !== undefined" ng-include="'components/modal/partials/{0}.html'|format:widget.type"></div>
-            <p ng-show="isDevelopment(widget.type)" class="text-danger">Favor não inserir este modulo (Em desenvolvimento)</p>
+            <div onload="ctrlModal.preparePartial(this, $event)" ng-if="ctrlModal.widget.type !== undefined" ng-include="ctrlModal.getPathPartial()"></div>
+            <p ng-show="ctrlModal.isDevelopment()" class="text-danger">Favor não inserir este modulo (Em desenvolvimento)</p>
         </fieldset>
     </form>
 </div>
 <div class="modal-footer" ng-if="!viewOnly">
-    <button type="button" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-remove"></i> Cancelar</button>
-    <button type="button" class="btn btn-success" ng-disabled="widget.title == '' || widget.type == ''" ng-click="ok()">
+    <button type="button" class="btn btn-danger" ng-click="ctrlModal.cancel()"><i class="fa fa-remove"></i> Cancelar</button>
+    <button type="button" class="btn btn-success" ng-disabled="!ctrlModal.canInsert()" ng-click="ctrlModal.ok()">
         <i class="fa fa-check"></i> Inserir
     </button>
 </div>
 <div class="modal-footer" ng-if="viewOnly">
-    <button id="btn-back" type="button" class="btn btn-md" ng-click="cancel()">
+    <button id="btn-back" type="button" class="btn btn-md" ng-click="ctrlModal.cancel()">
         <i class="fa fa-back"></i> Fechar
     </button>
 </div>

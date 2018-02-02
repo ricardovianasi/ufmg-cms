@@ -7,7 +7,7 @@
     function ModuleModalController($scope, $uibModalInstance, PagesService, module, widgets,
         $rootScope, RedactorPluginService, $timeout, Util, $q, $log) {
 
-        let vm = $scope;
+        let vm = this;
         let hasRequest = false;
         let countPage = 1;
 
@@ -21,8 +21,23 @@
         vm.loadHighlightednewsvideo = loadHighlightednewsvideo;
         vm.loadHighlightedrelease = loadHighlightedrelease;
         vm.loadMorePage = loadMorePage;
+        vm.onWidgetSelected = onWidgetSelected;
+        vm.canInsert = canInsert;
+        vm.getPathPartial = getPathPartial;
 
         activate();
+
+        function onWidgetSelected(item){
+            vm.widget.type = item.type;
+        }
+
+        function canInsert() {
+            return vm.widget.title !== '' && angular.isDefined(vm.widget.type);
+        }
+
+        function getPathPartial() {
+            return 'components/modal/partials/' + vm.widget.type + '.html';
+        }
 
         function ok() {
             let _obj = {
@@ -43,8 +58,8 @@
             $scope.$destroy();
         }
 
-        function isDevelopment(typeWidget) {
-            let index = vm.widgetsInDevelopment.findIndex(function(typeInDev) { return typeInDev === typeWidget; });
+        function isDevelopment() {
+            let index = vm.widgetsInDevelopment.findIndex(function(typeInDev) { return typeInDev === vm.widget.type; });
             return index >= 0;
         };
 
@@ -112,7 +127,8 @@
         }
 
         function _loadMore(eventMonitor, dataTemp, search) {
-            var defer = $q.defer();
+            console.log('_loadMore', dataTemp, search);
+            let defer = $q.defer();
             if (search || !hasRequest) {
                 if (search) {
                     countPage = 1;
@@ -130,6 +146,7 @@
                     currentElement: vm.currentElement,
                     search: search
                 }).then(function (data) {
+                    console.log('then', data);
                     countPage = data.countPage;
                     hasRequest = data.hasRequest;
                     vm.currentElement = data.currentElement;
@@ -174,7 +191,7 @@
             vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
             'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery'];
             vm.currentElement = 0;
-            vm.widget = { selected: {}, type: '', title: '' };
+            vm.widget = { selected: {}, type: undefined, title: '' };
             vm.preparePartial = PagesService.module().preparePartial;
 
             vm.events = [];
@@ -187,13 +204,7 @@
         }
 
         function activate() {
-            console.log('module', module);
             _initProps();
-
-            $scope.$watch('widget.selected', function () {
-                vm.widget.type = vm.widget.selected.type;
-            });
-
             _loadModule();
             _initRedactorOptions();
         }
