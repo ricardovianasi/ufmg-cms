@@ -396,20 +396,7 @@
                 },
 
                 highlightedrelease: function (widget) {
-                    let objToSave = {
-                        title: widget.title,
-                        description: widget.content.description,
-                        release: widget.content.release,
-                        specialists: [],
-                        image: widget.content.image ? widget.content.image.id : null,
-                    };
-
-                    angular.forEach(widget.content.specialists, function (specialist) {
-                        delete specialist.opened;
-                        objToSave.specialists.push(specialist);
-                    });
-
-                    return objToSave;
+                    return HighlightedReleaseService.parseToSave(widget);
                 },
 
                 lasttvprograms: function (widget) {
@@ -659,10 +646,7 @@
                 },
 
                 highlightedrelease: function (widget) {
-                    return {
-                        title: widget.title,
-                        content: widget.content,
-                    };
+                    return HighlightedReleaseService.parseToLoad(widget);
                 },
 
                 lasttvprograms: function (widget) {

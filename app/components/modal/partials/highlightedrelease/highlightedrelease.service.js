@@ -17,35 +17,50 @@
 
         ////////////////
         function load(ctrl, $scope) {
-            console.log('load - HighlightedReleaseService', ctrl, $scope);
             ctrl.widget.content = ctrl.widget.content || {};
             ctrl.releases = {};
+            _addListenerToContentImage(ctrl, $scope);
+            _registerFunctions(ctrl, $scope);
+            _registerRequest();
+        }
 
-            // Cover Image - Upload
+        function parseToLoad(widget) {
+            console.log('parseToLoad', widget);
+            return {
+                title: widget.title,
+                content: widget.content,
+            };
+        }
+
+        function parseToSave(widget) {
+            let objToSave = {
+                title: widget.title,
+                description: widget.content.description,
+                release: widget.content.release,
+                specialists: [],
+                image: widget.content.image ? widget.content.image.id : null,
+            };
+
+            angular.forEach(widget.content.specialists, function (specialist) {
+                delete specialist.opened;
+                objToSave.specialists.push(specialist);
+            });
+            return objToSave;
+        }
+
+        function _addListenerToContentImage(ctrl, $scope) {
             $scope.$watch('ctrlModal.widget.content.image', function () {
                 if (ctrl.widget.content && ctrl.widget.content.image instanceof File) {
                     ctrl.upload(ctrl.widget.content.image);
                 }
             });
+        }
 
-            _registerFunctions(ctrl, $scope);
-
+        function _registerRequest() {
             CommonWidgetService.request('EventHighlightedrelease', ReleasesService.getReleases, {
                 field: 'postDate',
                 direction: 'DESC'
             }, 'title');
-        }
-
-        function parseToLoad(widget) {
-            return {
-                event: widget.event || (widget.content ? widget.content.event : null),
-            };
-        }
-
-        function parseToSave(widget) {
-            return {
-                event: (widget.event ? widget.event.id : null) || (widget.content ? widget.content.event.id : null),
-            };
         }
 
         function _registerFunctions(ctrl, $scope) {
