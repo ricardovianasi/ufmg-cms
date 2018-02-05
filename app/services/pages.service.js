@@ -8,7 +8,7 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews) {
+        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService) {
 
             $log.info('PagesService');
 
@@ -820,66 +820,8 @@
 
             // Partial preparing
             var _preparing = {
-                highlightedrelease: function ($scope) {
-                    $log.info('highlightedrelease');
-                    $scope.widget.content = $scope.widget.content || {};
-
-                    // Cover Image - Upload
-                    $scope.$watch('widget.content.image', function () {
-                        if ($scope.widget.content && $scope.widget.content.image instanceof File) {
-                            $scope.upload($scope.widget.content.image);
-                        }
-                    });
-
-                    $scope.upload = function (file) {
-                        MediaService.newFile(file).then(function (data) {
-                            $scope.widget.content.image = {
-                                url: data.url,
-                                id: data.id
-                            };
-                        });
-                    };
-
-                    $scope.removeImage = function () {
-                        $timeout(function () {
-                            $scope.widget.content.image = '';
-                            $scope.$apply();
-                        });
-                    };
-
-                    // Releases
-                    $scope.releases = {};
-
-                    request('EventHighlightedrelease', ReleasesService.getReleases, {
-                        field: 'postDate',
-                        direction: 'DESC'
-                    }, 'title');
-
-                    // Specialists
-                    $scope.addSpecialist = function () {
-                        if ($scope.widget.content.specialists) {
-                            $scope.widget.content.specialists.push({
-                                name: '',
-                                phone: '',
-                                title_job: '',
-                                email: '',
-                                opened: true
-                            });
-                        } else {
-                            $scope.widget.content.specialists = [];
-                            $scope.widget.content.specialists.push({
-                                name: '',
-                                phone: '',
-                                title_job: '',
-                                email: '',
-                                opened: true
-                            });
-                        }
-                    };
-
-                    $scope.removeSpecialist = function (idx) {
-                        $scope.widget.content.specialists.splice(idx, 1);
-                    };
+                highlightedrelease: function (ctrl, $scope) {
+                    HighlightedReleaseService.load(ctrl, $scope);
                 },
 
                 sidebarbutton: function ($scope) {
@@ -1031,7 +973,7 @@
                 preparePartial: function ($scope) {
                     let currentWidget = $scope.$parent.ctrlModal.widget;
                     if (_preparing[currentWidget.type]) {
-                        _preparing[currentWidget.type]($scope.$parent.ctrlModal);
+                        _preparing[currentWidget.type]($scope.$parent.ctrlModal, $scope.$parent);
                     }
                 },
                 handle: function ($scope, column, idx) {
