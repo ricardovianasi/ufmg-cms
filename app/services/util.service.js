@@ -34,7 +34,6 @@
         function event(event, data) {
             var defer = $q.defer();
             $rootScope.$emit('set' + event, data);
-            console.log('defer resolve', data, event);
             $rootScope.$on('get' + event, function (event, data) {
                 defer.resolve(data);
             });

@@ -17,7 +17,6 @@
 
         ////////////////
         function load(scope) {
-            console.log('load', scope);
             CommonWidgetService.preparingNews(scope);
             CommonWidgetService.prepareItems(scope);
         }

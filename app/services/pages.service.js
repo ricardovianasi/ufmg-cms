@@ -8,7 +8,7 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService) {
+        ComHighlightNewsService, HighlightedNewsVideo) {
 
             $log.info('PagesService');
 
@@ -331,21 +331,7 @@
                 },
 
                 highlightednewsvideo: function (widget) {
-                    if (widget.news) {
-                        var newsToSelect = [];
-
-                        angular.forEach(widget.news, function (news) {
-                            newsToSelect.push(news.id);
-                        });
-
-                        return {
-                            news: newsToSelect,
-                        };
-                    }
-
-                    return {
-                        news: widget.news,
-                    };
+                    return HighlightedNewsVideo.parseToSave(widget);
                 },
 
                 /* jshint ignore:start */
@@ -504,17 +490,7 @@
                 },
 
                 highlightednewsvideo: function (widget) {
-                    var obj = {
-                        text: widget.text,
-                    };
-
-                    if ('content' in widget) {
-                        obj.news = widget.content.news;
-                    } else {
-                        obj.news = widget.news;
-                    }
-
-                    return obj;
+                    return HighlightedNewsVideo.parseToLoad(widget);
                 },
 
                 gallery: function (widget) {
@@ -969,15 +945,7 @@
                 },
 
                 highlightednewsvideo: function ($scope) {
-                    request('EventHighlightednewsvideo', NewsService.getNews, {
-                        field: 'postDate',
-                        direction: 'DESC'
-                    }, 'title', {
-                        field: 'hasVideo',
-                        value: 1
-                    });
-                    _preparingNews($scope);
-                    _prepareItems($scope);
+                    HighlightedNewsVideo.load($scope);
                 },
                 lasttvprograms: function ($scope) {
                     _preparingNews($scope);
@@ -1061,7 +1029,6 @@
             return {
 
                 parseWidgetToSave: function (widget) {
-
                     if (typeof _parseToSave[widget.type] !== 'undefined') {
                         return _parseToSave[widget.type](widget);
                     }
@@ -1074,7 +1041,6 @@
                     return obj;
                 },
                 preparePartial: function ($scope) {
-                    console.log('preparePartial', $scope);
                     let currentWidget = $scope.$parent.ctrlModal.widget;
                     if (_preparing[currentWidget.type]) {
                         _preparing[currentWidget.type]($scope.$parent.ctrlModal);
@@ -1131,7 +1097,6 @@
 
                         obj.type = widget.type;
                         obj.title = widget.title;
-
                         angular.extend(obj, this.parseWidgetToSave(widget));
                         if (widget.type === 'faq') {
                             delete obj.id;

@@ -127,7 +127,6 @@
         }
 
         function _loadMore(eventMonitor, dataTemp, search) {
-            console.log('_loadMore', dataTemp, search);
             let defer = $q.defer();
             if (search || !hasRequest) {
                 if (search) {
@@ -146,7 +145,6 @@
                     currentElement: vm.currentElement,
                     search: search
                 }).then(function (data) {
-                    console.log('then', data);
                     countPage = data.countPage;
                     hasRequest = data.hasRequest;
                     vm.currentElement = data.currentElement;
