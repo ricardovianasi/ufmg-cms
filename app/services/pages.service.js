@@ -6,9 +6,8 @@
 
     /** ngInject */
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
-        NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout,
-        Util, $q, $log,
-        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService) {
+        NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
+        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService) {
 
             $log.info('PagesService');
 
@@ -201,17 +200,7 @@
                 },
 
                 highlightedevents: function (widget) {
-                    let objLoad = {events: []};
-                    if (widget.events) {
-                        angular.forEach(widget.events, function (event) {
-                            objLoad.events.push(event.id);
-                        });
-                    } else if(widget.content && widget.content.events) {
-                        angular.forEach(widget.content.events, function (event) {
-                            objLoad.events.push(event.id);
-                        });
-                    }
-                    return objLoad;
+                    return HighlightedEventsService.parseToSave(widget);
                 },
 
                 gallery: function (widget) {
@@ -514,13 +503,7 @@
                 },
 
                 highlightedevents: function (widget) {
-                    let objLoad = { events: [] };
-                    if (widget.events) {
-                        objLoad.events = widget.events;
-                    } else if(widget.content && widget.content.events) {
-                        objLoad.events = widget.content.events;
-                    }
-                    return objLoad;
+                    return HighlightedEventsService.parseToLoad(widget);
                 },
 
                 highlightednewsvideo: function (widget) {
@@ -1015,7 +998,9 @@
                 },
                 highlightedgalleries: _preparingGalleries,
                 highlightedgallery: _preparingGalleries,
-                highlightedevents: _preparingEvents,
+                highlightedevents: function($scope) {
+                    HighlightedEventsService.load($scope);
+                },
                 highlightedevent: function($scope) {
                     HighlightedEventService.load($scope);
                 },

@@ -36,6 +36,7 @@
 
         function prepareItems (scope) {
             scope.addItem = function (item, type, prop) {
+                console.log(item);
                 if (scope.widget[type]) {
                     scope.widget[type].push(item);
                 } else {

@@ -1,0 +1,33 @@
+<div class="form-group" onload="ctrlModal.loadMoreEvents()">
+    <label>Selecione o evento:</label>
+    <ul class="dashed-list">
+        <li ng-repeat="event in ctrlModal.widget.events track by $index" class="as-sortable-item clearfix">
+            <div class="gal-list-left pull-left">
+                <strong>{{ event.name }}</strong>
+            </div>
+            <div class="pull-right">
+                <button type="button" ng-click="ctrlModal.removeItem($index, 'events')" class="btn btn-success">Excluir</button>
+            </div>
+        </li>
+        <li ng-hide="ctrlModal.widget.events.length &gt;= 4" class="as-sortable-item clearfix">
+            <div>+ Inserir Eventos</div>
+            <div class="clearfix">
+                <div class="pull-left gal-list-select-container" onload="ctrlModal.loadMoreEvents()">
+                    <ui-select ng-model="ctrlModal.widget.event_selected">
+                        <ui-select-match placeholder="Buscar eventos">
+                            {{ $select.selected.name }}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in ctrlModal.events | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreEvents()" refresh="ctrlModal.loadMoreEvents($select.search)"
+                            refresh-delay="300">
+                            <div ng-bind-html="item.name | highlight: $select.search">
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" ng-disabled="!ctrlModal.widget.event_selected" ng-click="ctrlModal.addItem(ctrlModal.widget.event_selected, 'events', 'event_selected')">OK</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
