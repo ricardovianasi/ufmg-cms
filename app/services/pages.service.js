@@ -8,9 +8,7 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout,
         Util, $q, $log,
-        HighlightedNewsService,
-        ComEventsService,
-        EditorialNewsService) {
+        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService) {
 
             $log.info('PagesService');
 
@@ -199,9 +197,7 @@
                 },
 
                 highlightedevent: function (widget) {
-                    return {
-                        event: (widget.event ? widget.event.id : null) || (widget.content ? widget.content.event.id : null),
-                    };
+                    return HighlightedEventService.parseToSave(widget);
                 },
 
                 highlightedevents: function (widget) {
@@ -514,9 +510,7 @@
                 },
 
                 highlightedevent: function (widget) {
-                    return {
-                        event: widget.event || (widget.content ? widget.content.event : null),
-                    };
+                    return HighlightedEventService.parseToLoad(widget);
                 },
 
                 highlightedevents: function (widget) {
@@ -1022,7 +1016,9 @@
                 highlightedgalleries: _preparingGalleries,
                 highlightedgallery: _preparingGalleries,
                 highlightedevents: _preparingEvents,
-                highlightedevent: _preparingEvents,
+                highlightedevent: function($scope) {
+                    HighlightedEventService.load($scope);
+                },
                 gallery: _preparingGalleries,
                 eventlist: _getTags,
                 editorialnews: function ($scope) {
