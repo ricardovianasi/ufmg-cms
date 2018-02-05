@@ -1,10 +1,22 @@
 <div class="form-group">
+    <label>Tipo de editoria:</label>
+    <select title="Tipo de editoria" ng-model="ctrlModal.widget.origin" class="form-control">
+        <option value="0">
+            Ordem cronol&oacute;gica
+        </option>
+
+        <option value="1">
+            Mat&eacute;rias Selecionadas
+        </option>
+    </select>
+</div>
+<div class="form-group">
     <label>Chapéu:</label>
     <tags-input add-on-comma="false" max-tags="1" enforce-max-tags ng-model="ctrlModal.widget.tag">
         <auto-complete source="ctrlModal.findTags($query)" max-results-to-show="1000" minLength="1"></auto-complete>
     </tags-input>
 </div>
-<div class="form-group">
+<div ng-show="ctrlModal.widget.origin == '1'" class="form-group">
     <label>Selecione as not&iacute;cias:</label>
     <ul class="dashed-list">
         <li ng-repeat="news in ctrlModal.widget.news track by $index" class="as-sortable-item clearfix">
@@ -17,17 +29,16 @@
         </li>
         <li ng-hide="ctrlModal.widget.news.length &gt;= 4" class="as-sortable-item clearfix">
             <div>+ Inserir Destaque</div>
-            <div class="clearfix" onload="ctrlModal.loadMoreNews()">
-                <div class="pull-left gal-list-select-container">
+            <div class="clearfix">
+                <div class="pull-left gal-list-select-container" onload="ctrlModal.loadMoreNews()">
                     <ui-select ng-model="ctrlModal.widget.news_selected">
                         <ui-select-match placeholder="Buscar notícia">
                             {{ $select.selected.title }}
                         </ui-select-match>
                         <ui-select-choices repeat="item in ctrlModal.dataNews | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreNews()" refresh="ctrlModal.loadMoreNews($select.search)"
                             refresh-delay="300">
-                            <div ng-bind-html="item.title | highlight: $select.search">
-                            </div>
-                            </ui-select-choices>
+                            <div ng-bind-html="item.title | highlight: $select.search"></div>
+                        </ui-select-choices>
                     </ui-select>
                 </div>
                 <div class="pull-right">
