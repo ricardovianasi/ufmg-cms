@@ -8,7 +8,7 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService, HighlightedNewsVideo) {
+        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews) {
 
             $log.info('PagesService');
 
@@ -313,21 +313,7 @@
                 },
 
                 highlightedradionews: function (widget) {
-                    if (widget.news) {
-                        var newsToSelect = [];
-
-                        angular.forEach(widget.news, function (news) {
-                            newsToSelect.push(news.id);
-                        });
-
-                        return {
-                            news: newsToSelect,
-                        };
-                    }
-
-                    return {
-                        news: widget.news,
-                    };
+                    return HighlightedRadioNews.parseToSave(widget);
                 },
 
                 highlightednewsvideo: function (widget) {
@@ -491,6 +477,10 @@
 
                 highlightednewsvideo: function (widget) {
                     return HighlightedNewsVideo.parseToLoad(widget);
+                },
+
+                highlightedradionews: function(widget) {
+                    return HighlightedRadioNews.parseToLoad(widget);
                 },
 
                 gallery: function (widget) {
@@ -939,9 +929,7 @@
                 },
 
                 highlightedradionews: function ($scope) {
-                    $log.info('highlightedradionews');
-                    _preparingNews($scope);
-                    _prepareItems($scope);
+                    HighlightedRadioNews.load($scope);
                 },
 
                 highlightednewsvideo: function ($scope) {

@@ -1,23 +1,23 @@
 <div class="form-group">
     <label>Selecione as not&iacute;cias:</label>
     <ul class="dashed-list">
-        <li ng-repeat="news in widget.news track by $index" class="as-sortable-item clearfix">
+        <li ng-repeat="news in ctrlModal.widget.news track by $index" class="as-sortable-item clearfix">
             <div class="gal-list-left pull-left">
                 <strong>{{ news.title }}</strong>
             </div>
             <div class="pull-right">
-                <button type="button" ng-click="removeItem($index, 'news')" class="btn btn-success">Excluir</button>
+                <button type="button" ng-click="ctrlModal.removeItem($index, 'news')" class="btn btn-success">Excluir</button>
             </div>
         </li>
-        <li ng-hide="widget.news.length &gt;= 4" class="as-sortable-item clearfix">
+        <li ng-hide="ctrlModal.widget.news.length &gt;= 4" class="as-sortable-item clearfix">
             <div>+ Inserir Destaque</div>
             <div class="clearfix">
-                <div class="pull-left gal-list-select-container" onload="loadMoreNews()">
-                    <ui-select ng-model="widget.news_selected">
+                <div class="pull-left gal-list-select-container" onload="ctrlModal.loadMoreNews()">
+                    <ui-select ng-model="ctrlModal.widget.news_selected">
                         <ui-select-match placeholder="Buscar notícia">
                             {{ $select.selected.title }}
                         </ui-select-match>
-                        <ui-select-choices repeat="item in dataNews | filter: $select.search track by $index" scroll-detect="loadMoreNews()" refresh="loadMoreNews($select.search)"
+                        <ui-select-choices repeat="item in ctrlModal.dataNews | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreNews()" refresh="ctrlModal.loadMoreNews($select.search)"
                             refresh-delay="300">
                             <div ng-bind-html="item.title | highlight: $select.search">
                             </div>
@@ -25,7 +25,7 @@
                     </ui-select>
                 </div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-success" ng-disabled="!widget.news_selected" ng-click="addItem(widget.news_selected, 'news', 'news_selected')">OK</button>
+                    <button type="button" class="btn btn-success" ng-disabled="!ctrlModal.widget.news_selected" ng-click="ctrlModal.addItem(ctrlModal.widget.news_selected, 'news', 'news_selected')">OK</button>
                 </div>
             </div>
         </li>
