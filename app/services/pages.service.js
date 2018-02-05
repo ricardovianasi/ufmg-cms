@@ -7,7 +7,8 @@
     /** ngInject */
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
-        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService) {
+        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
+        ComHighlightNewsService) {
 
             $log.info('PagesService');
 
@@ -451,11 +452,7 @@
                 },
 
                 comhighlightnews: function (widget) {
-                    let objToSave = { type: widget.type, news: [] };
-                    if(widget.content && widget.content.news) {
-                        objToSave.news = widget.content.news.map(function (news) { return news.id; }); 
-                    }
-                    return objToSave;
+                    return ComHighlightNewsService.parseToSave(widget);
                 },
 
                 faq: function (widget) {
@@ -713,14 +710,7 @@
                 },
 
                 comhighlightnews: function (widget) {
-                    return {
-                        content: widget.content,
-                        news: [{
-                            selected: widget.content.news[0]
-                        }, {
-                            selected: widget.content.news[1]
-                        }],
-                    };
+                    return ComHighlightNewsService.parseToLoad(widget);
                 },
 
                 faq: function (widget) {
@@ -1014,11 +1004,7 @@
                     ComEventsService.load($scope);
                 },
                 comhighlightnews: function ($scope) {
-                    $scope.news = [];
-                    $scope.widget.content = $scope.widget.content || {};
-                    $scope.widget.content.news = $scope.widget.content.news || [];
-
-                    _preparingNews($scope);
+                    ComHighlightNewsService.load($scope);
                 },
                 comhub: function () {
 

@@ -1,0 +1,20 @@
+<div class="form-group" onload="ctrlModal.loadMoreNews()">
+    <label>
+        Selecionar Notícias
+        <small>(selecione 2 notícias)</small>
+    </label>
+    <ui-select ng-model="ctrlModal.widget.content.news[0]" theme="bootstrap" class="ui-select">
+        <ui-select-match placeholder="Buscar Notícia">{{ $select.selected.title }}</ui-select-match>
+        <ui-select-choices repeat="item in ctrlModal.dataNews | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreNews()" refresh="ctrlModal.loadMoreNews($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="item.title|highlight: $select.search"></div>
+            </ui-select-choices>
+    </ui-select>
+    <ui-select ng-model="ctrlModal.widget.content.news[1]" theme="bootstrap" class="ui-select">
+        <ui-select-match placeholder="Buscar Notícia">{{ $select.selected.title }}</ui-select-match>
+        <ui-select-choices repeat="item in ctrlModal.dataNews | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreNews()" refresh="ctrlModal.loadMoreNews($select.search)"
+            refresh-delay="300">
+            <div ng-bind-html="item.title|highlight: $select.search"></div>
+            </ui-select-choices>
+    </ui-select>
+</div>
