@@ -9,7 +9,7 @@
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
         ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService) {
+        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService) {
 
             $log.info('PagesService');
 
@@ -234,42 +234,7 @@
                 },
 
                 listnews: function (widget) {
-                    var tags = [];
-                    var highlightUfmg = false;
-
-                    if (widget.content) {
-                        if ('tags' in widget.content && widget.content.tags.length > 0) {
-                            if (typeof widget.content.tags[0].text !== 'undefined') {
-                                widget.content.tags = _.map(widget.content.tags, 'text');
-                            }
-                            tags = widget.content.tags;
-                        } else {
-                            tags = widget.tags || (widget.content ? widget.content.tags.id : null);
-                        }
-                        highlightUfmg = widget.content.highlight_ufmg;
-                    } else {
-                        if ('tags' in widget && widget.tags.length > 0) {
-                            if (typeof widget.tags[0].text !== 'undefined') {
-                                widget.tags = _.map(widget.tags, 'text');
-                            }
-                            tags = widget.tags;
-                        } else {
-                            tags = widget.tags || (widget.content ? widget.content.tags.id : null);
-                        }
-                        highlightUfmg = widget.highlight_ufmg;
-                    }
-
-                    var res = {
-                        category: widget.category || (widget.content ? widget.content.category : null),
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        typeNews: widget.typeNews || (widget.content ?
-                            (widget.content.typeNews ? widget.content.typeNews.id : '') :
-                            null),
-                        highlight_ufmg: highlightUfmg,
-                        tags: tags,
-                    };
-
-                    return res;
+                    return ListNewsService.parseToSave(widget);
                 },
 
                 eventlist: function (widget) {
@@ -488,47 +453,7 @@
                 },
 
                 listnews: function (widget) {
-
-                    var typeNews = '';
-                    var tagsForTagsInput = [];
-
-                    if (widget.typeNews || widget.typeNews === '') {
-                        typeNews = widget.typeNews;
-                        if (widget.tags) {
-                            parseTags(widget.tags);
-                        }
-
-                    } else if (widget.content.typeNews !== null) {
-                        typeNews = widget.content.typeNews.id;
-                        if (widget.content.tags) {
-                            parseTags(widget.content.tags);
-                        }
-                    }
-
-                    function parseTags(tags) {
-                        if (widget.tags) {
-                            angular.forEach(tags, function (v, k) {
-                                tagsForTagsInput.push({
-                                    text: tags[k].text
-                                });
-                            });
-                        } else if (widget.content.tags) {
-                            angular.forEach(tags, function (v, k) {
-                                tagsForTagsInput.push({
-                                    text: tags[k].name
-                                });
-                            });
-                        }
-                    }
-                    var res = {
-                        category: widget.category || (widget.content ? widget.content.category : null),
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        typeNews: typeNews,
-                        highlight_ufmg: widget.highlight_ufmg ? widget.highlight_ufmg : widget.content.highlight_ufmg || false,
-                        tags: tagsForTagsInput
-                    };
-
-                    return res;
+                    return ListNewsService.parseToLoad(widget);
                 },
 
                 eventlist: function (widget) {
@@ -794,8 +719,8 @@
                     _preparingNewsTypes($scope);
                 },
 
-                listnews: function ($scope) {
-                    _preparingNewsTypes($scope);
+                listnews: function (ctrl) {
+                    ListNewsService.load(ctrl);
                 },
 
                 lastimagessidebar: function (ctrl) {

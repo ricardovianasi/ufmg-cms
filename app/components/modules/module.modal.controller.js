@@ -171,10 +171,6 @@
                         var html = $.parseHTML(vm.widget.text);
                         $('#redactor-only').append(html);
                     }, 300);
-
-                if (module.type === 'listnews') {
-                    vm.widget.highlight_ufmg = vm.module.content.highlight_ufmg;
-                }
             }
         }
 

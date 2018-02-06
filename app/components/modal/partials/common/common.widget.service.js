@@ -12,7 +12,8 @@
             preparingNews: preparingNews,
             prepareItems: prepareItems,
             preparingEvents: preparingEvents,
-            getTags: getTags
+            getTags: getTags,
+            preparingNewsTypes: preparingNewsTypes
         };
         
         return service;
@@ -25,6 +26,19 @@
                 field: 'initDate',
                 direction: 'DESC'
             }, 'name');
+        }
+
+        function preparingNewsTypes(scope) {
+            scope.news_types = [];
+
+            NewsService.getNewsTypes().then(function (data) {
+                scope.news_types = data.data;
+                scope.news_types.items.push({
+                    id: '',
+                    name: 'Todas'
+                });
+            });
+            getTags(scope);
         }
 
         function preparingNews(scope) {
