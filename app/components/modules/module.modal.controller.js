@@ -61,7 +61,7 @@
         function isDevelopment() {
             let index = vm.widgetsInDevelopment.findIndex(function(typeInDev) { return typeInDev === vm.widget.type; });
             return index >= 0;
-        };
+        }
 
         function loadMoreEvents(search) {
             _reset(vm.events);
@@ -69,7 +69,7 @@
                 .then(function (data) {
                     vm.events = Object.assign(vm.events, data);
                 });
-        };
+        }
 
         function loadMoreNews(search) {
             _reset(vm.dataNews);
@@ -77,7 +77,7 @@
                 .then(function (data) {
                     vm.dataNews = Object.assign(vm.dataNews, data);
                 });
-        };
+        }
 
         function loadMoreTag(search) {
             _reset(vm.dataTags);
@@ -85,7 +85,7 @@
                 .then(function (data) {
                     vm.dataTags = Object.assign(vm.dataTags, data[0]);
                 });
-        };
+        }
 
         function loadMoreFaq(search) {
             _reset(vm.dataFaq);
@@ -93,7 +93,7 @@
                 .then(function (data) {
                     vm.dataFaq = Object.assign(vm.dataFaq, data);
                 });
-        };
+        }
 
         function loadHighlightednewsvideo(search) {
             _reset(vm.dataHighlightednewsvideo);
@@ -101,7 +101,7 @@
                 .then(function (data) {
                     vm.dataHighlightednewsvideo = Object.assign(vm.dataHighlightednewsvideo, data);
                 });
-        };
+        }
 
         function loadHighlightedrelease(search) {
             _reset(vm.dataHighlightedrelease);
@@ -109,7 +109,7 @@
                 .then(function (data) {
                     vm.dataHighlightedrelease = Object.assign(vm.dataHighlightedrelease, data);
                 });
-        };
+        }
 
         function loadMorePage(search) {
             _reset(vm.dataPage);
@@ -117,7 +117,7 @@
                 .then(function (data) {
                     vm.dataPage = Object.assign(vm.dataPage, data);
                 });
-        };
+        }
 
         function _reset(data) {
             if (angular.isUndefined(data[0])) {
@@ -182,8 +182,9 @@
 
         function _initProps() {
             vm.widgets = widgets;
-            vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
-            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery', 'highlightedrelease'];
+            vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform',
+                'instagramlastimage', 'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector',
+                'eventcalendar', 'gridgallery', 'highlightedrelease'];
             vm.currentElement = 0;
             vm.widget = { selected: {}, type: undefined, title: '' };
             vm.preparePartial = PagesService.module().preparePartial;

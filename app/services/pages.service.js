@@ -5,10 +5,10 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
-        NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
-        HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService,
+    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
+        ReleasesService, faqService, PostTypeService, Util, HighlightedNewsService, ComEventsService,
+        EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService,
+        HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService) {
 
             $log.info('PagesService');
@@ -157,36 +157,6 @@
             });
         };
 
-        var _getTags = function ($scope) {
-            request('LoadMoreTag', TagsService.getTags, {
-                field: 'name',
-                direction: 'ASC'
-            }, 'name');
-
-            $scope.tags = [];
-
-            TagsService.getTags().then(function (data) {
-                $scope.tags = data.data.items[0];
-            });
-
-            $scope.findTags = function ($query) {
-                var allTags = _tagsForTagsInput($scope.tags);
-                return $filter('filter')(allTags, $query);
-            };
-
-            function _tagsForTagsInput(tags) {
-                var tagsForTagsInput = [];
-
-                angular.forEach(tags, function (v, k) {
-                    tagsForTagsInput.push({
-                        text: tags[k].name
-                    });
-                });
-
-                return tagsForTagsInput;
-            }
-        };
-
         var _module = (function (_getPages, $uibModal) { // jshint ignore: line
             // Parse widget object to send its data to webservice
             var _parseToSave = {
@@ -248,29 +218,11 @@
                 },
 
                 relatednews: function (widget) {
-                    if (widget.content) {
-                        if (widget.content.tags.length > 0) {
-                            if (typeof widget.content.tags[0].text !== 'undefined') {
-                                widget.content.tags = _.map(widget.content.tags, 'text');
-                            }
-                        }
-                    } else if (widget.tags) {
-                        if (widget.tags.length > 0) {
-                            if (typeof widget.tags[0].text !== 'undefined') {
-                                widget.tags = _.map(widget.tags, 'text');
-                            }
-                        }
-                    }
-
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        typeNews: widget.typeNews || (widget.content ? widget.content.typeNews : null),
-                        tags: widget.tags || (widget.content ? widget.content.tags : null),
-                    };
+                    return RelatedNewsService.parseToSave(widget);
                 },
 
                 highlightednews: function (widget) {
-                    return HighlightedNewsService.parseToSave(widget)
+                    return HighlightedNewsService.parseToSave(widget);
                 },
 
                 highlightedradionews: function (widget) {
@@ -357,7 +309,7 @@
                 },
 
                 lasttvprograms: function (widget) {
-                    return CommonWidgetService.parseToSave(widget);
+                    return LastTvProgramsService.parseToSave(widget);
                 },
 
                 comevents: function (widget) {
@@ -467,36 +419,7 @@
                 },
 
                 relatednews: function (widget) {
-
-                    var typeNews = '';
-                    var tagsForTagsInput = [];
-
-                    if (widget.content) {
-                        if (widget.content.typeNews !== null) {
-                            typeNews = widget.content.typeNews.id;
-                        }
-                        parseTags(widget.content.tags);
-                    } else {
-                        if (widget.typeNews !== null) {
-                            typeNews = widget.typeNews.id;
-                        }
-                        parseTags(widget.tags);
-                    }
-
-
-                    function parseTags(tags) {
-                        angular.forEach(tags, function (v, k) {
-                            tagsForTagsInput.push({
-                                text: tags[k].name
-                            });
-                        });
-                    }
-
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        typeNews: typeNews,
-                        tags: tagsForTagsInput,
-                    };
+                    return RelatedNewsService.parseToLoad(widget);
                 },
 
                 highlightednews: function (widget) {
@@ -555,7 +478,7 @@
                 },
 
                 lasttvprograms: function (widget) {
-                    return CommonWidgetService.parseToLoad(widget);
+                    return LastTvProgramsService.parseToLoad(widget);
                 },
 
                 comevents: function (widget) {
@@ -625,62 +548,12 @@
 
             };
 
-            var _prepareItems = function ($scope) {
-                $scope.addItem = function (item, type, prop) {
-                    if ($scope.widget[type]) {
-                        $scope.widget[type].push(item);
-                    } else {
-                        $scope.widget[type] = [];
-                        $scope.widget[type].push(item);
-                    }
-                    if(prop) {
-                        $scope.widget[prop]  = null;
-                    }
-                };
-
-                $scope.removeItem = function (idx, type) {
-                    if ($scope.widget[type][idx]) {
-                        $scope.widget[type].splice(idx, 1);
-                    }
-                };
-            };
-
-            var _preparingNewsTypes = function ($scope) {
-                $scope.news_types = [];
-
-                NewsService.getNewsTypes().then(function (data) {
-                    $scope.news_types = data.data;
-                    $scope.news_types.items.push({
-                        id: '',
-                        name: 'Todas'
-                    });
-                });
-                _getTags($scope);
-            };
-
-            var _preparingNews = function ($scope) {
-                request('LoadMoreNews', NewsService.getNews, {
-                    field: 'postDate',
-                    direction: 'DESC'
-                }, 'title');
-
-                _getTags($scope);
-            };
-
             var _preparingGalleries = function ($scope) {
                 $scope.galleries = [];
 
                 GalleryService.getGalleries().then(function (data) {
                     $scope.galleries = data.data;
                 });
-            };
-
-            var _preparingEvents = function ($scope) {
-                _prepareItems($scope);
-                request('LoadMoreEvents', EventsService.getEvents, {
-                    field: 'initDate',
-                    direction: 'DESC'
-                }, 'name');
             };
 
             var _preparingPostTypes = function ($scope) {
@@ -715,8 +588,8 @@
                     SidebarButtonService.load(ctrl);
                 },
 
-                relatednews: function ($scope) {
-                    _preparingNewsTypes($scope);
+                relatednews: function (ctrl) {
+                    RelatedNewsService.load(ctrl);
                 },
 
                 listnews: function (ctrl) {
@@ -759,7 +632,7 @@
                     HighlightedNewsVideo.load(ctrl);
                 },
                 lasttvprograms: function (ctrl) {
-                    CommonWidgetService.load(ctrl);
+                    LastTvProgramsService.load(ctrl);
                 },
                 highlightednews: function (ctrl) {
                     HighlightedNewsService.load(ctrl);
