@@ -6,7 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
-        ReleasesService, faqService, PostTypeService, Util, HighlightedNewsService, ComEventsService,
+        ReleasesService, faqService, PostTypeService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService) {
@@ -212,9 +212,7 @@
                 },
 
                 releaselist: function (widget) {
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                    };
+                    return ReleaseListService.parseToSave(widget);
                 },
 
                 relatednews: function (widget) {
@@ -413,9 +411,7 @@
                 },
 
                 releaselist: function (widget) {
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                    };
+                    return ReleaseListService.parseToLoad(widget);
                 },
 
                 relatednews: function (widget) {

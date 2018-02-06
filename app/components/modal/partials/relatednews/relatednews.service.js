@@ -25,7 +25,7 @@
                 limit: widget.limit || (widget.content ? widget.content.limit : null),
                 typeNews: _getTypeNews(widget) || '',
                 tags: _getTags(widget)
-            }
+            };
             return objLoaded;
         }
 
