@@ -1,10 +1,10 @@
 <div class="form-group">
     <label>Categoria:</label>
-    <ui-select ng-model="widget.category">
+    <ui-select ng-model="ctrlModal.widget.category">
         <ui-select-match placeholder="Buscar notícia">
             {{ $select.selected.name }}
         </ui-select-match>
-        <ui-select-choices repeat="item.id as item in categories.items | filter: $select.search track by $index">
+        <ui-select-choices repeat="item.id as item in ctrlModal.categories.items | filter: $select.search track by $index">
             <div ng-bind-html="item.name | highlight: $select.search">
             </div>
         </ui-select-choices>

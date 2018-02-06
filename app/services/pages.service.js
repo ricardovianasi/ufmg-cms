@@ -9,7 +9,7 @@
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
         ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService,
-        EventListService) {
+        EventListService, LastImagesSideBarService) {
 
             $log.info('PagesService');
 
@@ -230,9 +230,7 @@
                 },
 
                 lastimagessidebar: function (widget) {
-                    return {
-                        category: widget.category || (widget.content ? widget.content.category.id : null),
-                    };
+                    return LastImagesSideBarService.parseToSave(widget);
                 },
 
                 listnews: function (widget) {
@@ -489,9 +487,7 @@
                 },
 
                 lastimagessidebar: function (widget) {
-                    return {
-                        category: widget.category || (widget.content ? widget.content.category.id : null),
-                    };
+                    return LastImagesSideBarService.parseToLoad(widget);
                 },
 
                 listnews: function (widget) {
@@ -807,12 +803,8 @@
                     _preparingNewsTypes($scope);
                 },
 
-                lastimagessidebar: function ($scope) {
-                    $scope.categories = [];
-
-                    GalleryService.getCategories().then(function (data) {
-                        $scope.categories = data.data;
-                    });
+                lastimagessidebar: function (ctrl) {
+                    LastImagesSideBarService.load(ctrl);
                 },
 
                 internalmenu: function ($scope) {
