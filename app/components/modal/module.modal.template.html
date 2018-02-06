@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{ ctrlModal.widget.type|translate|titleize }}</h3>
+    <h3 class="modal-title">{{ ctrlModal.widget.type|translate|titleize }} <span ng-show="ctrlModal.isDevelopment()">(Em Desenvolvimento)</span></h3>
 </div>
 <div class="modal-body" can-get>
     <form>

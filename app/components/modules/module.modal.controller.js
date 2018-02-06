@@ -187,7 +187,7 @@
         function _initProps() {
             vm.widgets = widgets;
             vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform', 'instagramlastimage',
-            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery'];
+            'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector', 'eventcalendar', 'gridgallery', 'highlightedrelease'];
             vm.currentElement = 0;
             vm.widget = { selected: {}, type: undefined, title: '' };
             vm.preparePartial = PagesService.module().preparePartial;

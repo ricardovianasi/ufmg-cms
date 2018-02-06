@@ -8,7 +8,7 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService) {
+        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService) {
 
             $log.info('PagesService');
 
@@ -388,11 +388,7 @@
                 },
 
                 sidebarbutton: function (widget) {
-                    return {
-                        label: widget.label || (widget.content ? widget.content.label : null),
-                        url: widget.url || (widget.content ? widget.content.external_url : null),
-                        icon: widget.icon || (widget.content ? widget.content.icon.id : null),
-                    };
+                    return SidebarButtonService.parseToSave(widget);
                 },
 
                 highlightedrelease: function (widget) {
@@ -638,11 +634,7 @@
                 },
 
                 sidebarbutton: function (widget) {
-                    return {
-                        label: widget.label || (widget.content ? widget.content.label : null),
-                        url: widget.url || (widget.content ? widget.content.external_url : null),
-                        icon: widget.icon || (widget.content ? widget.content.icon.id : null),
-                    };
+                    return SidebarButtonService.parseToLoad(widget);
                 },
 
                 highlightedrelease: function (widget) {
@@ -808,16 +800,14 @@
                     HighlightedReleaseService.load(ctrl, $scope);
                 },
 
-                sidebarbutton: function ($scope) {
-                    $scope.icons = [];
-
-                    MediaService.getIcons().then(function (data) {
-                        $scope.icons = data.data;
-                    });
+                sidebarbutton: function (ctrl) {
+                    SidebarButtonService.load(ctrl);
                 },
+
                 relatednews: function ($scope) {
                     _preparingNewsTypes($scope);
                 },
+
                 listnews: function ($scope) {
                     _preparingNewsTypes($scope);
                 },
@@ -887,9 +877,6 @@
                 },
                 comhighlightnews: function ($scope) {
                     ComHighlightNewsService.load($scope);
-                },
-                comhub: function () {
-
                 },
                 hublinks: function ($scope) {
                     $log.info('hublinks');

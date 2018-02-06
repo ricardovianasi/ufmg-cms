@@ -25,7 +25,6 @@
         }
 
         function parseToLoad(widget) {
-            console.log('parseToLoad', widget);
             return {
                 title: widget.title,
                 content: widget.content,

@@ -3,7 +3,7 @@
         <div class="form-group">
             <label>Texto do Bot&atilde;o</label>
             <input class="form-control" type="text" title="Texto do Botão"
-                   ng-model="widget.label">
+                   ng-model="ctrlModal.widget.label">
         </div>
     </div>
 
@@ -11,15 +11,15 @@
         <div class="form-group">
             <label>Url</label>
             <input type="text" title="Url" class="form-control"
-                   ng-model="widget.url">
+                   ng-model="ctrlModal.widget.url">
         </div>
     </div>
 
     <div class="col-xs-4">
         <div class="form-group"><label>&Iacute;cone</label>
             <select title="Ícone" class="form-control"
-                    ng-model="widget.icon"
-                    ng-options="icon.id as icon.label for icon in icons.items"></select>
+                    ng-model="ctrlModal.widget.icon"
+                    ng-options="icon.id as icon.label for icon in ctrlModal.icons.items"></select>
         </div>
     </div>
 </div>
