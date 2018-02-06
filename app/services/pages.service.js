@@ -8,7 +8,8 @@
     function PagesService($http, $filter, $uibModal, apiUrl, EventsService, GalleryService, MediaService,
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
-        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService) {
+        ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService,
+        EventListService) {
 
             $log.info('PagesService');
 
@@ -274,10 +275,7 @@
                 },
 
                 eventlist: function (widget) {
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        tag: widget.tag || (widget.content ? widget.content.tag : null),
-                    };
+                    return EventListService.parseToSave(widget);
                 },
 
                 releaselist: function (widget) {
@@ -541,10 +539,7 @@
                 },
 
                 eventlist: function (widget) {
-                    return {
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                        tag: widget.content ? widget.content.tag.id : null,
-                    };
+                    return EventListService.parseToLoad(widget);
                 },
 
                 releaselist: function (widget) {
@@ -844,39 +839,41 @@
                     };
                 },
 
-                highlightedradionews: function ($scope) {
-                    HighlightedRadioNews.load($scope);
+                highlightedradionews: function (ctrl) {
+                    HighlightedRadioNews.load(ctrl);
                 },
 
-                highlightednewsvideo: function ($scope) {
-                    HighlightedNewsVideo.load($scope);
+                highlightednewsvideo: function (ctrl) {
+                    HighlightedNewsVideo.load(ctrl);
                 },
                 lasttvprograms: function ($scope) {
                     _preparingNews($scope);
                     _prepareItems($scope);
                 },
-                highlightednews: function ($scope) {
-                    HighlightedNewsService.load($scope);
+                highlightednews: function (ctrl) {
+                    HighlightedNewsService.load(ctrl);
                 },
                 highlightedgalleries: _preparingGalleries,
                 highlightedgallery: _preparingGalleries,
-                highlightedevents: function($scope) {
-                    HighlightedEventsService.load($scope);
+                highlightedevents: function(ctrl) {
+                    HighlightedEventsService.load(ctrl);
                 },
-                highlightedevent: function($scope) {
-                    HighlightedEventService.load($scope);
+                highlightedevent: function(ctrl) {
+                    HighlightedEventService.load(ctrl);
                 },
                 gallery: _preparingGalleries,
-                eventlist: _getTags,
-                editorialnews: function ($scope) {
-                    EditorialNewsService.load($scope);
+                eventlist: function(ctrl) {
+                    EventListService.load(ctrl);
+                },
+                editorialnews: function (ctrl) {
+                    EditorialNewsService.load(ctrl);
                 },
 
-                comevents: function ($scope) {
-                    ComEventsService.load($scope);
+                comevents: function (ctrl) {
+                    ComEventsService.load(ctrl);
                 },
-                comhighlightnews: function ($scope) {
-                    ComHighlightNewsService.load($scope);
+                comhighlightnews: function (ctrl) {
+                    ComHighlightNewsService.load(ctrl);
                 },
                 hublinks: function ($scope) {
                     $log.info('hublinks');

@@ -11,7 +11,8 @@
             request: request,
             preparingNews: preparingNews,
             prepareItems: prepareItems,
-            preparingEvents: preparingEvents
+            preparingEvents: preparingEvents,
+            getTags: getTags
         };
         
         return service;
@@ -31,7 +32,7 @@
                 field: 'postDate',
                 direction: 'DESC'
             }, 'title');
-            _getTags(scope);
+            getTags(scope);
         }
 
         function prepareItems (scope) {
@@ -55,7 +56,7 @@
             };
         }
 
-        function _getTags(scope) {
+        function getTags(scope) {
             request('LoadMoreTag', TagsService.getTags, {
                 field: 'name',
                 direction: 'ASC'
