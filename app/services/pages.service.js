@@ -9,7 +9,7 @@
         NewsService, ReleasesService, TagsService, faqService, PostTypeService, $rootScope, $timeout, Util, $q, $log,
         HighlightedNewsService, ComEventsService, EditorialNewsService, HighlightedEventService, HighlightedEventsService,
         ComHighlightNewsService, HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService,
-        EventListService, LastImagesSideBarService) {
+        EventListService, LastImagesSideBarService, LastTvProgramsService) {
 
             $log.info('PagesService');
 
@@ -392,10 +392,7 @@
                 },
 
                 lasttvprograms: function (widget) {
-                    return {
-                        type: widget.type,
-                        title: widget.title,
-                    };
+                    return CommonWidgetService.parseToSave(widget);
                 },
 
                 comevents: function (widget) {
@@ -633,9 +630,7 @@
                 },
 
                 lasttvprograms: function (widget) {
-                    return {
-                        type: widget.type,
-                    };
+                    return CommonWidgetService.parseToLoad(widget);
                 },
 
                 comevents: function (widget) {
@@ -838,9 +833,8 @@
                 highlightednewsvideo: function (ctrl) {
                     HighlightedNewsVideo.load(ctrl);
                 },
-                lasttvprograms: function ($scope) {
-                    _preparingNews($scope);
-                    _prepareItems($scope);
+                lasttvprograms: function (ctrl) {
+                    CommonWidgetService.load(ctrl);
                 },
                 highlightednews: function (ctrl) {
                     HighlightedNewsService.load(ctrl);
