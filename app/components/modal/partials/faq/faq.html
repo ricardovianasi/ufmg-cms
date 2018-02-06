@@ -1,0 +1,10 @@
+<div class=form-group>
+    <label>Selecione o Faq</label>
+    <ui-select ng-model="ctrlModal.widget.content.faq" theme="bootstrap" class="ui-select">
+        <ui-select-match placeholder="Buscar FAQ">{{ $select.selected.title }}</ui-select-match>
+        <ui-select-choices repeat="item.id as item in ctrlModal.dataFaq | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMoreFaq()"
+            refresh="ctrlModal.loadMoreFaq($select.search)" refresh-delay="300">
+            <div ng-bind-html="item.title | highlight: $select.search"></div>
+            </ui-select-choices>
+    </ui-select>
+</div>

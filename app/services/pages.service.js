@@ -6,8 +6,8 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
-        ReleasesService, faqService, PostTypeService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
-        EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService,
+        ReleasesService, PostTypeService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
+        EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService) {
 
@@ -319,18 +319,7 @@
                 },
 
                 faq: function (widget) {
-                    var id;
-
-                    if (typeof widget.content.faq === 'object') {
-                        id = widget.content.faq.id;
-                    } else {
-                        id = widget.content.faq;
-                    }
-
-                    return {
-                        type: widget.type,
-                        faq: parseInt(id)
-                    };
+                    return FaqWidgetService.parseToSave(widget);
                 },
 
                 tagcloud: function (widget) {
@@ -486,11 +475,7 @@
                 },
 
                 faq: function (widget) {
-                    widget.content.faq = widget.content.faq.id;
-                    return {
-                        title: widget.title,
-                        content: widget.content,
-                    };
+                    return FaqWidgetService.parseToLoad(widget);
                 },
 
                 tagcloud: function (widget) {
@@ -693,10 +678,7 @@
                     };
                 },
                 faq: function () {
-                    request('LoadMoreFaq', faqService.faqs, {
-                        field: 'title',
-                        direction: 'ASC'
-                    }, 'title');
+                    FaqWidgetService.load();
                 },
 
                 search: function ($scope) {
@@ -776,9 +758,6 @@
                         obj.type = widget.type;
                         obj.title = widget.title;
                         angular.extend(obj, this.parseWidgetToSave(widget));
-                        if (widget.type === 'faq') {
-                            delete obj.id;
-                        }
                     }
                     return obj;
                 }
