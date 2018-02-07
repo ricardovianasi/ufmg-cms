@@ -6,7 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
-        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
+        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService) {
@@ -323,10 +323,7 @@
                 },
 
                 tagcloud: function (widget) {
-                    return {
-                        type: widget.type,
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                    };
+                    return TagCloudService.parseToSave(widget);
                 },
 
                 search: function (widget) {
@@ -475,11 +472,7 @@
                 },
 
                 tagcloud: function (widget) {
-                    return {
-                        title: widget.title,
-                        type: widget.type,
-                        limit: widget.limit || (widget.content ? widget.content.limit : null),
-                    };
+                    return TagCloudService.parseToLoad(widget);
                 },
 
                 search: function (widget) {
