@@ -10,7 +10,7 @@
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService,
-        HublinksService) {
+        HublinksService, HighlightedGalleriesService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -135,15 +135,7 @@
                 },
 
                 highlightedgalleries: function (widget) {
-                    // var galleriesToSelect = [];
-                    //     angular.forEach(widget.content.galleries, function (gallery) {
-                    //       galleriesToSelect.push(gallery.id);
-                    //     });
-                    //     _obj.galleries = galleriesToSelect;
-
-                    return {
-                        galleries: widget.galleries ? widget.galleries : widget.content.galleries,
-                    };
+                    return HighlightedGalleriesService.parseToSave(widget);
                 },
 
                 lastimagessidebar: function (widget) {
@@ -259,15 +251,7 @@
                 },
 
                 highlightedgalleries: function (widget) {
-                    // var galleriesToSelect = [];
-                    //     angular.forEach(widget.content.galleries, function (gallery) {
-                    //       galleriesToSelect.push(gallery.id);
-                    //     });
-                    //     _obj.galleries = galleriesToSelect;
-
-                    return {
-                        galleries: widget.galleries ? widget.galleries : widget.content.galleries,
-                    };
+                    return HighlightedGalleriesService.parseToLoad(widget);
                 },
 
                 lastimagessidebar: function (widget) {
@@ -386,7 +370,9 @@
                 highlightednews: function (ctrl) {
                     HighlightedNewsService.load(ctrl);
                 },
-                highlightedgalleries: _preparingGalleries,
+                highlightedgalleries: function(ctrl) {
+                    HighlightedGalleriesService.load(ctrl);
+                },
                 highlightedgallery: _preparingGalleries,
                 highlightedevents: function(ctrl) {
                     HighlightedEventsService.load(ctrl);

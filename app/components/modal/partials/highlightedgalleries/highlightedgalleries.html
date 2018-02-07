@@ -2,10 +2,10 @@
     <label>Galerias em destaque:</label>
 
     <ul class=dashed-list>
-        <li ng-repeat="gallery in widget.galleries track by $index" class="as-sortable-item clearfix">
+        <li ng-repeat="gallery in ctrlModal.widget.galleries track by $index" class="as-sortable-item clearfix">
             <div class="gal-list-left pull-left">
                 <div class="gallery-thumb pull-left">
-                    <img alt="{{ photo.file.altText }}" ng-src="{{ gallery.photos[0].file.url }}">
+                    <img alt="{{ ctrlModal.photo.file.altText }}" ng-src="{{ gallery.photos[0].file.url }}">
                 </div>
 
                 <div class="gallery-title pull-left">
@@ -14,23 +14,23 @@
             </div>
 
             <div class=pull-right>
-                <button type=button ng-click="removeItem($index, 'galleries')" class="btn btn-success">
+                <button type=button ng-click="ctrlModal.removeItem($index, 'galleries')" class="btn btn-success">
                     Excluir
                 </button>
             </div>
         </li>
 
-        <li ng-hide="widget.galleries.length &gt;= 4" class="as-sortable-item clearfix">
+        <li ng-hide="ctrlModal.widget.galleries.length &gt;= 4" class="as-sortable-item clearfix">
             <div>+ Inserir Destaque</div>
 
             <div class=clearfix>
                 <div class="pull-left gal-list-select-container">
-                    <ui-select ng-model=widget.gallery_selected>
+                    <ui-select ng-model=ctrlModal.widget.gallery_selected>
                         <ui-select-match placeholder="Buscar galeria">
                             {{ $select.selected.title }}
                         </ui-select-match>
 
-                        <ui-select-choices repeat="gallery in galleries.items | filter: $select.search">
+                        <ui-select-choices repeat="gallery in ctrlModal.galleries.items | filter: $select.search">
                             <div ng-bind-html="gallery.title | highlight: $select.search">
                             </div>
                         </ui-select-choices>
@@ -39,8 +39,8 @@
 
                 <div class=pull-right>
                     <button type=button class="btn btn-success"
-                            ng-disabled=!widget.gallery_selected
-                            ng-click="addItem(widget.gallery_selected, 'galleries', 'gallery_selected')">OK</button>
+                            ng-disabled=!ctrlModal.widget.gallery_selected
+                            ng-click="ctrlModal.addItem(ctrlModal.widget.gallery_selected, 'galleries', 'gallery_selected')">OK</button>
                 </div>
             </div>
         </li>
