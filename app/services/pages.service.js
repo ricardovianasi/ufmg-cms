@@ -5,7 +5,7 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
+    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService, InternalMenuService,
         ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService, TextService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
@@ -234,35 +234,7 @@
                 /* jshint ignore:end */
 
                 internalmenu: function (widget) {
-
-                    var widgetLinks = [];
-                    var page;
-                    var external_url;
-                    var linksOnEach = widget.links ? widget.links : widget.content.links;
-
-                    angular.forEach(linksOnEach, function (links) {
-                        if (links.external_url) {
-                            links.isExternal = true;
-                        }
-
-                        if (!links.isExternal) {
-                            external_url = null;
-                            page = links.page ? links.page.id : null;
-                        } else {
-                            external_url = links.external_url ? links.external_url : null;
-                            page = null;
-                        }
-
-                        widgetLinks.push({
-                            page: page,
-                            label: links.label,
-                            external_url: external_url,
-                        });
-                    });
-
-                    return {
-                        links: widgetLinks,
-                    };
+                    return InternalMenuService.parseToSave(widget);
                 },
 
                 hublinks: function (widget) {
@@ -400,26 +372,7 @@
                 },
 
                 internalmenu: function (widget) {
-                    var widgetLinks = [];
-
-                    if (!widget.content) {
-                        widget.content = {
-                            links: widget.links
-                        };
-                    }
-
-                    angular.forEach(widget.content.links, function (links) {
-                        if (links.external_url) {
-                            links.isExternal = true;
-                            widgetLinks.push(links);
-                        } else {
-                            widgetLinks.push(links);
-                        }
-                    });
-
-                    return {
-                        links: widgetLinks,
-                    };
+                    return InternalMenuService.parseToLoad(widget);
                 },
 
                 hublinks: function (widget) {
@@ -503,28 +456,8 @@
                     LastImagesSideBarService.load(ctrl);
                 },
 
-                internalmenu: function ($scope) {
-                    $log.info('internalmenu');
-                    request('LoadMorePage', _getPages, {
-                        field: 'title',
-                        direction: 'ASC'
-                    }, 'title');
-
-                    $scope.pages = [];
-                    $scope.widget.links = $scope.widget.links || [];
-
-                    $scope.addItem = function () {
-                        $scope.widget.links.push({
-                            title: '',
-                            url: '',
-                        });
-                    };
-
-                    $scope.removeItem = function (idx) {
-                        if ($scope.widget.links[idx]) {
-                            $scope.widget.links.splice(idx, 1);
-                        }
-                    };
+                internalmenu: function (ctrl) {
+                    InternalMenuService.load(ctrl, _getPages);
                 },
 
                 highlightedradionews: function (ctrl) {
