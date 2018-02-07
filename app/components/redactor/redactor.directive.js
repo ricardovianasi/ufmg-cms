@@ -11,9 +11,9 @@
 
         var _applyPlugins = function ($scope, plugins, attrs) {
             angular.forEach(plugins, function (plugin) {
-                var pluginOptions = $scope[attrs[plugin.toLowerCase() + 'Options']] || {};
-                var pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
-
+                let namePluginOptions = plugin.toLowerCase() + 'Options';
+                let pluginOptions = _getPluginOptions($scope, attrs, namePluginOptions);
+                let pluginSource = RedactorPluginService.setPlugin(plugin, pluginOptions);
                 if (pluginSource) {
                     jQuery.Redactor.prototype[plugin] = function () { // jshint ignore: line
                         return pluginSource;
@@ -21,6 +21,14 @@
                 }
             });
         };
+
+        var _getPluginOptions = function($scope, attrs, namePlugin) {
+            if(attrs[namePlugin] && attrs[namePlugin].startsWith('ctrlModal')) {
+                let ctrlModal = $scope.$parent.$parent.$parent['ctrlModal'];
+                return ctrlModal[namePlugin];
+            }
+            return $scope[attrs[namePlugin]] || {};
+        }
 
         return {
             restrict: 'A',

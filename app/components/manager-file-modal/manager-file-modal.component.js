@@ -503,14 +503,15 @@
                 MediaService
                     .getMedia(Util.getParams(params, searchQuery), true)
                     .then(function (res) {
+                        let lengthItems = res.data.items ? res.data.items.length : 0;
                         countPage++;
-                        vm.currentElement += res.data.items.length;
-                        if (res.data.total > vm.currentElement && pageSize >= res.data.items.length) {
+                        vm.currentElement += lengthItems;
+                        if (res.data.total > vm.currentElement && pageSize >= lengthItems) {
                             $timeout(function () {
                                 hasRequest = false;
                             }, 200);
                         }
-                        for (var index = 0; index < res.data.items.length; index++) {
+                        for (var index = 0; index < lengthItems; index++) {
                             vm.files.push(res.data.items[index]);
                         }
                         $timeout(function () {

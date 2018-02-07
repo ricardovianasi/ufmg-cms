@@ -6,7 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
-        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService,
+        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService, TextService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService) {
@@ -162,9 +162,7 @@
             var _parseToSave = {
 
                 text: function (widget) {
-                    return {
-                        text: widget.text || (widget.content ? widget.content.text : null),
-                    };
+                    return TextService.parseToSave(widget);
                 },
 
                 highlightedevent: function (widget) {
@@ -333,9 +331,7 @@
             var _parseToLoad = {
 
                 text: function (widget) {
-                    return {
-                        text: widget.text || (widget.content ? widget.content.text : null),
-                    };
+                    return TextService.parseToLoad(widget);
                 },
 
                 highlightedevent: function (widget) {
@@ -622,7 +618,7 @@
                     }
                 },
                 parseWidgetToLoad: function (widget) {
-                    var obj = {};
+                    let obj = {};
                     if (typeof _parseToLoad[widget.type] !== 'undefined') {
                         obj = _parseToLoad[widget.type](widget);
                     }

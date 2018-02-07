@@ -176,7 +176,7 @@
 
         function _initRedactorOptions() {
             vm.imagencropOptions = RedactorPluginService.getOptions('imagencrop');
-            vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
+            vm.audiouploadOptions = RedactorPluginService.getOptions('audioUpload');
             vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
         }
 
