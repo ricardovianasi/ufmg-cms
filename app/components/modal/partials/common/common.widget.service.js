@@ -6,14 +6,15 @@
         .factory('CommonWidgetService', CommonWidgetService);
 
     /** ngInject */
-    function CommonWidgetService($rootScope, $timeout, Util, NewsService, TagsService, EventsService) {
+    function CommonWidgetService($rootScope, $timeout, Util, NewsService, TagsService, EventsService, PostTypeService) {
         var service = {
             request: request,
             preparingNews: preparingNews,
             prepareItems: prepareItems,
             preparingEvents: preparingEvents,
             getTags: getTags,
-            preparingNewsTypes: preparingNewsTypes
+            preparingNewsTypes: preparingNewsTypes,
+            preparingPostTypes: preparingPostTypes
         };
         
         return service;
@@ -39,6 +40,27 @@
                 });
             });
             getTags(scope);
+        }
+
+        function preparingPostTypes (scope) {
+            scope.post_types = [];
+
+            PostTypeService.getPostTypes().then(function (data) {
+                scope.post_types = data.data;
+
+                scope.typeChanged = function () {
+
+                    scope.options = [];
+
+                    for (var i = 0; i < scope.post_types.items.length; ++i) {
+                        if (scope.post_types.items[i].post_type === scope.widget.post_type) {
+                            scope.options = scope.post_types.items[i].options || [];
+                        }
+                    }
+                };
+
+                scope.typeChanged();
+            });
         }
 
         function preparingNews(scope) {

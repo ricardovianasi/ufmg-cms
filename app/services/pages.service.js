@@ -6,10 +6,10 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService,
-        ReleasesService, PostTypeService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
+        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService) {
+        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService) {
 
             $log.info('PagesService');
 
@@ -330,11 +330,7 @@
                 },
 
                 search: function (widget) {
-                    return {
-                        id: widget.id,
-                        post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-                        post_filter_id: widget.post_filter_id || (widget.content ? widget.content.post_filter_id : null),
-                    };
+                    return SearchService.parseToSave(widget);
                 }
             };
 
@@ -487,44 +483,7 @@
                 },
 
                 search: function (widget) {
-                    var postFilter;
-
-                    if (widget.post_filter_id && widget.post_filter_id.length <= 2) {
-
-                        postFilter = parseInt(widget.post_filter_id);
-
-                        return {
-                            id: widget.id,
-                            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-                            post_filter_id: postFilter
-                        };
-
-                    } else if (widget.content) {
-
-                        if (widget.content.postFilterId && widget.content.postFilterId.length <= 2) {
-
-                            postFilter = parseInt(widget.content.postFilterId);
-
-                            return {
-                                id: widget.id,
-                                post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-                                post_filter_id: postFilter
-                            };
-
-                        } else {
-                            return {
-                                id: widget.id,
-                                post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-                                post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
-                            };
-                        }
-                    } else {
-                        return {
-                            id: widget.id,
-                            post_type: widget.post_type || (widget.content ? widget.content.post_type : null),
-                            post_filter_id: widget.post_filter_id || (widget.content ? widget.content.postFilterId : null),
-                        };
-                    }
+                    return SearchService.parseToLoad(widget);
                 }
 
             };
@@ -536,28 +495,6 @@
                     $scope.galleries = data.data;
                 });
             };
-
-            var _preparingPostTypes = function ($scope) {
-                $scope.post_types = [];
-
-                PostTypeService.getPostTypes().then(function (data) {
-                    $scope.post_types = data.data;
-
-                    $scope.typeChanged = function () {
-
-                        $scope.options = [];
-
-                        for (var i = 0; i < $scope.post_types.items.length; ++i) {
-                            if ($scope.post_types.items[i].post_type === $scope.widget.post_type) {
-                                $scope.options = $scope.post_types.items[i].options || [];
-                            }
-                        }
-                    };
-
-                    $scope.typeChanged();
-                });
-            };
-
 
             // Partial preparing
             var _preparing = {
@@ -681,8 +618,8 @@
                     FaqWidgetService.load();
                 },
 
-                search: function ($scope) {
-                    _preparingPostTypes($scope);
+                search: function (ctrl) {
+                    SearchService.load(ctrl);
                 }
             };
 
