@@ -6,7 +6,8 @@
         .factory('CommonWidgetService', CommonWidgetService);
 
     /** ngInject */
-    function CommonWidgetService($rootScope, $timeout, Util, NewsService, TagsService, EventsService, PostTypeService) {
+    function CommonWidgetService($rootScope, $timeout, Util, NewsService, 
+        TagsService, EventsService, PostTypeService, GalleryService) {
         var service = {
             request: request,
             preparingNews: preparingNews,
@@ -14,7 +15,8 @@
             preparingEvents: preparingEvents,
             getTags: getTags,
             preparingNewsTypes: preparingNewsTypes,
-            preparingPostTypes: preparingPostTypes
+            preparingPostTypes: preparingPostTypes,
+            preparingGalleries: preparingGalleries
         };
         
         return service;
@@ -90,6 +92,14 @@
                     scope.widget[type].splice(idx, 1);
                 }
             };
+        }
+
+        function preparingGalleries(scope) {
+            scope.galleries = [];
+
+            GalleryService.getGalleries().then(function (data) {
+                scope.galleries = data.data;
+            });
         }
 
         function getTags(scope) {

@@ -9,7 +9,7 @@
         ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService) {
+        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService) {
 
             $log.info('PagesService');
 
@@ -176,9 +176,7 @@
                 },
 
                 gallery: function (widget) {
-                    return {
-                        gallery: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
-                    };
+                    return GalleryWidgetService.parseToSave(widget);
                 },
 
                 highlightedgallery: function (widget) {
@@ -357,9 +355,7 @@
                 },
 
                 gallery: function (widget) {
-                    return {
-                        gallery_id: widget.gallery_id || (widget.content ? widget.content.gallery.id : null),
-                    };
+                    return GalleryWidgetService.parseToLoad(widget);
                 },
 
                 highlightedgallery: function (widget) {
@@ -556,7 +552,9 @@
                 highlightedevent: function(ctrl) {
                     HighlightedEventService.load(ctrl);
                 },
-                gallery: _preparingGalleries,
+                gallery: function(ctrl) {
+                    GalleryWidgetService.load(ctrl);
+                },
                 eventlist: function(ctrl) {
                     EventListService.load(ctrl);
                 },
