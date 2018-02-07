@@ -2,17 +2,17 @@
     <div class="clearfix">
         <label>Links:</label>
         <div class="pull-right">
-            <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm" ng-click="addItem()">
+            <button type="button" style="margin-bottom: 3px" class="btn btn-primary btn-sm" ng-click="ctrlModal.addItem()">
                 <i class="fa fa-plus"></i>
             </button>
         </div>
     </div>
-    <div id="sort-main" as-sortable="sortableOptions" ng-model="widget.links">
-        <div ng-repeat="link in widget.links" class="well well-sm" as-sortable-item>
+    <div id="sort-main" as-sortable="ctrlModal.sortableOptions" ng-model="ctrlModal.widget.links">
+        <div ng-repeat="link in ctrlModal.widget.links" class="well well-sm" as-sortable-item>
             <div class="clearfix">
                 <div class=pull-left>Link {{ $index + 1 }}</div>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeItem($index)" ng-if="!viewOnly">
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="ctrlModal.removeItem($index)" ng-if="!viewOnly">
                     <i class="fa fa-trash"></i>
                 </button>
                     <button type="button" as-sortable-item-handle class="btn btn-primary btn-sm">
@@ -30,7 +30,7 @@
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label>Destino do link:</label>
-                        <select title="Destino do link" class="form-control" ng-model="link.link_type" ng-change="changeType($index)">
+                        <select title="Destino do link" class="form-control" ng-model="link.link_type" ng-change="ctrlModal.changeType($index)">
                         <option value="page"
                                 ng-selected="link.link_type === 'page';">
                             Páginas internas
@@ -43,14 +43,14 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <div class="form-group" ng-show="link.link_type === 'page'" onload="loadMorePage()">
+                    <div class="form-group" ng-show="link.link_type === 'page'" onload="ctrlModal.loadMorePage()">
                         <label>Página:</label>
                         <ui-select ng-model="link.page">
                             <ui-select-match placeholder="Buscar Página">
                                 {{ $select.selected.title }}
                             </ui-select-match>
-                            <ui-select-choices repeat="item.id as item in dataPage | filter: $select.search track by $index" scroll-detect="loadMorePage()"
-                                refresh="loadMorePage($select.search)" refresh-delay="300">
+                            <ui-select-choices repeat="item.id as item in ctrlModal.dataPage | filter: $select.search track by $index" scroll-detect="ctrlModal.loadMorePage()"
+                                refresh="ctrlModal.loadMorePage($select.search)" refresh-delay="300">
                                 <div ng-bind-html="item.title | highlight: $select.search">
                                 </div>
                             </ui-select-choices>

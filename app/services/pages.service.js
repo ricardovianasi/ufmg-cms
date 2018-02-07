@@ -9,57 +9,8 @@
         ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService, TextService,
         EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
         HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService) {
-
-            $log.info('PagesService');
-
-        function request(event, fnResquest, order_by, searchQuery, customFilter) {
-            var dataReturn = [];
-            var hasRequest = false;
-            var countPage = 1;
-            var search = false;
-            var currentElement = 0;
-
-            $rootScope.$on('set' + event, function (event, data) {
-                countPage = data.countPage;
-                hasRequest = data.hasRequest;
-                dataReturn = data.data;
-                currentElement = data.currentElement;
-                search = data.search;
-                _getDatarequest();
-            });
-
-            function _getDatarequest() {
-                let params = {
-                    page: countPage,
-                    page_size: 30,
-                    order_by: order_by,
-                    search: search,
-                    filter: customFilter
-                };
-                if (!params.search && countPage === 1) {
-                    currentElement = 0;
-                }
-                $log.info('_getDatarequest', event);
-                fnResquest(Util.getParams(params, searchQuery))
-                    .then(function (res) {
-                        countPage++;
-                        dataReturn = res.data.items;
-                        currentElement += dataReturn.length;
-                        if (res.data.total > currentElement && res.data.items.length <= params.page_size) {
-                            hasRequest = false;
-                        }
-                        $timeout(function () {
-                            $rootScope.$emit('get' + event, {
-                                hasRequest: hasRequest,
-                                countPage: countPage,
-                                data: dataReturn,
-                                currentElement: currentElement
-                            });
-                        }, 100);
-                    });
-            }
-        }
+        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService,
+        HublinksService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -238,32 +189,7 @@
                 },
 
                 hublinks: function (widget) {
-                    if (widget.content) {
-                        angular.forEach(widget.content.links, function (v, k) {
-                            if (typeof widget.content.links[k].page === 'object' &&
-                                typeof widget.content.links[k].page !== 'number' &&
-                                widget.content.links[k].page !== null) {
-                                widget.content.links[k].page = widget.content.links[k].page.id ?
-                                    widget.content.links[k].page.id :
-                                    widget.content.links[k].page;
-                            }
-                        });
-                    } else {
-                        angular.forEach(widget.links, function (v, k) {
-                            if (typeof widget.links[k].page === 'object' &&
-                                typeof widget.links[k].page !== 'number' &&
-                                widget.links[k].page !== 'null' &&
-                                widget.links[k].external_url === null) {
-                                widget.links[k].page = widget.links[k].page.id ?
-                                    widget.links[k].page.id :
-                                    widget.links[k].page;
-                            }
-                        });
-                    }
-
-                    return {
-                        links: widget.content ? widget.content.links : widget.links,
-                    };
+                    return HublinksService.parseToSave(widget);
                 },
 
                 sidebarbutton: function (widget) {
@@ -376,20 +302,7 @@
                 },
 
                 hublinks: function (widget) {
-                    angular.forEach(widget.content.links, function (v, k) {
-                        if (widget.content.links[k].external_url) {
-                            widget.content.links[k].link_type = 'link';
-                        } else {
-                            widget.content.links[k].link_type = 'page';
-                            widget.content.links[k].page = widget.content.links[k].page ?
-                                widget.content.links[k].page :
-                                false;
-                        }
-                    });
-
-                    return {
-                        links: widget.content ? widget.content.links : null,
-                    };
+                    return HublinksService.parseToLoad(widget);
                 },
 
                 sidebarbutton: function (widget) {
@@ -497,42 +410,8 @@
                 comhighlightnews: function (ctrl) {
                     ComHighlightNewsService.load(ctrl);
                 },
-                hublinks: function ($scope) {
-                    $log.info('hublinks');
-                    request('LoadMorePage', _getPages, {
-                        field: 'title',
-                        direction: 'ASC'
-                    }, 'title');
-
-                    $scope.widget.links = $scope.widget.links || [];
-
-                    $scope.addItem = function () {
-                        $scope.widget.links.push({
-                            title: '',
-                            url: '',
-                        });
-                    };
-
-                    $scope.removeItem = function (idx) {
-                        if ($scope.widget.links[idx]) {
-                            $scope.widget.links.splice(idx, 1);
-                        }
-                    };
-
-                    $scope.changeType = function (idx) {
-                        if ($scope.widget.links[idx].link_type === 'page') {
-                            $scope.widget.links[idx].external_url = null;
-                        } else {
-                            $scope.widget.links[idx].page = null;
-                        }
-                    };
-
-                    $scope.sortableOptions = {
-                        accept: function (sourceItemHandleScope, destSortableScope) {
-                            return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
-                        },
-                        containment: '#sort-main'
-                    };
+                hublinks: function (ctrl) {
+                    HublinksService.load(ctrl, _getPages);
                 },
                 faq: function () {
                     FaqWidgetService.load();

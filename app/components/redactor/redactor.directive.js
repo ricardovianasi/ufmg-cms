@@ -9,6 +9,14 @@
         $log.info('RedactorDirective');
         var _ = lodash;
 
+        var _getPluginOptions = function($scope, attrs, namePlugin) {
+            if(attrs[namePlugin] && attrs[namePlugin].startsWith('ctrlModal')) {
+                let ctrlModal = $scope.$parent.$parent.$parent['ctrlModal'];
+                return ctrlModal[namePlugin];
+            }
+            return $scope[attrs[namePlugin]] || {};
+        };
+
         var _applyPlugins = function ($scope, plugins, attrs) {
             angular.forEach(plugins, function (plugin) {
                 let namePluginOptions = plugin.toLowerCase() + 'Options';
@@ -21,14 +29,6 @@
                 }
             });
         };
-
-        var _getPluginOptions = function($scope, attrs, namePlugin) {
-            if(attrs[namePlugin] && attrs[namePlugin].startsWith('ctrlModal')) {
-                let ctrlModal = $scope.$parent.$parent.$parent['ctrlModal'];
-                return ctrlModal[namePlugin];
-            }
-            return $scope[attrs[namePlugin]] || {};
-        }
 
         return {
             restrict: 'A',
