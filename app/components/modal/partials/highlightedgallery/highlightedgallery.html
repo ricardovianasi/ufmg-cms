@@ -1,0 +1,7 @@
+<div class=form-group>
+    <label>Galeria destaque:</label>
+
+    <select title="Galeria destaque" class=form-control
+            ng-model=ctrlModal.widget.gallery_id
+            ng-options="gallery.id as gallery.title for gallery in ctrlModal.galleries.items"></select>
+</div>
