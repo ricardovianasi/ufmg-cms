@@ -5,7 +5,7 @@
         .factory('CourseService', CourseService);
 
     /**ngInject */
-    function CourseService($http, $filter, apiUrl, PagesService, $log) {
+    function CourseService($http, $filter, apiUrl, WidgetsService, $log) {
         $log.info('CourseService');
 
         var _parseCoursesData = function (widgets) {
@@ -14,7 +14,7 @@
             };
 
             angular.forEach(widgets, function (widget) {
-                cleanData.sidebar.push(PagesService.module().makeWidget(widget));
+                cleanData.sidebar.push(WidgetsService.parseWidgetToSave(widget));
             });
             return cleanData;
         };

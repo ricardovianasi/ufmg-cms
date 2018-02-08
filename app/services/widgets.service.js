@@ -5,11 +5,12 @@
         .factory('WidgetsService', WidgetsService);
 
     /** ngInject */
-    function WidgetsService($http, $q, apiUrl, $uibModal) {
+    function WidgetsService($http, $q, apiUrl, $uibModal, WidgetModuleService) {
 
         return {
-            getWidgets: _getWidgets,
-            openWidgetModal: openWidgetModal
+            getWidgets: getWidgets,
+            openWidgetModal: openWidgetModal,
+            parseWidgetToSave: parseWidgetToSave
         };
 
         function openWidgetModal(listWidgets, currentWidget) {
@@ -27,7 +28,22 @@
             return widgetModal.result;
         }
 
-        function _getWidgets() {
+        function parseWidgetToSave(widget) {
+            var obj = {};
+
+            if (widget) {
+                if (widget.id) {
+                    obj.id = widget.id;
+                }
+
+                obj.type = widget.type;
+                obj.title = widget.title;
+                angular.extend(obj, WidgetModuleService.getWidget(widget.type).parseToSave(widget));
+            }
+            return obj;
+        }
+
+        function getWidgets() {
             var deferred = $q.defer();
 
             $http

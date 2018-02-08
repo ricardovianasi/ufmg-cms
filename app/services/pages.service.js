@@ -6,7 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ReleasesService,
-        Util, WidgetModuleService) {
+        Util, WidgetsService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -29,12 +29,12 @@
 
             // Insert each widget into main and side columns
             angular.forEach(page.widgets.main, function (widget) {
-                let widgetMake = _module.makeWidget(widget);
+                let widgetMake = WidgetsService.parseWidgetToSave(widget);
                 cleanPage.widgets.main.push(widgetMake);
             });
 
             angular.forEach(page.widgets.side, function (widget) {
-                cleanPage.widgets.side.push(_module.makeWidget(widget));
+                cleanPage.widgets.side.push(WidgetsService.parseWidgetToSave(widget));
             });
 
             // If we are updating the Page
@@ -103,26 +103,6 @@
             });
         };
 
-        var _module = (function (_getPages) { // jshint ignore: line
-
-            return {
-                makeWidget: function (widget) {
-                    var obj = {};
-
-                    if (widget) {
-                        if (widget.id) {
-                            obj.id = widget.id;
-                        }
-
-                        obj.type = widget.type;
-                        obj.title = widget.title;
-                        angular.extend(obj, WidgetModuleService.getWidget(widget.type).parseToSave(widget));
-                    }
-                    return obj;
-                }
-            };
-        })(_getPages);
-
         return {
             // Columns defaults
             COLUMNS: [{
@@ -149,9 +129,6 @@
             },
             getType: function () {
                 return $http.get(apiUrl + '/page/type');
-            },
-            module: function () {
-                return _module;
             }
         };
     }
