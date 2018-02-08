@@ -201,10 +201,20 @@
             });
         }
 
-        function handleModule(column, index) {
-            return PagesService
-                .module()
-                .handle($scope, column, index);
+        function handleModule(column, idx) {
+            let widgetSelected = vm.page.widgets[column][idx];
+            WidgetsService.openWidgetModal(vm.widgets, widgetSelected)
+                .then(function (data) {
+                    _updateModule(data, column, idx);
+                });
+        }
+
+        function _updateModule(data, column, idx) {
+            if (typeof idx !== 'undefined') {
+                vm.page.widgets[column][idx] = data;
+            } else {
+                vm.page.widgets[column].push(data);
+            }
         }
 
         function _removeModule(column, index) {

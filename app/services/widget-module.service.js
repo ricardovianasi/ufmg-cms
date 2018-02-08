@@ -6,7 +6,7 @@
         .factory('WidgetModuleService', WidgetModuleService);
 
     /** ngInject */
-    function WidgetModuleService($uibModal, ComHighlightNewsService, ComEventsService, EditorialNewsService, 
+    function WidgetModuleService(ComHighlightNewsService, ComEventsService, EditorialNewsService, 
         HighlightedEventService, HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, 
         HighlightedRadioNews, ComHubService, HighlightedReleaseService, MainHighLightService, ComService, 
         SidebarButtonService, ComLastEditionService, EventListService, LastImagesSideBarService, LastTvProgramsService,
@@ -16,8 +16,7 @@
         HighlightedGalleriesService, HighlightedGalleryService, HublinksService, InternalMenuService) {
 
         var service = {
-            getWidget: getWidget,
-            openWidgetModal: openWidgetModal
+            getWidget: getWidget
         };
 
         var widgets;
@@ -31,21 +30,6 @@
                 _loadWidgets();
             }
             return widgets[type];
-        }
-
-        function openWidgetModal(listWidgets, currentWidget) {
-            let widgetModal = $uibModal.open({
-                templateUrl: 'components/modal/module.modal.template.html',
-                controller: 'ModuleModalController',
-                controllerAs: 'ctrlModal',
-                backdrop: 'static',
-                size: 'lg',
-                resolve: {
-                    module: function () { return currentWidget; },
-                    widgets: function () { return listWidgets; }
-                }
-            });
-            return widgetModal.result;
         }
 
         function _loadWidgets() {

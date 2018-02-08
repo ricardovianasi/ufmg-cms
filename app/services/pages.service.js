@@ -5,7 +5,7 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, ReleasesService,
+    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ReleasesService,
         Util, WidgetModuleService) {
 
         var _parseData = function (page) {
@@ -103,51 +103,9 @@
             });
         };
 
-        var _module = (function (_getPages, $uibModal) { // jshint ignore: line
+        var _module = (function (_getPages) { // jshint ignore: line
 
             return {
-
-                handle: function ($scope, column, idx) {
-                    var moduleModal = $uibModal.open({
-                        templateUrl: 'components/modal/module.modal.template.html',
-                        controller: 'ModuleModalController',
-                        controllerAs: 'ctrlModal',
-                        backdrop: 'static',
-                        size: 'lg',
-                        resolve: {
-                            module: function () {
-                                if (typeof idx !== 'undefined') {
-                                    if ($scope.page) {
-                                        return $scope.page.widgets[column][idx];
-                                    } else {
-                                        return $scope.course.widgets[column][idx];
-                                    }
-                                }
-                                return false;
-                            },
-                            widgets: function () {
-                                return $scope.widgets;
-                            },
-                        }
-                    });
-
-                    moduleModal.result.then(function (data) {
-                        $log.warn('Widget pos modal', data);
-                        if (typeof idx !== 'undefined') {
-                            if ($scope.page) {
-                                $scope.page.widgets[column][idx] = data;
-                            } else {
-                                $scope.course.widgets[column][idx] = data;
-                            }
-                        } else {
-                            if ($scope.page) {
-                                $scope.page.widgets[column].push(data);
-                            } else {
-                                $scope.course.widgets[column].push(data);
-                            }
-                        }
-                    });
-                },
                 makeWidget: function (widget) {
                     var obj = {};
 
@@ -163,7 +121,7 @@
                     return obj;
                 }
             };
-        })(_getPages, $uibModal);
+        })(_getPages);
 
         return {
             // Columns defaults

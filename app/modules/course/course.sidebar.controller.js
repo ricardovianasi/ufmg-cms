@@ -7,7 +7,6 @@
     /** ngInject */
     function CourseSidebarController($scope,
         $routeParams,
-        PagesService,
         WidgetsService,
         ModalService,
         CourseService,
@@ -19,6 +18,7 @@
 
         vm.type = $routeParams.type;
         vm.courseId = $routeParams.courseId;
+        vm.handleModule = handleModule;
         vm.save = _save;
 
         HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
@@ -60,9 +60,21 @@
             });
         }
 
-        vm.handleModule = function (column, idx) {
-            return PagesService.module().handle($scope, column, idx);
-        };
+        function handleModule(column, idx) {
+            let widgetSelected = $scope.course.widgets[column][idx];
+            WidgetsService.openWidgetModal($scope.widgets, widgetSelected)
+                .then(function(data) {
+                    _updateModule(data, column, idx);
+                });
+        }
+
+        function _updateModule(data, column, idx) {
+            if (typeof idx !== 'undefined') {
+                $scope.course.widgets[column][idx] = data;
+            } else {
+                $scope.course.widgets[column].push(data);
+            }
+        }
 
         $scope.removeModule = function (column, idx) {
             ModalService
