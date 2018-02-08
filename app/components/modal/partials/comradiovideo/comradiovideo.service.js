@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            ctrl.widget = { };
+            console.log('ComRadioVideoService - load - not implemented', ctrl);
         }
 
         function parseToLoad(widget) {

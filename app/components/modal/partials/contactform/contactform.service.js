@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            ctrl.widget = { };
+            console.log('ContactFormService - load - not implemented', ctrl);
         }
 
         function parseToLoad(widget) {

@@ -8,9 +8,10 @@
     /** ngInject */
     function WidgetModuleService(ComHighlightNewsService, ComEventsService, EditorialNewsService, HighlightedEventService,
         HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, HighlightedRadioNews, ComHubService,
-        HighlightedReleaseService, MainHighLightService, ComService, SidebarButtonService, ComLastEditionService, EventListService,
-        LastImagesSideBarService, LastTvProgramsService, ListNewsService, RelatedEventsService, RelatedNewsService,
-        ReleaseListService) {
+        HighlightedReleaseService, MainHighLightService, ComService, SidebarButtonService, ComLastEditionService,
+        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, RelatedEventsService,
+        RelatedNewsService, ReleaseListService, ComRadioVideoService, ContactCardService, RectorService,
+        ContactFormService) {
         var service = {
             getWidget: getWidget
         };
@@ -50,7 +51,11 @@
                 listnews: ListNewsService,
                 relatedevents: RelatedEventsService,
                 relatednews: RelatedNewsService,
-                releaselist: ReleaseListService
+                releaselist: ReleaseListService,
+                comradiovideo: ComRadioVideoService,
+                contactcard: ContactCardService,
+                rector: RectorService,
+                contactform: ContactFormService
             };
         }
 
