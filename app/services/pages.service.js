@@ -6,11 +6,10 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService, InternalMenuService,
-        ReleasesService, Util, HighlightedNewsService, ComEventsService, ReleaseListService, TagCloudService, TextService,
-        EditorialNewsService, HighlightedEventService, HighlightedEventsService, ComHighlightNewsService, FaqWidgetService,
-        HighlightedNewsVideo, HighlightedRadioNews, HighlightedReleaseService, SidebarButtonService, RelatedNewsService,
+        ReleasesService, Util, ReleaseListService, TagCloudService, TextService, FaqWidgetService,
+        SidebarButtonService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService,
-        HublinksService, HighlightedGalleriesService, HighlightedGalleryService) {
+        HublinksService, HighlightedGalleriesService, HighlightedGalleryService, WidgetModuleService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -116,14 +115,6 @@
                     return TextService.parseToSave(widget);
                 },
 
-                highlightedevent: function (widget) {
-                    return HighlightedEventService.parseToSave(widget);
-                },
-
-                highlightedevents: function (widget) {
-                    return HighlightedEventsService.parseToSave(widget);
-                },
-
                 gallery: function (widget) {
                     return GalleryWidgetService.parseToSave(widget);
                 },
@@ -156,24 +147,6 @@
                     return RelatedNewsService.parseToSave(widget);
                 },
 
-                highlightednews: function (widget) {
-                    return HighlightedNewsService.parseToSave(widget);
-                },
-
-                highlightedradionews: function (widget) {
-                    return HighlightedRadioNews.parseToSave(widget);
-                },
-
-                highlightednewsvideo: function (widget) {
-                    return HighlightedNewsVideo.parseToSave(widget);
-                },
-
-                /* jshint ignore:start */
-                editorialnews: function (widget) {
-                    return EditorialNewsService.parseToSave(widget);
-                },
-                /* jshint ignore:end */
-
                 internalmenu: function (widget) {
                     return InternalMenuService.parseToSave(widget);
                 },
@@ -186,20 +159,8 @@
                     return SidebarButtonService.parseToSave(widget);
                 },
 
-                highlightedrelease: function (widget) {
-                    return HighlightedReleaseService.parseToSave(widget);
-                },
-
                 lasttvprograms: function (widget) {
                     return LastTvProgramsService.parseToSave(widget);
-                },
-
-                comevents: function (widget) {
-                    return ComEventsService.parseToSave(widget);
-                },
-
-                comhighlightnews: function (widget) {
-                    return ComHighlightNewsService.parseToSave(widget);
                 },
 
                 faq: function (widget) {
@@ -220,22 +181,6 @@
 
                 text: function (widget) {
                     return TextService.parseToLoad(widget);
-                },
-
-                highlightedevent: function (widget) {
-                    return HighlightedEventService.parseToLoad(widget);
-                },
-
-                highlightedevents: function (widget) {
-                    return HighlightedEventsService.parseToLoad(widget);
-                },
-
-                highlightednewsvideo: function (widget) {
-                    return HighlightedNewsVideo.parseToLoad(widget);
-                },
-
-                highlightedradionews: function(widget) {
-                    return HighlightedRadioNews.parseToLoad(widget);
                 },
 
                 gallery: function (widget) {
@@ -270,13 +215,6 @@
                     return RelatedNewsService.parseToLoad(widget);
                 },
 
-                highlightednews: function (widget) {
-                    return HighlightedNewsService.parseToLoad(widget);
-                },
-                editorialnews: function (widget) {
-                    return EditorialNewsService.parseToLoad(widget);
-                },
-
                 internalmenu: function (widget) {
                     return InternalMenuService.parseToLoad(widget);
                 },
@@ -289,20 +227,8 @@
                     return SidebarButtonService.parseToLoad(widget);
                 },
 
-                highlightedrelease: function (widget) {
-                    return HighlightedReleaseService.parseToLoad(widget);
-                },
-
                 lasttvprograms: function (widget) {
                     return LastTvProgramsService.parseToLoad(widget);
-                },
-
-                comevents: function (widget) {
-                    return ComEventsService.parseToLoad(widget);
-                },
-
-                comhighlightnews: function (widget) {
-                    return ComHighlightNewsService.parseToLoad(widget);
                 },
 
                 faq: function (widget) {
@@ -321,9 +247,6 @@
 
             // Partial preparing
             var _preparing = {
-                highlightedrelease: function (ctrl, $scope) {
-                    HighlightedReleaseService.load(ctrl, $scope);
-                },
 
                 sidebarbutton: function (ctrl) {
                     SidebarButtonService.load(ctrl);
@@ -345,47 +268,24 @@
                     InternalMenuService.load(ctrl, _getPages);
                 },
 
-                highlightedradionews: function (ctrl) {
-                    HighlightedRadioNews.load(ctrl);
-                },
-
-                highlightednewsvideo: function (ctrl) {
-                    HighlightedNewsVideo.load(ctrl);
-                },
                 lasttvprograms: function (ctrl) {
                     LastTvProgramsService.load(ctrl);
                 },
-                highlightednews: function (ctrl) {
-                    HighlightedNewsService.load(ctrl);
-                },
+
                 highlightedgalleries: function(ctrl) {
                     HighlightedGalleriesService.load(ctrl);
                 },
                 highlightedgallery: function(ctrl) {
                     HighlightedGalleryService.load(ctrl);
                 },
-                highlightedevents: function(ctrl) {
-                    HighlightedEventsService.load(ctrl);
-                },
-                highlightedevent: function(ctrl) {
-                    HighlightedEventService.load(ctrl);
-                },
+
                 gallery: function(ctrl) {
                     GalleryWidgetService.load(ctrl);
                 },
                 eventlist: function(ctrl) {
                     EventListService.load(ctrl);
                 },
-                editorialnews: function (ctrl) {
-                    EditorialNewsService.load(ctrl);
-                },
 
-                comevents: function (ctrl) {
-                    ComEventsService.load(ctrl);
-                },
-                comhighlightnews: function (ctrl) {
-                    ComHighlightNewsService.load(ctrl);
-                },
                 hublinks: function (ctrl) {
                     HublinksService.load(ctrl, _getPages);
                 },
@@ -469,7 +369,7 @@
 
                         obj.type = widget.type;
                         obj.title = widget.title;
-                        angular.extend(obj, this.parseWidgetToSave(widget));
+                        angular.extend(obj, WidgetModuleService.getWidget(widget.type).parseToSave(widget));
                     }
                     return obj;
                 }

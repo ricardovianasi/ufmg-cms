@@ -4,8 +4,8 @@
     angular.module('componentsModule')
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
-    function ModuleModalController($scope, $uibModalInstance, PagesService, module, widgets,
-        $rootScope, RedactorPluginService, $timeout, Util, $q, $log) {
+    function ModuleModalController($scope, $uibModalInstance, module, widgets,
+        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService) {
 
         let vm = this;
         let hasRequest = false;
@@ -24,6 +24,7 @@
         vm.onWidgetSelected = onWidgetSelected;
         vm.canInsert = canInsert;
         vm.getPathPartial = getPathPartial;
+        vm.preparePartial = preparePartial;
 
         activate();
 
@@ -165,12 +166,19 @@
                 vm.widget.title = module.title;
                 vm.widget.selected.type = module.type;
 
-                angular.extend(vm.widget, PagesService.module().parseWidgetToLoad(vm.module));
+                angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module));
 
                 $timeout(function () {
                         var html = $.parseHTML(vm.widget.text);
                         $('#redactor-only').append(html);
                     }, 300);
+            }
+        }
+
+        function preparePartial(scope) {
+            let currentWidget = scope.$parent.ctrlModal.widget;
+            if (WidgetModuleService.getWidget(currentWidget.type)) {
+                WidgetModuleService.getWidget(currentWidget.type).load(scope.$parent.ctrlModal, scope.$parent);
             }
         }
 
@@ -187,7 +195,6 @@
                 'eventcalendar', 'gridgallery', 'highlightedrelease'];
             vm.currentElement = 0;
             vm.widget = { selected: {}, type: undefined, title: '' };
-            vm.preparePartial = PagesService.module().preparePartial;
 
             vm.events = [];
             vm.dataNews = [];

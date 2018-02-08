@@ -16,11 +16,11 @@
         return service;
 
         ////////////////
-        function load(scope) {
-            scope.news = [];
-            scope.widget.content = scope.widget.content || {};
-            scope.widget.content.news = scope.widget.content.news || [];
-            CommonWidgetService.preparingNews(scope);
+        function load(ctrl) {
+            ctrl.news = [];
+            ctrl.widget.content = ctrl.widget.content || {};
+            ctrl.widget.content.news = ctrl.widget.content.news || [];
+            CommonWidgetService.preparingNews(ctrl);
         }
 
         function parseToLoad(widget) {

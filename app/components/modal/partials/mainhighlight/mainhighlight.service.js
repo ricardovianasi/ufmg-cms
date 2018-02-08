@@ -3,10 +3,10 @@
 
     angular
         .module('serviceModule')
-        .factory('MainHighLight', MainHighLight);
+        .factory('MainHighLightService', MainHighLightService);
 
     /** ngInject */
-    function MainHighLight() {
+    function MainHighLightService() {
         var service = {
             load: load,
             parseToLoad: parseToLoad,
@@ -16,8 +16,8 @@
         return service;
 
         ////////////////
-        function load(scope) {
-            scope.widget = { };
+        function load(ctrl) {
+            console.log('MainHighLightService - load - not implemented', ctrl);
         }
 
         function parseToLoad(widget) {
