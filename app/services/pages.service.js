@@ -6,8 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService, InternalMenuService,
-        ReleasesService, Util, ReleaseListService, TagCloudService, TextService, FaqWidgetService,
-        SidebarButtonService, RelatedNewsService,
+        ReleasesService, Util, ReleaseListService, TagCloudService, TextService, FaqWidgetService, RelatedNewsService,
         EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService,
         HublinksService, HighlightedGalleriesService, HighlightedGalleryService, WidgetModuleService) {
 
@@ -155,10 +154,6 @@
                     return HublinksService.parseToSave(widget);
                 },
 
-                sidebarbutton: function (widget) {
-                    return SidebarButtonService.parseToSave(widget);
-                },
-
                 lasttvprograms: function (widget) {
                     return LastTvProgramsService.parseToSave(widget);
                 },
@@ -223,10 +218,6 @@
                     return HublinksService.parseToLoad(widget);
                 },
 
-                sidebarbutton: function (widget) {
-                    return SidebarButtonService.parseToLoad(widget);
-                },
-
                 lasttvprograms: function (widget) {
                     return LastTvProgramsService.parseToLoad(widget);
                 },
@@ -247,10 +238,6 @@
 
             // Partial preparing
             var _preparing = {
-
-                sidebarbutton: function (ctrl) {
-                    SidebarButtonService.load(ctrl);
-                },
 
                 relatednews: function (ctrl) {
                     RelatedNewsService.load(ctrl);

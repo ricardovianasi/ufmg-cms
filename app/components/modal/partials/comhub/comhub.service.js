@@ -3,10 +3,10 @@
 
     angular
         .module('serviceModule')
-        .factory('ComHub', ComHub);
+        .factory('ComHubService', ComHubService);
 
     /** ngInject */
-    function ComHub() {
+    function ComHubService() {
         var service = {
             load: load,
             parseToLoad: parseToLoad,
@@ -16,8 +16,9 @@
         return service;
 
         ////////////////
-        function load(scope) {
-            scope.widget = { };
+        function load(ctrl) {
+            console.log('ComHubService - load - not implemented', ctrl);
+
         }
 
         function parseToLoad(widget) {

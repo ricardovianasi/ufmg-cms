@@ -7,8 +7,8 @@
 
     /** ngInject */
     function WidgetModuleService(ComHighlightNewsService, ComEventsService, EditorialNewsService, HighlightedEventService,
-        HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, HighlightedRadioNews,
-        HighlightedReleaseService, MainHighLightService) {
+        HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, HighlightedRadioNews, ComHubService,
+        HighlightedReleaseService, MainHighLightService, ComService, SidebarButtonService) {
         var service = {
             getWidget: getWidget
         };
@@ -37,7 +37,10 @@
                 highlightednewsvideo: HighlightedNewsVideo,
                 highlightedradionews: HighlightedRadioNews,
                 highlightedrelease: HighlightedReleaseService,
-                mainhighlight: MainHighLightService
+                mainhighlight: MainHighLightService,
+                comhub: ComHubService,
+                comservice: ComService,
+                sidebarbutton: SidebarButtonService
             };
         }
 
