@@ -5,9 +5,8 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService, InternalMenuService,
-        ReleasesService, Util, TagCloudService, TextService, FaqWidgetService, SearchService, GalleryWidgetService,
-        HublinksService, HighlightedGalleriesService, HighlightedGalleryService, WidgetModuleService) {
+    function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, ReleasesService,
+        Util, WidgetModuleService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -15,7 +14,6 @@
 
             cleanPage.image = page.image ? page.image.id : null;
             cleanPage.status = page.status;
-
 
             cleanPage.post_date = postDateToSave(page.scheduled_date, page.scheduled_time);
 
@@ -106,137 +104,9 @@
         };
 
         var _module = (function (_getPages, $uibModal) { // jshint ignore: line
-            // Parse widget object to send its data to webservice
-            var _parseToSave = {
-
-                text: function (widget) {
-                    return TextService.parseToSave(widget);
-                },
-
-                gallery: function (widget) {
-                    return GalleryWidgetService.parseToSave(widget);
-                },
-
-                highlightedgallery: function (widget) {
-                    return HighlightedGalleryService.parseToSave(widget);
-                },
-
-                highlightedgalleries: function (widget) {
-                    return HighlightedGalleriesService.parseToSave(widget);
-                },
-
-                internalmenu: function (widget) {
-                    return InternalMenuService.parseToSave(widget);
-                },
-
-                hublinks: function (widget) {
-                    return HublinksService.parseToSave(widget);
-                },
-
-                faq: function (widget) {
-                    return FaqWidgetService.parseToSave(widget);
-                },
-
-                tagcloud: function (widget) {
-                    return TagCloudService.parseToSave(widget);
-                },
-
-                search: function (widget) {
-                    return SearchService.parseToSave(widget);
-                }
-            };
-
-            // Parse widget object from webservice data
-            var _parseToLoad = {
-
-                text: function (widget) {
-                    return TextService.parseToLoad(widget);
-                },
-
-                gallery: function (widget) {
-                    return GalleryWidgetService.parseToLoad(widget);
-                },
-
-                highlightedgallery: function (widget) {
-                    return HighlightedGalleryService.parseToLoad(widget);
-                },
-
-                highlightedgalleries: function (widget) {
-                    return HighlightedGalleriesService.parseToLoad(widget);
-                },
-
-                internalmenu: function (widget) {
-                    return InternalMenuService.parseToLoad(widget);
-                },
-
-                hublinks: function (widget) {
-                    return HublinksService.parseToLoad(widget);
-                },
-
-                faq: function (widget) {
-                    return FaqWidgetService.parseToLoad(widget);
-                },
-
-                tagcloud: function (widget) {
-                    return TagCloudService.parseToLoad(widget);
-                },
-
-                search: function (widget) {
-                    return SearchService.parseToLoad(widget);
-                }
-
-            };
-
-            // Partial preparing
-            var _preparing = {
-
-                internalmenu: function (ctrl) {
-                    InternalMenuService.load(ctrl, _getPages);
-                },
-
-                highlightedgalleries: function(ctrl) {
-                    HighlightedGalleriesService.load(ctrl);
-                },
-                highlightedgallery: function(ctrl) {
-                    HighlightedGalleryService.load(ctrl);
-                },
-
-                gallery: function(ctrl) {
-                    GalleryWidgetService.load(ctrl);
-                },
-
-                hublinks: function (ctrl) {
-                    HublinksService.load(ctrl, _getPages);
-                },
-                faq: function () {
-                    FaqWidgetService.load();
-                },
-
-                search: function (ctrl) {
-                    SearchService.load(ctrl);
-                }
-            };
 
             return {
 
-                parseWidgetToSave: function (widget) {
-                    if (typeof _parseToSave[widget.type] !== 'undefined') {
-                        return _parseToSave[widget.type](widget);
-                    }
-                },
-                parseWidgetToLoad: function (widget) {
-                    let obj = {};
-                    if (typeof _parseToLoad[widget.type] !== 'undefined') {
-                        obj = _parseToLoad[widget.type](widget);
-                    }
-                    return obj;
-                },
-                preparePartial: function ($scope) {
-                    let currentWidget = $scope.$parent.ctrlModal.widget;
-                    if (_preparing[currentWidget.type]) {
-                        _preparing[currentWidget.type]($scope.$parent.ctrlModal, $scope.$parent);
-                    }
-                },
                 handle: function ($scope, column, idx) {
                     var moduleModal = $uibModal.open({
                         templateUrl: 'components/modal/module.modal.template.html',

@@ -6,14 +6,18 @@
         .factory('WidgetModuleService', WidgetModuleService);
 
     /** ngInject */
-    function WidgetModuleService(ComHighlightNewsService, ComEventsService, EditorialNewsService, HighlightedEventService,
-        HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, HighlightedRadioNews, ComHubService,
-        HighlightedReleaseService, MainHighLightService, ComService, SidebarButtonService, ComLastEditionService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, RelatedEventsService,
-        RelatedNewsService, ReleaseListService, ComRadioVideoService, ContactCardService, RectorService,
-        ContactFormService) {
+    function WidgetModuleService($uibModal, ComHighlightNewsService, ComEventsService, EditorialNewsService, 
+        HighlightedEventService, HighlightedEventsService, HighlightedNewsService, HighlightedNewsVideo, 
+        HighlightedRadioNews, ComHubService, HighlightedReleaseService, MainHighLightService, ComService, 
+        SidebarButtonService, ComLastEditionService, EventListService, LastImagesSideBarService, LastTvProgramsService,
+        ListNewsService, RelatedEventsService, RelatedNewsService, ReleaseListService, ComRadioVideoService,
+        ContactCardService, RectorService, ContactFormService, EventCalendarService, FaqWidgetService,
+        InstagramLastImageService, SearchService, TagCloudService, GalleryWidgetService, TextService, GridGalleryService,
+        HighlightedGalleriesService, HighlightedGalleryService, HublinksService, InternalMenuService) {
+
         var service = {
-            getWidget: getWidget
+            getWidget: getWidget,
+            openWidgetModal: openWidgetModal
         };
 
         var widgets;
@@ -27,6 +31,21 @@
                 _loadWidgets();
             }
             return widgets[type];
+        }
+
+        function openWidgetModal(listWidgets, currentWidget) {
+            let widgetModal = $uibModal.open({
+                templateUrl: 'components/modal/module.modal.template.html',
+                controller: 'ModuleModalController',
+                controllerAs: 'ctrlModal',
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    module: function () { return currentWidget; },
+                    widgets: function () { return listWidgets; }
+                }
+            });
+            return widgetModal.result;
         }
 
         function _loadWidgets() {
@@ -55,7 +74,19 @@
                 comradiovideo: ComRadioVideoService,
                 contactcard: ContactCardService,
                 rector: RectorService,
-                contactform: ContactFormService
+                contactform: ContactFormService,
+                eventcalendar: EventCalendarService,
+                faq: FaqWidgetService,
+                instagramlastimage: InstagramLastImageService,
+                search: SearchService,
+                tagcloud: TagCloudService,
+                gallery: GalleryWidgetService,
+                text: TextService,
+                gridgallery: GridGalleryService,
+                highlightedgalleries: HighlightedGalleriesService,
+                highlightedgallery: HighlightedGalleryService,
+                hublinks: HublinksService,
+                internalmenu: InternalMenuService
             };
         }
 

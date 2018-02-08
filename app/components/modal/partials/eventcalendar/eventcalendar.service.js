@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            ctrl.widget = { };
+            console.log('EventCalendarService - load - not implemented', ctrl);
         }
 
         function parseToLoad(widget) {

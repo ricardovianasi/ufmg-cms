@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            ctrl.widget = { };
+            console.log('TextService - load - not implemented', ctrl);
         }
 
         function parseToLoad(widget) {
