@@ -6,8 +6,7 @@
 
     /** ngInject */
     function PagesService($timeout, $log, $http, $filter, $uibModal, $q, $rootScope, apiUrl, GalleryService, InternalMenuService,
-        ReleasesService, Util, ReleaseListService, TagCloudService, TextService, FaqWidgetService, RelatedNewsService,
-        EventListService, LastImagesSideBarService, LastTvProgramsService, ListNewsService, SearchService, GalleryWidgetService,
+        ReleasesService, Util, TagCloudService, TextService, FaqWidgetService, SearchService, GalleryWidgetService,
         HublinksService, HighlightedGalleriesService, HighlightedGalleryService, WidgetModuleService) {
 
         var _parseData = function (page) {
@@ -126,36 +125,12 @@
                     return HighlightedGalleriesService.parseToSave(widget);
                 },
 
-                lastimagessidebar: function (widget) {
-                    return LastImagesSideBarService.parseToSave(widget);
-                },
-
-                listnews: function (widget) {
-                    return ListNewsService.parseToSave(widget);
-                },
-
-                eventlist: function (widget) {
-                    return EventListService.parseToSave(widget);
-                },
-
-                releaselist: function (widget) {
-                    return ReleaseListService.parseToSave(widget);
-                },
-
-                relatednews: function (widget) {
-                    return RelatedNewsService.parseToSave(widget);
-                },
-
                 internalmenu: function (widget) {
                     return InternalMenuService.parseToSave(widget);
                 },
 
                 hublinks: function (widget) {
                     return HublinksService.parseToSave(widget);
-                },
-
-                lasttvprograms: function (widget) {
-                    return LastTvProgramsService.parseToSave(widget);
                 },
 
                 faq: function (widget) {
@@ -190,36 +165,12 @@
                     return HighlightedGalleriesService.parseToLoad(widget);
                 },
 
-                lastimagessidebar: function (widget) {
-                    return LastImagesSideBarService.parseToLoad(widget);
-                },
-
-                listnews: function (widget) {
-                    return ListNewsService.parseToLoad(widget);
-                },
-
-                eventlist: function (widget) {
-                    return EventListService.parseToLoad(widget);
-                },
-
-                releaselist: function (widget) {
-                    return ReleaseListService.parseToLoad(widget);
-                },
-
-                relatednews: function (widget) {
-                    return RelatedNewsService.parseToLoad(widget);
-                },
-
                 internalmenu: function (widget) {
                     return InternalMenuService.parseToLoad(widget);
                 },
 
                 hublinks: function (widget) {
                     return HublinksService.parseToLoad(widget);
-                },
-
-                lasttvprograms: function (widget) {
-                    return LastTvProgramsService.parseToLoad(widget);
                 },
 
                 faq: function (widget) {
@@ -239,24 +190,8 @@
             // Partial preparing
             var _preparing = {
 
-                relatednews: function (ctrl) {
-                    RelatedNewsService.load(ctrl);
-                },
-
-                listnews: function (ctrl) {
-                    ListNewsService.load(ctrl);
-                },
-
-                lastimagessidebar: function (ctrl) {
-                    LastImagesSideBarService.load(ctrl);
-                },
-
                 internalmenu: function (ctrl) {
                     InternalMenuService.load(ctrl, _getPages);
-                },
-
-                lasttvprograms: function (ctrl) {
-                    LastTvProgramsService.load(ctrl);
                 },
 
                 highlightedgalleries: function(ctrl) {
@@ -268,9 +203,6 @@
 
                 gallery: function(ctrl) {
                     GalleryWidgetService.load(ctrl);
-                },
-                eventlist: function(ctrl) {
-                    EventListService.load(ctrl);
                 },
 
                 hublinks: function (ctrl) {

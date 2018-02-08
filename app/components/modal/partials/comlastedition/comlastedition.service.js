@@ -16,8 +16,9 @@
         return service;
 
         ////////////////
-        function load(scope) {
-            scope.widget = { };
+        function load(ctrl) {
+            console.log('ComLastEditionService - load - not implemented', ctrl);
+
         }
 
         function parseToLoad(widget) {
