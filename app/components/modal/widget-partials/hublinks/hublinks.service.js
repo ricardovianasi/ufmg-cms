@@ -6,7 +6,7 @@
         .factory('HublinksService', HublinksService);
 
     /** ngInject */
-    function HublinksService(CommonWidgetService) {
+    function HublinksService(CommonWidgetService, PagesService) {
         var service = {
             load: load,
             parseToLoad: parseToLoad,
@@ -16,8 +16,8 @@
         return service;
 
         ////////////////
-        function load(ctrl, _getPages) {
-            CommonWidgetService.request('LoadMorePage', _getPages, {
+        function load(ctrl) {
+            CommonWidgetService.request('LoadMorePage', PagesService.getPages, {
                 field: 'title',
                 direction: 'ASC'
             }, 'title');

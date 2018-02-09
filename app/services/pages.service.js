@@ -5,8 +5,7 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ReleasesService,
-        Util, WidgetsService) {
+    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -19,25 +18,8 @@
 
             cleanPage.tags = _.map(page.tags, 'text');
             cleanPage.title = page.title;
+            cleanPage.widgets = angular.copy(page.widgetsSave);
 
-            //@todo: change this to editable slug
-            // cleanPage.slug = page.title;
-            cleanPage.widgets = {
-                main: [],
-                side: []
-            };
-
-            // Insert each widget into main and side columns
-            angular.forEach(page.widgets.main, function (widget) {
-                let widgetMake = WidgetsService.parseWidgetToSave(widget);
-                cleanPage.widgets.main.push(widgetMake);
-            });
-
-            angular.forEach(page.widgets.side, function (widget) {
-                cleanPage.widgets.side.push(WidgetsService.parseWidgetToSave(widget));
-            });
-
-            // If we are updating the Page
             if (page.id) {
                 cleanPage.id = page.id;
 

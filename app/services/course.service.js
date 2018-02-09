@@ -9,13 +9,9 @@
         $log.info('CourseService');
 
         var _parseCoursesData = function (widgets) {
-            var cleanData = {
-                sidebar: [],
+            let cleanData = {
+                sidebar: WidgetsService.parseListWidgets(widgets)
             };
-
-            angular.forEach(widgets, function (widget) {
-                cleanData.sidebar.push(WidgetsService.parseWidgetToSave(widget));
-            });
             return cleanData;
         };
 

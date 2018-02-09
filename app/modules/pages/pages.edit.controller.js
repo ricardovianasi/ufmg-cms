@@ -167,11 +167,20 @@
                 });
         }
 
+        function _handleWidgetsToSave(page) {
+            let widgets = {
+                main: WidgetsService.parseListWidgets(page.widgets.main),
+                side: WidgetsService.parseListWidgets(page.widgets.side)
+            };
+            return widgets;
+        }
+
         function publish(page) {
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
             vm.isLoading = true;
+            page.widgetsSave = _handleWidgetsToSave(page);
             PagesService
                 .updatePage($routeParams.id, page)
                 .then(function () {
