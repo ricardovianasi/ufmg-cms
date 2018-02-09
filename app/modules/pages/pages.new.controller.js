@@ -164,8 +164,8 @@
 
         function _handleWidgetsToSave(page) {
             let widgets = {
-                main: WidgetsService.parseListWidgets(page.widgets.main),
-                side: WidgetsService.parseListWidgets(page.widgets.side)
+                main: WidgetsService.parseListWidgetsToSave(page.widgets.main),
+                side: WidgetsService.parseListWidgetsToSave(page.widgets.side)
             };
             return widgets;
         }

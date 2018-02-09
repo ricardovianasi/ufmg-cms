@@ -25,6 +25,7 @@
             if(!obj) {
                 return obj;
             }
+            delete obj.widgetsSave;
             delete obj.scheduled_date;
             delete obj.scheduled_time;
             delete obj.status;
@@ -91,8 +92,7 @@
         }
 
         function _canIntercept(data) {
-            let isGet = data.method === 'GET';
-            if(isGet) {
+            if(data.method === 'GET') {
                 return false;
             }
             let isMethodIntercept = vm.currentPage.methods.findIndex(function (method) { return method === data.method; }) !== -1;

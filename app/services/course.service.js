@@ -10,7 +10,7 @@
 
         var _parseCoursesData = function (widgets) {
             let cleanData = {
-                sidebar: WidgetsService.parseListWidgets(widgets)
+                sidebar: WidgetsService.parseListWidgetsToSave(widgets)
             };
             return cleanData;
         };

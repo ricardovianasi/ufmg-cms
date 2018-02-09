@@ -10,7 +10,7 @@
         return {
             getWidgets: getWidgets,
             openWidgetModal: openWidgetModal,
-            parseListWidgets: parseListWidgets
+            parseListWidgetsToSave: parseListWidgetsToSave
         };
 
         function openWidgetModal(listWidgets, currentWidget) {
@@ -28,7 +28,7 @@
             return widgetModal.result;
         }
 
-        function parseListWidgets(widgets) {
+        function parseListWidgetsToSave(widgets) {
             let list = widgets.map(function(widget) {
                 return _parseWidgetToSave(widget);
             });
