@@ -104,22 +104,34 @@
         function _initListenerRoute() {
             $rootScope.$on('$routeChangeStart', function (event, next) {
                 let pathNext = next.$$route.originalPath;
-                _handleInterceptRouter(pathNext, event);
+                let pathParams = next.pathParams;
+                _handleInterceptRouter(pathNext, pathParams, event);
             });
         }
 
-        function _handleInterceptRouter(pathNext, event) {
+        function _handleInterceptRouter(pathNext, pathParams, event) {
             if(_canShowModal(vm.currentPage)) {
                 event.preventDefault();
                 _openModalConfirm().then(function() {
                     vm.currentPage.hasIntercept = false;
-                    _goRoute(pathNext);
+                    _goRoute(pathNext, pathParams);
                 }).catch(function () { });
             }
         }
 
-        function _goRoute(path) {
-            $location.path(path);
+        function _goRoute(path, pathParams) {
+            let fullPath = _buildUrl(path, pathParams);
+            $location.path(fullPath);
+        }
+
+        function _buildUrl(path, pathParams) {
+            if(!pathParams) {
+                return path;
+            }
+            for(let param in pathParams) {
+                path = path.replace(':' + param, pathParams[param]);
+            }
+            return path;
         }
 
         function _openModalConfirm() {

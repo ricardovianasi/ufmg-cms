@@ -228,7 +228,7 @@
 
         function _removeModule(column, index) {
             let msgModal = 'Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?';
-            ModalService .confirm(msgModal, ModalService.MODAL_MEDIUM).result
+            ModalService.confirm(msgModal, ModalService.MODAL_MEDIUM).result
                 .then(function () {
                     vm.page.widgets[column].splice(index, 1);
                     NotificationService.success('Modulo removido com sucesso.');
