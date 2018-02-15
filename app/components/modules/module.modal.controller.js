@@ -4,8 +4,8 @@
     angular.module('componentsModule')
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
-    function ModuleModalController($scope, $uibModalInstance, module, widgets,
-        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService) {
+    function ModuleModalController($scope, $uibModalInstance, module,
+        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService, WidgetsService) {
 
         let vm = this;
         let hasRequest = false;
@@ -189,7 +189,6 @@
         }
 
         function _initProps() {
-            vm.widgets = widgets;
             vm.widgetsInDevelopment = ['mainhighlight', 'comhub', 'comservice', 'comlastedition', 'contactform',
                 'instagramlastimage', 'lasttvprograms', 'relatedevents', 'comradiovideo', 'contactcard', 'rector',
                 'eventcalendar', 'gridgallery', 'highlightedrelease'];
@@ -205,7 +204,16 @@
             vm.dataPage = [];
         }
 
+        function _loadListWidgets() {
+            vm.loadingWidgets = true;
+            WidgetsService.getWidgets()
+                .then(function(widgets) { vm.widgets = widgets; })
+                .catch(function(error) { console.error(error); })
+                .then(function() { vm.loadingWidgets = false; });
+        }
+
         function activate() {
+            _loadListWidgets();
             _initProps();
             _loadModule();
             _initRedactorOptions();

@@ -20,7 +20,7 @@
         vm.findTags = _findTags;
         vm.uploadCover = _uploadCover;
         vm.removeImage = _removeImage;
-        vm.handleModule = _handleModule;
+        vm.handleModule = handleModule;
         vm.removeModule = _removeModule;
         vm.loadMorePage = _loadMorePage;
         vm.removeModuleMain = _removeModuleMain;
@@ -32,8 +32,6 @@
                 id: null,
                 title: '- Página Normal -'
             });
-
-            vm.widgets = [];
 
             vm.title = 'Nova Página';
             vm.breadcrumb_active = vm.title;
@@ -55,12 +53,6 @@
             };
 
             _getType();
-
-            WidgetsService
-                .getWidgets()
-                .then(function (data) {
-                    vm.widgets = data.data;
-                });
 
             vm.page_cover = null;
 
@@ -205,10 +197,20 @@
             });
         }
 
-        function _handleModule(column, index) {
-            return PagesService
-                .module()
-                .handle($scope, column, index);
+        function handleModule(column, idx) {
+            let widgetSelected = vm.page.widgets[column][idx];
+            WidgetsService.openWidgetModal(widgetSelected)
+                .then(function (data) {
+                    _updateModule(data, column, idx);
+                });
+        }
+
+        function _updateModule(data, column, idx) {
+            if (typeof idx !== 'undefined') {
+                vm.page.widgets[column][idx] = data;
+            } else {
+                vm.page.widgets[column].push(data);
+            }
         }
 
         function _removeModule(column, index) {

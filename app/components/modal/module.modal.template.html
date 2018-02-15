@@ -10,7 +10,7 @@
             </div>
             <div ng-if="!ctrlModal.module" class="form-group">
                 <label>Selecionar Widget:</label>
-                <ui-select ng-model="ctrlModal.widget.selected" on-select="ctrlModal.onWidgetSelected($item)" class="ui-select">
+                <ui-select ng-disabled="ctrlModal.loadingWidgets" ng-model="ctrlModal.widget.selected" on-select="ctrlModal.onWidgetSelected($item)" class="ui-select">
                     <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
                     <ui-select-choices repeat="widget in ctrlModal.widgets.items|filter: $select.search" group-by="'group'">
                         <div ng-bind-html="widget.label|highlight: $select.search"></div>

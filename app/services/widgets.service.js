@@ -7,13 +7,21 @@
     /** ngInject */
     function WidgetsService($http, $q, apiUrl, $uibModal, WidgetModuleService) {
 
+        let self = this;
+        
+        _initService();
+
         return {
             getWidgets: getWidgets,
             openWidgetModal: openWidgetModal,
             parseListWidgetsToSave: parseListWidgetsToSave
         };
 
-        function openWidgetModal(listWidgets, currentWidget) {
+        function _initService() {
+            self.listWidgets = { items: [] };
+        }
+
+        function openWidgetModal(currentWidget) {
             let widgetModal = $uibModal.open({
                 templateUrl: 'components/modal/module.modal.template.html',
                 controller: 'ModuleModalController',
@@ -21,8 +29,7 @@
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
-                    module: function () { return currentWidget; },
-                    widgets: function () { return listWidgets; }
+                    module: function () { return currentWidget; }
                 }
             });
             return widgetModal.result;
@@ -51,15 +58,20 @@
         }
 
         function getWidgets() {
-            var deferred = $q.defer();
-
-            $http
-                .get(apiUrl + '/widget')
-                .then(function (data) {
-                    deferred.resolve(data);
-                });
-
-            return deferred.promise;
+            var defer = $q.defer();
+            if(self.listWidgets.items.length) {
+                defer.resolve(self.listWidgets);
+            } else {
+                $http.get(apiUrl + '/widget')
+                    .then(function (data) {
+                        defer.resolve(data.data);
+                        self.listWidgets = data.data;
+                    })
+                    .catch(function(error) {
+                        defer.reject(error);
+                    });
+            }
+            return defer.promise;
         }
     }
 })();

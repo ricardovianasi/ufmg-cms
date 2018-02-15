@@ -212,7 +212,7 @@
 
         function handleModule(column, idx) {
             let widgetSelected = vm.page.widgets[column][idx];
-            WidgetsService.openWidgetModal(vm.widgets, widgetSelected)
+            WidgetsService.openWidgetModal(widgetSelected)
                 .then(function (data) {
                     _updateModule(data, column, idx);
                 });
@@ -262,19 +262,12 @@
                 });
         }
 
-        function _getWidgets() {
-            WidgetsService.getWidgets().then(function (data) {
-                vm.widgets = data.data;
-            });
-        }
-
         function findTags($query) {
             return TagsService.findTags($query, allTags);
         }
 
         function activate() {
             vm.title = 'Edição de página';
-            vm.widgets = [];
             vm.columns = PagesService.COLUMNS;
 
             vm.page = {
@@ -297,7 +290,6 @@
             };
             _getPage();
             _getTags();
-            _getWidgets();
             _getType();
 
             HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);

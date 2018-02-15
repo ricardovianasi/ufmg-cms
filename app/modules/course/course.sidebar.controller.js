@@ -36,10 +36,6 @@
             _getCourses();
         }
 
-        WidgetsService.getWidgets().then(function (data) {
-            $scope.widgets = data.data;
-        });
-
         function _hasLoaded(oldValue) {
             return oldValue.widgets.sidebar.length > 0 || !vm.courseId;
         }
@@ -62,7 +58,7 @@
 
         function handleModule(column, idx) {
             let widgetSelected = $scope.course.widgets[column][idx];
-            WidgetsService.openWidgetModal($scope.widgets, widgetSelected)
+            WidgetsService.openWidgetModal(widgetSelected)
                 .then(function(data) {
                     _updateModule(data, column, idx);
                 });
