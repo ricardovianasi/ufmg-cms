@@ -5,9 +5,7 @@
         .factory('GalleryService', GalleryService);
 
     /** ngInject */
-    function GalleryService($q, $http, $filter, apiUrl, $log) {
-        $log.info('GalleryService');
-
+    function GalleryService($http, $filter, apiUrl, ServerService) {
         var GALLERY_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'gallery');
 
         return {
@@ -31,7 +29,8 @@
                 return $http.delete(apiUrl + '/gallery/' + id);
             },
             getCategories: function () {
-                return $http.get(apiUrl + '/gallery/category');
+                let url = apiUrl + '/gallery/category';
+                return ServerService.getLoaded('galleryCategory', url, { useLoaded: true });
             }
         };
     }

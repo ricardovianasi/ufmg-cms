@@ -5,17 +5,16 @@
         .factory('CourseService', CourseService);
 
     /**ngInject */
-    function CourseService($http, $filter, apiUrl, WidgetsService, $log) {
-        $log.info('CourseService');
+    function CourseService($http, $filter, apiUrl, WidgetsService, ServerService) {
 
-        var _parseCoursesData = function (widgets) {
+        function _parseCoursesData(widgets) {
             let cleanData = {
                 sidebar: WidgetsService.parseListWidgetsToSave(widgets)
             };
             return cleanData;
-        };
+        }
 
-        var _parseCourseData = function (course) {
+        function _parseCourseData(course) {
             var obj = {
                 tags: _.map(course.tags, 'text'), // jshint ignore: line
                 cover: course.cover,
@@ -28,8 +27,18 @@
                 obj.scheduled_at = course.scheduled_date + ' ' + course.scheduled_time;
             }
             return obj;
-        };
+        }
 
+        function _prepareUrlToGetCourses(type, slug, params) {
+            type = type || '';
+            params = angular.isUndefined(params) ? '' : params;
+            let url = $filter('format')('{0}/course/{1}{2}', apiUrl, type, params);
+            if (slug) {
+                url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);
+            }
+            return url;
+        }
+        
         return {
             getCourseRoutes: function (type, id) {
                 var url = $filter('format')('{0}/course/{1}/{2}/routes', apiUrl, type, id);
@@ -48,17 +57,9 @@
                 return $http.put(apiUrl + '/route/' + id, obj);
             },
             getCourses: function (type, slug, params) {
-                if (angular.isUndefined(params)) {
-                    params = '';
-                }
-                type = type || '';
-
-                var url = $filter('format')('{0}/course/{1}{2}', apiUrl, type, params);
-
-                if (slug) {
-                    url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);
-                }
-                return $http.get(url);
+                let url = _prepareUrlToGetCourses(type, slug, params);
+                let configGet = { useLoaded: angular.isUndefined(params) };
+                return ServerService.getLoaded('courses' + type, url, configGet);
             },
             uploadCourseCover: function (type, course_id, cover_id) {
                 var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);

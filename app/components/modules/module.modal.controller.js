@@ -207,7 +207,7 @@
         function _loadListWidgets() {
             vm.loadingWidgets = true;
             WidgetsService.getWidgets()
-                .then(function(widgets) { vm.widgets = widgets; })
+                .then(function(data) { vm.widgets = data.data; })
                 .catch(function(error) { console.error(error); })
                 .then(function() { vm.loadingWidgets = false; });
         }

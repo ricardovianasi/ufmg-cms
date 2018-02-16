@@ -5,8 +5,7 @@
         .factory('EventsService', EventsService);
 
     /** ngInject */
-    function EventsService($http, $filter, DateTimeHelper, $log, apiUrl) {
-        $log.info('EventsService');
+    function EventsService($http, $filter, DateTimeHelper, apiUrl, ServerService) {
 
         var EVENT_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'event');
 
@@ -86,14 +85,13 @@
                 if (angular.isUndefined(params)) {
                     params = '';
                 }
-                var url = $filter('format')('{0}{1}', EVENT_ENDPOINT, params);
+                let url = $filter('format')('{0}{1}', EVENT_ENDPOINT, params);
 
                 return $http.get(url);
             },
             getEventsCategories: function () {
-                var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, 'category');
-
-                return $http.get(url);
+                let url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, 'category');
+                return ServerService.getLoaded('eventsCategories', url, {useLoaded: true});
             },
             store: function (data) {
                 data = _parseData(data);
@@ -101,19 +99,19 @@
                 return $http.post(EVENT_ENDPOINT, data, { ignoreLoadingBar: true });
             },
             update: function (data, id) {
-                var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
+                let url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
                 data = _parseData(data);
 
                 return $http.put(url, data, { ignoreLoadingBar: true });
             },
             destroy: function (id) {
-                var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
+                let url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
                 return $http.delete(url);
             },
             getEvent: function (id) {
-                var url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
+                let url = $filter('format')('{0}/{1}', EVENT_ENDPOINT, id);
 
                 return $http.get(url);
             }

@@ -5,21 +5,13 @@
         .factory('WidgetsService', WidgetsService);
 
     /** ngInject */
-    function WidgetsService($http, $q, apiUrl, $uibModal, WidgetModuleService) {
-
-        let self = this;
-        
-        _initService();
+    function WidgetsService($http, apiUrl, $uibModal, WidgetModuleService, ServerService) {
 
         return {
             getWidgets: getWidgets,
             openWidgetModal: openWidgetModal,
             parseListWidgetsToSave: parseListWidgetsToSave
         };
-
-        function _initService() {
-            self.listWidgets = { items: [] };
-        }
 
         function openWidgetModal(currentWidget) {
             let widgetModal = $uibModal.open({
@@ -58,20 +50,8 @@
         }
 
         function getWidgets() {
-            var defer = $q.defer();
-            if(self.listWidgets.items.length) {
-                defer.resolve(self.listWidgets);
-            } else {
-                $http.get(apiUrl + '/widget')
-                    .then(function (data) {
-                        defer.resolve(data.data);
-                        self.listWidgets = data.data;
-                    })
-                    .catch(function(error) {
-                        defer.reject(error);
-                    });
-            }
-            return defer.promise;
+            let url = apiUrl + '/widget';
+            return ServerService.getLoaded('listWidgets', url, { useLoaded: true });
         }
     }
 })();

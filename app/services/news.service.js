@@ -5,9 +5,7 @@
         .factory('NewsService', NewsService);
 
     /** ngInject */
-    function NewsService($http, $filter, $q, apiUrl, $log) {
-        $log.info('NewsService');
-
+    function NewsService($http, $filter, apiUrl, ServerService) {
 
         function convertPostDateToSend(data) {
             var datePost = new Date(data.scheduled_date);
@@ -38,7 +36,8 @@
                 return $http.get(apiUrl + '/news' + params + paramType);
             },
             getNewsCategories: function () {
-                return $http.get(apiUrl + '/news/category');
+                let url = apiUrl + '/news/category';
+                return ServerService.getLoaded('newsCategories', url, { useLoaded: true });
             },
             getNewsTypes: function () {
                 return $http.get(apiUrl + '/news/type');
