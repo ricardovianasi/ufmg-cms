@@ -127,7 +127,7 @@
                 vm.showLoad = true;
                 vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                 vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';
-                dateChoice = new Date(vm.obj.scheduled_date);
+                dateChoice = _convertToDate(vm.obj.scheduled_date);
                 dateCurrent = new Date(vm.obj.scheduled_date);
                 vm.moduleCurrent = $rootScope.moduleCurrent;
                 vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
@@ -159,7 +159,7 @@
                         }
                     } else if (isChangeScheduled && isPublishedObj && isEdit) {
                         vm.showMessageError = true;
-                        vm.messageText = 'Está publicação já está publicada.';
+                        vm.messageText = 'Já está publicada.';
                         vm.isScheduledRetroactive = true;
                     } else if (isChangeScheduled && !isPublishedObj && isEdit) {
                         vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
@@ -169,15 +169,17 @@
                         }
                     } else if (isChangePublished && isEdit) {
                         vm.showMessageError = false;
-                        var yesterdayDate = new Date();
-                        yesterdayDate.setDate(yesterdayDate.getDate());
+                        let yesterdayDate = new Date();
+                        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+                        let isDateChoiceFuture = dateChoice.valueOf() > yesterdayDate.valueOf();
                         vm.datepickerOpt.initDatea.dateOptions.maxDate = yesterdayDate;
-                        if (isPublishedObj && dateChoice.valueOf() > yesterdayDate.valueOf()) {
+                        console.log('isChangePublished isEdit', dateChoice, yesterdayDate, vm.obj.scheduled_date);
+                        if (isPublishedObj && isDateChoiceFuture) {
                             vm.showMessageError = true;
-                            vm.messageText = 'Este já está publicado, datas futuras não são válidas. Altere a data.';
-                        } else if (isScheduledObj && dateChoice.valueOf() > yesterdayDate.valueOf()) {
+                            vm.messageText = 'Já está publicado, datas futuras não são válidas. Altere a data.';
+                        } else if (isScheduledObj && isDateChoiceFuture) {
                             vm.showMessageError = true;
-                            vm.messageText = 'Este está agendado, altere a data para publicação';
+                            vm.messageText = 'Já está agendado, altere a data para publicação';
                             vm.obj.post_date = '';
                             vm.obj.scheduled_time = '';
                         }
@@ -205,6 +207,7 @@
 
             function _initListenerChangePostDate() {
                 vm.$watch('vm.obj.post_date', function () {
+                    console.log('$watch', vm.obj.post_date);
                     if (vm.obj.scheduled_date) {
                         let date = new Date(vm.obj.post_date);
                         vm.obj.scheduled_date = date;
@@ -349,7 +352,7 @@
             }
 
             function isDateFuture() {
-                dateChoice = new Date(vm.obj.scheduled_date);
+                dateChoice = _convertToDate(vm.obj.scheduled_date);
                 var dateNow = new Date();
                 if (vm.obj.scheduled_time) {
                     dateChoice.setHours(Number(vm.obj.scheduled_time.split(':')[0]));
@@ -378,10 +381,11 @@
                     }
                     datePost.setSeconds(0);
                     datePost.setMilliseconds(0);
+                    console.log('datePostRetroactive', datePost);
                     vm.obj.post_date = datePost.toISOString();
                     if (!vm.obj.id && isPublished(vm.preSaveStatus)) {
                         vm.showMessageWarn = true;
-                        vm.messageText = 'Esta publicação será publicada com data retrocedida.';
+                        vm.messageText = 'Esta pagina será publicada com data retrocedida.';
                     } else if (isPublished(vm.preSaveStatus)) {
                         vm.showMessageWarn = true;
                         vm.messageText = 'Publicação retrocedida.';
@@ -410,7 +414,7 @@
 
             function datePostToday() {
                 nowDate = new Date();
-                dateChoice = new Date(vm.obj.scheduled_date);
+                dateChoice = _convertToDate(vm.obj.scheduled_date);
                 if (dateChoice.toDateString() === nowDate.toDateString()) {
                     if (!vm.obj.scheduled_time || vm.obj.scheduled_time === 'NaN:NaN') {
                         var date = new Date();
@@ -448,6 +452,18 @@
                     return;
                 }
                 return true;
+            }
+
+            function _convertToDate(dateStr) {
+                dateStr = String(dateStr);
+                let dateConverted;
+                if(!dateStr || dateStr.indexOf('/') === -1) {
+                    dateConverted = new Date(dateStr);
+                } else {
+                    let dateStrToConvert = dateStr.split('/').reverse().join('/');
+                    dateConverted = new Date(dateStrToConvert);
+                }
+                return dateConverted;
             }
         }
     }
