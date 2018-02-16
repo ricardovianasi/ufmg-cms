@@ -5,7 +5,7 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl) {
+    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ServerService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -110,7 +110,8 @@
                 return $http.delete(apiUrl + '/page/' + id);
             },
             getType: function () {
-                return $http.get(apiUrl + '/page/type');
+                let url = apiUrl + '/page/type';
+                return ServerService.getLoaded('pageType', url, { useLoaded: true });
             }
         };
     }

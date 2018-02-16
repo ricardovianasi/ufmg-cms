@@ -17,7 +17,6 @@
 
         ////////////////
         function getLoaded(keyData, url, config) {
-            console.log('getLoaded', dataLoaded);
             if(dataLoaded[keyData] && config.useLoaded) {
                 let defer = $q.defer();
                 defer.resolve(dataLoaded[keyData]);
