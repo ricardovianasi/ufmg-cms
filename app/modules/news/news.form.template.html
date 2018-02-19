@@ -151,7 +151,7 @@
                             Tags
                             <small>(Digite a tag e pressione ENTER para inserir)</small>
                         </label>
-                        <tags-input add-on-comma="false" ng-model="news.tags">
+                        <tags-input add-on-comma="false" ng-model="news.tags" on-tag-added="onTagAdded($tag)">
                             <auto-complete source="findTags($query)" minLength="1"></auto-complete>
                         </tags-input>
                     </div>

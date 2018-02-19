@@ -20,7 +20,7 @@
 <div class="form-group">
     <label>Tag:</label>
 
-    <tags-input ng-model="ctrlModal.widget.tags">
+    <tags-input ng-model="ctrlModal.widget.tags" on-tag-added="onTagAdded($tag)">
         <auto-complete source="ctrlModal.findTags($query)"
                        minLength="1"></auto-complete>
     </tags-input>
