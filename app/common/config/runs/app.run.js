@@ -8,10 +8,6 @@
     function Run($rootScope, dataTableConfigService, sessionService, $window, $log, ModalService, DTDefaultOptions,
         $timeout, $location, PermissionService, TagsService) {
 
-        console.log('app run');
-
-        TagsService.getTags();
-
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
         $rootScope.moduleCurrent = false;
@@ -53,6 +49,10 @@
             sessionService.removeIsLogged();
             $location.path('/login');
         };
+
+        $rootScope.onTagAdded = function(tag) {
+            console.log('$rootScope.addTag', tag);
+        }
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
     }

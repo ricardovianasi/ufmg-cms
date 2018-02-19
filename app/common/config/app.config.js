@@ -74,7 +74,8 @@
                 replaceSpacesWithDashes: false
             })
             .setDefaults('autoComplete', {
-                selectFirstMatch: false
+                selectFirstMatch: false,
+                maxResultsToShow: 50
             });
     }
 })();

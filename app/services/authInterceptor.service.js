@@ -15,7 +15,8 @@
         apiUrl,
         $log,
         $rootScope,
-        $injector
+        $injector,
+        $timeout
     ) {
         let requestTries = {};
 
@@ -48,17 +49,25 @@
         }
 
         function _responseError(response) {
-            console.log('_responseError', response);
             let urlError = response.config.url;
             _handleTries(urlError);
             if (_maxTry(urlError)) {
                 _emitResponseError(response);
                 return $q.reject(response);
             } else {
-                console.log('tentando mais uma vez');
-                let $http = $injector.get('$http');
-                return $http(response.config);
+                return _retryRequestHttp(response.config)
             }
+        }
+        
+        function _retryRequestHttp(config) {
+            let defer = $q.defer();
+            $timeout(function() {
+                let $http = $injector.get('$http');
+                $http(config)
+                    .then(function(data) { defer.resolve(data); })
+                    .catch(function(error) { defer.reject(error); });
+            }, 1000);
+            return defer.promise;
         }
 
         function _emitResponseError(response) {
@@ -95,7 +104,6 @@
             } else {
                 requestTries[key] = 1;
             }
-            console.log('_handleTries', url, requestTries);
         }
     }
 })();

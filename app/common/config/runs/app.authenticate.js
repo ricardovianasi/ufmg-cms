@@ -6,9 +6,7 @@
 
     /** ngInject */
     function Authenticate($rootScope, ModalService, $window, $log, $location,
-        authService, NotificationService, sessionService, PermissionService,$timeout) {
-
-        console.log('app authenticate');
+        authService, NotificationService, sessionService, PermissionService, $timeout) {
 
         var hasRequired = true;
         $rootScope.modalLoginIsDisabled = true;
