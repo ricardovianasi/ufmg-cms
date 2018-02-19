@@ -51,7 +51,7 @@
         };
 
         $rootScope.onTagAdded = function(tag) {
-            console.log('$rootScope.addTag', tag);
+            TagsService.addTagOnDataLoaded(tag);
         }
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');

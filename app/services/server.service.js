@@ -13,12 +13,17 @@
             getLoaded: getLoaded,
             clearData: clearData,
             getData: getData,
-            setData: setData
+            setData: setData,
+            hasData: hasData
         };
         
         return service;
 
         ////////////////
+
+        function hasData(keyData) {
+            return angular.isDefined(dataLoaded[keyData]);
+        }
 
         function getData(keyData) {
             return dataLoaded[keyData];
@@ -33,7 +38,7 @@
         }
 
         function getLoaded(keyData, url, config) {
-            if(dataLoaded[keyData] && config.useLoaded) {
+            if(hasData(keyData) && config.useLoaded) {
                 let defer = $q.defer();
                 defer.resolve(getData(keyData));
                 return defer.promise;

@@ -6,11 +6,13 @@
 
     /** ngInjetc */
     function TagsService($http, apiUrl, $filter, ServerService) {
+        let KeyLoadedTag = 'listTags';
 
         let service = {
             getTags: getTags,
             findTags: findTags,
-            convertTagsInput: convertTagsInput
+            convertTagsInput: convertTagsInput,
+            addTagOnDataLoaded: addTagOnDataLoaded
         };
 
         return service;
@@ -20,7 +22,7 @@
             if(params) {
                 return ServerService.getLoaded('', url, { useLoaded: false });
             }
-            return ServerService.getLoaded('listTags', url, { useLoaded: true });
+            return ServerService.getLoaded(KeyLoadedTag, url, { useLoaded: true });
             // return $http.get(url);
         }
 
@@ -34,6 +36,25 @@
             return tags.map(function(tag) {
                 return { text: tag.name };
             });
+        }
+
+        function addTagOnDataLoaded(tag) {
+            if (ServerService.hasData(KeyLoadedTag)) {
+                let dataTags = ServerService.getData(KeyLoadedTag);
+                let listTags = dataTags.data.items[0];
+                let stringTags = dataTags.data.items[1].string;
+                let hasTag = tag.text && stringTags.includes(tag.text);
+                if(!hasTag) {
+                    _includeNewTagOnData(tag, dataTags);
+                    ServerService.setData(KeyLoadedTag, dataTags);
+                }
+
+            } 
+        }
+
+        function _includeNewTagOnData(tag, dataTags) {
+            dataTags.data.items[0].push({name: tag.text});
+            dataTags.data.items[1].string += ',' + tag.text;
         }
     }
 })();

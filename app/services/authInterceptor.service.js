@@ -50,9 +50,10 @@
 
         function _responseError(response) {
             let urlError = response.config.url;
+            let statusRequest = response.status;
             _handleTries(urlError);
-            if (_maxTry(urlError)) {
-                _emitResponseError(response);
+            if (_maxTry(urlError, statusRequest)) {
+                _emitResponseError(statusRequest);
                 return $q.reject(response);
             } else {
                 return _retryRequestHttp(response.config)
@@ -70,12 +71,12 @@
             return defer.promise;
         }
 
-        function _emitResponseError(response) {
-            if (response.status === 401) {
+        function _emitResponseError(status) {
+            if (status === 401) {
                 $rootScope.$broadcast('AuthenticateResponseError');
-            } else if (response.status === 403) {
+            } else if (status === 403) {
                 $rootScope.$broadcast('Error403');
-            } else if (response.status >= 500) {
+            } else if (status >= 500) {
                 $rootScope.$broadcast('Error5xx');
             } else {
                 $rootScope.$broadcast('ErrorUnknown');
