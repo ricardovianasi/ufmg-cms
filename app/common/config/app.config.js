@@ -6,7 +6,7 @@
         .config(Router)
         .config(Translator)
         .config(Tags)
-        .config(http);
+        .config(httpInterceptor);
 
     Debug.$inject = ['$logProvider', '$provide'];
 
@@ -38,9 +38,9 @@
         $logProvider.debugEnabled(false);
     }
 
-    http.$inject = ['$httpProvider'];
+    httpInterceptor.$inject = ['$httpProvider'];
 
-    function http($httpProvider) {
+    function httpInterceptor($httpProvider) {
         $httpProvider
             .interceptors
             .push('authInterceptorService');

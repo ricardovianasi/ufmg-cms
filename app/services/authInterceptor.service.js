@@ -14,8 +14,11 @@
         client_id_auth,
         apiUrl,
         $log,
-        $rootScope
+        $rootScope,
+        $injector
     ) {
+        let requestTries = {};
+
         return {
             request: _request,
             responseError: _responseError
@@ -45,6 +48,20 @@
         }
 
         function _responseError(response) {
+            console.log('_responseError', response);
+            let urlError = response.config.url;
+            _handleTries(urlError);
+            if (_maxTry(urlError)) {
+                _emitResponseError(response);
+                return $q.reject(response);
+            } else {
+                console.log('tentando mais uma vez');
+                let $http = $injector.get('$http');
+                return $http(response.config);
+            }
+        }
+
+        function _emitResponseError(response) {
             if (response.status === 401) {
                 $rootScope.$broadcast('AuthenticateResponseError');
             } else if (response.status === 403) {
@@ -54,7 +71,31 @@
             } else {
                 $rootScope.$broadcast('ErrorUnknown');
             }
-            return $q.reject(response);
+        }
+
+        function _maxTry(url, status) {
+            let key = btoa(url);
+            let numberMaxTry = 3;
+            let noTry = status === 401 || status === 403;
+            let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
+            if(isMaxTry || noTry) {
+                requestTries[key] = 0;
+                return true;
+            }
+            return false;
+        }
+
+        function _handleTries(url) {
+            if(!url.startsWith('http')) {
+                return;
+            }
+            let key = btoa(url);
+            if(angular.isDefined(requestTries[key])) {
+                requestTries[key]++; 
+            } else {
+                requestTries[key] = 1;
+            }
+            console.log('_handleTries', url, requestTries);
         }
     }
 })();
