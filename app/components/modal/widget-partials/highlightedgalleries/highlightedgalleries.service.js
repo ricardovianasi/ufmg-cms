@@ -27,10 +27,11 @@
             //       galleriesToSelect.push(gallery.id);
             //     });
             //     _obj.galleries = galleriesToSelect;
-
-            return {
-                galleries: widget.galleries ? widget.galleries : widget.content.galleries,
-            };
+            let obj = {};
+            if(widget.galleries || widget.content) {
+                obj.galleries = widget.galleries ? widget.galleries : widget.content.galleries;
+            }
+            return obj;
         }
 
         function parseToSave(widget) {
@@ -39,10 +40,17 @@
             //       galleriesToSelect.push(gallery.id);
             //     });
             //     _obj.galleries = galleriesToSelect;
+            let obj = {};
+            if(widget.galleries || widget.content) {
+                obj.galleries = widget.galleries ? _parseGalleries(widget.galleries) : _parseGalleries(widget.content.galleries);
+            }
+            return obj;
+        }
 
-            return {
-                galleries: widget.galleries ? widget.galleries : widget.content.galleries,
-            };
+        function _parseGalleries(galleries) {
+            return galleries.map(function(gallery) {
+                return { id: gallery.id };
+            });
         }
     }
 })();

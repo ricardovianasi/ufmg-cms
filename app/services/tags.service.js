@@ -5,7 +5,7 @@
         .factory('TagsService', TagsService);
 
     /** ngInjetc */
-    function TagsService($http, apiUrl, $filter) {
+    function TagsService($http, apiUrl, $filter, ServerService) {
 
         let service = {
             getTags: getTags,
@@ -17,7 +17,11 @@
 
         function getTags(params) {
             let url = apiUrl + '/tag' + (params || '');
-            return $http.get(url);
+            if(params) {
+                return ServerService.getLoaded('', url, { useLoaded: false });
+            }
+            return ServerService.getLoaded('listTags', url, { useLoaded: true });
+            // return $http.get(url);
         }
 
         function findTags($query, tags) {
