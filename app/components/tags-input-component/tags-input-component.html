@@ -1,3 +1,8 @@
-<tags-input ng-click="ctrlTags.getTags()" add-on-comma="ctrlTags.addOnComma" ng-model="ctrlTags.ngModelTags" on-tag-added="ctrlTags.onTagAdded($tag)">
+<tags-input ng-click="ctrlTags.getTags()"
+    max-tags="{{ ctrlTags.maxTags || '' }}"
+    enforce-max-tags="{{ ctrlTags.enforceMax || '' }}"
+    add-on-comma="ctrlTags.addOnComma"
+    ng-model="ctrlTags.ngModelTags"
+    on-tag-added="ctrlTags.onTagAdded($tag)">
     <auto-complete source="ctrlTags.findTags($query)" minLength="1"></auto-complete>
 </tags-input>

@@ -107,16 +107,6 @@
                 field: 'name',
                 direction: 'ASC'
             }, 'name');
-    
-            scope.tags = [];
-
-            TagsService.getTags().then(function (data) {
-                scope.tags = data.data.items[0];
-            });
-
-            scope.findTags = function ($query) {
-                return TagsService.findTags($query, scope.tags);
-            };
         }
 
         function request(eventName, fnResquest, order_by, searchQuery, customFilter) {

@@ -14,7 +14,9 @@
             controllerAs: 'ctrlTags',
             bindings: {
                 ngModelTags: '=',
-                addOnComma: '='
+                addOnComma: '=',
+                maxTags: '=',
+                enforceMax: '='
             },
         });
 
