@@ -6,7 +6,7 @@
 
     /** ngInject */
     function Run($rootScope, dataTableConfigService, sessionService, $window, $log, ModalService, DTDefaultOptions,
-        $timeout, $location, PermissionService, TagsService) {
+        $timeout, $location, PermissionService) {
 
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
@@ -49,10 +49,6 @@
             sessionService.removeIsLogged();
             $location.path('/login');
         };
-
-        $rootScope.onTagAdded = function(tag) {
-            TagsService.addTagOnDataLoaded(tag);
-        }
 
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
     }
