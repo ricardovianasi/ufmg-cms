@@ -17,13 +17,12 @@
         DateTimeHelper,
         ModalService,
         $rootScope,
-        TagsService,
         $log,
         $window,
         HandleChangeService,
         PermissionService,
         validationService) {
-        var allTags = [];
+
         var vm = $scope;
         vm.vm = vm;
 
@@ -151,13 +150,5 @@
         StatusService.getStatus().then(function (res) {
             vm.statuses = res.data;
         });
-
-        TagsService.getTags().then(function (data) {
-            allTags = data.data.items[0];
-        });
-
-        vm.findTags = function ($query) {
-            return TagsService.findTags($query, allTags);
-        };
     }
 })();

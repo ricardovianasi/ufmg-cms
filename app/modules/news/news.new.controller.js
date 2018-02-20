@@ -17,19 +17,17 @@
         DateTimeHelper,
         RedactorPluginService,
         $rootScope,
-        TagsService,
         GalleryService,
         PermissionService,
         HandleChangeService,
         $log,
         validationService) {
+
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
         $log.info('NoticiasNovoController');
         vm.canPermission = PermissionService.canPost(vm.typeNews);
-
-        var allTags = [];
 
         vm.title = 'Nova Notícia';
         vm.breadcrumb = 'Nova Notícia';
@@ -184,14 +182,6 @@
                 vm.news.thumb_name = '';
                 vm.$apply();
             });
-        };
-
-        TagsService.getTags().then(function (data) {
-            allTags = data.data.items[0];
-        });
-
-        vm.findTags = function ($query) {
-            return TagsService.findTags($query, allTags);
         };
     }
 })();

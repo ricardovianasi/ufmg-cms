@@ -20,14 +20,11 @@
         DateTimeHelper,
         $rootScope,
         PermissionService,
-        TagsService,
         $log,
         HandleChangeService,
         validationService) {
+
         $log.info('EventsEditController');
-
-        var allTags = [];
-
         var vm = $scope;
         vm.vm = vm;
 
@@ -237,13 +234,5 @@
         StatusService.getStatus().then(function (data) {
             vm.statuses = data.data;
         });
-
-        TagsService.getTags().then(function (data) {
-            allTags = data.data.items[0];
-        });
-
-        vm.findTags = function ($query) {
-            return TagsService.findTags($query, allTags);
-        };
     }
 })();

@@ -6,10 +6,9 @@
 
     /**ngInject */
     function NewsEditController($scope, $routeParams, $location, $timeout, $window, NewsService, NotificationService,
-        StatusService, MediaService, DateTimeHelper, ModalService, RedactorPluginService, $rootScope, TagsService,
+        StatusService, MediaService, DateTimeHelper, ModalService, RedactorPluginService, $rootScope,
         GalleryService, PermissionService, HandleChangeService, validationService) {
 
-        var allTags = [];
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
@@ -220,13 +219,5 @@
 
         vm.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
         vm.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
-
-        TagsService.getTags().then(function (data) {
-            allTags = data.data.items[0];
-        });
-
-        vm.findTags = function ($query) {
-            return TagsService.findTags($query, allTags);
-        };
     }
 })();
