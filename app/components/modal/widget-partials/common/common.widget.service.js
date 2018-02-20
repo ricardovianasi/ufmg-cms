@@ -70,7 +70,7 @@
                 field: 'postDate',
                 direction: 'DESC'
             }, 'title');
-            getTags(scope);
+            getTags();
         }
 
         function prepareItems (scope) {
