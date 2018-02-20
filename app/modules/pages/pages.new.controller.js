@@ -5,7 +5,7 @@
         .controller('PagesNewController', PagesNewController);
     /** ngInject */
     function PagesNewController($scope, $uibModal, $location, $timeout, $window, NotificationService, PagesService,
-        ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope, TagsService,
+        ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope,
         Util, $q, HandleChangeService, validationService, UsersService) {
 
         var allTags = [];
@@ -17,7 +17,6 @@
         vm.title = 'Nova página';
 
         vm.publish = _publish;
-        vm.findTags = _findTags;
         vm.uploadCover = _uploadCover;
         vm.removeImage = _removeImage;
         vm.handleModule = handleModule;
@@ -70,18 +69,12 @@
                 }
             };
 
-            TagsService.getTags()
-                .then(function (data) {
-                    allTags = data.data.items[0];
-                });
-
             HandleChangeService.registerHandleChange('/page', ['POST'], $scope, ['page'], _evenedObj);
         }
 
         function _evenedObj(obj) {
             return HandleChangeService.removePropsCommon(obj);
         }
-
 
         function _getType() {
             PagesService.getType()
@@ -148,10 +141,6 @@
                 countPage = 1;
                 vm.currentElement = 0;
             }
-        }
-
-        function _findTags($query) {
-            return TagsService.findTags($query, allTags);
         }
 
         function _handleWidgetsToSave(page) {

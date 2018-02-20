@@ -20,7 +20,6 @@
         vm.typesData = {};
 
         vm.loadMorePage = loadMorePage;
-        vm.findTags = findTags;
         vm.remove = remove;
         vm.publish = publish;
         vm.uploadCover = uploadCover;
@@ -74,13 +73,6 @@
             PagesService.getType()
                 .then(function (res) {
                     vm.typesData = res.data;
-                });
-        }
-
-        function _getTags() {
-            TagsService.getTags()
-                .then(function (data) {
-                    allTags = data.data.items[0];
                 });
         }
 
@@ -262,10 +254,6 @@
                 });
         }
 
-        function findTags($query) {
-            return TagsService.findTags($query, allTags);
-        }
-
         function activate() {
             vm.title = 'Edição de página';
             vm.columns = PagesService.COLUMNS;
@@ -289,7 +277,6 @@
                 containment: '#sort-main'
             };
             _getPage();
-            _getTags();
             _getType();
 
             HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
