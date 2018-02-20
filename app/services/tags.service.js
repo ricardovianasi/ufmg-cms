@@ -12,10 +12,16 @@
             getTags: getTags,
             findTags: findTags,
             convertTagsInput: convertTagsInput,
-            addTagOnDataLoaded: addTagOnDataLoaded
+            addTagOnDataLoaded: addTagOnDataLoaded,
+            getTagsWithParams: getTagsWithParams
         };
 
         return service;
+
+        function getTagsWithParams(params) {
+            let url = apiUrl + '/tag?' + _convertParams(params);
+            return $http.get(url);
+        }
 
         function getTags(params) {
             let url = apiUrl + '/tag' + (params || '');
@@ -23,7 +29,6 @@
                 return ServerService.getLoaded('', url, { useLoaded: false });
             }
             return ServerService.getLoaded(KeyLoadedTag, url, { useLoaded: true });
-            // return $http.get(url);
         }
 
         function findTags($query, tags) {
@@ -55,6 +60,17 @@
         function _includeNewTagOnData(tag, dataTags) {
             dataTags.data.items[0].push({name: tag.text});
             dataTags.data.items[1].string += ',' + tag.text;
+        }
+
+        function _convertParams(params) {
+            let urlParams = '';
+            for(let key in params) {
+                if(params[key]) {
+                    urlParams += key + '=' + params[key] + '&';
+                }
+            }
+            console.log('_convertParams', params, urlParams);
+            return urlParams;
         }
     }
 })();

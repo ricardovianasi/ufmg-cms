@@ -6,7 +6,7 @@
         .factory('CommonWidgetService', CommonWidgetService);
 
     /** ngInject */
-    function CommonWidgetService($rootScope, $timeout, Util, NewsService, 
+    function CommonWidgetService($rootScope, $timeout, Util, NewsService,
         TagsService, EventsService, PostTypeService, GalleryService) {
         var service = {
             request: request,
