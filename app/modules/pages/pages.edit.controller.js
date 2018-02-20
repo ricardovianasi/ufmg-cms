@@ -12,7 +12,6 @@
 
         let vm = $scope;
 
-        let allTags = [];
         let hasRequest = false;
         let countPage = 1;
 

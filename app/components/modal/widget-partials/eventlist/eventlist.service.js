@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            CommonWidgetService.getTags(ctrl);
+            CommonWidgetService.getTags();
         }
 
         function parseToLoad(widget) {

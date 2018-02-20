@@ -56,7 +56,7 @@
                 _emitResponseError(statusRequest);
                 return $q.reject(response);
             } else {
-                return _retryRequestHttp(response.config)
+                return _retryRequestHttp(response.config);
             }
         }
         

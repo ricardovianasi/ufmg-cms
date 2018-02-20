@@ -41,7 +41,7 @@
                     name: 'Todas'
                 });
             });
-            getTags(scope);
+            getTags();
         }
 
         function preparingPostTypes (scope) {
@@ -102,7 +102,7 @@
             });
         }
 
-        function getTags(scope) {
+        function getTags() {
             request('LoadMoreTag', TagsService.getTags, {
                 field: 'name',
                 direction: 'ASC'

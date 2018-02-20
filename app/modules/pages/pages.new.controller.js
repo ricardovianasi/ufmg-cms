@@ -8,7 +8,6 @@
         ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope,
         Util, $q, HandleChangeService, validationService, UsersService) {
 
-        var allTags = [];
         var vm = $scope;
         var hasRequest = false;
         var countPage = 1;
