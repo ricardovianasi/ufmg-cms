@@ -51,6 +51,7 @@
         'loginModule',
         'faqModule',
         'usersModule',
-        'accountModule'
+        'accountModule',
+        'tagsModule'
     ]);
 })();

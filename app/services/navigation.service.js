@@ -16,6 +16,7 @@
                 var hasPermissionEditions;
                 var hasPermissionEvents;
                 var hasPermissionFaq;
+                var hasPermissionTags;
                 var hasPermissionGallery;
                 var hasPermissionGlossary;
                 var hasPermissionHighlightedPress;
@@ -39,6 +40,7 @@
                     hasPermissionEditions = hasPermission('editions');
                     hasPermissionEvents = hasPermission('events');
                     hasPermissionFaq = hasPermission('faq');
+                    hasPermissionTags = hasPermission('tags');
                     hasPermissionGallery = hasPermission('gallery');
                     hasPermissionGlossary = hasPermission('glossary');
                     hasPermissionHighlightedPress = hasPermission('highlighted_press');
@@ -213,6 +215,13 @@
                                 icon: 'fa fa-question-circle',
                                 name: 'FAQ',
                                 location: 'faq',
+                                isActive: false,
+                                isOpen: false,
+                                enabled: hasPermissionTags
+                            }, {
+                                icon: 'fa fa-tag',
+                                name: 'Tags',
+                                location: 'tags',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionFaq
