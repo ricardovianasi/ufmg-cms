@@ -6,22 +6,46 @@
         .controller('TagsController', TagsController);
 
         /** ngInject */
-    function TagsController(dataTableConfigService, TagsService, TagsMock) {
+    function TagsController(dataTableConfigService, TagsService, ModalService, NotificationService, TagsMock) {
         var vm = this;
 
         vm.removeTag = removeTag;
-        vm.editTag = editTag;
+        vm.createTag = createTag;
+        vm.openEditTag = openEditTag;
 
         activate();
 
         ////////////////
 
-        function editTag(tag) {
-            console.log('removeTag', tag);
+        function openEditTag(tag) {
+            let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name);
+            modal.result.then(function (name) {
+                tag.name = name;
+                _updateTag(tag);
+            })
+            .catch(function () { console.log('catch modal tag'); });
+        }
+
+        function createTag() {
+            console.log('createTag', vm.nameNewTag);
+            if(vm.nameNewTag) {
+                this._postTag(vm.nameNewTag);
+            } else {
+                NotificationService.warning('É necessário informar um nome para a tag.');
+            }
+            vm.nameNewTag = '';
         }
 
         function removeTag(id, name) {
             console.log('removeTag', id, name);
+        }
+
+        function _updateTag(tag) {
+            console.log('_updateTag', tag);
+        }
+
+        function _postTag(name) {
+            console.log('_postTag', name);
         }
 
         function _renderDataTable() {
@@ -60,6 +84,7 @@
             _renderDataTable();
             vm.tags = TagsMock.mock();
             vm.dtInstance = {};
+            vm.nameNewTag = '';
         }
     }
 })();

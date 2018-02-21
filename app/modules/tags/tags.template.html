@@ -2,7 +2,7 @@
     <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Gerenciamento de Tags</h1>
+                <h1 class="title">Gestão de Tags</h1>
             </div>
         </div>
         <div class="col-md-6">
@@ -26,9 +26,9 @@
 <div class="new-tag panel panel-default color-strong-panel">
     <div class="panel-body">
         <div class="form-group col-md-6">
-            <input type="text" placeholder="Nome da tag" class="form-control">
+            <input type="text" ng-model="tagsCtrl.nameNewTag" placeholder="Nome da tag" class="form-control">
         </div>
-        <div class="btn btn-success">Inserir</div>
+        <div uib-tooltip="Inserir tag" class="btn btn-success" ng-click="tagsCtrl.createTag()">Inserir</div>
         <div class="col-md-12">
             <table class="table table-striped table-bordered" datatable dt-instance="tagsCtrl.dtInstance" dt-options="tagsCtrl.dtOptions" dt-columns="tagsCtrl.dtColumns">
                 <thead>
@@ -41,7 +41,7 @@
                     <tr role="row" ng-repeat="tag in tagsCtrl.tags.items[0]" class="odd">
                         <td> {{ tag.name }} </td>
                         <td class="table-fit">
-                            <a uib-tooltip="Editar" class="btn btn-warning" ng-click="tagsCtrl.editTag">
+                            <a uib-tooltip="Editar" class="btn btn-warning" ng-click="tagsCtrl.openEditTag(tag)">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a uib-tooltip="Excluir" ng-click="tagsCtrl.removeTag(tag.id, tag.name)" class="btn btn-danger">

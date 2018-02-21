@@ -17,6 +17,36 @@
             });
         }
 
+        function inputModal(title, label, value, size) {
+            size = size || ModalService.MODAL_MEDIUM;
+            return $uibModal.open({
+                templateUrl: 'components/modal/input.modal.template.html',
+                controller: InputModalCtrl,
+                backdrop: 'static',
+                size: size,
+                resolve: {
+                    title: function () { return title; },
+                    label: function () { return label; },
+                    value: function () { return value; }
+                }
+            });
+            
+            function InputModalCtrl($scope, $uibModalInstance, title, label, value) {
+                let vm = $scope;
+                vm.title = title;
+                vm.label = label;
+                vm.value = value;
+
+                vm.confirm = function() {
+                    $uibModalInstance.close(vm.value);
+                }
+
+                vm.cancel = function () {
+                    $uibModalInstance.close();
+                }
+            }
+        }
+
         function dialog(title, text, size) {
             size = size || ModalService.MODAL_MEDIUM;
 
@@ -242,6 +272,7 @@
             MODAL_LARGE: 'lg',
             FULL_SCREEN: 'full',
             openModal: openModal,
+            inputModal: inputModal,
             confirm: confirm,
             dialog: dialog,
             uploadImage: _uploadImage,
