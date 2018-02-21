@@ -7,16 +7,28 @@
     /** ngInjetc */
     function TagsService($http, apiUrl, $filter, ServerService) {
         let KeyLoadedTag = 'listTags';
+        let baseUrl = apiUrl + '/tag';
 
         let service = {
             getTags: getTags,
             findTags: findTags,
             convertTagsInput: convertTagsInput,
             addTagOnDataLoaded: addTagOnDataLoaded,
-            getTagsWithParams: getTagsWithParams
+            getTagsWithParams: getTagsWithParams,
+            postTag: postTag,
+            updateTag: updateTag
         };
 
         return service;
+
+        function postTag(data) {
+            return $http.post(baseUrl, data);
+        }
+
+        function updateTag(data) {
+            let url = baseUrl + '/' + data.id;
+            return $http.put(url, data);
+        }
 
         function getTagsWithParams(params) {
             let url = apiUrl + '/tag?' + _convertParams(params);
@@ -46,7 +58,6 @@
         function addTagOnDataLoaded(tag) {
             if (ServerService.hasData(KeyLoadedTag)) {
                 let dataTags = ServerService.getData(KeyLoadedTag);
-                let listTags = dataTags.data.items[0];
                 let stringTags = dataTags.data.items[1].string;
                 let hasTag = tag.text && stringTags.includes(tag.text);
                 if(!hasTag) {
@@ -69,7 +80,6 @@
                     urlParams += key + '=' + params[key] + '&';
                 }
             }
-            console.log('_convertParams', params, urlParams);
             return urlParams;
         }
     }
