@@ -4,7 +4,7 @@
 </div>
 <div class="form-group">
     <label>Tag:</label>
-    <ui-select ng-model="ctrlModal.widget.tag" theme="bootstrap" class="ui-select">
+    <ui-select on-select="ctrlModal.addFullTag($item)"  ng-model="ctrlModal.widget.tag" theme="bootstrap" class="ui-select">
         <ui-select-match placeholder="Buscar Tag">{{ $select.selected.name }}</ui-select-match>
         <ui-select-choices repeat="item.id as item in ctrlModal.dataTags"
             refresh="ctrlModal.loadMoreTag($select.search)" refresh-delay="300">

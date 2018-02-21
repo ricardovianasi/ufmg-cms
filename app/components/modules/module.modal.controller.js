@@ -178,7 +178,7 @@
                 vm.widget.title = module.title;
                 vm.widget.selected.type = module.type;
 
-                angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module));
+                angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module, vm));
 
                 $timeout(function () {
                         var html = $.parseHTML(vm.widget.text);
