@@ -10,7 +10,7 @@
             .when('/tags', {
                 templateUrl: 'modules/tags/tags.template.html',
                 controller: 'TagsController',
-                controllerAs: 'TagsCtrl'
+                controllerAs: 'tagsCtrl'
             });
     }
 })();
