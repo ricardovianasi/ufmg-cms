@@ -53,9 +53,6 @@
                 index: 0,
                 filter: 'name',
                 name: 'name'
-            }, {
-                index: 1,
-                name: 'postDate'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_getTags);
         }
@@ -68,8 +65,7 @@
                 .then(function (res) {
                     vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     // _permissions();
-                    // vm.tags = res.data;
-                    vm.tags = TagsMock.mock();
+                    vm.tags = res.data.items;
                     let records = {
                         'draw': params.draw,
                         'recordsTotal': res.data.total,

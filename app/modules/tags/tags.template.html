@@ -38,7 +38,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr role="row" ng-repeat="tag in tagsCtrl.tags.items[0]" class="odd">
+                    <tr role="row" ng-repeat="tag in tagsCtrl.tags" class="odd">
                         <td> {{ tag.name }} </td>
                         <td class="table-fit">
                             <a uib-tooltip="Editar" class="btn btn-warning" ng-click="tagsCtrl.openEditTag(tag)">
