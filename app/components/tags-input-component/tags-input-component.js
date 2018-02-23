@@ -16,12 +16,14 @@
                 ngModelTags: '=',
                 addOnComma: '=',
                 maxTags: '=',
-                enforceMax: '='
+                enforceMax: '=',
+                resource: '=',
+                label: '=nameLabel'
             },
         });
 
-    TagsInputController.$inject = ['TagsService'];
-    function TagsInputController(TagsService) {
+    TagsInputController.$inject = ['TagsService', 'PermissionService', '$rootScope'];
+    function TagsInputController(TagsService, PermissionService, $rootScope) {
 
         let ctrlTags = this;
 
@@ -52,8 +54,24 @@
             TagsService.addTagOnDataLoaded(tag);
         }
 
-        ctrlTags.$onInit = function() { };
-        ctrlTags.$onChanges = function(changesObj) { };
+        function _setPermissionTag(userLoaded) {
+            if(userLoaded && ctrlTags.resource) {
+                ctrlTags.canPutTags = PermissionService.canPutTag(ctrlTags.resource);
+            } else if(!ctrlTags.resource) {
+                ctrlTags.canPutTags = true;
+            }
+        }
+
+        function _permissions() {
+            $rootScope.$watch('User', function (user) {
+                let userLoaded = user && user.id;
+                _setPermissionTag(userLoaded);
+            });
+        }
+
+        ctrlTags.$onInit = function() {
+            _permissions();
+        };
         ctrlTags.$onDestroy = function() { };
     }
 })();

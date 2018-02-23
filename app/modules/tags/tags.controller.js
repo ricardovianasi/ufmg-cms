@@ -46,7 +46,7 @@
         
         function _removeTag(id, name, idx) {
             TagsService.deleteTag(id)
-                .then(function(data) {
+                .then(function() {
                     vm.tags.splice(idx, 1);
                     if(vm.tags.length <= 1) {
                         vm.dtInstance.DataTable.draw();
@@ -57,7 +57,7 @@
 
         function _updateTag(tag, idx) {
             TagsService.updateTag(tag)
-                .then(function (data) {
+                .then(function () {
                     vm.tags[idx] = tag;
                     NotificationService.success('Tag alterada com sucesso!');
                 });

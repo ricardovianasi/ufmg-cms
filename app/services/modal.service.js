@@ -45,11 +45,11 @@
                     } else {
                         $uibModalInstance.close(vm.value);
                     }
-                }
+                };
 
                 vm.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
-                }
+                };
             }
         }
 

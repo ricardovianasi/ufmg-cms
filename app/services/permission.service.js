@@ -19,6 +19,7 @@
             canPost: canPost,
             canPut: canPut,
             canGet: canGet,
+            canPutTag: canPutTag,
             run: initService,
             hasPermission: hasPermission,
             hasPermissionId: hasPermissionId
@@ -138,6 +139,10 @@
 
         function canGet(context, id) {
             return check(context, id, 'GET');
+        }
+
+        function canPutTag(context, id) {
+            return check(context, id, 'PUTTAG');
         }
 
         function messageWarn() {
