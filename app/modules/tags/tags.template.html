@@ -38,13 +38,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr role="row" ng-repeat="tag in tagsCtrl.tags" class="odd">
+                    <tr role="row" ng-repeat="tag in tagsCtrl.tags track by $index" class="odd">
                         <td> {{ tag.name }} </td>
                         <td class="table-fit">
-                            <a uib-tooltip="Editar" class="btn btn-warning" ng-click="tagsCtrl.openEditTag(tag)">
+                            <a uib-tooltip="Editar" class="btn btn-warning" ng-click="tagsCtrl.openEditTag(tag, $index)">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a uib-tooltip="Excluir" ng-click="tagsCtrl.removeTag(tag.id, tag.name)" class="btn btn-danger">
+                            <a uib-tooltip="Excluir" ng-click="tagsCtrl.removeTag(tag.id, tag.name, $index)" class="btn btn-danger">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

@@ -6,7 +6,7 @@
         .controller('TagsController', TagsController);
 
         /** ngInject */
-    function TagsController(dataTableConfigService, TagsService, ModalService, NotificationService, TagsMock) {
+    function TagsController(dataTableConfigService, TagsService, ModalService, NotificationService) {
         var vm = this;
 
         vm.removeTag = removeTag;
@@ -17,11 +17,11 @@
 
         ////////////////
 
-        function openEditTag(tag) {
+        function openEditTag(tag, idx) {
             let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name);
             modal.result.then(function (name) {
                 tag.name = name;
-                _updateTag(tag);
+                _updateTag(tag, idx);
             })
             .catch(function () { console.log('catch modal tag'); });
         }
@@ -29,19 +29,34 @@
         function createTag() {
             console.log('createTag', vm.nameNewTag);
             if(vm.nameNewTag) {
-                this._postTag(vm.nameNewTag);
+                _postTag(vm.nameNewTag);
             } else {
                 NotificationService.warning('É necessário informar um nome para a tag.');
             }
             vm.nameNewTag = '';
         }
 
-        function removeTag(id, name) {
-            console.log('removeTag', id, name);
+        function removeTag(id, name, idx) {
+            let msgConfirm = 'Voce tem certeza que deseja remover a tag <b>' + name + '</b>?';
+            ModalService.confirm(msgConfirm, ModalService.MODAL_MEDIUM, {isDanger: true}).result
+                .then(function() { _removeTag(id, name, idx); })
+                .catch(function() { console.log('catch modal delete'); });
+        }
+        
+        function _removeTag(id, name, idx) {
+            TagsService.deleteTag(id)
+                .then(function(data) {
+                    vm.tags.splice(idx, 1);
+                    NotificationService.success('Tag ' + name + ' removida com sucesso!');
+                });
         }
 
-        function _updateTag(tag) {
-            console.log('_updateTag', tag);
+        function _updateTag(tag, idx) {
+            TagsService.updateTag(tag)
+                .then(function (data) {
+                    vm.tags[idx] = tag;
+                    NotificationService.success('Tag alterada com sucesso!');
+                });
         }
 
         function _postTag(name) {
@@ -78,7 +93,6 @@
 
         function activate() {
             _renderDataTable();
-            vm.tags = TagsMock.mock();
             vm.dtInstance = {};
             vm.nameNewTag = '';
         }

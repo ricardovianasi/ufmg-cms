@@ -16,18 +16,22 @@
             addTagOnDataLoaded: addTagOnDataLoaded,
             getTagsWithParams: getTagsWithParams,
             postTag: postTag,
-            updateTag: updateTag
+            updateTag: updateTag,
+            deleteTag: deleteTag
         };
 
         return service;
+
+        function deleteTag(id) {
+            return $http.delete(_getUrlTagId(id));
+        }
 
         function postTag(data) {
             return $http.post(baseUrl, data);
         }
 
         function updateTag(data) {
-            let url = baseUrl + '/' + data.id;
-            return $http.put(url, data);
+            return $http.put(_getUrlTagId(data.id), data);
         }
 
         function getTagsWithParams(params) {
@@ -66,6 +70,10 @@
                 }
 
             } 
+        }
+
+        function _getUrlTagId(id) {
+            return baseUrl + '/' + id;
         }
 
         function _includeNewTagOnData(tag, dataTags) {
