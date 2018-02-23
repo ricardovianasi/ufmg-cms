@@ -18,7 +18,8 @@
         ////////////////
 
         function openEditTag(tag, idx) {
-            let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name);
+            let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name, 
+                ModalService.MODAL_MEDIUM, {required: true});
             modal.result.then(function (name) {
                 tag.name = name;
                 _updateTag(tag, idx);

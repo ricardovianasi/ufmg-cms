@@ -17,7 +17,7 @@
             });
         }
 
-        function inputModal(title, label, value, size) {
+        function inputModal(title, label, value, size, options) {
             size = size || ModalService.MODAL_MEDIUM;
             return $uibModal.open({
                 templateUrl: 'components/modal/input.modal.template.html',
@@ -27,18 +27,24 @@
                 resolve: {
                     title: function () { return title; },
                     label: function () { return label; },
-                    value: function () { return value; }
+                    value: function () { return value; },
+                    options: function () { return options; }
                 }
             });
             
-            function InputModalCtrl($scope, $uibModalInstance, title, label, value) {
+            function InputModalCtrl($scope, $uibModalInstance, NotificationService, title, label, value, options) {
                 let vm = $scope;
                 vm.title = title;
                 vm.label = label;
                 vm.value = value;
+                vm.options = options || { };
 
                 vm.confirm = function() {
-                    $uibModalInstance.close(vm.value);
+                    if(options.required && !vm.value) {
+                        NotificationService.warning('O campo ' + label + ' é obrigatório.');
+                    } else {
+                        $uibModalInstance.close(vm.value);
+                    }
                 }
 
                 vm.cancel = function () {
