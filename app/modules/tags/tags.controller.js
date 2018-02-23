@@ -6,12 +6,13 @@
         .controller('TagsController', TagsController);
 
         /** ngInject */
-    function TagsController(dataTableConfigService, TagsService, ModalService, NotificationService) {
-        var vm = this;
+    function TagsController(dataTableConfigService, TagsService, ModalService, NotificationService, PermissionService) {
+        let vm = this;
 
         vm.removeTag = removeTag;
         vm.createTag = createTag;
         vm.openEditTag = openEditTag;
+        vm.hasColumnAction = hasColumnAction;
 
         activate();
 
@@ -85,8 +86,8 @@
             TagsService
                 .getTags(dataTableConfigService.getParams(params))
                 .then(function (res) {
+                    _permissions();
                     vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                    // _permissions();
                     vm.tags = res.data.items;
                     let records = {
                         'draw': params.draw,
@@ -96,6 +97,16 @@
                     };
                     fnCallback(records);
                 });
+        }
+
+        function hasColumnAction() {
+            return vm.canDelete || vm.canPut;
+        }
+
+        function _permissions() {
+            vm.canPut = PermissionService.canPut('tags');
+            vm.canDelete = PermissionService.canDelete('tags');
+            vm.canPost = PermissionService.canPost('tags');
         }
 
         function activate() {

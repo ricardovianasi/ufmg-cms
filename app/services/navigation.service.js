@@ -217,14 +217,14 @@
                                 location: 'faq',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionTags
+                                enabled: hasPermissionFaq
                             }, {
                                 icon: 'fa fa-tag',
                                 name: 'Tags',
                                 location: 'tags',
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionFaq
+                                enabled: hasPermissionTags
                             }, {
                                 icon: 'fa fa-users',
                                 name: 'Usuários',

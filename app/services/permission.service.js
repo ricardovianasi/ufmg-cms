@@ -6,20 +6,13 @@
         .factory('PermissionService', PermissionService);
 
     /** ngInject */
-    function PermissionService(
-        authService,
-        $log,
-        NotificationService,
-        $timeout,
-        $q,
-        $location,
-        $rootScope
+    function PermissionService(authService, $log, NotificationService, $timeout, $q, $location, $rootScope
     ) {
         $log.info('PermissionService');
         initService();
         $rootScope.User = null;
         var showMessage = null;
-        var service = {
+        let service = {
             check: check,
             initService: initService,
             canDelete: canDelete,

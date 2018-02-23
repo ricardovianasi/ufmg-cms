@@ -161,6 +161,7 @@
                 pathOne === 'events' ||
                 pathOne === 'faq' ||
                 pathOne === 'gallery' ||
+                pathOne === 'tags' ||
                 pathOne === 'highlighted_press' ||
                 pathOne === 'menu' ||
                 pathOne === 'page' ||
