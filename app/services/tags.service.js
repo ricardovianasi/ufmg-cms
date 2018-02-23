@@ -14,7 +14,6 @@
             findTags: findTags,
             convertTagsInput: convertTagsInput,
             addTagOnDataLoaded: addTagOnDataLoaded,
-            getTagsWithParams: getTagsWithParams,
             postTag: postTag,
             updateTag: updateTag,
             deleteTag: deleteTag
@@ -32,11 +31,6 @@
 
         function updateTag(data) {
             return $http.put(_getUrlTagId(data.id), data);
-        }
-
-        function getTagsWithParams(params) {
-            let url = apiUrl + '/tag?' + _convertParams(params);
-            return $http.get(url);
         }
 
         function getTags(params) {
@@ -79,16 +73,6 @@
         function _includeNewTagOnData(tag, dataTags) {
             dataTags.data.items[0].push({name: tag.text});
             dataTags.data.items[1].string += ',' + tag.text;
-        }
-
-        function _convertParams(params) {
-            let urlParams = '';
-            for(let key in params) {
-                if(params[key]) {
-                    urlParams += key + '=' + params[key] + '&';
-                }
-            }
-            return urlParams;
         }
     }
 })();

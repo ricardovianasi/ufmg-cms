@@ -81,18 +81,6 @@
         }
 
         function loadMoreTag(search) {
-            // if(!search || search.length <= 3){
-            //     return;
-            // }
-            // let params = {
-            //     search: search,
-            //     direction: 'ASC'
-            // };
-            // TagsService.getTagsWithParams(params)
-            //     .then(function (data) {
-            //         vm.dataTags = data.data.items[0];
-            //         console.log(vm.dataTags);
-            //     });
             _reset(vm.dataTags);
             _loadMore('LoadMoreTag', vm.dataTags, search)
                 .then(function (data) {

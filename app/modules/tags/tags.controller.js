@@ -27,9 +27,8 @@
         }
 
         function createTag() {
-            console.log('createTag', vm.nameNewTag);
             if(vm.nameNewTag) {
-                _postTag(vm.nameNewTag);
+                _postTag({ name: vm.nameNewTag });
             } else {
                 NotificationService.warning('É necessário informar um nome para a tag.');
             }
@@ -47,6 +46,9 @@
             TagsService.deleteTag(id)
                 .then(function(data) {
                     vm.tags.splice(idx, 1);
+                    if(vm.tags.length <= 1) {
+                        vm.dtInstance.DataTable.draw();
+                    }
                     NotificationService.success('Tag ' + name + ' removida com sucesso!');
                 });
         }
@@ -59,8 +61,12 @@
                 });
         }
 
-        function _postTag(name) {
-            console.log('_postTag', name);
+        function _postTag(newTag) {
+            TagsService.postTag(newTag)
+                .then(function(data) {
+                    vm.tags.unshift(data.data);
+                    NotificationService.success('Tag '+ newTag.name + ' inserida com sucesso!');
+                });
         }
 
         function _renderDataTable() {
