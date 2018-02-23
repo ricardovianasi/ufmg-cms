@@ -16,38 +16,35 @@
         return service;
 
         ////////////////
-        function load(ctrl) {
-            CommonWidgetService.getTags();
-            ctrl.addFullTag = function(tag) {
-                addFullTag(ctrl.widget, tag);
-            };
-        }
+        function load() { }
 
         function parseToLoad(widget, ctrl) {
-            _preSelectedTag(widget, ctrl);
             let objLoaded = {};
             objLoaded.limit = widget.limit || (widget.content ? widget.content.limit : null);
-            objLoaded.tag = widget.content && widget.content.tag ? widget.content.tag.id : widget.tag;
+            objLoaded.tag = _getTag(widget);
             return objLoaded;
         }
 
         function parseToSave(widget) {
             let objLoaded = {};
             objLoaded.limit = widget.limit || (widget.content ? widget.content.limit : null);
-            objLoaded.tag = widget.tag || (widget.content ? widget.content.tag : null);
-            delete widget.fullTag;
+            objLoaded.tag = _parseTagToSave(widget);
             return objLoaded;
         }
 
-        function addFullTag(widget, tag) {
-            widget.fullTag = tag;
+        function _parseTagToSave(widget) {
+            if(widget.tag) {
+                return widget.tag[0].text;
+            } else if(widget.content) {
+                return widget.content.tag || null;
+            }
         }
 
-        function _preSelectedTag(widget, ctrl) {
-            if(widget.fullTag) {
-                ctrl.dataTags = [widget.fullTag];
+        function _getTag(widget) {
+            if(widget.tag && widget.tag.length > 0) {
+                return widget.tag;
             } else if(widget.content) {
-                ctrl.dataTags = [widget.content.tag];
+                return widget.content.tag ? [widget.content.tag.name] : [widget.tag];
             }
         }
     }

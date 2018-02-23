@@ -1,6 +1,6 @@
 <label ng-show="ctrlTags.canPutTags">
     {{ ctrlTags.label || 'Tag' }}
-    <small>(Digite a tag e pressione ENTER para selecionar)</small>
+    <small ng-show="ctrlTags.maxTags"> Máximo de {{ ctrlTags.maxTags }} tag(s)</small>
 </label>
 <tags-input ng-if="ctrlTags.canPutTags" ng-click="ctrlTags.getTags()"
     max-tags="{{ ctrlTags.maxTags || '' }}"
