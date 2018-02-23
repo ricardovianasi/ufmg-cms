@@ -31,7 +31,6 @@
 
         ctrlTags.getTags = getTags;
         ctrlTags.findTags = findTags;
-        ctrlTags.onTagAdded = onTagAdded;
 
         ////////////////
 
@@ -41,17 +40,12 @@
             }
             TagsService.getTags()
                 .then(function (data) {
-                    console.log('getTags', allTags);
-                    allTags = data.data.items[0];
+                    allTags = data.data.items;
                 });
         }
 
         function findTags($query) {
             return TagsService.findTags($query, allTags);
-        }
-
-        function onTagAdded(tag) {
-            TagsService.addTagOnDataLoaded(tag);
         }
 
         function _setPermissionTag(userLoaded) {

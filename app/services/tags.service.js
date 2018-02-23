@@ -56,8 +56,7 @@
         function addTagOnDataLoaded(tag) {
             if (ServerService.hasData(KeyLoadedTag)) {
                 let dataTags = ServerService.getData(KeyLoadedTag);
-                let stringTags = dataTags.data.items[1].string;
-                let hasTag = tag.text && stringTags.includes(tag.text);
+                let hasTag = tag.text;
                 if(!hasTag) {
                     _includeNewTagOnData(tag, dataTags);
                     ServerService.setData(KeyLoadedTag, dataTags);
@@ -71,8 +70,7 @@
         }
 
         function _includeNewTagOnData(tag, dataTags) {
-            dataTags.data.items[0].push({name: tag.text});
-            dataTags.data.items[1].string += ',' + tag.text;
+            dataTags.data.items.push({name: tag.text});
         }
     }
 })();

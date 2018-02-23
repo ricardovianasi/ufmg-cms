@@ -7,6 +7,6 @@
     enforce-max-tags="{{ ctrlTags.enforceMax || '' }}"
     add-on-comma="ctrlTags.addOnComma"
     ng-model="ctrlTags.ngModelTags"
-    on-tag-added="ctrlTags.onTagAdded($tag)">
+    add-on-enter="false">
     <auto-complete source="ctrlTags.findTags($query)" minLength="1"></auto-complete>
 </tags-input>

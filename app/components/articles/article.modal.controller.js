@@ -22,7 +22,7 @@
         var allTags = [];
 
         TagsService.getTags().then(function (data) {
-            allTags = data.data.items[0];
+            allTags = data.data.items;
         });
 
         $scope.findTags = function ($query) {
