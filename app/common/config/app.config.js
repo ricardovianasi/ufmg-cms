@@ -70,7 +70,7 @@
     function Tags(tagsInputConfigProvider) {
         tagsInputConfigProvider
             .setDefaults('tagsInput', {
-                placeholder: 'Adicionar tag',
+                placeholder: 'Selecionar tag',
                 replaceSpacesWithDashes: false
             })
             .setDefaults('autoComplete', {

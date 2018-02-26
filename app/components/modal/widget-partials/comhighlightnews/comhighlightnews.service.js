@@ -20,7 +20,7 @@
             ctrl.news = [];
             ctrl.widget.content = ctrl.widget.content || {};
             ctrl.widget.content.news = ctrl.widget.content.news || [];
-            CommonWidgetService.preparingNews(ctrl);
+            CommonWidgetService.preparingNews();
         }
 
         function parseToLoad(widget) {

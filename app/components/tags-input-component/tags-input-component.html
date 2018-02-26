@@ -1,4 +1,4 @@
-<label ng-show="ctrlTags.canPutTags">
+<label ng-show="ctrlTags.canPutTags && !ctrlTags.hideLabel">
     {{ ctrlTags.label || 'Tag' }}
     <small ng-show="ctrlTags.maxTags"> Máximo de {{ ctrlTags.maxTags }} tag(s)</small>
 </label>
@@ -7,6 +7,6 @@
     enforce-max-tags="{{ ctrlTags.enforceMax || '' }}"
     add-on-comma="ctrlTags.addOnComma"
     ng-model="ctrlTags.ngModelTags"
-    add-on-enter="false">
+    add-from-autocomplete-only="true">
     <auto-complete source="ctrlTags.findTags($query)" minLength="1"></auto-complete>
 </tags-input>

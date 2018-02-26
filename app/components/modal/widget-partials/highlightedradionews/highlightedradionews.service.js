@@ -17,7 +17,7 @@
 
         ////////////////
         function load(scope) {
-            CommonWidgetService.preparingNews(scope);
+            CommonWidgetService.preparingNews();
             CommonWidgetService.prepareItems(scope);
         }
 

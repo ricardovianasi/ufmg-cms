@@ -5,7 +5,7 @@
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
     function ModuleModalController($scope, $uibModalInstance, module,
-        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService, WidgetsService, TagsService) {
+        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService, WidgetsService) {
 
         let vm = this;
         let hasRequest = false;
@@ -166,7 +166,7 @@
                 vm.widget.title = module.title;
                 vm.widget.selected.type = module.type;
 
-                angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module, vm));
+                angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module));
 
                 $timeout(function () {
                         var html = $.parseHTML(vm.widget.text);

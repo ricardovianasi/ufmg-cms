@@ -65,7 +65,7 @@
             });
         }
 
-        function preparingNews(scope) {
+        function preparingNews() {
             request('LoadMoreNews', NewsService.getNews, {
                 field: 'postDate',
                 direction: 'DESC'

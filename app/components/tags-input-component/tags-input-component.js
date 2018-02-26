@@ -18,7 +18,8 @@
                 maxTags: '=',
                 enforceMax: '=',
                 resource: '=',
-                label: '=nameLabel'
+                label: '=nameLabel',
+                hideLabel: '='
             },
         });
 

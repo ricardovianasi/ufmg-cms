@@ -6,7 +6,7 @@
         .factory('EventListService', EventListService);
 
     /** ngInject */
-    function EventListService(CommonWidgetService) {
+    function EventListService() {
         var service = {
             load: load,
             parseToLoad: parseToLoad,
@@ -18,7 +18,7 @@
         ////////////////
         function load() { }
 
-        function parseToLoad(widget, ctrl) {
+        function parseToLoad(widget) {
             let objLoaded = {};
             objLoaded.limit = widget.limit || (widget.content ? widget.content.limit : null);
             objLoaded.tag = _getTag(widget);

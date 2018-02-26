@@ -17,7 +17,7 @@
 
         ////////////////
         function load(ctrl) {
-            CommonWidgetService.preparingNews(ctrl);
+            CommonWidgetService.preparingNews();
             CommonWidgetService.prepareItems(ctrl);
         }
 
