@@ -31,8 +31,12 @@
         vm.isActive = _isActive;
         vm.modalGetContext = _modalGetContext;
 
+        vm.hasCustomPermission = hasCustomPermission;
+        vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
+
         function onInit() {
             $log.info('UsersFormController');
+            _initListCustomPermission();
             _getResources();
             userId = $routeParams.userId ? $routeParams.userId : undefined;
             if (userId) {
@@ -209,6 +213,22 @@
             return vm.tab === tabId;
         }
 
+        function hasCustomPermission(context, key) {
+            let labelPermission = context + '_' + key;
+            return vm.modulesCustomPermission[labelPermission] || false;
+        }
+        
+        function hasCustomPermissionSetted(context, key) {
+            // console.log('hasCustomPermission', context, vm.listPermissions);
+            if(!vm.listPermissions[context]) {
+                return false;
+            }
+            let hasCustomPerm = hasCustomPermission(context, key);
+            let hasResourcePerm = hasCustomPerm && vm.user.resources_perms[context] && !!vm.user.resources_perms[context][key];
+            let hasCustomSet = hasResourcePerm && vm.listPermissions[context][key][0] !== undefined;
+            return hasCustomSet;
+        }
+
         function _contextPermissions(contextName) {
             var resp = [];
             vm.user.resources_perms = vm.user.resources_perms ? vm.user.resources_perms : {};
@@ -231,88 +251,23 @@
             return resp;
         }
 
-        function contextData(op, permission) {
-            var defer = $q.defer();
+        function contextData(op) {
             switch (op) {
                 case 'page':
-                    PagesService
-                        .getPages()
-                        .then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return PagesService.getPages();
                 case 'editions':
-                    PeriodicalService
-                        .getPeriodicals()
-                        .then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return PeriodicalService.getPeriodicals();
                 case 'course_graduation':
-                    CourseService
-                        .getCourses('graduation').then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return CourseService.getCourses('graduation');
                 case 'course_specialization':
-                    CourseService
-                        .getCourses('specialization').then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return CourseService.getCourses('specialization');
                 case 'course_master':
-                    CourseService
-                        .getCourses('master').then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return CourseService.getCourses('master');
                 case 'course_doctorate':
-                    CourseService
-                        .getCourses('doctorate').then(function (res) {
-                            defer.resolve({
-                                data: res.data.items,
-                                permission: permission
-                            });
-                        })
-                        .catch(function () {
-                            defer.resolve(false);
-                        });
-                    break;
+                    return CourseService.getCourses('doctorate');
                 default:
-                    defer.resolve(false);
-                    break;
+                    return $q.resolve(false);
             }
-            return defer.promise;
         }
 
         function _mountItem(contextName, item) {
@@ -344,18 +299,18 @@
             for (var index = 0; index < contextPermissions.length; index++) {
                 var element = contextPermissions[index];
                 if (element.valuePermission) {
-                    contextData(contextName, element.permission)
+                    contextData(contextName)
                         .then(function (res) {
-                            var listContext = res.data;
                             vm.listPermissions[contextName] = {};
-                            vm.listPermissions[contextName][res.permission] = _mountListPermissionContextId(listContext, element);
-                            angular.element('#' + contextName + '_' + res.permission).prop('indeterminate', true);
+                            vm.listPermissions[contextName][element.permission] = _mountListPermissionContextId(res.data.items, element);
+                            angular.element('#' + contextName + '_' + element.permission).prop('indeterminate', true);
                         });
                 }
             }
         };
 
         function _mountListPermissionContextId(listContext, contextPermissions) {
+            console.log('_mountListPermissionContextId', listContext, contextPermissions);
             var selecteds = [];
             var isString = angular.isString(contextPermissions.valuePermission);
             var countIsVerify = 0;
@@ -458,6 +413,14 @@
                         });
                     }
                 });
+        }
+
+        function _initListCustomPermission() {
+            vm.modulesCustomPermission = {
+                'page_PUT': true, 'editions_POST': true, 'editions_PUT': true,
+                'editions_DELETE': true, 'course_graduation_PUT': true, 'course_master_PUT': true,
+                'course_doctorate_PUT': true, 'course_specialization_PUT': true
+            };
         }
 
         onInit();

@@ -37,55 +37,20 @@
                             <span>{{ value }}</span>
                         </label>
                         <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'page_PUT'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'editions_POST'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'editions_PUT'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'editions_DELETE'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'course_graduation_PUT'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'course_master_PUT'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'course_doctorate_PUT'">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
-                        </span>
-                        <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
-                            ng-show="contextName.context+'_'+key == 'course_specialization_PUT'">
+                            ng-show="vm.hasCustomPermission(contextName.context, key)">
                             <i class="glyphicon glyphicon-cog"></i>
                             Personalizar permissões
                         </span>
                     </div>
-                    <div ng-if="contextName.context+'_'+key === 'page_PUT' && vm.listPermissions['page'][key][0] !== undefined && vm.user.resources_perms['page'][key][0] !== 'PUT' && !!vm.user.resources_perms[contextName.context][key]">
+                    <div ng-if="vm.hasCustomPermissionSetted(contextName.context, key)">
                         <ui-select ng-model="vm.onlyVisualization" title="Este usuário pode editar" append-to-body="true">
                             <ui-select-match placeholder="Este usuário pode editar">Este usuário pode editar</ui-select-match>
-                            <ui-select-choices repeat="item in vm.listPermissions['page'][key] | filter: $select.search">
+                            <ui-select-choices repeat="item in vm.listPermissions[contextName.context][key] | filter: $select.search">
                                 <span ng-bind-html="item.title | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div ng-if="contextName.context+'_'+key === 'editions_POST' && vm.listPermissions['editions'][key][0] !== undefined && vm.user.resources_perms['editions'][key][0] !== 'POST' && !!vm.user.resources_perms[contextName.context][key]">
+                    <!-- <div ng-if="contextName.context+'_'+key === 'editions_POST' && vm.listPermissions['editions'][key][0] !== undefined && vm.user.resources_perms['editions'][key][0] !== 'POST' && !!vm.user.resources_perms[contextName.context][key]">
                         <ui-select ng-model="vm.onlyVisualization" title="Este usuário pode editar" append-to-body="true">
                             <ui-select-match placeholder="Este usuário pode editar">Este usuário pode editar</ui-select-match>
                             <ui-select-choices repeat="item in vm.listPermissions['editions'][key] | filter: $select.search">
@@ -140,7 +105,7 @@
                                 <span ng-bind-html="item.title | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                    </div>
+                    </div> -->
                 </div>
             </v-pane-content>
         </v-pane>

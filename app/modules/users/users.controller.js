@@ -6,18 +6,9 @@
         .controller('UsersController', UsersController);
 
     /** ngInject */
-    function UsersController(
-        $rootScope,
-        UsersService,
-        ModalService,
-        NotificationService,
-        PermissionService,
-        dataTableConfigService,
-        Util,
-        authService,
-        ENV,
-        $log
-    ) {
+    function UsersController($rootScope, UsersService, ModalService, NotificationService, PermissionService,
+        dataTableConfigService, Util, authService, ENV, $log) {
+
         $log.info('UsersController');
 
         var vm = this;
