@@ -219,13 +219,12 @@
         }
         
         function hasCustomPermissionSetted(context, key) {
-            // console.log('hasCustomPermission', context, vm.listPermissions);
             if(!vm.listPermissions[context]) {
                 return false;
             }
             let hasCustomPerm = hasCustomPermission(context, key);
             let hasResourcePerm = hasCustomPerm && vm.user.resources_perms[context] && !!vm.user.resources_perms[context][key];
-            let hasCustomSet = hasResourcePerm && vm.listPermissions[context][key][0] !== undefined;
+            let hasCustomSet = hasResourcePerm && vm.listPermissions[context][key] && vm.listPermissions[context][key][0] !== undefined;
             return hasCustomSet;
         }
 
@@ -251,23 +250,32 @@
             return resp;
         }
 
-        function contextData(op) {
+        function contextData(op, element) {
             switch (op) {
                 case 'page':
-                    return PagesService.getPages();
+                    return _handleContextData(PagesService.getPages(), element);
                 case 'editions':
-                    return PeriodicalService.getPeriodicals();
+                    return _handleContextData(PeriodicalService.getPeriodicals(), element);
                 case 'course_graduation':
-                    return CourseService.getCourses('graduation');
+                    return _handleContextData(CourseService.getCourses('graduation'), element);
                 case 'course_specialization':
-                    return CourseService.getCourses('specialization');
+                    return _handleContextData(CourseService.getCourses('specialization'), element);
                 case 'course_master':
-                    return CourseService.getCourses('master');
+                    return _handleContextData(CourseService.getCourses('master'), element);
                 case 'course_doctorate':
-                    return CourseService.getCourses('doctorate');
+                    return _handleContextData(CourseService.getCourses('doctorate'), element);
                 default:
                     return $q.resolve(false);
             }
+        }
+
+        function _handleContextData(promise, element) {
+            return promise.then(function(result) {
+                return {
+                    data: result.data,
+                    element: element
+                }
+            });
         }
 
         function _mountItem(contextName, item) {
@@ -295,18 +303,19 @@
                 return;
             }
             isLoadAccordion[contextName] = true;
-            var contextPermissions = _contextPermissions(contextName);
-            for (var index = 0; index < contextPermissions.length; index++) {
-                var element = contextPermissions[index];
+            let contextPermissions = _contextPermissions(contextName);
+            contextPermissions.forEach(function(element) {
                 if (element.valuePermission) {
-                    contextData(contextName)
+                    contextData(contextName, element)
                         .then(function (res) {
-                            vm.listPermissions[contextName] = {};
-                            vm.listPermissions[contextName][element.permission] = _mountListPermissionContextId(res.data.items, element);
-                            angular.element('#' + contextName + '_' + element.permission).prop('indeterminate', true);
+                            if(!vm.listPermissions[contextName]) {
+                                vm.listPermissions[contextName] = {};
+                            }
+                            vm.listPermissions[contextName][res.element.permission] = _mountListPermissionContextId(res.data.items, res.element);
+                            angular.element('#' + contextName + '_' + res.element.permission).prop('indeterminate', true);
                         });
                 }
-            }
+            });
         };
 
         function _mountListPermissionContextId(listContext, contextPermissions) {
