@@ -6,17 +6,11 @@
         .controller('UsersPermissionModelController', UsersPermissionModelController);
 
     /** ngInject */
-    function UsersPermissionModelController($log,
-        DTOptionsBuilder,
-        $window,
-        PagesService,
-        CourseService,
-        contextPermissions,
-        PeriodicalService,
-        $timeout,
-        $uibModalInstance) {
-        var vm = this;
-        var lengthOfDataContext = 0;
+    function UsersPermissionModelController($log, DTOptionsBuilder, $window, PagesService, CourseService,
+        contextPermissions, PeriodicalService, $timeout, $uibModalInstance) {
+
+        let vm = this;
+        let lengthOfDataContext = 0;
         vm.heightScreen = $window.screen.availHeight * 0.78;
         vm.configTableDeselected = {};
         vm.configTableDeselected.page = 1;
@@ -31,50 +25,38 @@
         vm.cancel = _cancel;
         vm.save = _save;
 
-        vm.changeTable = function () {
-            _changeTables();
-        };
+        vm.changeTable = _changeTables;
 
         function onInit() {
             $log.info('UsersPermissionModelController');
             switch (contextPermissions.context) {
                 case 'page':
-                    PagesService
-                        .getPages()
-                        .then(function (res) {
-                            _mountListPermissionContextId(res.data.items);
-                        });
+                    _getItems(PagesService.getPages());
                     break;
                 case 'editions':
-                    PeriodicalService
-                        .getPeriodicals()
-                        .then(function (res) {
-                            _mountListPermissionContextId(res.data.items);
-                        });
+                    _getItems(PeriodicalService.getPeriodicals());
                     break;
                 case 'course_graduation':
-                    CourseService.getCourses('graduation').then(function (res) {
-                        _mountListPermissionContextId(res.data.items);
-                    });
+                    _getItems(CourseService.getCourses('graduation'));
                     break;
                 case 'course_specialization':
-                    CourseService.getCourses('specialization').then(function (res) {
-                        _mountListPermissionContextId(res.data.items);
-                    });
+                    _getItems(CourseService.getCourses('specialization'));
                     break;
                 case 'course_master':
-                    CourseService.getCourses('master').then(function (res) {
-                        _mountListPermissionContextId(res.data.items);
-                    });
+                    _getItems(CourseService.getCourses('master'));
                     break;
                 case 'course_doctorate':
-                    CourseService.getCourses('doctorate').then(function (res) {
-                        _mountListPermissionContextId(res.data.items);
-                    });
+                    _getItems(CourseService.getCourses('doctorate'));
                     break;
                 default:
                     break;
             }
+        }
+
+        function _getItems(promise) {
+            promise.then(function(res) {
+                _mountListPermissionContextId(res.data.items);
+            });
         }
 
         function _cancel() {
@@ -86,23 +68,10 @@
         }
 
         function _mountItem(item) {
-            if (contextPermissions.context === 'page') {
-                return {
-                    id: item.id,
-                    title: item.title
-                };
-            } else if (contextPermissions.context === 'editions') {
-                return {
-                    id: item.id,
-                    title: item.name
-                };
-            } else if (contextPermissions.context.substr(0, 6) === 'course') {
-                return {
-                    id: item.id,
-                    title: item.name
-                };
+            if(item) {
+                return { id: item.id, title: item.title || item.name };
             }
-            return false;
+            return null;
         }
 
         function _changeTables() {
@@ -117,36 +86,16 @@
 
         function _mountListPermissionContextId(listContext) {
             lengthOfDataContext = listContext.length;
-            vm.selecteds = [];
+            let permissions = angular.isString(contextPermissions.valuePermission) ? contextPermissions.valuePermission : '';
             vm.deselects = [];
-            var isString = angular.isString(contextPermissions.valuePermission);
-            var countIsVerify = 0;
-            if (isString) {
-                var arraycontextPermissions = contextPermissions.valuePermission.split(',');
-                for (var i = 0; i < listContext.length; i++) {
-                    var item = listContext[i];
-                    for (var j = 0; j < arraycontextPermissions.length; j++) {
-                        var contextId = arraycontextPermissions[j];
-                        if (item.id.toString() === contextId.toString()) {
-                            vm.selecteds.push(_mountItem(item));
-                            listContext[i] = null;
-                            countIsVerify++;
-                            break;
-                        }
-                    }
-                    if (arraycontextPermissions.length === countIsVerify) {
-                        vm.configTableSelected.size = vm.selecteds.length;
-                        break;
-                    }
-                    item = null;
+            vm.selecteds = listContext.filter(function(item) {
+                let isSelected = permissions.includes(item.id.toString());
+                if(!isSelected) {
+                    vm.deselects.push(_mountItem(item));
                 }
-            }
-            for (var k = 0; k < listContext.length; k++) {
-                var el = listContext[k];
-                if (el) {
-                    vm.deselects.push(_mountItem(el));
-                }
-            }
+                return isSelected;
+            }).map(function(item) { return _mountItem(item); });
+            vm.configTableSelected.size = vm.selecteds.length;
             vm.configTableDeselected.size = vm.deselects.length;
             $timeout(function () {
                 _changeTables();
@@ -154,10 +103,9 @@
         }
 
         function _arrayRemoveItem(arr, item) {
-            for (var i = arr.length; i--;) {
-                if (arr[i] === item) {
-                    arr.splice(i, 1);
-                }
+            let idx = arr.indexOf(item);
+            if(idx !== -1) {
+                arr.splice(idx, 1);
             }
         }
 
@@ -179,21 +127,17 @@
 
 
         function _updateCustomPermission() {
-            var array = {
-                ids: [],
-                data: []
-            };
-            var contextIds = false;
+            let array = { ids: [], data: [] };
+            let contextIds = false;
             if (!vm.selecteds) {
                 return [];
             }
-            for (var i = 0; i < vm.selecteds.length; i++) {
-                var select = vm.selecteds[i];
-                array.ids.push(select.id);
+            vm.selecteds.forEach(function (selected) {
+                array.ids.push(selected.id);
                 array.data.push({
-                    title: select.name || select.title
+                    title: selected.name || selected.title
                 });
-            }
+            });
             if (array.ids.length !== 0) {
                 if (array.data.length === lengthOfDataContext) {
                     contextIds = true;

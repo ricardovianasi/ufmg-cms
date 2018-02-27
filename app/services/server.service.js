@@ -26,11 +26,11 @@
         }
 
         function getData(keyData) {
-            return dataLoaded[keyData];
+            return angular.copy(dataLoaded[keyData]);
         }
 
         function setData(keyData, data) {
-            dataLoaded[keyData] = data;
+            dataLoaded[keyData] = angular.copy(data);
         }
 
         function clearData(key) {

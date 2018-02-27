@@ -310,7 +310,6 @@
         };
 
         function _mountListPermissionContextId(listContext, contextPermissions) {
-            console.log('_mountListPermissionContextId', listContext, contextPermissions);
             var selecteds = [];
             var isString = angular.isString(contextPermissions.valuePermission);
             var countIsVerify = 0;
