@@ -6,7 +6,7 @@
         .controller('UsersFormController', UsersFormController);
 
     /** ngInject */
-    function UsersFormController($routeParams, $log, $q, UsersService, ResourcesService, PagesService, $uibModal,
+    function UsersFormController($routeParams, $log, $q, UsersService, ResourcesService, PagesService, ModalService,
         PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService) {
 
         var vm = this;
@@ -33,6 +33,8 @@
 
         vm.hasCustomPermission = hasCustomPermission;
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
+        vm.openModulesPermission = openModulesPermission;
+        vm.loadMoreUser = loadMoreUser;
 
         function onInit() {
             $log.info('UsersFormController');
@@ -52,13 +54,17 @@
                 .registerHandleChange('/user', ['POST', 'PUT'], $scope, ['vm.user'], undefined, _hasLoaded);
         }
 
-        vm.loadMoreUser = function (search) {
+        function loadMoreUser (search) {
             reset(vm.moderators);
             loadMore(vm.moderators, search)
                 .then(function (data) {
                     vm.moderators = Object.assign(vm.moderators, data);
                 });
-        };
+        }
+
+        function openModulesPermission() {
+            let modal = _openModulesPermissionModal();
+        }
 
         function _hasLoaded(oldValue) {
             return (oldValue && angular.isDefined(oldValue.id)) || angular.isUndefined(userId);
@@ -355,7 +361,7 @@
         };
 
         function _modalGetContext(context, permission, contextTitle) {
-            _openModal(context, permission, contextTitle)
+            _openCustomPermissionModal(context, permission, contextTitle)
                 .result
                 .then(function (contextPermissions) {
                     if (angular.isUndefined(vm.listPermissions[context])) {
@@ -380,28 +386,28 @@
                 });
         }
 
-        function _openModal(context, permission, contextTitle) {
-            return $uibModal.open({
-                templateUrl: 'modules/users/form/permission/custom-permission-modal/custom-permission.template.html',
-                controller: 'CustomPermissionController',
-                controllerAs: 'vm',
-                backdrop: 'static',
-                resolve: {
-                    contextPermissions: function () {
-                        vm.user.resources_perms = vm.user.resources_perms ? vm.user.resources_perms : {};
-                        vm.user.resources_perms[context] = vm.user.resources_perms[context] ?
-                            vm.user.resources_perms[context] : {};
-                        vm.user.resources_perms[context][permission] = vm.user.resources_perms[context][permission] ?
-                            vm.user.resources_perms[context][permission] : [];
-                        return {
-                            title: contextTitle,
-                            context: context,
-                            valuePermission: vm.user.resources_perms[context][permission]
-                        };
-                    }
-                },
-                size: 'xl'
-            });
+        function _openCustomPermissionModal(context, permission, contextTitle) {
+            let resolveModal = {
+                contextPermissions: function () {
+                    vm.user.resources_perms = vm.user.resources_perms ? vm.user.resources_perms : {};
+                    vm.user.resources_perms[context] = vm.user.resources_perms[context] ?
+                        vm.user.resources_perms[context] : {};
+                    vm.user.resources_perms[context][permission] = vm.user.resources_perms[context][permission] ?
+                        vm.user.resources_perms[context][permission] : [];
+                    return {
+                        title: contextTitle,
+                        context: context,
+                        valuePermission: vm.user.resources_perms[context][permission]
+                    };
+                }
+            };
+            return ModalService.openModal('modules/users/form/permission/custom-permission-modal/custom-permission.template.html',
+                'CustomPermissionController as vm', resolveModal, 'xl');
+        }
+
+        function _openModulesPermissionModal() {
+            return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
+            'ModulesPermissionController as vm', null, 'xl');
         }
 
         function _getResources() {

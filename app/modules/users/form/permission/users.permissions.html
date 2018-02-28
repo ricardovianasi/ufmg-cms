@@ -41,6 +41,10 @@
                             <i class="glyphicon glyphicon-cog"></i>
                             Personalizar permissões
                         </span>
+                        <span class="custom-modal" ng-click="vm.openModulesPermission()" ng-show="key === 'PUTSPECIAL'">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            Personalizar permissões
+                        </span>
                     </div>
                     <div ng-if="vm.hasCustomPermissionSetted(contextName.context, key)">
                         <ui-select ng-model="vm.onlyVisualization" title="Este usuário pode editar" append-to-body="true">
