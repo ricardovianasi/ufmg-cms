@@ -3,10 +3,10 @@
 
     angular
         .module('usersModule')
-        .controller('UsersPermissionModelController', UsersPermissionModelController);
+        .controller('CustomPermissionController', CustomPermissionController);
 
     /** ngInject */
-    function UsersPermissionModelController($log, DTOptionsBuilder, $window, PagesService, CourseService,
+    function CustomPermissionController($log, DTOptionsBuilder, $window, PagesService, CourseService,
         contextPermissions, PeriodicalService, $timeout, $uibModalInstance) {
 
         let vm = this;
@@ -28,7 +28,7 @@
         vm.changeTable = _changeTables;
 
         function onInit() {
-            $log.info('UsersPermissionModelController');
+            $log.info('CustomPermissionController');
             switch (contextPermissions.context) {
                 case 'page':
                     _getItems(PagesService.getPages());

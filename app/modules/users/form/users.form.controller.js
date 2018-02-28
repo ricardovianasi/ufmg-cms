@@ -382,8 +382,8 @@
 
         function _openModal(context, permission, contextTitle) {
             return $uibModal.open({
-                templateUrl: 'modules/users/form/permission/users.permissions.model.html',
-                controller: 'UsersPermissionModelController',
+                templateUrl: 'modules/users/form/permission/custom-permission-modal/custom-permission.template.html',
+                controller: 'CustomPermissionController',
                 controllerAs: 'vm',
                 backdrop: 'static',
                 resolve: {
