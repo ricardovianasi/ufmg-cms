@@ -271,10 +271,7 @@
 
         function _handleContextData(promise, element) {
             return promise.then(function(result) {
-                return {
-                    data: result.data,
-                    element: element
-                }
+                return { data: result.data, element: element };
             });
         }
 
