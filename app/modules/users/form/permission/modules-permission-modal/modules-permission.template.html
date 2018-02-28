@@ -1,3 +1,18 @@
 <div class="page-container">
-    modules-permission-work
+    <div class="main-content ms-container">
+        <div class="row">
+            <h3>Personalizar acesso aos módulos</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <ui-select ng-model="vm.pageSelected" theme="bootstrap" class="ui-select" title="Selecione uma página...">
+                    <ui-select-match placeholder="Procure uma página...">{{ $select.selected.title }}</ui-select-match>
+                    <ui-select-choices repeat="item.id as item in vm.pages | filter: $select.search track by $index" scroll-detect="vm.loadMorePage($select.search)"
+                        refresh="vm.loadMorePage($select.search)" refresh-delay="300">
+                        <div ng-bind-html="item.title | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
 </div>
