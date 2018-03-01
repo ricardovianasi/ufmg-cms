@@ -147,7 +147,6 @@
                     vm.datepickerOpt.initDatea.dateOptions.minDate = null;
                     vm.datepickerOpt.initDatea.dateOptions.maxDate = null;
                     vm.isScheduledRetroactive = false;
-
                     if (isChangeScheduled && !isEdit) {
                         vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         vm.showMessageWarn = true;
@@ -157,10 +156,6 @@
                             vm.obj.post_date = '';
                             vm.obj.scheduled_time = '';
                         }
-                    } else if (isChangeScheduled && isPublishedObj && isEdit) {
-                        vm.showMessageError = true;
-                        vm.messageText = 'Já está publicada.';
-                        vm.isScheduledRetroactive = true;
                     } else if (isChangeScheduled && !isPublishedObj && isEdit) {
                         vm.datepickerOpt.initDatea.dateOptions.minDate = new Date();
                         if (verifyHourFuture() && !vm.showLoad) {
@@ -172,12 +167,12 @@
                         let yesterdayDate = new Date();
                         yesterdayDate.setDate(yesterdayDate.getDate() - 1);
                         let isDateChoiceFuture = dateChoice.valueOf() > yesterdayDate.valueOf();
-                        vm.datepickerOpt.initDatea.dateOptions.maxDate = yesterdayDate;
-                        console.log('isChangePublished isEdit', dateChoice, yesterdayDate, vm.obj.scheduled_date);
-                        if (isPublishedObj && isDateChoiceFuture) {
-                            vm.showMessageError = true;
-                            vm.messageText = 'Já está publicado, datas futuras não são válidas. Altere a data.';
-                        } else if (isScheduledObj && isDateChoiceFuture) {
+                        vm.datepickerOpt.initDatea.dateOptions.maxDate = new Date();
+                        // if (isPublishedObj && isDateChoiceFuture) {
+                        //     vm.showMessageError = true;
+                        //     vm.messageText = 'Já está publicado, datas futuras não são válidas. Altere a data.';
+                        // } else
+                        if (isScheduledObj && isDateChoiceFuture) {
                             vm.showMessageError = true;
                             vm.messageText = 'Já está agendado, altere a data para publicação';
                             vm.obj.post_date = '';
