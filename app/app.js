@@ -50,8 +50,8 @@
         'serviceModule',
         'loginModule',
         'faqModule',
+        'tagsManagerModule',
         'usersModule',
-        'accountModule',
-        'tagsModule'
+        'accountModule'
     ]);
 })();

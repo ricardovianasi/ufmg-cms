@@ -12,22 +12,10 @@
         article,
         MediaService,
         RedactorPluginService,
-        TagsService,
         ManagerFileService,
         $log,
         validationService) {
         $log.info('ArticleModalController');
-
-
-        var allTags = [];
-
-        TagsService.getTags().then(function (data) {
-            allTags = data.data.items;
-        });
-
-        $scope.findTags = function ($query) {
-            return TagsService.findTags($query, allTags);
-        };
 
         $scope.article = {};
         $scope.article.tags = [];
