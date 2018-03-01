@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('tagsModule')
+        .module('tagsManagerModule')
         .controller('TagsController', TagsController);
 
         /** ngInject */

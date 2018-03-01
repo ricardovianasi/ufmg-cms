@@ -221,7 +221,7 @@
                             }, {
                                 icon: 'fa fa-tag',
                                 name: 'Tags',
-                                location: 'tags',
+                                location: 'tags-manager',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionTags
