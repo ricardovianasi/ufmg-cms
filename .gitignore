@@ -10,3 +10,4 @@ app/env-local.json
 app/env-local.json.dist
 .DS_Store
 test.js
+package-lock.json
