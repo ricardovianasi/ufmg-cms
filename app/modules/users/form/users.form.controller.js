@@ -406,8 +406,13 @@
         }
 
         function _openModulesPermissionModal() {
+            let resolve = {
+                dataPermissionModule: {
+                    highlightednews: [273]
+                }
+            };
             return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-            'ModulesPermissionController as vm', null, 'xl');
+            'ModulesPermissionController as vm', resolve, 'xl');
         }
 
         function _getResources() {

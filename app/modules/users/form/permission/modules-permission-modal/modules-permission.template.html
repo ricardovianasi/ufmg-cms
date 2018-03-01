@@ -5,13 +5,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <ui-select ng-model="vm.pageSelected" theme="bootstrap" class="ui-select" title="Selecione uma página...">
-                    <ui-select-match placeholder="Procure uma página...">{{ $select.selected.title }}</ui-select-match>
-                    <ui-select-choices repeat="item.id as item in vm.pages | filter: $select.search track by $index" scroll-detect="vm.loadMorePage($select.search)"
-                        refresh="vm.loadMorePage($select.search)" refresh-delay="300">
-                        <div ng-bind-html="item.title | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+                <select-pages-component page-selected="vm.pageSelected"></select-pages-component>
             </div>
         </div>
     </div>
