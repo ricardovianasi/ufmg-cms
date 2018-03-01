@@ -14,6 +14,8 @@
             controllerAs: 'ctrlSelectPage',
             bindings: {
                 pageSelected: '=',
+                placeholder: '@',
+                title: '@'
             },
         });
 
@@ -66,8 +68,14 @@
             ctrl.isAllLoaded = false;
         }
 
+        function _initParams() {
+            ctrl.titleDefault = ctrl.title || 'Selecione uma página...';
+            ctrl.placeHolderDefault = ctrl.placeholder || 'Procure uma página...';
+        }
+
         ctrl.$onInit = function() {
             _initParamsSelectPage();
+            _initParams();
         };
         ctrl.$onChanges = function(changesObj) { };
         ctrl.$onDestroy = function() { };

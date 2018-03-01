@@ -158,13 +158,15 @@
         <publishment-options is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
         <div class="panel panel-default" onload="loadMorePage()">
             A página atual é filha de:
-            <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
+            <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
+            
+            <!-- <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
                 <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.title }}</ui-select-match>
                 <ui-select-choices repeat="item.id as item in pagesParent | filter: $select.search track by $index" scroll-detect="loadMorePage()"
                     refresh="loadMorePage($select.search)" refresh-delay="300">
                     <div ng-bind-html="item.title | highlight: $select.search"></div>
                 </ui-select-choices>
-            </ui-select>
+            </ui-select> -->
         </div>
         <div class="panel panel-default" ng-if="User.is_administrator">
             Tipo da página:
