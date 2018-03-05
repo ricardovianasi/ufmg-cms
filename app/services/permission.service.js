@@ -22,7 +22,8 @@
             canPutTag: canPutTag,
             run: initService,
             hasPermission: hasPermission,
-            hasPermissionId: hasPermissionId
+            hasPermissionId: hasPermissionId,
+            getPrivilege: getPrivilege
         };
 
         function hasContext(permission, context) {

@@ -61,6 +61,11 @@
             }
         }
 
+        function _setPermissionEditBar() {
+            let previlege = PermissionService.getPrivilege('course_'+vm.type, 'PUT');
+            vm.canEditSideBar = previlege && previlege.posts === null;
+        }
+
         function _hasLoaded(oldValue) {
             return oldValue && angular.isDefined(oldValue.id) || !vm.courseId;
         }
@@ -79,6 +84,7 @@
                     .then(function (res) {
                         vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         vm.courses = res.data;
+                        _setPermissionEditBar();
                         var records = {
                             'draw': params.draw,
                             'recordsTotal': res.data.total,
