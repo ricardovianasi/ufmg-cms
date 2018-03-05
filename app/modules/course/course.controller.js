@@ -63,7 +63,7 @@
 
         function _setPermissionEditBar() {
             let previlege = PermissionService.getPrivilege('course_'+vm.type, 'PUT');
-            vm.canEditSideBar = previlege && previlege.posts === null;
+            vm.canEditSideBar = (previlege && previlege.posts === null) || PermissionService.isAdministrator();
         }
 
         function _hasLoaded(oldValue) {
