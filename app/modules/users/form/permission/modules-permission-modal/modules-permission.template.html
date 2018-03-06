@@ -1,5 +1,19 @@
 <div class="page-container">
     <div class="main-content ms-container">
+        <div class="container-modules">
+            <h3>Selecione o módulo</h3>
+            <div class="form-group select-modules">
+                <ui-select ng-disabled="vm.loadingWidgets" ng-model="vm.widgetSelected" on-select="vm.onWidgetSelected($item)" class="ui-select">
+                    <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
+                    <ui-select-choices repeat="widget in vm.widgets |filter: $select.search" group-by="'group'">
+                        <div ng-bind-html="widget.label|highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="container-pages">
+
+        </div>
         <div class="row">
             <h3>Personalizar acesso aos módulos</h3>
         </div>
