@@ -22,8 +22,14 @@
             canPutTag: canPutTag,
             run: initService,
             hasPermission: hasPermission,
-            hasPermissionId: hasPermissionId
+            hasPermissionId: hasPermissionId,
+            getPrivilege: getPrivilege,
+            isAdministrator: isAdministrator
         };
+
+        function isAdministrator() {
+            return $rootScope.User.is_administrator;
+        }
 
         function hasContext(permission, context) {
             if (permission.resource === context) {

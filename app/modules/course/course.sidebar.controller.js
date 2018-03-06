@@ -5,15 +5,8 @@
         .controller('CourseSidebarController', CourseSidebarController);
 
     /** ngInject */
-    function CourseSidebarController($scope,
-        $routeParams,
-        WidgetsService,
-        ModalService,
-        CourseService,
-        NotificationService,
-        $rootScope,
-        $location,
-        HandleChangeService) {
+    function CourseSidebarController($scope, $routeParams, WidgetsService, ModalService, CourseService,
+        NotificationService, $rootScope, $location, HandleChangeService, $timeout) {
         var vm = this;
 
         vm.type = $routeParams.type;
@@ -21,14 +14,14 @@
         vm.handleModule = handleModule;
         vm.save = _save;
 
-        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
-            ['course'], undefined, _hasLoaded);
-
         $scope.course = {
             widgets: {
                 sidebar: []
             }
         };
+
+        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
+            ['course.widgets.sidebar'], _evenedUpSideBar, _hasLoaded);
 
         if (typeof vm.courseId !== 'undefined') {
             _getCoursesRoutes();
@@ -37,19 +30,32 @@
         }
 
         function _hasLoaded(oldValue) {
-            return oldValue.widgets.sidebar.length > 0 || !vm.courseId;
+            return vm.loadedSidebar;
+        }
+
+        function _evenedUpSideBar(sidebar) {
+            return sidebar.map(function(widget) {
+                delete widget.content;
+                delete widget.links;
+                return widget;
+            });
         }
 
         function _getCourses() {
-            CourseService.getCourses(vm.type, true).then(function (data) {
-                $scope.course.widgets.sidebar = data.data.items[0].sidebar;
+            vm.loadedSidebar = false;
+            CourseService.getCourses().then(function (data) {
+                let course = data.data.items.find(function(c) { return c.slug === vm.type; });
+                $scope.course.widgets.sidebar = course.sidebar;
+                $timeout(function() { vm.loadedSidebar = true; }, 1000);
             });
         }
 
         function _getCoursesRoutes() {
+            vm.loadedSidebar = false;
             CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
                 if (data.data.sidebar.length > 0) {
                     $scope.course.widgets.sidebar = data.data.sidebar;
+                    $timeout(function() { vm.loadedSidebar = true; }, 1000);
                 } else {
                     _getCourses();
                 }
@@ -88,8 +94,9 @@
                     $location.path('course/list/' + vm.type);
                 });
             } else {
-                CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function () {
+                CourseService.updateCourses(vm.type, $scope.course.widgets.sidebar).then(function (dataUpdated) {
                     NotificationService.success('sidebar salva com sucesso!');
+                    CourseService.updateCoursesLocal(vm.type, dataUpdated.data);
                     $location.path('course/list/' + vm.type);
                 });
             }
