@@ -14,14 +14,14 @@
         vm.handleModule = handleModule;
         vm.save = _save;
 
-        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
-            ['course'], undefined, _hasLoaded);
-
         $scope.course = {
             widgets: {
                 sidebar: []
             }
         };
+
+        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
+            ['course.widgets.sidebar'], _evenedUpSideBar, _hasLoaded);
 
         if (typeof vm.courseId !== 'undefined') {
             _getCoursesRoutes();
@@ -30,7 +30,15 @@
         }
 
         function _hasLoaded(oldValue) {
-            return oldValue.widgets.sidebar.length > 0 || !vm.courseId;
+            return oldValue.length > 0 || !vm.courseId;
+        }
+
+        function _evenedUpSideBar(sidebar) {
+            return sidebar.map(function(widget) {
+                delete widget.content;
+                delete widget.links;
+                return widget;
+            });
         }
 
         function _getCourses() {
