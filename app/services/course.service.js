@@ -7,6 +7,8 @@
     /**ngInject */
     function CourseService($http, $filter, apiUrl, WidgetsService, ServerService) {
 
+        let KEY_COURSES_BASE = 'courses';
+
         function _parseCoursesData(widgets) {
             let cleanData = {
                 sidebar: WidgetsService.parseListWidgetsToSave(widgets)
@@ -30,12 +32,9 @@
         }
 
         function _prepareUrlToGetCourses(type, slug, params) {
-            type = type || '';
+            type =  type ? '/' + type : '';
             params = angular.isUndefined(params) ? '' : params;
-            let url = $filter('format')('{0}/course/{1}{2}', apiUrl, type, params);
-            if (slug) {
-                url = $filter('format')('{0}/course?search=slug%3D{1}', apiUrl, type);
-            }
+            let url = $filter('format')('{0}/course{1}{2}', apiUrl, type, params);
             return url;
         }
         
@@ -59,7 +58,8 @@
             getCourses: function (type, slug, params) {
                 let url = _prepareUrlToGetCourses(type, slug, params);
                 let configGet = { useLoaded: angular.isUndefined(params) };
-                return ServerService.getLoaded('courses' + type, url, configGet);
+                let keyData = KEY_COURSES_BASE + (type || '');
+                return ServerService.getLoaded(keyData, url, configGet);
             },
             uploadCourseCover: function (type, course_id, cover_id) {
                 var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
@@ -81,6 +81,16 @@
             updateTypeCourse: function (type, course_id, data) {
                 var url = $filter('format')('{0}/course/{1}/{2}', apiUrl, type, course_id);
                 return $http.put(url, data);
+            },
+            updateCoursesLocal: function (type, data) {
+                if(!ServerService.hasData(KEY_COURSES_BASE)) { return; }
+                let dataLocalCourses = ServerService.getData(KEY_COURSES_BASE);
+                dataLocalCourses.data.items.forEach(function(course, i) {
+                    if (course.slug === type) {
+                        dataLocalCourses.data.items[i] = data;
+                    }
+                });
+                ServerService.setData(KEY_COURSES_BASE, dataLocalCourses);
             }
         };
     }
