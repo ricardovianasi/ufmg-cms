@@ -6,7 +6,7 @@
 
     /** ngInject */
     function CourseSidebarController($scope, $routeParams, WidgetsService, ModalService, CourseService,
-        NotificationService, $rootScope, $location, HandleChangeService) {
+        NotificationService, $rootScope, $location, HandleChangeService, $timeout) {
         var vm = this;
 
         vm.type = $routeParams.type;
@@ -30,7 +30,7 @@
         }
 
         function _hasLoaded(oldValue) {
-            return oldValue.length > 0 || !vm.courseId;
+            return vm.loadedSidebar;
         }
 
         function _evenedUpSideBar(sidebar) {
@@ -42,16 +42,20 @@
         }
 
         function _getCourses() {
+            vm.loadedSidebar = false;
             CourseService.getCourses().then(function (data) {
                 let course = data.data.items.find(function(c) { return c.slug === vm.type; });
                 $scope.course.widgets.sidebar = course.sidebar;
+                $timeout(function() { vm.loadedSidebar = true; }, 1000);
             });
         }
 
         function _getCoursesRoutes() {
+            vm.loadedSidebar = false;
             CourseService.getCourseRoute(vm.type, vm.courseId).then(function (data) {
                 if (data.data.sidebar.length > 0) {
                     $scope.course.widgets.sidebar = data.data.sidebar;
+                    $timeout(function() { vm.loadedSidebar = true; }, 1000);
                 } else {
                     _getCourses();
                 }
