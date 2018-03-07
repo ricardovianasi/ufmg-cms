@@ -14,6 +14,7 @@
             controllerAs: 'ctrlSelectPage',
             bindings: {
                 pageSelected: '=',
+                isDisabled: '=',
                 placeholder: '@',
                 title: '@',
                 onPageSelected: '&'

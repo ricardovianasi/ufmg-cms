@@ -12,15 +12,19 @@
                 </ui-select>
             </div>
             <div class="form-group col-md-6">
-                <label>Escolha uma página</label>
-                <select-pages-component on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="vm.pageSelected"></select-pages-component>
+                <label>Adicione uma página</label>
+                <select-pages-component is-disabled="!vm.widgetSelected" on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="vm.pageSelected"></select-pages-component>
             </div>
         </div>
         <div class="container-pages row">
             <div class="col-md-12">
-                <h4>Paginas com acesso ao módulo <b> {{ vm.widgetSelected.label }} </b></h4>
-                <table-full-data full-datas="vm.listAllowedPages" limit="10" cols="vm.cols"></table-full-data>
+                <p ng-show="vm.widgetSelected"> <b> {{ vm.widgetSelected.label }} </b> estará disponível para o usuário <b> {{ vm.currentUser }} </b> nas páginas: </p>
+                <table-full-data full-datas="vm.dataPermissions[vm.widgetSelected.type]" limit="10" cols="vm.cols"></table-full-data>
             </div>
+        </div>
+        <div class="actions-modal pull-right">
+            <button class="btn btn-default" ng-click="vm.cancel()">Cancelar</button>
+            <button class="btn btn-primary" ng-click="vm.ok()">Alterar</button>
         </div>
     </div>
 </div>

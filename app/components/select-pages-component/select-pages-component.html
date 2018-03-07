@@ -1,7 +1,8 @@
 <ui-select ng-model="ctrlSelectPage.pageSelected"
     theme="bootstrap" class="ui-select"
     title="{{ ctrlSelectPage.titleDefault }}"
-    on-select="ctrlSelectPage.onPageSelect($select.selected)">
+    on-select="ctrlSelectPage.onPageSelect($select.selected)"
+    ng-disabled="ctrlSelectPage.isDisabled">
     <ui-select-match placeholder="{{ ctrlSelectPage.placeHolderDefault }}">{{ $select.selected.title }}</ui-select-match>
     <ui-select-choices repeat="item.id as item in ctrlSelectPage.pages | filter: $select.search track by $index" scroll-detect="ctrlSelectPage.loadMorePage($select.search)"
         refresh="ctrlSelectPage.loadMorePage($select.search)" refresh-delay="300">

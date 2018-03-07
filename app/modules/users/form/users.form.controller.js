@@ -407,9 +407,15 @@
 
         function _openModulesPermissionModal() {
             let resolve = {
-                dataPermissionModule: {
-                    highlightednews: [273]
-                }
+                dataPermissionModule: function() {
+                    return { highlightednews: [
+                        {
+                            title: '7º Festival de Verão da UFMG',
+                            id:216
+                        }
+                    ] }
+                },
+                currentUser: function () { return vm.user.name }
             };
             return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
             'ModulesPermissionController as vm', resolve, 'md');
