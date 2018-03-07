@@ -6,7 +6,7 @@
         .controller('ModulesPermissionController', ModulesPermissionController);
 
     /** ngInject */
-    function ModulesPermissionController(WidgetsService, PagesService, Util, dataPermissionModule) {
+    function ModulesPermissionController(WidgetsService, PagesService, Util, NotificationService, dataPermissionModule) {
         let vm = this;
 
         vm.onWidgetSelected = onWidgetSelected;
@@ -21,9 +21,31 @@
         }
 
         function onPageSelected(page) {
-            console.log('onPageSelected', page);
             _addActions(page);
-            vm.permissionPages.push(page);
+            _addPage(page);
+            vm.pageSelected = undefined;
+        }
+        
+        function _addPage(page) {
+            let idxPage = _getIndexPage(page);
+            if(idxPage === -1) {
+                vm.listAllowedPages.push(page);
+            } else {
+                NotificationService.warn('Esta pagina já foi inserida.');
+            }
+        }
+
+        function _removePage(page) {
+            let idxPage = _getIndexPage(page);
+            if(idxPage !== -1) {
+                vm.listAllowedPages.splice(idxPage, 1);
+            }
+        }
+
+        function _getIndexPage(page) {
+            return vm.listAllowedPages.findIndex(function(pg) {
+                return pg.id === page.id;
+            });
         }
 
         function _addActions(page) {
@@ -31,8 +53,8 @@
                 {
                     buttonTitle: 'Remover',
                     icon: 'fa-trash',
-                    eventClick: function(page) {
-                        console.log('eventClick', page);
+                    eventClick: function(pageToRemove) {
+                        _removePage(pageToRemove);
                     }
                 }
             ]
@@ -40,7 +62,7 @@
 
         function _initVariables() {
             vm.pageSelected;
-            vm.permissionPages = [];
+            vm.listAllowedPages = [];
             vm.widgetSelected;
         }
 
