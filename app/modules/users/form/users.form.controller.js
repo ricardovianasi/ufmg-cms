@@ -412,7 +412,7 @@
                 }
             };
             return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-            'ModulesPermissionController as vm', resolve, 'xl');
+            'ModulesPermissionController as vm', resolve, 'md');
         }
 
         function _getResources() {

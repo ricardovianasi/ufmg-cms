@@ -19,6 +19,13 @@
                     templateUrl: 'modules/users/form/users.form.html',
                     controller: 'UsersFormController',
                     controllerAs: 'vm'
+                }).when('/user/permission', {
+                    templateUrl: 'modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
+                    controller: 'ModulesPermissionController',
+                    controllerAs: 'vm',
+                    resolve: {
+                        dataPermissionModule: [function() { return 'dataPermission' }]
+                    }
                 });
         });
 })();

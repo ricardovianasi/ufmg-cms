@@ -15,7 +15,8 @@
             bindings: {
                 pageSelected: '=',
                 placeholder: '@',
-                title: '@'
+                title: '@',
+                onPageSelected: '&'
             },
         });
 
@@ -24,8 +25,13 @@
         let ctrl = this;
 
         ctrl.loadMorePage = loadMorePage;
+        ctrl.onPageSelect = onPageSelect;
 
         ////////////////
+
+        function onPageSelect(page) {
+            ctrl.onPageSelected({ pageSeleted: page });
+        }
 
         function loadMorePage(search) {
             if(search !== ctrl.currentSearch) {

@@ -1,8 +1,9 @@
 <div class="page-container">
     <div class="main-content ms-container">
-        <div class="container-modules">
-            <h3>Selecione o módulo</h3>
-            <div class="form-group select-modules">
+        <h3>Personalizar acesso aos módulos</h3>
+        <div class="container-modules row">
+            <div class="col-md-6 form-group select-modules">
+                <label >Escolha o módulo</label>
                 <ui-select ng-disabled="vm.loadingWidgets" ng-model="vm.widgetSelected" on-select="vm.onWidgetSelected($item)" class="ui-select">
                     <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
                     <ui-select-choices repeat="widget in vm.widgets |filter: $select.search" group-by="'group'">
@@ -10,16 +11,15 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
+            <div class="form-group col-md-6">
+                <label>Escolha uma página</label>
+                <select-pages-component on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
+            </div>
         </div>
-        <div class="container-pages">
-
-        </div>
-        <div class="row">
-            <h3>Personalizar acesso aos módulos</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <select-pages-component placeholder="Teste de Placeholder" title="Teste de title" page-selected="vm.pageSelected"></select-pages-component>
+        <div class="container-pages row">
+            <div class="col-md-12">
+                <h4>Paginas com acesso ao módulo</h4>
+                <table-full-data full-datas="vm.permissionPages" limit="10" cols="vm.cols"></table-full-data>
             </div>
         </div>
     </div>
