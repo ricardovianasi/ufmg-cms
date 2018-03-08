@@ -25,14 +25,7 @@
                     controllerAs: 'vm',
                     resolve: {
                         dataPermissionModule: [function() { 
-                            return {
-                                eventlist: [
-                                    {
-                                        title: '7º Festival de Verão da UFMG',
-                                        id:216
-                                    }
-                                ]
-                            };
+                            return [{idPage: 20, module: 'comevents'}];
                         }],
                         currentUser: [function() { return 'Lucas' }]
                     }

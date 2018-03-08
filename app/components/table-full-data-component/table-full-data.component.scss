@@ -30,4 +30,10 @@
     .margin-bottom {
         margin-bottom: 15px;
     }
+
+    .pagination, .state-table {
+        margin-top: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
 }

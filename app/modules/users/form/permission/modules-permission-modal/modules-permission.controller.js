@@ -6,10 +6,9 @@
         .controller('ModulesPermissionController', ModulesPermissionController);
 
     /** ngInject */
-    function ModulesPermissionController(WidgetsService, PagesService, Util, NotificationService, dataPermissionModule, currentUser) {
+    function ModulesPermissionController(WidgetsService, $q, PagesService, Util, NotificationService, dataPermissionModule, currentUser) {
         let vm = this;
 
-        vm.onWidgetSelected = onWidgetSelected;
         vm.onPageSelected = onPageSelected;
         vm.cancel = cancel;
         vm.ok = ok;
@@ -26,10 +25,6 @@
             console.log('ok');
         }
 
-        function onWidgetSelected(item) {
-            _loadPagesAllowed(item.type);
-        }
-
         function onPageSelected(page) {
             _addPermission(page);
             vm.pageSelected = undefined;
@@ -37,16 +32,21 @@
 
         function _getIndexList(list, item) {
             return list.findIndex(function(eachItem) {
-                return eachItem.id === item.id;
+                return eachItem.idPage === item.idPage && eachItem.module === item.module;
             });
         }
 
         function _loadWidgets() {
-            WidgetsService.getWidgets()
+            return WidgetsService.getWidgets()
                 .then(function(data) {
                     vm.widgets = data.data.items;
-                    vm.widgetSelected = vm.widgets[0];
-                    onWidgetSelected(vm.widgetSelected.type)
+                });
+        }
+
+        function _loadPages() {
+            return PagesService.getPages()
+                .then(function(data) {
+                    vm.allPages = data.data.items;
                 });
         }
 
@@ -54,39 +54,44 @@
             if (!vm.widgetSelected) {
                 return;
             }
-            let pageAllowed = { id: page.id, title: page.title, actions: page.actions };
-            let typeWidget = vm.widgetSelected.type;
-            vm.dataPermissions[typeWidget] ? vm.dataPermissions[typeWidget].push(pageAllowed)
-             : vm.dataPermissions[typeWidget] = [pageAllowed];
+            let pageAllowed = _createPermission(page, vm.widgetSelected);
+            vm.dataPermissions.push(pageAllowed);
         }
 
-        function _removePermission(page) {
-            if (!vm.widgetSelected) {
-                return;
+        function _removePermission(permission) {
+            let idxPermission = _getIndexList(vm.dataPermissions, permission);
+            vm.dataPermissions.splice(idxPermission, 1);
+        }
+
+        function _createPermission(page, widget) {
+            return {
+                idPage: page.id,
+                title: page.title,
+                module: widget.type,
+                nameModule: widget.label
             }
-            let typeWidget = vm.widgetSelected.type;
-            let widget = vm.dataPermissions[typeWidget];
-            let indexModule = _getIndexList(widget, page);
-            widget.splice(indexModule, 1);
         }
 
-        function _loadPagesAllowed(typeModule) {
-            if (dataPermissionModule[typeModule]) {
-                vm.dataPermissions[typeModule] = vm.dataPermissions[typeModule].map(function(pageAllowed) {
-                    return pageAllowed;
+         function _preparePermissions() {
+            $q.all([_loadPages(), _loadWidgets()]).then(function() {
+                vm.dataPermissions = dataPermissionModule.map(function(permission) {
+                    let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
+                    let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
+                    permission.title = pageAllowed.title;
+                    permission.nameModule = moduleAllowed.label;
+                    return permission;
                 });
-            } else {
-                vm.dataPermissions[typeModule] = [];
-            }
-        }
+            });
+         }
 
          function _initConfigTable() {
             vm.configTable = {
-                cols: [ { id: 'title', title: 'Titulo' } ],
-                actions: [ { label: 'Remover', icon: 'fa-trash', eventClick: function (pageToRemove) { _removePermission(pageToRemove); } } ]
+                cols: [ { id: 'title', title: 'Titulo' }, { id: 'nameModule', title: 'Módulo' } ],
+                actions: [ 
+                    { label: 'Remover', icon: 'fa-trash', eventClick: function (permissionToRemove) { _removePermission(permissionToRemove); } } 
+                ]
             };
          }
-
 
         function _initVariables() {
             vm.pageSelected;
@@ -96,8 +101,8 @@
         }
 
         function activate() {
+            _preparePermissions();
             _initVariables();
-            _loadWidgets();
             _initConfigTable();
         }
     }

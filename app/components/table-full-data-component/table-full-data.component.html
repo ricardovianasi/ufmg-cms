@@ -33,9 +33,11 @@
             </tr>
         </tbody>
     </table>
-    <div ng-show="ctrlTable.fullDatasFiltered.length" class="pagination row">
-        <p>Exibindo resultados de {{ ctrlTable.boundResults.start }} 
-            até {{ ctrlTable.boundResults.end }} de um total de {{ ctrlTable.fullDatasFiltered.length }}</p>
+    <p ng-show="ctrlTable.fullDatasFiltered.length" class="state-table">
+        Exibindo resultados de {{ ctrlTable.boundResults.start }} 
+            até {{ ctrlTable.boundResults.end }} de um total de {{ ctrlTable.fullDatasFiltered.length }}
+    </p>
+    <div ng-show="ctrlTable.fullDatasFiltered.length" class="pagination">
         <div class="pages">
             <ul uib-pagination items-per-page="ctrlTable.limit" ng-change="ctrlTable.changeTable()" total-items="ctrlTable.fullDatasFiltered.length" ng-model="ctrlTable.configPagination.page"
             max-size="5" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
