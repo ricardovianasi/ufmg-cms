@@ -17,8 +17,15 @@
             <tr role="row" class="odd ms-hover text-center" 
             ng-repeat="item in ctrlTable.fullDatasFiltered = (ctrlTable.fullDatas | filter: search) | orderBy:'title' | limitTo: ctrlTable.limit:(ctrlTable.limit * (ctrlTable.configPagination.page - 1)) track by $index"
             ng-click="vm.deselect(context)">
-                <td ng-repeat="col in ctrlTable.config.cols"> 
-                    {{ item[col.id] }}
+                <td ng-repeat="col in ctrlTable.config.cols">
+                    <span ng-if="col.type === 'listcheckbox'"> 
+                        <div class="checkbox">
+                            <label class="label-checkbox" ng-repeat="check in item[col.id]"> <input ng-model="check.value" type="checkbox"> {{ check.label }} </label>
+                        </div>
+                    </span>
+                    <span ng-if="col.type === 'default'">
+                        {{ item[col.id] }}
+                    </span>
                 </td>
                 <td ng-show="ctrlTable.config.actions">
                     <button class="btn btn-default" ng-click="btn.eventClick(item)" ng-repeat="btn in ctrlTable.config.actions"> 

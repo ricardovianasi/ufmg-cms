@@ -23,7 +23,7 @@
         }
 
         function ok() {
-            console.log('ok');
+            console.log('ok', vm.dataPermissions);
         }
 
         function onPageSelected(page) {
@@ -88,7 +88,11 @@
 
         function _initConfigTable() {
             vm.configTable = {
-                cols: [ { id: 'title', title: 'Titulo' }, { id: 'nameModule', title: 'Módulo' } ],
+                cols: [ 
+                    { id: 'title', title: 'Página', type: 'default' },
+                    { id: 'nameModule', title: 'Módulo', type: 'default' },
+                    { id: 'permissions', title: 'Permissões', type: 'listcheckbox' }
+                ],
                 actions: [ 
                     { label: 'Remover', icon: 'fa-trash', eventClick: function (permissionToRemove) { _removePermission(permissionToRemove); } } 
                 ]
@@ -98,7 +102,11 @@
         function _initCrudPermission() {
             vm.pageSelected = undefined;
             vm.widgetSelected = undefined;
-            vm.crudPermission = { delete: false, edit: false, create: false };
+            vm.crudPermission = [
+                {value: false, label: 'Excluir', type: 'delete'},
+                {value: false, label: 'Editar', type: 'put'},
+                {value: false, label: 'Criar', type: 'create'} 
+            ];
         }
 
         function _initVariables() {

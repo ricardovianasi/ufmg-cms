@@ -418,7 +418,7 @@
                 currentUser: function () { return vm.user.name }
             };
             return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-            'ModulesPermissionController as vm', resolve, 'md');
+            'ModulesPermissionController as vm', resolve, 'xl');
         }
 
         function _getResources() {

@@ -25,7 +25,11 @@
                     controllerAs: 'vm',
                     resolve: {
                         dataPermissionModule: [function() { 
-                            return [ {idPage: 20, module: 'comevents'} ];
+                            return [ {idPage: 20, module: 'comevents', permissions: [
+                                {value: false, label: 'Excluir', type: 'delete'},
+                                {value: false, label: 'Editar', type: 'put'},
+                                {value: false, label: 'Criar', type: 'create'} 
+                            ]} ];
                         }],
                         currentUser: [function() { return 'Lucas' }]
                     }

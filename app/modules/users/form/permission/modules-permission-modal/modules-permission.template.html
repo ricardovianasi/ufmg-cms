@@ -19,10 +19,8 @@
         <div class="row">
             <div class="col-md-6">
                 <label> Defina as permissões para <b> {{ vm.widgetSelected.label }} </b> </label>
-                <div class="checkbox">
-                    <label> <input ng-model="vm.crudPermission.create" type="checkbox"> Criar </label>
-                    <label> <input ng-model="vm.crudPermission.edit" type="checkbox"> Editar </label>
-                    <label> <input ng-model="vm.crudPermission.delete" type="checkbox"> Excluir </label>
+                <div class="checkbox" >
+                    <label ng-repeat="check in vm.crudPermission" class="label-checkbox"> <input ng-model="check.value" type="checkbox"> {{ check.label }} </label>
                 </div>
             </div>
             <div class="col-md-6">
