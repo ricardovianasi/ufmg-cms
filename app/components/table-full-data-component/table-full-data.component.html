@@ -8,26 +8,27 @@
     <table class="table table-striped table-bordered remove-padding">
         <thead>
             <tr >
-                <th class="text-center" ng-repeat="col in ctrlTable.cols">{{ col.title }}</th>
+                <th class="text-center" ng-repeat="col in ctrlTable.config.cols">{{ col.title }}</th>
+                <th class="text-center" ng-show="ctrlTable.config.actions"> Ações </th>
             </tr>
         </thead>
         <tbody>
             <tr role="row" class="odd ms-hover text-center" 
             ng-repeat="item in ctrlTable.fullDatasFiltered = (ctrlTable.fullDatas | filter: search) | orderBy:'title' | limitTo: ctrlTable.limit track by $index"
             ng-click="vm.deselect(context)">
-                <td ng-repeat="col in ctrlTable.cols"> 
-                    <span ng-show="col.id !== 'actions'"> {{ item[col.id] }} </span>
-                    <div ng-show="col.id === 'actions'"> 
-                        <button class="btn btn-default" ng-click="btn.eventClick(item)" ng-repeat="btn in item.actions"> 
-                            <i ng-show="btn.icon" class="fa {{ btn.icon }}"></i>
-                            {{ btn.buttonTitle }} 
-                        </button>
-                    </div>
+                <td ng-repeat="col in ctrlTable.config.cols"> 
+                    {{ item[col.id] }}
+                </td>
+                <td ng-show="ctrlTable.config.actions">
+                    <button class="btn btn-default" ng-click="btn.eventClick(item)" ng-repeat="btn in ctrlTable.config.actions"> 
+                        <i ng-show="btn.icon" class="fa {{ btn.icon }}"></i>
+                        {{ btn.label }} 
+                    </button>
                 </td>
             </tr>
             <tr ng-show="!ctrlTable.fullDatas.length" class="odd ms-hover text-center">
-                <td colspan="{{ ctrlTable.cols.length }}">
-                    <p>Lista Vazia</p>
+                <td colspan="{{ ctrlTable.getTotCols() }}">
+                    <p> Lista Vazia </p>
                 </td>
             </tr>
         </tbody>

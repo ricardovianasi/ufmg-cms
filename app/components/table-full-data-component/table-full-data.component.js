@@ -14,7 +14,7 @@
             controllerAs: 'ctrlTable',
             bindings: {
                 fullDatas: '<',
-                cols: '<',
+                config: '<',
                 limit: '<'
             },
         });
@@ -22,12 +22,19 @@
     /** ngInject */
     function TableFullDataController() {
         let ctrlTable = this;
-        
+
+        ctrlTable.getTotCols = getTotCols;
 
         ////////////////
 
         ctrlTable.$onInit = function() { };
         ctrlTable.$onChanges = function(changesObj) { };
         ctrlTable.$onDestroy = function() { };
+
+        function getTotCols() {
+            let lengthCols = ctrlTable.config.cols ? ctrlTable.config.cols.length : 0;
+            let lengthColsActions = ctrlTable.config.actions ? ctrlTable.config.actions.length : 0;
+            return lengthCols + lengthColsActions;
+        }
     }
 })();

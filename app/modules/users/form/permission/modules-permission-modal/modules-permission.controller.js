@@ -41,19 +41,6 @@
             });
         }
 
-        function _addActions(page) {
-            page.actions = [
-                {
-                    buttonTitle: 'Remover',
-                    icon: 'fa-trash',
-                    eventClick: function(pageToRemove) {
-                        _removePermission(pageToRemove);
-                    }
-                }
-            ];
-            return page;
-        }
-
         function _loadWidgets() {
             WidgetsService.getWidgets()
                 .then(function(data) {
@@ -67,10 +54,10 @@
             if (!vm.widgetSelected) {
                 return;
             }
-            _addActions(page);
             let pageAllowed = { id: page.id, title: page.title, actions: page.actions };
             let typeWidget = vm.widgetSelected.type;
-            vm.dataPermissions[typeWidget].push(pageAllowed);
+            vm.dataPermissions[typeWidget] ? vm.dataPermissions[typeWidget].push(pageAllowed)
+             : vm.dataPermissions[typeWidget] = [pageAllowed];
         }
 
         function _removePermission(page) {
@@ -86,7 +73,7 @@
         function _loadPagesAllowed(typeModule) {
             if (dataPermissionModule[typeModule]) {
                 vm.dataPermissions[typeModule] = vm.dataPermissions[typeModule].map(function(pageAllowed) {
-                    return _addActions(pageAllowed);
+                    return pageAllowed;
                 });
             } else {
                 vm.dataPermissions[typeModule] = [];
@@ -94,7 +81,10 @@
         }
 
          function _initConfigTable() {
-            vm.cols = [ { id: 'title', title: 'Titulo' }, { id: 'actions', title: 'Ações' } ];
+            vm.configTable = {
+                cols: [ { id: 'title', title: 'Titulo' } ],
+                actions: [ { label: 'Remover', icon: 'fa-trash', eventClick: function (pageToRemove) { _removePermission(pageToRemove); } } ]
+            };
          }
 
 
