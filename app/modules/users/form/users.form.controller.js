@@ -64,6 +64,9 @@
 
         function openModulesPermission() {
             let modal = _openModulesPermissionModal();
+            modal.result.then(function (res) {
+                console.log('openModulesPermission', res);
+            });
         }
 
         function _hasLoaded(oldValue) {
@@ -405,15 +408,20 @@
                 'CustomPermissionController as vm', resolveModal, 'xl');
         }
 
+        function _getPrivileges(resource, privilege) {
+            return vm.user.permissions.find(function(perm) {
+                return perm.resource === resource;
+            }).privileges.find(function(p) {
+                return p.privilege === privilege;
+            });
+
+        }
+
         function _openModulesPermissionModal() {
             let resolve = {
                 dataPermissionModule: function() {
-                    return { highlightednews: [
-                        {
-                            title: '7º Festival de Verão da UFMG',
-                            id:216
-                        }
-                    ] }
+                    let privilege = _getPrivileges('page', 'PUTSPECIAL');
+                    return privilege ? privilege.modules : [];
                 },
                 currentUser: function () { return vm.user.name }
             };

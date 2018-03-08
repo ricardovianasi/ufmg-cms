@@ -6,7 +6,7 @@
         .controller('ModulesPermissionController', ModulesPermissionController);
 
     /** ngInject */
-    function ModulesPermissionController(WidgetsService, $q, PagesService, Util, NotificationService, dataPermissionModule, currentUser) {
+    function ModulesPermissionController($uibModalInstance, $q, WidgetsService, PagesService, NotificationService, dataPermissionModule, currentUser) {
         let vm = this;
 
         vm.onPageSelected = onPageSelected;
@@ -20,10 +20,13 @@
 
         function cancel() {
             console.log('cancel');
+            $uibModalInstance.dismiss();
         }
 
         function ok() {
             console.log('ok', vm.dataPermissions);
+            let permissionsToSave = _preparePermissionsToSave();
+            $uibModalInstance.close(permissionsToSave);
         }
 
         function onPageSelected(page) {
@@ -51,7 +54,8 @@
         }
 
         function addPermission() {
-            if (!vm.widgetSelected) {
+            if (!vm.widgetSelected || !vm.pageSelected) {
+                NotificationService.warn('Você deve selecionar uma página e um widget para adicionar.');
                 return;
             }
             let pageAllowed = _createPermission(vm.pageSelected, vm.widgetSelected);
@@ -75,15 +79,24 @@
         }
 
         function _preparePermissions() {
-        $q.all([_loadPages(), _loadWidgets()]).then(function() {
-            vm.dataPermissions = dataPermissionModule.map(function(permission) {
-                let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
-                let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
-                permission.title = pageAllowed.title;
-                permission.nameModule = moduleAllowed.label;
-                return permission;
+            $q.all([_loadPages(), _loadWidgets()]).then(function() {
+                console.log('dataPermissionModule', dataPermissionModule);
+                vm.dataPermissions = dataPermissionModule.map(function(permission) {
+                    let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
+                    let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
+                    permission.title = pageAllowed.title;
+                    permission.nameModule = moduleAllowed.label;
+                    return permission;
+                });
             });
-        });
+        }
+
+        function _preparePermissionsToSave() {
+            return vm.dataPermissions.map(function(data) {
+                delete data.nameModule;
+                delete data.title;
+                return data;
+            });
         }
 
         function _initConfigTable() {
