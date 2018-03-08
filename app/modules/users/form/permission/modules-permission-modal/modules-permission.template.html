@@ -16,9 +16,24 @@
                 <select-pages-component is-disabled="!vm.widgetSelected" on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="vm.pageSelected"></select-pages-component>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Defina as permissões para <b> {{ vm.widgetSelected.label }} </b> </label>
+                <div class="checkbox">
+                    <label> <input ng-model="vm.crudPermission.create" type="checkbox"> Criar </label>
+                    <label> <input ng-model="vm.crudPermission.edit" type="checkbox"> Editar </label>
+                    <label> <input ng-model="vm.crudPermission.delete" type="checkbox"> Excluir </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button ng-click="vm.addPermission()" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                    Adicionar
+                </button>
+            </div>
+        </div>
         <div class="container-pages row">
             <div class="col-md-12">
-                <p ng-show="vm.widgetSelected"> <b> {{ vm.widgetSelected.label }} </b> estará disponível para o usuário <b> {{ vm.currentUser }} </b> nas páginas: </p>
                 <table-full-data full-datas="vm.dataPermissions" limit="5" config="vm.configTable"></table-full-data>
             </div>
         </div>

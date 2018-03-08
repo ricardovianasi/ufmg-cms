@@ -10,6 +10,7 @@
         let vm = this;
 
         vm.onPageSelected = onPageSelected;
+        vm.addPermission = addPermission;
         vm.cancel = cancel;
         vm.ok = ok;
 
@@ -26,8 +27,7 @@
         }
 
         function onPageSelected(page) {
-            _addPermission(page);
-            vm.pageSelected = undefined;
+            vm.pageSelected = page;
         }
 
         function _getIndexList(list, item) {
@@ -50,12 +50,13 @@
                 });
         }
 
-        function _addPermission(page) {
+        function addPermission() {
             if (!vm.widgetSelected) {
                 return;
             }
-            let pageAllowed = _createPermission(page, vm.widgetSelected);
+            let pageAllowed = _createPermission(vm.pageSelected, vm.widgetSelected);
             vm.dataPermissions.push(pageAllowed);
+            _initCrudPermission();
         }
 
         function _removePermission(permission) {
@@ -68,36 +69,42 @@
                 idPage: page.id,
                 title: page.title,
                 module: widget.type,
-                nameModule: widget.label
+                nameModule: widget.label,
+                permissions: vm.crudPermission
             }
         }
 
-         function _preparePermissions() {
-            $q.all([_loadPages(), _loadWidgets()]).then(function() {
-                vm.dataPermissions = dataPermissionModule.map(function(permission) {
-                    let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
-                    let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
-                    permission.title = pageAllowed.title;
-                    permission.nameModule = moduleAllowed.label;
-                    return permission;
-                });
+        function _preparePermissions() {
+        $q.all([_loadPages(), _loadWidgets()]).then(function() {
+            vm.dataPermissions = dataPermissionModule.map(function(permission) {
+                let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
+                let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
+                permission.title = pageAllowed.title;
+                permission.nameModule = moduleAllowed.label;
+                return permission;
             });
-         }
+        });
+        }
 
-         function _initConfigTable() {
+        function _initConfigTable() {
             vm.configTable = {
                 cols: [ { id: 'title', title: 'Titulo' }, { id: 'nameModule', title: 'Módulo' } ],
                 actions: [ 
                     { label: 'Remover', icon: 'fa-trash', eventClick: function (permissionToRemove) { _removePermission(permissionToRemove); } } 
                 ]
             };
-         }
+        }
+
+        function _initCrudPermission() {
+            vm.pageSelected = undefined;
+            vm.widgetSelected = undefined;
+            vm.crudPermission = { delete: false, edit: false, create: false };
+        }
 
         function _initVariables() {
-            vm.pageSelected;
-            vm.widgetSelected;
-            vm.dataPermissions = dataPermissionModule;
+            vm.dataPermissions = [];
             vm.currentUser = currentUser;
+            _initCrudPermission();
         }
 
         function activate() {

@@ -25,7 +25,7 @@
                     controllerAs: 'vm',
                     resolve: {
                         dataPermissionModule: [function() { 
-                            return [{idPage: 20, module: 'comevents'}];
+                            return [ {idPage: 20, module: 'comevents'} ];
                         }],
                         currentUser: [function() { return 'Lucas' }]
                     }
