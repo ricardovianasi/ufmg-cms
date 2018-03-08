@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             <tr role="row" class="odd ms-hover text-center" 
-            ng-repeat="item in ctrlTable.fullDatasFiltered = (ctrlTable.fullDatas | filter: search) | orderBy:'title' | limitTo: ctrlTable.limit track by $index"
+            ng-repeat="item in ctrlTable.fullDatasFiltered = (ctrlTable.fullDatas | filter: search) | orderBy:'title' | limitTo: ctrlTable.limit:(ctrlTable.limit * (ctrlTable.configPagination.page - 1)) track by $index"
             ng-click="vm.deselect(context)">
                 <td ng-repeat="col in ctrlTable.config.cols"> 
                     {{ item[col.id] }}
@@ -33,4 +33,13 @@
             </tr>
         </tbody>
     </table>
+    <div ng-show="ctrlTable.fullDatasFiltered.length" class="pagination row">
+        <p>Exibindo resultados de {{ ctrlTable.boundResults.start }} 
+            até {{ ctrlTable.boundResults.end }} de um total de {{ ctrlTable.fullDatasFiltered.length }}</p>
+        <div class="pages">
+            <ul uib-pagination items-per-page="ctrlTable.limit" ng-change="ctrlTable.changeTable()" total-items="ctrlTable.fullDatasFiltered.length" ng-model="ctrlTable.configPagination.page"
+            max-size="5" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+        </div>
+    </div>
 </div>

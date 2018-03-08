@@ -19,7 +19,7 @@
         <div class="container-pages row">
             <div class="col-md-12">
                 <p ng-show="vm.widgetSelected"> <b> {{ vm.widgetSelected.label }} </b> estará disponível para o usuário <b> {{ vm.currentUser }} </b> nas páginas: </p>
-                <table-full-data full-datas="vm.dataPermissions[vm.widgetSelected.type]" limit="10" config="vm.configTable"></table-full-data>
+                <table-full-data full-datas="vm.dataPermissions[vm.widgetSelected.type]" limit="5" config="vm.configTable"></table-full-data>
             </div>
         </div>
         <div class="actions-modal pull-right">
