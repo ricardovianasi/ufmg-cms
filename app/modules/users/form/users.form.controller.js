@@ -31,6 +31,8 @@
         vm.isActive = _isActive;
         vm.modalGetContext = _modalGetContext;
 
+        vm.loadContextData = loadContextData;
+
         vm.hasCustomPermission = hasCustomPermission;
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
         vm.openModulesPermission = openModulesPermission;
@@ -157,9 +159,10 @@
             var permsToConvert = vm.user.resources_perms;
             Object.keys(permsToConvert).forEach(function (key) {
                 permsToConvert[key].split(';').forEach(function (value) {
-                    var item = value.split(':');
+                    let item = [];
+                    item[0] = value.substring(0, value.indexOf(':'));
+                    item[1] = value.substring(value.indexOf(':') + 1);
                     var permsToConvert = convertedPerms[key] || {};
-
                     if (item.length > 1) {
                         permsToConvert[item[0]] = item[1];
                         convertedPerms[key] = permsToConvert;
@@ -181,7 +184,7 @@
                 items = [];
                 innerKeys.forEach(function (key) {
                     if (resourcesPerms[k][key][0]) {
-                        var permission = (Array.isArray(resourcesPerms[k][key])) ? key : key + ':' + resourcesPerms[k][key];
+                        let permission = (Array.isArray(resourcesPerms[k][key])) ? key : key + ':' + resourcesPerms[k][key];
                         items.push(permission);
                     }
                 });
@@ -195,7 +198,6 @@
                 NotificationService.error('Existem campos obrigatórios vazios ou inválidos.');
                 return;
             }
-
             let userToSave = angular.copy(vm.user);
             userToSave.permissions = _convertPrivilegesToSave(userToSave.resources_perms);
             vm.isLoading = true;
@@ -254,7 +256,6 @@
                 vm.user.resources_perms[contextName] : {};
             vm.user.resources_perms[contextName] = vm.user.resources_perms[contextName] ?
                 vm.user.resources_perms[contextName] : [];
-
             for (var key in vm.user.resources_perms[contextName]) {
                 if (vm.user.resources_perms[contextName].hasOwnProperty(key)) {
                     if (angular.isString(vm.user.resources_perms[contextName][key])) {
@@ -295,31 +296,23 @@
         }
 
         function _mountItem(contextName, item) {
-            if (contextName === 'page') {
-                return {
-                    id: item.id,
-                    title: item.title
-                };
-            } else if (contextName === 'editions') {
-                return {
-                    id: item.id,
-                    title: item.name
-                };
-            } else if (contextName.substr(0, 6) === 'course') {
-                return {
-                    id: item.id,
-                    title: item.name
-                };
+            let contextApplyItem = contextName === 'page' || contextName === 'editions' || contextName.substr(0, 6) === 'course';
+            if(contextApplyItem) {
+                return { id: item.id, title: item.title || item.name };
             }
             return false;
         }
 
-        vm.loadContextData = function (contextName) {
+        function loadContextData (contextName) {
             if (angular.isDefined(isLoadAccordion[contextName])) {
                 return;
             }
             isLoadAccordion[contextName] = true;
             let contextPermissions = _contextPermissions(contextName);
+            _loadContextDataPut(contextPermissions, contextName);
+        };
+
+        function _loadContextDataPut(contextPermissions, contextName) {
             contextPermissions.forEach(function(element) {
                 if (element.valuePermission) {
                     contextData(contextName, element)
@@ -328,11 +321,11 @@
                                 vm.listPermissions[contextName] = {};
                             }
                             vm.listPermissions[contextName][res.element.permission] = _mountListPermissionContextId(res.data.items, res.element);
-                            angular.element('#' + contextName + '_' + res.element.permission).prop('indeterminate', true);
+                            _setCheckboxPermission(contextName, res.element.permission, { method: 'prop', key: 'indeterminate', value: true });
                         });
                 }
             });
-        };
+        }
 
         function _mountListPermissionContextId(listContext, contextPermissions) {
             var selecteds = [];
@@ -424,11 +417,16 @@
         }
 
         function _getPrivileges(resource, privilege) {
-            return vm.user.permissions.find(function(perm) {
+            let privilegeToReturn = {};
+            let permission = vm.user.permissions.find(function(perm) {
                 return perm.resource === resource;
-            }).privileges.find(function(p) {
-                return p.privilege === privilege;
-            });
+            })
+            if(permission && permission.privileges) {
+                privilegeToReturn = permission.privileges.find(function(p) {
+                    return p.privilege === privilege;
+                });
+            }
+            return privilegeToReturn;
 
         }
 
@@ -436,7 +434,11 @@
             let resolve = {
                 dataPermissionModule: function() {
                     let privilege = _getPrivileges('page', 'PUTSPECIAL');
-                    return privilege && privilege.modules ? JSON.parse(privilege.modules) : [];
+                    if(!privilege || !angular.isString(privilege.modules)) {
+                        return [];
+                    }
+                    try { return JSON.parse(privilege.modules); } 
+                    catch (e) { return []; }
                 },
                 currentUser: function () { return vm.user.name }
             };
