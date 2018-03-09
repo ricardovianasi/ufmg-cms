@@ -65,7 +65,17 @@
         function openModulesPermission() {
             let modal = _openModulesPermissionModal();
             modal.result.then(function (res) {
-                console.log('openModulesPermission', res);
+                let resString = JSON.stringify(res);
+                vm.user.resources_perms.page.PUTSPECIAL = resString;
+                let privilege = _getPrivileges('page', 'PUTSPECIAL');
+                privilege.modules = resString
+                if(res.length > 0) {
+                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: true});
+                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: true});
+                } else {
+                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: false});
+                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: false});                    
+                }
             });
         }
 
@@ -168,7 +178,7 @@
             }
             Object.keys(resourcesPerms).forEach(function (k) {
                 var innerKeys = Object.keys(resourcesPerms[k]),
-                    items = [];
+                items = [];
                 innerKeys.forEach(function (key) {
                     if (resourcesPerms[k][key][0]) {
                         var permission = (Array.isArray(resourcesPerms[k][key])) ? key : key + ':' + resourcesPerms[k][key];
@@ -373,20 +383,25 @@
                     if (angular.isString(contextPermissions.ids)) {
                         vm.listPermissions[context][permission] = contextPermissions.data;
                         vm.user.resources_perms[context][permission] = contextPermissions.ids;
-                        angular.element('#' + context + '_' + permission).prop('indeterminate', true);
+                        _setCheckboxPermission(context, permission, { method: 'prop', key: 'indeterminate', value: true});
                     } else {
                         if (contextPermissions.ids) {
                             vm.user.resources_perms[context][permission] = [];
                             vm.user.resources_perms[context][permission][0] = permission;
-                            angular.element('#' + context + '_' + permission).prop('checked', true);
+                            _setCheckboxPermission(context, permission, { method: 'prop', key: 'checked', value: true});                            
                         } else {
                             vm.listPermissions[context][permission] = undefined;
                             vm.user.resources_perms[context][permission] = [];
-                            angular.element('#' + context + '_' + permission).prop('indeterminate', false);
-                            angular.element('#' + context + '_' + permission).attr('value', false);
+                            _setCheckboxPermission(context, permission, { method: 'prop', key: 'indeterminate', value: false});
+                            _setCheckboxPermission(context, permission, { method: 'attr', key: 'value', value: false});
                         }
                     }
                 });
+        }
+
+        function _setCheckboxPermission(context, permission, config) {
+            let idElement = '#' + context + '_' + permission;
+            angular.element(idElement)[config.method](config.key, config.value);
         }
 
         function _openCustomPermissionModal(context, permission, contextTitle) {
@@ -421,7 +436,7 @@
             let resolve = {
                 dataPermissionModule: function() {
                     let privilege = _getPrivileges('page', 'PUTSPECIAL');
-                    return privilege ? privilege.modules : [];
+                    return privilege && privilege.modules ? JSON.parse(privilege.modules) : [];
                 },
                 currentUser: function () { return vm.user.name }
             };

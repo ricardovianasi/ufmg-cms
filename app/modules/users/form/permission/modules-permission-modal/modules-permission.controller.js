@@ -113,6 +113,10 @@
             return vm.dataPermissions.map(function(data) {
                 delete data.nameModule;
                 delete data.title;
+                data.permissions = data.permissions.map(function (perCrud) {
+                    delete perCrud.$$hashKey;
+                    return perCrud;
+                });
                 return data;
             });
         }
