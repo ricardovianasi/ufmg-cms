@@ -54,13 +54,31 @@
         }
 
         function addPermission() {
-            if (!vm.widgetSelected || !vm.pageSelected) {
-                NotificationService.warn('Você deve selecionar uma página e um widget para adicionar.');
+            if(!_canAdded(vm.widgetSelected, vm.pageSelected)) {
                 return;
             }
             let pageAllowed = _createPermission(vm.pageSelected, vm.widgetSelected);
             vm.dataPermissions.push(pageAllowed);
             _initCrudPermission();
+        }
+
+        function _canAdded(widget, page) {
+            if (!widget || !page) {
+                NotificationService.warn('Você deve selecionar uma página e um widget para adicionar.');
+                return false;
+            }
+            if(_checkAlreadyAdded(widget, page)) {
+                NotificationService.warn('Você já adicionou a permissão deste módulo para esta página.');
+                return false;
+            }
+            return true;
+        }
+
+        function _checkAlreadyAdded(widget, page) {
+            let alreadyAdded = vm.dataPermissions.find(function(permission) {
+                return permission.idPage === page.id && permission.module === widget.type;
+            });
+            return angular.isDefined(alreadyAdded);
         }
 
         function _removePermission(permission) {
@@ -114,11 +132,10 @@
 
         function _initCrudPermission() {
             vm.pageSelected = undefined;
-            vm.widgetSelected = undefined;
             vm.crudPermission = [
-                {value: false, label: 'Excluir', type: 'delete'},
-                {value: false, label: 'Editar', type: 'put'},
-                {value: false, label: 'Criar', type: 'create'} 
+                { value: false, label: 'Excluir', type: 'delete' },
+                { value: false, label: 'Editar', type: 'put' },
+                { value: false, label: 'Criar', type: 'create' } 
             ];
         }
 
