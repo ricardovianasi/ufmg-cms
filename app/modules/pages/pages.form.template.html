@@ -88,69 +88,10 @@
                 </div>
             </div>
             <div class="row">
-                <div id="sort-main" as-sortable="sortableOptions" ng-model="page.widgets.main" ng-class="{ 'col-xs-8': page.columns == 2, 'col-xs-12': page.columns == 1 }">
-                    <div class="pages-module" ng-repeat="item in page.widgets.main" as-sortable-item>
-                        <div class="row flex-center">
-                            <div class="col-md-10">
-                                <h4>
-                                    <strong>{{ item.title }}</strong>
-                                </h4>
-                                <h5 class="text-capitalize">{{ item.type|translate }}</h5>
-                            </div>
-                            <div class="col-md-2" ng-if="viewOnly">
-                                <span class="label label-primary" ng-click="handleModule('main', $index)">
-                                    <i class="fa fa-pencil"></i> Visualisar
-                                </span>
-                            </div>
-                            <div class="col-md-2" ng-if="!viewOnly">
-                                <span class="label label-warning" ng-click="handleModule('main', $index)">
-                                    <i class="fa fa-pencil"></i> EDITAR
-                                </span>
-                                <span class="label label-danger" ng-click="removeModuleMain($index)">
-                                    <i class="fa fa-remove"></i> REMOVER
-                                </span>
-                                <span class="label label-primary" as-sortable-item-handle>
-                                    <i class="fa fa-arrows-v"></i> MOVER
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-if="!viewOnly" class="pages-module add-module" ng-click="handleModule('main')">
-                        <span class="add-title">+ Adicionar Módulo</span>
-                    </div>
-                </div>
-                <div id="sort-side" as-sortable="sortableOptions" ng-model="page.widgets.side" ng-class="{ 'col-xs-4': page.columns === 2, 'hidden': page.columns === 1 }">
-                    <div class="pages-module" ng-repeat="item in page.widgets.side" as-sortable-item>
-                        <div class="row flex-center">
-                            <div class="col-md-8">
-                                <h4>
-                                    {{ item.title }}
-                                </h4>
-                                <h5 class="text-capitalize">{{ item.type|translate }}</h5>
-                            </div>
-
-                            <div class="col-md-4" ng-if="viewOnly">
-                                <span class="label label-primary view-permission" ng-click="handleModule('side', $index)">
-                                    <i class="fa fa-pencil"></i> Visualisar
-                                </span>
-                            </div>
-                            <div class="col-md-4" ng-if="!viewOnly">
-                                <span class="label label-warning" ng-click="handleModule('side', $index)">
-                                    <i class="fa fa-pencil"></i> EDITAR
-                                </span>
-                                <span class="label label-danger" ng-click="removeModuleSide($index)">
-                                    <i class="fa fa-remove"></i> REMOVER
-                                </span>
-                                <span class="label label-primary" as-sortable-item-handle>
-                                    <i class="fa fa-arrows-v"></i> MOVER
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div ng-if="!viewOnly" class="pages-module add-module" ng-click="handleModule('side')">
-                        <span class="add-title">+ Adicionar Módulo</span>
-                    </div>
-                </div>
+                <list-widgets-component ng-if="page.id" id-component="sort-main" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
+                </list-widgets-component>
+                <list-widgets-component ng-if="page.id" id-component="sort-side" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
+                </list-widgets-component>
             </div>
         </form>
     </div>

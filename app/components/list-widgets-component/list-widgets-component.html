@@ -1,0 +1,31 @@
+<div id="{{ ctrl.idComponent }}" as-sortable="ctrl.sortableOptions" ng-model="ctrl.listWidgets" class="{{ ctrl.setClass }}">
+    <div class="pages-module" ng-repeat="item in ctrl.listWidgets | filter:ctrl.isView" as-sortable-item>
+        <div class="row flex-center">
+            <div class="col-md-10">
+                <h4>
+                    <strong>{{ item.title }}</strong>
+                </h4>
+                <h5 class="text-capitalize">{{ item.type|translate }}</h5>
+            </div>
+            <div class="col-md-2" ng-if="ctrl.viewOnly">
+                <span class="label label-primary" ng-click="openModalWidgets($index)">
+                    <i class="fa fa-pencil"></i> Visualisar
+                </span>
+            </div>
+            <div class="col-md-2" ng-if="!ctrl.viewOnly">
+                <span class="label label-warning" ng-click="ctrl.openModalWidgets($index)">
+                    <i class="fa fa-pencil"></i> EDITAR
+                </span>
+                <span class="label label-danger" ng-click="ctrl.removeWidget($index)">
+                    <i class="fa fa-remove"></i> REMOVER
+                </span>
+                <span class="label label-primary" as-sortable-item-handle>
+                    <i class="fa fa-arrows-v"></i> MOVER
+                </span>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!ctrl.viewOnly" class="pages-module add-module" ng-click="ctrl.openModalWidgets()">
+        <span class="add-title">+ Adicionar Módulo</span>
+    </div>
+</div>

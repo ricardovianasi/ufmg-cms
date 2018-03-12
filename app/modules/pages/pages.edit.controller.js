@@ -248,8 +248,13 @@
                     page.columns = !page.widgets.side.length ? 1 : 2;
                     page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
+                    vm.widgetPermissionOptions = {
+                        context: 'page',
+                        id: page.id,
+                        keyId: 'idPage'
+                    };
                     angular.extend(vm.page, page);
-                    _loadPermissionModules();
+                    // _loadPermissionModules();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
