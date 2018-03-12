@@ -28,6 +28,7 @@
         ctrl.openModalWidgets = openModalWidgets;
         ctrl.removeWidget = removeWidget;
         ctrl.isView = isView;
+        ctrl.canHandle = canHandle;
 
         ////////////////
 
@@ -48,8 +49,16 @@
                 });
         }
 
+        function canHandle(widget, role) {
+            let widgetPermission = _getWidgetPermission(widget.type);
+            if(angular.isUndefined(widgetPermission)) {
+                return false;
+            }
+            return widgetPermission.permissions[role].value;
+        }
+
         function isView(widget, idx, array) {
-            return angular.isDefined(ctrl.modulesPermissions[widget.type]);
+            return angular.isDefined(_getWidgetPermission(widget.type));
         }
 
         function _updateWidget(data, idx) {
@@ -60,6 +69,10 @@
             }
         }
 
+        function _getWidgetPermission(type) {
+            return ctrl.modulesPermissions[type];
+        }
+
         function _loadingPermission() {
             if(!ctrl.permissionsOptions) {
                 return;
@@ -67,7 +80,6 @@
             let config = ctrl.permissionsOptions;
             ctrl.modulesPermissions = 
                 PermissionService.getModulesPermissions(config.id, config.keyId, config.context);
-            console.log('_loadingPermission', ctrl.modulesPermissions);
         }
 
         function _getOptionsSortable() {
