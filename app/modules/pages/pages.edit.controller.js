@@ -8,7 +8,7 @@
     /** ngInject */
     function PagesEditController($scope, $uibModal, $location, $routeParams, $timeout, $window, NotificationService,
         PagesService, ManagerFileService, WidgetsService, StatusService, DateTimeHelper, $q, ModalService,
-        $rootScope, TagsService, validationService, Util, HandleChangeService) {
+        $rootScope, TagsService, validationService, Util, HandleChangeService, PermissionService) {
 
         let vm = $scope;
 
@@ -249,8 +249,25 @@
                     page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
+                    _loadPermissionModules();
                     $scope.$broadcast('objPublishLoaded');
                 });
+        }
+
+        function _loadPermissionModules() {
+            vm.modulesPermissions = PermissionService.getModulesPermissions(vm.page.id, 'idPage', 'page');
+            vm.page.widgets.main = _filterWidgetsWithPermission(vm.page.widgets.main, vm.modulesPermissions);
+            vm.page.widgets.side = _filterWidgetsWithPermission(vm.page.widgets.side, vm.modulesPermissions);
+            console.log('_loadPermissionModules', vm.modulesPermissions);
+        }
+
+        function _filterWidgetsWithPermission(widgets, permissions) {
+            return widgets.filter(function(widget) {
+                if(permissions[widget.type]) {
+                    return true;
+                }
+                return false;
+            });
         }
 
         function activate() {

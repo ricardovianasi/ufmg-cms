@@ -24,7 +24,8 @@
             hasPermission: hasPermission,
             hasPermissionId: hasPermissionId,
             getPrivilege: getPrivilege,
-            isAdministrator: isAdministrator
+            isAdministrator: isAdministrator,
+            getModulesPermissions: getModulesPermissions
         };
 
         function isAdministrator() {
@@ -51,6 +52,30 @@
             if (privilege.privilege === role) {
                 return privilege;
             }
+        }
+
+        function getModulesPermissions(id, keyId, context) {
+            let privilege = getPrivilege(context, 'PUTSPECIAL');
+            if(privilege && privilege.modules) {
+                console.log(privilege);
+                let modules = JSON.parse(privilege.modules);
+                modules = modules.filter(function(modulePermission) {
+                    return modulePermission[keyId] === id;
+                });
+                return _transformPermissionsModuleToObj(modules);
+            }
+            return [];
+        }
+
+        function _transformPermissionsModuleToObj(modules) {
+            return modules.reduce(function(result, item) {
+                item.permissions = item.permissions.reduce(function(resPerm, itemPerm) {
+                    resPerm[itemPerm.type] = itemPerm;
+                    return resPerm;
+                }, {});
+                result[item.module] = item;
+                return result;
+            }, {});
         }
 
         function getPrivilege(context, role) {
@@ -149,6 +174,10 @@
 
         function canPutTag(context, id) {
             return check(context, id, 'PUTTAG');
+        }
+
+        function canPutSpecial(context, id) {
+            return check(context, id, 'PUTSPECIAL');
         }
 
         function messageWarn() {
