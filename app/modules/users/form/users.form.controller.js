@@ -70,13 +70,13 @@
                 let resString = JSON.stringify(res);
                 vm.user.resources_perms.page.PUTSPECIAL = resString;
                 let privilege = _getPrivileges('page', 'PUTSPECIAL');
-                privilege.modules = resString
+                privilege.modules = resString;
                 if(res.length > 0) {
                     _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: true});
                     _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: true});
                 } else {
                     _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: false});
-                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: false});                    
+                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: false});
                 }
             });
         }
@@ -155,19 +155,19 @@
             if (angular.isUndefined(vm.user.resources_perms)) {
                 return;
             }
-            var convertedPerms = {};
-            var permsToConvert = vm.user.resources_perms;
+            let convertedPerms = {};
+            let permsToConvert = vm.user.resources_perms;
             Object.keys(permsToConvert).forEach(function (key) {
                 permsToConvert[key].split(';').forEach(function (value) {
-                    let item = [];
-                    item[0] = value.substring(0, value.indexOf(':'));
-                    item[1] = value.substring(value.indexOf(':') + 1);
+                    let method = value.substring(0, value.indexOf(':'));
+                    let val = value.substring(value.indexOf(':') + 1);
                     var permsToConvert = convertedPerms[key] || {};
-                    if (item.length > 1) {
-                        permsToConvert[item[0]] = item[1];
+                    if (method) {
+                        val = val.replace(/\\/g, '');
+                        permsToConvert[method] = val;
                         convertedPerms[key] = permsToConvert;
                     } else {
-                        permsToConvert[item[0]] = [item[0]];
+                        permsToConvert[val] = [val];
                         convertedPerms[key] = permsToConvert;
                     }
                 });
@@ -245,7 +245,8 @@
             }
             let hasCustomPerm = hasCustomPermission(context, key);
             let hasResourcePerm = hasCustomPerm && vm.user.resources_perms[context] && !!vm.user.resources_perms[context][key];
-            let hasCustomSet = hasResourcePerm && vm.listPermissions[context][key] && vm.listPermissions[context][key][0] !== undefined;
+            let hasCustomSet = hasResourcePerm && vm.listPermissions[context][key] &&
+                vm.listPermissions[context][key][0] !== undefined;
             return hasCustomSet;
         }
 
@@ -310,7 +311,7 @@
             isLoadAccordion[contextName] = true;
             let contextPermissions = _contextPermissions(contextName);
             _loadContextDataPut(contextPermissions, contextName);
-        };
+        }
 
         function _loadContextDataPut(contextPermissions, contextName) {
             contextPermissions.forEach(function(element) {
@@ -320,8 +321,10 @@
                             if(!vm.listPermissions[contextName]) {
                                 vm.listPermissions[contextName] = {};
                             }
-                            vm.listPermissions[contextName][res.element.permission] = _mountListPermissionContextId(res.data.items, res.element);
-                            _setCheckboxPermission(contextName, res.element.permission, { method: 'prop', key: 'indeterminate', value: true });
+                            vm.listPermissions[contextName][res.element.permission] = 
+                                _mountListPermissionContextId(res.data.items, res.element);
+                            _setCheckboxPermission(contextName, res.element.permission, 
+                                { method: 'prop', key: 'indeterminate', value: true });
                         });
                 }
             });
@@ -381,7 +384,8 @@
                         if (contextPermissions.ids) {
                             vm.user.resources_perms[context][permission] = [];
                             vm.user.resources_perms[context][permission][0] = permission;
-                            _setCheckboxPermission(context, permission, { method: 'prop', key: 'checked', value: true});                            
+                            _setCheckboxPermission(context, permission, 
+                                { method: 'prop', key: 'checked', value: true});
                         } else {
                             vm.listPermissions[context][permission] = undefined;
                             vm.user.resources_perms[context][permission] = [];
@@ -420,7 +424,7 @@
             let privilegeToReturn = {};
             let permission = vm.user.permissions.find(function(perm) {
                 return perm.resource === resource;
-            })
+            });
             if(permission && permission.privileges) {
                 privilegeToReturn = permission.privileges.find(function(p) {
                     return p.privilege === privilege;
@@ -440,10 +444,11 @@
                     try { return JSON.parse(privilege.modules); } 
                     catch (e) { return []; }
                 },
-                currentUser: function () { return vm.user.name }
+                currentUser: function () { return vm.user.name; }
             };
-            return ModalService.openModal('modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-            'ModulesPermissionController as vm', resolve, 'xl');
+            return ModalService.openModal(
+                'modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
+                'ModulesPermissionController as vm', resolve, 'xl');
         }
 
         function _getResources() {

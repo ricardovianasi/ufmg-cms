@@ -6,7 +6,8 @@
         .controller('ModulesPermissionController', ModulesPermissionController);
 
     /** ngInject */
-    function ModulesPermissionController($uibModalInstance, $q, WidgetsService, PagesService, NotificationService, dataPermissionModule, currentUser) {
+    function ModulesPermissionController($uibModalInstance, $q, WidgetsService, PagesService, NotificationService,
+            dataPermissionModule, currentUser) {
         let vm = this;
 
         vm.onPageSelected = onPageSelected;
@@ -93,15 +94,15 @@
                 module: widget.type,
                 nameModule: widget.label,
                 permissions: vm.crudPermission
-            }
+            };
         }
 
         function _preparePermissions() {
             $q.all([_loadPages(), _loadWidgets()]).then(function() {
                 console.log('dataPermissionModule', dataPermissionModule);
                 vm.dataPermissions = dataPermissionModule.map(function(permission) {
-                    let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage });
-                    let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module });
+                    let pageAllowed = vm.allPages.find(function (page) { return page.id === permission.idPage; });
+                    let moduleAllowed = vm.widgets.find(function (widget) { return widget.type === permission.module; });
                     permission.title = pageAllowed.title;
                     permission.nameModule = moduleAllowed.label;
                     return permission;
@@ -129,7 +130,8 @@
                     { id: 'permissions', title: 'Permissões', type: 'listcheckbox' }
                 ],
                 actions: [ 
-                    { label: 'Remover', icon: 'fa-trash', eventClick: function (permissionToRemove) { _removePermission(permissionToRemove); } } 
+                    { label: 'Remover', icon: 'fa-trash', 
+                    eventClick: function (permissionToRemove) { _removePermission(permissionToRemove); } } 
                 ]
             };
         }

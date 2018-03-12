@@ -31,7 +31,7 @@
                                 {value: false, label: 'Criar', type: 'create'} 
                             ]} ];
                         }],
-                        currentUser: [function() { return 'Lucas' }]
+                        currentUser: [function() { return 'Lucas'; }]
                     }
                 });
         });
