@@ -43,7 +43,7 @@
 
         function openModalWidgets(idx) {
             let widgetSelected = ctrl.listWidgets[idx];
-            WidgetsService.openWidgetModal(widgetSelected)
+            WidgetsService.openWidgetModal(widgetSelected, ctrl.modulesPermissions)
                 .then(function (data) {
                     _updateWidget(data, idx);
                 });

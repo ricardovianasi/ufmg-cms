@@ -5,7 +5,7 @@
         .controller('ModuleModalController', ModuleModalController);
     /** ngInject */
     function ModuleModalController($scope, $uibModalInstance, module,
-        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService, WidgetsService) {
+        $rootScope, RedactorPluginService, $timeout, Util, $q, $log, WidgetModuleService, WidgetsService, permissions) {
 
         let vm = this;
         let hasRequest = false;
@@ -167,7 +167,6 @@
                 vm.widget.selected.type = module.type;
 
                 angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module));
-
                 $timeout(function () {
                         var html = $.parseHTML(vm.widget.text);
                         $('#redactor-only').append(html);
@@ -207,9 +206,29 @@
         function _loadListWidgets() {
             vm.loadingWidgets = true;
             WidgetsService.getWidgets()
-                .then(function(data) { vm.widgets = data.data; })
+                .then(function(data) { vm.widgets = _filterWidgetsPermissionCreate(data.data) })
                 .catch(function(error) { console.error(error); })
                 .then(function() { vm.loadingWidgets = false; });
+        }
+
+        function _setIsOnlyView() {
+            if(permissions) {
+                console.log('permissions[vm.module.type]', permissions, vm.widget.selected.type);
+                let canPut = permissions[vm.widget.selected.type].permissions.put.value;
+                vm.isOnlyView = angular.isDefined(vm.widget.selected) && !canPut;
+            }
+            console.log('_setIsOnlyView', vm.isOnlyView);
+        }
+
+        function _filterWidgetsPermissionCreate(data) {
+            if(permissions) {
+                data.items = data.items.filter(function(wgt) {
+                    let wgtPermission = permissions[wgt.type];
+                    let canCreate = angular.isDefined(wgtPermission) && wgtPermission.permissions.create.value;
+                    return wgtPermission && canCreate;
+                });
+            }
+            return data;
         }
 
         function activate() {

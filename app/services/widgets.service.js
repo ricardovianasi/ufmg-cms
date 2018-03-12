@@ -13,7 +13,7 @@
             parseListWidgetsToSave: parseListWidgetsToSave
         };
 
-        function openWidgetModal(currentWidget) {
+        function openWidgetModal(currentWidget, permissions) {
             let widgetModal = $uibModal.open({
                 templateUrl: 'components/modal/module.modal.template.html',
                 controller: 'ModuleModalController',
@@ -21,7 +21,8 @@
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
-                    module: function () { return currentWidget; }
+                    module: function () { return currentWidget; },
+                    permissions: function() { return permissions; }
                 }
             });
             return widgetModal.result;
