@@ -69,7 +69,7 @@
         }
 
         function _updateWidget(data, idx) {
-            if (typeof idx !== 'undefined') {
+            if (idx !== -1) {
                 ctrl.listWidgets[idx] = data;
             } else {
                 ctrl.listWidgets.push(data);

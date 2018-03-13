@@ -216,7 +216,6 @@
                 let canPut = permissions[vm.widget.selected.type].permissions.put.value;
                 vm.isOnlyView = angular.isDefined(vm.widget.selected) && !canPut;
             }
-            console.log('_setIsOnlyView', vm.isOnlyView);
         }
 
         function _filterWidgetsPermissionCreate(data) {
@@ -224,7 +223,7 @@
                 data.items = data.items.filter(function(wgt) {
                     let wgtPermission = permissions[wgt.type];
                     let canCreate = angular.isDefined(wgtPermission) && wgtPermission.permissions.create.value;
-                    return wgtPermission && canCreate;
+                    return canCreate;
                 });
             }
             return data;
