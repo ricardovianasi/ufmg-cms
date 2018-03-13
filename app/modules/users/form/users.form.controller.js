@@ -7,7 +7,8 @@
 
     /** ngInject */
     function UsersFormController($routeParams, $log, $q, UsersService, ResourcesService, PagesService, ModalService,
-        PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService) {
+        PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService,
+        PermissionService) {
 
         var vm = this;
         var userId;
@@ -37,6 +38,7 @@
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
         vm.openModulesPermission = openModulesPermission;
         vm.loadMoreUser = loadMoreUser;
+        vm.checkListContext = checkListContext;
 
         function onInit() {
             $log.info('UsersFormController');
@@ -66,19 +68,24 @@
 
         function openModulesPermission() {
             let modal = _openModulesPermissionModal();
-            modal.result.then(function (res) {
-                let resString = JSON.stringify(res);
-                vm.user.resources_perms.page.PUTSPECIAL = resString;
-                let privilege = _getPrivileges('page', 'PUTSPECIAL');
-                privilege.modules = resString;
-                if(res.length > 0) {
-                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: true});
-                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: true});
-                } else {
-                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'attr', key: 'value', value: false});
-                    _setCheckboxPermission('page', 'PUTSPECIAL', { method: 'prop', key: 'indeterminate', value: false});
-                }
-            });
+            modal.result.then(function (res) { _prepareCustomModules(res); });
+        }
+
+        function _prepareCustomModules(customModules) {
+            let keyPutModules = PermissionService.TYPES_PERMISSIONS.PUTMODULES;
+            let customModulesStr = JSON.stringify(customModules);
+            let privilege = _getPrivileges('page', keyPutModules);
+            if(customModules.length > 0) {
+                vm.user.resources_perms.page.PUTSPECIAL = customModulesStr;
+                privilege.modules = customModulesStr;
+                _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: true});
+                _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: true});
+            } else {
+                privilege.modules = [];
+                _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: false});
+                _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: false});
+                checkListContext('page', keyPutModules);
+            }
         }
 
         function _hasLoaded(oldValue) {
@@ -353,8 +360,11 @@
             return selecteds;
         }
 
-        vm.checkListContext = function (context, permission) {
-            if (vm.resources[context] && vm.resources[context].select && vm.resources[context].select[0] === permission) {
+        function checkListContext (context, permission) {
+            if ((vm.resources[context] && vm.resources[context].select 
+                && vm.resources[context].select[0] === permission) || 
+                PermissionService.TYPES_PERMISSIONS.PUTMODULES === permission
+            ) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
                 }
@@ -426,12 +436,12 @@
                 return perm.resource === resource;
             });
             if(permission && permission.privileges) {
-                privilegeToReturn = permission.privileges.find(function(p) {
+                let privilegeFound = permission.privileges.find(function(p) {
                     return p.privilege === privilege;
                 });
+                privilegeToReturn = privilegeFound || {};
             }
             return privilegeToReturn;
-
         }
 
         function _openModulesPermissionModal() {

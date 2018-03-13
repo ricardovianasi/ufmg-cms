@@ -11,7 +11,9 @@
         $log.info('PermissionService');
         initService();
         $rootScope.User = null;
-        var showMessage = null;
+        let showMessage = null;
+        let TYPES_PERMISSIONS = Object.freeze({ POST: 'POST', GET: 'GET', PUT: 'PUT', DELETE: 'DELETE', PUTTAG: 'PUTTAG',
+            PUTMODULES: 'PUTSPECIAL', PUTSPECIAL: 'PUTSPECIAL' });
         let service = {
             check: check,
             initService: initService,
@@ -25,7 +27,8 @@
             hasPermissionId: hasPermissionId,
             getPrivilege: getPrivilege,
             isAdministrator: isAdministrator,
-            getModulesPermissions: getModulesPermissions
+            getModulesPermissions: getModulesPermissions,
+            TYPES_PERMISSIONS: TYPES_PERMISSIONS
         };
 
         function isAdministrator() {
@@ -55,7 +58,7 @@
         }
 
         function getModulesPermissions(id, keyId, context) {
-            let privilege = getPrivilege(context, 'PUTSPECIAL');
+            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTMODULES);
             if(privilege && privilege.modules) {
                 console.log(privilege);
                 let modules = JSON.parse(privilege.modules);
@@ -165,19 +168,31 @@
         }
 
         function canPost(context, id) {
-            return check(context, id, 'POST');
+            return check(context, id, TYPES_PERMISSIONS.POST);
         }
 
         function canGet(context, id) {
-            return check(context, id, 'GET');
+            return check(context, id, TYPES_PERMISSIONS.GET);
         }
 
         function canPutTag(context, id) {
-            return check(context, id, 'PUTTAG');
+            return check(context, id, TYPES_PERMISSIONS.PUTTAG);
         }
 
         function canPutSpecial(context, id) {
-            return check(context, id, 'PUTSPECIAL');
+            return check(context, id, TYPES_PERMISSIONS.PUTSPECIAL);
+        }
+
+        function canPutModules(context, id) {
+            return check(context, id, TYPES_PERMISSIONS.PUTMODULES);
+        }
+
+        function canDelete(context, id) {
+            return check(context, id, TYPES_PERMISSIONS.DELETE);
+        }
+
+        function canPut(context, id) {
+            return check(context, id, TYPES_PERMISSIONS.PUT);
         }
 
         function messageWarn() {
@@ -189,14 +204,6 @@
             $timeout(function () {
                 showMessage = false;
             }, 5000);
-        }
-
-        function canDelete(context, id) {
-            return check(context, id, 'DELETE');
-        }
-
-        function canPut(context, id) {
-            return check(context, id, 'PUT');
         }
 
         function hasPermissionId(context, id) {
