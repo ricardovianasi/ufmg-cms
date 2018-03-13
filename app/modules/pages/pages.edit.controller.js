@@ -254,16 +254,14 @@
                         keyId: 'idPage'
                     };
                     angular.extend(vm.page, page);
-                    vm.canPutModules = PermissionService.canPutModules('page');
+                    _loadPermissionModules();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
 
         function _loadPermissionModules() {
-            vm.modulesPermissions = PermissionService.getModulesPermissions(vm.page.id, 'idPage', 'page');
-            vm.page.widgets.main = _filterWidgetsWithPermission(vm.page.widgets.main, vm.modulesPermissions);
-            vm.page.widgets.side = _filterWidgetsWithPermission(vm.page.widgets.side, vm.modulesPermissions);
-            console.log('_loadPermissionModules', vm.modulesPermissions);
+            vm.canPutModules = PermissionService.canPutModules('page');
+            vm.isLimitPut = PermissionService.canPutSpecial('page');
         }
 
         function _filterWidgetsWithPermission(widgets, permissions) {

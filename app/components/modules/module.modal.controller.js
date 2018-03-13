@@ -212,7 +212,7 @@
         }
 
         function _setIsOnlyView() {
-            if(permissions) {
+            if(permissions && permissions[vm.widget.selected.type]) {
                 let canPut = permissions[vm.widget.selected.type].permissions.put.value;
                 vm.isOnlyView = angular.isDefined(vm.widget.selected) && !canPut;
             }

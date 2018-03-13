@@ -22,6 +22,7 @@
             canPut: canPut,
             canGet: canGet,
             canPutTag: canPutTag,
+            canPutSpecial: canPutSpecial,
             canPutModules: canPutModules,
             run: initService,
             hasPermission: hasPermission,
@@ -181,7 +182,7 @@
         }
 
         function canPutSpecial(context, id) {
-            return check(context, id, TYPES_PERMISSIONS.PUTSPECIAL);
+            return check(context, id, TYPES_PERMISSIONS.PUTSPECIAL) && !$rootScope.User.is_administrator;
         }
 
         function canPutModules(context, id) {
