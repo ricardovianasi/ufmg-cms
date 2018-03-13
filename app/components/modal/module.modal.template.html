@@ -1,12 +1,17 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{ ctrlModal.widget.type|translate|titleize }} <span ng-show="ctrlModal.isDevelopment()">(Em Desenvolvimento)</span></h3>
+    <h3 class="modal-title">
+        {{ ctrlModal.widget.type|translate|titleize }} 
+        <span ng-show="ctrlModal.isDevelopment()">(Em Desenvolvimento)</span>
+    </h3>
+    <span ng-show="ctrlModal.isOnlyView">(Modo somente visualização)</span>
 </div>
 <div class="modal-body" can-get>
+    <div ng-show="ctrlModal.isOnlyView" class="block-only-view"></div>
     <form>
         <fieldset>
             <div class="form-group">
                 <label>T&iacute;tulo do Widget:</label>
-                <input ng-disabled="ctrlModal.isDevelopment()" type="text" title="Título do Widget" class="form-control" ng-model="ctrlModal.widget.title">
+                <input ng-disabled="ctrlModal.isDevelopment() || ctrlModal.isOnlyView" type="text" title="Título do Widget" class="form-control" ng-model="ctrlModal.widget.title">
             </div>
             <div ng-if="!ctrlModal.module" class="form-group">
                 <label>Selecionar Widget:</label>
@@ -24,7 +29,7 @@
 </div>
 <div class="modal-footer" ng-if="!viewOnly">
     <button type="button" class="btn btn-danger" ng-click="ctrlModal.cancel()"><i class="fa fa-remove"></i> Cancelar</button>
-    <button type="button" class="btn btn-success" ng-disabled="!ctrlModal.canInsert()" ng-click="ctrlModal.ok()">
+    <button ng-if="!ctrlModal.isOnlyView" type="button" class="btn btn-success" ng-disabled="!ctrlModal.canInsert()" ng-click="ctrlModal.ok()">
         <i class="fa fa-check"></i> Inserir
     </button>
 </div>

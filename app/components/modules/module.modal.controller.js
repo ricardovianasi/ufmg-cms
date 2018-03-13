@@ -165,8 +165,8 @@
                 vm.widget.type = module.type;
                 vm.widget.title = module.title;
                 vm.widget.selected.type = module.type;
-
                 angular.extend(vm.widget, WidgetModuleService.getWidget(vm.widget.type).parseToLoad(vm.module));
+                _setIsOnlyView();
                 $timeout(function () {
                         var html = $.parseHTML(vm.widget.text);
                         $('#redactor-only').append(html);
@@ -213,7 +213,6 @@
 
         function _setIsOnlyView() {
             if(permissions) {
-                console.log('permissions[vm.module.type]', permissions, vm.widget.selected.type);
                 let canPut = permissions[vm.widget.selected.type].permissions.put.value;
                 vm.isOnlyView = angular.isDefined(vm.widget.selected) && !canPut;
             }

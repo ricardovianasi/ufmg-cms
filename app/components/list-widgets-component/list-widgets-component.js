@@ -32,19 +32,20 @@
 
         ////////////////
 
-        function removeWidget(idx) {
-            let msgModal = 'Você deseja excluir o modulo <b>' + ctrl.listWidgets[idx].title + '</b>?';
+        function removeWidget(widget) {
+            let msgModal = 'Você deseja excluir o modulo <b>' + widget.title + '</b>?';
             ModalService.confirm(msgModal, ModalService.MODAL_MEDIUM).result
                 .then(function () {
+                    let idx = _getIdxFromWidget(widget);
                     ctrl.listWidgets.splice(idx, 1);
                     NotificationService.success('Modulo removido com sucesso.');
                 });
         }
 
-        function openModalWidgets(idx) {
-            let widgetSelected = ctrl.listWidgets[idx];
-            WidgetsService.openWidgetModal(widgetSelected, ctrl.modulesPermissions)
+        function openModalWidgets(widget) {
+            WidgetsService.openWidgetModal(widget, ctrl.modulesPermissions)
                 .then(function (data) {
+                    let idx = _getIdxFromWidget(widget);
                     _updateWidget(data, idx);
                 });
         }
@@ -57,8 +58,14 @@
             return widgetPermission.permissions[role].value;
         }
 
-        function isView(widget, idx, array) {
+        function isView(widget) {
             return angular.isDefined(_getWidgetPermission(widget.type));
+        }
+
+        function _getIdxFromWidget(item) {
+            return ctrl.listWidgets.findIndex(function(widget) {
+                return item == widget;
+            });
         }
 
         function _updateWidget(data, idx) {

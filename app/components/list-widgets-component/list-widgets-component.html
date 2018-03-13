@@ -8,18 +8,18 @@
                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
             </div>
             <div class="col-md-2" ng-if="ctrl.viewOnly">
-                <span class="label label-primary" ng-click="ctrl.openModalWidgets($index)">
+                <span class="label label-primary" ng-click="ctrl.openModalWidgets(item)">
                     <i class="fa fa-pencil"></i> Visualisar
                 </span>
             </div>
             <div class="col-md-2" ng-if="!ctrl.viewOnly">
-                <span ng-if="!ctrl.canHandle(item, 'put')" class="label label-default" ng-click="ctrl.openModalWidgets($index)">
+                <span ng-if="!ctrl.canHandle(item, 'put')" class="label label-default" ng-click="ctrl.openModalWidgets(item)">
                     <i class="fa fa-eye"></i> Visualisar
                 </span>
-                <span ng-if="ctrl.canHandle(item, 'put')" class="label label-warning" ng-click="ctrl.openModalWidgets($index)">
+                <span ng-if="ctrl.canHandle(item, 'put')" class="label label-warning" ng-click="ctrl.openModalWidgets(item)">
                     <i class="fa fa-pencil"></i> EDITAR
                 </span>
-                <span ng-if="ctrl.canHandle(item, 'delete')" class="label label-danger" ng-click="ctrl.removeWidget($index)">
+                <span ng-if="ctrl.canHandle(item, 'delete')" class="label label-danger" ng-click="ctrl.removeWidget(item)">
                     <i class="fa fa-remove"></i> REMOVER
                 </span>
                 <span class="label label-primary" as-sortable-item-handle>
