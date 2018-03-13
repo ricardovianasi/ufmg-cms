@@ -254,7 +254,7 @@
                         keyId: 'idPage'
                     };
                     angular.extend(vm.page, page);
-                    // _loadPermissionModules();
+                    vm.canPutModules = PermissionService.canPutModules('page');
                     $scope.$broadcast('objPublishLoaded');
                 });
         }

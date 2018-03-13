@@ -22,7 +22,7 @@
                 <span ng-if="ctrl.canHandle(item, 'delete')" class="label label-danger" ng-click="ctrl.removeWidget(item)">
                     <i class="fa fa-remove"></i> REMOVER
                 </span>
-                <span class="label label-primary" as-sortable-item-handle>
+                <span ng-if="ctrl.canAll" class="label label-primary" as-sortable-item-handle>
                     <i class="fa fa-arrows-v"></i> MOVER
                 </span>
             </div>

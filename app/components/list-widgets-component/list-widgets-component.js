@@ -51,15 +51,16 @@
         }
 
         function canHandle(widget, role) {
+            let result = false;
             let widgetPermission = _getWidgetPermission(widget.type);
-            if(angular.isUndefined(widgetPermission)) {
-                return false;
+            if(angular.isDefined(widgetPermission)) {
+                result = widgetPermission.permissions[role].value
             }
-            return widgetPermission.permissions[role].value;
+            return result || ctrl.canAll;
         }
 
         function isView(widget) {
-            return angular.isDefined(_getWidgetPermission(widget.type));
+            return angular.isDefined(_getWidgetPermission(widget.type)) || ctrl.canAll;
         }
 
         function _getIdxFromWidget(item) {
@@ -87,6 +88,9 @@
             let config = ctrl.permissionsOptions;
             ctrl.modulesPermissions = 
                 PermissionService.getModulesPermissions(config.id, config.keyId, config.context);
+            let canPut = PermissionService.canPutModules(config.context);
+            let listPermissionIsVoid = !Object.keys(ctrl.modulesPermissions).length;
+            ctrl.canAll = canPut && listPermissionIsVoid;
         }
 
         function _getOptionsSortable() {

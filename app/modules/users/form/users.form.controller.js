@@ -39,6 +39,7 @@
         vm.openModulesPermission = openModulesPermission;
         vm.loadMoreUser = loadMoreUser;
         vm.checkListContext = checkListContext;
+        vm.isTypePutModules = isTypePutModules;
 
         function onInit() {
             $log.info('UsersFormController');
@@ -66,6 +67,10 @@
                 });
         }
 
+        function isTypePutModules(key) {
+            return PermissionService.TYPES_PERMISSIONS.PUTMODULES == key;
+        }
+
         function openModulesPermission() {
             let modal = _openModulesPermissionModal();
             modal.result.then(function (res) { _prepareCustomModules(res); });
@@ -76,7 +81,7 @@
             let customModulesStr = JSON.stringify(customModules);
             let privilege = _getPrivileges('page', keyPutModules);
             if(customModules.length > 0) {
-                vm.user.resources_perms.page.PUTSPECIAL = customModulesStr;
+                vm.user.resources_perms.page.PUTMODULES = customModulesStr;
                 privilege.modules = customModulesStr;
                 _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: true});
                 _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: true});
@@ -447,7 +452,7 @@
         function _openModulesPermissionModal() {
             let resolve = {
                 dataPermissionModule: function() {
-                    let privilege = _getPrivileges('page', 'PUTSPECIAL');
+                    let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTMODULES);
                     if(!privilege || !angular.isString(privilege.modules)) {
                         return [];
                     }
