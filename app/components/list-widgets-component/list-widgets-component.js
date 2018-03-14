@@ -43,7 +43,8 @@
         }
 
         function openModalWidgets(widget) {
-            WidgetsService.openWidgetModal(widget, ctrl.modulesPermissions)
+            let permissions = ctrl.canAll ? null : ctrl.modulesPermissions;
+            WidgetsService.openWidgetModal(widget, permissions)
                 .then(function (data) {
                     let idx = _getIdxFromWidget(widget);
                     _updateWidget(data, idx);
@@ -53,7 +54,7 @@
         function canHandle(widget, role) {
             let result = false;
             let widgetPermission = _getWidgetPermission(widget.type);
-            if(angular.isDefined(widgetPermission)) {
+            if(angular.isDefined(widgetPermission) && widgetPermission.permissions) {
                 result = widgetPermission.permissions[role].value
             }
             return result || ctrl.canAll;
@@ -78,11 +79,12 @@
         }
 
         function _getWidgetPermission(type) {
-            return ctrl.modulesPermissions[type];
+            return ctrl.modulesPermissions ? ctrl.modulesPermissions[type] : undefined;
         }
 
         function _loadingPermission() {
             if(!ctrl.permissionsOptions) {
+                ctrl.canAll = true;
                 return;
             }
             let config = ctrl.permissionsOptions;
@@ -90,7 +92,7 @@
                 PermissionService.getModulesPermissions(config.id, config.keyId, config.context);
             let canPut = PermissionService.canPutModules(config.context);
             let listPermissionIsVoid = !Object.keys(ctrl.modulesPermissions).length;
-            ctrl.canAll = canPut && listPermissionIsVoid;
+            ctrl.canAll = (canPut && listPermissionIsVoid) || config.isAuthor;
         }
 
         function _getOptionsSortable() {

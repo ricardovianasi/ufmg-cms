@@ -243,23 +243,28 @@
                     
                     vm.title = page.title;
                     vm.breadcrumb_active = page.title;
-
                     page.tags = TagsService.convertTagsInput(tags);
                     page.columns = !page.widgets.side.length ? 1 : 2;
                     page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
-                    vm.widgetPermissionOptions = {
-                        context: 'page',
-                        id: page.id,
-                        keyId: 'idPage'
-                    };
                     angular.extend(vm.page, page);
+                    _setIsAuthor();
                     _loadPermissionModules();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
 
+        function _setIsAuthor() {
+            vm.isAuthor = $rootScope.User.is_administrator || ($rootScope.User.id === vm.page.author.id);
+        }
+
         function _loadPermissionModules() {
+            vm.widgetPermissionOptions = {
+                context: 'page',
+                id: vm.page.id,
+                keyId: 'idPage',
+                isAuthor: vm.isAuthor
+            };
             vm.canPutModules = PermissionService.canPutModules('page');
             vm.isLimitPut = PermissionService.canPutSpecial('page');
         }

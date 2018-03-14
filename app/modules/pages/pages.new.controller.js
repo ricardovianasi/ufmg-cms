@@ -25,12 +25,12 @@
         vm.removeModuleSide = _removeModuleSide;
 
         function onInit() {
-
             vm.pagesParent.push({
                 id: null,
                 title: '- Página Normal -'
             });
-
+            vm.canPutModules = true;
+            vm.isNew = true;
             vm.title = 'Nova Página';
             vm.breadcrumb_active = vm.title;
 
