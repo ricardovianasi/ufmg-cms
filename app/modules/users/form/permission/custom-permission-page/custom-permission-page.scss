@@ -1,0 +1,101 @@
+@keyframes transition-delete-page {
+    from {left: 45%;}
+    to {left: 0;}
+}
+.page-permissions {
+    .container-list {
+        max-height: 50vh;
+        margin-bottom: 20px;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+
+    .list-pages {
+        margin: 5px 0;
+        border: 1px solid rgba(2, 2, 2, .38);
+        box-shadow: 0px 2px 7px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .list-pages .wrapper-delete {
+        position: relative;
+        left: 45%;
+        &.-page-transitions {
+            left: 0;
+            animation-duration: 1s;
+            animation-name: transition-delete-page;
+        }
+        &.-moodule-transitions {
+            
+        }
+        > .btn-delete {
+            margin: 0;
+            &:hover {
+                color: #d9534f;
+            }
+        }
+        > .dialog-delete {
+            display: inline-block;
+            position: relative;
+            visibility: collapse;
+            > .text-msg, .group-button {
+                font-size: .7em;
+                display: inline-block;
+            }
+            > .group-button {
+                margin-left: 5px;
+                .btn {
+                    margin: 0;
+                }
+            }
+            &.-visible {
+                visibility: visible;
+            }
+        }
+    }
+
+    .list-pages > .item-modules {
+        margin-top: 5px;
+        .list-modules {
+            padding-left: 50px;
+            width: 60ch;
+            > .module {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px;
+                margin: 5px;
+                border: .5px dashed;
+                .title {
+                    flex: 1;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .list-pages > .item-page {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        > .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        > .head > .title-page {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        > .btn-modules {
+            margin-bottom: 0;
+        }
+    }
+
+}

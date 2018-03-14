@@ -20,19 +20,19 @@
                     controller: 'UsersFormController',
                     controllerAs: 'vm'
                 }).when('/user/permission', {
-                    templateUrl: 'modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-                    controller: 'ModulesPermissionController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        dataPermissionModule: [function() { 
-                            return [ {idPage: 20, module: 'comevents', permissions: [
-                                {value: false, label: 'Excluir', type: 'delete'},
-                                {value: false, label: 'Editar', type: 'put'},
-                                {value: false, label: 'Criar', type: 'create'} 
-                            ]} ];
-                        }],
-                        currentUser: [function() { return 'Lucas'; }]
-                    }
+                    templateUrl: 'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
+                    controller: 'CustomPermissionPageController',
+                    controllerAs: 'vm'
+                    // resolve: {
+                    //     dataPermissionModule: [function() { 
+                    //         return [ {idPage: 20, module: 'comevents', permissions: [
+                    //             {value: false, label: 'Excluir', type: 'delete'},
+                    //             {value: false, label: 'Editar', type: 'put'},
+                    //             {value: false, label: 'Criar', type: 'create'} 
+                    //         ]} ];
+                    //     }],
+                    //     currentUser: [function() { return 'Lucas'; }]
+                    // }
                 });
         });
 })();

@@ -450,20 +450,20 @@
         }
 
         function _openModulesPermissionModal() {
-            let resolve = {
-                dataPermissionModule: function() {
-                    let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTMODULES);
-                    if(!privilege || !angular.isString(privilege.modules)) {
-                        return [];
-                    }
-                    try { return JSON.parse(privilege.modules); } 
-                    catch (e) { return []; }
-                },
-                currentUser: function () { return vm.user.name; }
-            };
+            // let resolve = {
+            //     dataPermissionModule: function() {
+            //         let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTMODULES);
+            //         if(!privilege || !angular.isString(privilege.modules)) {
+            //             return [];
+            //         }
+            //         try { return JSON.parse(privilege.modules); } 
+            //         catch (e) { return []; }
+            //     },
+            //     currentUser: function () { return vm.user.name; }
+            // };
             return ModalService.openModal(
-                'modules/users/form/permission/modules-permission-modal/modules-permission.template.html',
-                'ModulesPermissionController as vm', resolve, 'xl');
+                'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
+                'CustomPermissionPageController as vm', null, 'md');
         }
 
         function _getResources() {
