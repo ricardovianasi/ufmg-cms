@@ -50,6 +50,13 @@
                     font-weight: bold;
                 }
             }
+            > .select-module {
+                display: flex;
+                align-items: flex-end;
+                .select {
+                    flex: 2;
+                }
+            }
         }
     }
 

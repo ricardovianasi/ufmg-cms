@@ -43,8 +43,16 @@
                 <div class="item-modules collapse" id="collapseModules{{ $index }}">
                     <div class="list-modules">
                         <div class="select-module">
-                            <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected" on-selected="vm.onWidgetSelected(widget, dataPage)">
-                            </select-widget-component>
+                            <div class="select">
+                                <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected" on-selected="vm.onWidgetSelected(widget, dataPage)">
+                                </select-widget-component>
+                            </div>
+                            <div class="action">
+                                <button ng-click="vm.addPage()" class="btn btn-sm btn-default">
+                                    <i class="fa fa-plus"></i>
+                                    Inserir
+                                </button>
+                            </div>
                         </div>
                         <div ng-repeat="widget in dataPage.modules track by widget.type" class="module">
                             <h5 class="title">
@@ -73,11 +81,11 @@
         </section>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success pull-right">
+                <button ng-click="vm.save()" class="btn btn-success pull-right">
                     <i class="fa fa-check"></i>
                     Salvar
                 </button>
-                <button class="btn btn-default pull-right">
+                <button ng-click="vm.close()" class="btn btn-default pull-right">
                     <i class="fa fa-times"></i>
                     Cancelar
                 </button>

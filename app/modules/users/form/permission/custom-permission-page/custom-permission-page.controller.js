@@ -6,7 +6,7 @@
         .controller('CustomPermissionPageController', CustomPermissionPageController);
 
     /** ngInject */
-    function CustomPermissionPageController($q, data, PagesService, WidgetsService, NotificationService) {
+    function CustomPermissionPageController($q, data, PagesService, WidgetsService, NotificationService, $uibModalInstance) {
         let vm = this;
 
         vm.deletePage = deletePage;
@@ -15,18 +15,30 @@
         vm.addPage = addPage;
         vm.onPageSelected = onPageSelected;
         vm.onWidgetSelected = onWidgetSelected;
+        vm.close = close;
+        vm.save = save;
 
         activate();
 
         ////////////////
 
+        function close() {
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        function save() {
+            $uibModalInstance.close('data');
+        }
+
         function onWidgetSelected(widget, page) {
-            let widgetToSelect = {
-                type: widget.type,
-                label: widget.label,
-                permissions: { put: false, post: false, delete: false }
+            let added = page.modules.find(function(wgtAdded) {
+                return wgtAdded.type === widget.type;
+            });
+            if(added) {
+                NotificationService.warn('Atenção, você já inseriu o widget nesta página.');
+                return;
             }
-            page.modules.unshift(widgetToSelect);
+            page.modules.unshift(_createWidgetToAdd(widget));
         }
 
         function onPageSelected(page) {
@@ -88,6 +100,15 @@
                 modules: [],
                 permissions: { putTag:false, putSuper: false }
             };
+        }
+
+
+        function _createWidgetToAdd(widget) {
+            return {
+                type: widget.type,
+                label: widget.label,
+                permissions: { put: false, post: false, delete: false }
+            }
         }
 
         function _loadAllWidgets() {
