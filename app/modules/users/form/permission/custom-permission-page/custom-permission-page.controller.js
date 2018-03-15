@@ -12,10 +12,15 @@
         vm.deletePage = deletePage;
         vm.deleteModule = deleteModule;
         vm.startDialogDelete = startDialogDelete;
+        vm.addPage = addPage;
 
         activate();
 
         ////////////////
+
+        function addPage(page) {
+
+        }
 
         function deleteModule(result) {
 
