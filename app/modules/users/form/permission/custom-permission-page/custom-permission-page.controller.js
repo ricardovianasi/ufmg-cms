@@ -14,7 +14,7 @@
         vm.startDialogDelete = startDialogDelete;
         vm.addPage = addPage;
         vm.onPageSelected = onPageSelected;
-        vm.onWidgetSelected = onWidgetSelected;
+        vm.addModule = addModule;
         vm.close = close;
         vm.save = save;
 
@@ -30,19 +30,15 @@
             $uibModalInstance.close('data');
         }
 
-        function onWidgetSelected(widget, page) {
-            let added = page.modules.find(function(wgtAdded) {
-                return wgtAdded.type === widget.type;
-            });
-            if(added) {
-                NotificationService.warn('Atenção, você já inseriu o widget nesta página.');
-                return;
-            }
-            page.modules.unshift(_createWidgetToAdd(widget));
-        }
-
         function onPageSelected(page) {
             vm.pageToAdd = page;
+        }
+
+        function addModule(page) {
+            if(!_canAddedWidget(page.modules, vm.moduleSelected)) {
+                return;
+            }
+            page.modules.unshift(_createWidgetToAdd(vm.moduleSelected));
         }
 
         function addPage() {
@@ -69,12 +65,11 @@
 
         function startDialogDelete(type, idx) {
             vm.toggleDelete[type+idx] = true;
-            console.log('startDialogDelete', vm.toggleDelete);
         }
 
         function _canAddedPage(page) {
             let result = false;
-            let isAdded = _checkPageAdded(page);
+            let isAdded = _checkAdded(page, vm.dataList, 'id', 'idPage');
             if(page && !isAdded) {
                 result = true;
             } else if(!page) {
@@ -85,10 +80,23 @@
             return result;
         }
 
-        function _checkPageAdded(page) {
-            if(!page) {return false; };
-            let idx = vm.dataList.findIndex(function(pgAdded) {
-                return pgAdded.idPage === page.id
+        function _canAddedWidget(modules, widget) {
+            let result = false;
+            let isAdded = _checkAdded(widget, modules, 'type', 'type');
+            if(widget && !isAdded) {
+                result = true;
+            } else if(!widget) {
+                NotificationService.warn('Atenção, deve ser selecionado um módulo antes de inserir.');
+            } else if(isAdded) {
+                NotificationService.warn('Atenção, este módulo já foi inserido.');
+            }
+            return result;
+        }
+
+        function _checkAdded(obj, list, refObj, refList) {
+            if(!obj) {return false; };
+            let idx = list.findIndex(function(objAdded) {
+                return objAdded[refList] === obj[refObj];
             });
             return idx >= 0;
         }

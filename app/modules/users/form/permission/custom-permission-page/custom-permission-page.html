@@ -44,11 +44,11 @@
                     <div class="list-modules">
                         <div class="select-module">
                             <div class="select">
-                                <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected" on-selected="vm.onWidgetSelected(widget, dataPage)">
+                                <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected">
                                 </select-widget-component>
                             </div>
                             <div class="action">
-                                <button ng-click="vm.addPage()" class="btn btn-sm btn-default">
+                                <button ng-click="vm.addModule(dataPage)" class="btn btn-sm btn-default">
                                     <i class="fa fa-plus"></i>
                                     Inserir
                                 </button>
@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div ng-if="!vm.dataList.length" class="col-md-12 list-pages">
-                <p> Sem páginas adicionadas ainda. </p>                
+                <p> Sem páginas adicionadas ainda. </p>
             </div>
         </section>
         <div class="row">
