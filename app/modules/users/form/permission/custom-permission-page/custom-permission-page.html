@@ -17,11 +17,11 @@
                 <div class="item-page">
                     <div class="head">
                         <h4 class="title-page">Nome da pagina muito grandto grandto grandto grande</h4>
-                        <div class="wrapper-delete" ng-class="{'-page-transitions': vm.toggleDelete['page'+i]}">
+                        <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete['page'+i]}">
                             <button ng-click="vm.startDialogDelete('page', i)" class="btn btn-link btn-delete">
                                 <i class="fa fa-trash"></i>
                             </button>
-                            <div class="dialog-delete" ng-class="{'-visible': vm.toggleDelete['page'+i]}">
+                            <div class="dialog-delete">
                                 <p class="text-danger text-msg">Remover página de permissões?</p>
                                 <div class="group-button">
                                     <button ng-click="vm.deletePage(true, 'page', i)" class="btn btn-danger btn-xs">Sim</button>

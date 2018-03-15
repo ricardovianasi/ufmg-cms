@@ -56,9 +56,9 @@
         > .head > .wrapper-delete {
             position: relative;
             left: 45%;
-            &.-page-transitions {
+            transition: 1s;
+            &.-trash-transitions {
                 left: 0;
-                transition: 1s;
             }
             > .btn-delete {
                 margin: 0;
@@ -69,7 +69,6 @@
             > .dialog-delete {
                 display: inline-block;
                 position: relative;
-                visibility: collapse;
                 > .text-msg, .group-button {
                     font-size: .7em;
                     display: inline-block;
@@ -79,9 +78,6 @@
                     .btn {
                         margin: 0;
                     }
-                }
-                &.-visible {
-                    visibility: visible;
                 }
             }
         }
