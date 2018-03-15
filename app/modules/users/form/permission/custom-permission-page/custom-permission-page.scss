@@ -14,7 +14,7 @@
         padding: 10px;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow-x: hidden;
         .btn-delete {
             margin: 0;
             &:hover {

@@ -14,10 +14,20 @@
         vm.startDialogDelete = startDialogDelete;
         vm.addPage = addPage;
         vm.onPageSelected = onPageSelected;
+        vm.onWidgetSelected = onWidgetSelected;
 
         activate();
 
         ////////////////
+
+        function onWidgetSelected(widget, page) {
+            let widgetToSelect = {
+                type: widget.type,
+                label: widget.label,
+                permissions: { put: false, post: false, delete: false }
+            }
+            page.modules.unshift(widgetToSelect);
+        }
 
         function onPageSelected(page) {
             vm.pageToAdd = page;

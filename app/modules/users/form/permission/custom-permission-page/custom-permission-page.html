@@ -43,12 +43,8 @@
                 <div class="item-modules collapse" id="collapseModules{{ $index }}">
                     <div class="list-modules">
                         <div class="select-module">
-                            <label >Escolha o módulo</label>
-                            <select class="form-control">
-                                <option value="">Módulo 1</option>
-                                <option value="">Módulo 2</option>
-                                <option value="">Módulo 3</option>
-                            </select>
+                            <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected" on-selected="vm.onWidgetSelected(widget, dataPage)">
+                            </select-widget-component>
                         </div>
                         <div ng-repeat="widget in dataPage.modules track by widget.type" class="module">
                             <h5 class="title">
@@ -66,10 +62,13 @@
                             </div>
                         </div>
                         <div class="module" ng-show="!dataPage.modules.length">
-                            <p class="msg-void"> Sem módulos adicionados ainda. </p>
+                            <p> Sem módulos adicionados ainda. </p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div ng-if="!vm.dataList.length" class="col-md-12 list-pages">
+                <p> Sem páginas adicionadas ainda. </p>                
             </div>
         </section>
         <div class="row">

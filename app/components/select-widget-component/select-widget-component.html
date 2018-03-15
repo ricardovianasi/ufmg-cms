@@ -1,0 +1,7 @@
+<label>{{ ctrl.label }}</label>
+<ui-select ng-disabled="ctrl.isDisabled" ng-model="ctrl.widgetModel" on-select="ctrl.onWidgetSelected($item)" class="ui-select">
+    <ui-select-match placeholder="Procurar...">{{ $select.selected.label }}</ui-select-match>
+    <ui-select-choices repeat="widget in ctrl.widgets.items|filter: $select.search" group-by="'group'">
+        <div ng-bind-html="widget.label|highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>
