@@ -2,6 +2,7 @@
     .container-list {
         max-height: 50vh;
         margin-bottom: 20px;
+        padding-right: 25px;
         overflow: auto;
         overflow-x: hidden;
     }
@@ -14,6 +15,12 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        .btn-delete {
+            margin: 0;
+            &:hover {
+                color: #d9534f;
+            }
+        }
     }
 
     .list-pages > .item-modules {
@@ -55,16 +62,10 @@
 
         > .head > .wrapper-delete {
             position: relative;
-            left: 45%;
+            left: 47%;
             transition: 1s;
             &.-trash-transitions {
                 left: 0;
-            }
-            > .btn-delete {
-                margin: 0;
-                &:hover {
-                    color: #d9534f;
-                }
             }
             > .dialog-delete {
                 display: inline-block;

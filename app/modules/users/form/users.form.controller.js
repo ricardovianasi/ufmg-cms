@@ -461,9 +461,22 @@
             //     },
             //     currentUser: function () { return vm.user.name; }
             // };
+            let resolve = {
+                data: function() {
+                    return [
+                        { 
+                            idPage: 132,
+                            modules: [ 
+                                { type: 'comevents', permissions: { put: false, post: false, delete: false } } 
+                            ], 
+                            permissons: { putTag: false, putSuper: false } 
+                        }
+                    ];
+                }
+            };
             return ModalService.openModal(
                 'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
-                'CustomPermissionPageController as vm', null, 'md');
+                'CustomPermissionPageController as vm', resolve, 'md');
         }
 
         function _getResources() {

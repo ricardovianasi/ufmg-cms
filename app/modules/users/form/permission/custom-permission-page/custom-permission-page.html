@@ -6,33 +6,33 @@
                 <select-pages-component on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione uma pagina para inserir" title="Selecione ou procure a página..." page-selected="vm.pageSelected"></select-pages-component>
             </div>
             <div class="col-md-6 col-xs-12">
-                <button class="btn btn-primary">
+                <button ng-click="vm.addPage()" class="btn btn-primary">
                     <i class="fa fa-plus"></i>
                     Inserir
                 </button>
             </div>
         </div>
         <section class="row container-list">
-            <div ng-repeat="i in [1, 2, 3]" class="col-md-12 list-pages">
+            <div ng-repeat="dataPage in vm.dataList track by $index" class="col-md-12 list-pages">
                 <div class="item-page">
                     <div class="head">
-                        <h4 class="title-page">Nome da pagina muito grandto grandto grandto grande</h4>
-                        <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete['page'+i]}">
-                            <button ng-click="vm.startDialogDelete('page', i)" class="btn btn-link btn-delete">
+                        <h4 class="title-page">{{ dataPage.title }}</h4>
+                        <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete['page'+$index]}">
+                            <button ng-click="vm.startDialogDelete('page', $index)" class="btn btn-link btn-delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                             <div class="dialog-delete">
                                 <p class="text-danger text-msg">Remover página de permissões?</p>
                                 <div class="group-button">
-                                    <button ng-click="vm.deletePage(true, 'page', i)" class="btn btn-danger btn-xs">Sim</button>
-                                    <button ng-click="vm.deletePage(false, 'page', i)" class="btn btn-default btn-xs">Não</button>
+                                    <button ng-click="vm.deletePage(true, 'page', $index)" class="btn btn-danger btn-xs">Sim</button>
+                                    <button ng-click="vm.deletePage(false, 'page', $index)" class="btn btn-default btn-xs">Não</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="permissions checkbox">
-                        <label class="label-checkbox"> <input ng-model="check.value" type="checkbox"> Super Editar </label>
-                        <label class="label-checkbox"> <input ng-model="check.value" type="checkbox"> Editar Tags </label>
+                        <label class="label-checkbox"> <input ng-model="dataPage.permissons.putSuper" type="checkbox"> Super Editar </label>
+                        <label class="label-checkbox"> <input ng-model="dataPage.permissons.putTag" type="checkbox"> Editar Tags </label>
                     </div>
                 </div>
                 <button class="btn btn-default btn-modules" 
@@ -50,14 +50,14 @@
                                 <option value="">Módulo 3</option>
                             </select>
                         </div>
-                        <div ng-repeat="m in [1, 2, 3, 4, 5, 6]" class="module">
+                        <div ng-repeat="widget in dataPage.modules" class="module">
                             <h5 class="title">
-                                Módulo 1
+                                {{ widget.label }}
                             </h5>
                             <div class="permissions-module checkbox">
-                                <label class="label-checkbox"> <input ng-model="check.value" type="checkbox"> Editar </label>
-                                <label class="label-checkbox"> <input ng-model="check.value" type="checkbox"> Excluir </label>
-                                <label class="label-checkbox"> <input ng-model="check.value" type="checkbox"> Criar </label>
+                                <label class="label-checkbox"> <input ng-model="widget.permissions.put" type="checkbox"> Editar </label>
+                                <label class="label-checkbox"> <input ng-model="widget.permissions.delete" type="checkbox"> Excluir </label>
+                                <label class="label-checkbox"> <input ng-model="widget.permissions.post" type="checkbox"> Criar </label>
                             </div>
                             <div class="actions">
                                 <button class="btn btn-link btn-delete">

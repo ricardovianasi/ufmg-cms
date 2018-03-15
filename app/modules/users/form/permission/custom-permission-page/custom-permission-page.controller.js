@@ -6,20 +6,28 @@
         .controller('CustomPermissionPageController', CustomPermissionPageController);
 
     /** ngInject */
-    function CustomPermissionPageController() {
+    function CustomPermissionPageController($q, data, PagesService, WidgetsService) {
         let vm = this;
 
         vm.deletePage = deletePage;
         vm.deleteModule = deleteModule;
         vm.startDialogDelete = startDialogDelete;
         vm.addPage = addPage;
+        vm.onPageSelected = onPageSelected;
 
         activate();
 
         ////////////////
 
-        function addPage(page) {
+        function onPageSelected(page) {
+            vm.pageToAdd = page;
+        }
 
+        function addPage() {
+            if(!vm.pageToAdd) {
+                return;
+            }
+            vm.dataList.unshift(_createPageToAdd(vm.pageToAdd));
         }
 
         function deleteModule(result) {
@@ -42,9 +50,61 @@
             console.log('startDialogDelete', vm.toggleDelete);
         }
 
+        function _createPageToAdd(page) {
+            return {
+                idPage: page.id,
+                title: page.title,
+                modules: [],
+                permissions: { putTag:false, putSuper: false }
+            };
+        }
+
+        function _loadAllWidgets() {
+            return WidgetsService.getWidgets()
+                .then(function(dataWidgets) {
+                    vm.listAllWidgets = dataWidgets.data.items;
+                });
+        }
+
+        function _loadAllPages() {
+            return PagesService.getPages()
+                .then(function(dataPages) {
+                    vm.listAllPages = dataPages.data.items;
+                });
+        }
+
+        function _mapsWidgets(listWidgets) {
+            return listWidgets.map(function(widgetAdded) {
+                let widget = vm.listAllWidgets.find(function(wgt) {
+                    return wgt.type === widgetAdded.type;
+                });
+                widgetAdded.label = widget.label;
+                return widgetAdded;
+            });
+        }
+
+        function _mapsData() {
+            vm.dataList = data.map(function (pagePermission) {
+                let page = vm.listAllPages.find(function(pg) {
+                    return pg.id === pagePermission.idPage;
+                });
+                pagePermission.modules = _mapsWidgets(pagePermission.modules);
+                pagePermission.title = page.title;
+                return pagePermission;
+            });
+            console.log('_mapsData', vm.dataList);
+        }
+
+        function _loadDataList() {
+            if(!data) { return; }
+            $q.all([_loadAllWidgets(), _loadAllPages()])
+                .then(function () { _mapsData(); });
+        }
 
         function activate() {
-            vm.toggleDelete = {}; 
+            vm.toggleDelete = {};
+            vm.dataList = [];
+            _loadDataList(); 
         }
     }
 })();
