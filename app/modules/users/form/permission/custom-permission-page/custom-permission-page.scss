@@ -2,7 +2,7 @@
     .container-list {
         max-height: 50vh;
         margin-bottom: 20px;
-        padding-right: 25px;
+        padding-right: 15px;
         overflow: auto;
         overflow-x: hidden;
     }
@@ -72,13 +72,14 @@
 
         > .head > .wrapper-delete {
             position: relative;
-            left: 48%;
+            left: 41%;
             transition: 1s;
             &.-trash-transitions {
                 left: 0;
             }
             > .dialog-delete {
                 display: inline-block;
+                padding-left: 5px;
                 position: relative;
                 > .text-msg, .group-button {
                     font-size: .7em;
