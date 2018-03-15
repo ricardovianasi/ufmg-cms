@@ -30,8 +30,8 @@
             vm.dataList.unshift(_createPageToAdd(vm.pageToAdd));
         }
 
-        function deleteModule(result) {
-
+        function deleteModule(idxModule, page) {
+            page.modules.splice(idxModule, 1);
         }
 
         function deletePage(result, type, idx) {

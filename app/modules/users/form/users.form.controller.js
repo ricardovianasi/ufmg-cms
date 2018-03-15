@@ -467,7 +467,8 @@
                         { 
                             idPage: 132,
                             modules: [ 
-                                { type: 'comevents', permissions: { put: false, post: false, delete: false } } 
+                                { type: 'comevents', permissions: { put: false, post: false, delete: false } },
+                                { type: 'hublinks', permissions: { put: false, post: false, delete: false } }
                             ], 
                             permissons: { putTag: false, putSuper: false } 
                         }

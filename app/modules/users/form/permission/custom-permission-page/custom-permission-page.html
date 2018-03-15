@@ -35,12 +35,12 @@
                         <label class="label-checkbox"> <input ng-model="dataPage.permissons.putTag" type="checkbox"> Editar Tags </label>
                     </div>
                 </div>
-                <button class="btn btn-default btn-modules" 
-                    data-toggle="collapse" data-target="#collapseModules{{ i }}" aria-expanded="false" aria-controls="collapseModules">
-                    <i class="fa-arrow-down"></i>
+                <button class="btn btn-link btn-modules" role="button" ng-click="vm.btnModules[$index] = !vm.btnModules[$index]" ng-init="vm.btnModules[$index] = false"
+                    data-toggle="collapse" data-target="#collapseModules{{ $index }}" aria-expanded="false" aria-controls="collapseModules">
+                    <i class="fa fa-arrow-down" ng-class="{'-up': vm.btnModules[$index]}"></i>
                     Módulos
                 </button>
-                <div class="item-modules collapse" id="collapseModules{{ i }}">
+                <div class="item-modules collapse" id="collapseModules{{ $index }}">
                     <div class="list-modules">
                         <div class="select-module">
                             <label >Escolha o módulo</label>
@@ -50,7 +50,7 @@
                                 <option value="">Módulo 3</option>
                             </select>
                         </div>
-                        <div ng-repeat="widget in dataPage.modules" class="module">
+                        <div ng-repeat="widget in dataPage.modules track by widget.type" class="module">
                             <h5 class="title">
                                 {{ widget.label }}
                             </h5>
@@ -60,10 +60,13 @@
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.post" type="checkbox"> Criar </label>
                             </div>
                             <div class="actions">
-                                <button class="btn btn-link btn-delete">
+                                <button ng-click="vm.deleteModule($index, dataPage)" class="btn btn-link btn-delete">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
+                        </div>
+                        <div class="module" ng-show="!dataPage.modules.length">
+                            <p class="msg-void"> Sem módulos adicionados ainda. </p>
                         </div>
                     </div>
                 </div>
