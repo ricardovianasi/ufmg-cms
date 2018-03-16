@@ -80,8 +80,7 @@
             let isCheckBoxIntermediate = customPages.raw.length > 0;
             _setCheckboxPermission('page', keyPut, { method: 'prop', key: 'indeterminate', value: isCheckBoxIntermediate});
             _setCheckboxPermission('page', keyPut, { method: 'attr', key: 'value', value: isCheckBoxIntermediate});
-            _updatePrivileges('page', keyPutSpecial, 'modules', customPages.putSpecial)
-
+            PermissionService.updatePrivilege(vm.user, 'page', keyPutSpecial, 'modules', customPages.putSpecial);
         }
 
         function _hasLoaded(oldValue) {
@@ -428,29 +427,35 @@
                 'CustomPermissionController as vm', resolveModal, 'xl');
         }
 
-        function _updatePrivileges(resouce, privilege, key, data) {
-            let privilegeToUpdate = _getPrivileges(resouce, privilege);
-            privilegeToUpdate[key] = data;
+        function _updateOldPermissionPage(posts) {
+            let oldPermissionPages = posts.split(',');
+            let newPermissionPages = oldPermissionPages.map(function(id) {
+                return {
+                    idPage: Number.parseInt(id),
+                    modules: [],
+                    permissions: { putTag: false, putSuper: false }
+                }
+            });
+            PermissionService.updatePrivilege(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL,
+                'modules', JSON.stringify(newPermissionPages));
         }
 
-        function _getPrivileges(resource, privilege) {
-            let privilegeToReturn = {};
-            let permission = vm.user.permissions.find(function(perm) {
-                return perm.resource === resource;
-            });
-            if(permission && permission.privileges) {
-                let privilegeFound = permission.privileges.find(function(p) {
-                    return p.privilege === privilege;
-                });
-                privilegeToReturn = privilegeFound || {};
-            }
-            return privilegeToReturn;
+        function _hasPermissionOld() {
+            return angular.isDefined(vm.user.resources_perms.page) 
+                && angular.isDefined(vm.user.resources_perms.page.PUT)
+                && angular.isString(vm.user.resources_perms.page.PUT) 
+                && !vm.user.resources_perms.page.PUTSPECIAL;
         }
 
         function _openPagesPermissionModal() {
             let resolve = {
                 data: function() {
-                    let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
+                    let mustUpdate = _hasPermissionOld();
+                    if(mustUpdate) {
+                        let privilegePut = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUT);
+                        _updateOldPermissionPage(privilegePut.posts);
+                    }
+                    let privilege = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
                     try { return JSON.parse(privilege.modules); }
                     catch(e) {return [];}
                 }

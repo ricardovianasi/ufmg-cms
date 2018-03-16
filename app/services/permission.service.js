@@ -30,6 +30,8 @@
             getPrivilege: getPrivilege,
             isAdministrator: isAdministrator,
             getModulesPermissions: getModulesPermissions,
+            updatePrivilege: updatePrivilege,
+            getPrivileges: getPrivileges,
             TYPES_PERMISSIONS: TYPES_PERMISSIONS
         };
 
@@ -227,6 +229,37 @@
                 return false;
             }
             return true;
+        }
+
+        function getPrivileges(user, resource, privilege) {
+            let privilegeToReturn = {};
+            let permission = user.permissions.find(function(perm) {
+                return perm.resource === resource;
+            });
+            if(permission && permission.privileges) {
+                let privilegeFound = permission.privileges.find(function(p) {
+                    return p.privilege === privilege;
+                });
+                privilegeToReturn = privilegeFound || {};
+            }
+            return privilegeToReturn;
+        }
+
+        function updatePrivilege(user, resource, privilege, key, data) {
+            user.permissions.forEach(function(perm) {
+                if(perm.resource === resource) {
+                    let idxPrivilege = perm.privileges.findIndex(function(pvl) {
+                        pvl.privilege === privilege;
+                    })
+                    if(idxPrivilege >= 0) {
+                        perm.privileges[idxPrivilege][key] = data;
+                    } else {
+                        let newPrivilege = { privilege: privilege };
+                        newPrivilege[key] = data;
+                        perm.privileges.push(newPrivilege);
+                    }
+                }
+            });
         }
 
         function initService(user) {
