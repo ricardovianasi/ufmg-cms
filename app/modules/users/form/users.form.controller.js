@@ -38,7 +38,6 @@
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
         vm.loadMoreUser = loadMoreUser;
         vm.checkListContext = checkListContext;
-        vm.isTypePutModules = isTypePutModules;
 
         function onInit() {
             $log.info('UsersFormController');
@@ -66,36 +65,23 @@
                 });
         }
 
-        function isTypePutModules(key) {
-            return PermissionService.TYPES_PERMISSIONS.PUTMODULES == key;
-        }
-
         function _openPagesPermission() {
             let modal = _openPagesPermissionModal();
-            modal.result.then(function (res) { _prepareCustomModules(res); });
+            modal.result.then(function (res) { _preparePutPages(res); });
         }
 
-        function _prepareCustomModules(customPages) {
+        function _preparePutPages(customPages) {
+            let keyPutSpecial = PermissionService.TYPES_PERMISSIONS.PUTSPECIAL;
+            let keyPut = PermissionService.TYPES_PERMISSIONS.PUT;
             vm.listPermissions.page = vm.listPermissions.page || {};
-            vm.listPermissions.page['PUT'] = customPages.raw;
-            vm.user.resources_perms.page['PUT'] = customPages.idsPages;
-            vm.user.resources_perms.page.PUTSPECIAL = customPages.putSpecial;
-            console.log(customPages, vm.user);
-            // _setCheckboxPermission(context, permission, { method: 'prop', key: 'indeterminate', value: true});
-            // let keyPutModules = PermissionService.TYPES_PERMISSIONS.PUTMODULES;
-            // let customModulesStr = JSON.stringify(customModules);
-            // let privilege = _getPrivileges('page', keyPutModules);
-            // if(customModules.length > 0) {
-            //     vm.user.resources_perms.page.PUTMODULES = customModulesStr;
-            //     privilege.modules = customModulesStr;
-            //     _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: true});
-            //     _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: true});
-            // } else {
-            //     privilege.modules = [];
-            //     _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: false});
-            //     _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: false});
-            //     checkListContext('page', keyPutModules);
-            // }
+            vm.listPermissions.page[keyPut] = customPages.raw;
+            vm.user.resources_perms.page[keyPut] = customPages.idsPages;
+            vm.user.resources_perms.page[keyPutSpecial] = customPages.putSpecial;
+            let isCheckBoxIntermediate = customPages.raw.length > 0;
+            _setCheckboxPermission('page', keyPut, { method: 'prop', key: 'indeterminate', value: isCheckBoxIntermediate});
+            _setCheckboxPermission('page', keyPut, { method: 'attr', key: 'value', value: isCheckBoxIntermediate});
+            _updatePrivileges('page', keyPutSpecial, 'modules', customPages.putSpecial)
+
         }
 
         function _hasLoaded(oldValue) {
@@ -372,9 +358,7 @@
 
         function checkListContext (context, permission) {
             if ((vm.resources[context] && vm.resources[context].select 
-                && vm.resources[context].select[0] === permission) || 
-                PermissionService.TYPES_PERMISSIONS.PUTMODULES === permission
-            ) {
+                && vm.resources[context].select[0] === permission)) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
                 }
@@ -442,6 +426,11 @@
             };
             return ModalService.openModal('modules/users/form/permission/custom-permission-modal/custom-permission.template.html',
                 'CustomPermissionController as vm', resolveModal, 'xl');
+        }
+
+        function _updatePrivileges(resouce, privilege, key, data) {
+            let privilegeToUpdate = _getPrivileges(resouce, privilege);
+            privilegeToUpdate[key] = data;
         }
 
         function _getPrivileges(resource, privilege) {

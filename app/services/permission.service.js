@@ -13,7 +13,7 @@
         $rootScope.User = null;
         let showMessage = null;
         let TYPES_PERMISSIONS = Object.freeze({ POST: 'POST', GET: 'GET', PUT: 'PUT', DELETE: 'DELETE', PUTTAG: 'PUTTAG',
-            PUTMODULES: 'PUTMODULES', PUTSPECIAL: 'PUTSPECIAL' });
+            PUTSPECIAL: 'PUTSPECIAL' });
         let service = {
             check: check,
             initService: initService,
@@ -60,9 +60,8 @@
         }
 
         function getModulesPermissions(id, keyId, context) {
-            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTMODULES);
+            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTSPECIAL);
             if(privilege && privilege.modules) {
-                console.log(privilege);
                 let modules = angular.isString(privilege.modules) ? JSON.parse(privilege.modules) : privilege.modules;
                 modules = modules.filter(function(modulePermission) {
                     return modulePermission[keyId] === id;
@@ -186,7 +185,7 @@
         }
 
         function canPutModules(context, id) {
-            return check(context, id, TYPES_PERMISSIONS.PUTMODULES);
+            return check(context, id, TYPES_PERMISSIONS.PUTSPECIAL);
         }
 
         function canDelete(context, id) {

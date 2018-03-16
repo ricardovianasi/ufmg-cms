@@ -2,18 +2,18 @@
     <div class="main-content ms-container">
         <h3>Personalização da edição de paginas</h3>
         <div class="row">
-            <div class="form-group col-md-6 col-xs-12">
+            <div class="form-group col-md-9 col-xs-12">
                 <select-pages-component on-page-selected="vm.onPageSelected(pageSeleted)" placeholder="Selecione uma pagina para inserir" title="Selecione ou procure a página..." page-selected="vm.pageSelected"></select-pages-component>
             </div>
-            <div class="col-md-6 col-xs-12">
-                <button ng-click="vm.addPage()" class="btn btn-primary">
+            <div class="col-md-3 col-xs-12">
+                <button ng-click="vm.addPage()" class="btn btn-primary btn-block">
                     <i class="fa fa-plus"></i>
                     Inserir
                 </button>
             </div>
         </div>
         <div class="row search-pages">
-            <div class="form-group col-md-6 col-xs-12">
+            <div class="form-group col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-search"></i>
