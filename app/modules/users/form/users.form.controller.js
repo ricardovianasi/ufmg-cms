@@ -30,13 +30,12 @@
         vm.save = _save;
         vm.setTab = _setTab;
         vm.isActive = _isActive;
-        vm.modalGetContext = _modalGetContext;
+        vm.modalGetContext = modalGetContext;
 
         vm.loadContextData = loadContextData;
 
         vm.hasCustomPermission = hasCustomPermission;
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
-        vm.openModulesPermission = openModulesPermission;
         vm.loadMoreUser = loadMoreUser;
         vm.checkListContext = checkListContext;
         vm.isTypePutModules = isTypePutModules;
@@ -71,26 +70,32 @@
             return PermissionService.TYPES_PERMISSIONS.PUTMODULES == key;
         }
 
-        function openModulesPermission() {
-            let modal = _openModulesPermissionModal();
+        function _openPagesPermission() {
+            let modal = _openPagesPermissionModal();
             modal.result.then(function (res) { _prepareCustomModules(res); });
         }
 
-        function _prepareCustomModules(customModules) {
-            let keyPutModules = PermissionService.TYPES_PERMISSIONS.PUTMODULES;
-            let customModulesStr = JSON.stringify(customModules);
-            let privilege = _getPrivileges('page', keyPutModules);
-            if(customModules.length > 0) {
-                vm.user.resources_perms.page.PUTMODULES = customModulesStr;
-                privilege.modules = customModulesStr;
-                _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: true});
-                _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: true});
-            } else {
-                privilege.modules = [];
-                _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: false});
-                _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: false});
-                checkListContext('page', keyPutModules);
-            }
+        function _prepareCustomModules(customPages) {
+            vm.listPermissions.page = vm.listPermissions.page || {};
+            vm.listPermissions.page['PUT'] = customPages.raw;
+            vm.user.resources_perms.page['PUT'] = customPages.idsPages;
+            vm.user.resources_perms.page.PUTSPECIAL = customPages.putSpecial;
+            console.log(customPages, vm.user);
+            // _setCheckboxPermission(context, permission, { method: 'prop', key: 'indeterminate', value: true});
+            // let keyPutModules = PermissionService.TYPES_PERMISSIONS.PUTMODULES;
+            // let customModulesStr = JSON.stringify(customModules);
+            // let privilege = _getPrivileges('page', keyPutModules);
+            // if(customModules.length > 0) {
+            //     vm.user.resources_perms.page.PUTMODULES = customModulesStr;
+            //     privilege.modules = customModulesStr;
+            //     _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: true});
+            //     _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: true});
+            // } else {
+            //     privilege.modules = [];
+            //     _setCheckboxPermission('page', keyPutModules, { method: 'attr', key: 'value', value: false});
+            //     _setCheckboxPermission('page', keyPutModules, { method: 'prop', key: 'indeterminate', value: false});
+            //     checkListContext('page', keyPutModules);
+            // }
         }
 
         function _hasLoaded(oldValue) {
@@ -384,7 +389,11 @@
             }
         };
 
-        function _modalGetContext(context, permission, contextTitle) {
+        function modalGetContext(context, permission, contextTitle) {
+            if(context === 'page') {
+                _openPagesPermission();
+                return;
+            }
             _openCustomPermissionModal(context, permission, contextTitle)
                 .result
                 .then(function (contextPermissions) {
@@ -449,30 +458,12 @@
             return privilegeToReturn;
         }
 
-        function _openModulesPermissionModal() {
-            // let resolve = {
-            //     dataPermissionModule: function() {
-            //         let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTMODULES);
-            //         if(!privilege || !angular.isString(privilege.modules)) {
-            //             return [];
-            //         }
-            //         try { return JSON.parse(privilege.modules); } 
-            //         catch (e) { return []; }
-            //     },
-            //     currentUser: function () { return vm.user.name; }
-            // };
+        function _openPagesPermissionModal() {
             let resolve = {
                 data: function() {
-                    return [
-                        { 
-                            idPage: 132,
-                            modules: [ 
-                                { type: 'comevents', permissions: { put: false, post: false, delete: false } },
-                                { type: 'hublinks', permissions: { put: false, post: false, delete: false } }
-                            ], 
-                            permissons: { putTag: false, putSuper: false } 
-                        }
-                    ];
+                    let privilege = _getPrivileges('page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
+                    try { return JSON.parse(privilege.modules); }
+                    catch(e) {return [];}
                 }
             };
             return ModalService.openModal(

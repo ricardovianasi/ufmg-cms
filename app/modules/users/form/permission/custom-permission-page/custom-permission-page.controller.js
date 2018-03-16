@@ -27,7 +27,7 @@
         }
 
         function save() {
-            $uibModalInstance.close('data');
+            $uibModalInstance.close(_prepareToSave());
         }
 
         function onPageSelected(page) {
@@ -70,6 +70,33 @@
 
         function startDialogDelete(idPage) {
             vm.toggleDelete[idPage] = true;
+        }
+
+        function _prepareToSave() {
+            let putPagesIds = [];
+            let dataListRaw = angular.copy(vm.dataList);
+            let customPutSpecial = _preparePagesToSave(vm.dataList, putPagesIds);
+            return {
+                idsPages: putPagesIds.join(','),
+                putSpecial: JSON.stringify(customPutSpecial),
+                raw: dataListRaw 
+            };
+        }
+
+        function _preparePagesToSave(pages, putPagesIds) {
+            return pages.map(function (data) {
+                data.modules = _prepareModulesToSave(data.modules);
+                putPagesIds.push(data.idPage);
+                delete data.title;
+                return data;
+            });
+        }
+
+        function _prepareModulesToSave(modules) {
+            return modules.map(function(mod) {
+                delete mod.label;
+                return mod;
+            });
         }
 
         function _canAddedPage(page) {
