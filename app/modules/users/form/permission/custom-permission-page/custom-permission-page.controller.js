@@ -35,36 +35,41 @@
         }
 
         function addModule(page) {
-            if(!_canAddedWidget(page.modules, vm.moduleSelected)) {
-                return;
+            if(_canAddedWidget(page.modules, vm.moduleSelected)) {
+                page.modules.unshift(_createWidgetToAdd(vm.moduleSelected));
             }
-            page.modules.unshift(_createWidgetToAdd(vm.moduleSelected));
+            vm.moduleSelected = undefined;
         }
 
         function addPage() {
-            if(!_canAddedPage(vm.pageToAdd)) {
-                return;
+            if(_canAddedPage(vm.pageToAdd)) {
+                vm.dataList.unshift(_createPageToAdd(vm.pageToAdd));
             }
-            vm.dataList.unshift(_createPageToAdd(vm.pageToAdd));
+            vm.pageSelected = undefined;
+            
         }
 
         function deleteModule(idxModule, page) {
             page.modules.splice(idxModule, 1);
         }
 
-        function deletePage(result, type, idx) {
-            endDialodDelete(type, idx);
+        function deletePage(result, page) {
+            let idPage = page.idPage
+            let idx = vm.dataList.findIndex(function(data) {
+                return idPage === data.idPage;
+            });
+            endDialodDelete(idPage);
             if(result) {
                 vm.dataList.splice(idx, 1);
             }
         }
 
-        function endDialodDelete(type, idx) {
-            vm.toggleDelete[type+idx] = false;
+        function endDialodDelete(idPage) {
+            vm.toggleDelete[idPage] = false;
         }
 
-        function startDialogDelete(type, idx) {
-            vm.toggleDelete[type+idx] = true;
+        function startDialogDelete(idPage) {
+            vm.toggleDelete[idPage] = true;
         }
 
         function _canAddedPage(page) {

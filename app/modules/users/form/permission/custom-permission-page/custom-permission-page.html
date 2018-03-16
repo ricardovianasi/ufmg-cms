@@ -12,20 +12,30 @@
                 </button>
             </div>
         </div>
+        <div class="row search-pages">
+            <div class="form-group col-md-6 col-xs-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control" ng-model="vm.queryPage" placeholder="Buscar rápida de paginas">
+                </div>
+            </div> 
+        </div>
         <section class="row container-list">
-            <div ng-repeat="dataPage in vm.dataList track by $index" class="col-md-12 list-pages">
+            <div ng-repeat="dataPage in vm.dataList | filter: vm.queryPage track by dataPage.idPage" class="col-md-12 list-pages">
                 <div class="item-page">
                     <div class="head">
                         <h4 class="title-page">{{ dataPage.title }}</h4>
-                        <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete['page'+$index]}">
-                            <button ng-click="vm.startDialogDelete('page', $index)" class="btn btn-link btn-delete">
+                        <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete[dataPage.idPage]}">
+                            <button ng-click="vm.startDialogDelete(dataPage.idPage)" class="btn btn-link btn-delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                             <div class="dialog-delete">
                                 <p class="text-danger text-msg">Remover de permissões?</p>
                                 <div class="group-button">
-                                    <button ng-click="vm.deletePage(true, 'page', $index)" class="btn btn-danger btn-xs">Sim</button>
-                                    <button ng-click="vm.deletePage(false, 'page', $index)" class="btn btn-default btn-xs">Não</button>
+                                    <button ng-click="vm.deletePage(true, dataPage)" class="btn btn-danger btn-xs">Sim</button>
+                                    <button ng-click="vm.deletePage(false, dataPage)" class="btn btn-default btn-xs">Não</button>
                                 </div>
                             </div>
                         </div>
@@ -35,12 +45,12 @@
                         <label class="label-checkbox"> <input ng-model="dataPage.permissons.putTag" type="checkbox"> Editar Tags </label>
                     </div>
                 </div>
-                <button class="btn btn-link btn-modules" role="button" ng-click="vm.btnModules[$index] = !vm.btnModules[$index]" ng-init="vm.btnModules[$index] = false"
-                    data-toggle="collapse" data-target="#collapseModules{{ $index }}" aria-expanded="false" aria-controls="collapseModules">
-                    <i class="fa fa-arrow-down" ng-class="{'-up': vm.btnModules[$index]}"></i>
+                <button class="btn btn-link btn-modules" role="button" ng-click="vm.btnModules[dataPage.idPage] = !vm.btnModules[dataPage.idPage]" ng-init="vm.btnModules[dataPage.idPage]"
+                    data-toggle="collapse" data-target="#collapseModules{{ dataPage.idPage }}" aria-expanded="false" aria-controls="collapseModules">
+                    <i class="fa fa-arrow-down" ng-class="{'-up': vm.btnModules[dataPage.idPage]}"></i>
                     Módulos
                 </button>
-                <div class="item-modules collapse" id="collapseModules{{ $index }}">
+                <div class="item-modules collapse" id="collapseModules{{ dataPage.idPage }}">
                     <div class="list-modules">
                         <div class="select-module">
                             <div class="select">
@@ -70,13 +80,16 @@
                             </div>
                         </div>
                         <div class="module" ng-show="!dataPage.modules.length">
-                            <p> Sem módulos adicionados ainda. </p>
+                            <p>
+                                Nenhum módulo adicionado ainda. 
+                                Usuário sem permissão para gerenciar módulos em <b> {{ dataPage.title }}. </b>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
             <div ng-if="!vm.dataList.length" class="col-md-12 list-pages">
-                <p> Sem páginas adicionadas ainda. </p>
+                <p> Nenhuma página adicionada ainda. </p>
             </div>
         </section>
         <div class="row">
