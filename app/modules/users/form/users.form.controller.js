@@ -356,8 +356,8 @@
         }
 
         function checkListContext (context, permission) {
-            if ((vm.resources[context] && vm.resources[context].select 
-                && vm.resources[context].select[0] === permission)) {
+            if ((vm.resources[context] && vm.resources[context].select && 
+                    vm.resources[context].select[0] === permission)) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
                 }
@@ -370,7 +370,7 @@
                     vm.listPermissions[context][permission] = [];
                 }
             }
-        };
+        }
 
         function modalGetContext(context, permission, contextTitle) {
             if(context === 'page') {
@@ -434,17 +434,17 @@
                     idPage: Number.parseInt(id),
                     modules: [],
                     permissions: { putTag: false, putSuper: false }
-                }
+                };
             });
             PermissionService.updatePrivilege(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL,
                 'modules', JSON.stringify(newPermissionPages));
         }
 
         function _hasPermissionOld() {
-            return angular.isDefined(vm.user.resources_perms.page) 
-                && angular.isDefined(vm.user.resources_perms.page.PUT)
-                && angular.isString(vm.user.resources_perms.page.PUT) 
-                && !vm.user.resources_perms.page.PUTSPECIAL;
+            return angular.isDefined(vm.user.resources_perms.page) && 
+                angular.isDefined(vm.user.resources_perms.page.PUT) && 
+                angular.isString(vm.user.resources_perms.page.PUT) && 
+                !vm.user.resources_perms.page.PUTSPECIAL;
         }
 
         function _openPagesPermissionModal() {
@@ -452,10 +452,12 @@
                 data: function() {
                     let mustUpdate = _hasPermissionOld();
                     if(mustUpdate) {
-                        let privilegePut = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUT);
+                        let privilegePut 
+                            = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUT);
                         _updateOldPermissionPage(privilegePut.posts);
                     }
-                    let privilege = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
+                    let privilege = 
+                        PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
                     try { return JSON.parse(privilege.modules); }
                     catch(e) {return [];}
                 }

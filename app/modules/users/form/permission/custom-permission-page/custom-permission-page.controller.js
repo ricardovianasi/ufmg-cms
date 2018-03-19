@@ -54,7 +54,7 @@
         }
 
         function deletePage(result, page) {
-            let idPage = page.idPage
+            let idPage = page.idPage;
             let idx = vm.dataList.findIndex(function(data) {
                 return idPage === data.idPage;
             });
@@ -126,7 +126,7 @@
         }
 
         function _checkAdded(obj, list, refObj, refList) {
-            if(!obj) {return false; };
+            if(!obj) {return false; }
             let idx = list.findIndex(function(objAdded) {
                 return objAdded[refList] === obj[refObj];
             });
@@ -148,7 +148,7 @@
                 type: widget.type,
                 label: widget.label,
                 permissions: { put: false, post: false, delete: false }
-            }
+            };
         }
 
         function _loadAllWidgets() {
