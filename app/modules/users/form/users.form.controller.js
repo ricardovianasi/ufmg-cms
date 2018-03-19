@@ -38,6 +38,7 @@
         vm.hasCustomPermissionSetted = hasCustomPermissionSetted;
         vm.loadMoreUser = loadMoreUser;
         vm.checkListContext = checkListContext;
+        vm.openPermissionModulePostPage = openPermissionModulePostPage;
 
         function onInit() {
             $log.info('UsersFormController');
@@ -63,6 +64,10 @@
                 .then(function (data) {
                     vm.moderators = Object.assign(vm.moderators, data);
                 });
+        }
+
+        function openPermissionModulePostPage() {
+            let modal = _openPermissionModulePostPage();
         }
 
         function _openPagesPermission() {
@@ -478,6 +483,15 @@
             return ModalService.openModal(
                 'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
                 'CustomPermissionPageController as vm', resolve, 'md');
+        }
+
+        function _openPermissionModulePostPage() {
+            let resolve = {dataModules: [function() {
+                return [{type: 'comevents'}]
+            }]};
+            return ModalService.openModal(
+                'modules/users/form/permission/modules-create-page/modules-create-page.html',
+                'ModulesCreatePageController as vm', resolve, 'md');
         }
 
         function _getResources() {

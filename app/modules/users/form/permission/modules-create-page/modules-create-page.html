@@ -1,0 +1,54 @@
+<div class="page-container modules-permissions">
+    <div class="main-content ms-container">
+        <h3>Permissões de módulos na criação de paginas</h3>
+        <div class="select-module">
+            <div class="select">
+                <select-widget-component label="Escolha o módulo" widget-model="vm.moduleSelected">
+                </select-widget-component>
+            </div>
+            <div class="actions">
+                <button class="btn btn-primary btn-block" ng-click="vm.addModule(vm.moduleSelected)" type="button">
+                    <i class="fa fa-plus"></i>
+                    Inserir
+                </button>
+            </div>
+        </div>
+        <div class="row search-pages">
+            <div class="form-group col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control" ng-model="vm.queryPage" placeholder="Buscar rápida de módulos">
+                </div>
+            </div>
+        </div>
+        <section class="list-modules">
+            <div ng-show="!vm.listWidgetsSelecteds.length" class="module">
+                <p>Nenhum módulo adicionado ainda.</p>
+            </div>
+            <div ng-repeat="widget in vm.listWidgetsSelecteds | filter: vm.queryPage track by widget.type" class="module">
+                <h5 class="title">
+                    {{ widget.label }}
+                </h5>
+                <div class="actions">
+                    <button ng-click="vm.deleteModule($index)" class="btn btn-link btn-delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="row footer">
+            <div class="col-md-12">
+                <button ng-click="vm.save()" class="btn btn-success pull-right">
+                    <i class="fa fa-check"></i>
+                    Salvar
+                </button>
+                <button ng-click="vm.close()" class="btn btn-default pull-right">
+                    <i class="fa fa-times"></i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

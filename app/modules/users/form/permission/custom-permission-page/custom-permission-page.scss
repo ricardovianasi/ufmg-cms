@@ -15,12 +15,6 @@
         display: flex;
         flex-direction: column;
         overflow-x: hidden;
-        .btn-delete {
-            margin: 0;
-            &:hover {
-                color: #d9534f;
-            }
-        }
         .btn-modules {
             margin-bottom: 0;
             text-decoration: none;

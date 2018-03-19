@@ -1,0 +1,42 @@
+.modules-permissions {
+    .list-modules {
+        overflow: auto;
+        max-height: 50vh;
+    }
+
+    .list-modules > .module {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 5px;
+        margin: 5px;
+        border: .5px dashed;
+        .title {
+            flex: 1;
+            font-weight: bold;
+        }
+        .actions {
+            .btn-delete {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .select-module {
+        display: flex;
+        align-items: flex-end;
+        .select {
+            flex: 1;
+        }
+        .actions {
+            margin-left: 5px;
+        }
+
+    }
+    .footer {
+        margin-top: 15px;
+        .btn {
+            margin-left: 10px;
+        }
+    }
+}
