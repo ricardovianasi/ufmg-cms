@@ -183,10 +183,10 @@
         }
 
         function wildcard(el) {
-            var element = Number(el);
-            if (!isNaN(element)) {
-                return element;
-            }
+            // var element = Number(el);
+            // if (!isNaN(element)) {
+            //     return element;
+            // }
             return '%\\' + el + '%';
         }
 
@@ -267,7 +267,7 @@
                 .newOptions()
                 .withOption('processing', false)
                 .withOption('serverSide', true)
-                .withOption('searchDelay', 800)
+                .withOption('searchDelay', 1500)
                 .withOption('aaSorting', [])
                 .withOption('bLengthChange', !!!options.displayLength)
                 .withDataProp('data')
