@@ -232,34 +232,38 @@
         }
 
         function getPrivileges(user, resource, privilege) {
-            let privilegeToReturn = {};
-            let permission = user.permissions.find(function(perm) {
-                return perm.resource === resource;
-            });
-            if(permission && permission.privileges) {
-                let privilegeFound = permission.privileges.find(function(p) {
-                    return p.privilege === privilege;
-                });
-                privilegeToReturn = privilegeFound || {};
-            }
-            return privilegeToReturn;
+            let idxPermission = _findIdxPermissions(user.permissions, resource);
+            if(idxPermission < 0) { return {}; }
+            let permission = user.permissions[idxPermission];
+            let idxPrivilege = _findIdxPrivileges(permission.privileges, privilege);
+            return  idxPrivilege < 0 ? {} : permission.privileges[idxPrivilege];
         }
 
         function updatePrivilege(user, resource, privilege, key, data) {
-            user.permissions.forEach(function(perm) {
-                if(perm.resource === resource) {
-                    let idxPrivilege = perm.privileges.findIndex(function(pvl) {
-                        pvl.privilege === privilege;
-                    })
-                    if(idxPrivilege >= 0) {
-                        perm.privileges[idxPrivilege][key] = data;
-                    } else {
-                        let newPrivilege = { privilege: privilege };
-                        newPrivilege[key] = data;
-                        perm.privileges.push(newPrivilege);
-                    }
-                }
-            });
+            let idxPerm = _findIdxPermissions(user.permissions, resource);
+            let permUpdate = idxPerm < 0 ? {} : user.permissions[idxPerm];
+            let idxPrivilege = _findIdxPrivileges(permUpdate.privileges, privilege);
+            if(idxPrivilege >= 0) {
+                permUpdate.privileges[idxPrivilege][key] = data;
+            } else {
+                let newPrivilege = { privilege: privilege };
+                newPrivilege[key] = data;
+                permUpdate.privileges = permUpdate.privileges ? permUpdate.privileges : []; 
+                permUpdate.privileges.push(newPrivilege);
+            }
+        }
+
+        function _findIdxPermissions(permissions, key) {
+            return _findList(permissions, 'resource', key);
+        }
+
+        function _findIdxPrivileges(privileges, key) {
+            return _findList(privileges, 'privilege', key);
+        }
+
+        function _findList(list, param, key) {
+            if(!list) { list = []; }
+            return list.findIndex(function (item) { return item[param] === key; });
         }
 
         function initService(user) {
