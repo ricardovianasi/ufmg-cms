@@ -13,6 +13,7 @@
         vm.deleteModule = deleteModule;
         vm.startDialogDelete = startDialogDelete;
         vm.addPage = addPage;
+        vm.changePutSuper = changePutSuper;
         vm.onPageSelected = onPageSelected;
         vm.addModule = addModule;
         vm.close = close;
@@ -28,6 +29,12 @@
 
         function save() {
             $uibModalInstance.close(_prepareToSave());
+        }
+
+        function changePutSuper(page) {
+            if(page.permissions.putSuper) {
+                page.permissions.putTag = true;
+            }
         }
 
         function onPageSelected(page) {

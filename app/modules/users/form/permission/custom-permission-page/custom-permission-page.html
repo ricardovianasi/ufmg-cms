@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div class="permissions checkbox">
-                        <label class="label-checkbox"> <input ng-model="dataPage.permissions.putSuper" type="checkbox"> Super Editar </label>
-                        <label class="label-checkbox"> <input ng-model="dataPage.permissions.putTag" type="checkbox"> Editar Tags </label>
+                        <label class="label-checkbox"> <input ng-model="dataPage.permissions.putSuper" type="checkbox" ng-change="vm.changePutSuper(dataPage)"> Super Editar </label>
+                        <label class="label-checkbox"> <input ng-model="dataPage.permissions.putTag" type="checkbox" ng-disabled="dataPage.permissions.putSuper"> Editar Tags </label>
                     </div>
                 </div>
                 <button class="btn btn-link btn-modules" role="button" ng-click="vm.btnModules[dataPage.idPage] = !vm.btnModules[dataPage.idPage]" ng-init="vm.btnModules[dataPage.idPage]"
@@ -58,17 +58,23 @@
                                 </select-widget-component>
                             </div>
                             <div class="action">
-                                <button ng-click="vm.addModule(dataPage)" class="btn btn-sm btn-default">
+                                <button ng-disabled="dataPage.permissions.putSuper" ng-click="vm.addModule(dataPage)" class="btn btn-sm btn-default">
                                     <i class="fa fa-plus"></i>
                                     Inserir
                                 </button>
                             </div>
                         </div>
+                        <div class="module" ng-show="dataPage.permissions.putSuper">
+                            <p class="text-danger">
+                                Super editar está ativo. Este usuário pode gerenciar (criar, editar, excluir)
+                                todos os módulo para a página <b> {{ dataPage.title }}. </b>
+                            </p>
+                        </div>
                         <div ng-repeat="widget in dataPage.modules track by widget.type" class="module">
                             <h5 class="title">
                                 {{ widget.label }}
                             </h5>
-                            <div class="permissions-module checkbox">
+                            <div class="permissions-module checkbox" ng-show="!dataPage.permissions.putSuper">
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.put" type="checkbox"> Editar </label>
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.delete" type="checkbox"> Excluir </label>
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.post" type="checkbox"> Criar </label>
@@ -79,8 +85,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="module" ng-show="!dataPage.modules.length">
-                            <p>
+                        <div class="module" ng-show="!dataPage.modules.length && !dataPage.permissions.putSuper">
+                            <p >
                                 Nenhum módulo adicionado ainda. 
                                 Usuário sem permissão para gerenciar módulos em <b> {{ dataPage.title }}. </b>
                             </p>
