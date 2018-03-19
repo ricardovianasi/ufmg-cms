@@ -357,7 +357,7 @@
 
         function checkListContext (context, permission) {
             if ((vm.resources[context] && vm.resources[context].select && 
-                    vm.resources[context].select[0] === permission)) {
+                vm.resources[context].select[0] === permission)) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
                 }
@@ -369,6 +369,19 @@
                     vm.listPermissions[context] = {};
                     vm.listPermissions[context][permission] = [];
                 }
+                _checkListContextPutPage(context, permission);
+            }
+        }
+
+        function _checkListContextPutPage(context, permission) {
+            if(context !== 'page' || permission !== 'PUT') { return; }
+            let onlyOnePermissions = Object.keys(vm.user.resources_perms[context]).length <= 1;
+            if(onlyOnePermissions) {
+                delete vm.user.resources_perms[context];
+            } else {
+                delete vm.user.resources_perms[context][PermissionService.TYPES_PERMISSIONS.PUTSPECIAL];
+                PermissionService.updatePrivilege(vm.user, context, PermissionService.TYPES_PERMISSIONS.PUTSPECIAL,
+                    'modules', '[]');
             }
         }
 

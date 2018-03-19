@@ -251,6 +251,10 @@
                 permUpdate.privileges = permUpdate.privileges ? permUpdate.privileges : []; 
                 permUpdate.privileges.push(newPrivilege);
             }
+            if(idxPerm < 0) {
+                permUpdate.resource = resource;
+                user.permissions ? user.permissions.push(permUpdate) : user.permissions = [permUpdate];
+            }
         }
 
         function _findIdxPermissions(permissions, key) {
