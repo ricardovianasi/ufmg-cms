@@ -31,7 +31,7 @@
 <div class="row" can-get>
     <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
-            <div class="row">
+            <div class="row" ng-if="isSuperPut">
                 <div class="col-xs-12" ng-if="!isLimitPut">
                     <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
                         <label for="title">Título</label>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-if="isSuperPut">
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="title">Slug</label>
@@ -66,8 +66,8 @@
             <div class="row">
                 <div class="col-xs-12"></div>
             </div>
-            <div class="row">
-                <div class="col-xs-12" ng-if="!isLimitPut">
+            <div class="row" ng-if="isSuperPut">
+                <div class="col-xs-12">
                     <div class="pages-module add-module pages-module-cover" ng-show="!viewOnly">
                         <div class="chosen-cover">
                             <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="page.image">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="canPutModules">
+            <div class="row">
                 <list-widgets-component ng-if="page.id || isNew" id-component="sort-main" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
                 </list-widgets-component>
                 <list-widgets-component ng-if="page.id || isNew" id-component="sort-side" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
@@ -97,7 +97,7 @@
     </div>
     <div class="col-xs-4">
         <publishment-options is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
-        <div class="panel panel-default" onload="loadMorePage()" ng-if="!isLimitPut">
+        <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()" ng-if="!isLimitPut">
             A página atual é filha de:
             <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
             
@@ -109,7 +109,7 @@
                 </ui-select-choices>
             </ui-select> -->
         </div>
-        <div class="panel panel-default" ng-if="User.is_administrator">
+        <div ng-if="isSuperPut" class="panel panel-default" ng-if="User.is_administrator">
             Tipo da página:
             <ui-select ng-model="page.page_type" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
                 <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.name }}</ui-select-match>

@@ -88,9 +88,8 @@
                 return;
             }
             let config = ctrl.permissionsOptions;
-            let permissionPage = PermissionService.getPermissionModules(config.id, config.keyId, config.context);
+            let permissionPage = PermissionService.getPutSpecialById(config.id, config.keyId, config.context);
             ctrl.modulesPermissions = permissionPage.modules;
-            console.log(permissionPage, ctrl.modulesPermissions);
             let canPut = PermissionService.canPutModules(config.context);
             let listPermissionIsVoid = !Object.keys(ctrl.modulesPermissions).length;
             ctrl.canAll = (canPut && listPermissionIsVoid) || config.isAuthor;

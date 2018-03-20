@@ -265,8 +265,13 @@
                 keyId: 'idPage',
                 isAuthor: vm.isAuthor
             };
-            vm.canPutModules = PermissionService.canPutModules('page');
-            vm.isLimitPut = PermissionService.canPutSpecial('page');
+            let permissionConfig = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
+            console.log(permissionConfig);
+            vm.isSuperPut = permissionConfig.permissions.putSuper;
+            vm.putTag = permissionConfig.permissions.putTag;
+            // vm.canPutModules = PermissionService.canPutModules('page');
+            // vm.isLimitPut = PermissionService.canPutSpecial('page');
+
         }
 
         function _filterWidgetsWithPermission(widgets, permissions) {

@@ -30,7 +30,7 @@
             getPrivilege: getPrivilege,
             isAdministrator: isAdministrator,
             getPermissionsPutSpecial: getPermissionsPutSpecial,
-            getPermissionModules: getPermissionModules,
+            getPutSpecialById: getPutSpecialById,
             updatePrivilege: updatePrivilege,
             getPrivileges: getPrivileges,
             TYPES_PERMISSIONS: TYPES_PERMISSIONS
@@ -62,7 +62,7 @@
             }
         }
 
-        function getPermissionModules(id, keyId, context) {
+        function getPutSpecialById(id, keyId, context) {
             let objPermissions = getPermissionsPutSpecial(context, keyId);
             console.log(objPermissions);
             return objPermissions[id];
