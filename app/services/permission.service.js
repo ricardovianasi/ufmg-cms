@@ -29,7 +29,8 @@
             hasPermissionId: hasPermissionId,
             getPrivilege: getPrivilege,
             isAdministrator: isAdministrator,
-            getModulesPermissions: getModulesPermissions,
+            getPermissionsPutSpecial: getPermissionsPutSpecial,
+            getPermissionModules: getPermissionModules,
             updatePrivilege: updatePrivilege,
             getPrivileges: getPrivileges,
             TYPES_PERMISSIONS: TYPES_PERMISSIONS
@@ -61,25 +62,28 @@
             }
         }
 
-        function getModulesPermissions(id, keyId, context) {
-            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTSPECIAL);
-            if(privilege && privilege.modules) {
-                let modules = angular.isString(privilege.modules) ? JSON.parse(privilege.modules) : privilege.modules;
-                modules = modules.filter(function(modulePermission) {
-                    return modulePermission[keyId] === id;
-                });
-                return _transformPermissionsModuleToObj(modules);
-            }
-            return [];
+        function getPermissionModules(id, keyId, context) {
+            let objPermissions = getPermissionsPutSpecial(context, keyId);
+            console.log(objPermissions);
+            return objPermissions[id];
         }
 
-        function _transformPermissionsModuleToObj(modules) {
-            return modules.reduce(function(result, item) {
-                item.permissions = item.permissions.reduce(function(resPerm, itemPerm) {
-                    resPerm[itemPerm.type] = itemPerm;
-                    return resPerm;
+        function getPermissionsPutSpecial(context, keyId) {
+            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTSPECIAL);
+            if(privilege && privilege.modules) {
+                let permissions = JSON.parse(atob(privilege.modules));
+                return _transformPutSpecialToObj(permissions, keyId);
+            }
+            return {};
+        }
+
+        function _transformPutSpecialToObj(pages, keyId) {
+            return pages.reduce(function(result, item) {
+                item.modules = item.modules.reduce(function(resModules, itemModules) {
+                    resModules[itemModules.type] = itemModules;
+                    return resModules;
                 }, {});
-                result[item.module] = item;
+                result[item[keyId]] = item;
                 return result;
             }, {});
         }

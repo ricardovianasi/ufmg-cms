@@ -55,7 +55,7 @@
             let result = false;
             let widgetPermission = _getWidgetPermission(widget.type);
             if(angular.isDefined(widgetPermission) && widgetPermission.permissions) {
-                result = widgetPermission.permissions[role].value
+                result = widgetPermission.permissions[role];
             }
             return result || ctrl.canAll;
         }
@@ -88,8 +88,9 @@
                 return;
             }
             let config = ctrl.permissionsOptions;
-            ctrl.modulesPermissions = 
-                PermissionService.getModulesPermissions(config.id, config.keyId, config.context);
+            let permissionPage = PermissionService.getPermissionModules(config.id, config.keyId, config.context);
+            ctrl.modulesPermissions = permissionPage.modules;
+            console.log(permissionPage, ctrl.modulesPermissions);
             let canPut = PermissionService.canPutModules(config.context);
             let listPermissionIsVoid = !Object.keys(ctrl.modulesPermissions).length;
             ctrl.canAll = (canPut && listPermissionIsVoid) || config.isAuthor;

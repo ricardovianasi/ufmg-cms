@@ -189,7 +189,7 @@
                 var innerKeys = Object.keys(resourcesPerms[k]),
                 items = [];
                 innerKeys.forEach(function (key) {
-                    if (resourcesPerms[k][key][0]) {
+                    if (resourcesPerms[k][key] && resourcesPerms[k][key][0]) {
                         let permission = (Array.isArray(resourcesPerms[k][key])) ? key : key + ':' + resourcesPerms[k][key];
                         items.push(permission);
                     }

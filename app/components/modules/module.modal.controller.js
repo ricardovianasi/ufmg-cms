@@ -212,8 +212,9 @@
         }
 
         function _setIsOnlyView() {
+            console.log(permissions);
             if(permissions && permissions[vm.widget.selected.type]) {
-                let canPut = permissions[vm.widget.selected.type].permissions.put.value;
+                let canPut = permissions[vm.widget.selected.type].permissions.put;
                 vm.isOnlyView = angular.isDefined(vm.widget.selected) && !canPut;
             }
         }
@@ -222,7 +223,7 @@
             if(permissions) {
                 data.items = data.items.filter(function(wgt) {
                     let wgtPermission = permissions[wgt.type];
-                    let canCreate = angular.isDefined(wgtPermission) && wgtPermission.permissions.create.value;
+                    let canCreate = angular.isDefined(wgtPermission) && wgtPermission.permissions.post;
                     return canCreate;
                 });
             }

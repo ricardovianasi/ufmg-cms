@@ -1,5 +1,6 @@
 <label>Conteúdo</label>
+<p ng-show="ctrlModal.isOnlyView" ng-bind-html="ctrlModal.widget.text"></p>
 <div ng-if="viewOnly" id="redactor-only"></div>
-<textarea ng-if="!viewOnly" cols="30" rows="10" title="Texto" ng-model="ctrlModal.widget.text" redactor imagencrop-options="ctrlModal.imagencropOptions" audioUpload-options="ctrlModal.audiouploadOptions"
+<textarea ng-if="!ctrlModal.isOnlyView" cols="30" rows="10" title="Texto" ng-model="ctrlModal.widget.text" redactor imagencrop-options="ctrlModal.imagencropOptions" audioUpload-options="ctrlModal.audiouploadOptions"
     uploadfiles-options="ctrlModal.uploadfilesOptions"></textarea>
 <ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
