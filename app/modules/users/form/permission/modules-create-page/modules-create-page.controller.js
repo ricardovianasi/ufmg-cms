@@ -23,8 +23,10 @@
         }
 
         function save() {
-            let listToSave = this.listWidgetsSelecteds.map(function (widget) { return {type: widget.type}; })
-            $uibModalInstance.close(JSON.stringify(listToSave));
+            let listToSave = vm.listWidgetsSelecteds.map(function (widget) { return {type: widget.type}; });
+            let jsonResult = JSON.stringify(listToSave);
+            let code64 = btoa(jsonResult);
+            $uibModalInstance.close(code64);
         }
 
         function addModule(widget) {

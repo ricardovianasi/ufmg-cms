@@ -170,7 +170,6 @@
                     let val = value.substring(value.indexOf(':') + 1);
                     var permsToConvert = convertedPerms[key] || {};
                     if (method) {
-                        val = val.replace(/\\/g, '');
                         permsToConvert[method] = val;
                         convertedPerms[key] = permsToConvert;
                     } else {
@@ -455,7 +454,7 @@
                 };
             });
             PermissionService.updatePrivilege(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL,
-                'modules', JSON.stringify(newPermissionPages));
+                'modules', btoa(JSON.stringify(newPermissionPages)));
         }
 
         function _hasPermissionOld() {
@@ -476,8 +475,7 @@
                     }
                     let privilege = 
                         PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
-                    try { return JSON.parse(privilege.modules); }
-                    catch(e) {return [];}
+                    return privilege.modules;
                 }
             };
             return ModalService.openModal(

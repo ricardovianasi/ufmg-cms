@@ -83,9 +83,10 @@
             let putPagesIds = [];
             let dataListRaw = angular.copy(vm.dataList);
             let customPutSpecial = _preparePagesToSave(vm.dataList, putPagesIds);
+            let code64 = btoa(JSON.stringify(customPutSpecial));
             return {
                 idsPages: putPagesIds.join(','),
-                putSpecial: JSON.stringify(customPutSpecial),
+                putSpecial: code64,
                 raw: dataListRaw 
             };
         }
@@ -183,6 +184,8 @@
         }
 
         function _mapsData() {
+            try { data = JSON.parse(atob(data)); } 
+            catch (err) { data = []; }
             vm.dataList = data.map(function (pagePermission) {
                 let page = vm.listAllPages.find(function(pg) {
                     return pg.id === pagePermission.idPage;
@@ -193,7 +196,7 @@
             });
             console.log('_mapsData', vm.dataList);
         }
-
+        
         function _loadDataList() {
             if(!data) { return; }
             $q.all([_loadAllWidgets(), _loadAllPages()])
