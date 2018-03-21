@@ -61,7 +61,7 @@
 
         function _setPermissionsTagSpecial() {
             const setPermissions = ctrlTags.permissions;
-            ctrlTags.canPutTags = setPermissions ? setPermissions.permissions.putTag : false;
+            ctrlTags.canPutTags = setPermissions ? setPermissions.permissions.putTag : ctrlTags.canPutTags;
         }
 
         function _permissions() {

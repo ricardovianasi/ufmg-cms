@@ -260,7 +260,7 @@
 
         function _loadPermission() {
             vm.configPerm = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
-            console.log('_loadPermission', vm.permissions);
+            vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
             vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
             vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
         }

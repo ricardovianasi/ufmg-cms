@@ -53,6 +53,15 @@
             _getType();
 
             vm.page_cover = null;
+            vm.isSuperPut = true;
+            vm.configPerm = {
+                isPost: true,
+                permissions: {
+                    putTag: true,
+                    putSuper: true
+                },
+                modules: []
+            };
 
             vm.page = {
                 image: null,

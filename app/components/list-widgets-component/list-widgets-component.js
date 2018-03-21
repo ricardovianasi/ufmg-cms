@@ -84,12 +84,11 @@
 
         function _loadingPermission() {
             if(!ctrl.permissions) {
-                ctrl.canAll = true;
                 return;
             }
-            ctrl.modulesPermissions = ctrl.permissions ? ctrl.permissions.modules : {};
+            ctrl.modulesPermissions = ctrl.permissions.modules || {};
             let listKeysModules = Object.keys(ctrl.modulesPermissions);
-            ctrl.canAll = ctrl.permissions.permissions.putSuper && !listKeysModules.length;
+            ctrl.canAll = ctrl.permissions.isPost;
             ctrl.canAdd = listKeysModules.reduce(function(result, item) {
                 return ctrl.modulesPermissions[item].permissions.post || result;
             }, false);
@@ -106,6 +105,8 @@
 
         ctrl.$onInit = function() {
             ctrl.sortableOptions = _getOptionsSortable();
+            ctrl.canAll = false;
+            ctrl.modulesPermissions = {};
             _loadingPermission();
         };
         ctrl.$onChanges = function(changesObj) { };
