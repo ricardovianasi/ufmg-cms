@@ -7,12 +7,7 @@
                 </h4>
                 <h5 class="text-capitalize">{{ item.type|translate }}</h5>
             </div>
-            <div class="col-md-2" ng-if="ctrl.viewOnly">
-                <span class="label label-primary" ng-click="ctrl.openModalWidgets(item)">
-                    <i class="fa fa-pencil"></i> Visualisar
-                </span>
-            </div>
-            <div class="col-md-2" ng-if="!ctrl.viewOnly">
+            <div class="col-md-2">
                 <span ng-if="!ctrl.canHandle(item, 'put')" class="label label-default" ng-click="ctrl.openModalWidgets(item)">
                     <i class="fa fa-eye"></i> Visualisar
                 </span>
@@ -28,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="!ctrl.viewOnly" class="pages-module add-module" ng-click="ctrl.openModalWidgets()">
+    <div ng-if="ctrl.canAdd || ctrl.canAll" class="pages-module add-module" ng-click="ctrl.openModalWidgets()">
         <span class="add-title">+ Adicionar Módulo</span>
     </div>
 </div>

@@ -17,12 +17,12 @@
                 idComponent: '@',
                 listWidgets: '=',
                 viewOnly: '<',
-                permissionsOptions: '<'
+                permissions: '<'
             },
         });
 
     /** ngInject */
-    function ControllerController(PermissionService, WidgetsService, ModalService, NotificationService) {
+    function ControllerController(WidgetsService, ModalService, NotificationService) {
         var ctrl = this;
 
         ctrl.openModalWidgets = openModalWidgets;
@@ -83,16 +83,16 @@
         }
 
         function _loadingPermission() {
-            if(!ctrl.permissionsOptions) {
+            if(!ctrl.permissions) {
                 ctrl.canAll = true;
                 return;
             }
-            let config = ctrl.permissionsOptions;
-            let permissionPage = PermissionService.getPutSpecialById(config.id, config.keyId, config.context);
-            ctrl.modulesPermissions = permissionPage.modules;
-            let canPut = PermissionService.canPutModules(config.context);
-            let listPermissionIsVoid = !Object.keys(ctrl.modulesPermissions).length;
-            ctrl.canAll = (canPut && listPermissionIsVoid) || config.isAuthor;
+            ctrl.modulesPermissions = ctrl.permissions ? ctrl.permissions.modules : {};
+            let listKeysModules = Object.keys(ctrl.modulesPermissions);
+            ctrl.canAll = ctrl.permissions.permissions.putSuper && !listKeysModules.length;
+            ctrl.canAdd = listKeysModules.reduce(function(result, item) {
+                return ctrl.modulesPermissions[item].permissions.post || result;
+            }, false);
         }
 
         function _getOptionsSortable() {

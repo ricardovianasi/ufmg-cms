@@ -52,8 +52,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-8">
-                    <div class="form-group">
-                        <tags-input-component resource="'page'" add-on-comma="false" ng-model-tags="page.tags"></tags-input-component>
+                    <div class="form-group" ng-if="page.id || isNew">
+                        <tags-input-component permissions="configPerm" resource="page" add-on-comma="false" ng-model-tags="page.tags"></tags-input-component>
                     </div>
                 </div>
                 <div class="col-xs-4">
@@ -88,15 +88,15 @@
                 </div>
             </div>
             <div class="row">
-                <list-widgets-component ng-if="page.id || isNew" id-component="sort-main" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
+                <list-widgets-component ng-if="page.id || isNew" id-component="sort-main" permissions="configPerm" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
                 </list-widgets-component>
-                <list-widgets-component ng-if="page.id || isNew" id-component="sort-side" permissions-options="widgetPermissionOptions" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
+                <list-widgets-component ng-if="page.id || isNew" id-component="sort-side" permissions="configPerm" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
                 </list-widgets-component>
             </div>
         </form>
     </div>
     <div class="col-xs-4">
-        <publishment-options is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
+        <publishment-options is-super-put="isSuperPut" is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
         <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()" ng-if="!isLimitPut">
             A página atual é filha de:
             <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
@@ -117,7 +117,6 @@
                     <div ng-bind-html="type.name | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select>
-
         </div>
     </div>
 </div>

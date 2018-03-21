@@ -15,6 +15,7 @@
                 obj: '=routeModel',
                 isLoading: '=?isLoading',
                 publishMethod: '=?publishMethod',
+                isSuperPut: '='
             },
             link: linkController
         };

@@ -16,7 +16,7 @@
 <form name="formPub" ng-submit="publish(formPub)" novalidate>
     <div class="panel panel-default publishment-options" ng-show="showLoad">
         <h4 class="publishment-title">Opções de Publicação</h4>
-        <div class="publishment-body">
+        <div class="publishment-body" ng-if="vm.isSuperPut">
             <div class="status">
                 <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
                         <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>

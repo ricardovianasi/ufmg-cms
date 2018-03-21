@@ -249,7 +249,7 @@
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
                     _setIsAuthor();
-                    _loadPermissionModules();
+                    _loadPermission();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
@@ -258,20 +258,11 @@
             vm.isAuthor = $rootScope.User.is_administrator || ($rootScope.User.id === vm.page.author.id);
         }
 
-        function _loadPermissionModules() {
-            vm.widgetPermissionOptions = {
-                context: 'page',
-                id: vm.page.id,
-                keyId: 'idPage',
-                isAuthor: vm.isAuthor
-            };
-            let permissionConfig = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
-            console.log(permissionConfig);
-            vm.isSuperPut = permissionConfig.permissions.putSuper;
-            vm.putTag = permissionConfig.permissions.putTag;
-            // vm.canPutModules = PermissionService.canPutModules('page');
-            // vm.isLimitPut = PermissionService.canPutSpecial('page');
-
+        function _loadPermission() {
+            vm.configPerm = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
+            console.log('_loadPermission', vm.permissions);
+            vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
+            vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
         }
 
         function _filterWidgetsWithPermission(widgets, permissions) {
@@ -286,6 +277,8 @@
         function activate() {
             vm.title = 'Edição de página';
             vm.columns = PagesService.COLUMNS;
+            vm.idPage = $routeParams.id;
+            vm.isEdit = angular.isDefined(vm.idPage);
 
             vm.page = {
                 image: null,

@@ -64,7 +64,6 @@
 
         function getPutSpecialById(id, keyId, context) {
             let objPermissions = getPermissionsPutSpecial(context, keyId);
-            console.log(objPermissions);
             return objPermissions[id];
         }
 

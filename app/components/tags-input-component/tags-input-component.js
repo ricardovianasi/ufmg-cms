@@ -17,9 +17,10 @@
                 addOnComma: '=',
                 maxTags: '=',
                 enforceMax: '=',
-                resource: '=',
+                resource: '@',
                 label: '=nameLabel',
-                hideLabel: '='
+                hideLabel: '=',
+                permissions: '='
             },
         });
 
@@ -52,9 +53,15 @@
         function _setPermissionTag(userLoaded) {
             if(userLoaded && ctrlTags.resource) {
                 ctrlTags.canPutTags = PermissionService.canPutTag(ctrlTags.resource);
+                _setPermissionsTagSpecial();
             } else if(!ctrlTags.resource) {
                 ctrlTags.canPutTags = true;
             }
+        }
+
+        function _setPermissionsTagSpecial() {
+            const setPermissions = ctrlTags.permissions;
+            ctrlTags.canPutTags = setPermissions ? setPermissions.permissions.putTag : false;
         }
 
         function _permissions() {
