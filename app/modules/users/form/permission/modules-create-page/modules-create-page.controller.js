@@ -26,7 +26,11 @@
             let listToSave = vm.listWidgetsSelecteds.map(function (widget) { return {type: widget.type}; });
             let jsonResult = JSON.stringify(listToSave);
             let code64 = btoa(jsonResult);
-            $uibModalInstance.close(code64);
+            let result = {
+                raw: vm.listWidgetsSelecteds,
+                code64: code64
+            }
+            $uibModalInstance.close(result);
         }
 
         function addModule(widget) {

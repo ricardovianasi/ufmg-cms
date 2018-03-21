@@ -68,11 +68,22 @@
 
         function openPermissionModulePostPage() {
             let modal = _openPermissionModulePostPage();
+            modal.result.then(function (res) { _prepareModulesPostPages(res) });
         }
 
         function _openPagesPermission() {
             let modal = _openPagesPermissionModal();
             modal.result.then(function (res) { _preparePutPages(res); });
+        }
+
+        function _prepareModulesPostPages(modulesPost) {
+            let keyPost = PermissionService.TYPES_PERMISSIONS.POST;
+            vm.listPermissions.page = vm.listPermissions.page || {};
+            vm.listPermissions.page[keyPost] = modulesPost.raw;
+            vm.user.resources_perms.page[keyPost] = modulesPost.code64;
+            let isCheckBoxIntermediate = modulesPost.raw.length > 0;
+            _setCheckboxPermission('page', keyPost, { method: 'prop', key: 'indeterminate', value: isCheckBoxIntermediate});
+            _setCheckboxPermission('page', keyPost, { method: 'attr', key: 'value', value: isCheckBoxIntermediate});
         }
 
         function _preparePutPages(customPages) {
