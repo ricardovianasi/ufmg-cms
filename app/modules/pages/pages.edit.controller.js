@@ -23,9 +23,6 @@
         vm.publish = publish;
         vm.uploadCover = uploadCover;
         vm.removeImage = removeImage;
-        vm.handleModule = handleModule;
-        vm.removeModuleMain = removeModuleMain;
-        vm.removeModuleSide = removeModuleSide;
 
         activate();
 
@@ -201,39 +198,6 @@
             });
         }
 
-        function handleModule(column, idx) {
-            let widgetSelected = vm.page.widgets[column][idx];
-            WidgetsService.openWidgetModal(widgetSelected)
-                .then(function (data) {
-                    _updateModule(data, column, idx);
-                });
-        }
-
-        function _updateModule(data, column, idx) {
-            if (typeof idx !== 'undefined') {
-                vm.page.widgets[column][idx] = data;
-            } else {
-                vm.page.widgets[column].push(data);
-            }
-        }
-
-        function _removeModule(column, index) {
-            let msgModal = 'Você deseja excluir o modulo <b>' + vm.page.widgets[column][index].title + '</b>?';
-            ModalService.confirm(msgModal, ModalService.MODAL_MEDIUM).result
-                .then(function () {
-                    vm.page.widgets[column].splice(index, 1);
-                    NotificationService.success('Modulo removido com sucesso.');
-                });
-        }
-
-        function removeModuleMain(index) {
-            _removeModule('main', index);
-        }
-
-        function removeModuleSide(index) {
-            _removeModule('side', index);
-        }
-
         function _getPage() {
             PagesService
                 .getPage(parseInt($routeParams.id))
@@ -259,20 +223,19 @@
         }
 
         function _loadPermission() {
+            vm.putTag = vm.isSuperPut = true;
+            vm.isAdmin = PermissionService.isAdministrator;
+            if(PermissionService.isAdministrator()) {
+                vm.configPerm = { isAdmin: true };
+                return;
+            }
             vm.configPerm = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
             vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
             vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
             vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
-        }
 
-        function _filterWidgetsWithPermission(widgets, permissions) {
-            return widgets.filter(function(widget) {
-                if(permissions[widget.type]) {
-                    return true;
-                }
-                return false;
-            });
         }
+        
 
         function activate() {
             vm.title = 'Edição de página';
@@ -300,7 +263,6 @@
             };
             _getPage();
             _getType();
-
             HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
 

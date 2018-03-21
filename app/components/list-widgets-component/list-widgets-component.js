@@ -83,12 +83,12 @@
         }
 
         function _loadingPermission() {
+            ctrl.canAll = ctrl.permissions && (ctrl.permissions.isPost || ctrl.permissions.isAdmin);
             if(!ctrl.permissions) {
                 return;
             }
             ctrl.modulesPermissions = ctrl.permissions.modules || {};
             let listKeysModules = Object.keys(ctrl.modulesPermissions);
-            ctrl.canAll = ctrl.permissions.isPost;
             ctrl.canAdd = listKeysModules.reduce(function(result, item) {
                 return ctrl.modulesPermissions[item].permissions.post || result;
             }, false);
