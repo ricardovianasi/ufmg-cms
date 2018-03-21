@@ -187,16 +187,16 @@
                     } else {
                         vm.showMessageError = false;
                         vm.showMessageWarn = false;
-                        vm.obj.scheduled_date = new Date();
-                        var hh = vm.obj.scheduled_date.getHours();
-                        var MM = vm.obj.scheduled_date.getMinutes();
-                        if (hh < 10) {
-                            hh = '0' + hh;
-                        }
-                        if (MM < 10) {
-                            MM = '0' + MM;
-                        }
-                        vm.obj.scheduled_time = hh + ':' + MM;
+                        // vm.obj.scheduled_date = new Date();
+                        // var hh = vm.obj.scheduled_date.getHours();
+                        // var MM = vm.obj.scheduled_date.getMinutes();
+                        // if (hh < 10) {
+                        //     hh = '0' + hh;
+                        // }
+                        // if (MM < 10) {
+                        //     MM = '0' + MM;
+                        // }
+                        // vm.obj.scheduled_time = hh + ':' + MM;
                     }
                 });
             }
