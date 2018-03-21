@@ -73,6 +73,8 @@
         }
 
         function _mapsWidgets(allWidgets) {
+            console.log(dataModules);
+            dataModules = dataModules ? JSON.parse(atob(dataModules)) : [];
             return dataModules.map(function(widgetAdded) {
                 let widget = allWidgets.find(function(wgt) {
                     return wgt.type === widgetAdded.type;

@@ -496,7 +496,9 @@
 
         function _openPermissionModulePostPage() {
             let resolve = {dataModules: [function() {
-                return [{type: 'comevents'}]
+                let privilege = 
+                    PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.POST);
+                return privilege.modules;
             }]};
             return ModalService.openModal(
                 'modules/users/form/permission/modules-create-page/modules-create-page.html',
