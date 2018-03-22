@@ -60,7 +60,7 @@
 
             function getPages(params, fnCallback) {
                 PagesService
-                    .getPages(dataTableConfigService.getParams(params))
+                    .getPages(dataTableConfigService.getParams(params), false, true)
                     .then(function (res) {
                         vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();

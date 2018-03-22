@@ -60,8 +60,12 @@
         }
 
         function _setPermissionsTagSpecial() {
+            if(!ctrlTags.permissions) {
+                return;
+            }
             const setPermissions = ctrlTags.permissions;
-            ctrlTags.canPutTags = setPermissions ? setPermissions.permissions.putTag : ctrlTags.canPutTags;
+            ctrlTags.canPutTags = setPermissions.isAdmin ||
+                (setPermissions.permissions ? setPermissions.permissions.putTag : ctrlTags.canPutTags);
         }
 
         function _permissions() {

@@ -5,7 +5,7 @@
         .factory('PagesService', PagesService);
 
     /** ngInject */
-    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ServerService) {
+    function PagesService($timeout, $log, $http, $filter, $q, $rootScope, apiUrl, ServerService, authService) {
 
         var _parseData = function (page) {
             $log.info('parseData', page);
@@ -76,9 +76,28 @@
             return dd + '/' + mm + '/' + yyyy + ' ' + scheduled_time;
         }
 
-        var _getPages = function (params, ignoreLoadingBar) {
+        function _getPagesWithFlagAuthor(params, ignoreLoadingBar) {
+            let promiseGetPages = $http.get(apiUrl + '/page' + params, {
+                ignoreLoadingBar: ignoreLoadingBar
+            });
+            return $q.all([authService.account(), promiseGetPages])
+                .then(function(data) {
+                    let user = data[0].data;
+                    let dataPage = data[1];
+                    dataPage.data.items = dataPage.data.items.map(function(page) {
+                        page.isAuthor = page.author.id === user.id || user.is_administrator;
+                        return page;
+                    });
+                    return dataPage;
+                });
+        }
+        
+        var _getPages = function (params, ignoreLoadingBar, withAuthor) {
             if (angular.isUndefined(params)) {
                 params = '';
+            }
+            if(withAuthor) {
+                return _getPagesWithFlagAuthor(params, ignoreLoadingBar);
             }
             return $http.get(apiUrl + '/page' + params, {
                 ignoreLoadingBar: ignoreLoadingBar

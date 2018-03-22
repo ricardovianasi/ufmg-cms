@@ -212,6 +212,8 @@
                 } else if (action && action === 'edit') {
                     if (module === 'editions') {
                         noHasPermissionCustom = !PermissionService.canPut(module, idModule);
+                    } else if(module === 'page') { 
+                        noHasPermissionCustom = false;
                     } else {
                         noHasPermissionCustom = !PermissionService.canPut(module, idAction);
                     }

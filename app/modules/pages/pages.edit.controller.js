@@ -213,28 +213,30 @@
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
                     _setIsAuthor();
+                    _loadPermission();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
 
         function _setIsAuthor() {
-            vm.isAuthor = $rootScope.User.is_administrator || ($rootScope.User.id === vm.page.author.id);
+            vm.isAuthorOrAdmin = $rootScope.User.is_administrator || ($rootScope.User.id === vm.page.author.id);
         }
 
         function _loadPermission() {
             vm.putTag = vm.isSuperPut = true;
-            vm.isAdmin = PermissionService.isAdministrator;
-            if(PermissionService.isAdministrator()) {
-                vm.configPerm = { isAdmin: true };
-                return;
-            }
             PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
                 .then(function (perm) {
+                    if(vm.isAuthorOrAdmin) {
+                        vm.configPerm = { isAdmin: true };
+                        return;
+                    }
+                    console.log(perm);
+                    if(!perm || !perm.idPage) { return; }
                     vm.configPerm = perm;
+                    vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
+                    vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
+                    vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
                 });
-            vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
-            vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
-            vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
 
         }
         
@@ -264,7 +266,6 @@
                 containment: '#sort-main'
             };
             _getPage();
-            _loadPermission();
             _getType();
             HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
