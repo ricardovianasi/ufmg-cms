@@ -50,8 +50,10 @@
             return authService.account()
                 .then(function() {
                     let privilege = getPrivilege(context, role);
-                    if(privilege[key]) {
+                    if(privilege && privilege[key]) {
                         return atob(privilege[key]);
+                    } else if(privilege) {
+                        return { hasOnlyRole: true };
                     }
                     return '';
                 });
@@ -83,9 +85,11 @@
         function getPermissionsPutSpecial(context, keyId) {
             return getPrivilegeBase64(context, TYPES_PERMISSIONS.PUTSPECIAL, 'modules')
                 .then(function(modulesPutSpecial) {
-                    if(modulesPutSpecial) {
+                    if(modulesPutSpecial && !modulesPutSpecial.hasOnlyRole) {
                         let permissions = JSON.parse(modulesPutSpecial);
                         return _transformPutSpecialToObj(permissions, keyId);
+                    } else if(modulesPutSpecial.hasOnlyRole) {
+                        return  modulesPutSpecial;
                     }
                     return {};
                 });

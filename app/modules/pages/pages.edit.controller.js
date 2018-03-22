@@ -223,21 +223,26 @@
         }
 
         function _loadPermission() {
-            vm.putTag = vm.isSuperPut = true;
+            vm.isSuperPut = true;
+            if(_isPermissionTotal()) { return; }
             PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
                 .then(function (perm) {
-                    if(vm.isAuthorOrAdmin) {
-                        vm.configPerm = { isAdmin: true };
-                        return;
-                    }
-                    console.log(perm);
-                    if(!perm || !perm.idPage) { return; }
+                    const isDefinedPermissions = angular.isDefined(perm.permissions);
+                    vm.viewOnly = isDefinedPermissions && !perm.permissions.putSuper;
+                    vm.isSuperPut = isDefinedPermissions ? perm.permissions.putSuper : false;
                     vm.configPerm = perm;
-                    vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
-                    vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
-                    vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
                 });
 
+        }
+
+        function _isPermissionTotal() {
+            let privilege = PermissionService.getPrivileges($rootScope.User, 'page', 'PUT');
+            let canPutTotal = angular.isDefined(privilege.privilege) && !privilege.posts;
+            if(vm.isAuthorOrAdmin || canPutTotal) {
+                vm.configPerm = { isAdmin: true };
+                return true;
+            }
+            return false;
         }
         
 

@@ -77,12 +77,13 @@
         function _loadPermissionModules() {
             PermissionService.getPrivilegeBase64('page', PermissionService.TYPES_PERMISSIONS.POST, 'modules')
                 .then(function(modules) {
+                    console.log('_loadPermissionModules', modules);
                     vm.isSuperPut = true;
                     vm.configPerm = {
                         isPost: true,
-                        isAdmin: PermissionService.isAdministrator(),
+                        isAdmin: PermissionService.isAdministrator() || modules.hasOnlyRole,
                         permissions: { putTag: true, putSuper: true },
-                        modules: modules ? JSON.parse(modules) : []
+                        modules: modules && !modules.hasOnlyRole ? JSON.parse(modules) : []
                     };
                 });
         }
