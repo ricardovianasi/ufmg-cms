@@ -213,7 +213,6 @@
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
                     _setIsAuthor();
-                    _loadPermission();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
@@ -229,7 +228,10 @@
                 vm.configPerm = { isAdmin: true };
                 return;
             }
-            vm.configPerm = PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page');
+            PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
+                .then(function (perm) {
+                    vm.configPerm = perm;
+                });
             vm.viewOnly = angular.isDefined(vm.configPerm) && !vm.configPerm.permissions.putSuper;
             vm.isSuperPut = vm.configPerm ? vm.configPerm.permissions.putSuper : false;
             vm.putTag = vm.configPerm ? vm.configPerm.permissions.putTag : false;
@@ -262,6 +264,7 @@
                 containment: '#sort-main'
             };
             _getPage();
+            _loadPermission();
             _getType();
             HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }

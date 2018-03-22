@@ -6,7 +6,7 @@
     /** ngInject */
     function PagesNewController($scope, $uibModal, $location, $timeout, $window, NotificationService, PagesService,
         ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope,
-        Util, $q, HandleChangeService, validationService, UsersService) {
+        Util, $q, HandleChangeService, validationService, UsersService, PermissionService) {
 
         var vm = $scope;
         var hasRequest = false;
@@ -52,16 +52,7 @@
             _getType();
 
             vm.page_cover = null;
-            vm.isSuperPut = true;
-            vm.configPerm = {
-                isPost: true,
-                permissions: {
-                    putTag: true,
-                    putSuper: true
-                },
-                modules: []
-            };
-
+            _loadPermissionModules();
             vm.page = {
                 image: null,
                 scheduled_at: {},
@@ -83,13 +74,25 @@
             return HandleChangeService.removePropsCommon(obj);
         }
 
+        function _loadPermissionModules() {
+            PermissionService.getPrivilegeBase64('page', PermissionService.TYPES_PERMISSIONS.POST, 'modules')
+                .then(function(modules) {
+                    vm.isSuperPut = true;
+                    vm.configPerm = {
+                        isPost: true,
+                        isAdmin: PermissionService.isAdministrator(),
+                        permissions: { putTag: true, putSuper: true },
+                        modules: modules ? JSON.parse(modules) : []
+                    };
+                });
+        }
+
         function _getType() {
             PagesService.getType()
                 .then(function (res) {
                     vm.typesData = res.data;
                 });
         }
-
 
         function loadMore(dataTemp, search) {
             var defer = $q.defer();

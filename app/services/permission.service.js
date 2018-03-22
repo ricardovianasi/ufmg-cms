@@ -32,6 +32,7 @@
             getPutSpecialById: getPutSpecialById,
             updatePrivilege: updatePrivilege,
             getPrivileges: getPrivileges,
+            getPrivilegeBase64: getPrivilegeBase64,
             TYPES_PERMISSIONS: TYPES_PERMISSIONS
         };
 
@@ -43,6 +44,17 @@
             if (permission.resource === context) {
                 return permission;
             }
+        }
+
+        function getPrivilegeBase64(context, role, key) {
+            return authService.account()
+                .then(function() {
+                    let privilege = getPrivilege(context, role);
+                    if(privilege[key]) {
+                        return atob(privilege[key]);
+                    }
+                    return '';
+                });
         }
 
         function getPermissions(context) {
@@ -62,17 +74,21 @@
         }
 
         function getPutSpecialById(id, keyId, context) {
-            let objPermissions = getPermissionsPutSpecial(context, keyId);
-            return objPermissions[id];
+            return getPermissionsPutSpecial(context, keyId)
+                .then(function(objPermissions) {
+                    return objPermissions[id] || {};
+                });
         }
 
         function getPermissionsPutSpecial(context, keyId) {
-            let privilege = getPrivilege(context, TYPES_PERMISSIONS.PUTSPECIAL);
-            if(privilege && privilege.modules) {
-                let permissions = JSON.parse(atob(privilege.modules));
-                return _transformPutSpecialToObj(permissions, keyId);
-            }
-            return {};
+            return getPrivilegeBase64(context, TYPES_PERMISSIONS.PUTSPECIAL, 'modules')
+                .then(function(modulesPutSpecial) {
+                    if(modulesPutSpecial) {
+                        let permissions = JSON.parse(modulesPutSpecial);
+                        return _transformPutSpecialToObj(permissions, keyId);
+                    }
+                    return {};
+                });
         }
 
         function _transformPutSpecialToObj(pages, keyId) {

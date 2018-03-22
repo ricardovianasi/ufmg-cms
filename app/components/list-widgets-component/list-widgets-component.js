@@ -38,7 +38,7 @@
                 .then(function () {
                     let idx = _getIdxFromWidget(widget);
                     ctrl.listWidgets.splice(idx, 1);
-                    NotificationService.success('Modulo removido com sucesso.');
+                    NotificationService.success('Módulo removido com sucesso.');
                 });
         }
 
@@ -82,16 +82,36 @@
             return ctrl.modulesPermissions ? ctrl.modulesPermissions[type] : undefined;
         }
 
-        function _loadingPermission() {
-            ctrl.canAll = ctrl.permissions && (ctrl.permissions.isPost || ctrl.permissions.isAdmin);
-            if(!ctrl.permissions) {
+        function _loadPermissionModulesToPost() {
+            if(!ctrl.permissions.modules.length) {
+                ctrl.canAdd = false;
                 return;
             }
+            ctrl.canAdd = true;
+            ctrl.modulesPermissions = ctrl.permissions.modules.reduce(function(res, item) {
+                res[item.type] = { permissions: { post: true, put: true, delete: true } };
+                return res;
+            }, {});
+        }
+
+
+        function _loadPermissionModulesToPut() {
             ctrl.modulesPermissions = ctrl.permissions.modules || {};
             let listKeysModules = Object.keys(ctrl.modulesPermissions);
             ctrl.canAdd = listKeysModules.reduce(function(result, item) {
                 return ctrl.modulesPermissions[item].permissions.post || result;
             }, false);
+        }
+
+        function _loadPermission() {
+            ctrl.canAll = ctrl.permissions ? ctrl.permissions.isAdmin : false;
+            if(!ctrl.permissions && ctrl.canAll) { return; }
+            if(ctrl.permissions.isPost) {
+                _loadPermissionModulesToPost();
+            } else {
+                _loadPermissionModulesToPut();
+            }
+
         }
 
         function _getOptionsSortable() {
@@ -107,7 +127,7 @@
             ctrl.sortableOptions = _getOptionsSortable();
             ctrl.canAll = false;
             ctrl.modulesPermissions = {};
-            _loadingPermission();
+            _loadPermission();
         };
         ctrl.$onChanges = function(changesObj) { };
         ctrl.$onDestroy = function() { };

@@ -88,9 +88,9 @@
                 </div>
             </div>
             <div class="row">
-                <list-widgets-component ng-if="page.id || isNew" id-component="sort-main" permissions="configPerm" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
+                <list-widgets-component ng-if="configPerm" id-component="sort-main" permissions="configPerm" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
                 </list-widgets-component>
-                <list-widgets-component ng-if="page.id || isNew" id-component="sort-side" permissions="configPerm" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
+                <list-widgets-component ng-if="configPerm" id-component="sort-side" permissions="configPerm" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
                 </list-widgets-component>
             </div>
         </form>

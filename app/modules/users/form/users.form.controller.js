@@ -84,6 +84,7 @@
             let isCheckBoxIntermediate = modulesPost.raw.length > 0;
             _setCheckboxPermission('page', keyPost, { method: 'prop', key: 'indeterminate', value: isCheckBoxIntermediate});
             _setCheckboxPermission('page', keyPost, { method: 'attr', key: 'value', value: isCheckBoxIntermediate});
+            PermissionService.updatePrivilege(vm.user, 'page', keyPost, 'modules', modulesPost.code64);
         }
 
         function _preparePutPages(customPages) {
@@ -495,7 +496,7 @@
         }
 
         function _openPermissionModulePostPage() {
-            let resolve = {dataModules: [function() {
+            let resolve = {dataModules: [ function() {
                 let privilege = 
                     PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.POST);
                 return privilege.modules;
