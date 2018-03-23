@@ -8,7 +8,7 @@
     /** ngInject */
     function PagesEditController($scope, $uibModal, $location, $routeParams, $timeout, $window, NotificationService,
         PagesService, ManagerFileService, WidgetsService, StatusService, DateTimeHelper, $q, ModalService,
-        $rootScope, TagsService, validationService, Util, HandleChangeService, PermissionService) {
+        $rootScope, TagsService, validationService, Util, HandleChangeService, PermissionService, PermissionPageService) {
 
         let vm = $scope;
 
@@ -219,12 +219,30 @@
         }
 
         function _setIsAuthor() {
-            vm.isAuthorOrAdmin = $rootScope.User.is_administrator || ($rootScope.User.id === vm.page.author.id);
+            vm.isAuthorOrAdmin = _isAdmin() || _isAuthor();
+        }
+
+        function _isAuthor() {
+            return $rootScope.User.id === vm.page.author.id;
+        }
+
+
+        function _isAdmin() {
+            return $rootScope.User.is_administrator;
         }
 
         function _loadPermission() {
             vm.isSuperPut = true;
-            if(_isPermissionTotal()) { return; }
+            PermissionPageService.canTotal('PUT').then(function(canTotal) {
+                if(canTotal || _isAuthor()) { 
+                    _setPermissionPostModules();
+                    return;
+                 }
+                _setPermissionPutSpecial();
+            });
+        }
+
+        function _setPermissionPutSpecial() {
             PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
                 .then(function (perm) {
                     const isDefinedPermissions = angular.isDefined(perm.permissions);
@@ -235,21 +253,19 @@
                         (!perm.permissions.putSuper && !perm.permissions.putTag && !hasModuleToHandle);
                     vm.isSuperPut = isDefinedPermissions ? perm.permissions.putSuper : false;
                     vm.configPerm = perm;
-                    console.log(vm.viewOnly);
                 });
-
         }
 
-        function _isPermissionTotal() {
-            let privilege = PermissionService.getPrivileges($rootScope.User, 'page', 'PUT');
-            let canPutTotal = angular.isDefined(privilege.privilege) && !privilege.posts;
-            if(vm.isAuthorOrAdmin || canPutTotal) {
-                vm.configPerm = { isAdmin: true };
-                return true;
-            }
-            return false;
+        function _setPermissionPostModules() {
+            PermissionPageService.getPostModules({getAsList: true}).then(function(postModules) {
+                vm.configPerm = {
+                    isPost: true,
+                    isAdmin: _isAdmin() || !!postModules.isTotal,
+                    permissions: { putTag: true, putSuper: true },
+                    modules: postModules && !postModules.noPrivilege ? postModules : []
+                };
+            });
         }
-        
 
         function activate() {
             vm.title = 'Edição de página';
