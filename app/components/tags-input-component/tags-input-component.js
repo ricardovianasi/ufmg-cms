@@ -52,6 +52,7 @@
 
         function _setPermissionTag(userLoaded) {
             if(userLoaded && ctrlTags.resource) {
+                ctrlTags.canGet = PermissionService.canGet(ctrlTags.resource);
                 ctrlTags.canPutTags = PermissionService.canPutTag(ctrlTags.resource);
                 _setPermissionsTagSpecial();
             } else if(!ctrlTags.resource) {
@@ -75,9 +76,19 @@
             });
         }
 
+        function _prepareTagsOnlyView() {
+            if (!ctrlTags.ngModelTags) {
+                return;
+            }
+            ctrlTags.tagsOnlyView 
+                = ctrlTags.ngModelTags.map(function(tag) { return tag.text || tag.name }).join(', ');
+        }
+
         ctrlTags.$onInit = function() {
+            _prepareTagsOnlyView();
             _permissions();
         };
+
         ctrlTags.$onDestroy = function() { };
     }
 })();

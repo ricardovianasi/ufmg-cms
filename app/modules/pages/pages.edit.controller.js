@@ -228,9 +228,14 @@
             PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
                 .then(function (perm) {
                     const isDefinedPermissions = angular.isDefined(perm.permissions);
-                    vm.viewOnly = isDefinedPermissions && !perm.permissions.putSuper;
+                    const hasModuleToHandle = Object.keys(perm.modules || []).reduce(function (result, key) {
+                        return perm.modules[key].permissions.put || perm.modules[key].permissions.post;
+                    }, false);
+                    vm.viewOnly = !isDefinedPermissions || 
+                        (!perm.permissions.putSuper && !perm.permissions.putTag && !hasModuleToHandle);
                     vm.isSuperPut = isDefinedPermissions ? perm.permissions.putSuper : false;
                     vm.configPerm = perm;
+                    console.log(vm.viewOnly);
                 });
 
         }
