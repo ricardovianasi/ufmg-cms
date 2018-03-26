@@ -50,9 +50,12 @@
                     .getUser(userId)
                     .then(function (data) {
                         vm.user = data.data;
+                        vm.isUserLoaded = true;
                         _normalizeUser();
                         _convertPrivilegesToLoad();
                     });
+            } else {
+                vm.isUserLoaded = true;
             }
             HandleChangeService
                 .registerHandleChange('/user', ['POST', 'PUT'], $scope, ['vm.user'], undefined, _hasLoaded);

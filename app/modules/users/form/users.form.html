@@ -2,7 +2,8 @@
     <div class="row flexcenter">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Novo Usuário</h1>
+                <h1 class="title" ng-show="vm.isUserLoaded && !vm.user.id">Novo Usuário</h1>
+                <h1 class="title" ng-show="vm.isUserLoaded && vm.user.id">{{ vm.user.name }}</h1>
             </div>
         </div>
         <div class="col-md-6">
