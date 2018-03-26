@@ -226,10 +226,6 @@
                     _setPermission(perm);
                     return;
                 }
-                if(PermissionPageService.isAuthor(vm.page)) { 
-                    _setPermissionAuthor();
-                    return;
-                 }
                 _setPermissionPutSpecial();
             });
         }
@@ -241,6 +237,10 @@
                         perm.modules = PermissionPageService.transformListToObj(perm.modules, 'type');
                     }
                     _setPermission(perm);
+                    if(PermissionPageService.isAuthor(vm.page) && !perm.idPage) { 
+                        _setPermissionAuthor();
+                        return;
+                     }
                 });
         }
 
