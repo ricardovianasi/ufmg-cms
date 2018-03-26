@@ -80,7 +80,7 @@
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
                     </div>
-                    <div class="pages-module add-module pages-module-cover" ng-show="viewOnly && page.image.url">
+                    <div class="pages-module add-module pages-module-cover" ng-show="!isSuperPut && page.image.url">
                         <div class="uploaded-image" ng-show="page.image">
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>

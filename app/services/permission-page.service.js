@@ -6,13 +6,15 @@
         .factory('PermissionPageService', PermissionPageService);
 
     /** ngInject */
-    function PermissionPageService(PermissionService, authService) {
+    function PermissionPageService($rootScope, PermissionService, authService) {
         let service = {
+            isAuthor: isAuthor,
             canPost: canPost,
             canTotal: canTotal,
             canPutTag: canPutTag,
             getPutSpecial: getPutSpecial,
             getPostModules: getPostModules,
+            setConfigPermission: setConfigPermission,
             getPutSpecialByIdPage: getPutSpecialByIdPage
         };
 
@@ -21,10 +23,15 @@
         return service;
 
         ////////////////
-        function canTotal(role) {
+
+        function isAuthor(page) {
+            return $rootScope.User.id === page.author.id;
+        }
+
+        function canTotal(role, key) {
             return _getUser().then(function() {
                 let privilege = PermissionService.getPrivilege(CONTEXT, role);
-                return privilege && !privilege[role];
+                return privilege && !privilege[key];
             });
         }
 
@@ -40,13 +47,22 @@
             });
         }
 
+        function setConfigPermission(opts) {
+            return {
+                isPost: opts.isPost,
+                isAdmin: PermissionService.isAdministrator() || opts.isAdmin,
+                permissions: opts.permissions,
+                modules: opts.modules || []
+            };
+        }
+
         function getPostModules(options) {
             options = options || {};
             return _getUser().then(function() {
                 let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.POST);
                 let modules = _getPermissionDecode(privilege, 'modules');
                 console.log('getPostModules', modules);
-                if(modules && modules.noPrivilege) { return modules; }
+                if(modules && (modules.noPrivilege || modules.isTotal)) { return modules; }
                 if(options.getAsList) {
                     return modules;
                 } else {
@@ -69,7 +85,7 @@
             return _getUser().then(function() {
                 let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.PUTSPECIAL)
                 let pages = _getPermissionDecode(privilege, 'modules');
-                if(page && page.noPrivilege) { return page; }
+                if(pages && pages.noPrivilege) { return pages; }
                 return _transformListToObj(pages, 'idPage');
             });
         }
@@ -83,7 +99,7 @@
 
         function _transformListToObj(list, keyAttr) {
             return list.reduce(function(result, item) {
-                result[item[keyAttr]] = item[keyAttr];
+                result[item[keyAttr]] = item;
                 return result;
             }, {});
         }

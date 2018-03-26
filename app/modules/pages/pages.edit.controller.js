@@ -212,29 +212,20 @@
                     page.scheduled_date = moment(page.post_date).format('DD/MM/YYYY');
                     page.scheduled_time = moment(page.post_date).format('hh:mm');
                     angular.extend(vm.page, page);
-                    _setIsAuthor();
                     _loadPermission();
                     $scope.$broadcast('objPublishLoaded');
                 });
         }
 
-        function _setIsAuthor() {
-            vm.isAuthorOrAdmin = _isAdmin() || _isAuthor();
-        }
-
-        function _isAuthor() {
-            return $rootScope.User.id === vm.page.author.id;
-        }
-
-
-        function _isAdmin() {
-            return $rootScope.User.is_administrator;
-        }
-
         function _loadPermission() {
             vm.isSuperPut = true;
-            PermissionPageService.canTotal('PUT').then(function(canTotal) {
-                if(canTotal || _isAuthor()) { 
+            PermissionPageService.canTotal('PUT', 'posts').then(function(canTotal) {
+                if(canTotal) {
+                    vm.configPerm = PermissionPageService.setConfigPermission({ isPost: true, isAdmin: true, 
+                        permissions: { putTag: true, putSuper: true } })
+                    return;
+                }
+                if(PermissionPageService.isAuthor(vm.page)) { 
                     _setPermissionPostModules();
                     return;
                  }
@@ -243,7 +234,7 @@
         }
 
         function _setPermissionPutSpecial() {
-            PermissionService.getPutSpecialById(vm.page.id, 'idPage', 'page')
+            PermissionPageService.getPutSpecialByIdPage(vm.page.id)
                 .then(function (perm) {
                     const isDefinedPermissions = angular.isDefined(perm.permissions);
                     const hasModuleToHandle = Object.keys(perm.modules || []).reduce(function (result, key) {
@@ -258,12 +249,11 @@
 
         function _setPermissionPostModules() {
             PermissionPageService.getPostModules({getAsList: true}).then(function(postModules) {
-                vm.configPerm = {
-                    isPost: true,
-                    isAdmin: _isAdmin() || !!postModules.isTotal,
-                    permissions: { putTag: true, putSuper: true },
-                    modules: postModules && !postModules.noPrivilege ? postModules : []
-                };
+                let modules = postModules && !postModules.noPrivilege ? postModules : [];
+                vm.configPerm = PermissionPageService.setConfigPermission(
+                    { isPost: true, isAdmin: !!postModules.isTotal,
+                        permissions: { putTag: true, putSuper: true }, modules: modules }
+                );
             });
         }
 
