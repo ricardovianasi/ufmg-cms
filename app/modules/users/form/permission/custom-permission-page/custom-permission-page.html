@@ -26,9 +26,15 @@
             <div ng-repeat="dataPage in vm.dataList | filter: vm.queryPage track by dataPage.idPage" class="col-md-12 list-pages">
                 <div class="item-page">
                     <div class="head">
-                        <h4 class="title-page">{{ dataPage.title }}</h4>
+                        <h4 class="title-page">
+                            {{ dataPage.title }}
+                            <span ng-show="vm.isPageCreator(dataPage.idAuthor)" 
+                                uib-tooltip="{{ vm.getMessageCreator() }}" tooltip-placement="bottom">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </h4>
                         <div class="wrapper-delete" ng-class="{'-trash-transitions': vm.toggleDelete[dataPage.idPage]}">
-                            <button ng-click="vm.startDialogDelete(dataPage.idPage)" class="btn btn-link btn-delete">
+                            <button ng-click="vm.toggleDialogDelete(dataPage.idPage)" class="btn btn-link btn-delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                             <div class="dialog-delete">
@@ -58,17 +64,11 @@
                                 </select-widget-component>
                             </div>
                             <div class="action">
-                                <button ng-disabled="dataPage.permissions.putSuper" ng-click="vm.addModule(dataPage)" class="btn btn-sm btn-default">
+                                <button ng-click="vm.addModule(dataPage)" class="btn btn-sm btn-default">
                                     <i class="fa fa-plus"></i>
                                     Inserir
                                 </button>
                             </div>
-                        </div>
-                        <div class="module" ng-show="dataPage.permissions.putSuper">
-                            <p class="text-danger">
-                                Super editar está ativo. Este usuário pode gerenciar (criar, editar, excluir)
-                                todos os módulo para a página <b> {{ dataPage.title }}. </b>
-                            </p>
                         </div>
                         <div ng-repeat="widget in dataPage.modules track by widget.type" class="module">
                             <h5 class="title">
@@ -85,7 +85,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="module" ng-show="!dataPage.modules.length && !dataPage.permissions.putSuper">
+                        <div class="module" ng-show="!dataPage.modules.length">
                             <p >
                                 Nenhum módulo adicionado ainda. 
                                 Usuário sem permissão para gerenciar módulos em <b> {{ dataPage.title }}. </b>

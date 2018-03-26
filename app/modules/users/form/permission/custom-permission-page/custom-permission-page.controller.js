@@ -6,16 +6,18 @@
         .controller('CustomPermissionPageController', CustomPermissionPageController);
 
     /** ngInject */
-    function CustomPermissionPageController($q, data, PagesService, WidgetsService, NotificationService, $uibModalInstance) {
+    function CustomPermissionPageController($q, data, dataUser, PagesService, WidgetsService, NotificationService, $uibModalInstance) {
         let vm = this;
 
         vm.deletePage = deletePage;
         vm.deleteModule = deleteModule;
-        vm.startDialogDelete = startDialogDelete;
+        vm.toggleDialogDelete = toggleDialogDelete;
         vm.addPage = addPage;
         vm.changePutSuper = changePutSuper;
         vm.onPageSelected = onPageSelected;
         vm.addModule = addModule;
+        vm.isPageCreator = isPageCreator;
+        vm.getMessageCreator = getMessageCreator;
         vm.close = close;
         vm.save = save;
 
@@ -29,6 +31,18 @@
 
         function save() {
             $uibModalInstance.close(_prepareToSave());
+        }
+
+        function getMessageCreator() {
+            let firstName = dataUser.name.split(' ')[0];
+            return firstName + ' é o autor.'
+        }
+
+        function isPageCreator(idAuthor) {
+            if(dataUser) {
+                return dataUser.id === idAuthor; 
+            }
+            return false;
         }
 
         function changePutSuper(page) {
@@ -75,8 +89,8 @@
             vm.toggleDelete[idPage] = false;
         }
 
-        function startDialogDelete(idPage) {
-            vm.toggleDelete[idPage] = true;
+        function toggleDialogDelete(idPage) {
+            vm.toggleDelete[idPage] = !vm.toggleDelete[idPage];
         }
 
         function _prepareToSave() {
@@ -96,6 +110,7 @@
                 data.modules = _prepareModulesToSave(data.modules);
                 putPagesIds.push(data.idPage);
                 delete data.title;
+                delete data.idAuthor;
                 return data;
             });
         }
@@ -145,6 +160,7 @@
             return {
                 idPage: page.id,
                 title: page.title,
+                idAuthor: page.author.id,
                 modules: [],
                 permissions: { putTag:false, putSuper: false }
             };
@@ -184,7 +200,7 @@
         }
 
         function _mapsData() {
-            try { data = JSON.parse(atob(data)); } 
+            try { data = JSON.parse(atob(data)); }
             catch (err) { data = []; }
             vm.dataList = data.map(function (pagePermission) {
                 let page = vm.listAllPages.find(function(pg) {
@@ -192,9 +208,9 @@
                 });
                 pagePermission.modules = _mapsWidgets(pagePermission.modules);
                 pagePermission.title = page.title;
+                pagePermission.idAuthor = page.author.id;
                 return pagePermission;
             });
-            console.log('_mapsData', vm.dataList);
         }
         
         function _loadDataList() {

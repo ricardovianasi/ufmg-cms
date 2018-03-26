@@ -488,7 +488,8 @@
                     let privilege = 
                         PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
                     return privilege.modules;
-                }
+                },
+                dataUser: function() { return vm.user; }
             };
             return ModalService.openModal(
                 'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
