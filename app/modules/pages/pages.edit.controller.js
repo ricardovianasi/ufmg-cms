@@ -219,14 +219,15 @@
 
         function _loadPermission() {
             vm.isSuperPut = true;
-            PermissionPageService.canTotal('PUT', 'posts').then(function(canTotal) {
-                if(canTotal) {
-                    vm.configPerm = PermissionPageService.setConfigPermission({ isPost: true, isAdmin: true, 
-                        permissions: { putTag: true, putSuper: true } })
+            PermissionPageService.canTotal(['PUT'], ['posts']).then(function(canTotal) {
+                if(canTotal.PUT) {
+                    let perm = PermissionPageService.setConfigPermission({ isPost: true, isAdmin: true, 
+                        permissions: { putTag: true, putSuper: true } });
+                    _setPermission(perm);
                     return;
                 }
                 if(PermissionPageService.isAuthor(vm.page)) { 
-                    _setPermissionPostModules();
+                    _setPermissionAuthor();
                     return;
                  }
                 _setPermissionPutSpecial();
@@ -236,25 +237,34 @@
         function _setPermissionPutSpecial() {
             PermissionPageService.getPutSpecialByIdPage(vm.page.id)
                 .then(function (perm) {
-                    const isDefinedPermissions = angular.isDefined(perm.permissions);
-                    const hasModuleToHandle = Object.keys(perm.modules || []).reduce(function (result, key) {
-                        return perm.modules[key].permissions.put || perm.modules[key].permissions.post;
-                    }, false);
-                    vm.viewOnly = !isDefinedPermissions || 
-                        (!perm.permissions.putSuper && !perm.permissions.putTag && !hasModuleToHandle);
-                    vm.isSuperPut = isDefinedPermissions ? perm.permissions.putSuper : false;
-                    vm.configPerm = perm;
+                    if(perm.modules) {
+                        perm.modules = PermissionPageService.transformListToObj(perm.modules, 'type');
+                    }
+                    _setPermission(perm);
                 });
         }
 
-        function _setPermissionPostModules() {
-            PermissionPageService.getPostModules({getAsList: true}).then(function(postModules) {
-                let modules = postModules && !postModules.noPrivilege ? postModules : [];
-                vm.configPerm = PermissionPageService.setConfigPermission(
+        function _setPermissionAuthor() {
+            PermissionPageService.getPostModules({ getAsList: true }).then(function(postModules) {
+                let modules = 
+                    postModules && (!postModules.noPrivilege && !postModules.isTotal) ? postModules : [];
+                let perm = PermissionPageService.setConfigPermission(
                     { isPost: true, isAdmin: !!postModules.isTotal,
-                        permissions: { putTag: true, putSuper: true }, modules: modules }
+                        permissions: { putTag: !postModules.noPrivilege, putSuper: !postModules.noPrivilege },
+                        modules: modules }
                 );
+                _setPermission(perm);
             });
+        }
+
+        function _setPermission(objPermission) {
+            console.log('_setPermission', objPermission);
+            const isDefinedPermissions = angular.isDefined(objPermission.permissions);
+            const hasModuleToHandle = PermissionPageService.hasModuleToHandle(objPermission.modules);
+            vm.viewOnly = !isDefinedPermissions || 
+                (!objPermission.permissions.putSuper && !objPermission.permissions.putTag && !hasModuleToHandle);
+            vm.isSuperPut = isDefinedPermissions ? objPermission.permissions.putSuper : false;
+            vm.configPerm = objPermission;
         }
 
         function activate() {

@@ -14,6 +14,8 @@
             canPutTag: canPutTag,
             getPutSpecial: getPutSpecial,
             getPostModules: getPostModules,
+            hasModuleToHandle: hasModuleToHandle,
+            transformListToObj: transformListToObj,
             setConfigPermission: setConfigPermission,
             getPutSpecialByIdPage: getPutSpecialByIdPage
         };
@@ -28,10 +30,15 @@
             return $rootScope.User.id === page.author.id;
         }
 
-        function canTotal(role, key) {
+        function canTotal(roles, keys) {
             return _getUser().then(function() {
-                let privilege = PermissionService.getPrivilege(CONTEXT, role);
-                return privilege && !privilege[key];
+                let isAdmin = PermissionService.isAdministrator();
+                return roles.reduce(function(result, role, idx) {
+                    let privilege = PermissionService.getPrivilege(CONTEXT, role);
+                    let isCan = !!privilege && !privilege[keys[idx]];
+                    result[role] = isAdmin || isCan;
+                    return result;
+                }, {});
             });
         }
 
@@ -45,6 +52,16 @@
             return _getUser().then(function() {
                 return PermissionService.canPost(CONTEXT, PermissionService.TYPES_PERMISSIONS.POST);
             });
+        }
+
+        function hasModuleToHandle(modules) {
+            modules = modules || [];
+            return Object.keys(modules).reduce(function (result, key) {
+                let hasPermissions = !!modules[key].permissions;
+                return hasPermissions ?
+                    modules[key].permissions.put || modules[key].permissions.post || result :
+                    true;
+            }, false);
         }
 
         function setConfigPermission(opts) {
@@ -61,13 +78,9 @@
             return _getUser().then(function() {
                 let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.POST);
                 let modules = _getPermissionDecode(privilege, 'modules');
-                console.log('getPostModules', modules);
                 if(modules && (modules.noPrivilege || modules.isTotal)) { return modules; }
-                if(options.getAsList) {
-                    return modules;
-                } else {
-                    return _transformListToObj(modules, 'type');
-                }
+                if(options.getAsList) { return modules; } 
+                else { return transformListToObj(modules, 'type'); }
             });
 
         }
@@ -77,7 +90,7 @@
                 if(pagesObj && pagesObj[idPage]) {
                     return pagesObj[idPage];
                 }
-                return pagesObj;
+                return {};
             });
         }
         
@@ -86,8 +99,16 @@
                 let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.PUTSPECIAL)
                 let pages = _getPermissionDecode(privilege, 'modules');
                 if(pages && pages.noPrivilege) { return pages; }
-                return _transformListToObj(pages, 'idPage');
+                return transformListToObj(pages, 'idPage');
             });
+        }
+
+        function transformListToObj(list, keyAttr) {
+            list = list && list.length ? list : [];
+            return list.reduce(function(result, item) {
+                result[item[keyAttr]] = item;
+                return result;
+            }, {});
         }
 
         function _getPermissionDecode(privilege, role) {
@@ -95,13 +116,6 @@
                 return JSON.parse(atob(privilege[role]));
             }
             return { isTotal: !!privilege, noPrivilege: !privilege };
-        }
-
-        function _transformListToObj(list, keyAttr) {
-            return list.reduce(function(result, item) {
-                result[item[keyAttr]] = item;
-                return result;
-            }, {});
         }
 
         function _getUser() {

@@ -6,7 +6,7 @@
     /** ngInject */
     function PagesNewController($scope, $uibModal, $location, $timeout, $window, NotificationService, PagesService,
         ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope,
-        Util, $q, HandleChangeService, validationService, UsersService, PermissionService, PermissionPageService) {
+        Util, $q, HandleChangeService, validationService, UsersService, PermissionPageService) {
 
         var vm = $scope;
         var hasRequest = false;
@@ -78,12 +78,11 @@
             PermissionPageService.getPostModules({getAsList: true})
                 .then(function(modules) {
                     vm.isSuperPut = true;
-                    vm.configPerm = {
-                        isPost: true,
-                        isAdmin: PermissionService.isAdministrator() || !!modules.isTotal,
+                    let perm = PermissionPageService.setConfigPermission({ isPost: true,
+                        isAdmin: !!modules.isTotal,
                         permissions: { putTag: true, putSuper: true },
-                        modules: modules || []
-                    };
+                        modules: modules });
+                    vm.configPerm = perm;
                 });
         }
 
