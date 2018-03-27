@@ -496,7 +496,7 @@
             };
             return ModalService.openModal(
                 'modules/users/form/permission/custom-permission-page/custom-permission-page.html',
-                'CustomPermissionPageController as vm', resolve, 'md');
+                'CustomPermissionPageController as vm', resolve, 'lg');
         }
 
         function _openPermissionModulePostPage() {

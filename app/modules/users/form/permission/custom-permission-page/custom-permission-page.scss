@@ -76,8 +76,11 @@
 
         > .head > .wrapper-delete {
             position: relative;
-            left: 41%;
+            left: 26%;
             transition: .8s;
+            @media only screen and (max-width: 992px) {
+                left: 41%;
+            }
             &.-trash-transitions {
                 left: 0;
             }
