@@ -267,7 +267,7 @@
                 .newOptions()
                 .withOption('processing', false)
                 .withOption('serverSide', true)
-                .withOption('searchDelay', 1500)
+                .withOption('searchDelay', 1000)
                 .withOption('aaSorting', [])
                 .withOption('bLengthChange', !!!options.displayLength)
                 .withDataProp('data')
