@@ -55,9 +55,10 @@
             vm.pageToAdd = page;
         }
 
-        function addModule(page) {
-            if(_canAddedWidget(page.modules, vm.moduleSelected)) {
-                page.modules.unshift(_createWidgetToAdd(vm.moduleSelected));
+        function addModule(page, widget, voidToast) {
+            let moduleToAdd = widget || vm.moduleSelected;
+            if(_canAddedWidget(page.modules, moduleToAdd, voidToast)) {
+                page.modules.unshift(_createWidgetToAdd(moduleToAdd));
             }
             vm.moduleSelected = undefined;
         }
@@ -75,11 +76,8 @@
         }
 
         function deletePage(result, page) {
-            let idPage = page.idPage;
-            let idx = vm.dataList.findIndex(function(data) {
-                return idPage === data.idPage;
-            });
-            endDialodDelete(idPage);
+            let idx = _getIndexPage(page.idPage);
+            endDialodDelete(page.idPage);
             if(result) {
                 vm.dataList.splice(idx, 1);
             }
@@ -135,14 +133,14 @@
             return result;
         }
 
-        function _canAddedWidget(modules, widget) {
+        function _canAddedWidget(modules, widget, voidToast) {
             let result = false;
             let isAdded = _checkAdded(widget, modules, 'type', 'type');
             if(widget && !isAdded) {
                 result = true;
-            } else if(!widget) {
+            } else if(!widget && !voidToast) {
                 NotificationService.warn('Atenção, deve ser selecionado um módulo antes de inserir.');
-            } else if(isAdded) {
+            } else if(isAdded && !voidToast) {
                 NotificationService.warn('Atenção, este módulo já foi inserido.');
             }
             return result;
@@ -157,6 +155,7 @@
         }
 
         function _createPageToAdd(page) {
+            _loadModulesPreAdded(page.id);
             return {
                 idPage: page.id,
                 title: page.title,
@@ -166,11 +165,26 @@
             };
         }
 
+        function _loadModulesPreAdded(idPage) {
+            vm.isLoadingModules = true;
+            PagesService.getPage(idPage).then(function(dataPage) {
+                let idx = _getIndexPage(idPage);
+                let widgets = dataPage.data.widgets;
+                let page = vm.dataList[idx];
+                if(widgets) {
+                    let allWidgets = widgets.main.concat(widgets.side);
+                    allWidgets.forEach(function(widget) { addModule(page, widget, true); });
+                }
+            }).catch(function(err) { console.error(err); })
+            .then(function() {
+                vm.isLoadingModules = false;
+            });
+        }
 
         function _createWidgetToAdd(widget) {
             return {
                 type: widget.type,
-                label: widget.label,
+                label: widget.label || widget.title,
                 permissions: { put: false, post: false, delete: false }
             };
         }
@@ -217,6 +231,12 @@
             if(!data) { return; }
             $q.all([_loadAllWidgets(), _loadAllPages()])
                 .then(function () { _mapsData(); });
+        }
+
+        function _getIndexPage(idPage) {
+            return vm.dataList.findIndex(function(pg) {
+                return idPage === pg.idPage;
+            });
         }
 
         function activate() {

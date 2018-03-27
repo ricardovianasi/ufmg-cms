@@ -74,7 +74,7 @@
                             <h5 class="title">
                                 {{ widget.label }}
                             </h5>
-                            <div class="permissions-module checkbox" ng-show="!dataPage.permissions.putSuper">
+                            <div class="permissions-module checkbox">
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.put" type="checkbox"> Editar </label>
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.delete" type="checkbox"> Excluir </label>
                                 <label class="label-checkbox"> <input ng-model="widget.permissions.post" type="checkbox"> Criar </label>
@@ -85,7 +85,12 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="module" ng-show="!dataPage.modules.length">
+                        <div class="module" ng-show="vm.isLoadingModules">
+                            <p class="text-light">
+                                Carregando módulos da página ...
+                            </p>
+                        </div>
+                        <div class="module" ng-show="!dataPage.modules.length && !vm.isLoadingModules">
                             <p >
                                 Nenhum módulo adicionado ainda. 
                                 Usuário sem permissão para gerenciar módulos em <b> {{ dataPage.title }}. </b>
