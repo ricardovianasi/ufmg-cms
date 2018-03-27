@@ -19,13 +19,6 @@
                     templateUrl: 'modules/users/form/users.form.html',
                     controller: 'UsersFormController',
                     controllerAs: 'vm'
-                }).when('/user/permission', {
-                    templateUrl: 'modules/users/form/permission/modules-create-page/modules-create-page.html',
-                    controller: 'ModulesCreatePageController',
-                    controllerAs: 'vm',
-                    resolve: {dataModules: [function() {
-                        return [{type: 'comevents'}]
-                    }]}
                 });
         });
 })();

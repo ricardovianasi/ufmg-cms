@@ -54,10 +54,7 @@
         }
 
         function activate() {
-            vm.readctorOpts = {
-                plugins: false,
-                buttons: ['bold', 'italic', 'link']
-            }
+            vm.readctorOpts = { plugins: false, buttons: ['bold', 'italic', 'link'] };
             _initVariables();
         }
     }

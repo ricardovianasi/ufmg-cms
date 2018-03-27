@@ -71,7 +71,7 @@
 
         function openPermissionModulePostPage() {
             let modal = _openPermissionModulePostPage();
-            modal.result.then(function (res) { _prepareModulesPostPages(res) });
+            modal.result.then(function (res) { _prepareModulesPostPages(res); });
         }
 
         function _openPagesPermission() {

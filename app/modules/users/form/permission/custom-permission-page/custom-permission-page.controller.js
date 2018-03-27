@@ -6,7 +6,8 @@
         .controller('CustomPermissionPageController', CustomPermissionPageController);
 
     /** ngInject */
-    function CustomPermissionPageController($q, data, dataUser, PagesService, WidgetsService, NotificationService, $uibModalInstance) {
+    function CustomPermissionPageController($q, data, dataUser, PagesService, WidgetsService,
+        NotificationService, $uibModalInstance) {
         let vm = this;
 
         vm.deletePage = deletePage;
@@ -35,7 +36,7 @@
 
         function getMessageCreator() {
             let firstName = dataUser.name.split(' ')[0];
-            return firstName + ' é o autor.'
+            return firstName + ' é o autor.';
         }
 
         function isPageCreator(idAuthor) {

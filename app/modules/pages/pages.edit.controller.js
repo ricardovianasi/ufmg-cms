@@ -8,7 +8,7 @@
     /** ngInject */
     function PagesEditController($scope, $uibModal, $location, $routeParams, $timeout, $window, NotificationService,
         PagesService, ManagerFileService, WidgetsService, StatusService, DateTimeHelper, $q, ModalService,
-        $rootScope, TagsService, validationService, Util, HandleChangeService, PermissionService, PermissionPageService) {
+        $rootScope, TagsService, validationService, Util, HandleChangeService, PermissionPageService) {
 
         let vm = $scope;
 
