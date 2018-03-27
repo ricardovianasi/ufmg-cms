@@ -76,8 +76,11 @@
             return dd + '/' + mm + '/' + yyyy + ' ' + scheduled_time;
         }
 
-        function _getPagesWithFlagAuthor(params, ignoreLoadingBar) {
-            let promiseGetPages = $http.get(apiUrl + '/page' + params, {
+        function getPagesByUser(params, ignoreLoadingBar) {
+            if (angular.isUndefined(params)) {
+                params = '';
+            }
+            let promiseGetPages = $http.get(apiUrl + '/post/pages-by-user' + params, {
                 ignoreLoadingBar: ignoreLoadingBar
             });
             return $q.all([authService.account(), promiseGetPages])
@@ -92,12 +95,9 @@
                 });
         }
         
-        var _getPages = function (params, ignoreLoadingBar, withAuthor) {
+        function getPages(params, ignoreLoadingBar) {
             if (angular.isUndefined(params)) {
                 params = '';
-            }
-            if(withAuthor) {
-                return _getPagesWithFlagAuthor(params, ignoreLoadingBar);
             }
             return $http.get(apiUrl + '/page' + params, {
                 ignoreLoadingBar: ignoreLoadingBar
@@ -113,7 +113,8 @@
                 value: 2,
                 label: '2 colunas'
             }],
-            getPages: _getPages,
+            getPages: getPages,
+            getPagesByUser: getPagesByUser,
             addPage: function (page) {
                 page = _parseData(page);
                 return $http.post(apiUrl + '/page', page, { ignoreLoadingBar: true });

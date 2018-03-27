@@ -50,9 +50,10 @@
 
         function _responseError(response) {
             let urlError = response.config.url;
+            let method = response.config.method;
             let statusRequest = response.status;
             _handleTries(urlError);
-            if (_maxTry(urlError, statusRequest)) {
+            if (_maxTry(urlError, statusRequest, method)) {
                 _emitResponseError(statusRequest);
                 return $q.reject(response);
             } else {
@@ -83,10 +84,10 @@
             }
         }
 
-        function _maxTry(url, status) {
+        function _maxTry(url, status, method) {
             let key = btoa(url);
             let numberMaxTry = 3;
-            let noTry = status === 401 || status === 403;
+            let noTry = status === 401 || status === 403 || method !== 'GET';
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
                 requestTries[key] = 0;

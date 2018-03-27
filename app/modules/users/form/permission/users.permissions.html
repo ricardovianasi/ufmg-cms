@@ -39,13 +39,13 @@
                         <span class="custom-modal" ng-click="vm.modalGetContext(contextName.context, key, vm.resources[contextName.context].alias)"
                             ng-show="vm.hasCustomPermission(contextName.context, key)">
                             <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar permissões
+                            Personalizar
                         </span>
 
                         <span class="custom-modal" ng-click="vm.openPermissionModulePostPage()"
                             ng-show="contextName.context === 'page' && key === 'POST'">
                             <i class="glyphicon glyphicon-cog"></i>
-                            Personalizar módulos
+                            Personalizar
                         </span>
                     </div>
                     <div ng-if="vm.hasCustomPermissionSetted(contextName.context, key)">
