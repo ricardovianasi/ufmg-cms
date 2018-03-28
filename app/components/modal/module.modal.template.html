@@ -21,7 +21,7 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <div onload="ctrlModal.preparePartial(this, $event)" ng-if="ctrlModal.widget.type !== undefined" ng-include="ctrlModal.getPathPartial()"></div>
+            <div can-get="ctrlModal.isOnlyView" onload="ctrlModal.preparePartial(this, $event)" ng-if="ctrlModal.widget.type !== undefined" ng-include="ctrlModal.getPathPartial()"></div>
             <p ng-show="ctrlModal.isDevelopment()" class="text-danger">Favor não inserir este modulo (Em desenvolvimento)</p>
         </fieldset>
     </form>
