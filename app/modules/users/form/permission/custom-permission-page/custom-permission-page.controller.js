@@ -236,7 +236,7 @@
                 return pagePermission;
             });
             if(hasOldPermission) {
-                vm.dataList.forEach(function(page) { _loadModulesPreAdded(page.idPage); })
+                vm.dataList.forEach(function(page) { _loadModulesPreAdded(page.idPage); });
             }
         }
         

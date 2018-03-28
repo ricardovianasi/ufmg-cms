@@ -56,7 +56,7 @@
                     field: 'title',
                     direction: 'ASC'
                 }
-            }
+            };
             return Util.getParams(params, 'title');
         }
 
@@ -84,7 +84,6 @@
             _initParamsSelectPage();
             _initParams();
         };
-        ctrl.$onChanges = function(changesObj) { };
         ctrl.$onDestroy = function() { };
     }
 })();

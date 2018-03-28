@@ -35,7 +35,7 @@
         function _loadListWidgets() {
             ctrl.loadingWidgets = true;
             WidgetsService.getWidgets()
-                .then(function(data) { ctrl.widgets = data.data })
+                .then(function(data) { ctrl.widgets = data.data; })
                 .catch(function(error) { console.error(error); })
                 .then(function() { ctrl.loadingWidgets = false; });
         }
@@ -43,7 +43,6 @@
         ctrl.$onInit = function() {
             _loadListWidgets();
         };
-        ctrl.$onChanges = function(changesObj) { };
         ctrl.$onDestroy = function() { };
     }
 })();

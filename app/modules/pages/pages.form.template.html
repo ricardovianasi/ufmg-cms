@@ -80,11 +80,6 @@
                             <img class="img-responsive" ng-src="{{ page.image.url }}">
                         </div>
                     </div>
-                    <!-- <div class="pages-module add-module pages-module-cover" ng-show="!isSuperPut && page.image.url">
-                        <div class="uploaded-image" ng-show="page.image">
-                            <img class="img-responsive" ng-src="{{ page.image.url }}">
-                        </div>
-                    </div> -->
                 </div>
             </div>
             <div class="row">
@@ -101,14 +96,6 @@
             <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()">
                 A página atual é filha de:
                 <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
-                
-                <!-- <ui-select ng-model="page.parent" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
-                    <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.title }}</ui-select-match>
-                    <ui-select-choices repeat="item.id as item in pagesParent | filter: $select.search track by $index" scroll-detect="loadMorePage()"
-                        refresh="loadMorePage($select.search)" refresh-delay="300">
-                        <div ng-bind-html="item.title | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select> -->
             </div>
             <div ng-if="isSuperPut" class="panel panel-default" ng-if="User.is_administrator">
                 Tipo da página:

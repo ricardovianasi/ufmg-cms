@@ -29,7 +29,6 @@
 
         ////////////////
 
-        ctrlTable.$onChanges = function(changesObj) { };
         ctrlTable.$onDestroy = function() { };
 
         function showPagination() {
@@ -45,7 +44,7 @@
             ctrlTable.boundResults = {
                 start: startBound + 1,
                 end: startBound + ctrlTable.limit
-            }
+            };
         }
 
         function getTotCols() {

@@ -109,7 +109,7 @@
         }
 
         function showButtonEdit(item) {
-            return canPut('page', item.id) || (item.isAuthor && vm.canPost)
+            return canPut('page', item.id) || (item.isAuthor && vm.canPost);
         }
 
         onInit();

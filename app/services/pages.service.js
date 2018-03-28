@@ -102,7 +102,7 @@
             return $http.get(apiUrl + '/page' + params, {
                 ignoreLoadingBar: ignoreLoadingBar
             });
-        };
+        }
 
         return {
             // Columns defaults

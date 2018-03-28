@@ -206,7 +206,7 @@
         function _loadListWidgets() {
             vm.loadingWidgets = true;
             WidgetsService.getWidgets()
-                .then(function(data) { vm.widgets = _filterWidgetsPermissionCreate(data.data) })
+                .then(function(data) { vm.widgets = _filterWidgetsPermissionCreate(data.data); })
                 .catch(function(error) { console.error(error); })
                 .then(function() { vm.loadingWidgets = false; });
         }

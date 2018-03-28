@@ -80,8 +80,8 @@
             if (!ctrlTags.ngModelTags) {
                 return;
             }
-            ctrlTags.tagsOnlyView 
-                = ctrlTags.ngModelTags.map(function(tag) { return tag.text || tag.name }).join(', ');
+            ctrlTags.tagsOnlyView = 
+                ctrlTags.ngModelTags.map(function(tag) { return tag.text || tag.name; }).join(', ');
         }
 
         ctrlTags.$onInit = function() {

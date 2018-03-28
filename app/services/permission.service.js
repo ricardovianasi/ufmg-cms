@@ -271,7 +271,11 @@
             }
             if(idxPerm < 0) {
                 permUpdate.resource = resource;
-                user.permissions ? user.permissions.push(permUpdate) : user.permissions = [permUpdate];
+                if(user.permissions) {
+                    user.permissions.push(permUpdate);
+                } else {
+                    user.permissions = [permUpdate];
+                }
             }
         }
 

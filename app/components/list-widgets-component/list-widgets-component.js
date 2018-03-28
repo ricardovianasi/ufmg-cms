@@ -130,7 +130,6 @@
             ctrl.modulesPermissions = {};
             _loadPermission();
         };
-        ctrl.$onChanges = function(changesObj) { };
         ctrl.$onDestroy = function() { };
     }
 })();

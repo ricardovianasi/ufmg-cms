@@ -96,7 +96,7 @@
         
         function getPutSpecial() {
             return _getUser().then(function() {
-                let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.PUTSPECIAL)
+                let privilege = PermissionService.getPrivilege(CONTEXT, PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
                 let pages = _getPermissionDecode(privilege, 'modules');
                 if(pages && pages.noPrivilege) { return pages; }
                 return transformListToObj(pages, 'idPage');
