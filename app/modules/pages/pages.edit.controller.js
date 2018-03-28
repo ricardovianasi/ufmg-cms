@@ -258,7 +258,6 @@
         }
 
         function _setPermission(objPermission) {
-            console.log('_setPermission', objPermission);
             const isDefinedPermissions = angular.isDefined(objPermission.permissions);
             const hasModuleToHandle = PermissionPageService.hasModuleToHandle(objPermission.modules);
             vm.viewOnly = !isDefinedPermissions || 

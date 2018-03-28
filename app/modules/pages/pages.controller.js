@@ -28,6 +28,7 @@
         vm.canDelete = null;
         vm.canPost = null;
         vm.changeStatus = _changeStatus;
+        vm.showButtonEdit = showButtonEdit;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
         vm.canPut = canPut;
@@ -105,6 +106,10 @@
 
         function canPut(context, id) {
             return PermissionService.canPut('page', id);
+        }
+
+        function showButtonEdit(item) {
+            return canPut('page', item.id) || (item.isAuthor && vm.canPost)
         }
 
         onInit();
