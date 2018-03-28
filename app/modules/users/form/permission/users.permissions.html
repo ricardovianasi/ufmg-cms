@@ -49,8 +49,8 @@
                         </span>
                     </div>
                     <div ng-if="vm.hasCustomPermissionSetted(contextName.context, key)">
-                        <ui-select ng-model="vm.onlyVisualization" title="Este usuário pode editar" append-to-body="true">
-                            <ui-select-match placeholder="Este usuário pode editar">Este usuário pode editar</ui-select-match>
+                        <ui-select ng-model="vm.onlyVisualization" title="Paginas que o usuário pode editar" append-to-body="true">
+                            <ui-select-match placeholder="Paginas que o usuário pode editar">Páginas que o usuário pode editar</ui-select-match>
                             <ui-select-choices repeat="item in vm.listPermissions[contextName.context][key] | filter: $select.search">
                                 <span ng-bind-html="item.title | highlight: $select.search"></span>
                             </ui-select-choices>

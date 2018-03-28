@@ -464,6 +464,7 @@
             let newPermissionPages = oldPermissionPages.map(function(id) {
                 return {
                     idPage: Number.parseInt(id),
+                    oldPermission: true,
                     modules: [],
                     permissions: { putTag: false, putSuper: false }
                 };

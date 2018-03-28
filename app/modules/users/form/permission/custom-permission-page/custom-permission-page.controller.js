@@ -110,6 +110,7 @@
                 putPagesIds.push(data.idPage);
                 delete data.title;
                 delete data.idAuthor;
+                delete data.oldPermission;
                 return data;
             });
         }
@@ -176,18 +177,24 @@
                     let allWidgets = widgets.main.concat(widgets.side);
                     allWidgets.forEach(function(widget) { addModule(page, widget, true); });
                 }
-            }).catch(function(err) { console.error(err); })
+            })
+            .catch(function(err) { console.error(err); })
             .then(function() {
                 vm.isLoadingModules = false;
             });
         }
 
         function _createWidgetToAdd(widget) {
-            return {
+            let labelWidget = widget.label || widget.type;
+            if(widget.widget_label) {
+                labelWidget = widget.widget_label.label; 
+            }
+            let objWidget = {
                 type: widget.type,
-                label: widget.label || widget.title,
+                label: labelWidget,
                 permissions: { put: false, post: false, delete: false }
             };
+            return objWidget;
         }
 
         function _loadAllWidgets() {
@@ -217,6 +224,7 @@
         function _mapsData() {
             try { data = JSON.parse(atob(data)); }
             catch (err) { data = []; }
+            let hasOldPermission;
             vm.dataList = data.map(function (pagePermission) {
                 let page = vm.listAllPages.find(function(pg) {
                     return pg.id === pagePermission.idPage;
@@ -224,8 +232,12 @@
                 pagePermission.modules = _mapsWidgets(pagePermission.modules);
                 pagePermission.title = page.title;
                 pagePermission.idAuthor = page.author.id;
+                hasOldPermission = hasOldPermission || pagePermission.oldPermission;
                 return pagePermission;
             });
+            if(hasOldPermission) {
+                vm.dataList.forEach(function(page) { _loadModulesPreAdded(page.idPage); })
+            }
         }
         
         function _loadDataList() {
