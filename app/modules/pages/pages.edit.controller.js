@@ -263,6 +263,7 @@
             vm.viewOnly = !isDefinedPermissions || 
                 (!objPermission.permissions.putSuper && !objPermission.permissions.putTag && !hasModuleToHandle);
             vm.isSuperPut = isDefinedPermissions ? objPermission.permissions.putSuper : false;
+            vm.canPutTag = isDefinedPermissions ? objPermission.permissions.putTag : false;
             vm.configPerm = objPermission;
         }
 
