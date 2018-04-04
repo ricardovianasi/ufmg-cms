@@ -83,7 +83,6 @@
         }
 
         function _loadPermissionModulesToPost() {
-            console.log('_loadPermissionModulesToPost', ctrl.permissions);
             if(!ctrl.permissions.modules.length) {
                 ctrl.canAdd = false;
                 return;

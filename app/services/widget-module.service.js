@@ -13,7 +13,7 @@
         ListNewsService, RelatedEventsService, RelatedNewsService, ReleaseListService, ComRadioVideoService,
         ContactCardService, RectorService, ContactFormService, EventCalendarService, FaqWidgetService,
         InstagramLastImageService, SearchService, TagCloudService, GalleryWidgetService, TextService, GridGalleryService,
-        HighlightedGalleriesService, HighlightedGalleryService, HublinksService, InternalMenuService) {
+        HighlightedGalleriesService, HighlightedGalleryService, HublinksService, InternalMenuService, SidebarButtonRadioService) {
 
         var service = {
             getWidget: getWidget
@@ -47,6 +47,7 @@
                 comhub: ComHubService,
                 comservice: ComService,
                 sidebarbutton: SidebarButtonService,
+                sidebarbuttonradio: SidebarButtonRadioService,
                 comlastedition: ComLastEditionService,
                 eventlist: EventListService,
                 lastimagessidebar: LastImagesSideBarService,

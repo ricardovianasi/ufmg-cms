@@ -16,7 +16,7 @@
         return service;
 
         ////////////////
-        function load(ctrl) {
+        function load() {
         }
 
         function parseToLoad(widget) {
