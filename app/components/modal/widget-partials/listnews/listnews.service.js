@@ -26,6 +26,7 @@
                 category: widget.category || (widget.content ? widget.content.category : null),
                 limit: widget.limit || (widget.content ? widget.content.limit : null),
                 highlight_ufmg: _getHighlightUfmg(widget),
+                show_category_filter: _getShowCategoryFilter(widget),
                 tags: _parseTags(widget)
             };
             if (widget.content && widget.content.typeNews !== null) {
@@ -37,6 +38,7 @@
         function parseToSave(widget) {
             let tags = [];
             let highlightUfmg = false;
+            let showCategoryFilter = false;
 
             if (widget.content) {
                 if ('tags' in widget.content && widget.content.tags.length > 0) {
@@ -48,6 +50,7 @@
                     tags = widget.tags || (widget.content ? widget.content.tags.id : null);
                 }
                 highlightUfmg = widget.content.highlight_ufmg;
+                showCategoryFilter = widget.content.show_category_filter;
             } else {
                 if ('tags' in widget && widget.tags.length > 0) {
                     if (typeof widget.tags[0].text !== 'undefined') {
@@ -58,6 +61,7 @@
                     tags = widget.tags || (widget.content ? widget.content.tags.id : null);
                 }
                 highlightUfmg = widget.highlight_ufmg;
+                showCategoryFilter = widget.show_category_filter;
             }
 
             let res = {
@@ -67,6 +71,7 @@
                     (widget.content.typeNews ? widget.content.typeNews.id : '') :
                     null),
                 highlight_ufmg: highlightUfmg,
+                show_category_filter: showCategoryFilter,
                 tags: tags,
             };
 
@@ -78,6 +83,15 @@
                 return widget.highlight_ufmg;
             } else if(widget.content){
                 return widget.content.highlight_ufmg;
+            }
+            return false;
+        }
+
+        function _getShowCategoryFilter(widget) {
+            if(widget.show_category_filter) {
+                return widget.show_category_filter;
+            } else if(widget.content){
+                return widget.content.show_category_filter;
             }
             return false;
         }
