@@ -37,7 +37,7 @@
         }
 
         function getPathPartial() {
-            return 'components/modal/widget-partials/' + vm.widget.type + '/' + vm.widget.type + '.html?v=' + Date.now();
+            return 'components/modal/widget-partials/' + vm.widget.type + '/' + vm.widget.type + '.html';
         }
 
         function ok() {
