@@ -17,6 +17,7 @@ function widgetButtonRemove() {
 
     $(document).on('click', '.remove-button', function (event) {
         $(this).closest('.figure-removable').remove();
-        // updateRedactor();
+        updateRedactor();
+        //dont remove, it is used on components/redactor/redactor.directive.js
     });
 }
