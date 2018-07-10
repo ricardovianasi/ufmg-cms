@@ -7,7 +7,6 @@
     /** ngInject */
     function NewsNewController($scope,
         $location,
-        $window,
         MediaService,
         NewsService,
         $routeParams,
@@ -16,7 +15,6 @@
         $timeout,
         DateTimeHelper,
         RedactorPluginService,
-        $rootScope,
         GalleryService,
         PermissionService,
         HandleChangeService,

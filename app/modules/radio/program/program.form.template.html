@@ -1,0 +1,81 @@
+<div class="page-title">
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">
+                    Nova programação
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/radio">
+                            <strong>Radio</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/radio/new">
+                            <strong>Programação</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" can-get>
+    <div class="col-xs-8 panel panel-default">
+        <form class="form" name="formData" novalidate>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
+                        <label>Título</label>
+                        <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
+                            <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
+                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Hora de início</label>
+                        <input type="time" class="form-control" name="timeStart" ng-model="vm.program.timeStart">
+                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>Hora de término</label>
+                        <input type="time" class="form-control" name="timeEnd" ng-model="vm.program.timeEnd">
+                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

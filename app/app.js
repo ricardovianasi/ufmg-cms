@@ -52,6 +52,7 @@
         'faqModule',
         'tagsManagerModule',
         'usersModule',
-        'accountModule'
+        'accountModule',
+        'radioModule'
     ]);
 })();

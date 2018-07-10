@@ -170,6 +170,31 @@
                                     enabled: hasPermissionNewsRadio
                                 }]
                             }, {
+                                icon: 'fa fa-podcast',
+                                name: 'Rádio',
+                                location: false,
+                                isActive: false,
+                                isOpen: false,
+                                enabled: hasPermissionCourse(),
+                                menuItems: [
+                                    {
+                                        icon: 'fa fa-list-ul',
+                                        name: 'Grade',
+                                        location: 'radio/new',
+                                        isActive: false,
+                                        isOpen: false,
+                                        enabled: hasPermissionNewsAgencia,
+                                    },
+                                    {
+                                        icon: 'fa fa-television',
+                                        name: 'Programa',
+                                        location: 'radio',
+                                        isActive: false,
+                                        isOpen: false,
+                                        enabled: hasPermissionNewsAgencia,
+                                    }
+                                ]
+                            }, {
                                 icon: 'fa fa-circle-o',
                                 name: 'Cursos',
                                 location: 'course',
