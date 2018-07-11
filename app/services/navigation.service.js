@@ -188,7 +188,7 @@
                                     {
                                         icon: 'fa fa-television',
                                         name: 'Programa',
-                                        location: 'radio',
+                                        location: 'radio/new-program',
                                         isActive: false,
                                         isOpen: false,
                                         enabled: hasPermissionNewsAgencia,

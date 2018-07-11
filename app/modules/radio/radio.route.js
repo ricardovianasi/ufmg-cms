@@ -5,7 +5,7 @@
         /**ngInject */
         .config(function ($routeProvider) {
             $routeProvider
-                .when('/radio/program', {
+                .when('/radio/programs', {
                     templateUrl: 'modules/radio/program/programs.template.html',
                     controller: 'ProgramsController'
                 })

@@ -35,6 +35,11 @@
         <form class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12">
+                    <upload-cover-component select-image="vm.setImageCover(imageSelected)" url-image="vm.program.image.url"></upload-cover-component>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
                     <div class="form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
                         <label>Título</label>
                         <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
@@ -50,26 +55,6 @@
                     <div class="form-group">
                         <label>Descrição</label>
                         <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
-                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
-                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="form-group">
-                        <label>Hora de início</label>
-                        <input type="time" class="form-control" name="timeStart" ng-model="vm.program.timeStart">
-                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
-                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="form-group">
-                        <label>Hora de término</label>
-                        <input type="time" class="form-control" name="timeEnd" ng-model="vm.program.timeEnd">
                         <div ng-show="!formData.description.$valid" class="error-message" role="alert">
                             <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                         </div>
