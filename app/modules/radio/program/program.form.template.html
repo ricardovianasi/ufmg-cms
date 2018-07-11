@@ -35,7 +35,8 @@
         <form class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12">
-                    <upload-cover-component select-image="vm.setImageCover(imageSelected)" url-image="vm.program.image.url"></upload-cover-component>
+                    <upload-cover-component inner-class="pages-module-cover" select-image="vm.setImageCover(imageSelected)" 
+                        url-image="vm.program.image.url" type-cover="pageCover"></upload-cover-component>
                 </div>
             </div>
             <div class="row">
@@ -59,6 +60,14 @@
                             <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button type="submit" class="btn btn-lg btn-block btn-success">Criar Programa</button>
+                </div>
+                <div class="col-xs-6">
+                    <button type="button" class="btn btn-lg btn-block btn-danger">Cancelar</button>
                 </div>
             </div>
         </form>

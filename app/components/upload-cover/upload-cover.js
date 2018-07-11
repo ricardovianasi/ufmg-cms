@@ -13,6 +13,8 @@
             controller: UploadCoverController,
             controllerAs: '$ctrl',
             bindings: {
+                innerClass: '@',
+                typeCover: '@',
                 urlImage: '=',
                 selectImage: '&'
             },
@@ -35,7 +37,7 @@
 
         function openPickCover() {
             ManagerFileService.imageFiles()
-                .open('pageCover')
+                .open($ctrl.typeCover)
                 .then(function (image) {
                     $ctrl.selectImage({imageSelected: image});
                 });

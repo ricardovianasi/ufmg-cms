@@ -16,8 +16,7 @@
         vm.title = 'Nova página';
 
         vm.publish = _publish;
-        vm.uploadCover = _uploadCover;
-        vm.removeImage = _removeImage;
+        vm.setImageCover = setImageCover;
         vm.handleModule = handleModule;
         vm.removeModule = _removeModule;
         vm.loadMorePage = _loadMorePage;
@@ -176,23 +175,12 @@
                 .then(function() {vm.isLoading = false;});
         }
 
-        function _uploadCover() {
-            ManagerFileService
-                .imageFiles()
-                .open('pageCover')
-                .then(function (image) {
-                    vm.page.image = {
-                        url: image.url,
-                        id: image.id
-                    };
-                });
-        }
-
-        function _removeImage() {
-            $timeout(function () {
-                vm.page.image = '';
-                vm.$apply();
-            });
+        function setImageCover(imageSelected) {
+            if(!imageSelected) {
+                vm.page.image = {};
+                return;
+            }
+            vm.page.image = {url: imageSelected.url, id: imageSelected.id };
         }
 
         function handleModule(column, idx) {

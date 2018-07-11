@@ -21,8 +21,7 @@
         vm.loadMorePage = loadMorePage;
         vm.remove = remove;
         vm.publish = publish;
-        vm.uploadCover = uploadCover;
-        vm.removeImage = removeImage;
+        vm.setImageCover = setImageCover;
 
         activate();
 
@@ -179,23 +178,12 @@
 
         }
 
-        function uploadCover() {
-            ManagerFileService
-                .imageFiles()
-                .open('pageCover')
-                .then(function (image) {
-                    vm.page.image = {
-                        url: image.url,
-                        id: image.id
-                    };
-                });
-        }
-
-        function removeImage() {
-            $timeout(function () {
-                vm.page.image = '';
-                vm.$apply();
-            });
+        function setImageCover(imageSelected) {
+            if(!imageSelected) {
+                vm.page.image = {};
+                return;
+            }
+            vm.page.image = {url: imageSelected.url, id: imageSelected.id };
         }
 
         function _getPage() {

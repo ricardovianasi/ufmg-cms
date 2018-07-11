@@ -68,18 +68,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="pages-module add-module pages-module-cover" ng-show="isSuperPut">
-                        <div class="chosen-cover">
-                            <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="removeImage()" ng-show="page.image">
-                                <i class="fa fa-remove"></i> REMOVER IMAGEM
-                            </a>
-                        </div>
-                        <div class="add-title" ng-model="page_cover" ng-click="uploadCover()" ng-show=!page.image>+ Adicionar Capa
-                        </div>
-                        <div class="uploaded-image" ng-show="page.image">
-                            <img class="img-responsive" ng-src="{{ page.image.url }}">
-                        </div>
-                    </div>
+                    <upload-cover-component inner-class="pages-module-cover" select-image="setImageCover(imageSelected)" 
+                        url-image="page.image.url" type-cover="pageCover"></upload-cover-component>
                 </div>
             </div>
             <div class="row">
