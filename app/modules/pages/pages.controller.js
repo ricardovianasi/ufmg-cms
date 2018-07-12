@@ -5,19 +5,9 @@
         .controller('PagesController', PagesController);
 
     /** ngInject */
-    function PagesController(
-        $scope,
-        dataTableConfigService,
-        PermissionService,
-        PagesService,
-        NotificationService,
-        StatusService,
-        ModalService,
-        DateTimeHelper,
-        $rootScope,
-        Util,
-        $log
-    ) {
+    function PagesController($scope, dataTableConfigService, PermissionService, PagesService, NotificationService,
+        ModalService, DateTimeHelper, $log) {
+
         $log.info('PagesController');
         var vm = $scope;
         vm.dtColumns = {};

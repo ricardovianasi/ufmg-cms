@@ -4,9 +4,9 @@
     angular.module('pagesModule')
         .controller('PagesNewController', PagesNewController);
     /** ngInject */
-    function PagesNewController($scope, $uibModal, $location, $timeout, $window, NotificationService, PagesService,
-        ManagerFileService, WidgetsService, StatusService, ModalService, DateTimeHelper, $rootScope,
-        Util, $q, HandleChangeService, validationService, UsersService, PermissionPageService) {
+    function PagesNewController($scope, $location, $timeout, NotificationService, PagesService,
+        WidgetsService, StatusService, ModalService, DateTimeHelper, PermissionPageService,
+        Util, $q, HandleChangeService, validationService) {
 
         var vm = $scope;
         var hasRequest = false;
