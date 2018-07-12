@@ -180,7 +180,7 @@
                                     {
                                         icon: 'fa fa-list-ul',
                                         name: 'Grade',
-                                        location: 'radio/new',
+                                        location: 'radio/radio-programming',
                                         isActive: false,
                                         isOpen: false,
                                         enabled: hasPermissionNewsAgencia,
@@ -188,7 +188,7 @@
                                     {
                                         icon: 'fa fa-television',
                                         name: 'Programa',
-                                        location: 'radio/new-program',
+                                        location: 'radio/programs',
                                         isActive: false,
                                         isOpen: false,
                                         enabled: hasPermissionNewsAgencia,
