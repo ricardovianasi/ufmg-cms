@@ -7,7 +7,8 @@
             $routeProvider
                 .when('/radio/programs', {
                     templateUrl: 'modules/radio/program/programs.template.html',
-                    controller: 'ProgramsController'
+                    controller: 'ProgramsController',
+                    controllerAs: 'vm'
                 })
                 .when('/radio/new-program', {
                     templateUrl: 'modules/radio/program/program.form.template.html',

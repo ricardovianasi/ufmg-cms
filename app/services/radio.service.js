@@ -19,8 +19,9 @@
         return service;
 
         ////////////////
-        function listPrograms() {
-
+        function listPrograms(params) {
+            let url = apiUrl + '/radio-programming' + (params || '');
+            return $http.get(url);
         }
 
         function program(idProgram) {
