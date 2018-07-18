@@ -32,7 +32,7 @@
 </div>
 <div class="row" can-get>
     <div class="col-xs-12 panel panel-default">
-        <form class="form" name="formData" novalidate>
+        <form ng-submit="vm.save()" class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12">
                     <upload-cover-component inner-class="pages-module-cover" select-image="vm.setImageCover(imageSelected)" 

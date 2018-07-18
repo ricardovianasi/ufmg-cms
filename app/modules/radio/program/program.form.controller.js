@@ -6,11 +6,11 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController() {
+    function ProgramFormController(RadioService) {
         var vm = this;
 
         vm.setImageCover = setImageCover;
-        
+        vm.save = save;
 
         activate();
 
@@ -23,6 +23,10 @@
         function setImageCover(imageSelected) {
             vm.program.image = { url: imageSelected.url, id: imageSelected.id };
             console.log('setImageCover', vm.program);
+        }
+
+        function save() {
+            RadioService.registerProgram(vm.program);
         }
 
     }

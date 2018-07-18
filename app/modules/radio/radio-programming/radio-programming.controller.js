@@ -6,7 +6,7 @@
         .controller('RadioProgrammingController', RadioProgrammingController);
 
     /** ngInject */
-    function RadioProgrammingController() {
+    function RadioProgrammingController(RadioService) {
         var vm = this;
         
 
@@ -14,6 +14,15 @@
 
         ////////////////
 
-        function activate() { }
+        function loadRadioProgramming() {
+            RadioService.radioProgramming()
+                .then(function(data) {
+                    console.log('loadRadioProgramming', data);
+                });
+        }
+
+        function activate() {
+            loadRadioProgramming();
+        }
     }
 })();

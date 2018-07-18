@@ -7,6 +7,8 @@
 
     /** ngInject */
     function RadioService($http, $q, apiUrl) {
+        let baseUrl = apiUrl + '/radio-programming';
+
         let service = {
             listPrograms: listPrograms,
             program: program,
@@ -20,7 +22,7 @@
 
         ////////////////
         function listPrograms(params) {
-            let url = apiUrl + '/radio-programming' + (params || '');
+            let url = baseUrl + (params || '');
             return $http.get(url);
         }
 
@@ -29,11 +31,12 @@
         }
 
         function radioProgramming() {
-
+            let url = baseUrl + '/all-grid';
+            return $http.get(url);
         }
 
         function registerProgram(data) {
-
+            return $http.post(baseUrl, data);
         }
 
         function updateProgram(data) {
