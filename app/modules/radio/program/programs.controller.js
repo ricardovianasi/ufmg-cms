@@ -19,18 +19,15 @@
         ////////////////
 
         function _renderDataTable() {
-            var numberOfColumns = 4;
-            var columnsHasNotOrder = [3];
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'title' },
                 { index: 1, filter: 'author', name: 'name' },
-                { index: 2, name: 'postDate' }
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
         }
 
         function getProgramas(params, cb) {
-            let numberOfColumns = 4;
+            let numberOfColumns = 3;
             let columnsHasNotOrder = [];
             RadioService.listPrograms(dataTableConfigService.getParams(params))
                 .then(function(res) {
@@ -50,9 +47,9 @@
         }
 
         function _permissions() {
-            vm.canPut = PermissionService.canPut('tags');
-            vm.canDelete = PermissionService.canDelete('tags');
-            vm.canPost = PermissionService.canPost('tags');
+            vm.canPut = PermissionService.canPut('radio_programming');
+            vm.canDelete = PermissionService.canDelete('radio_programming');
+            vm.canPost = PermissionService.canPost('radio_programming');
         }
 
         function activate() {
