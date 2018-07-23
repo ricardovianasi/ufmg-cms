@@ -27,7 +27,11 @@
         }
 
         function program(idProgram) {
-
+            let url = baseUrl + '/' + idProgram;
+            return $http.get(url)
+                .then(function(data) {
+                    return data.data;
+                });
         }
 
         function radioProgramming() {
@@ -39,8 +43,9 @@
             return $http.post(baseUrl, data);
         }
 
-        function updateProgram(data) {
-
+        function updateProgram(data, id) {
+            let url = baseUrl + '/' + id;
+            return $http.post(url, data);
         }
 
         function updateRadioProgramming(data) {

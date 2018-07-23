@@ -3,6 +3,7 @@ var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var gulpif = require('gulp-if');
 var expect = require('gulp-expect-file');
+var commons = require('./commons.js');
 
 var SCRIPTS = [
     'bower_components/jquery/dist/jquery.min.js',
@@ -114,7 +115,7 @@ gulp.task('build-vendors-js', function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./build/scripts/'));
+        .pipe(gulp.dest(commons.getBasePath() + '/scripts/'));
 });
 
 gulp.task('build-vendors-css', function () {
@@ -126,7 +127,7 @@ gulp.task('build-vendors-css', function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./build/assets/css/'));
+        .pipe(gulp.dest(commons.getBasePath() + '/assets/css/'));
 });
 
 gulp.task('build-vendors-bootstrap-fonts', function () {
@@ -134,7 +135,7 @@ gulp.task('build-vendors-bootstrap-fonts', function () {
         .pipe(expect({
             errorOnFailure: true
         }, BOOTSTRAP_FONTS))
-        .pipe(gulp.dest('./build/assets/css/fonts/glyphicons/'));
+        .pipe(gulp.dest(commons.getBasePath() + '/assets/css/fonts/glyphicons/'));
 });
 
 gulp.task('build-vendors-fonts', function () {
@@ -142,5 +143,5 @@ gulp.task('build-vendors-fonts', function () {
         .pipe(expect({
             errorOnFailure: true
         }, FONTS))
-        .pipe(gulp.dest('./build/assets/fonts/'));
+        .pipe(gulp.dest(commons.getBasePath() + '/assets/fonts/'));
 });

@@ -4,7 +4,7 @@ coverage
 public
 app/common/config/env*
 app/env-local.js
-build/*
+*build/*
 .idea
 app/env-local.json
 app/env-local.json.dist

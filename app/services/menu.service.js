@@ -11,10 +11,7 @@
         var MENU_ENDPOINT = $filter('format')('{0}/{1}', apiUrl, 'menu');
 
         var service = {
-            MENUS: {
-                mainMenu: [],
-                quickAccess: [],
-            },
+            MENUS: { mainMenu: [], quickAccess: [] },
             get: get,
             update: update,
             parseMenuToMenuFlat: parseMenuToMenuFlat,

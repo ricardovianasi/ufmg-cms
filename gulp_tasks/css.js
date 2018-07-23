@@ -8,6 +8,7 @@ var cmq = require('gulp-merge-media-queries');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
+var commons = require('./commons.js');
 
 gulp.task('css', function () {
     gulp.src('./app/assets/**/*.sass')
@@ -32,5 +33,5 @@ gulp.task('css', function () {
             suffix: '.min'
         }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./build/assets/css'));
+        .pipe(gulp.dest(commons.getBasePath() + '/assets/css'));
 });

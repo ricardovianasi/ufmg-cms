@@ -14,6 +14,8 @@
         vm.dtColumns = {};
         vm.listPrograms = [];
 
+        vm.showButtonEdit = showButtonEdit;
+
         activate();
 
         ////////////////
@@ -32,7 +34,7 @@
             RadioService.listPrograms(dataTableConfigService.getParams(params))
                 .then(function(res) {
                     console.log('listPrograms', res);
-                    // _permissions();
+                    _permissions();
                     vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     vm.listPrograms = res.data.items;
                     let records = {
@@ -50,6 +52,10 @@
             vm.canPut = PermissionService.canPut('radio_programming');
             vm.canDelete = PermissionService.canDelete('radio_programming');
             vm.canPost = PermissionService.canPost('radio_programming');
+        }
+
+        function showButtonEdit(item) {
+            return PermissionService.canPut('radio_programming', item.id) || vm.canPost;
         }
 
         function activate() {

@@ -8,6 +8,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
+var commons = require('./commons.js');
 
 gulp.task('js', function () {
     return gulp
@@ -27,5 +28,5 @@ gulp.task('js', function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./build/scripts/'));
+        .pipe(gulp.dest(commons.getBasePath() + '/scripts/'));
 });

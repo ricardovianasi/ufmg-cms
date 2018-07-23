@@ -8,14 +8,10 @@
     function CourseController($routeParams,
         CourseService,
         dataTableConfigService,
-        NotificationService,
-        ModalService,
         PermissionService,
         $scope,
-        $rootScope,
         $location,
         ManagerFileService,
-        Util,
         HandleChangeService,
         $log) {
         $log.info('CourseController');

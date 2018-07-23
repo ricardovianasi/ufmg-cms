@@ -29,6 +29,7 @@
                 var hasPermissionRector;
                 var hasPermissionRelease;
                 var hasPermissionUser;
+                var hasPermissionRadioProgramming;
 
                 function loadPermission() {
                     hasPermissionCalendar = hasPermission('calendar');
@@ -53,6 +54,7 @@
                     hasPermissionRector = hasPermission('rector');
                     hasPermissionRelease = hasPermission('release');
                     hasPermissionUser = hasPermission('user');
+                    hasPermissionRadioProgramming = hasPermission('radio_programming');
                 }
 
                 function hasPermissionCourse() {
@@ -63,8 +65,7 @@
                 }
 
                 function hasPermissionPeriodical() {
-                    return hasPermission('periodical') ||
-                        hasPermissionEditions;
+                    return hasPermission('periodical') || hasPermissionEditions;
                 }
 
                 function hasPermission(context) {
@@ -175,7 +176,7 @@
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionCourse(),
+                                enabled: hasPermissionRadioProgramming,
                                 menuItems: [
                                     {
                                         icon: 'fa fa-list-ul',
@@ -183,7 +184,7 @@
                                         location: 'radio/radio-programming',
                                         isActive: false,
                                         isOpen: false,
-                                        enabled: hasPermissionNewsAgencia,
+                                        enabled: hasPermissionRadioProgramming,
                                     },
                                     {
                                         icon: 'fa fa-television',
@@ -191,7 +192,7 @@
                                         location: 'radio/programs',
                                         isActive: false,
                                         isOpen: false,
-                                        enabled: hasPermissionNewsAgencia,
+                                        enabled: hasPermissionRadioProgramming,
                                     }
                                 ]
                             }, {

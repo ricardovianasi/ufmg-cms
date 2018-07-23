@@ -17,11 +17,13 @@
                 })
                 .when('/radio/edit/:id', {
                     templateUrl: 'modules/radio/program/program.form.template.html',
-                    controller: 'RadioFormController'
+                    controller: 'ProgramFormController',
+                    controllerAs: 'vm'
                 })
                 .when('/radio/view/:id', {
                     templateUrl: 'modules/radio/program/program.form.template.html',
-                    controller: 'RadioFormController'
+                    controller: 'ProgramFormController',
+                    controllerAs: 'vm'
                 })
                 .when('/radio/radio-programming', {
                     templateUrl: 'modules/radio/radio-programming/radio-programming.template.html',

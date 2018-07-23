@@ -64,7 +64,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <button type="submit" class="btn btn-lg btn-block btn-success">Criar Programa</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success">
+                        {{ vm.id ? 'Editar' : 'Criar' }}
+                    </button>
                 </div>
                 <div class="col-xs-6">
                     <button type="button" class="btn btn-lg btn-block btn-danger">Cancelar</button>
