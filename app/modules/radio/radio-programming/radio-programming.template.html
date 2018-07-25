@@ -30,13 +30,12 @@
         </div>
     </div>
 </div>
-<section class="row">
-    <div class="col-md-12 panel panel-default">
+<div class="row">
+    <section class="container-program col-md-3 col-sm-12 panel panel-default">
+        Programações
 
-    </div>
-</section>
-<section class="row">
-    <div class="col-md-12 panel panel-default container-grade">
+    </section>
+    <section class="container-grade col-md-8 col-sm-12 panel panel-default">
         <div class="side-hour">
             <div class="slot-time" ng-repeat="hour in vm._.range(0, 24)">
                 {{ vm.pipeHour(hour, 2) }}
@@ -48,5 +47,5 @@
                 <div class="slot-content" ng-repeat="n in vm._.range(0, 48)"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>

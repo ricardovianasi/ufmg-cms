@@ -1,14 +1,21 @@
 $heightHour: 80px;
 $chopHours: 2;
 
+.container-program {
+    margin-right: 5px;
+}
+
 .container-grade {
     display: flex;
     justify-content: space-between;
+    max-height: 75vh;
+    overflow: auto;
 }
 .container-grade > .side-hour {
     display: flex;
     flex-direction: column;
     padding: 75px 5px;
+    height: 100%;
     .slot-time {
         height: $heightHour;
         width: $heightHour;
