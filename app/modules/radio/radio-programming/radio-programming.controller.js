@@ -9,6 +9,7 @@
     function RadioProgrammingController(RadioService) {
         var vm = this;
         vm._ = _;
+        vm.pipeHour = pipeHour;
         
 
         activate();
@@ -22,10 +23,15 @@
                 });
         }
 
+        function pipeHour(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            let padZero = n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            return padZero + ':00';
+        }
+
 
         function _initWeekCalendar() {
-            vm.hours24 = 
-                ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00'];
             vm.days = [
                 {label: 'Seg', content: []},
                 {label: 'Ter', content: []},

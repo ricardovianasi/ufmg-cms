@@ -39,7 +39,7 @@
     <div class="col-md-12 panel panel-default container-grade">
         <div class="side-hour">
             <div class="slot-time" ng-repeat="hour in vm._.range(0, 24)">
-                {{ hour }}
+                {{ vm.pipeHour(hour, 2) }}
             </div>
         </div>
         <div class="weekdays" ng-repeat="nday in vm._.range(0, 7)">
