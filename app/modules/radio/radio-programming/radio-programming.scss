@@ -1,0 +1,41 @@
+$heightHour: 80px;
+$chopHours: 2;
+
+.container-grade {
+    display: flex;
+    justify-content: space-between;
+}
+.container-grade > .side-hour {
+    display: flex;
+    flex-direction: column;
+    padding: 75px 5px;
+    .slot-time {
+        height: $heightHour;
+        width: $heightHour;
+        text-align: center;
+    }
+}
+.container-grade > .weekdays {
+    display: flex;
+    flex: 1 auto;
+    flex-direction: column;
+    .header {
+        padding: 5px;
+        font-size: 1.5em;
+        position: fixed;
+        border-radius: 5%;
+        align-self: center;
+    }
+
+    .column-time {
+        margin-top: 60px;
+    }
+
+    .column-time > .slot-content {
+        border: 1px solid #e0babc;
+        height: $heightHour / $chopHours;
+        &:hover {
+            background-color: #000;
+        }
+    }
+}

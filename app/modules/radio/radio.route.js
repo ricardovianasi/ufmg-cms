@@ -27,7 +27,8 @@
                 })
                 .when('/radio/radio-programming', {
                     templateUrl: 'modules/radio/radio-programming/radio-programming.template.html',
-                    controller: 'RadioProgrammingController'
+                    controller: 'RadioProgrammingController',
+                    controllerAs: 'vm'
                 });
         });
 })();

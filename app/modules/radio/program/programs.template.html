@@ -45,7 +45,7 @@
                         <a uib-tooltip="Visualizar" ng-href="#/radio/view/{{ item.id }}" class="btn btn-primary">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <a uib-tooltip="Editar" ng-if="vm.showButtonEdit(item)" context="page" context-id="item.id" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
+                        <a uib-tooltip="Editar" ng-if="vm.showButtonEdit(item)" context="page" context-id="item.id" ng-href="#/radio/edit/{{ item.id }}" class="btn btn-warning">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a uib-tooltip="Excluir" ng-if="vm.canDelete" ng-click="remove(item.id, item.title)" class="btn btn-danger">

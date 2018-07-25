@@ -30,6 +30,23 @@
         </div>
     </div>
 </div>
-<div class="row" can-get>
+<section class="row">
+    <div class="col-md-12 panel panel-default">
 
-</div>
+    </div>
+</section>
+<section class="row">
+    <div class="col-md-12 panel panel-default container-grade">
+        <div class="side-hour">
+            <div class="slot-time" ng-repeat="hour in vm._.range(0, 24)">
+                {{ hour }}
+            </div>
+        </div>
+        <div class="weekdays" ng-repeat="nday in vm._.range(0, 7)">
+            <div class="header"> {{ vm.days[nday].label }} </div>
+            <div class="column-time">
+                <div class="slot-content" ng-repeat="n in vm._.range(0, 48)"></div>
+            </div>
+        </div>
+    </div>
+</section>
