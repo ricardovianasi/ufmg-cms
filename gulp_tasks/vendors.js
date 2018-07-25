@@ -53,6 +53,9 @@ var SCRIPTS = [
     'bower_components/ng-scrollbars/dist/scrollbars.min.js',
     'bower_components/dropzone/dist/min/dropzone.min.js',
     'bower_components/ng-dropzone/dist/ng-dropzone.min.js',
+    'node_modules/angular-ui-calendar/src/calendar.js',
+    'node_modules/fullcalendar/dist/fullcalendar.min.js',
+    'node_modules/fullcalendar/dist/gcal.min.js',
 
     // 'bower_components/pdfjs-bower/dist/compatibility.js',
     // 'bower_components/pdfjs-bower/dist/pdf.js'
@@ -78,6 +81,7 @@ var STYLES = [
     'bower_components/dropzone/dist/min/dropzone.min.css',
     'bower_components/dropzone/dist/min/basic.min.css',
     'bower_components/ng-dropzone/dist/ng-dropzone.min.css',
+    'node_modules/fullcalendar/dist/fullcalendar.min.css',
 
     // God Damn Xenon
     'app/assets/xenon/css/bootstrap.css',

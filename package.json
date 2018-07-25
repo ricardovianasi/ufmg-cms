@@ -52,5 +52,9 @@
   },
   "jshintConfig": {
     "expr": true
+  },
+  "dependencies": {
+    "angular-ui-calendar": "^1.0.2",
+    "fullcalendar": "^3.9.0"
   }
 }

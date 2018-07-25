@@ -33,19 +33,41 @@
 
         function _initWeekCalendar() {
             vm.days = [
-                {label: 'Seg', content: []},
-                {label: 'Ter', content: []},
-                {label: 'Qua', content: []},
-                {label: 'Qui', content: []},
-                {label: 'Sex', content: []},
-                {label: 'Sáb', content: []},
-                {label: 'Dom', content: []},
+                { label: 'Seg', content: [] },
+                { label: 'Ter', content: [] },
+                { label: 'Qua', content: [] },
+                { label: 'Qui', content: [] },
+                { label: 'Sex', content: [] },
+                { label: 'Sáb', content: [] },
+                { label: 'Dom', content: [] },
+            ];
+        }
+
+        function _initListProgramming() {
+            vm.listProgramming = [
+                { title: 'Jornal da Noite', time: '20:00 às 22:00' },
+                { title: 'Musical Especial', time: '19:00 às 20:00' }
             ];
         }
 
         function activate() {
+            vm.eventSources = [];
+            vm.uiConfig = {
+                calendar:{
+                  height: 450,
+                  editable: true,
+                  header:{
+                    left: 'month basicWeek basicDay agendaWeek agendaDay',
+                    center: 'title',
+                    right: 'today prev,next'
+                  },
+                //   eventClick: $scope.alertEventOnClick,
+                //   eventDrop: $scope.alertOnDrop,
+                //   eventResize: $scope.alertOnResize
+                }
+              };
             _initWeekCalendar();
-            console.log(vm._.range);
+            _initListProgramming();
             // loadRadioProgramming();
         }
     }

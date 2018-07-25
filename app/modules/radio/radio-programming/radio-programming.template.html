@@ -33,9 +33,19 @@
 <div class="row">
     <section class="container-program col-md-3 col-sm-12 panel panel-default">
         Programações
-
+        <ul ng-model="vm.listProgramming" class="collection-programming programs">
+            <li ng-repeat="program in vm.listProgramming">
+                <div class="card-programming">
+                    <div class="title"> {{ program.title }} </div>
+                    <p class="time">{{ program.time }}</p>
+                </div>
+            </li>
+        </ul>
     </section>
-    <section class="container-grade col-md-8 col-sm-12 panel panel-default">
+    <section class="col-md-8 col-sm-12 panel panel-default">
+        <div ui-calendar="vm.uiConfig.calendar" class="span8 calendar" ng-model="vm.eventSources"></div>
+    </section>
+    <!-- <section class="container-grade col-md-8 col-sm-12 panel panel-default">
         <div class="side-hour">
             <div class="slot-time" ng-repeat="hour in vm._.range(0, 24)">
                 {{ vm.pipeHour(hour, 2) }}
@@ -43,9 +53,12 @@
         </div>
         <div class="weekdays" ng-repeat="nday in vm._.range(0, 7)">
             <div class="header"> {{ vm.days[nday].label }} </div>
-            <div class="column-time">
-                <div class="slot-content" ng-repeat="n in vm._.range(0, 48)"></div>
+            <div ng-model="vm.days[nday].content" class="column-time programs">
+                <div class="card-programming" ng-repeat="n in vm.days[nday].content">
+                    <div class="title"> {{ n.title }} </div>
+                    <p class="time">{{ n.time }}</p>
+                </div>
             </div>
         </div>
-    </section>
+    </section> -->
 </div>

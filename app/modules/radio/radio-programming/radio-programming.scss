@@ -36,6 +36,7 @@ $chopHours: 2;
 
     .column-time {
         margin-top: 60px;
+        height: 100%;
     }
 
     .column-time > .slot-content {
@@ -44,5 +45,18 @@ $chopHours: 2;
         &:hover {
             background-color: #000;
         }
+    }
+}
+
+.card-programming {
+    overflow-wrap: break-word;
+    padding: 5px;
+    height: 40px;
+    background-color: #ef3f4a;
+    border-radius: 5%;
+    color: #fff;
+    cursor: move;
+    .time {
+        color: #fff;
     }
 }

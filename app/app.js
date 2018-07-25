@@ -10,6 +10,7 @@
         'ngRoute',
         'ngSanitize',
         'toastr',
+        'ui.calendar',
         'ui.bootstrap',
         'ui.select',
         'ui.mask',
