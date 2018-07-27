@@ -6,7 +6,7 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams) {
+    function ProgramFormController(RadioService, $routeParams, toastr) {
         var vm = this;
         vm.id = '';
         vm.setImageCover = setImageCover;
@@ -26,7 +26,8 @@
         }
 
         function setImageCover(imageSelected) {
-            vm.program.image = { url: imageSelected.url, id: imageSelected.id };
+            vm.program.image = { url: imageSelected.url };
+            vm.program.id_image = imageSelected.id;
             console.log('setImageCover', vm.program);
         }
 
@@ -39,7 +40,12 @@
         }
         
         function _register() {
-            RadioService.registerProgram(vm.program);
+            delete vm.program.image;
+            RadioService.registerProgram(vm.program)
+                .then(function() {
+                    toastr.success('Programa de rádio cadastrado com sucesso!');
+                    vm.program = {title: ''};
+                });
         }
 
         function _update() {
@@ -50,17 +56,18 @@
             vm.loading = true;
             RadioService.program(id)
                 .then(function(data) {
-                    initObjProgram(data.title, data.description);
+                    initObjProgram(data.title, data.description, data.image);
                 })
                 .catch(function(error) { console.error(error); })
                 .finally(function() { vm.loading = false; });
         }
 
-        function initObjProgram(title, description, imageUrl) {
+        function initObjProgram(title, description, image) {
             vm.program = {
                 title: title,
                 description: description,
             };
+            setImageCover(image);
         }
 
     }

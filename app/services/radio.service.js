@@ -35,7 +35,7 @@
         }
 
         function radioProgramming() {
-            let url = baseUrl + '/all-grid';
+            let url = baseUrl + '-grid';
             return $http.get(url);
         }
 

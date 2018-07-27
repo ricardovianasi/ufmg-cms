@@ -39,6 +39,7 @@
         'featuredModule',
         'filterModule',
         'galleryModule',
+        'directivesModule',
         'helperModule',
         'indexModule',
         'mediaModule',
