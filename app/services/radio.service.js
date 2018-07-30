@@ -7,7 +7,8 @@
 
     /** ngInject */
     function RadioService($http, $q, apiUrl) {
-        let baseUrl = apiUrl + '/radio-programming';
+        let baseUrlProgram = apiUrl + '/radio-programming';
+        let baseUrlGrid = apiUrl + '/radio-programming-grid';
 
         let service = {
             listPrograms: listPrograms,
@@ -15,19 +16,21 @@
             radioProgramming: radioProgramming,
             registerProgram: registerProgram,
             updateProgram: updateProgram,
-            updateRadioProgramming: updateRadioProgramming,
+            updateProgramGrid: updateProgramGrid,
+            registerProgramGrid: registerProgramGrid,
+            deleteProgramGrid: deleteProgramGrid
         };
         
         return service;
 
         ////////////////
         function listPrograms(params) {
-            let url = baseUrl + (params || '');
+            let url = baseUrlProgram + (params || '');
             return $http.get(url);
         }
 
         function program(idProgram) {
-            let url = baseUrl + '/' + idProgram;
+            let url = baseUrlProgram + '/' + idProgram;
             return $http.get(url)
                 .then(function(data) {
                     return data.data;
@@ -35,8 +38,7 @@
         }
 
         function radioProgramming() {
-            let url = baseUrl + '-grid';
-            return $http.get(url);
+            return $http.get(baseUrlGrid);
         }
 
         function registerProgram(data) {
@@ -48,8 +50,18 @@
             return $http.post(url, data);
         }
 
-        function updateRadioProgramming(data) {
+        function updateProgramGrid(data, id) {
+            let url = baseUrlGrid + '/' + id;
+            return $http.put(url, data);
+        }
 
+        function deleteProgramGrid(id) {
+            let url = baseUrlGrid + '/' + id;
+            return $http.delete(url);
+        }
+
+        function registerProgramGrid(data) {
+            return $http.post(baseUrlGrid, data);
         }
     }
 })();
