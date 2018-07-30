@@ -6,18 +6,12 @@
         .controller('RadioProgrammingController', RadioProgrammingController);
 
     /** ngInject */
-    function RadioProgrammingController(RadioService, toastr) {
+    function RadioProgrammingController(RadioService, toastr, uiCalendarConfig) {
         var vm = this;
-
-        vm.programToDataDrop = programToDataDrop;
 
         activate();
 
         ////////////////
-
-        function programToDataDrop(program) {
-            return angular.copy(program);
-        }
 
         function _loadGrid() {
             RadioService.radioProgramming()
@@ -35,25 +29,18 @@
                 });
         }
 
-        function removeProgramOfGrid(idGrid) {
-            let idx = vm.events.findIndex(function(programGrid) {
-                return programGrid.id === idGrid;
-            });
-            vm.events.splice(idx, 1);
-        }
-
         function _insertProgramOnGrid(listDataGrid) {
-            listDataGrid.forEach(function(programGrid) {
-                let event = {
+            let events = listDataGrid.map(function(programGrid) {
+                return {
                     title: programGrid.program.title,
                     start: _convertTimeToMoment(programGrid.time_start, programGrid.week_day),
                     end: _convertTimeToMoment(programGrid.time_end, programGrid.week_day),
                     id: programGrid.id,
-                    program_id: programGrid.program.id
+                    programming: programGrid.program.id
                 };
-                vm.events.push(event);
+                // vm.events.push(event);
             });
-            console.log('insertProgramingInGrid', vm.eventSources);
+            _getCalendar().fullCalendar('addEventSource', {events: events});
         }
 
         function _convertTimeToMoment(time, week_day) {
@@ -62,45 +49,41 @@
             return moment().set({day: day, hour: timeSplitted[0], minute: timeSplitted[1] });
         }
 
-        function _createProgramGrid(event) {
-            let dayOfWeek = event.start.days();
+        function _createProgramGrid(event, idProgramming) {
+            let eventCopy = angular.copy(event);
+            let dayOfWeek = eventCopy.start.days();
             let obj = {
                 week_day: dayOfWeek || 7,
-                programming: event.id,
-                time_start: event.start.format('hh:mm'),
-                time_end: !event.end ? event.start.add(2, 'hours').format('HH:mm') : event.end.format('HH:mm')
+                programming: idProgramming,
+                time_start: eventCopy.start.format('hh:mm'),
+                time_end: !eventCopy.end ? eventCopy.start.add(2, 'hours').format('HH:mm') : eventCopy.end.format('HH:mm')
             };
             return obj;
         }
 
+        function _getCalendar() {
+            return uiCalendarConfig.calendars.fCalendar;
+        }
+
         function whenReceive(event) {
-            let programGrid = _createProgramGrid(event);
-            postEventGrid(programGrid, event);
-            console.log('whenReceive', programGrid);
+            let programGrid = _createProgramGrid(event, event.id);
+            _postEventGrid(programGrid, event);
         }
 
-        function whenResize(event) {
-            let programGrid = _createProgramGrid(event);
-            programGrid.id = event.id;
-            updateEventGrid(programGrid, event.id);
-            console.log('whenResize', programGrid, event);
+        function whenChange(event) {
+            let programGrid = _createProgramGrid(event, event.programming);
+            _updateEventGrid(programGrid, event.id);
         }
 
-        function whenDrop(event) {
-            let programGrid = _createProgramGrid(event);
-            console.log('whenDrop', programGrid);
-        }
-
-        function removeEventGrid(event) {
+        function _removeEventGrid(event) {
             RadioService.deleteProgramGrid(event.id)
                 .then(function(res) {
                     toastr.success('Programação removida com sucesso!');
-                    removeProgramOfGrid(event.id);
-                    console.log('removeEventGrid', res);
+                    _getCalendar().fullCalendar('removeEvents', event.id);
                 });
         }
 
-        function updateEventGrid(programGrid, id) {
+        function _updateEventGrid(programGrid, id) {
             RadioService.updateProgramGrid(programGrid, id)
                 .then(function(res) {
                     toastr.success('Grade atualizada com sucesso!');
@@ -108,12 +91,13 @@
                 });
         }
 
-        function postEventGrid(programGrid, event) {
+        function _postEventGrid(programGrid, event) {
             RadioService.registerProgramGrid(programGrid)
                 .then(function(res) {
                     toastr.success('Grade salva com sucesso!');
                     event.id = res.data.id;
-                    console.log('registerProgram', res, vm.eventSources);
+                    event.programming = res.data.program.id;
+                    _getCalendar().fullCalendar('updateEvent', event);
                 });
         }
 
@@ -122,11 +106,11 @@
             vm.eventSources = [vm.events];
             vm.uiConfig = {
                 calendar: { height: 450, editable: true, defaultView: 'agendaWeek', droppable: true,
-                    header: { left: '', center: '', right: '' },
+                    header: { left: '', center: '', right: '' }, dragOpacity: 0.7,
                     eventReceive: whenReceive,
-                    eventDrop: whenDrop,
-                    eventResize: whenResize,
-                    eventClick: removeEventGrid
+                    eventDrop: whenChange,
+                    eventResize: whenChange,
+                    eventClick: _removeEventGrid
                 }
             };
         }

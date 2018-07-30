@@ -34,7 +34,7 @@
     <section class="container-program col-md-3 col-sm-12 panel panel-default">
         Programações
         <ul ng-model="vm.listProgramming" class="collection-programming programs">
-            <li ng-repeat="program in vm.listProgramming" draggable data-event="{{ vm.programToDataDrop(program) }}">
+            <li ng-repeat="program in vm.listProgramming" draggable data-event="{{ program }}">
                 <div class="card-programming">
                     <div class="title"> {{ program.title }} </div>
                     <p class="time">{{ program.time }}</p>
@@ -43,6 +43,6 @@
         </ul>
     </section>
     <section class="col-md-8 col-sm-12 panel panel-default">
-        <div ui-calendar="vm.uiConfig.calendar" class="span8 calendar" ng-model="vm.eventSources"></div>
+        <div id="fullCalendar" ui-calendar="vm.uiConfig.calendar" class="span8 calendar" ng-model="vm.eventSources" calendar="fCalendar"></div>
     </section>
 </div>
