@@ -4,7 +4,7 @@ $chopHours: 2;
 .collection-programming {
     list-style: none;
     padding: 0;
-    height: 90px;
+    height: 60px;
     li {
         float: left;
     }
@@ -12,7 +12,7 @@ $chopHours: 2;
 
 .card-programming {
     overflow-wrap: break-word;
-    padding: 10px;
+    padding: 5px;
     margin: 10px;
     width: 10em;
     background-color: #ef3f4a;
@@ -22,4 +22,10 @@ $chopHours: 2;
     .time {
         color: #fff;
     }
+}
+
+.helper-text {
+    font-size: 55%;
+    display: block;
+    padding-top: 5px;
 }

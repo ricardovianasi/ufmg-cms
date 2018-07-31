@@ -193,6 +193,14 @@
                                         isActive: false,
                                         isOpen: false,
                                         enabled: hasPermissionRadioProgramming,
+                                    },
+                                    {
+                                        icon: 'fa fa-tags',
+                                        name: 'Categorias',
+                                        location: 'radio/category-list',
+                                        isActive: false,
+                                        isOpen: false,
+                                        enabled: hasPermission('radio_category'),
                                     }
                                 ]
                             }, {

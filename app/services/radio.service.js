@@ -7,6 +7,7 @@
 
     /** ngInject */
     function RadioService($http, $q, apiUrl) {
+        let baseUrlCategory = apiUrl + '/radio-genre';
         let baseUrlProgram = apiUrl + '/radio-programming';
         let baseUrlGrid = apiUrl + '/radio-programming-grid';
 
@@ -18,7 +19,11 @@
             updateProgram: updateProgram,
             updateProgramGrid: updateProgramGrid,
             registerProgramGrid: registerProgramGrid,
-            deleteProgramGrid: deleteProgramGrid
+            deleteProgramGrid: deleteProgramGrid,
+            listCategory: listCategory,
+            updateCategory: updateCategory,
+            registerCategory: registerCategory,
+            deleteCategory: deleteCategory,
         };
         
         return service;
@@ -37,17 +42,17 @@
                 });
         }
 
-        function radioProgramming() {
-            return $http.get(baseUrlGrid);
-        }
-
         function registerProgram(data) {
-            return $http.post(baseUrl, data);
+            return $http.post(baseUrlProgram, data);
         }
 
         function updateProgram(data, id) {
-            let url = baseUrl + '/' + id;
+            let url = baseUrlProgram + '/' + id;
             return $http.post(url, data);
+        }
+
+        function radioProgramming() {
+            return $http.get(baseUrlGrid);
         }
 
         function updateProgramGrid(data, id) {
@@ -62,6 +67,25 @@
 
         function registerProgramGrid(data) {
             return $http.post(baseUrlGrid, data);
+        }
+
+        function listCategory(params) {
+            let url = baseUrlCategory + (params || '');
+            return $http.get(url);
+        }
+
+        function updateCategory(data, id) {
+            let url = baseUrlCategory + '/' + id;
+            return $http.put(url, data);
+        }
+
+        function registerCategory(data) {
+            return $http.post(baseUrlCategory, data);
+        }
+
+        function deleteCategory(id) {
+            let url = baseUrlCategory + '/' + id;
+            return $http.delete(url);
         }
     }
 })();

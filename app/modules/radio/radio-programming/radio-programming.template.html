@@ -2,8 +2,9 @@
     <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">
+                <h1 class="title"> 
                     Grade de programação
+                    <small class="helper-text"> Arraste o programa para dentro do calendario </small>
                 </h1>
             </div>
         </div>
@@ -32,7 +33,6 @@
 </div>
 <div class="row">
     <section class="col-sm-12 panel panel-default">
-        <h3> Grade de programação </h3>
         <input type="search" ng-model="nameProgram" placeholder="Busque pelo nome da programação" class="form-control">
         <ul class="collection-programming">
             <li ng-repeat="program in vm.listProgramming | filter:{title: nameProgram}" draggable data-event="{{ program }}">

@@ -29,6 +29,11 @@
                     templateUrl: 'modules/radio/radio-programming/radio-programming.template.html',
                     controller: 'RadioProgrammingController',
                     controllerAs: 'vm'
+                })
+                .when('/radio/category-list', {
+                    templateUrl: 'modules/radio/category/category.list.template.html',
+                    controller: 'CategoryListController',
+                    controllerAs: 'vm'
                 });
         });
 })();
