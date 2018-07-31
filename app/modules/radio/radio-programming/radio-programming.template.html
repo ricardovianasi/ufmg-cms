@@ -31,18 +31,17 @@
     </div>
 </div>
 <div class="row">
-    <section class="container-program col-md-3 col-sm-12 panel panel-default">
-        Programações
-        <ul ng-model="vm.listProgramming" class="collection-programming programs">
-            <li ng-repeat="program in vm.listProgramming" draggable data-event="{{ program }}">
+    <section class="col-sm-12 panel panel-default">
+        <h3> Grade de programação </h3>
+        <input type="search" ng-model="nameProgram" placeholder="Busque pelo nome da programação" class="form-control">
+        <ul class="collection-programming">
+            <li ng-repeat="program in vm.listProgramming | filter:{title: nameProgram}" draggable data-event="{{ program }}">
                 <div class="card-programming">
                     <div class="title"> {{ program.title }} </div>
-                    <p class="time">{{ program.time }}</p>
+                    <p class="time"> {{ program.time }} </p>
                 </div>
             </li>
         </ul>
-    </section>
-    <section class="col-md-8 col-sm-12 panel panel-default">
         <div id="fullCalendar" ui-calendar="vm.uiConfig.calendar" class="span8 calendar" ng-model="vm.eventSources" calendar="fCalendar"></div>
     </section>
 </div>

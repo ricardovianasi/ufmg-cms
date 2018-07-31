@@ -55,7 +55,7 @@
             let obj = {
                 week_day: dayOfWeek || 7,
                 programming: idProgramming,
-                time_start: eventCopy.start.format('hh:mm'),
+                time_start: eventCopy.start.format('HH:mm'),
                 time_end: !eventCopy.end ? eventCopy.start.add(2, 'hours').format('HH:mm') : eventCopy.end.format('HH:mm')
             };
             return obj;
@@ -105,8 +105,8 @@
             vm.events = [];
             vm.eventSources = [vm.events];
             vm.uiConfig = {
-                calendar: { height: 450, editable: true, defaultView: 'agendaWeek', droppable: true,
-                    header: { left: '', center: '', right: '' }, dragOpacity: 0.7,
+                calendar: { height: 450, editable: true, defaultView: 'agendaWeek', droppable: true, allDaySlot: false,
+                    header: { left: '', center: '', right: '' }, dragOpacity: 0.7, timeFormat: 'H:mm',
                     eventReceive: whenReceive,
                     eventDrop: whenChange,
                     eventResize: whenChange,

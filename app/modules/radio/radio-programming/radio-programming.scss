@@ -1,57 +1,20 @@
 $heightHour: 80px;
 $chopHours: 2;
 
-.container-program {
-    margin-right: 5px;
-}
-
-.container-grade {
-    display: flex;
-    justify-content: space-between;
-    max-height: 75vh;
-    overflow: auto;
-}
-.container-grade > .side-hour {
-    display: flex;
-    flex-direction: column;
-    padding: 75px 5px;
-    height: 100%;
-    .slot-time {
-        height: $heightHour;
-        width: $heightHour;
-        text-align: center;
-    }
-}
-.container-grade > .weekdays {
-    display: flex;
-    flex: 1 auto;
-    flex-direction: column;
-    .header {
-        padding: 5px;
-        font-size: 1.5em;
-        position: fixed;
-        border-radius: 5%;
-        align-self: center;
-    }
-
-    .column-time {
-        margin-top: 60px;
-        height: 100%;
-    }
-
-    .column-time > .slot-content {
-        border: 1px solid #e0babc;
-        height: $heightHour / $chopHours;
-        &:hover {
-            background-color: #000;
-        }
+.collection-programming {
+    list-style: none;
+    padding: 0;
+    height: 90px;
+    li {
+        float: left;
     }
 }
 
 .card-programming {
     overflow-wrap: break-word;
-    padding: 5px;
-    height: 40px;
+    padding: 10px;
+    margin: 10px;
+    width: 10em;
     background-color: #ef3f4a;
     border-radius: 5%;
     color: #fff;
