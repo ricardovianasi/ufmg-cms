@@ -19,6 +19,7 @@
             registerProgram: registerProgram,
             updateProgram: updateProgram,
             updateProgramGrid: updateProgramGrid,
+            deleteProgram: deleteProgram,
             registerProgramGrid: registerProgramGrid,
             deleteProgramGrid: deleteProgramGrid,
             listItemFilter: listItemFilter,
@@ -51,7 +52,12 @@
 
         function updateProgram(data, id) {
             let url = baseUrlProgram + '/' + id;
-            return $http.post(url, data);
+            return $http.put(url, data);
+        }
+
+        function deleteProgram(id) {
+            let url = baseUrlProgram + '/' + id;
+            return $http.delete(url);
         }
 
         function radioProgramming() {

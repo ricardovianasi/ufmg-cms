@@ -40,26 +40,42 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
-                        <label>Título</label>
-                        <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
-                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
-                            <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
-                            <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
-                        </div>
+                <div class="col-xs-12 form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
+                    <label>Título</label>
+                    <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
+                    <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                        <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
+                        <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
-                        <div ng-show="!formData.description.$valid" class="error-message" role="alert">
-                            <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
-                        </div>
+                <div class="col-xs-12 form-group">
+                    <label>Descrição</label>
+                    <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
+                    <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                        <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12 form-group">
+                    <label>Categoria</label>
+                    <ui-select ng-model="vm.program.category_id" theme="bootstrap" class="ui-select" title="Selecione ou procure uma categoria...">
+                        <ui-select-match placeholder="Selecione ou procure uma categoria...">{{ $select.selected.name }}</ui-select-match>
+                        <ui-select-choices repeat="categ.id as categ in vm.listCategory | filter: $select.search track by $index">
+                            <div ng-bind-html="categ.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-6 col-xs-12 form-group">
+                    <label>Gênero</label>
+                    <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
+                        <ui-select-match placeholder="Selecione ou procure um gênero...">{{ $select.selected.name }}</ui-select-match>
+                        <ui-select-choices repeat="genre.id as genre in vm.listGenre | filter: $select.search track by $index">
+                            <div ng-bind-html="genre.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
             </div>
             <div class="row">
@@ -69,7 +85,7 @@
                     </button>
                 </div>
                 <div class="col-xs-6">
-                    <button type="button" class="btn btn-lg btn-block btn-danger">Cancelar</button>
+                    <a type="button" ng-href="#/radio/radio-programming" class="btn btn-lg btn-block btn-danger">Cancelar</a>
                 </div>
             </div>
         </form>

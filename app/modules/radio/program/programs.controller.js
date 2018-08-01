@@ -6,7 +6,7 @@
         .controller('ProgramsController', ProgramsController);
 
     /** ngInject */
-    function ProgramsController(dataTableConfigService, RadioService, PermissionService) {
+    function ProgramsController(dataTableConfigService, RadioService, PermissionService, NotificationService, ModalService) {
         var vm = this;
 
         vm.dtInstance = {};
@@ -15,6 +15,7 @@
         vm.listPrograms = [];
 
         vm.showButtonEdit = showButtonEdit;
+        vm.removeProgram = removeProgram;
 
         activate();
 
@@ -48,14 +49,30 @@
 
         }
 
-        function _permissions() {
-            vm.canPut = PermissionService.canPut('radio_programming');
-            vm.canDelete = PermissionService.canDelete('radio_programming');
-            vm.canPost = PermissionService.canPost('radio_programming');
+        function removeProgram(program) {
+            let msg = 'Você realmente deseja apagar o programa ' + program.title + '?';
+            ModalService.confirm(msg, ModalService.MODAL_MEDIUM, {isDanger: true}).result
+                .then(function() { _removeProgram(program.id); })
+                .catch(function(error) { console.error(error); });
         }
 
         function showButtonEdit(item) {
             return PermissionService.canPut('radio_programming', item.id) || vm.canPost;
+        }
+
+        function _removeProgram(id) {
+            RadioService.deleteProgram(id)
+                .then(function(data) {
+                    NotificationService.success('O programa foi removido com sucesso.');
+                    let idx = vm.listPrograms.findIndex(function(program) { return program.id === id; });
+                    vm.listPrograms.splice(idx, 1);
+                });
+        }
+
+        function _permissions() {
+            vm.canPut = PermissionService.canPut('radio_programming');
+            vm.canDelete = PermissionService.canDelete('radio_programming');
+            vm.canPost = PermissionService.canPost('radio_programming');
         }
 
         function activate() {
