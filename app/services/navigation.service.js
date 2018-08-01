@@ -201,6 +201,14 @@
                                         isActive: false,
                                         isOpen: false,
                                         enabled: hasPermission('radio_category'),
+                                    },
+                                    {
+                                        icon: 'fa fa-neuter',
+                                        name: 'Gêneros',
+                                        location: 'radio/genre-list',
+                                        isActive: false,
+                                        isOpen: false,
+                                        enabled: hasPermission('radio_genre'),
                                     }
                                 ]
                             }, {
@@ -233,15 +241,8 @@
                                 enabled: hasPermissionCalendar
                             }, {
                                 icon: 'fa fa-bars',
-                                name: 'Novo Menu',
+                                name: 'Menu',
                                 location: 'new-menu',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionMenu
-                            }, {
-                                icon: 'fa fa-bars',
-                                name: 'Antigo Menu',
-                                location: 'menu',
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionMenu

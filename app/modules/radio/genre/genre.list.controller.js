@@ -3,10 +3,10 @@
 
     angular
         .module('radioModule')
-        .controller('CategoryListController', CategoryListController);
+        .controller('GenreListController', GenreListController);
 
     /** ngInject */
-    function CategoryListController(dataTableConfigService, RadioService, PermissionService, NotificationService, ModalService) {
+    function GenreListController(dataTableConfigService, RadioService, PermissionService, NotificationService, ModalService) {
         var vm = this;
 
         vm.registerCategory = registerCategory;
@@ -26,7 +26,7 @@
         ////////////////
 
         function openUpdateCategory(categ, idx) {
-            let modal = ModalService.inputModal('Edição de categoria da rádio', 'Nome', categ.name, 
+            let modal = ModalService.inputModal('Edição de gênero da rádio', 'Nome', categ.name, 
                 ModalService.MODAL_MEDIUM, {required: true});
             modal.result.then(function (name) {
                 categ.name = name;
@@ -36,7 +36,7 @@
         }
 
         function removeCategory(id, name, idx) {
-            let msgConfirm = 'Voce tem certeza que deseja remover a categoria <b>' + name + '</b>?';
+            let msgConfirm = 'Voce tem certeza que deseja remover o gênero <b>' + name + '</b>?';
             ModalService.confirm(msgConfirm, ModalService.MODAL_MEDIUM, {isDanger: true}).result
                 .then(function() { _removeCategory(id, name, idx); })
                 .catch(function() { console.log('catch modal delete'); });
@@ -45,9 +45,9 @@
         function registerCategory() {
             if(!vm.nameCategory) { return; }
             vm.loading = true;
-            RadioService.registerItemFilter({name: vm.nameCategory}, RadioService.baseUrlCategory)
+            RadioService.registerItemFilter({name: vm.nameCategory}, RadioService.baseUrlGenre)
                 .then(function(data) {
-                    NotificationService.success('Categoria cadastrada com sucesso.');
+                    NotificationService.success('Gênero cadastrado com sucesso.');
                     vm.listCategory.unshift(data.data);
                     vm.nameCategory = '';
                 })
@@ -56,21 +56,21 @@
         }
 
         function _updateCategory(categ, idx) {
-            RadioService.updateItemFilter(categ, categ.id, RadioService.baseUrlCategory)
+            RadioService.updateItemFilter(categ, categ.id, RadioService.baseUrlGenre)
                 .then(function () {
                     vm.listCategory[idx] = categ;
-                    NotificationService.success('Categoria alterada com sucesso!');
+                    NotificationService.success('Gênero atualizado com sucesso!');
                 });
         }
 
         function _removeCategory(id, name, idx) {
-            RadioService.deleteItemFilter(id, RadioService.baseUrlCategory)
+            RadioService.deleteItemFilter(id, RadioService.baseUrlGenre)
                 .then(function() {
                     vm.listCategory.splice(idx, 1);
                     if(vm.listCategory.length <= 1) {
                         vm.dtInstance.DataTable.draw();
                     }
-                    NotificationService.success('Categoria ' + name + ' removida com sucesso!');
+                    NotificationService.success('Gênero ' + name + ' removido com sucesso!');
                 });
         }
 
@@ -84,7 +84,7 @@
         function getProgramas(params, cb) {
             let numberOfColumns = 2;
             let columnsHasNotOrder = [];
-            RadioService.listItemFilter(dataTableConfigService.getParams(params), RadioService.baseUrlCategory)
+            RadioService.listItemFilter(dataTableConfigService.getParams(params), RadioService.baseUrlGenre)
                 .then(function(res) {
                     _permissions();
                     vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
@@ -101,9 +101,9 @@
         }
 
         function _permissions() {
-            vm.canPut = PermissionService.canPut('radio_category');
-            vm.canDelete = PermissionService.canDelete('radio_category');
-            vm.canPost = PermissionService.canPost('radio_category');
+            vm.canPut = PermissionService.canPut('radio_genre');
+            vm.canDelete = PermissionService.canDelete('radio_genre');
+            vm.canPost = PermissionService.canPost('radio_genre');
             vm.canActions = vm.canPut && vm.canDelete;
         }
 

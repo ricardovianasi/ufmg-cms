@@ -34,6 +34,11 @@
                     templateUrl: 'modules/radio/category/category.list.template.html',
                     controller: 'CategoryListController',
                     controllerAs: 'vm'
+                })
+                .when('/radio/genre-list', {
+                    templateUrl: 'modules/radio/genre/genre.list.template.html',
+                    controller: 'GenreListController',
+                    controllerAs: 'vm'
                 });
         });
 })();
