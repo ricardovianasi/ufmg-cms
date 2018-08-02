@@ -5,37 +5,37 @@
         /**ngInject */
         .config(function ($routeProvider) {
             $routeProvider
-                .when('/radio/programs', {
+                .when('/radio_programming/programs', {
                     templateUrl: 'modules/radio/program/programs.template.html',
                     controller: 'ProgramsController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/new-program', {
+                .when('/radio_programming/new', {
                     templateUrl: 'modules/radio/program/program.form.template.html',
                     controller: 'ProgramFormController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/edit/:id', {
+                .when('/radio_programming/edit/:id', {
                     templateUrl: 'modules/radio/program/program.form.template.html',
                     controller: 'ProgramFormController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/view/:id', {
+                .when('/radio_programming/view/:id', {
                     templateUrl: 'modules/radio/program/program.form.template.html',
                     controller: 'ProgramFormController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/radio-programming', {
+                .when('/radio_programming_grid', {
                     templateUrl: 'modules/radio/radio-programming/radio-programming.template.html',
                     controller: 'RadioProgrammingController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/category-list', {
+                .when('/radio_category/category-list', {
                     templateUrl: 'modules/radio/category/category.list.template.html',
                     controller: 'CategoryListController',
                     controllerAs: 'vm'
                 })
-                .when('/radio/genre-list', {
+                .when('/radio_genre/genre-list', {
                     templateUrl: 'modules/radio/genre/genre.list.template.html',
                     controller: 'GenreListController',
                     controllerAs: 'vm'

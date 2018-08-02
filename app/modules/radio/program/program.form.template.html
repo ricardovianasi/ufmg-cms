@@ -1,3 +1,4 @@
+<loading-spinner ng-show="vm.loading"></loading-spinner>
 <div class="page-title">
     <div class="row flex-center">
         <div class="col-md-6">
@@ -79,13 +80,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
-                    <button type="submit" class="btn btn-lg btn-block btn-success">
+                <div ng-if="vm.canPut || vm.canPost" class="col-xs-6">
+                    <button type="submit" ng-disabled="vm.loading" class="btn btn-lg btn-block btn-success">
                         {{ vm.id ? 'Editar' : 'Criar' }}
                     </button>
                 </div>
                 <div class="col-xs-6">
-                    <a type="button" ng-href="#/radio/radio-programming" class="btn btn-lg btn-block btn-danger">Cancelar</a>
+                    <a type="button" ng-href="#/radio_programming/programs" class="btn btn-lg btn-block btn-danger">Cancelar</a>
                 </div>
             </div>
         </form>

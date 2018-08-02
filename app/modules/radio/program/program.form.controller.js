@@ -6,11 +6,12 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService) {
         var vm = this;
         vm.id = '';
         vm.listCategory = [];
         vm.listGenre = [];
+        vm.loading = false;
 
         vm.setImageCover = setImageCover;
         vm.save = save;
@@ -19,38 +20,36 @@
 
         ////////////////
 
-        function activate() {
-            vm.program = {title: ''};
-            vm.id = $routeParams.id;
-            _loadItemsFilters();
-            if(vm.id) {
-                _getProgram(vm.id);
-            }
-        }
-
         function setImageCover(imageSelected) {
             vm.program.image = { url: imageSelected.url };
             vm.program.id_image = imageSelected.id;
         }
 
         function save() {
+            let promiseSave;
+            vm.loading = true;
             if(vm.id) {
-                _update();
+                promiseSave = _update();
             } else {
-                _register();
+                promiseSave = _register();
             }
+            promiseSave
+                .catch(function(error) {console.error(error);})
+                .finally(function() {vm.loading = false;});
+
         }
         
         function _register() {
-            RadioService.registerProgram(_getProgramToSave())
-                .then(function() {
+            return RadioService.registerProgram(_getProgramToSave())
+                .then(function(res) {
                     toastr.success('Programa de rádio cadastrado com sucesso!');
+                    $location.path('/radio/edit/' + res.data.id);
                     vm.program = {title: ''};
                 });
         }
 
         function _update() {
-            RadioService.updateProgram(_getProgramToSave(), vm.id)
+            return RadioService.updateProgram(_getProgramToSave(), vm.id)
                 .then(function() {
                     toastr.success('Programa de rádio atualizado com sucesso!');
                 });
@@ -80,6 +79,10 @@
                 .then(function(res) { vm.listGenre = res.data.items; });
         }
 
+        function _permissions() {
+            vm.canPut = PermissionService.canPut('radio_programming');
+            vm.canPost = PermissionService.canPost('radio_programming');
+        }
 
         function initObjProgram(data) {
             vm.program = {
@@ -89,6 +92,16 @@
                 category_id: data.categories[0] ? data.categories[0].id : null,
             };
             setImageCover(data.image);
+        }
+
+        function activate() {
+            _permissions();
+            vm.program = {title: ''};
+            vm.id = $routeParams.id;
+            _loadItemsFilters();
+            if(vm.id) {
+                _getProgram(vm.id);
+            }
         }
 
     }

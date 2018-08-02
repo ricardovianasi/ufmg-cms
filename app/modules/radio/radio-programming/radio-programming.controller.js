@@ -122,27 +122,3 @@
         }
     }
 })();
-
-// Buscar por ID
-// Method: GET
-// URL: /radio-programming-grid/{id}
-
-// Retornar todos
-// Method: GET
-// URL: /radio-programming-grid
-
-// Nova
-// Method: POST
-// URL: /radio-programming-grid
-
-// Editar
-// Method: PUT
-// URL: /radio-programming-grid
-
-// JSON:
-// {
-// 	"programming": 13,
-// 	"week_day": 1,
-// 	"time_start": "09:07",
-// 	"time_end": "10:12"
-// }

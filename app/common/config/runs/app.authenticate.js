@@ -154,21 +154,12 @@
             }
 
             var pathOne = hash.split('/')[1];
-
-            if (
-                pathOne === 'calendar' ||
-                pathOne === 'clipping' ||
-                pathOne === 'events' ||
-                pathOne === 'faq' ||
-                pathOne === 'gallery' ||
-                pathOne === 'tags' ||
-                pathOne === 'highlighted_press' ||
-                pathOne === 'menu' ||
-                pathOne === 'page' ||
-                pathOne === 'periodical' ||
-                pathOne === 'release' ||
-                pathOne === 'user'
-            ) {
+            let pages = [
+                'calendar', 'clipping', 'events', 'faq', 'gallery', 'tags', 'highlighted_press',
+                'menu', 'page', 'periodical', 'release', 'user',
+                'radio_programming_grid', 'radio_programming', 'radio_genre', 'radio_category'];
+            let idx = pages.indexOf(pathOne);
+            if (idx !== -1) {
                 return pathOne;
             }
             return;

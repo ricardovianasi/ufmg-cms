@@ -23,7 +23,7 @@
     <div class="col-xs-12 panel panel-default">
         <div class="btn-toolbar">
             <div class="pull-right">
-                <a ng-if="vm.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/radio/new-program"><i class="fa fa-plus"></i> NOVO PROGRAMA</a>
+                <a ng-if="vm.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/radio_programming/new"><i class="fa fa-plus"></i> NOVO PROGRAMA</a>
             </div>
         </div>
         <table class="table table-striped table-bordered" datatable dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-columns="vm.dtColumns">
@@ -37,15 +37,15 @@
             <tbody>
                 <tr dt-rows role="row" class="odd" ng-repeat="item in vm.listPrograms track by item.id">
                     <td>
-                        <a ng-if="!canPut('radio_programming', item.id)" ng-href="#/radio/view/{{ item.id }}">{{ item.title }}</a>
-                        <a ng-if="canPut('radio_programming', item.id)" ng-href="#/radio/edit/{{ item.id }}">{{ item.title }}</a>
+                        <a ng-if="!canPut('radio_programming', item.id)" ng-href="#/radio_programming/view/{{ item.id }}">{{ item.title }}</a>
+                        <a ng-if="canPut('radio_programming', item.id)" ng-href="#/radio_programming/edit/{{ item.id }}">{{ item.title }}</a>
                     </td>
                     <td>{{ item.author.name }}</td>
                     <td class="table-fit">
-                        <a uib-tooltip="Visualizar" ng-href="#/radio/view/{{ item.id }}" class="btn btn-primary">
+                        <a uib-tooltip="Visualizar" ng-href="#/radio_programming/view/{{ item.id }}" class="btn btn-primary">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <a uib-tooltip="Editar" ng-if="vm.showButtonEdit(item)" context="page" context-id="item.id" ng-href="#/radio/edit/{{ item.id }}" class="btn btn-warning">
+                        <a uib-tooltip="Editar" ng-if="vm.showButtonEdit(item)" context="page" context-id="item.id" ng-href="#/radio_programming/edit/{{ item.id }}" class="btn btn-warning">
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a uib-tooltip="Excluir" ng-if="vm.canDelete" ng-click="vm.removeProgram(item)" class="btn btn-danger">

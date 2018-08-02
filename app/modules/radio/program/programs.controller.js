@@ -34,7 +34,6 @@
             let columnsHasNotOrder = [];
             RadioService.listPrograms(dataTableConfigService.getParams(params))
                 .then(function(res) {
-                    console.log('listPrograms', res);
                     _permissions();
                     vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     vm.listPrograms = res.data.items;
