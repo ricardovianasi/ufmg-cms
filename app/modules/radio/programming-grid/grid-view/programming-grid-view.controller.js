@@ -3,10 +3,10 @@
 
     angular
         .module('radioModule')
-        .controller('RadioProgrammingController', RadioProgrammingController);
+        .controller('GridViewController', GridViewController);
 
     /** ngInject */
-    function RadioProgrammingController(RadioService, toastr, uiCalendarConfig) {
+    function GridViewController(RadioService, toastr, uiCalendarConfig) {
         var vm = this;
 
         activate();
@@ -110,7 +110,7 @@
                     eventReceive: whenReceive,
                     eventDrop: whenChange,
                     eventResize: whenChange,
-                    eventClick: _removeEventGrid
+                    // eventClick: _removeEventGrid
                 }
             };
         }

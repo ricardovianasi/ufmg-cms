@@ -25,9 +25,14 @@
                     controller: 'ProgramFormController',
                     controllerAs: 'vm'
                 })
-                .when('/radio_programming_grid', {
-                    templateUrl: 'modules/radio/radio-programming/radio-programming.template.html',
-                    controller: 'RadioProgrammingController',
+                .when('/radio_programming_grid/view', {
+                    templateUrl: 'modules/radio/programming-grid/grid-view/programming-grid-view.template.html',
+                    controller: 'GridViewController',
+                    controllerAs: 'vm'
+                })
+                .when('/radio_programming_grid/edit', {
+                    templateUrl: 'modules/radio/programming-grid/grid-edit/programming-grid-edit.template.html',
+                    controller: 'GridEditController',
                     controllerAs: 'vm'
                 })
                 .when('/radio_category/category-list', {

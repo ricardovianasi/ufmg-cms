@@ -4,7 +4,7 @@
             <div class="title-env">
                 <h1 class="title"> 
                     Grade de programação
-                    <small class="helper-text"> Arraste o programa para dentro do calendario </small>
+                    <small class="helper-text"> Visualize os programas na grade semanal </small>
                 </h1>
             </div>
         </div>
@@ -16,13 +16,8 @@
                             <i class="fa-home"></i>Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#/radio">
-                            <strong>Radio</strong>
-                        </a>
-                    </li>
                     <li class="active">
-                        <a href="#/radio/new">
+                        <a href="#/radio_programming_grid/view">
                             <strong>Grade</strong>
                         </a>
                     </li>
@@ -42,6 +37,11 @@
                 </div>
             </li>
         </ul>
+        <div class="btn-toolbar">
+            <div class="pull-right">
+                <a class="btn btn-secondary btn-lg" ng-href="#/radio_programming_grid/edit"><i class="fa fa-cog"></i> EDIÇÃO DA GRADE</a>
+            </div>
+        </div>
         <div id="fullCalendar" ui-calendar="vm.uiConfig.calendar" class="span8 calendar" ng-model="vm.eventSources" calendar="fCalendar"></div>
     </section>
 </div>
