@@ -2,4 +2,13 @@
     display: flex;
     justify-content: space-between;
     float: none;
+    border-bottom: 1px solid #ccc;
+}
+
+label {
+    color: #000;
+}
+
+.btn-add {
+    margin-top: 25px;
 }
