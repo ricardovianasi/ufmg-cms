@@ -13,6 +13,7 @@
         vm.addProgram = addProgram;
 
         vm.listPrograms = [];
+        vm.listProgramsGrid = [];
         vm.loading = false;
         vm.weekDayActive;
 
@@ -64,8 +65,15 @@
         function _loadGrid() {
             RadioService.radioProgramming()
                 .then(function(res) {
+                    vm.listProgramsGrid = res.data.items;
+                });
+        }
+
+
+        function _loadPrograms() {
+            RadioService.listPrograms()
+                .then(function(res) {
                     vm.listPrograms = res.data.items;
-                    console.log('loadGrid', res);
                 });
         }
 
@@ -81,6 +89,7 @@
             ];
             vm.weekDayActive = vm.weekdays[0];
             _loadGrid();
+            _loadPrograms();
         }
     }
 })();

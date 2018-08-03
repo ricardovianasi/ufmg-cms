@@ -42,8 +42,8 @@
                         <label>Programa:</label>
                         <ui-select ng-model="vm.programToAdd" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
                             <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.program.title }}</ui-select-match>
-                            <ui-select-choices repeat="program.program as program in vm.listPrograms | filter: $select.search track by $index">
-                                <div ng-bind-html="program.program.title | highlight: $select.search"></div>
+                            <ui-select-choices repeat="program as program in vm.listPrograms | filter: $select.search track by $index">
+                                <div ng-bind-html="program.title | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -51,8 +51,11 @@
                         <label>Dentro do programa: </label>
                         <ui-select ng-model="vm.programParent" theme="bootstrap" class="ui-select" title="Selecione um programa pai">
                             <ui-select-match placeholder="Selecione um programa pai...">{{ $select.selected.program.title }}</ui-select-match>
-                            <ui-select-choices repeat="program.program as program in vm.listPrograms | filter: $select.search track by $index">
-                                <div ng-bind-html="program.program.title | highlight: $select.search"></div>
+                            <ui-select-choices repeat="program.program as program in vm.listFiltered | filter: $select.search track by $index">
+                                <div >
+                                    <span ng-bind-html="program.program.title | highlight: $select.search"></span>
+                                    <span ng-bind-html="' ' + program.time_start + ' às ' + program.time_end"></span>
+                                </div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -81,7 +84,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="odd" ng-repeat="program in (vm.listFiltered = (vm.listPrograms | filter:{week_day: vm.weekDayActive.code}))">
+                        <tr class="odd" ng-repeat="program in (vm.listFiltered = (vm.listProgramsGrid | filter:{week_day: vm.weekDayActive.code}))">
                             <td>{{ program.program.title }}</td>
                             <td>{{ program.time_start }} às {{ program.time_end }}</td>
                             <td class="text-center">
