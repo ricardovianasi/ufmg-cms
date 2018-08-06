@@ -38,18 +38,18 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="form-group col-xs-12 col-md-4">
+                    <div class="form-group col-xs-12 col-md-7">
                         <label>Programa:</label>
-                        <ui-select ng-model="vm.programToAdd" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
-                            <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.program.title }}</ui-select-match>
-                            <ui-select-choices repeat="program as program in vm.listPrograms | filter: $select.search track by $index">
+                        <ui-select ng-model="vm.dataProgram.program" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
+                            <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.title }}</ui-select-match>
+                            <ui-select-choices repeat="program in vm.listPrograms | filter: $select.search track by $index">
                                 <div ng-bind-html="program.title | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="form-group col-xs-12 col-md-4">
+                    <!-- <div class="form-group col-xs-12 col-md-4">
                         <label>Dentro do programa: </label>
-                        <ui-select ng-model="vm.programParent" theme="bootstrap" class="ui-select" title="Selecione um programa pai">
+                        <ui-select ng-model="vm.dataProgram.programParent" theme="bootstrap" class="ui-select" title="Selecione um programa pai">
                             <ui-select-match placeholder="Selecione um programa pai...">{{ $select.selected.program.title }}</ui-select-match>
                             <ui-select-choices repeat="program.program as program in vm.listFiltered | filter: $select.search track by $index">
                                 <div >
@@ -58,19 +58,19 @@
                                 </div>
                             </ui-select-choices>
                         </ui-select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-md-2">
                         <label>Ínicio:</label>
-                        <input ng-model="vm.time.time_start" type="time" class="form-control">
+                        <input ng-model="vm.dataProgram.time_start" type="time" class="form-control">
                     </div>
                     <div class="form-group col-xs-12 col-md-2">
                         <label>Fim:</label>
-                        <input ng-model="vm.time.time_end" type="time" class="form-control">
+                        <input ng-model="vm.dataProgram.time_end" type="time" class="form-control">
                     </div>
-                    <div class="col-md-4">
-                        <button ng-click="vm.addProgram(vm.programToAdd, vm.programParent, vm.time)" class="btn btn-secondary btn-add">
+                    <div class="col-md-3">
+                        <button ng-click="vm.addProgram()" class="btn btn-secondary btn-add">
                             <i class="fa fa-plus"></i> Adicionar na grade de {{ vm.weekDayActive.label }}
                         </button>
                     </div>
@@ -84,9 +84,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="odd" ng-repeat="program in (vm.listFiltered = (vm.listProgramsGrid | filter:{week_day: vm.weekDayActive.code}))">
-                            <td>{{ program.program.title }}</td>
-                            <td>{{ program.time_start }} às {{ program.time_end }}</td>
+                        <tr class="odd" ng-repeat="program in (vm.listFiltered = (vm.listTable | filter:{weekDay: vm.weekDayActive.code}))">
+                            <td >
+                                <span ng-class="{'children': program.idParent}">
+                                    {{ program.titleProgram }} {{program.idParent}}
+                                </span>
+                            </td>
+                            <td>{{ program.timeStart }} às {{ program.timeEnd }}</td>
                             <td class="text-center">
                                 <a uib-tooltip="Editar" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>

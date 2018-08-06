@@ -6,7 +6,7 @@
         .controller('NewMenuController', MenuController);
     
         /** ngInject */
-    function MenuController($scope, $log, $q, $rootScope, $filter, NotificationService, ModalService,
+    function MenuController($scope, $q, $filter, NotificationService, ModalService,
         PermissionService, PagesService, MenuService, HandleChangeService) {
 
         let vm = this;

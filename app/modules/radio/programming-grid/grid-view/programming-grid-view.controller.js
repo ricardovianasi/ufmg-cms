@@ -110,7 +110,7 @@
                     eventReceive: whenReceive,
                     eventDrop: whenChange,
                     eventResize: whenChange,
-                    // eventClick: _removeEventGrid
+                    eventClick: _removeEventGrid
                 }
             };
         }

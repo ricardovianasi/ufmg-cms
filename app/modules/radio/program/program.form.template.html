@@ -51,24 +51,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 form-group">
-                    <label>Descrição</label>
-                    <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
-                    <div ng-show="!formData.description.$valid" class="error-message" role="alert">
-                        <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-xs-12 form-group">
-                    <label>Categoria</label>
-                    <ui-select ng-model="vm.program.category_id" theme="bootstrap" class="ui-select" title="Selecione ou procure uma categoria...">
-                        <ui-select-match placeholder="Selecione ou procure uma categoria...">{{ $select.selected.name }}</ui-select-match>
-                        <ui-select-choices repeat="categ.id as categ in vm.listCategory | filter: $select.search track by $index">
-                            <div ng-bind-html="categ.name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
                 <div class="col-md-6 col-xs-12 form-group">
                     <label>Gênero</label>
                     <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
@@ -77,6 +59,28 @@
                             <div ng-bind-html="genre.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
+                </div>
+                <div class="col-md-6 col-xs-12 form-group">
+                    <label>Está dentro do bloco:</label> 
+                    <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
+                    <ui-select ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
+                        <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.title }}</ui-select-match>
+                        <ui-select-choices repeat="program.id as program in vm.listProgramBlock | filter: $select.search track by $index">
+                            <div ng-bind-html="program.title | highlight: $select.search"></div>
+                        </ui-select-choices>
+                        <ui-select-no-choice>
+                            Sem blocos para exibir
+                        </ui-select-no-choice>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    <label>Descrição</label>
+                    <textarea cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
+                    <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                        <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="row">

@@ -9,7 +9,7 @@
     function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService) {
         var vm = this;
         vm.id = '';
-        vm.listCategory = [];
+        vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
 
@@ -21,6 +21,9 @@
         ////////////////
 
         function setImageCover(imageSelected) {
+            if(!imageSelected) {
+                return;
+            }
             vm.program.image = { url: imageSelected.url };
             vm.program.id_image = imageSelected.id;
         }
@@ -57,9 +60,11 @@
 
         function _getProgramToSave() {
             let objProgram = angular.copy(vm.program);
-            objProgram.categories = [objProgram.category_id];
-            objProgram.genres = [objProgram.genre_id];
-            delete objProgram.image, objProgram.genre_id, objProgram.category_id;
+            objProgram.genres = objProgram.genre_id ? [objProgram.genre_id] : [];
+            objProgram.id_parent = objProgram.id_parent;
+            delete objProgram.image;
+            delete objProgram.genre_id;
+            delete objProgram.parent;
             return objProgram;
             
         }
@@ -73,10 +78,18 @@
         }
 
         function _loadItemsFilters() {
-            RadioService.listItemFilter(undefined, RadioService.baseUrlCategory)
-                .then(function(res) { vm.listCategory = res.data.items; });
             RadioService.listItemFilter(undefined, RadioService.baseUrlGenre)
                 .then(function(res) { vm.listGenre = res.data.items; });
+        }
+
+        function _loadBlockPrograms() {
+            RadioService.listPrograms()
+                .then(function(res) { 
+                    _permissions();
+                    vm.listProgramBlock = res.data.items.filter(function(program) {
+                        return !program.parent;
+                    }); 
+                });
         }
 
         function _permissions() {
@@ -87,18 +100,18 @@
         function initObjProgram(data) {
             vm.program = {
                 title: data.title,
+                id_parent: data.parent ? data.parent.id : null,
                 description: data.description,
                 genre_id: data.genres[0] ? data.genres[0].id : null,
-                category_id: data.categories[0] ? data.categories[0].id : null,
             };
             setImageCover(data.image);
         }
 
         function activate() {
-            _permissions();
             vm.program = {title: ''};
             vm.id = $routeParams.id;
             _loadItemsFilters();
+            _loadBlockPrograms();
             if(vm.id) {
                 _getProgram(vm.id);
             }
