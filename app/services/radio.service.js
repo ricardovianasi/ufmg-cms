@@ -6,7 +6,7 @@
         .factory('RadioService', RadioService);
 
     /** ngInject */
-    function RadioService($http, $q, apiUrl) {
+    function RadioService($http, $q, apiUrl, dataTableConfigService) {
         let baseUrlGenre = apiUrl + '/radio-genre';
         let baseUrlCategory = apiUrl + '/radio-category';
         let baseUrlProgram = apiUrl + '/radio-programming';
@@ -61,7 +61,9 @@
         }
 
         function radioProgramming() {
-            return $http.get(baseUrlGrid);
+            let params = dataTableConfigService.getParams(_getParamsOrderGrid());
+            let url = baseUrlGrid + params;
+            return $http.get(url);
         }
 
         function updateProgramGrid(data, id) {
@@ -95,6 +97,12 @@
         function deleteItemFilter(id, urlItem) {
             let url = urlItem + '/' + id;
             return $http.delete(url);
+        }
+
+        function _getParamsOrderGrid() {
+            return {
+                order_by: { field: 'timeStart', direction: 'ASC' },
+            };
         }
     }
 })();

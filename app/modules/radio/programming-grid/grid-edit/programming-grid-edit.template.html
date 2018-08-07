@@ -39,7 +39,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="form-group col-xs-12 col-md-7">
-                        <label>Programa:</label>
+                        <label>Programa Bloco:</label>
                         <ui-select ng-model="vm.dataProgram.program" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
                             <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.title }}</ui-select-match>
                             <ui-select-choices repeat="program in vm.listPrograms | filter: $select.search track by $index">
@@ -86,16 +86,16 @@
                     <tbody>
                         <tr class="odd" ng-repeat="program in (vm.listFiltered = (vm.listTable | filter:{weekDay: vm.weekDayActive.code}))">
                             <td >
-                                <span ng-class="{'children': program.idParent}">
-                                    {{ program.titleProgram }} {{program.idParent}}
+                                <span ng-class="{'children': program.idParent, 'parent': !program.idParent}">
+                                    {{ program.titleProgram }}
                                 </span>
                             </td>
                             <td>{{ program.timeStart }} às {{ program.timeEnd }}</td>
                             <td class="text-center">
-                                <a uib-tooltip="Editar" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
+                                <a ng-if="!program.idParent" uib-tooltip="Editar" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a uib-tooltip="Excluir" ng-href="#/page/edit/{{ item.id }}" class="btn btn-danger">
+                                <a ng-if="!program.idParent" uib-tooltip="Excluir" ng-click="vm.removeProgram(program)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

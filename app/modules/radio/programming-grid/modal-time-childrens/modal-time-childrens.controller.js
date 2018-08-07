@@ -6,12 +6,11 @@
         .controller('TimeChildrensController', TimeChildrensController);
 
     /** ngInject */
-    function TimeChildrensController($uibModalInstance, program, time) {
+    function TimeChildrensController($uibModalInstance, dataProgram) {
         var vm = this;
 
         vm.dismiss = dismiss;
         vm.saveItem = saveItem;
-        vm.program = program;
 
         activate();
 
@@ -38,8 +37,11 @@
         }
 
         function _initProgramMain() {
-            vm.program = program;
-            vm.time = time;
+            vm.program = dataProgram.program;
+            vm.program.time_start = dataProgram.time_start;
+            vm.program.time_end = dataProgram.time_end;
+            vm.time = { timeStart: moment(dataProgram.time_start).format('HH:mm'),
+                timeEnd: moment(dataProgram.time_end).format('HH:mm') };
         }
 
         function activate() {
