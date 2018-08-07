@@ -11,7 +11,7 @@
 
         vm.changeDay = changeDay;
         vm.addProgram = addProgram;
-        vm.removeProgram = removeProgram;
+        vm.removeGrid = removeGrid;
 
         vm.listPrograms = [];
         vm.listProgramsGrid = [];
@@ -32,8 +32,11 @@
             vm.weekDayActive = weekDay;
         }
 
-        function removeProgram(program) {
-            console.log('removeProgram', program);
+        function removeGrid(program) {
+            ModalService.confirm('Você deseja excluir este bloco de programa?', ModalService.MODAL_MEDIUM, { isDanger: true })
+                .result.then(function() {
+                    _removeGrid(program);
+                }).catch(function(error) {console.log(error);});
         }
 
         function addProgram() {
@@ -46,7 +49,10 @@
                 promises = _saveChildrenTime(vm.dataProgram);
             }
             promises                    
-                .then(function(resDatas) { _loadGrid(); })
+                .then(function(resDatas) { 
+                    _loadGrid();
+                    vm.dataProgram = {};
+                })
                 .catch(function(error) {console.error(error);});
         }
 
@@ -55,7 +61,6 @@
             let resolve = { dataProgram: function() { return data; } };
             let instanceModal = ModalService.openModal(pathTemplate, 'TimeChildrensController as vm', resolve);
             return instanceModal.result.then(function(res) {
-                console.log('close modal', res);
                 let listPromises = res.map(function(gridToSave) {
                     gridToSave.week_day = vm.weekDayActive.code;
                     return RadioService.registerProgramGrid(gridToSave);
@@ -73,6 +78,18 @@
                 time_end: moment(data.time_end).format('HH:mm'),
             };
             return RadioService.registerProgramGrid(programGrid);
+        }
+
+        function _removeGrid(program) {
+            let gridsDel = vm.listTable
+                .filter(function(prog) {return prog.idGridParent === program.idGrid || program.idGrid === prog.idGrid;});
+            RadioService.deleteProgramGrid(program.idGrid)
+                .then(function() {
+                    toastr.success('Bloco apagado com sucesso.');
+                    vm.listTable = vm.listTable
+                        .filter(function(grid) { return this.indexOf(grid) < 0; }, gridsDel);
+                })
+                .catch(function(error) { console.error(error); });
         }
 
         function _loadGrid() {
@@ -97,9 +114,9 @@
             let listParent = vm.listProgramsGrid
                 .filter(function(grid) { return !grid.program.parent; });
             listParent.forEach(function(grid) {
-                let children = grid.program.children.map(
-                    function(child) {
-                        return _generateItemGrid(child, child.grid_program[0], grid.week_day, grid.program);
+                let children = grid.program.children
+                    .map( function(child) {
+                        return _generateItemGrid(child, child.grid_program[0], grid.week_day, grid.program, grid.id);
                     });
                 vm.listTable.push(_generateItemGrid(grid.program, grid, grid.week_day));
                 vm.listTable = vm.listTable.concat(children);
@@ -107,17 +124,18 @@
             console.log('generateListTable', vm.listTable);
         }
 
-        function _generateItemGrid(program, grid, weekDay, parent) {
+        function _generateItemGrid(program, grid, weekDay, parent, idGridParent) {
             let obj = {
                 idProgram: program.id,
                 idGrid: grid.id,
+                idGridParent: idGridParent,
                 idParent: parent ? parent.id : null,
                 timeStart: grid.time_start,
                 timeEnd: grid.time_end,
                 weekDay: weekDay,
                 titleProgram: program.title,
             };
-            console.log('_generateItemGrid', program, grid, weekDay, obj);
+            console.log('_generateItemGrid', obj);
             return obj;
         }
 
