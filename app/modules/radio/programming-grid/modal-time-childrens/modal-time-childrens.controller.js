@@ -11,6 +11,7 @@
 
         vm.dismiss = dismiss;
         vm.saveItem = saveItem;
+        vm.requiredForm = false;
 
         activate();
 
@@ -21,11 +22,24 @@
         }
 
         function saveItem() {
+            if (_hasRequired()) {
+                return;
+            }
+            vm.submitted = true;
             console.log('saveItem', vm.program);
             let listProgramsToSave = vm.program.children
                 .map(function(child) {return _generateProgramGrid(child);});
             listProgramsToSave.push(_generateProgramGrid(vm.program));
             $uibModalInstance.close(listProgramsToSave);
+        }
+
+
+        function _hasRequired() {
+            vm.requiredForm = vm.program.children.reduce(function(result, child) {
+                let noTime = !child.time_start || !child.time_end;
+                return noTime || result;
+            }, false);
+            return vm.requiredForm;
         }
 
         function _generateProgramGrid(prog) {

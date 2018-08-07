@@ -7,11 +7,11 @@
         <div class="col-md-4 title-child">
             <span class="title">{{ child.title }}</span>
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_start}">
             <label>Ínicio:</label>
             <input ng-model="child.time_start" type="time" class="form-control">
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_end}">
             <label>Fim:</label>
             <input ng-model="child.time_end" type="time" class="form-control">
         </div>

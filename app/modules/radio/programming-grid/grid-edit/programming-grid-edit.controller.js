@@ -95,7 +95,10 @@
 
         function _removeGrid(program) {
             let gridsDel = vm.listTable
-                .filter(function(prog) {return prog.idGridParent === program.idGrid || program.idGrid === prog.idGrid;});
+                .filter(function(prog) {
+                    if(!prog) { return false; }
+                    return prog.idGridParent === program.idGrid || program.idGrid === prog.idGrid;
+                });
             RadioService.deleteProgramGrid(program.idGrid)
                 .then(function() {
                     toastr.success('Bloco apagado com sucesso.');
@@ -136,7 +139,9 @@
         function _generateChildrenGrid(grid) {
             return grid.program.children.map( function(child) {
                 let gridChild = child.grid_program.find(function(gc) { return gc.week_day === grid.week_day; });
-                return _generateItemGrid(child, gridChild, grid.week_day, grid.program, grid.id);
+                if(gridChild) {
+                    return _generateItemGrid(child, gridChild, grid.week_day, grid.program, grid.id);
+                }
             });
         }
 
