@@ -17,6 +17,7 @@
         vm.listProgramsGrid = [];
         vm.listTable = [];
         vm.loading = false;
+        vm.requiredForm = false;
         vm.weekDayActive;
         vm.dataProgram = {};
 
@@ -40,7 +41,10 @@
         }
 
         function addProgram() {
-            console.log('addProgram', vm.dataProgram);
+            if(_hasRequired()) {
+                toastr.warning('Atenção todos os campos são obrigatório para adicionar o programa.');
+                return;
+            }
             vm.loading =  true;
             var promises;
             if (vm.dataProgram.program.children && !vm.dataProgram.program.children.length) {
@@ -53,7 +57,16 @@
                     _loadGrid();
                     vm.dataProgram = {};
                 })
-                .catch(function(error) {console.error(error);});
+                .catch(function(error) {console.error(error);})
+                .finally(function() { vm.loading = false; });
+        }
+
+        function _hasRequired() {
+            vm.requiredForm = true;
+            if(vm.dataProgram.program && vm.dataProgram.time_start && vm.dataProgram.time_end) {
+                vm.requiredForm = false;
+            }
+            return vm.requiredForm;
         }
 
         function _saveChildrenTime(data) {
@@ -92,15 +105,6 @@
                 .catch(function(error) { console.error(error); });
         }
 
-        function _loadGrid() {
-            RadioService.radioProgramming()
-                .then(function(res) {
-                    vm.listProgramsGrid = res.data.items;
-                    generateListTable();
-                });
-        }
-
-
         function _loadPrograms() {
             RadioService.listPrograms()
                 .then(function(res) {
@@ -109,19 +113,31 @@
                 });
         }
 
-        function generateListTable() {
+        function _loadGrid() {
+            RadioService.radioProgramming()
+                .then(function(res) {
+                    vm.listProgramsGrid = res.data.items;
+                    _generateListTable();
+                });
+        }
+
+        function _generateListTable() {
             vm.listTable = [];
             let listParent = vm.listProgramsGrid
                 .filter(function(grid) { return !grid.program.parent; });
             listParent.forEach(function(grid) {
-                let children = grid.program.children
-                    .map( function(child) {
-                        return _generateItemGrid(child, child.grid_program[0], grid.week_day, grid.program, grid.id);
-                    });
+                let children = _generateChildrenGrid(grid);
                 vm.listTable.push(_generateItemGrid(grid.program, grid, grid.week_day));
                 vm.listTable = vm.listTable.concat(children);
             });
-            console.log('generateListTable', vm.listTable);
+            console.log('_generateListTable', vm.listTable);
+        }
+
+        function _generateChildrenGrid(grid) {
+            return grid.program.children.map( function(child) {
+                let gridChild = child.grid_program.find(function(gc) { return gc.week_day === grid.week_day; });
+                return _generateItemGrid(child, gridChild, grid.week_day, grid.program, grid.id);
+            });
         }
 
         function _generateItemGrid(program, grid, weekDay, parent, idGridParent) {

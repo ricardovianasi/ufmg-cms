@@ -38,7 +38,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="form-group col-xs-12 col-md-7">
+                    <div class="form-group col-xs-12 col-md-7" ng-class="{'has-error': vm.requiredForm && !vm.dataProgram.program}">
                         <label>Programa Bloco:</label>
                         <ui-select ng-model="vm.dataProgram.program" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
                             <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.title }}</ui-select-match>
@@ -47,30 +47,18 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <!-- <div class="form-group col-xs-12 col-md-4">
-                        <label>Dentro do programa: </label>
-                        <ui-select ng-model="vm.dataProgram.programParent" theme="bootstrap" class="ui-select" title="Selecione um programa pai">
-                            <ui-select-match placeholder="Selecione um programa pai...">{{ $select.selected.program.title }}</ui-select-match>
-                            <ui-select-choices repeat="program.program as program in vm.listFiltered | filter: $select.search track by $index">
-                                <div >
-                                    <span ng-bind-html="program.program.title | highlight: $select.search"></span>
-                                    <span ng-bind-html="' ' + program.time_start + ' às ' + program.time_end"></span>
-                                </div>
-                            </ui-select-choices>
-                        </ui-select>
-                    </div> -->
                 </div>
                 <div class="row">
-                    <div class="form-group col-xs-12 col-md-2">
+                    <div class="form-group col-xs-12 col-md-2" ng-class="{'has-error': vm.requiredForm && !vm.dataProgram.time_start}">
                         <label>Ínicio:</label>
                         <input ng-model="vm.dataProgram.time_start" type="time" class="form-control">
                     </div>
-                    <div class="form-group col-xs-12 col-md-2">
+                    <div class="form-group col-xs-12 col-md-2" ng-class="{'has-error': vm.requiredForm && !vm.dataProgram.time_end}">
                         <label>Fim:</label>
                         <input ng-model="vm.dataProgram.time_end" type="time" class="form-control">
                     </div>
                     <div class="col-md-3">
-                        <button ng-click="vm.addProgram()" class="btn btn-secondary btn-add">
+                        <button ng-disabled="vm.loading" ng-click="vm.addProgram()" class="btn btn-secondary btn-add">
                             <i class="fa fa-plus"></i> Adicionar na grade de {{ vm.weekDayActive.label }}
                         </button>
                     </div>
