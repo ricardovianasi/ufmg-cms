@@ -1,14 +1,24 @@
 <div class="modal-header">
     <h3 class="modal-title">{{ vm.program.title }}</h3>
-    <small>{{ vm.time.timeStart }} às {{ vm.time.timeEnd }}</small>
+    <small ng-show="!vm.isEdit">{{ vm.time.timeStart }} às {{ vm.time.timeEnd }}</small>
 </div>
 <div class="modal-body">
+    <div class="row" ng-show="vm.isEdit">
+        <div class="col-md-6 form-group" ng-class="{'has-error': !vm.program.time_start}">
+            <label>Início:</label>
+            <input ng-model="vm.program.time_start" type="time" class="form-control">
+        </div>
+        <div class="col-md-6 form-group" ng-class="{'has-error': !vm.program.time_end}">
+            <label>Fim:</label>
+            <input ng-model="vm.program.time_end" type="time" class="form-control">
+        </div>
+    </div>
     <div class="row" ng-repeat="child in vm.program.children">
         <div class="col-md-4 title-child">
             <span class="title">{{ child.title }}</span>
         </div>
         <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_start}">
-            <label>Ínicio:</label>
+            <label>Início:</label>
             <input ng-model="child.time_start" type="time" class="form-control">
         </div>
         <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_end}">

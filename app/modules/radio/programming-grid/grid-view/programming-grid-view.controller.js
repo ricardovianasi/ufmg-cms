@@ -105,12 +105,12 @@
             vm.events = [];
             vm.eventSources = [vm.events];
             vm.uiConfig = {
-                calendar: { height: 450, editable: true, defaultView: 'agendaWeek', droppable: true, allDaySlot: false,
+                calendar: { height: 450, editable: false, defaultView: 'agendaWeek', droppable: true, allDaySlot: false,
                     header: { left: '', center: '', right: '' }, dragOpacity: 0.7, timeFormat: 'H:mm',
-                    eventReceive: whenReceive,
-                    eventDrop: whenChange,
-                    eventResize: whenChange,
-                    eventClick: _removeEventGrid
+                    // eventReceive: whenReceive,
+                    // eventDrop: whenChange,
+                    // eventResize: whenChange,
+                    // eventClick: _removeEventGrid
                 }
             };
         }

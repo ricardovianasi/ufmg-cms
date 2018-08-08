@@ -80,7 +80,7 @@
                             </td>
                             <td>{{ program.timeStart }} às {{ program.timeEnd }}</td>
                             <td class="text-center">
-                                <a ng-if="!program.idParent" uib-tooltip="Editar" ng-href="#/page/edit/{{ item.id }}" class="btn btn-warning">
+                                <a ng-if="!program.idParent" uib-tooltip="Editar" ng-click="vm.editGrid(program)" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <a ng-if="!program.idParent" uib-tooltip="Excluir" ng-click="vm.removeGrid(program)" class="btn btn-danger">

@@ -12,6 +12,7 @@
         vm.changeDay = changeDay;
         vm.addProgram = addProgram;
         vm.removeGrid = removeGrid;
+        vm.editGrid = editGrid;
 
         vm.listPrograms = [];
         vm.listProgramsGrid = [];
@@ -33,8 +34,27 @@
             vm.weekDayActive = weekDay;
         }
 
+        function editGrid(program) {
+            let listChildren = vm.listTable.filter(function(item) { 
+                return item.weekDay === vm.weekDayActive.code && item.idGridParent === program.idGrid;
+            });
+            let gridEdit = { parent: program, children: listChildren };
+            let instanceModal = _openModalGrid(undefined, gridEdit);
+            instanceModal.result.then(function(data) {
+                let promises = data.map(function(programmingGrid) {
+                    return RadioService.updateProgramGrid(programmingGrid, programmingGrid.id);
+                });
+                Promise.all(promises).then(function() { 
+                    _loadGrid();
+                    toastr.success('Grade atualizada com sucesso!');
+                });
+            }).catch(function(error) { console.error(error); });
+
+        }
+
         function removeGrid(program) {
-            ModalService.confirm('Você deseja excluir este bloco de programa?', ModalService.MODAL_MEDIUM, { isDanger: true })
+            let msg = 'Você deseja excluir este bloco de programa ' + program.titleProgram + '?';
+            ModalService.confirm(msg, ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result.then(function() {
                     _removeGrid(program);
                 }).catch(function(error) {console.log(error);});
@@ -52,13 +72,11 @@
             } else {
                 promises = _saveChildrenTime(vm.dataProgram);
             }
-            promises                    
-                .then(function(resDatas) { 
-                    _loadGrid();
-                    vm.dataProgram = {};
-                })
-                .catch(function(error) {console.error(error);})
-                .finally(function() { vm.loading = false; });
+            promises.then(function() { 
+                _loadGrid();
+                vm.dataProgram = {};
+            }).catch(function(error) {console.error(error);})
+            .finally(function() { vm.loading = false; });
         }
 
         function _hasRequired() {
@@ -70,9 +88,7 @@
         }
 
         function _saveChildrenTime(data) {
-            let pathTemplate = 'modules/radio/programming-grid/modal-time-childrens/modal-time-childrens.template.html';
-            let resolve = { dataProgram: function() { return data; } };
-            let instanceModal = ModalService.openModal(pathTemplate, 'TimeChildrensController as vm', resolve);
+            let instanceModal = _openModalGrid(data)
             return instanceModal.result.then(function(res) {
                 let listPromises = res.map(function(gridToSave) {
                     gridToSave.week_day = vm.weekDayActive.code;
@@ -108,6 +124,12 @@
                 .catch(function(error) { console.error(error); });
         }
 
+        function _openModalGrid(dataProgram, gridEdit) {
+            let pathTemplate = 'modules/radio/programming-grid/modal-time-childrens/modal-time-childrens.template.html';
+            let resolve = { dataProgram: function() { return dataProgram; },  gridEdit: function() { return gridEdit; }};
+            return ModalService.openModal(pathTemplate, 'TimeChildrensController as vm', resolve);
+        }
+
         function _loadPrograms() {
             RadioService.listPrograms()
                 .then(function(res) {
@@ -133,7 +155,6 @@
                 vm.listTable.push(_generateItemGrid(grid.program, grid, grid.week_day));
                 vm.listTable = vm.listTable.concat(children);
             });
-            console.log('_generateListTable', vm.listTable);
         }
 
         function _generateChildrenGrid(grid) {
@@ -156,7 +177,6 @@
                 weekDay: weekDay,
                 titleProgram: program.title,
             };
-            console.log('_generateItemGrid', obj);
             return obj;
         }
 
