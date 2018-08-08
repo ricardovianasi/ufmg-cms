@@ -8,7 +8,6 @@
     /** ngInject */
     function GridEditController(RadioService, $q, toastr, ModalService) {
         var vm = this;
-
         vm.changeDay = changeDay;
         vm.addProgram = addProgram;
         vm.removeGrid = removeGrid;
@@ -27,9 +26,7 @@
         ////////////////
 
         function changeDay(weekDay) {
-            vm.weekdays.forEach(function(day) {
-                day.active = false;
-            });
+            vm.weekdays.forEach(function(day) { day.active = false; });
             weekDay.active = true;
             vm.weekDayActive = weekDay;
         }
@@ -60,9 +57,9 @@
                 }).catch(function(error) {console.log(error);});
         }
 
-        function addProgram() {
-            if(_hasRequired()) {
-                toastr.warning('Atenção todos os campos são obrigatório para adicionar o programa.');
+        function addProgram(formDataProgram) {
+            if(formDataProgram.$invalid) {
+                toastr.warning('Atenção todos aos campos em vermelho.');
                 return;
             }
             vm.loading =  true;
@@ -77,14 +74,6 @@
                 vm.dataProgram = {};
             }).catch(function(error) {console.error(error);})
             .finally(function() { vm.loading = false; });
-        }
-
-        function _hasRequired() {
-            vm.requiredForm = true;
-            if(vm.dataProgram.program && vm.dataProgram.time_start && vm.dataProgram.time_end) {
-                vm.requiredForm = false;
-            }
-            return vm.requiredForm;
         }
 
         function _saveChildrenTime(data) {

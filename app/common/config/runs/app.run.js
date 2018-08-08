@@ -50,6 +50,17 @@
             $location.path('/login');
         };
 
+        $rootScope.getFormValidation = function (dataForm, field, error) {
+            let result = {
+                isValid: dataForm[field].$valid,
+                error: dataForm[field].$error,
+                submitted: dataForm.$submitted,
+                isInvalid: dataForm.$submitted && dataForm[field].$invalid
+            };
+            result.hasError = error ? result.submitted && result.error[error] : false;
+            return result;
+        };
+
         DTDefaultOptions.setLoadingTemplate('<img src="assets/img/loading.gif">');
     }
 })();
