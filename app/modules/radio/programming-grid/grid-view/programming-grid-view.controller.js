@@ -6,7 +6,7 @@
         .controller('GridViewController', GridViewController);
 
     /** ngInject */
-    function GridViewController(RadioService, toastr, uiCalendarConfig) {
+    function GridViewController(RadioService, toastr, uiCalendarConfig, PermissionService) {
         var vm = this;
 
         activate();
@@ -16,16 +16,9 @@
         function _loadGrid() {
             RadioService.radioProgramming()
                 .then(function(res) {
+                    _permissions();
                     _insertProgramOnGrid(res.data.items);
                     console.log('loadGrid', res);
-                });
-        }
-
-        function _loadPrograms() {
-            RadioService.listPrograms()
-                .then(function(res) {
-                    vm.listProgramming = res.data.items;
-                    console.log('loadPrograms', res);
                 });
         }
 
@@ -115,10 +108,14 @@
             };
         }
 
+        function _permissions() {
+            vm.canPut = PermissionService.canPut('radio_programming_grid');
+            vm.canPost = PermissionService.canPost('radio_programming_grid');
+        }
+
         function activate() {
             _configCalendar();
             _loadGrid();
-            _loadPrograms();
         }
     }
 })();

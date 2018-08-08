@@ -100,6 +100,7 @@
         }
 
         function _getParamsOrderGrid() {
+            dataTableConfigService.setColumnsHasOrderAndSearch([]);
             return {
                 order_by: { field: 'timeStart', direction: 'ASC' },
             };

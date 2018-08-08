@@ -28,16 +28,7 @@
 </div>
 <div class="row">
     <section class="col-sm-12 panel panel-default">
-        <!-- <input type="search" ng-model="nameProgram" placeholder="Busque pelo nome da programação" class="form-control">
-        <ul class="collection-programming">
-            <li ng-repeat="program in vm.listProgramming | filter:{title: nameProgram}" draggable data-event="{{ program }}">
-                <div class="card-programming">
-                    <div class="title"> {{ program.title }} </div>
-                    <p class="time"> {{ program.time }} </p>
-                </div>
-            </li>
-        </ul> -->
-        <div class="btn-toolbar">
+        <div class="btn-toolbar" ng-if="vm.canPut || vm.canPost">
             <div class="pull-right">
                 <a class="btn btn-secondary btn-lg" ng-href="#/radio_programming_grid/edit"><i class="fa fa-cog"></i> EDIÇÃO DA GRADE</a>
             </div>
