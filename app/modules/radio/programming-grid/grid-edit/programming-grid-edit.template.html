@@ -69,7 +69,9 @@
                         </div>
                     </div>
                     <div class="helper text-danger">
-                        <span ng-show="dataProgram.time_start.$error.max">A data Início não pode ser maior que a data Fim.</span>
+                        <span ng-show="getFormValidation(dataProgram, 'time_start', 'max').hasError">
+                            A data Início não pode ser maior que a data Fim.
+                        </span>
                     </div>
                 </form>
                 

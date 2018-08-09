@@ -101,7 +101,6 @@
                                 menuItems: [
                                     { icon: 'fa fa-television', name: 'Programas', location: 'radio_programming/programs', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
                                     { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/view', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
-                                    { icon: 'fa fa-tags', name: 'Categorias', location: 'radio_category/category-list', isActive: false, isOpen: false, enabled: permissions.hasRadioCategory },
                                     { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }
                                 ]
                             }, 

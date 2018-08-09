@@ -2,43 +2,55 @@
     <h3 class="modal-title">{{ vm.program.title }}</h3>
     <small ng-show="!vm.isEdit">{{ vm.time.timeStart }} às {{ vm.time.timeEnd }}</small>
 </div>
-<div class="modal-body modal-time-grid">
-    <div class="row" ng-show="vm.isEdit">
-        <div class="col-md-6 form-group" ng-class="{'has-error': !vm.program.time_start}">
-            <label>Início:</label>
-            <input ng-model="vm.program.time_start" type="time" class="form-control">
-        </div>
-        <div class="col-md-6 form-group" ng-class="{'has-error': !vm.program.time_end}">
-            <label>Fim:</label>
-            <input ng-model="vm.program.time_end" type="time" class="form-control">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p class="helper">
-                Defina os horários dos programas filhos abaixo e clica em <b>Salvar</b>  para adicionar a grade:
-            </p>
-        </div>
-    </div>
-    <ul class="list-childs">
-        <li class="row item-child" ng-repeat="child in vm.program.children">
-            <div class="col-md-4 title-child">
-                <span class="title">{{ child.title }}</span>
-            </div>
-            <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_start}">
+<form name="dataForm" novalidate>
+    <div class="modal-body modal-time-grid">
+        <div class="row" ng-if="vm.isEdit">
+            <div class="col-md-6 form-group" ng-class="{'has-error': getFormValidation(dataForm, 'time_start').isInvalid}">
                 <label>Início:</label>
-                <input ng-model="child.time_start" type="time" class="form-control">
+                <input name="time_start" ng-max="vm.program.time_end" ng-model="vm.program.time_start" type="time" class="form-control" ng-required="vm.isEdit">
+                <span ng-show="getFormValidation(dataForm, 'time_start', 'required').hasError" class="text-danger">Campo obrigatório</span>
             </div>
-            <div class="col-md-4 form-group" ng-class="{'has-error': vm.requiredForm && !child.time_end}">
+            <div class="col-md-6 form-group" ng-class="{'has-error': getFormValidation(dataForm, 'time_end').isInvalid}">
                 <label>Fim:</label>
-                <input ng-model="child.time_end" type="time" class="form-control">
+                <input name="time_end" ng-model="vm.program.time_end" type="time" class="form-control" ng-required="vm.isEdit">
+                <span ng-show="getFormValidation(dataForm, 'time_end', 'required').hasError" class="text-danger">Campo obrigatório</span>
             </div>
-        </li>
-    </ul>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="vm.dismiss()"><i class="fa fa-times"></i> Cancelar
-    </button>
-    <button class="btn btn-success" ng-click="vm.saveItem()"><i class="fa fa-check"></i> Salvar
-    </button>
-</div>
+            <span class="text-danger" ng-show="getFormValidation(dataForm, 'time_start', 'max').hasError">
+                A data Início não pode ser maior que a data Fim.
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="helper">
+                    Defina os horários dos programas filhos abaixo e clica em <b>Salvar</b> para atualizar a grade:
+                </p>
+            </div>
+        </div>
+        <ul class="list-childs">
+            <li class="row item-child" ng-repeat="child in vm.program.children">
+                <div class="col-md-4 title-child">
+                    <span class="title">{{ child.title }}</span>
+                </div>
+                <div class="col-md-4 form-group" ng-class="{'has-error': getFormValidation(dataForm, {{$index}} + '_child_time_start').isInvalid}">
+                    <label>Início:</label>
+                    <input name="{{$index}}_child_time_start" ng-max="child.time_end" ng-model="child.time_start" type="time" class="form-control" required>
+                    <span ng-show="getFormValidation(dataForm, {{$index}} + '_child_time_start', 'required').hasError" class="text-danger">Campo obrigatório</span>
+                </div>
+                <div class="col-md-4 form-group" ng-class="{'has-error': getFormValidation(dataForm, {{$index}} + '_child_time_end').isInvalid}">
+                    <label>Fim:</label>
+                    <input name="{{$index}}_child_time_end" ng-model="child.time_end" type="time" class="form-control" required>
+                    <span ng-show="getFormValidation(dataForm, {{$index}} + '_child_time_end', 'required').hasError" class="text-danger">Campo obrigatório</span>
+                </div>
+                <div class="col-md-12 text-danger text-center" ng-show="getFormValidation(dataForm, {{$index}} + '_child_time_start', 'max').hasError">
+                    A data Início não pode ser maior que a data Fim.
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button  type="button" class="btn btn-primary" ng-click="vm.dismiss()"><i class="fa fa-times"></i> Cancelar
+        </button>
+        <button  type="submit" class="btn btn-success" ng-click="vm.saveItem(dataForm)"><i class="fa fa-check"></i> Salvar
+        </button>
+    </div>
+</form>

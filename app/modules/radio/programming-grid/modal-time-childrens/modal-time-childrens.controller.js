@@ -6,7 +6,7 @@
         .controller('TimeChildrensController', TimeChildrensController);
 
     /** ngInject */
-    function TimeChildrensController($uibModalInstance, dataProgram, gridEdit) {
+    function TimeChildrensController($uibModalInstance, dataProgram, gridEdit, toastr) {
         var vm = this;
         
         vm.requiredForm = false;
@@ -23,11 +23,11 @@
             $uibModalInstance.dismiss('Canceled');
         }
 
-        function saveItem() {
-            if (_hasRequired()) {
+        function saveItem(dataForm) {
+            if (dataForm.$invalid) {
+                toastr.warning('Atenção todos aos campos em vermelho.');
                 return;
             }
-            vm.submitted = true;
             let listProgramsToSave = vm.program.children
                 .map(function(child) {return _generateProgramGrid(child);});
             listProgramsToSave.push(_generateProgramGrid(vm.program));
