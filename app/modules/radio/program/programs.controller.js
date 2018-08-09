@@ -25,6 +25,7 @@
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'title' },
                 { index: 1, filter: 'author', name: 'name' },
+                { index: 2, filter: 'parent', name: 'title' },
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
         }

@@ -15,10 +15,15 @@
 
         vm.setImageCover = setImageCover;
         vm.save = save;
+        vm.hasChildren = hasChildren;
 
         activate();
 
         ////////////////
+
+        function hasChildren() {
+            return vm.program.children.length;
+        }
 
         function setImageCover(imageSelected) {
             if(!imageSelected) {
@@ -87,7 +92,7 @@
                 .then(function(res) { 
                     _permissions();
                     vm.listProgramBlock = res.data.items.filter(function(program) {
-                        return !program.parent;
+                        return !program.parent && program.id != vm.id;
                     }); 
                 });
         }
@@ -103,6 +108,7 @@
                 id_parent: data.parent ? data.parent.id : null,
                 description: data.description,
                 genre_id: data.genres[0] ? data.genres[0].id : null,
+                children: data.children
             };
             setImageCover(data.image);
         }
@@ -114,7 +120,7 @@
             _loadBlockPrograms();
             if(vm.id) {
                 _getProgram(vm.id);
-            }
+            } 
         }
 
     }

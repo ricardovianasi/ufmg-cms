@@ -60,10 +60,10 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
-                <div class="col-md-6 col-xs-12 form-group">
+                <div class="col-md-6 col-xs-12 form-group" tooltip-enable="vm.hasChildren()" uib-tooltip="Esse programa já é um bloco, não pode estar contido em outro bloco.">
                     <label>Está dentro do bloco:</label> 
                     <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
-                    <ui-select ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
+                    <ui-select ng-disabled="vm.hasChildren()" ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
                         <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.title }}</ui-select-match>
                         <ui-select-choices repeat="program.id as program in vm.listProgramBlock | filter: $select.search track by $index">
                             <div ng-bind-html="program.title | highlight: $select.search"></div>
