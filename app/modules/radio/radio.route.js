@@ -30,7 +30,7 @@
                     controller: 'GridViewController',
                     controllerAs: 'vm'
                 })
-                .when('/radio_programming_grid/edit', {
+                .when('/radio_programming_grid/handle', {
                     templateUrl: 'modules/radio/programming-grid/grid-edit/programming-grid-edit.template.html',
                     controller: 'GridEditController',
                     controllerAs: 'vm'

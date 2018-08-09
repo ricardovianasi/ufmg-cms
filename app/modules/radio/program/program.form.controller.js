@@ -51,7 +51,9 @@
             return RadioService.registerProgram(_getProgramToSave())
                 .then(function(res) {
                     toastr.success('Programa de rádio cadastrado com sucesso!');
-                    $location.path('/radio/edit/' + res.data.id);
+                    if(vm.canPut) {
+                        $location.path('/radio_programming/edit/' + res.data.id);
+                    }
                     vm.program = {title: ''};
                 });
         }

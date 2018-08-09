@@ -6,7 +6,7 @@
         .controller('GridEditController', GridEditController);
 
     /** ngInject */
-    function GridEditController(RadioService, $q, toastr, ModalService) {
+    function GridEditController(RadioService, $q, toastr, ModalService, PermissionService) {
         var vm = this;
         vm.changeDay = changeDay;
         vm.addProgram = addProgram;
@@ -131,6 +131,7 @@
             RadioService.radioProgramming()
                 .then(function(res) {
                     vm.listProgramsGrid = res.data.items;
+                    _permissions();
                     _generateListTable();
                 });
         }
@@ -169,15 +170,21 @@
             return obj;
         }
 
+        function _permissions() {
+            vm.canDelete = PermissionService.canDelete('radio_programming_grid');
+            vm.canPut = PermissionService.canPut('radio_programming_grid');
+            vm.canPost = PermissionService.canPost('radio_programming_grid');
+        }
+
         function activate() {
             vm.weekdays = [
-                {label: 'Domingo', active: true, code: 7},
-                {label: 'Segunda-Feira', active: false, code: 1},
-                {label: 'Terça-Feira', active: false, code: 2},
-                {label: 'Quarta-Feira', active: false, code: 3},
-                {label: 'Quinta-Feira', active: false, code: 4},
-                {label: 'Sexta-Feira', active: false, code: 5},
-                {label: 'Sábado', active: false, code: 6},
+                { label: 'Domingo', active: true, code: 7 },
+                { label: 'Segunda-Feira', active: false, code: 1 },
+                { label: 'Terça-Feira', active: false, code: 2 },
+                { label: 'Quarta-Feira', active: false, code: 3 },
+                { label: 'Quinta-Feira', active: false, code: 4 },
+                { label: 'Sexta-Feira', active: false, code: 5 },
+                { label: 'Sábado', active: false, code: 6 },
             ];
             vm.weekDayActive = vm.weekdays[0];
             _loadGrid();

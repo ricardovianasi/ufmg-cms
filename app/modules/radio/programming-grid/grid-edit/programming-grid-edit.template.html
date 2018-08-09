@@ -38,7 +38,7 @@
             </div>
             <div class="panel-body">
 
-                <form name="dataProgram" class="area-add" novalidate>
+                <form ng-if="vm.canPost" name="dataProgram" class="area-add" novalidate>
                     <div class="row">
                         <div class="form-group col-xs-12 col-md-7" ng-class="{'has-error': getFormValidation(dataProgram, 'program').isInvalid}">
                             <label>* Programa Bloco:</label>
@@ -80,7 +80,7 @@
                         <tr>
                             <th> Programas </th>
                             <th> Horário </th>
-                            <th> Ações </th>
+                            <th ng-if="vm.canPut || vm.canDelete"> Ações </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,17 +91,17 @@
                                 </span>
                             </td>
                             <td>{{ program.timeStart }} às {{ program.timeEnd }}</td>
-                            <td class="text-center">
-                                <a ng-if="!program.idParent" uib-tooltip="Editar" ng-click="vm.editGrid(program)" class="btn btn-warning">
+                            <td ng-if="vm.canPut || vm.canDelete" class="text-center">
+                                <a ng-if="!program.idParent && vm.canPut" uib-tooltip="Editar" ng-click="vm.editGrid(program)" class="btn btn-warning">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a ng-if="!program.idParent" uib-tooltip="Excluir" ng-click="vm.removeGrid(program)" class="btn btn-danger">
+                                <a ng-if="!program.idParent && vm.canDelete" uib-tooltip="Excluir" ng-click="vm.removeGrid(program)" class="btn btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
                         <tr class="odd" ng-show="vm.listFiltered.length === 0">
-                            <td colspan="3" class="text-center">Sem programas cadastrados para este dia.</td>
+                            <td colspan="3" class="text-center">Sem programas neste dia.</td>
                         </tr>
                     </tbody>
                 </table>

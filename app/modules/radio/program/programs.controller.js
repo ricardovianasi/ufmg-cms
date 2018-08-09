@@ -24,8 +24,8 @@
         function _renderDataTable() {
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'title' },
-                { index: 1, filter: 'author', name: 'name' },
-                { index: 2, filter: 'parent', name: 'title' },
+                { index: 1, filter: 'parent', name: 'title' },
+                { index: 2, filter: 'author', name: 'name' },
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
         }
@@ -57,7 +57,7 @@
         }
 
         function showButtonEdit(item) {
-            return PermissionService.canPut('radio_programming', item.id) || vm.canPost;
+            return PermissionService.canPut('radio_programming', item.id);
         }
 
         function _removeProgram(id) {

@@ -104,7 +104,7 @@
             vm.canPut = PermissionService.canPut('radio_genre');
             vm.canDelete = PermissionService.canDelete('radio_genre');
             vm.canPost = PermissionService.canPost('radio_genre');
-            vm.canActions = vm.canPut && vm.canDelete;
+            vm.canActions = vm.canPut || vm.canDelete;
         }
 
         function activate() {
