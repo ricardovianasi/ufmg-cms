@@ -22,7 +22,7 @@
         ////////////////
 
         function hasChildren() {
-            return vm.program.children.length;
+            return vm.program.children && vm.program.children.length;
         }
 
         function setImageCover(imageSelected) {

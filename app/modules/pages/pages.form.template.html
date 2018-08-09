@@ -82,22 +82,26 @@
     </div>
     <div class="col-xs-4">
         <publishment-options is-super-put="isSuperPut" is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
-        <div ng-if="isSuperPut">
-            <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()">
-                A página atual é filha de:
-                <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
+        <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()">
+            <div class="row">
+                <div class="col-md-12 form-group height-select">
+                    <label>A página atual é filha de:</label>
+                    <select-pages-component placeholder="Selecione ou procure a página..." title="Selecione ou procure a página..." page-selected="page.parent"></select-pages-component>
+                </div>
             </div>
-            <div ng-if="isSuperPut" class="panel panel-default" ng-if="User.is_administrator">
-                Tipo da página:
-                <ui-select ng-model="page.page_type" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
-                    <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.name }}</ui-select-match>
-                    <ui-select-choices repeat="type.id as type in typesData.items | filter: $select.search track by $index">
-                        <div ng-bind-html="type.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+            <div class="row">
+                <div class="col-md-12 form-group height-select">
+                    <label>Tipo da página:</label>
+                    <ui-select ng-model="page.page_type" theme="bootstrap" class="ui-select" title="Selecione ou procure a página...">
+                        <ui-select-match placeholder="Selecione ou procure a página...">{{ $select.selected.name }}</ui-select-match>
+                        <ui-select-choices repeat="type.id as type in typesData.items | filter: $select.search track by $index">
+                            <div ng-bind-html="type.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
             </div>
         </div>
-        <div ng-if="viewOnly">
+        <div ng-if="viewOnly" class="panel panel-default">
             <p class="text-primary"> <b> A página atual é filha de: </b> {{ page ? page.parent.title : 'Não tem pai'  }}</p>
             <p class="text-primary"> <b> Tipo da página: </b> {{  page.page_type || 'Sem tipo'  }}</p>
         </div>

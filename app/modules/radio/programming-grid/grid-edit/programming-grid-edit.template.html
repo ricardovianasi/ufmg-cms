@@ -40,7 +40,7 @@
 
                 <form ng-if="vm.canPost" name="dataProgram" class="area-add" novalidate>
                     <div class="row">
-                        <div class="form-group col-xs-12 col-md-7" ng-class="{'has-error': getFormValidation(dataProgram, 'program').isInvalid}">
+                        <div class="form-group col-xs-12 col-md-7 height-select" ng-class="{'has-error': getFormValidation(dataProgram, 'program').isInvalid}">
                             <label>* Programa Bloco:</label>
                             <ui-select required name="program" ng-model="vm.dataProgram.program" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
                                 <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.title }}</ui-select-match>
