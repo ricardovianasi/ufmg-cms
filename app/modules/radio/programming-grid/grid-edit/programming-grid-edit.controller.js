@@ -153,7 +153,8 @@
                 if(gridChild) {
                     return _generateItemGrid(child, gridChild, grid.week_day, grid.program, grid.id);
                 }
-            });
+                return false;
+            }).filter(function (children) {return !!children;});
         }
 
         function _generateItemGrid(program, grid, weekDay, parent, idGridParent) {

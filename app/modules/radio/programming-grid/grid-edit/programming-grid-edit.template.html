@@ -38,7 +38,7 @@
             </div>
             <div class="panel-body">
 
-                <form ng-if="vm.canPost" name="dataProgram" class="area-add" novalidate>
+                <form ng-show="vm.canPost" name="dataProgram" class="area-add" novalidate>
                     <div class="row">
                         <div class="form-group col-xs-12 col-md-7 height-select" ng-class="{'has-error': getFormValidation(dataProgram, 'program').isInvalid}">
                             <label>* Programa Bloco:</label>
