@@ -6,15 +6,24 @@
         .controller('UseTermController', UseTermController);
 
     /** ngInject */
-    function UseTermController(UseTermService, PermissionService, toastr) {
+    function UseTermController(UseTermService, PermissionService, toastr, authService) {
         var vm = this;
         vm.isAdmin = false;
+        vm.idUser;
 
         vm.updateTerm = updateTerm;
+        vm.signTerm = signTerm;
 
         activate();
 
         ////////////////
+
+        function signTerm() {
+            authService.account()
+                .then(function(res) { return res.data.id; })
+                .then(function(idUser) { return UseTermService.signTerm(idUser); })
+                .then(function() { toastr.success('Termo assinado com sucesso.'); });
+        }
 
         function updateTerm() {
             var data = {

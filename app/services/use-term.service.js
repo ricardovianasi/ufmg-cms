@@ -29,6 +29,7 @@
         }
 
         function signTerm(idUser) {
+            console.log({id: idUser});
             return $http.put(urlSigned, {id: idUser});
         }
     }
