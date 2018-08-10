@@ -6,133 +6,78 @@
             /** ngInject */
             function ($log, PermissionService, authService, $q) {
                 $log.info('NavigationService');
-
-                var hasPermissionCalendar;
-                var hasPermissionClipping;
-                var hasPermissionCourseDoc;
-                var hasPermissionCourseGra;
-                var hasPermissionCourseMas;
-                var hasPermissionCourseSpe;
-                var hasPermissionEditions;
-                var hasPermissionEvents;
-                var hasPermissionFaq;
-                var hasPermissionTags;
-                var hasPermissionGallery;
-                var hasPermissionGlossary;
-                var hasPermissionHighlightedPress;
-                var hasPermissionMenu;
-                var hasPermissionNewsAgencia;
-                var hasPermissionNewsFiqueAtento;
-                var hasPermissionNewsTv;
-                var hasPermissionNewsRadio;
-                var hasPermissionPage;
-                var hasPermissionRector;
-                var hasPermissionRelease;
-                var hasPermissionUser;
+                var permissions = {};
 
                 function loadPermission() {
-                    hasPermissionCalendar = hasPermission('calendar');
-                    hasPermissionClipping = hasPermission('clipping');
-                    hasPermissionCourseDoc = hasPermission('course_doctorate');
-                    hasPermissionCourseGra = hasPermission('course_graduation');
-                    hasPermissionCourseMas = hasPermission('course_master');
-                    hasPermissionCourseSpe = hasPermission('course_specialization');
-                    hasPermissionEditions = hasPermission('editions');
-                    hasPermissionEvents = hasPermission('events');
-                    hasPermissionFaq = hasPermission('faq');
-                    hasPermissionTags = hasPermission('tags');
-                    hasPermissionGallery = hasPermission('gallery');
-                    hasPermissionGlossary = hasPermission('glossary');
-                    hasPermissionHighlightedPress = hasPermission('highlighted_press');
-                    hasPermissionMenu = hasPermission('menu');
-                    hasPermissionNewsAgencia = hasPermission('news_agencia_de_agencia');
-                    hasPermissionNewsFiqueAtento = hasPermission('news_fique_atento');
-                    hasPermissionNewsTv = hasPermission('news_tv');
-                    hasPermissionNewsRadio = hasPermission('news_radio');
-                    hasPermissionPage = hasPermission('page');
-                    hasPermissionRector = hasPermission('rector');
-                    hasPermissionRelease = hasPermission('release');
-                    hasPermissionUser = hasPermission('user');
+                    permissions = {
+                        hasCalendar: hasPerm('calendar'), hasClipping: hasPerm('clipping'), hasTermsUse: hasPerm('term_of_use'),
+                        hasCourseDoc: hasPerm('course_doctorate'), hasCourseGra: hasPerm('course_graduation'),
+                        hasCourseMas: hasPerm('course_master'), hasCourseSpe: hasPerm('course_specialization'),
+                        hasEditions: hasPerm('editions'), hasEvents: hasPerm('events'),
+                        hasFaq: hasPerm('faq'), hasTags: hasPerm('tags'),
+                        hasGallery: hasPerm('gallery'), hasGlossary: hasPerm('glossary'),
+                        hasHighlightedPress: hasPerm('highlighted_press'), hasMenu: hasPerm('menu'),
+                        hasNewsAgencia: hasPerm('news_agencia_de_agencia'), hasNewsFiqueAtento: hasPerm('news_fique_atento'),
+                        hasNewsTv: hasPerm('news_tv'), hasNewsRadio: hasPerm('news_radio'),
+                        hasPage: hasPerm('page'), hasRector: hasPerm('rector'),
+                        hasRelease: hasPerm('release'), hasUser: hasPerm('user'),
+                        hasRadioGrid: hasPerm('radio_programming_grid'), hasRadioProgramming: hasPerm('radio_programming'),
+                        hasRadioCategory: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'),
+                    };
+                }
+
+                function hasPermissionRadioProgramming() {
+                    return ['radio_programming', 'radio_genre', 'radio_category', 'radio_programming_grid']
+                        .reduce(function(result, key) {return result || hasPerm(key); }, false);
                 }
 
                 function hasPermissionCourse() {
-                    return hasPermissionCourseDoc ||
-                        hasPermissionCourseGra ||
-                        hasPermissionCourseMas ||
-                        hasPermissionCourseSpe;
+                    return permissions.hasCourseDoc ||
+                        permissions.hasCourseGra ||
+                        permissions.hasCourseMas ||
+                        permissions.hasCourseSpe;
                 }
 
                 function hasPermissionPeriodical() {
-                    return hasPermission('periodical') ||
-                        hasPermissionEditions;
+                    return hasPerm('periodical') || permissions.hasEditions;
                 }
 
-                function hasPermission(context) {
+                function hasPerm(context) {
                     return PermissionService.hasPermission(context);
                 }
 
                 function hasPermissionNews() {
-                    return hasPermissionNewsAgencia ||
-                        hasPermissionNewsFiqueAtento ||
-                        hasPermissionNewsTv ||
-                        hasPermissionNewsRadio;
+                    return permissions.hasNewsAgencia ||
+                        permissions.hasNewsFiqueAtento ||
+                        permissions.hasNewsTv ||
+                        permissions.hasNewsRadio;
                 }
 
                 function hasPermissionAccessory() {
-                    return hasPermissionRelease ||
-                        hasPermissionClipping ||
-                        hasPermissionHighlightedPress;
+                    return permissions.hasRelease ||
+                        permissions.hasClipping ||
+                        permissions.hasHighlightedPress;
                 }
 
                 function get() {
                     var defer = $q.defer();
-                    authService
-                        .account()
-                        .then(function () {
-                            loadPermission();
-                            defer.resolve([{
-                                icon: 'fa fa-file-o',
-                                name: 'Páginas',
-                                location: 'page',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionPage
-                            }, {
-                                icon: 'fa fa-book',
-                                name: 'Publicações Jornalísticas',
-                                location: 'periodical',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionPeriodical()
-                            }, {
+                    authService.account().then(function () {
+                        loadPermission();
+                        defer.resolve([
+                            { icon: 'fa fa-file-o', name: 'Páginas', location: 'page', isActive: false, isOpen: false, enabled: permissions.hasPage }, 
+                            { icon: 'fa fa-book', name: 'Publicações Jornalísticas', location: 'periodical', isActive: false, isOpen: false, enabled: hasPermissionPeriodical() }, 
+                            {
                                 icon: 'fa fa-group',
                                 name: 'Assessoria',
                                 location: false,
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionAccessory(),
-                                menuItems: [{
-                                    icon: 'fa fa-bullhorn',
-                                    name: 'Releases',
-                                    location: 'release',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionRelease
-                                }, {
-                                    icon: 'fa fa-thumb-tack',
-                                    name: 'Clippings',
-                                    location: 'clipping',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionClipping
-                                }, {
-                                    icon: 'fa fa-star',
-                                    name: 'Destaque',
-                                    location: 'highlighted_press',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionHighlightedPress
-                                }]
+                                menuItems: [
+                                    { icon: 'fa fa-bullhorn', name: 'Releases', location: 'release', isActive: false, isOpen: false, enabled: permissions.hasRelease },
+                                    { icon: 'fa fa-thumb-tack', name: 'Clippings', location: 'clipping', isActive: false, isOpen: false, enabled: permissions.hasClipping }, 
+                                    { icon: 'fa fa-star', name: 'Destaque', location: 'highlighted_press', isActive: false, isOpen: false, enabled: permissions.hasHighlightedPress }
+                                ]
                             }, {
                                 icon: 'fa fa-newspaper-o',
                                 name: 'Notícias',
@@ -140,100 +85,36 @@
                                 isActive: false,
                                 isOpen: false,
                                 enabled: hasPermissionNews(),
-                                menuItems: [{
-                                    icon: 'fa fa-file-text',
-                                    name: 'Agência',
-                                    location: 'news/news_agencia_de_agencia',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionNewsAgencia,
-                                }, {
-                                    icon: 'fa fa-eye',
-                                    name: 'Fique Atento',
-                                    location: 'news/news_fique_atento',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionNewsFiqueAtento,
-                                }, {
-                                    icon: 'fa fa-play-circle-o',
-                                    name: 'TV',
-                                    location: 'news/news_tv',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionNewsTv
-                                }, {
-                                    icon: 'fa fa-volume-up',
-                                    name: 'Radio',
-                                    location: 'news/news_radio',
-                                    isActive: false,
-                                    isOpen: false,
-                                    enabled: hasPermissionNewsRadio
-                                }]
+                                menuItems: [
+                                    { icon: 'fa fa-file-text', name: 'Agência', location: 'news/news_agencia_de_agencia', isActive: false, isOpen: false, enabled: permissions.hasNewsAgencia }, 
+                                    { icon: 'fa fa-eye', name: 'Fique Atento', location: 'news/news_fique_atento', isActive: false, isOpen: false, enabled: permissions.hasNewsFiqueAtento }, 
+                                    { icon: 'fa fa-play-circle-o', name: 'TV', location: 'news/news_tv', isActive: false, isOpen: false, enabled: permissions.hasNewsTv },
+                                    { icon: 'fa fa-volume-up', name: 'Radio', location: 'news/news_radio', isActive: false, isOpen: false, enabled: permissions.hasNewsRadio }
+                                ]
                             }, {
-                                icon: 'fa fa-circle-o',
-                                name: 'Cursos',
-                                location: 'course',
+                                icon: 'fa fa-podcast',
+                                name: 'Rádio',
+                                location: false,
                                 isActive: false,
                                 isOpen: false,
-                                enabled: hasPermissionCourse()
-                            }, {
-                                icon: 'glyphicon glyphicon-time',
-                                name: 'Eventos',
-                                location: 'events',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionEvents
-                            }, {
-                                icon: 'fa fa-picture-o',
-                                name: 'Galerias',
-                                location: 'gallery',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionGallery
-                            }, {
-                                icon: 'fa fa-calendar',
-                                name: 'Calendário Acadêmico',
-                                location: 'calendar',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionCalendar
-                            }, {
-                                icon: 'fa fa-bars',
-                                name: 'Novo Menu',
-                                location: 'new-menu',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionMenu
-                            }, {
-                                icon: 'fa fa-bars',
-                                name: 'Antigo Menu',
-                                location: 'menu',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionMenu
-                            }, {
-                                icon: 'fa fa-question-circle',
-                                name: 'FAQ',
-                                location: 'faq',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionFaq
-                            }, {
-                                icon: 'fa fa-tag',
-                                name: 'Tags',
-                                location: 'tags-manager',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionTags
-                            }, {
-                                icon: 'fa fa-users',
-                                name: 'Usuários',
-                                location: 'user',
-                                isActive: false,
-                                isOpen: false,
-                                enabled: hasPermissionUser
-                            }]);
-                        });
+                                enabled: hasPermissionRadioProgramming(),
+                                menuItems: [
+                                    { icon: 'fa fa-television', name: 'Programas', location: 'radio_programming/programs', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
+                                    { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/handle', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
+                                    { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }
+                                ]
+                            }, 
+                            { icon: 'fa fa-circle-o', name: 'Cursos', location: 'course', isActive: false, isOpen: false, enabled: hasPermissionCourse() }, 
+                            { icon: 'glyphicon glyphicon-time', name: 'Eventos', location: 'events', isActive: false, isOpen: false, enabled: permissions.hasEvents }, 
+                            { icon: 'fa fa-picture-o', name: 'Galerias', location: 'gallery', isActive: false, isOpen: false, enabled: permissions.hasGallery }, 
+                            { icon: 'fa fa-calendar', name: 'Calendário Acadêmico', location: 'calendar', isActive: false, isOpen: false, enabled: permissions.hasCalendar }, 
+                            { icon: 'fa fa-bars', name: 'Menu', location: 'new-menu', isActive: false, isOpen: false, enabled: permissions.hasMenu }, 
+                            { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq }, 
+                            { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags }, 
+                            { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser },
+                            { icon: 'fa fa-file-text-o', name: 'Termos de uso', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasTermsUse }
+                        ]);
+                    });
                     return defer.promise;
                 }
                 return {
