@@ -7,7 +7,7 @@ function getPort() {
 }
 
 function getBasePath() {
-    return './' + getPort() + '-' + basePath;
+    return './' + (argv.port === undefined ? basePath : getPort() + '-' + basePath);
 }
 
 var commons = {
