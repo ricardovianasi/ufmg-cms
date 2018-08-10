@@ -12,11 +12,11 @@
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
                     <li> <a href="#/"> <i class="fa-home"></i> Home </a> </li>
-                    <li>
+                    <!-- <li>
                         <a href="#/radio_programming_grid/view">
                             <strong>Grade</strong>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="active">
                         <a href="#/radio_programming_grid/edit">
                             <strong>Edição da grade</strong>
@@ -41,7 +41,7 @@
                 <form ng-show="vm.canPost" name="dataProgram" class="area-add" novalidate>
                     <div class="row">
                         <div class="form-group col-xs-12 col-md-7 height-select" ng-class="{'has-error': getFormValidation(dataProgram, 'program').isInvalid}">
-                            <label>* Programa Bloco:</label>
+                            <label>* Nome do Programa:</label>
                             <ui-select required name="program" ng-model="vm.dataProgram.program" theme="bootstrap" class="ui-select" title="Selecione um programa para adicionar">
                                 <ui-select-match placeholder="Selecione um programa para adicionar...">{{ $select.selected.title }}</ui-select-match>
                                 <ui-select-choices repeat="program in vm.listPrograms | filter: $select.search track by $index">

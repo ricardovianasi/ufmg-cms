@@ -100,7 +100,7 @@
                                 enabled: hasPermissionRadioProgramming(),
                                 menuItems: [
                                     { icon: 'fa fa-television', name: 'Programas', location: 'radio_programming/programs', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
-                                    { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/view', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
+                                    { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/handle', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
                                     { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }
                                 ]
                             }, 

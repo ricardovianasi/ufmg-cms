@@ -34,15 +34,15 @@
 <div class="row" can-get>
     <div class="col-xs-12 panel panel-default">
         <form ng-submit="vm.save()" class="form" name="formData" novalidate>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-xs-12">
                     <upload-cover-component inner-class="pages-module-cover" select-image="vm.setImageCover(imageSelected)" 
                         url-image="vm.program.image.url" type-cover="pageCover"></upload-cover-component>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-xs-12 form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
-                    <label>Título</label>
+                    <label>* Nome</label>
                     <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
                     <div ng-show="!formData.title.$valid" class="error-message" role="alert">
                         <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
@@ -61,7 +61,7 @@
                     </ui-select>
                 </div>
                 <div class="col-md-6 col-xs-12 form-group height-select" tooltip-enable="vm.hasChildren()" uib-tooltip="Esse programa já é um bloco, não pode estar contido em outro bloco.">
-                    <label>Está dentro do bloco:</label> 
+                    <label>Bloco:</label> 
                     <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
                     <ui-select ng-disabled="vm.hasChildren()" ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
                         <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.title }}</ui-select-match>
