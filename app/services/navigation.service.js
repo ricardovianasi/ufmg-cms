@@ -112,7 +112,7 @@
                             { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq }, 
                             { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags }, 
                             { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser },
-                            { icon: 'fa fa-file-text-o', name: 'Termos de uso', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasTermsUse }
+                            { icon: 'fa fa-file-text-o', name: 'Termos de uso', location: 'use-term', isActive: false, isOpen: false, enabled: true }
                         ]);
                     });
                     return defer.promise;

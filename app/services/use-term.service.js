@@ -3,12 +3,12 @@
 
     angular
         .module('serviceModule')
-        .factory('Service', Service);
+        .factory('UseTermService', UseTermService);
 
     /** ngInject */
-    function Service($http) {
-        var urlTerm = '/term-of-use';
-        var urlSigned = '/sign-term';
+    function UseTermService($http, apiUrl) {
+        var urlTerm = apiUrl + '/term-of-use';
+        var urlSigned = apiUrl + '/sign-term';
 
         var service = {
             getTerms: getTerms,

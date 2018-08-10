@@ -51,6 +51,7 @@
         'loginModule',
         'faqModule',
         'tagsManagerModule',
+        'useTermModule',
         'usersModule',
         'accountModule'
     ]);
