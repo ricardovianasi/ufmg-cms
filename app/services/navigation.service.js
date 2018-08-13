@@ -10,7 +10,7 @@
 
                 function loadPermission() {
                     permissions = {
-                        hasCalendar: hasPerm('calendar'), hasClipping: hasPerm('clipping'),
+                        hasCalendar: hasPerm('calendar'), hasClipping: hasPerm('clipping'), hasTermsUse: hasPerm('term_of_use'),
                         hasCourseDoc: hasPerm('course_doctorate'), hasCourseGra: hasPerm('course_graduation'),
                         hasCourseMas: hasPerm('course_master'), hasCourseSpe: hasPerm('course_specialization'),
                         hasEditions: hasPerm('editions'), hasEvents: hasPerm('events'),
@@ -111,7 +111,8 @@
                             { icon: 'fa fa-bars', name: 'Menu', location: 'new-menu', isActive: false, isOpen: false, enabled: permissions.hasMenu }, 
                             { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq }, 
                             { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags }, 
-                            { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser }
+                            { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser },
+                            { icon: 'fa fa-file-text-o', name: 'Termos de uso', location: 'use-term', isActive: false, isOpen: false, enabled: true }
                         ]);
                     });
                     return defer.promise;

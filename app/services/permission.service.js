@@ -180,9 +180,14 @@
                 return false;
             }
             var isAdmin = $rootScope.User.is_administrator;
+            var isTermSigned = $rootScope.User.term_signed;
             try {
                 if (isAdmin) {
                     return true;
+                }
+                if(!isTermSigned) {
+                    $location.path('/use-term');
+                    return false;
                 }
                 var hasPrivilege = getPrivilege(context, role);
                 return verifyRole(hasPrivilege, id);
