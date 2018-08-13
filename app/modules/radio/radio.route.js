@@ -35,9 +35,9 @@
                     controller: 'GridEditController',
                     controllerAs: 'vm'
                 })
-                .when('/radio_category/category-list', {
-                    templateUrl: 'modules/radio/category/category.list.template.html',
-                    controller: 'CategoryListController',
+                .when('/radio_category/parent-list', {
+                    templateUrl: 'modules/radio/program-parent/program-parent.list.template.html',
+                    controller: 'ParentListController',
                     controllerAs: 'vm'
                 })
                 .when('/radio_genre/genre-list', {

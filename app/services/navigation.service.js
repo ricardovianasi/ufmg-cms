@@ -22,7 +22,7 @@
                         hasPage: hasPerm('page'), hasRector: hasPerm('rector'),
                         hasRelease: hasPerm('release'), hasUser: hasPerm('user'),
                         hasRadioGrid: hasPerm('radio_programming_grid'), hasRadioProgramming: hasPerm('radio_programming'),
-                        hasRadioCategory: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'),
+                        hasRadioParent: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'),
                     };
                 }
 
@@ -100,6 +100,7 @@
                                 enabled: hasPermissionRadioProgramming(),
                                 menuItems: [
                                     { icon: 'fa fa-television', name: 'Programas', location: 'radio_programming/programs', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
+                                    { icon: 'fa fa-list-ul', name: 'Blocos', location: 'radio_category/parent-list', isActive: false, isOpen: false, enabled: permissions.hasRadioParent },
                                     { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/handle', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
                                     { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }
                                 ]

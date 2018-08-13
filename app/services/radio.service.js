@@ -8,7 +8,7 @@
     /** ngInject */
     function RadioService($http, $q, apiUrl, dataTableConfigService) {
         let baseUrlGenre = apiUrl + '/radio-genre';
-        let baseUrlCategory = apiUrl + '/radio-category';
+        let baseUrlParent = apiUrl + '/radio-schedule';
         let baseUrlProgram = apiUrl + '/radio-programming';
         let baseUrlGrid = apiUrl + '/radio-programming-grid';
 
@@ -27,7 +27,7 @@
             registerItemFilter: registerItemFilter,
             deleteItemFilter: deleteItemFilter,
             baseUrlGenre: baseUrlGenre,
-            baseUrlCategory: baseUrlCategory
+            baseUrlParent: baseUrlParent
         };
         
         return service;
