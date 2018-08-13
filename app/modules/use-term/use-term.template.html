@@ -2,7 +2,7 @@
     <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Termos de Serviço</h1>
+                <h1 class="title">Termos de uso</h1>
             </div>
         </div>
         <div class="col-md-6">
@@ -15,7 +15,7 @@
                     </li>
                     <li class="active">
                         <a href="#/use-term">
-                            <strong>Termos de Serviço</strong>
+                            <strong>Termos de uso</strong>
                         </a>
                     </li>
                 </ol>
@@ -24,35 +24,33 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-8" ng-class="{'col-xs-offset-2': !vm.isAdmin}">
+    <div class="col-xs-8" ng-class="{'col-xs-offset-2': !vm.canPut}">
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    <textarea ng-if="vm.isAdmin" class="form-control" cols="50" rows="10" ng-model="vm.term.term" redactor="redactorConfig"></textarea>
-                    <div ng-if="!vm.isAdmin" data-ng-bind-html="vm.term.term"></div>
+                    <textarea ng-if="vm.canPut" class="form-control" cols="50" rows="10" ng-model="vm.term.term" redactor="redactorConfig"></textarea>
+                    <div ng-if="!vm.canPut" data-ng-bind-html="vm.term.term" class="area-term"></div>
                 </div>
-                <div class="col-xs-12" ng-if="!vm.isAdmin">
-                    <button ng-click="vm.signTerm()" class="btn btn-secondary pull-right">Aceitar Termo</button>
+                <div class="col-xs-12" ng-if="!vm.canPut">
+                    <button ng-disabled="vm.signing || vm.termAssigned" ng-click="vm.signTerm()" class="btn btn-lg btn-secondary pull-right">
+                        {{vm.termAssigned ? 'Já Assinado' : 'Aceitar termos de uso'}}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    <div ng-if="vm.isAdmin" class="col-xs-4">
+    <div ng-if="vm.canPut" class="col-xs-4">
         <div class="panel panel-default">
             <div class="panel-heading">Painel de Atualização</div>
             <div class="panel-body">
                 <div class="col-xs-12 form-group">
-                    <select class="form-control" ng-model="vm.forceAccept" placeholder="Selecione o modo de Update">
-                        <option ng-value="undefined" selected>Selecione o modo de atualização</option>
-                        <option ng-value="true">Com Aceite</option>
-                        <option ng-value="false">Sem Aceite</option>
-                    </select>
+                    <input type="checkbox" id="checkbox1" ng-model="vm.forceAccept">
+                    <label for="checkbox1">Forçar aceite do usuário</label>
                 </div>
                 <div class="col-xs-12">
-                    <button ng-click="vm.updateTerm()" class="btn btn-secondary pull-right">Atualizar Termo</button>
+                    <button ng-click="vm.updateTerm()" class="btn btn-secondary">Atualizar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    
