@@ -6,11 +6,12 @@
         .factory('RadioService', RadioService);
 
     /** ngInject */
-    function RadioService($http, $q, apiUrl, dataTableConfigService) {
+    function RadioService($http, apiUrl, dataTableConfigService, SerializeService) {
         let baseUrlGenre = apiUrl + '/radio-genre';
         let baseUrlParent = apiUrl + '/radio-schedule';
         let baseUrlProgram = apiUrl + '/radio-programming';
         let baseUrlGrid = apiUrl + '/radio-programming-grid';
+        let baseUrlRadioThumb = apiUrl + '/radio-thumb';
 
         let service = {
             listPrograms: listPrograms,
@@ -27,7 +28,8 @@
             registerItemFilter: registerItemFilter,
             deleteItemFilter: deleteItemFilter,
             baseUrlGenre: baseUrlGenre,
-            baseUrlParent: baseUrlParent
+            baseUrlParent: baseUrlParent,
+            saveThumbnail: saveThumbnail,
         };
         
         return service;
@@ -104,6 +106,13 @@
             return {
                 order_by: { field: 'timeStart', direction: 'ASC' },
             };
+        }
+
+
+        function saveThumbnail(idProgram, idImage) {
+            let params = { id: idProgram, thumb: idImage };
+            let url = baseUrlRadioThumb + '?' + SerializeService(params);
+            return $http.get(url);
         }
     }
 })();

@@ -1,10 +1,10 @@
 <div class="pages-module add-module {{ $ctrl.innerClass }}">
     <div class="chosen-cover">
-        <a href="javascript:void(0);" class="label label-danger remove-image" ng-click="$ctrl.removeImage()" ng-show="$ctrl.urlImage">
+        <a ng-if="!$ctrl.disabled" href="javascript:void(0);" class="label label-danger remove-image" ng-click="$ctrl.removeImage()" ng-show="$ctrl.urlImage">
             <i class="fa fa-remove"></i> REMOVER IMAGEM
         </a>
     </div>
-    <div class="add-title" ng-model="page_cover" ng-click="$ctrl.openPickCover()" ng-show=!$ctrl.urlImage>+ {{ $ctrl.labelBox }}
+    <div class="add-title" ng-if="!$ctrl.disabled" ng-model="page_cover" ng-click="$ctrl.openPickCover()" ng-show=!$ctrl.urlImage>+ {{ $ctrl.labelBox }}
     </div>
     <div class="uploaded-image" ng-show="$ctrl.urlImage">
         <img class="img-responsive" src="{{ $ctrl.urlImage }}">

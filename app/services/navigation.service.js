@@ -22,12 +22,12 @@
                         hasPage: hasPerm('page'), hasRector: hasPerm('rector'),
                         hasRelease: hasPerm('release'), hasUser: hasPerm('user'),
                         hasRadioGrid: hasPerm('radio_programming_grid'), hasRadioProgramming: hasPerm('radio_programming'),
-                        hasRadioParent: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'),
+                        hasRadioParent: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'), hasRadioThumb: hasPerm('radio_thumb'),
                     };
                 }
 
                 function hasPermissionRadioProgramming() {
-                    return ['radio_programming', 'radio_genre', 'radio_category', 'radio_programming_grid']
+                    return ['radio_programming', 'radio_genre', 'radio_category', 'radio_programming_grid', 'radio_thumb']
                         .reduce(function(result, key) {return result || hasPerm(key); }, false);
                 }
 
@@ -100,7 +100,7 @@
                                 enabled: hasPermissionRadioProgramming(),
                                 menuItems: [
                                     { icon: 'fa fa-television', name: 'Programas', location: 'radio_programming/programs', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
-                                    { icon: 'fa fa-picture-o', name: 'Thumbnails', location: 'radio_thumb/program-list', isActive: false, isOpen: false, enabled: permissions.hasRadioProgramming },
+                                    { icon: 'fa fa-picture-o', name: 'Thumbnails', location: 'radio_thumb/program-list', isActive: false, isOpen: false, enabled: permissions.hasRadioThumb },
                                     { icon: 'fa fa-list-ul', name: 'Blocos', location: 'radio_category/parent-list', isActive: false, isOpen: false, enabled: permissions.hasRadioParent },
                                     { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/handle', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
                                     { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }

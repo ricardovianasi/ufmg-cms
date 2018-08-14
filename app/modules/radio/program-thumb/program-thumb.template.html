@@ -22,8 +22,8 @@
         </div>
     </div>
 </div>
-<div class="row" can-get>
-    <div class="col-xs-8 panel panel-default">
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12 panel panel-default">
         <div class="row">
             <div class="col-xs-12 form-group">
                 <label >Nome: </label>
@@ -32,9 +32,14 @@
         </div>
         <div class="row">
             <div class="col-xs-6">
-                <upload-cover-component label-box="Adicionar Thumbnail" select-image="setImageCover(imageSelected)" 
-                    url-image="page.image.url" type-cover="programThumbnail"></upload-cover-component>
+                <label>Thumbnail</label>
+                <upload-cover-component disabled="!vm.canPut" inner-class="add-thumb" label-box="Adicionar Thumbnail" select-image="vm.setImageThumb(imageSelected)" 
+                    url-image="vm.program.image.url" type-cover="programThumbnail"></upload-cover-component>
             </div>
+        </div>
+        <div class="buttons">
+            <button type="button" ng-if="vm.canPut" class="btn btn-secondary pull-right" ng-click="vm.saveThumbnail()">Atualizar</button>
+            <a href="#/radio_thumb/program-list" class="btn btn-link pull-right">Cancelar</button>
         </div>
     </div>
 </div>

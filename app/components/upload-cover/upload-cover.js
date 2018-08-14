@@ -17,7 +17,8 @@
                 typeCover: '@',
                 labelBox: '@',
                 urlImage: '=',
-                selectImage: '&'
+                disabled: '=',
+                selectImage: '&',
             },
         });
 
