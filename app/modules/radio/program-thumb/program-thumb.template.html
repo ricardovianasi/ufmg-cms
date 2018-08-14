@@ -1,0 +1,40 @@
+<div class="page-title">
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title"> Adicionar Thumbnail </h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="#/radio_thumb/program-list">Lista dos Thumbnails</a>
+                    </li>
+                    <li>
+                        <a><strong> Adicionar Thumbnail </strong></a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" can-get>
+    <div class="col-xs-8 panel panel-default">
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                <label >Nome: </label>
+                <input type="text" ng-model="vm.program.title" disabled class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <upload-cover-component label-box="Adicionar Thumbnail" select-image="setImageCover(imageSelected)" 
+                    url-image="page.image.url" type-cover="programThumbnail"></upload-cover-component>
+            </div>
+        </div>
+    </div>
+</div>

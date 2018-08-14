@@ -101,6 +101,11 @@
                     width: 1920,
                     height: 444
                 },
+                programThumbnail: {
+                    name: 'Thumbnail do programa',
+                    width: 400,
+                    height: 250
+                },
                 digitalizedCover: {
                     name: 'Capa Digitalizada',
                     width: 350,
