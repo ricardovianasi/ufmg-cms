@@ -1,0 +1,20 @@
+.select-time {
+
+    .col-separator, .col-time {
+        display: inline-block;
+    }
+    
+    .col-separator {
+        width: 15px;
+        text-align: center;
+        .separator {
+            font-size: 1.2em;
+        }
+    }
+    .col-time {
+        width: 50px;
+        .form-control {
+            padding: 6px;
+        }
+    }
+}

@@ -115,11 +115,24 @@
             setImageCover(data.image);
         }
 
+        function _initWeek() {
+            vm.weekDay = [
+                { label: 'Seg', value: 1, checked: false },
+                { label: 'Sex', value: 5, checked: false },
+                { label: 'Ter', value: 2, checked: false },
+                { label: 'Sab', value: 6, checked: false },
+                { label: 'Qua', value: 3, checked: false },
+                { label: 'Dom', value: 7, checked: false },
+                { label: 'Qui', value: 4, checked: false },
+            ];
+        }
+
         function activate() {
             vm.program = {title: ''};
             vm.id = $routeParams.id;
             _loadItemsFilters();
             _loadBlockPrograms();
+            _initWeek();
             if(vm.id) {
                 _getProgram(vm.id);
             } 

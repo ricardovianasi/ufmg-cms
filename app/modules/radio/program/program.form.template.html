@@ -32,14 +32,8 @@
     </div>
 </div>
 <div class="row" can-get>
-    <div class="col-xs-12 panel panel-default">
+    <div class="col-xs-8 panel panel-default">
         <form ng-submit="vm.save()" class="form" name="formData" novalidate>
-            <!-- <div class="row">
-                <div class="col-xs-12">
-                    <upload-cover-component inner-class="pages-module-cover" select-image="vm.setImageCover(imageSelected)" 
-                        url-image="vm.program.image.url" type-cover="pageCover"></upload-cover-component>
-                </div>
-            </div> -->
             <div class="row">
                 <div class="col-xs-12 form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
                     <label>* Nome</label>
@@ -51,15 +45,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-xs-12 form-group height-select">
-                    <label>Gênero</label>
-                    <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
-                        <ui-select-match placeholder="Selecione ou procure um gênero...">{{ $select.selected.name }}</ui-select-match>
-                        <ui-select-choices repeat="genre.id as genre in vm.listGenre | filter: $select.search track by $index">
-                            <div ng-bind-html="genre.name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
                 <div class="col-md-6 col-xs-12 form-group height-select" tooltip-enable="vm.hasChildren()" uib-tooltip="Esse programa já é um bloco, não pode estar contido em outro bloco.">
                     <label>Bloco:</label> 
                     <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
@@ -73,6 +58,48 @@
                         </ui-select-no-choice>
                     </ui-select>
                 </div>
+                <div class="col-md-6 col-xs-12 form-group height-select">
+                    <label>Gênero</label>
+                    <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
+                        <ui-select-match placeholder="Selecione ou procure um gênero...">{{ $select.selected.name }}</ui-select-match>
+                        <ui-select-choices repeat="genre.id as genre in vm.listGenre | filter: $select.search track by $index">
+                            <div ng-bind-html="genre.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label >Link para ver todos</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label> Escolha os dias da semana</label>
+                    <div class="days-week row">
+                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="week in vm.weekDay">
+                            <div class="df jc-space-between at-baseline">
+                                <label class="uppercase weight-300">
+                                    <input type="checkbox" ng-model="week.checked">
+                                    {{ week.label }}
+                                </label>
+                                <select-time is-disabled="!week.checked"></select-time>
+                                <span> às </span>
+                                <select-time is-disabled="!week.checked"></select-time>
+                            </div>
+                            <div ng-show="week.checked" class="add-hour">
+                                <i class="fa fa-plus"></i>
+                                Adicionar outro horário no mesmo dia
+                            </div>
+                        </div>
+                        <label class="col-md-6 col-xs-12 mv-10 news-extra weight-300">
+                            <input type="checkbox">
+                            <span class="uppercase"> Notícia Extraordinária </span>
+                            <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
@@ -83,14 +110,49 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div ng-if="vm.canPut || vm.canPost" class="col-xs-6">
-                    <button type="submit" ng-disabled="vm.loading" class="btn btn-lg btn-block btn-success">
-                        {{ vm.id ? 'Editar' : 'Criar' }}
-                    </button>
+        </form>
+    </div>
+    <div class="col-xs-4">
+        <div class="panel panel-default actions-context">
+            <div class="actions">
+                <div class="col">
+                    <a class="btn btn-link" ng-href="{{goBack()}}">
+                        <i class="fa fa-arrow-left"></i> Voltar para lista
+                    </a>
                 </div>
-                <div class="col-xs-6">
-                    <a type="button" ng-href="#/radio_programming/programs" class="btn btn-lg btn-block btn-danger">Cancelar</a>
+                <div class="col">
+                    <a class="btn btn-default">
+                        <i class="fa fa-plus"></i> Novo
+                    </a>
+                </div>
+            </div>
+        </div>
+        <form class="panel panel-default publishment-options" name="formPub" ng-submit="publish(formPub)" novalidate>
+            <h4 class="publishment-title">Opções de Publicação</h4>
+            <div class="publishment-body">
+                <div class="form-group status" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
+                        <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
+                    <label>Status: </label>
+                    <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
+                        <option ng-repeat="item in ['draft', 'published'] track by $index" ng-value="item">{{item | translate}}</option>
+                    </select>
+                    <div ng-show="formPub.$submitted || formPub.pickStatus.$touched" class="error-message" role="alert">
+                        <div ng-show="formPub.pickStatus.$error.required">Campo obrigatório</div>
+                    </div>
+                </div>
+            </div>
+            <div class="publishment-footer">
+                <div class="actions row">
+                    <div class="col-md-12">
+                        <button id="publish-button" type="submit" class="btn btn-secondary">
+                            <i class="fa fa-check"></i>
+                            {{ isLoading ? 'Salvando...' : 'Salvar'}}
+                        </button>
+                        <button type="button" class="btn btn-danger pull-right">
+                            <i class="fa fa-close"></i>
+                            Excluir
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
