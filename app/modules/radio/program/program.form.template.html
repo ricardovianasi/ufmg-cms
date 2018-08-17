@@ -78,17 +78,18 @@
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
                     <div class="days-week row">
-                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="week in vm.weekDay">
+                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="day in vm.listDays">
                             <div class="df jc-space-between at-baseline">
-                                <label class="uppercase weight-300">
-                                    <input type="checkbox" ng-model="week.checked">
-                                    {{ week.label }}
+                                <label class="check-day uppercase weight-300">
+                                    {{ day.label }}
+                                    <input type="checkbox" ng-model="day.checked">
+                                    <span class="checkmark-day"></span>
                                 </label>
-                                <select-time is-disabled="!week.checked"></select-time>
+                                <select-time is-disabled="!day.checked"></select-time>
                                 <span> às </span>
-                                <select-time is-disabled="!week.checked"></select-time>
+                                <select-time is-disabled="!day.checked"></select-time>
                             </div>
-                            <div ng-show="week.checked" class="add-hour">
+                            <div ng-show="day.checked" class="add-hour">
                                 <i class="fa fa-plus"></i>
                                 Adicionar outro horário no mesmo dia
                             </div>

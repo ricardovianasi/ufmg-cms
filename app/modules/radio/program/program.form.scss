@@ -17,3 +17,57 @@
     background-color: #efefef;
     cursor: pointer;
 }
+
+.check-day {
+    padding-left: 1.5em;
+    display: block;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+.checkmark-day {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    box-shadow: 1px 1px 1px #eee;
+}
+
+.check-day:hover input ~ .checkmark-day {
+    background-color: #fff;
+}
+
+.check-day input:checked ~ .checkmark-day {
+    background-color: #2196F3;
+}
+
+.checkmark-day:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.check-day input:checked ~ .checkmark-day:after {
+    display: block;
+}
+
+.check-day .checkmark-day:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

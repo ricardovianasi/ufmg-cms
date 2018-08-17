@@ -16,10 +16,15 @@
         vm.setImageCover = setImageCover;
         vm.save = save;
         vm.hasChildren = hasChildren;
+        vm.addHour = addHour;
 
         activate();
 
         ////////////////
+
+        function addHour(weekDay) {
+
+        }
 
         function hasChildren() {
             return vm.program.children && vm.program.children.length;
@@ -116,14 +121,14 @@
         }
 
         function _initWeek() {
-            vm.weekDay = [
-                { label: 'Seg', value: 1, checked: false },
-                { label: 'Sex', value: 5, checked: false },
-                { label: 'Ter', value: 2, checked: false },
-                { label: 'Sab', value: 6, checked: false },
-                { label: 'Qua', value: 3, checked: false },
-                { label: 'Dom', value: 7, checked: false },
-                { label: 'Qui', value: 4, checked: false },
+            vm.listDays = [
+                { label: 'Seg', week_day: 1, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Sex', week_day: 5, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Ter', week_day: 2, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Sab', week_day: 6, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Qua', week_day: 3, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Dom', week_day: 7, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                { label: 'Qui', week_day: 4, checked: false, times: [ { time_start: '', time_end: '' } ] },
             ];
         }
 
