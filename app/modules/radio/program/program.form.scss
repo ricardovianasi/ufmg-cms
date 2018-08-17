@@ -34,7 +34,7 @@
 .add-hour {
     padding: 5px 2px;
     text-align: center;
-    border: 2px dashed #b3b3b3;;
+    border: 2px dashed #b3b3b3;
     width: 80%;
     float: right;
     background-color: #efefef;
@@ -81,6 +81,11 @@
 
 .check-day input:checked ~ .checkmark-day {
     background-color: #2196F3;
+}
+
+.check-day input:disabled ~ .checkmark-day {
+    border: none;
+    background-color: #a5a1a1;
 }
 
 .checkmark:after {

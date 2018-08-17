@@ -12,25 +12,33 @@
         vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
+        vm.isExtraordinaryProgram = false;
 
         vm.setImageCover = setImageCover;
         vm.save = save;
         vm.hasChildren = hasChildren;
         vm.addHour = addHour;
         vm.removeHour = removeHour;
+        vm.setExtraordinary = setExtraordinary;
 
         activate();
 
         ////////////////
 
+        function setExtraordinary() {
+            if (vm.isExtraordinaryProgram) {
+                vm.listDays.forEach(function(column) {
+                    column.forEach(function(day) { day.checked = false; });
+                });
+            }
+        }
+
         function removeHour(times, idxTime) {
             times.splice(idxTime, 1);
         }
 
-        function addHour(idxColumn, idxDay) {
-            console.log('addHour', idxColumn, idxDay, vm.listDays);
-            vm.listDays[idxColumn][idxDay].times.unshift({ time_start: '', time_end: '' });
-
+        function addHour(day) {
+            day.times.unshift({ time_start: '', time_end: '' });
         }
 
         function hasChildren() {
