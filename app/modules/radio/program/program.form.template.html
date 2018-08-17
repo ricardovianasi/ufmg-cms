@@ -77,28 +77,38 @@
             <div class="row">
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
-                    <div class="days-week row">
-                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="day in vm.listDays">
-                            <div class="df jc-space-between at-baseline">
+                    <div class="row-days row" ng-repeat="columns in vm.listDays">
+                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="day in columns">
+                            <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time">
                                 <label class="check-day uppercase weight-300">
                                     {{ day.label }}
                                     <input type="checkbox" ng-model="day.checked">
-                                    <span class="checkmark-day"></span>
+                                    <span class="checkmark checkmark-day"></span>
                                 </label>
-                                <select-time is-disabled="!day.checked"></select-time>
-                                <span> às </span>
-                                <select-time is-disabled="!day.checked"></select-time>
+                                <select-time ng-show="day.checked" is-disabled="!day.checked" ng-model="day.time_start"></select-time>
+                                <div ng-show="day.checked"> às </div>
+                                <select-time ng-show="day.checked" is-disabled="!day.checked" ng-model="day.time_end"></select-time>
                             </div>
-                            <div ng-show="day.checked" class="add-hour">
+                            <div class="df jc-space-between ai-center more-hours day-time" ng-repeat="moreTime in day.times">
+                                <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                                <select-time ng-model="moreTime.time_start" is-disabled="!day.checked"></select-time>
+                                <span> às </span>
+                                <select-time ng-model="moreTime.time_start" is-disabled="!day.checked"></select-time>
+                            </div>
+
+                            <div ng-if="!day.isExtraordinary" ng-click="vm.addHour($parent.$index, $index)" ng-show="day.checked" class="add-hour">
                                 <i class="fa fa-plus"></i>
                                 Adicionar outro horário no mesmo dia
                             </div>
+                            <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
+                                <span class="uppercase"> {{ day.label }} </span>
+                                <input type="checkbox">
+                                <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
+                                <span class="checkmark checkmark-extra"></span>
+                            </label>
                         </div>
-                        <label class="col-md-6 col-xs-12 mv-10 news-extra weight-300">
-                            <input type="checkbox">
-                            <span class="uppercase"> Notícia Extraordinária </span>
-                            <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
-                        </label>
                     </div>
                 </div>
             </div>

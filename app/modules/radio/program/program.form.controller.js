@@ -17,12 +17,19 @@
         vm.save = save;
         vm.hasChildren = hasChildren;
         vm.addHour = addHour;
+        vm.removeHour = removeHour;
 
         activate();
 
         ////////////////
 
-        function addHour(weekDay) {
+        function removeHour(times, idxTime) {
+            times.splice(idxTime, 1);
+        }
+
+        function addHour(idxColumn, idxDay) {
+            console.log('addHour', idxColumn, idxDay, vm.listDays);
+            vm.listDays[idxColumn][idxDay].times.unshift({ time_start: '', time_end: '' });
 
         }
 
@@ -122,13 +129,22 @@
 
         function _initWeek() {
             vm.listDays = [
-                { label: 'Seg', week_day: 1, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Sex', week_day: 5, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Ter', week_day: 2, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Sab', week_day: 6, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Qua', week_day: 3, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Dom', week_day: 7, checked: false, times: [ { time_start: '', time_end: '' } ] },
-                { label: 'Qui', week_day: 4, checked: false, times: [ { time_start: '', time_end: '' } ] },
+                [
+                    { label: 'Seg', week_day: 1, checked: false, time_start: '08:00', time_end: '12:00', times: [ ] },
+                    { label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
+                ],
+                [
+                    { label: 'Ter', week_day: 2, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { label: 'Sab', week_day: 6, checked: false, time_start: '', time_end: '',  times: [ ] },
+                ],
+                [
+                    { label: 'Qua', week_day: 3, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { label: 'Dom', week_day: 7, checked: false, time_start: '', time_end: '',  times: [ ] },
+                ],
+                [
+                    { label: 'Qui', week_day: 4, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { label: 'Notícia Extraordinária', week_day: 0, checked: false, isExtraordinary: true },
+                ]
             ];
         }
 

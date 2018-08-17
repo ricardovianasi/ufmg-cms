@@ -1,6 +1,6 @@
 <div class="select-time">
     <div class="form-group col-time">
-        <select ng-disabled="$ctrl.isDisabled" name="hour" id="hour" class="form-control">
+        <select ng-disabled="$ctrl.isDisabled" ng-change="$ctrl.selectTime()" ng-model="$ctrl.hour" name="hour" id="hour" class="form-control">
             <option ng-value="value" ng-repeat="value in $ctrl.listHours"> {{ value }} </option>
         </select>
     </div>
@@ -8,7 +8,7 @@
         <span class="separator"> : </span>
     </div>
     <div class="form-group col-time">
-        <select ng-disabled="$ctrl.isDisabled" name="minute" id="minute" class="form-control">
+        <select ng-disabled="$ctrl.isDisabled" ng-change="$ctrl.selectTime()" ng-model="$ctrl.minute" name="minute" id="minute" class="form-control">
             <option ng-value="value" ng-repeat="value in $ctrl.listMinutes"> {{ value }} </option>
         </select>
     </div>

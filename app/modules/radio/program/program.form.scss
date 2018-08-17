@@ -2,10 +2,33 @@
     background-color: #fcdea6;
     padding-top: 10px;
     padding-bottom: 10px;
+    width: 100%;
 }
 
-.box-day {
-    min-height: 85px;
+.row-days {
+    min-height: 100px;
+    margin-bottom: 20px;
+    > .box-day {
+        &:nth-child(odd) {
+            padding-right: 30px; 
+        }
+        &:nth-child(even) {
+            padding-left: 30px; 
+        }
+        .day-time {
+            min-height: 50px;
+        }
+    }
+}
+
+
+.more-hours {
+    .icon-remove {
+        cursor: pointer;
+        color: #ef3f4a;
+        width: 47px;
+        text-align: center;
+    }
 }
 
 .add-hour {
@@ -31,13 +54,23 @@
     }
 }
 
-.checkmark-day {
+.checkmark {
     position: absolute;
-    top: 0;
-    left: 0;
     height: 15px;
     width: 15px;
     background-color: #fff;
+}
+
+.checkmark-extra {
+    top: 10px;
+    left: 2px;
+    border: 1px solid #969696;
+    box-shadow: 1px 1px 1px #eee;
+}
+
+.checkmark-day {
+    top: 0;
+    left: 0;
     border: 1px solid #dedede;
     box-shadow: 1px 1px 1px #eee;
 }
@@ -50,24 +83,34 @@
     background-color: #2196F3;
 }
 
-.checkmark-day:after {
+.checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-.check-day input:checked ~ .checkmark-day:after {
+.check-day input:checked ~ .checkmark:after {
     display: block;
 }
 
-.check-day .checkmark-day:after {
-    left: 5px;
-    top: 1px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+.check-day {
+    .checkmark:after {
+        width: 5px;
+        height: 10px;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .checkmark-extra:after {
+        left: 5px;
+        border: solid #000;
+        border-width: 0 3px 3px 0;
+    }
+
+    .checkmark-day:after {
+        left: 4px;
+        border: solid #fff;
+        border-width: 0 3px 3px 0;
+    }
 }
