@@ -14,7 +14,6 @@
         vm.loading = false;
         vm.isExtraordinaryProgram = false;
 
-        vm.setImageCover = setImageCover;
         vm.save = save;
         vm.hasChildren = hasChildren;
         vm.addHour = addHour;
@@ -37,20 +36,12 @@
             times.splice(idxTime, 1);
         }
 
-        function addHour(day) {
-            day.times.unshift({ time_start: '', time_end: '' });
+        function addHour(day, start, end) {
+            day.times.unshift({ time_start: start || '', time_end: end || '' });
         }
 
         function hasChildren() {
             return vm.program.children && vm.program.children.length;
-        }
-
-        function setImageCover(imageSelected) {
-            if(!imageSelected) {
-                return;
-            }
-            vm.program.image = { url: imageSelected.url };
-            vm.program.id_image = imageSelected.id;
         }
 
         function save() {
@@ -132,13 +123,35 @@
                 genre_id: data.genres[0] ? data.genres[0].id : null,
                 children: data.children
             };
-            setImageCover(data.image);
+            data.grid_program.forEach(function(grid) {
+                let day = _getDayByWeek(grid.week_day);
+                day.checked = true;
+                if(day.time_start) {
+                    addHour(day, grid.time_start, grid.time_end);
+                } else {
+                    day.time_start = grid.time_start;
+                    day.time_end = grid.time_end;
+                }
+            });
+        }
+
+        function _getDayByWeek(week_day) {
+            let day;
+            vm.listDays.forEach(function(column) {
+                if(!day) {
+                    day = column.find(function(day) {
+                        if (day.week_day === week_day) { return true; }
+                        return false;
+                    });
+                }
+            });
+            return day;
         }
 
         function _initWeek() {
             vm.listDays = [
                 [
-                    { label: 'Seg', week_day: 1, checked: false, time_start: '08:00', time_end: '12:00', times: [ ] },
+                    { label: 'Seg', week_day: 1, checked: false, time_start: '', time_end: '', times: [ ] },
                     { label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
                 ],
                 [

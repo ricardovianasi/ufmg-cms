@@ -85,9 +85,9 @@
                                     <input ng-disabled="vm.isExtraordinaryProgram" type="checkbox" ng-model="day.checked">
                                     <span class="checkmark checkmark-day"></span>
                                 </label>
-                                <select-time ng-show="day.checked" is-disabled="!day.checked" ng-model="day.time_start"></select-time>
+                                <select-time ng-if="day.checked" is-disabled="!day.checked" ng-model="day.time_start"></select-time>
                                 <div ng-show="day.checked"> às </div>
-                                <select-time ng-show="day.checked" is-disabled="!day.checked" ng-model="day.time_end"></select-time>
+                                <select-time ng-if="day.checked" is-disabled="!day.checked" ng-model="day.time_end"></select-time>
                             </div>
                             <div ng-show="day.checked" class="df jc-space-between ai-center more-hours day-time" ng-repeat="moreTime in day.times">
                                 <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
@@ -95,7 +95,7 @@
                                 </div>
                                 <select-time ng-model="moreTime.time_start" is-disabled="!day.checked"></select-time>
                                 <span> às </span>
-                                <select-time ng-model="moreTime.time_start" is-disabled="!day.checked"></select-time>
+                                <select-time ng-model="moreTime.time_end" is-disabled="!day.checked"></select-time>
                             </div>
 
                             <div ng-if="!day.isExtraordinary" ng-click="vm.addHour(day)" ng-show="day.checked" class="add-hour">
