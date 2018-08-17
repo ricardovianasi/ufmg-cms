@@ -19,6 +19,7 @@
         vm.addHour = addHour;
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
+        vm.saveGrid = saveGrid;
 
         activate();
 
@@ -36,8 +37,8 @@
             times.splice(idxTime, 1);
         }
 
-        function addHour(day, start, end) {
-            day.times.unshift({ time_start: start || '', time_end: end || '' });
+        function addHour(day, start, end, idGrid) {
+            day.times.unshift({ time_start: start || '', time_end: end || '', idGrid: idGrid });
         }
 
         function hasChildren() {
@@ -84,7 +85,17 @@
             delete objProgram.genre_id;
             delete objProgram.parent;
             return objProgram;
+        }
+
+        function saveGrid() {
+            let listGridsToSave = vm.listDays
+                .reduce(function(result, column) {
+                    console.log(result, column);
+                    return result.concat(column);
+                }, [])
+                .filter(function(day) { return day.checked; });
             
+            console.log('saveGrid', listGridsToSave);
         }
 
         function _getProgram(id) {
@@ -127,8 +138,9 @@
                 let day = _getDayByWeek(grid.week_day);
                 day.checked = true;
                 if(day.time_start) {
-                    addHour(day, grid.time_start, grid.time_end);
+                    addHour(day, grid.time_start, grid.time_end, grid.id);
                 } else {
+                    day.idGrid = grid.id;
                     day.time_start = grid.time_start;
                     day.time_end = grid.time_end;
                 }
@@ -151,19 +163,19 @@
         function _initWeek() {
             vm.listDays = [
                 [
-                    { label: 'Seg', week_day: 1, checked: false, time_start: '', time_end: '', times: [ ] },
-                    { label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
+                    { idGrid: undefined, label: 'Seg', week_day: 1, checked: false, time_start: '', time_end: '', times: [ ] },
+                    { idGrid: undefined, label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
                 ],
                 [
-                    { label: 'Ter', week_day: 2, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { label: 'Sab', week_day: 6, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { idGrid: undefined, label: 'Ter', week_day: 2, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { idGrid: undefined, label: 'Sab', week_day: 6, checked: false, time_start: '', time_end: '',  times: [ ] },
                 ],
                 [
-                    { label: 'Qua', week_day: 3, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { label: 'Dom', week_day: 7, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { idGrid: undefined, label: 'Qua', week_day: 3, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { idGrid: undefined, label: 'Dom', week_day: 7, checked: false, time_start: '', time_end: '',  times: [ ] },
                 ],
                 [
-                    { label: 'Qui', week_day: 4, checked: false, time_start: '', time_end: '',  times: [ ] },
+                    { idGrid: undefined, label: 'Qui', week_day: 4, checked: false, time_start: '', time_end: '',  times: [ ] },
                     { label: 'Notícia Extraordinária', week_day: 0, checked: false, isExtraordinary: true },
                 ]
             ];

@@ -138,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <form class="panel panel-default publishment-options" name="formPub" ng-submit="publish(formPub)" novalidate>
+        <form class="panel panel-default publishment-options" name="formPub" novalidate>
             <h4 class="publishment-title">Opções de Publicação</h4>
             <div class="publishment-body">
                 <div class="form-group status" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
@@ -155,7 +155,7 @@
             <div class="publishment-footer">
                 <div class="actions row">
                     <div class="col-md-12">
-                        <button id="publish-button" type="submit" class="btn btn-secondary">
+                        <button type="button" class="btn btn-secondary" ng-click="vm.saveGrid()">
                             <i class="fa fa-check"></i>
                             {{ isLoading ? 'Salvando...' : 'Salvar'}}
                         </button>
