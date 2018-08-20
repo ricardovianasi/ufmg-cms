@@ -45,10 +45,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-xs-12 form-group height-select" tooltip-enable="vm.hasChildren()" uib-tooltip="Esse programa já é um bloco, não pode estar contido em outro bloco.">
+                <div class="col-md-6 col-xs-12 form-group height-select">
                     <label>Bloco:</label> 
                     <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
-                    <ui-select ng-disabled="vm.hasChildren()" ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
+                    <ui-select ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
                         <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.title }}</ui-select-match>
                         <ui-select-choices repeat="program.id as program in vm.listProgramBlock | filter: $select.search track by $index">
                             <div ng-bind-html="program.title | highlight: $select.search"></div>
@@ -82,14 +82,14 @@
                             <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time">
                                 <label class="check-day uppercase weight-300">
                                     {{ day.label }}
-                                    <input ng-disabled="vm.isExtraordinaryProgram" type="checkbox" ng-model="day.checked">
+                                    <input ng-change="vm.changeCheckDay(day)" ng-disabled="vm.isExtraordinaryProgram" type="checkbox" ng-model="day.checked">
                                     <span class="checkmark checkmark-day"></span>
                                 </label>
                                 <select-time ng-if="day.checked" is-disabled="!day.checked" ng-model="day.time_start"></select-time>
                                 <div ng-show="day.checked"> às </div>
                                 <select-time ng-if="day.checked" is-disabled="!day.checked" ng-model="day.time_end"></select-time>
                             </div>
-                            <div ng-show="day.checked" class="df jc-space-between ai-center more-hours day-time" ng-repeat="moreTime in day.times">
+                            <div ng-show="day.checked" class="df jc-space-between ai-center more-hours day-time" ng-repeat="moreTime in day.times | filter: {delete: false}">
                                 <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
                                     <i class="fa fa-times"></i>
                                 </div>

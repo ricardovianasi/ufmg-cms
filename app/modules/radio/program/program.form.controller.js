@@ -6,7 +6,7 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q) {
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
@@ -15,8 +15,8 @@
         vm.isExtraordinaryProgram = false;
 
         vm.save = save;
-        vm.hasChildren = hasChildren;
         vm.addHour = addHour;
+        vm.changeCheckDay = changeCheckDay;
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
         vm.saveGrid = saveGrid;
@@ -33,16 +33,29 @@
             }
         }
 
+        function changeCheckDay(day) {
+            day.delete = !day.checked;
+            if(!day.checked) {
+                day.time_start = '';
+                day.time_end = '';
+                day.times.forEach(function(time) { time.delete = true; });
+            }
+        }
+
         function removeHour(times, idxTime) {
-            times.splice(idxTime, 1);
+            times[idxTime].delete = true;
         }
 
         function addHour(day, start, end, idGrid) {
-            day.times.unshift({ time_start: start || '', time_end: end || '', idGrid: idGrid });
-        }
-
-        function hasChildren() {
-            return vm.program.children && vm.program.children.length;
+            day.times.unshift(
+                {
+                    time_start: start || '',
+                    time_end: end || '', idGrid: idGrid, 
+                    week_day: day.week_day, 
+                    delete: false, 
+                    checked: true 
+                }
+            );
         }
 
         function save() {
@@ -87,15 +100,39 @@
             return objProgram;
         }
 
-        function saveGrid() {
+        function _prepareGridToSave() {
             let listGridsToSave = vm.listDays
-                .reduce(function(result, column) {
-                    console.log(result, column);
-                    return result.concat(column);
-                }, [])
-                .filter(function(day) { return day.checked; });
-            
-            console.log('saveGrid', listGridsToSave);
+                .reduce(function(result, column) { return result.concat(column); }, [])
+                .filter(function(grid) { return grid.idGrid || grid.checked; })
+                .reduce(function(resultDays, day) { return resultDays.concat(day.times).concat(day); }, [])
+                .map(function(grid) {
+                    return {
+                        programming: vm.program.id,
+                        delete: grid.delete,
+                        idGrid: grid.idGrid, 
+                        time_start: grid.time_start, 
+                        time_end: grid.time_end, 
+                        week_day: grid.week_day, 
+                    };
+                });
+            return listGridsToSave;
+        }
+
+        function saveGrid() {
+            let listPromise = [];
+            _prepareGridToSave().forEach(function(grid) {
+                if (grid.idGrid && grid.delete) { 
+                    listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
+                } else if (grid.idGrid) {
+                    listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
+                } else { 
+                    listPromise.push(RadioService.registerProgramGrid(grid));
+                }
+            });
+            $q.all(listPromise).then(function() {
+
+                toastr.success('Grade salva com sucesso.');
+            });
         }
 
         function _getProgram(id) {
@@ -128,6 +165,7 @@
 
         function initObjProgram(data) {
             vm.program = {
+                id: data.id,
                 title: data.title,
                 id_parent: data.parent ? data.parent.id : null,
                 description: data.description,
