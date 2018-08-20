@@ -22,13 +22,20 @@
         ////////////////
 
         function checkValidateDate(dayTime) {
-            if(!dayTime.moment.start || !dayTime.moment.end) { return {}; }
-            let result = {
-                startBigger: dayTime.moment.start > dayTime.moment.end,
-                dateEqual: dayTime.moment.start === dayTime.moment.end
-            };
-            dayTime.moment.isInvalid = result.startBigger || result.dateEqual;
-            return { isInvalid: dayTime.moment.isInvalid, result: result };
+            if(!dayTime.moment.start || !dayTime.moment.end) { return {result: []}; }
+            let result = [
+                {
+                    isInvalid: dayTime.moment.start > dayTime.moment.end,
+                    message: 'A hora de início não pode ser maior que a hora final.',
+                    type: 'startBigger'
+                },
+                {
+                    isInvalid: dayTime.moment.start.isSame(dayTime.moment.end),
+                    message: 'A hora de início não pode ser igual a hora final.',
+                    type: 'dateEqual'
+                }
+            ];
+            dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
         }
 
         function initObjProgram(data) {

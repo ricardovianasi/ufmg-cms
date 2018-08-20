@@ -49,7 +49,7 @@
         }
 
         function _createMoment() {
-            return moment().set({hour: $ctrl.hour, minute: $ctrl.minute, second: '00', day: $ctrl.weekDay});
+            return moment().set({hour: $ctrl.hour, minute: $ctrl.minute, second: '0', millisecond: '0', day: $ctrl.weekDay});
         }
 
         function _setSelectHour() {

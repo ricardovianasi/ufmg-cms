@@ -17,10 +17,13 @@
         }
         .day-time {
             min-height: 50px;
-        }
-        &.-error {
-            .form-control {
-                border-color: #ef3f4a;;
+            &.-error {
+                label {
+                    color: #cc3f44;
+                }
+                .form-control {
+                    border-color: #cc3f44;
+                }
             }
         }
     }
@@ -30,7 +33,7 @@
 .more-hours {
     .icon-remove {
         cursor: pointer;
-        color: #ef3f4a;
+        color: #cc3f44;
         width: 47px;
         text-align: center;
     }

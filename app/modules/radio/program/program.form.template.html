@@ -77,13 +77,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
-                    <div ng-show="vm.validityGrid.isInvalid">
-                        <p class="text-danger" ng-show="vm.validityGrid.result.startBigger">A data de ínicio não pode ser maior que a data de fim.</p>
-                        <p class="text-danger" ng-show="vm.validityGrid.result.dateEqual">A data de ínicio não pode ser igual que a data de fim.</p>
-                    </div>
                     <div class="row-days row" ng-repeat="columns in vm.listDays">
-                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-class="{'-error': day.moment.isInvalid}" ng-repeat="day in columns">
-                            <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time">
+                        <div class="col-md-6 col-xs-12 mv-10 box-day" ng-repeat="day in columns">
+                            <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time" ng-class="{'-error': day.moment.error}">
                                 <label class="check-day uppercase weight-300">
                                     {{ day.label }}
                                     <input ng-change="vm.changeCheckDay(day)" ng-disabled="vm.isExtraordinaryProgram" type="checkbox" ng-model="day.checked">
@@ -105,23 +101,31 @@
                                     moment="day.moment.end">
                                 </select-time>
                             </div>
-                            <div ng-show="day.checked" class="df jc-space-between ai-center more-hours day-time" ng-repeat="moreTime in day.times | filter: {delete: false}">
-                                <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
-                                    <i class="fa fa-times"></i>
+                            <div ng-show="day.moment.error">
+                                <p class="text-danger text-center">{{ day.moment.error.message }}</p>
+                            </div>
+                            <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
+                                <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
+                                    <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                    <select-time ng-model="moreTime.time_start"
+                                        is-disabled="!day.checked"
+                                        change-time="vm.changeTime($moment, $time, moreTime, 'start')"
+                                        week-day="moreTime.week_day"
+                                        moment="moreTime.moment.start">
+                                    </select-time>
+                                    <span> às </span>
+                                    <select-time ng-model="moreTime.time_end"
+                                        is-disabled="!day.checked"
+                                        change-time="vm.changeTime($moment, $time, moreTime, 'end')"
+                                        week-day="moreTime.week_day"
+                                        moment="moreTime.moment.end">
+                                    </select-time>
                                 </div>
-                                <select-time ng-model="moreTime.time_start"
-                                    is-disabled="!day.checked"
-                                    change-time="vm.changeTime($moment, $time, moreTime, 'start')"
-                                    week-day="moreTime.week_day"
-                                    moment="moreTime.moment.start">
-                                </select-time>
-                                <span> às </span>
-                                <select-time ng-model="moreTime.time_end"
-                                    is-disabled="!day.checked"
-                                    change-time="vm.changeTime($moment, $time, moreTime, 'end')"
-                                    week-day="moreTime.week_day"
-                                    moment="moreTime.moment.end">
-                                </select-time>
+                                <div ng-show="moreTime.moment.error">
+                                    <p class="text-danger text-center">{{ moreTime.moment.error.message }}</p>
+                                </div>
                             </div>
 
                             <div ng-if="!day.isExtraordinary" ng-click="vm.addHour(day)" ng-show="day.checked" class="add-hour">

@@ -9,7 +9,6 @@
     function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q, ProgramFormUtils) {
         var vm = this;
         vm.id = '';
-        vm.validityGrid = {};
         vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
@@ -27,9 +26,8 @@
         ////////////////
 
         function changeTime(moment, time, day, type) {
-            let dayTime = ProgramFormUtils.getByWeekDay(vm.listDays, day.week_day);
-            dayTime.moment[type] = moment;
-            vm.validityGrid = ProgramFormUtils.checkValidateDate(dayTime);
+            day.moment[type] = moment;
+            ProgramFormUtils.checkValidateDate(day);
         }
 
         function setExtraordinary() {
@@ -95,7 +93,7 @@
                 .reduce(function(result, column) { return result.concat(column); }, [])
                 .filter(function(grid) { return grid.idGrid || grid.checked; })
                 .reduce(function(resultDays, day) { return resultDays.concat(day.times).concat(day); }, [])
-                .map(function(grid) { ProgramFormUtils.createGridServer(grid, vm.program.id) });
+                .map(function(grid) { ProgramFormUtils.createGridServer(grid, vm.program.id); });
             return listGridsToSave;
         }
 
