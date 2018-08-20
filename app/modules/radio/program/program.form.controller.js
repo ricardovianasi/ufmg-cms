@@ -19,7 +19,6 @@
         vm.changeCheckDay = changeCheckDay;
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
-        vm.saveGrid = saveGrid;
 
         activate();
 
@@ -75,6 +74,10 @@
         function _register() {
             return RadioService.registerProgram(_getProgramToSave())
                 .then(function(res) {
+                    vm.program.id = res.data.id;
+                    return _saveGrid();
+                })
+                .then(function(res) {
                     toastr.success('Programa de rádio cadastrado com sucesso!');
                     if(vm.canPut) {
                         $location.path('/radio_programming/edit/' + res.data.id);
@@ -84,7 +87,7 @@
         }
 
         function _update() {
-            return RadioService.updateProgram(_getProgramToSave(), vm.id)
+            return $q.all([RadioService.updateProgram(_getProgramToSave(), vm.id), _saveGrid()])
                 .then(function() {
                     toastr.success('Programa de rádio atualizado com sucesso!');
                 });
@@ -118,7 +121,7 @@
             return listGridsToSave;
         }
 
-        function saveGrid() {
+        function _saveGrid() {
             let listPromise = [];
             _prepareGridToSave().forEach(function(grid) {
                 if (grid.idGrid && grid.delete) { 
@@ -126,13 +129,15 @@
                 } else if (grid.idGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
                 } else { 
-                    listPromise.push(RadioService.registerProgramGrid(grid));
+                    let promiseRegister = RadioService.registerProgramGrid(grid)
+                        .then(function(res) {
+                            let day = _getDayByWeek(res.data.week_day);
+                            day.idGrid = res.data.id;
+                        });
+                    listPromise.push();
                 }
             });
-            $q.all(listPromise).then(function() {
-
-                toastr.success('Grade salva com sucesso.');
-            });
+            return $q.all(listPromise);
         }
 
         function _getProgram(id) {
