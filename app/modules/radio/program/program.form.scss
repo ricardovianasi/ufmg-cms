@@ -18,6 +18,11 @@
         .day-time {
             min-height: 50px;
         }
+        &.-error {
+            .form-control {
+                border-color: #ef3f4a;;
+            }
+        }
     }
 }
 

@@ -6,9 +6,10 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q, ProgramFormUtils) {
         var vm = this;
         vm.id = '';
+        vm.validityGrid = {};
         vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
@@ -16,6 +17,7 @@
 
         vm.save = save;
         vm.addHour = addHour;
+        vm.changeTime = changeTime;
         vm.changeCheckDay = changeCheckDay;
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
@@ -23,6 +25,12 @@
         activate();
 
         ////////////////
+
+        function changeTime(moment, time, day, type) {
+            let dayTime = ProgramFormUtils.getByWeekDay(vm.listDays, day.week_day);
+            dayTime.moment[type] = moment;
+            vm.validityGrid = ProgramFormUtils.checkValidateDate(dayTime);
+        }
 
         function setExtraordinary() {
             if (vm.isExtraordinaryProgram) {
@@ -38,6 +46,7 @@
                 day.time_start = '';
                 day.time_end = '';
                 day.times.forEach(function(time) { time.delete = true; });
+                day.moment = {};
             }
         }
 
@@ -46,33 +55,21 @@
         }
 
         function addHour(day, start, end, idGrid) {
-            day.times.unshift(
-                {
-                    time_start: start || '',
-                    time_end: end || '', idGrid: idGrid, 
-                    week_day: day.week_day, 
-                    delete: false, 
-                    checked: true 
-                }
-            );
+            day.times.unshift(ProgramFormUtils.createGrid(day.week_day, start, end, idGrid));
         }
 
         function save() {
             let promiseSave;
             vm.loading = true;
-            if(vm.id) {
-                promiseSave = _update();
-            } else {
-                promiseSave = _register();
-            }
+            if(vm.id) { promiseSave = _update(); } 
+            else { promiseSave = _register(); }
             promiseSave
                 .catch(function(error) {console.error(error);})
                 .finally(function() {vm.loading = false;});
-
         }
         
         function _register() {
-            return RadioService.registerProgram(_getProgramToSave())
+            return RadioService.registerProgram(ProgramFormUtils.createProgramServer(vm.program))
                 .then(function(res) {
                     vm.program.id = res.data.id;
                     return _saveGrid();
@@ -87,20 +84,10 @@
         }
 
         function _update() {
-            return $q.all([RadioService.updateProgram(_getProgramToSave(), vm.id), _saveGrid()])
+            return $q.all([RadioService.updateProgram(ProgramFormUtils.createProgramServer(vm.program), vm.id), _saveGrid()])
                 .then(function() {
                     toastr.success('Programa de rádio atualizado com sucesso!');
                 });
-        }
-
-        function _getProgramToSave() {
-            let objProgram = angular.copy(vm.program);
-            objProgram.genres = objProgram.genre_id ? [objProgram.genre_id] : [];
-            objProgram.id_parent = objProgram.id_parent;
-            delete objProgram.image;
-            delete objProgram.genre_id;
-            delete objProgram.parent;
-            return objProgram;
         }
 
         function _prepareGridToSave() {
@@ -108,16 +95,7 @@
                 .reduce(function(result, column) { return result.concat(column); }, [])
                 .filter(function(grid) { return grid.idGrid || grid.checked; })
                 .reduce(function(resultDays, day) { return resultDays.concat(day.times).concat(day); }, [])
-                .map(function(grid) {
-                    return {
-                        programming: vm.program.id,
-                        delete: grid.delete,
-                        idGrid: grid.idGrid, 
-                        time_start: grid.time_start, 
-                        time_end: grid.time_end, 
-                        week_day: grid.week_day, 
-                    };
-                });
+                .map(function(grid) { ProgramFormUtils.createGridServer(grid, vm.program.id) });
             return listGridsToSave;
         }
 
@@ -131,10 +109,10 @@
                 } else { 
                     let promiseRegister = RadioService.registerProgramGrid(grid)
                         .then(function(res) {
-                            let day = _getDayByWeek(res.data.week_day);
+                            let day = ProgramFormUtils.getByWeekDay(vm.listDays, res.data.week_day);
                             day.idGrid = res.data.id;
                         });
-                    listPromise.push();
+                    listPromise.push(promiseRegister);
                 }
             });
             return $q.all(listPromise);
@@ -169,16 +147,9 @@
         }
 
         function initObjProgram(data) {
-            vm.program = {
-                id: data.id,
-                title: data.title,
-                id_parent: data.parent ? data.parent.id : null,
-                description: data.description,
-                genre_id: data.genres[0] ? data.genres[0].id : null,
-                children: data.children
-            };
+            vm.program = ProgramFormUtils.initObjProgram(data);
             data.grid_program.forEach(function(grid) {
-                let day = _getDayByWeek(grid.week_day);
+                let day = ProgramFormUtils.getByWeekDay(vm.listDays, grid.week_day);
                 day.checked = true;
                 if(day.time_start) {
                     addHour(day, grid.time_start, grid.time_end, grid.id);
@@ -190,46 +161,12 @@
             });
         }
 
-        function _getDayByWeek(week_day) {
-            let day;
-            vm.listDays.forEach(function(column) {
-                if(!day) {
-                    day = column.find(function(day) {
-                        if (day.week_day === week_day) { return true; }
-                        return false;
-                    });
-                }
-            });
-            return day;
-        }
-
-        function _initWeek() {
-            vm.listDays = [
-                [
-                    { idGrid: undefined, label: 'Seg', week_day: 1, checked: false, time_start: '', time_end: '', times: [ ] },
-                    { idGrid: undefined, label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, label: 'Ter', week_day: 2, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { idGrid: undefined, label: 'Sab', week_day: 6, checked: false, time_start: '', time_end: '',  times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, label: 'Qua', week_day: 3, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { idGrid: undefined, label: 'Dom', week_day: 7, checked: false, time_start: '', time_end: '',  times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, label: 'Qui', week_day: 4, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { label: 'Notícia Extraordinária', week_day: 0, checked: false, isExtraordinary: true },
-                ]
-            ];
-        }
-
         function activate() {
             vm.program = {title: ''};
             vm.id = $routeParams.id;
+            vm.listDays = ProgramFormUtils.createListDays();
             _loadItemsFilters();
             _loadBlockPrograms();
-            _initWeek();
             if(vm.id) {
                 _getProgram(vm.id);
             } 
