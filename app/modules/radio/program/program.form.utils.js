@@ -40,6 +40,7 @@
                     type: 'dayTimeAllocated'
                 }
             ];
+            RadioService.hasScheduleBusy();
             dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
         }
 

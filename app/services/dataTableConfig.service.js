@@ -153,12 +153,10 @@
                     var isDate = Util.getDateBetween(search);
                     if (isDate) {
                         conditionsIndex++;
-                        searchParam += BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('type', 'between') +
-                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('field', element.name) +
-                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('from', isDate.from) +
-                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('to', isDate.to) +
-                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('format', 'Y-m-d H:i:s') +
-                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('where', 'or');
+                        let params = [ {name: 'type', value: 'between'}, {name: 'field', value: element.name},
+                            {name: 'from', value: isDate.from}, {name: 'to', value: isDate.to},
+                            {name: 'format', value: 'Y-m-d H:i:s'}, {name: 'where', value: 'or'} ];
+                        searchParam += BuildParamsService.getParamsFilter(params, filterIndex, conditionsIndex);
                     }
                 } else if (element.filter) {
                     conditionsIndex++;

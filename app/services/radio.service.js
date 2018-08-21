@@ -6,7 +6,7 @@
         .factory('RadioService', RadioService);
 
     /** ngInject */
-    function RadioService($http, apiUrl, dataTableConfigService, SerializeService) {
+    function RadioService($http, apiUrl, dataTableConfigService, BuildParamsService, SerializeService) {
         let baseUrlGenre = apiUrl + '/radio-genre';
         let baseUrlParent = apiUrl + '/radio-schedule';
         let baseUrlProgram = apiUrl + '/radio-programming';
@@ -30,6 +30,7 @@
             baseUrlGenre: baseUrlGenre,
             baseUrlParent: baseUrlParent,
             saveThumbnail: saveThumbnail,
+            hasScheduleBusy: hasScheduleBusy,
         };
         
         return service;
@@ -101,13 +102,26 @@
             return $http.delete(url);
         }
 
+        function hasScheduleBusy() {
+            dataTableConfigService.setColumnsHasOrderAndSearch([]);
+            let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
+            params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('type', 'orx');
+            let paramsDate = [ {name: 'type', value: 'between'}, {name: 'field', value: 'time_start'},
+            {name: 'from', value: '11:00'}, {name: 'to', value: '12:00'},
+            {name: 'format', value: 'H:i'}, {name: 'where', value: 'or'} ];
+            params += BuildParamsService.getParamsFilter(paramsDate, 1, 1);
+            params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('where', 'and');
+            let url = baseUrlGrid + '?' + params;
+            console.log(params);
+            return $http.get(url);
+        }
+
         function _getParamsOrderGrid() {
             dataTableConfigService.setColumnsHasOrderAndSearch([]);
             return {
                 order_by: { field: 'timeStart', direction: 'ASC' },
             };
         }
-
 
         function saveThumbnail(idProgram, idImage) {
             let params = { id: idProgram, thumb: idImage };

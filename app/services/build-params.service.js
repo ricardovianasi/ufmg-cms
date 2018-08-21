@@ -10,12 +10,14 @@
         var service = {
             getParamToOrderBy: getParamToOrderBy,
             getParamToSearch: getParamToSearch,
+            getParamsFilter: getParamsFilter,
             getInnerJoin: getInnerJoin,
             getQueryFilter: getQueryFilter,
             getQuery: getQuery,
             getElement: getElement,
             wildcard: wildcard,
             getObjOrderBy: getObjOrderBy,
+            getPureElement: getPureElement,
         };
         
         return service;
@@ -30,12 +32,22 @@
         }
 
         function getParamToSearch(type, field, value, alias, where, filterIndex, conditionsIndex) {
-            return getQueryFilter(filterIndex, conditionsIndex) + getElement('type', type) +
-                getQueryFilter(filterIndex, conditionsIndex) + getElement('field', field) +
-                getQueryFilter(filterIndex, conditionsIndex) + getElement('value', value) +
-                (alias ?
-                    getQueryFilter(filterIndex, conditionsIndex) + getElement('alias', alias) : '') +
-                getQueryFilter(filterIndex, conditionsIndex) + getElement('where', where);
+            let queryParams = [ 
+                {name: 'type', value: type}, {name: 'field', value: field},
+                {name: 'value', value: value}, alias ? { name: 'alias', value: alias } : undefined,
+                {name: 'where', value: where}
+            ];
+            return getParamsFilter(queryParams, filterIndex, conditionsIndex);
+        }
+
+        function getParamsFilter(listQuery, filterIndex, conditionsIndex) {
+            let params = '';
+            listQuery.forEach(function(query) {
+                if(query) {
+                    params += getQueryFilter(filterIndex, conditionsIndex) + getElement(query.name, query.value);
+                }
+            });
+            return params;
         }
 
         function getInnerJoin(index, field) {
@@ -55,6 +67,14 @@
 
         function getElement(name, value) {
             return  '[' + name + ']=' + value;
+        }
+
+        function getPureElement(listName, listValues) {
+            var params = '';
+            listName.forEach(function(name, idx) { 
+                params += name + '=' + listValues[idx] + (idx + 1 < listValues.length ? '&' : '');
+            });
+            return params;
         }
 
         function wildcard(el) {
