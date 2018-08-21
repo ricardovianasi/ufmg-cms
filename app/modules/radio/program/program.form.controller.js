@@ -93,7 +93,7 @@
                 .reduce(function(result, column) { return result.concat(column); }, [])
                 .filter(function(grid) { return grid.idGrid || grid.checked; })
                 .reduce(function(resultDays, day) { return resultDays.concat(day.times).concat(day); }, [])
-                .map(function(grid) { ProgramFormUtils.createGridServer(grid, vm.program.id); });
+                .map(function(grid) { return ProgramFormUtils.createGridServer(grid, vm.program.id); });
             return listGridsToSave;
         }
 

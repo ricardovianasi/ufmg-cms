@@ -5,7 +5,7 @@
         .factory('dataTableConfigService', dataTableConfigService);
 
     /** ngInject */
-    function dataTableConfigService(DTOptionsBuilder, DTColumnDefBuilder, $log, $timeout, Util) {
+    function dataTableConfigService(DTOptionsBuilder, DTColumnDefBuilder, $log, BuildParamsService, Util) {
         $log.info('dataTableConfigService');
         var paramStatus = 'all';
         var filterIndex = 0;
@@ -25,35 +25,16 @@
             columnsHasOrder = columns;
         }
 
-        function hasAuthor() {
-            filterIndex++;
+        function _getParamsFilter() {
+            let parametersFilter = '';
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
-                if (element.filter === 'type') {
-                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
-                        '&query[filter][' + filterIndex + '][field]=type' +
-                        '&query[filter][' + filterIndex + '][alias]=type';
-                }
-                if (element.filter === 'author') {
-                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
-                        '&query[filter][' + filterIndex + '][field]=author' +
-                        '&query[filter][' + filterIndex + '][alias]=author';
+                if (element.filter && (element.filter === 'type' || element.filter === 'author')) {
+                    filterIndex++;
+                    parametersFilter += BuildParamsService.getInnerJoin(filterIndex, element.filter);
                 }
             }
-            return '';
-        }
-
-        function hasFilter() {
-            filterIndex++;
-            for (var i = 0; i < columnsHasOrder.length; i++) {
-                var element = columnsHasOrder[i];
-                if (element.filter === 'type') {
-                    return '&query[filter][' + filterIndex + '][type]=innerjoin' +
-                        '&query[filter][' + filterIndex + '][field]=type' +
-                        '&query[filter][' + filterIndex + '][alias]=type';
-                }
-            }
-            return '';
+            return parametersFilter;
         }
 
         function _getParams(params, elementSearch) {
@@ -67,8 +48,8 @@
             if (params.page_size) {
                 parameters += '&page_size=' + params.page_size;
             }
-            parameters += hasAuthor();
-            parameters += hasFilter();
+            parameters += _getParamsFilter();
+
             if (paramStatus) {
                 parameters += _getStatusParam(paramStatus);
             }
@@ -106,38 +87,18 @@
                 for (var j = 0; j < columns.length; j++) {
                     var element = columns[j];
                     if (element.index === order[0].column) {
-                        orderBy = {
-                            field: element.name,
-                            direction: order[0].dir.toUpperCase(),
-                            filter: element.filter
-                        };
+                        orderBy = BuildParamsService.getObjOrderBy(element.name, order[0].dir.toUpperCase(), element.filter);
                     }
                 }
             } else {
-                var isNotOrder = true;
                 for (var k = 0; k < columnsHasOrder.length; k++) {
                     var el = columnsHasOrder[k];
-                    if (el.name === 'postDate' || el.name === 'initDate' || el.name === 'publishDate') {
-                        orderBy = {
-                            field: el.name,
-                            direction: 'DESC',
-                            filter: el.filter
-                        };
-                        isNotOrder = false;
+                    let isOrderDate = el.name === 'postDate' || el.name === 'initDate' || el.name === 'publishDate';
+                    let isOrderOrdinary = el.name === 'name' || el.name === 'title';
+                    if (isOrderDate || isOrderOrdinary) {
+                        let direction = isOrderDate ? 'DESC' : 'ASC';
+                        orderBy = BuildParamsService.getObjOrderBy(el.name, direction, el.filter);
                         break;
-                    }
-                }
-                if (isNotOrder) {
-                    for (var f = 0; f < columnsHasOrder.length; f++) {
-                        var ele = columnsHasOrder[f];
-                        if (ele.name === 'name' || ele.name === 'title') {
-                            orderBy = {
-                                field: ele.name,
-                                direction: 'ASC',
-                                filter: ele.filter
-                            };
-                            break;
-                        }
                     }
                 }
             }
@@ -165,29 +126,11 @@
                 return '';
             }
             filterIndex++;
-            if (order.filter === 'author') {
-                return '&query[order_by][' + filterIndex + '][type]=field' +
-                    '&query[order_by][' + filterIndex + '][field]=' + order.field +
-                    '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
-                    '&query[order_by][' + filterIndex + '][alias]=author';
+            if (order.filter === 'author' || order.filter === 'type') {
+                return BuildParamsService.getParamToOrderBy('field', order.field, order.direction, order.filter, filterIndex);
             }
-            if (order.filter === 'type') {
-                return '&query[order_by][' + filterIndex + '][type]=field' +
-                    '&query[order_by][' + filterIndex + '][field]=' + order.field +
-                    '&query[order_by][' + filterIndex + '][direction]=' + order.direction +
-                    '&query[order_by][' + filterIndex + '][alias]=type';
-            }
-            return '&query[order_by][' + filterIndex + '][type]=field' +
-                '&query[order_by][' + filterIndex + '][field]=' + order.field +
-                '&query[order_by][' + filterIndex + '][direction]=' + order.direction;
-        }
+            return BuildParamsService.getParamToOrderBy('field', order.field, order.direction, '', filterIndex);
 
-        function wildcard(el) {
-            // var element = Number(el);
-            // if (!isNaN(element)) {
-            //     return element;
-            // }
-            return '%\\' + el + '%';
         }
 
         function _getSearchParam(search, elementSearch) {
@@ -195,56 +138,39 @@
                 return '';
             }
             filterIndex++;
+            let searchWildCard = BuildParamsService.wildcard(search);
             if (angular.isDefined(elementSearch)) {
-                return '&query[filter][' + filterIndex + '][type]=like' +
-                    '&query[filter][' + filterIndex + '][field]=' + elementSearch +
-                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
-                    '&query[filter][' + filterIndex + '][where]=and';
+                return BuildParamsService.getParamToSearch('like', elementSearch, searchWildCard, '', 'and', filterIndex);
             }
             if (columnsHasOrder.length === 1) {
-                return '&query[filter][' + filterIndex + '][type]=like' +
-                    '&query[filter][' + filterIndex + '][field]=' + columnsHasOrder[0].name +
-                    '&query[filter][' + filterIndex + '][value]=' + wildcard(search) +
-                    '&query[filter][' + filterIndex + '][where]=and';
+                return BuildParamsService.getParamToSearch('like', columnsHasOrder[0].name, searchWildCard, '', 'and', filterIndex);
             }
             conditionsIndex = 0;
-            var searchParam = '&query[filter][' + filterIndex + '][type]=orx';
+            var searchParam = BuildParamsService.getQueryFilter(filterIndex) + BuildParamsService.getElement('type', 'orx');
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
                 if (element.name === 'postDate' || element.name === 'initDate' || element.name === 'publishDate') {
                     var isDate = Util.getDateBetween(search);
                     if (isDate) {
                         conditionsIndex++;
-                        searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=between' +
-                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
-                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][from]=' + isDate.from +
-                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][to]=' + isDate.to +
-                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][format]=Y-m-d H:i:s' +
-                            '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                        searchParam += BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('type', 'between') +
+                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('field', element.name) +
+                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('from', isDate.from) +
+                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('to', isDate.to) +
+                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('format', 'Y-m-d H:i:s') +
+                            BuildParamsService.getQueryFilter(filterIndex, conditionsIndex) + BuildParamsService.getElement('where', 'or');
                     }
-                } else if (element.filter === 'author') {
+                } else if (element.filter) {
                     conditionsIndex++;
-                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=author' +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
-                } else if (element.filter === 'type') {
-                    conditionsIndex++;
-                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][alias]=type' +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                    searchParam += 
+                        BuildParamsService.getParamToSearch('like', element.name, searchWildCard, element.filter, 'or', filterIndex, conditionsIndex);
                 } else {
                     conditionsIndex++;
-                    searchParam += '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][type]=like' +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][field]=' + element.name +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][value]=' + wildcard(search) +
-                        '&query[filter][' + filterIndex + '][conditions][' + conditionsIndex + '][where]=or';
+                    searchParam += 
+                        BuildParamsService.getParamToSearch('like', element.name, searchWildCard, '', 'or', filterIndex, conditionsIndex);
                 }
             }
-            searchParam += '&query[filter][' + filterIndex + '][where]=and';
+            searchParam += BuildParamsService.getQueryFilter(filterIndex) + BuildParamsService.getElement('where', 'and');
             return searchParam;
         }
 
@@ -253,10 +179,7 @@
                 return '';
             }
             filterIndex++;
-            return '&query[filter][' + filterIndex + '][type]=eq' +
-                '&query[filter][' + filterIndex + '][field]=status' +
-                '&query[filter][' + filterIndex + '][value]=' + paramStatus +
-                '&query[filter][' + filterIndex + '][where]=and';
+            return BuildParamsService.getParamToSearch('eq', 'status', paramStatus, '', 'and', filterIndex);
         }
 
         function _dtOptionsBuilder(getContextCallback, options) {

@@ -6,7 +6,7 @@
         .factory('ProgramFormUtils', ProgramFormUtils);
 
     /** ngInject */
-    function ProgramFormUtils() {
+    function ProgramFormUtils(RadioService) {
         var service = {
             checkValidateDate: checkValidateDate,
             getByWeekDay: getByWeekDay,
@@ -33,6 +33,11 @@
                     isInvalid: dayTime.moment.start.isSame(dayTime.moment.end),
                     message: 'A hora de início não pode ser igual a hora final.',
                     type: 'dateEqual'
+                },
+                {
+                    isInvalid: true,
+                    message: 'Programação tal já esta alocada neste dia e horário.',
+                    type: 'dayTimeAllocated'
                 }
             ];
             dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
