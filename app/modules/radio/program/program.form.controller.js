@@ -20,13 +20,25 @@
         vm.changeCheckDay = changeCheckDay;
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
+        vm.addNewParent = addNewParent;
 
         activate();
 
         ////////////////
 
+        function addNewParent(nameParent) {
+            RadioService.registerItemFilter({name: nameParent}, RadioService.baseUrlParent)
+                .then(function(res) {
+                    let parent = res.data;
+                    vm.listParents.unshift(parent);
+                    vm.program.schedule = parent;
+                    toastr.success('Bloco ' + parent.name + ' adicionado com sucesso.');
+                });
+        }
+
         function changeTime(moment, time, day, type) {
             day.moment[type] = moment;
+            day['time_'+type] = time;
             ProgramFormUtils.checkValidateDate(day);
         }
 
@@ -124,18 +136,16 @@
                 .finally(function() { vm.loading = false; });
         }
 
-        function _loadItemsFilters() {
+        function _loadGenre() {
             RadioService.listItemFilter(undefined, RadioService.baseUrlGenre)
                 .then(function(res) { vm.listGenre = res.data.items; });
         }
 
-        function _loadBlockPrograms() {
-            RadioService.listPrograms()
+        function _loadParents() {
+            RadioService.listItemFilter(undefined, RadioService.baseUrlParent)
                 .then(function(res) { 
                     _permissions();
-                    vm.listProgramBlock = res.data.items.filter(function(program) {
-                        return !program.parent && program.id != vm.id;
-                    }); 
+                    vm.listParents = res.data.items; 
                 });
         }
 
@@ -163,8 +173,8 @@
             vm.program = {title: ''};
             vm.id = $routeParams.id;
             vm.listDays = ProgramFormUtils.createListDays();
-            _loadItemsFilters();
-            _loadBlockPrograms();
+            _loadGenre();
+            _loadParents();
             if(vm.id) {
                 _getProgram(vm.id);
             } 

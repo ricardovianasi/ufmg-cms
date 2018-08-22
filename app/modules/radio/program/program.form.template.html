@@ -47,14 +47,18 @@
             <div class="row">
                 <div class="col-md-6 col-xs-12 form-group height-select">
                     <label>Bloco:</label> 
-                    <span ng-show="vm.program.id_parent" ng-click="vm.program.id_parent = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
-                    <ui-select ng-model="vm.program.id_parent" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
-                        <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.title }}</ui-select-match>
-                        <ui-select-choices repeat="program.id as program in vm.listProgramBlock | filter: $select.search track by $index">
-                            <div ng-bind-html="program.title | highlight: $select.search"></div>
+                    <span ng-show="vm.program.schedule" ng-click="vm.program.schedule = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
+                    <ui-select ng-model="vm.program.schedule" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
+                        <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.name }}</ui-select-match>
+                        <ui-select-choices repeat="schedule as schedule in vm.listParents | filter: { name: $select.search } track by $index">
+                            <div ng-bind-html="schedule.name | highlight: $select.search"></div>
                         </ui-select-choices>
                         <ui-select-no-choice>
-                            Sem blocos para exibir
+                            <div class="text-center">
+                                <button type="button" class="btn btn-link" ng-click="vm.addNewParent($select.search)">
+                                    Adicionar bloco: <b>{{ $select.search }}</b>
+                                </button>
+                            </div>
                         </ui-select-no-choice>
                     </ui-select>
                 </div>

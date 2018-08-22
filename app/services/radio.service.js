@@ -102,15 +102,14 @@
             return $http.delete(url);
         }
 
-        function hasScheduleBusy() {
+        function hasScheduleBusy(idProgram, weekDay, timeStart, timeEnd) {
             dataTableConfigService.setColumnsHasOrderAndSearch([]);
             let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
-            params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('type', 'orx');
-            let paramsDate = [ {name: 'type', value: 'between'}, {name: 'field', value: 'time_start'},
-            {name: 'from', value: '11:00'}, {name: 'to', value: '12:00'},
-            {name: 'format', value: 'H:i'}, {name: 'where', value: 'or'} ];
-            params += BuildParamsService.getParamsFilter(paramsDate, 1, 1);
-            params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('where', 'and');
+            params += BuildParamsService.getParamToSearch('eq', 'weekDay', weekDay, '', 'and', 1);
+            params += BuildParamsService.getParamToSearch('gte', 'timeStart', timeStart, '', 'and', 2);
+            // params += BuildParamsService.getParamToSearch('lte', 'timeEnd', timeEnd, '', 'and', 3);
+            // params += BuildParamsService.getParamToSearch('gte', 'id', 11, '', 'and', 3);
+            // params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('type', 'orx');
             let url = baseUrlGrid + '?' + params;
             console.log(params);
             return $http.get(url);

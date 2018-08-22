@@ -37,8 +37,8 @@
             }
             if(_isFullFilled()) {
                 let timeStr = $ctrl.hour + ':' + $ctrl.minute;
-                let momentTime = _createMoment();
                 $ctrl.ngModel = timeStr;
+                let momentTime = _createMoment();
                 $ctrl.moment = momentTime;
                 $ctrl.changeTime({ $moment: momentTime, $time: timeStr});
             }
