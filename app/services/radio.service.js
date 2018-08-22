@@ -106,10 +106,8 @@
             dataTableConfigService.setColumnsHasOrderAndSearch([]);
             let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
             params += BuildParamsService.getParamToSearch('eq', 'weekDay', weekDay, '', 'and', 1);
-            params += BuildParamsService.getParamToSearch('gte', 'timeStart', timeStart, '', 'and', 2);
-            // params += BuildParamsService.getParamToSearch('lte', 'timeEnd', timeEnd, '', 'and', 3);
-            // params += BuildParamsService.getParamToSearch('gte', 'id', 11, '', 'and', 3);
-            // params += BuildParamsService.getQueryFilter(1) + BuildParamsService.getElement('type', 'orx');
+            params += BuildParamsService.getParamToSearch('gt', 'timeStart', timeStart, '', 'and', 2);
+            params += BuildParamsService.getParamToSearch('lt', 'timeEnd', timeEnd, '', 'or', 3);
             let url = baseUrlGrid + '?' + params;
             console.log(params);
             return $http.get(url);
