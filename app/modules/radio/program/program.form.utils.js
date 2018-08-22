@@ -35,12 +35,20 @@
                     type: 'dateEqual'
                 },
                 {
-                    isInvalid: true,
-                    message: 'Programação tal já esta alocada neste dia e horário.',
+                    isInvalid: false,
+                    message: ' já esta alocado neste dia e horário.',
                     type: 'dayTimeAllocated'
                 }
             ];
-            RadioService.hasScheduleBusy(undefined, dayTime.week_day, dayTime.time_start, dayTime.time_end);
+            RadioService.hasScheduleBusy(undefined, dayTime.week_day, dayTime.time_start, dayTime.time_end)
+                .then(function(res) {
+                    let items = res.data.items;
+                    if (!dayTime.moment.error && items.length) {
+                        result[2].isInvalid = true;
+                        result[2].message = items[0].program.title + result[2].message;
+                        dayTime.moment.error = result[2];
+                    }
+                });
             dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
         }
 
@@ -48,7 +56,9 @@
             return {
                 id: data.id,
                 title: data.title,
-                id_parent: data.parent ? data.parent.id : null,
+                status: data.status,
+                highlight: data.highlight,
+                id_schedule: data.schedule ? data.schedule.id : null,
                 description: data.description,
                 genre_id: data.genres[0] ? data.genres[0].id : null
             };

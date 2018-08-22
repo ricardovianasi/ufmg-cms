@@ -6,8 +6,7 @@
 }
 
 .row-days {
-    min-height: 100px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     > .box-day {
         &:nth-child(odd) {
             padding-right: 30px; 
@@ -25,6 +24,7 @@
                     border-color: #cc3f44;
                 }
             }
+
         }
     }
 }
@@ -40,6 +40,7 @@
 }
 
 .add-hour {
+    margin-top: 5px;
     padding: 5px 2px;
     text-align: center;
     border: 2px dashed #b3b3b3;
@@ -50,7 +51,7 @@
 }
 
 .check-day {
-    padding-left: 1.5em;
+    padding-left: 23px;
     display: block;
     position: relative;
     user-select: none;

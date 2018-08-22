@@ -31,7 +31,7 @@
                 .then(function(res) {
                     let parent = res.data;
                     vm.listParents.unshift(parent);
-                    vm.program.schedule = parent;
+                    vm.program.id_schedule = parent.id;
                     toastr.success('Bloco ' + parent.name + ' adicionado com sucesso.');
                 });
         }
@@ -43,10 +43,8 @@
         }
 
         function setExtraordinary() {
-            if (vm.isExtraordinaryProgram) {
-                vm.listDays.forEach(function(column) {
-                    column.forEach(function(day) { day.checked = false; });
-                });
+            if (vm.program.highlight) {
+
             }
         }
 
@@ -65,7 +63,10 @@
         }
 
         function addHour(day, start, end, idGrid) {
-            day.times.unshift(ProgramFormUtils.createGrid(day.week_day, start, end, idGrid));
+            if(vm.program.highlight) {
+                return;
+            }
+            day.times.push(ProgramFormUtils.createGrid(day.week_day, start, end, idGrid));
         }
 
         function save() {

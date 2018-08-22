@@ -106,11 +106,18 @@
             dataTableConfigService.setColumnsHasOrderAndSearch([]);
             let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
             params += BuildParamsService.getParamToSearch('eq', 'weekDay', weekDay, '', 'and', 1);
-            params += BuildParamsService.getParamToSearch('gt', 'timeStart', timeStart, '', 'and', 2);
-            params += BuildParamsService.getParamToSearch('lt', 'timeEnd', timeEnd, '', 'or', 3);
+            params += _getParamDate(timeStart, timeEnd, 'timeStart', 1);
+            params += _getParamDate(timeStart, timeEnd, 'timeEnd', 1);
             let url = baseUrlGrid + '?' + params;
             console.log(params);
             return $http.get(url);
+        }
+
+        function _getParamDate(timeStart, timeEnd, field, filterIndex, conditionsIndex) {
+            let params = [ {name: 'type', value: 'between'}, {name: 'field', value: field},
+                {name: 'from', value: timeStart}, {name: 'to', value: timeEnd},
+                {name: 'format', value: 'H:i'}, {name: 'where', value: 'or'} ];
+            return BuildParamsService.getParamsFilter(params, filterIndex, conditionsIndex);
         }
 
         function _getParamsOrderGrid() {
