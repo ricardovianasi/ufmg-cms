@@ -21,6 +21,7 @@
         vm.removeHour = removeHour;
         vm.setExtraordinary = setExtraordinary;
         vm.addNewParent = addNewParent;
+        vm.canAddHour = canAddHour;
 
         activate();
 
@@ -58,15 +59,31 @@
             }
         }
 
-        function removeHour(times, idxTime) {
-            times[idxTime].delete = true;
+        function removeHour(day, timeExtra) {
+            let idxTime = day.times.indexOf(timeExtra);
+            if(!timeExtra.idGrid) {
+                day.times.splice(idxTime, 1);
+                return;
+            }
+            timeExtra.delete = true;
         }
 
         function addHour(day, start, end, idGrid) {
-            if(vm.program.highlight) {
-                return;
-            }
             day.times.push(ProgramFormUtils.createGrid(day.week_day, start, end, idGrid));
+        }
+
+        function canAddHour(day) {
+            if (day.isExtraordinary) { return false; }
+            let canAdd = true;
+            let times = day.times.filter(function(time) {return !time.delete;});
+            if(times && times.length) {
+                let timeExtra = times[times.length - 1];
+                canAdd = timeExtra.time_start && timeExtra.time_end;
+            } else {
+                canAdd = day.time_start && day.time_end;
+            }
+            return canAdd && !vm.program.highlight;
+
         }
 
         function save() {
@@ -95,8 +112,9 @@
         }
 
         function _update() {
-            return $q.all([RadioService.updateProgram(ProgramFormUtils.createProgramServer(vm.program), vm.id), _saveGrid()])
-                .then(function() {
+            return $q.all([ RadioService.updateProgram(ProgramFormUtils.createProgramServer(vm.program), vm.id), _saveGrid() ])
+                .then(function(res) {
+                    _getProgram(vm.id);
                     toastr.success('Programa de rádio atualizado com sucesso!');
                 });
         }
@@ -113,17 +131,12 @@
         function _saveGrid() {
             let listPromise = [];
             _prepareGridToSave().forEach(function(grid) {
-                if (grid.idGrid && grid.delete) { 
+                if (grid.idGrid && grid.delete) {
                     listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
                 } else if (grid.idGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
                 } else { 
-                    let promiseRegister = RadioService.registerProgramGrid(grid)
-                        .then(function(res) {
-                            let day = ProgramFormUtils.getByWeekDay(vm.listDays, res.data.week_day);
-                            day.idGrid = res.data.id;
-                        });
-                    listPromise.push(promiseRegister);
+                    listPromise.push(RadioService.registerProgramGrid(grid));
                 }
             });
             return $q.all(listPromise);
@@ -157,6 +170,7 @@
 
         function initObjProgram(data) {
             vm.program = ProgramFormUtils.initObjProgram(data);
+            vm.listDays = ProgramFormUtils.createListDays();
             data.grid_program.forEach(function(grid) {
                 let day = ProgramFormUtils.getByWeekDay(vm.listDays, grid.week_day);
                 day.checked = true;
@@ -171,9 +185,9 @@
         }
 
         function activate() {
+            vm.readctorOpts = { plugins: false, buttons: ['bold', 'italic'] };
             vm.program = {title: ''};
             vm.id = $routeParams.id;
-            vm.listDays = ProgramFormUtils.createListDays();
             _loadGenre();
             _loadParents();
             if(vm.id) {

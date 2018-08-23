@@ -55,8 +55,9 @@
                         </ui-select-choices>
                         <ui-select-no-choice>
                             <div class="text-center">
-                                <button type="button" class="btn btn-link" ng-click="vm.addNewParent($select.search)">
-                                    Adicionar bloco: <b>{{ $select.search }}</b>
+                                <button type="button" class="btn btn-success" ng-click="vm.addNewParent($select.search)">
+                                    <i class="fa fa-check"></i>
+                                    Salvar bloco: <b>{{ $select.search }}</b>
                                 </button>
                             </div>
                         </ui-select-no-choice>
@@ -73,16 +74,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 form-group">
+                <div class="col-md-12 form-group" >
                     <label >Link para ver todos</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
                     <div class="row-days row" ng-repeat="columns in vm.listDays">
-                        <div class="col-lg-6 col-md-12 mv-10 box-day" ng-repeat="day in columns">
+                        <div class="col-lg-6 col-md-12 mb-15 box-day" ng-repeat="day in columns">
                             <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time" ng-class="{'-error': day.moment.error}">
                                 <label class="check-day uppercase">
                                     {{ day.label }}
@@ -110,7 +111,7 @@
                             </div>
                             <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
                                 <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
-                                    <div class="icon-remove" ng-click="vm.removeHour(day.times, $index)">
+                                    <div class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
                                         <i class="fa fa-times"></i>
                                     </div>
                                     <select-time ng-model="moreTime.time_start"
@@ -132,10 +133,11 @@
                                 </div>
                             </div>
 
-                            <div ng-if="!day.isExtraordinary" ng-click="vm.addHour(day)" ng-show="day.checked" class="add-hour">
+                            <button ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
+                                ng-click="vm.addHour(day)" class="add-hour" type="button">
                                 <i class="fa fa-plus"></i>
                                 Adicionar outro horário no mesmo dia
-                            </div>
+                            </button>
                             <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
                                 <span class="uppercase"> {{ day.label }} </span>
                                 <input type="checkbox" ng-model="vm.program.highlight" ng-change="vm.setExtraordinary()">
@@ -149,7 +151,8 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     <label>Descrição</label>
-                    <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control" ng-model="vm.program.description" name="description" required></textarea>
+                    <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control"
+                        ng-model="vm.program.description" name="description" required redactor="vm.readctorOpts"></textarea>
                     <div ng-show="!formData.description.$valid" class="error-message" role="alert">
                         <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                     </div>
@@ -189,19 +192,19 @@
             <div class="publishment-footer">
                 <div class="actions row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger pull-left">
                             <i class="fa fa-close"></i>
                             Excluir
                         </button>
 
 
-                        <button type="button" class="btn btn-gray">
-                            <i class="fa fa-eye"></i>
-                            Visualizar
-                        </button>
-                        <button type="button" class="btn btn-secondary" ng-click="vm.save()">
+                        <button type="button" class="btn btn-secondary pull-right" ng-click="vm.save()">
                             <i class="fa fa-check"></i>
                             {{ isLoading ? 'Salvando...' : 'Salvar'}}
+                        </button>
+                        <button type="button" class="btn btn-gray pull-right">
+                            <i class="fa fa-eye"></i>
+                            Visualizar
                         </button>
                     </div>
                 </div>
