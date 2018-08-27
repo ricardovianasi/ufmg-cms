@@ -6,7 +6,7 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q, ProgramFormUtils) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q, ProgramFormUtils, ModalService) {
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
@@ -14,6 +14,7 @@
         vm.loading = false;
         vm.isExtraordinaryProgram = false;
 
+        vm.removeProgram = removeProgram;
         vm.save = save;
         vm.addHour = addHour;
         vm.changeTime = changeTime;
@@ -26,6 +27,16 @@
         activate();
 
         ////////////////
+
+        function removeProgram() {
+            ModalService.confirm('Deseja excluir este programa?', ModalService.MODAL_MEDIUM).result
+                .then(function() { return RadioService.deleteProgram(vm.id); })
+                .then(function() { 
+                    toastr.success('Programa removido com sucesso.');
+                    $location.path('/radio_programming/programs');
+                })
+                .catch(function(){console.log('closeModal');});
+        }
 
         function addNewParent(nameParent) {
             RadioService.registerItemFilter({name: nameParent}, RadioService.baseUrlParent)
@@ -40,7 +51,7 @@
         function changeTime(moment, time, day, type) {
             day.moment[type] = moment;
             day['time_'+type] = time;
-            ProgramFormUtils.checkValidateDate(day);
+            ProgramFormUtils.checkValidateDate(day, vm.id);
         }
 
         function setExtraordinary() {
@@ -83,7 +94,6 @@
                 canAdd = day.time_start && day.time_end;
             }
             return canAdd && !vm.program.highlight;
-
         }
 
         function save() {
@@ -192,7 +202,10 @@
             _loadParents();
             if(vm.id) {
                 _getProgram(vm.id);
-            } 
+            } else {
+                vm.program = ProgramFormUtils.initObjProgram();
+                vm.listDays = ProgramFormUtils.createListDays();
+            }
         }
 
     }

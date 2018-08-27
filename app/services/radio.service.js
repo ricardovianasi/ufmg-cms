@@ -103,14 +103,25 @@
         }
 
         function hasScheduleBusy(idProgram, weekDay, timeStart, timeEnd) {
-            dataTableConfigService.setColumnsHasOrderAndSearch([]);
-            let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
-            params += BuildParamsService.getParamToSearch('eq', 'weekDay', weekDay, '', 'and', 1);
-            params += _getParamDate(timeStart, timeEnd, 'timeStart', 1);
-            params += _getParamDate(timeStart, timeEnd, 'timeEnd', 1);
+            let params = _buildParamsScheduleBusy(idProgram, weekDay, timeStart, timeEnd);
             let url = baseUrlGrid + '?' + params;
             console.log(params);
             return $http.get(url);
+        }
+
+        function _buildParamsScheduleBusy(idProgram, weekDay, timeStart, timeEnd) {
+            let params = BuildParamsService.getPureElement(['page', 'page_size'], [1, 1]);
+            params += BuildParamsService.getInnerJoin(1, 'program');
+            params += BuildParamsService.getParamToSearch('eq', 'weekDay', weekDay, '', 'and', 2);
+            let index = 3;
+            if(idProgram) {
+                params += BuildParamsService.getParamToSearch('neq', 'id', idProgram, 'program', 'and', index);
+                index++;
+            }
+            params += BuildParamsService.getQueryFilter(index) + BuildParamsService.getElement('type', 'orx');
+            params += _getParamDate(timeStart, timeEnd, 'timeStart', index, 1);
+            params += _getParamDate(timeStart, timeEnd, 'timeEnd', index, 2);
+            return params;
         }
 
         function _getParamDate(timeStart, timeEnd, field, filterIndex, conditionsIndex) {
