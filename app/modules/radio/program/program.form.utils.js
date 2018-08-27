@@ -6,7 +6,7 @@
         .factory('ProgramFormUtils', ProgramFormUtils);
 
     /** ngInject */
-    function ProgramFormUtils(RadioService) {
+    function ProgramFormUtils(RadioService, PermissionService, $route) {
         var service = {
             checkValidateDate: checkValidateDate,
             getByWeekDay: getByWeekDay,
@@ -15,11 +15,27 @@
             createGridServer: createGridServer,
             createGrid: createGrid,
             initObjProgram: initObjProgram,
+            getPermissions: getPermissions,
         };
         
         return service;
 
         ////////////////
+
+        function getPermissions() {
+            let originalPath = $route.current.$$route.originalPath;
+            return {
+                getGrid: PermissionService.canGet('radio_programming_grid'),
+                putGrid: PermissionService.canPut('radio_programming_grid'),
+                postGrid: PermissionService.canPost('radio_programming_grid'),
+                deleteGrid: PermissionService.canDelete('radio_programming_grid'),
+                delete: PermissionService.canDelete('radio_programming'),
+                put: PermissionService.canPut('radio_programming'),
+                post: PermissionService.canPost('radio_programming'),
+                view: originalPath.indexOf('/view/') >= 0,
+                isNew: originalPath.indexOf('/new') >= 0
+            };
+        }
 
         function checkValidateDate(dayTime, idProgram) {
             if(!dayTime.moment.start || !dayTime.moment.end) { return {result: []}; }
@@ -69,7 +85,7 @@
             return {
                 id: data ? data.id : '',
                 title: data ? data.title : '',
-                status: data ? data.status : '',
+                status: data ? data.status : 'published',
                 highlight: data ? data.highlight : false,
                 id_schedule: data && data.schedule ? data.schedule.id : null,
                 description: data ? data.description: '',

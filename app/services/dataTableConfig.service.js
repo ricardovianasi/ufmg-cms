@@ -29,7 +29,7 @@
             let parametersFilter = '';
             for (var i = 0; i < columnsHasOrder.length; i++) {
                 var element = columnsHasOrder[i];
-                if (element.filter && (element.filter === 'type' || element.filter === 'author')) {
+                if (element.filter && (element.filter === 'type' || element.filter === 'author' || element.filter === 'genres')) {
                     filterIndex++;
                     parametersFilter += BuildParamsService.getInnerJoin(filterIndex, element.filter);
                 }
@@ -126,7 +126,7 @@
                 return '';
             }
             filterIndex++;
-            if (order.filter === 'author' || order.filter === 'type') {
+            if (order.filter === 'author' || order.filter === 'type' || order.filter === 'genres') {
                 return BuildParamsService.getParamToOrderBy('field', order.field, order.direction, order.filter, filterIndex);
             }
             return BuildParamsService.getParamToOrderBy('field', order.field, order.direction, '', filterIndex);

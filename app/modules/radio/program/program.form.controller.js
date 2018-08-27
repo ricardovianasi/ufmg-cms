@@ -6,7 +6,7 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, PermissionService, $q, ProgramFormUtils, ModalService) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, $q, ProgramFormUtils, ModalService) {
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
@@ -112,12 +112,12 @@
                     vm.program.id = res.data.id;
                     return _saveGrid();
                 })
-                .then(function(res) {
+                .then(function() {
                     toastr.success('Programa de rádio cadastrado com sucesso!');
-                    if(vm.canPut) {
-                        $location.path('/radio_programming/edit/' + res.data.id);
+                    if(vm.canPut || true) {
+                        $location.path('/radio_programming/edit/' + vm.program.id);
                     }
-                    vm.program = {title: ''};
+                    // vm.program = {title: ''};
                 });
         }
 
@@ -141,11 +141,11 @@
         function _saveGrid() {
             let listPromise = [];
             _prepareGridToSave().forEach(function(grid) {
-                if (grid.idGrid && grid.delete) {
+                if (grid.idGrid && grid.delete && vm.can.deleteGrid) {
                     listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
-                } else if (grid.idGrid) {
+                } else if (grid.idGrid && vm.can.putGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
-                } else { 
+                } else if(vm.can.postGrid) { 
                     listPromise.push(RadioService.registerProgramGrid(grid));
                 }
             });
@@ -174,8 +174,7 @@
         }
 
         function _permissions() {
-            vm.canPut = PermissionService.canPut('radio_programming');
-            vm.canPost = PermissionService.canPost('radio_programming');
+            vm.can = ProgramFormUtils.getPermissions();
         }
 
         function initObjProgram(data) {

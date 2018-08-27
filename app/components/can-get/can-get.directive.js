@@ -80,7 +80,7 @@
                 }
 
                 function noRemoveEvents(elem) {
-                    return elem.id === 'btn-back' || $(elem).hasClass('view-permission');
+                    return elem.id == 'btn-back' || $(elem).hasClass('view-permission');
                 }
             }
         };

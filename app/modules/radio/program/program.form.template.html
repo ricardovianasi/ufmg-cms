@@ -36,7 +36,7 @@
         <form ng-submit="vm.save()" class="form" name="formData" novalidate>
             <div class="row">
                 <div class="col-xs-12 form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
-                    <label>* Nome</label>
+                    <label>Nome</label>
                     <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
                     <div ng-show="!formData.title.$valid" class="error-message" role="alert">
                         <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
@@ -79,7 +79,7 @@
                     <input type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
                 </div>
             </div>
-            <div class="row">
+            <div ng-if="vm.can.getGrid" class="row" can-get="!vm.can.putGrid && vm.can.getGrid">
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
                     <div class="row-days row" ng-repeat="columns in vm.listDays">
@@ -111,7 +111,7 @@
                             </div>
                             <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
                                 <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
-                                    <div class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
+                                    <div ng-if="vm.can.deleteGrid || vm.can.postGrid" class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
                                         <i class="fa fa-times"></i>
                                     </div>
                                     <select-time ng-model="moreTime.time_start"
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
 
-                            <button ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
+                            <button ng-if="vm.can.postGrid" ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
                                 ng-click="vm.addHour(day)" class="add-hour" type="button">
                                 <i class="fa fa-plus"></i>
                                 Adicionar outro horário no mesmo dia
@@ -164,18 +164,18 @@
         <div class="panel panel-default actions-context">
             <div class="actions">
                 <div class="col">
-                    <a class="btn btn-link" ng-href="{{goBack()}}">
+                    <a id="btn-back" class="btn btn-link" ng-href="#/radio_programming/programs">
                         <i class="fa fa-arrow-left"></i> Voltar para lista
                     </a>
                 </div>
-                <div class="col">
-                    <a class="btn btn-default">
+                <div ng-if="vm.can.post && !vm.can.isNew" class="col">
+                    <a class="btn btn-default" ng-href="#/radio_programming/new">
                         <i class="fa fa-plus"></i> Novo
                     </a>
                 </div>
             </div>
         </div>
-        <form class="panel panel-default publishment-options" name="formPub" novalidate>
+        <form ng-if="!vm.can.view" class="panel panel-default publishment-options" name="formPub" novalidate>
             <h4 class="publishment-title">Opções de Publicação</h4>
             <div class="publishment-body">
                 <div class="form-group status" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
@@ -192,7 +192,7 @@
             <div class="publishment-footer">
                 <div class="actions row">
                     <div class="col-md-12">
-                        <button type="button" ng-click="vm.removeProgram()" class="btn btn-danger pull-left">
+                        <button ng-if="vm.can.delete && !vm.can.isNew" type="button" ng-click="vm.removeProgram()" class="btn btn-danger pull-left">
                             <i class="fa fa-close"></i>
                             Excluir
                         </button>
@@ -202,7 +202,7 @@
                             <i class="fa fa-check"></i>
                             {{ isLoading ? 'Salvando...' : 'Salvar'}}
                         </button>
-                        <button type="button" class="btn btn-gray pull-right">
+                        <button ng-show="!vm.can.isNew" type="button" class="btn btn-gray" ng-class="{ 'pull-right': vm.can.delete }">
                             <i class="fa fa-eye"></i>
                             Visualizar
                         </button>

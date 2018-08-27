@@ -30,7 +30,7 @@
             <thead ng-if="vm.listPrograms">
                 <tr>
                     <th class="col-xs-5">Título</th>
-                    <th class="col-xs-5">Programa Bloco</th>
+                    <th class="col-xs-5">Gênero</th>
                     <th class="col-xs-2">Autor</th>
                     <th class="col-xs-2">Ações</th>
                 </tr>
@@ -41,7 +41,7 @@
                         <a ng-if="!canPut('radio_programming', item.id)" ng-href="#/radio_programming/view/{{ item.id }}">{{ item.title }}</a>
                         <a ng-if="canPut('radio_programming', item.id)" ng-href="#/radio_programming/edit/{{ item.id }}">{{ item.title }}</a>
                     </td>
-                    <td>{{ item.parent ? item.parent.title : '---' }}</td>
+                    <td>{{ item.genres ? item.genres[0].name : '---' }}</td>
                     <td>{{ item.author.name }}</td>
                     <td class="table-fit">
                         <a uib-tooltip="Visualizar" ng-href="#/radio_programming/view/{{ item.id }}" class="btn btn-primary">
