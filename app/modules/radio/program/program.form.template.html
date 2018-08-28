@@ -76,10 +76,10 @@
             <div class="row">
                 <div class="col-md-12 form-group" >
                     <label >Link para ver todos</label>
-                    <input type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
+                    <input ng-model="vm.program.link" type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
                 </div>
             </div>
-            <div ng-if="vm.can.getGrid" class="row" can-get="!vm.can.putGrid && vm.can.getGrid">
+            <div class="row">
                 <div class="col-md-12">
                     <label> Escolha os dias da semana</label>
                     <div class="row-days row" ng-repeat="columns in vm.listDays">
@@ -111,7 +111,7 @@
                             </div>
                             <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
                                 <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
-                                    <div ng-if="vm.can.deleteGrid || vm.can.postGrid" class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
+                                    <div class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
                                         <i class="fa fa-times"></i>
                                     </div>
                                     <select-time ng-model="moreTime.time_start"
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
 
-                            <button ng-if="vm.can.postGrid" ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
+                            <button ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
                                 ng-click="vm.addHour(day)" class="add-hour" type="button">
                                 <i class="fa fa-plus"></i>
                                 Adicionar outro horário no mesmo dia
@@ -149,13 +149,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 form-group">
+                <div ng-if="!vm.can.isView" class="col-xs-12 form-group">
                     <label>Descrição</label>
                     <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control"
                         ng-model="vm.program.description" name="description" required redactor="vm.readctorOpts"></textarea>
                     <div ng-show="!formData.description.$valid" class="error-message" role="alert">
                         <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                     </div>
+                </div>
+                <div ng-if="vm.can.isView" class="col-xs-12 form-group">
+                    <label>Descrição</label>
+                    <div ng-bind-html="vm.program.description"></div>
                 </div>
             </div>
         </form>
@@ -175,7 +179,7 @@
                 </div>
             </div>
         </div>
-        <form ng-if="!vm.can.view" class="panel panel-default publishment-options" name="formPub" novalidate>
+        <form ng-if="!vm.can.isView" class="panel panel-default publishment-options" name="formPub" novalidate>
             <h4 class="publishment-title">Opções de Publicação</h4>
             <div class="publishment-body">
                 <div class="form-group status" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">

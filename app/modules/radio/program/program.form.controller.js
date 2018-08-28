@@ -12,7 +12,6 @@
         vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
-        vm.isExtraordinaryProgram = false;
 
         vm.removeProgram = removeProgram;
         vm.save = save;
@@ -114,10 +113,11 @@
                 })
                 .then(function() {
                     toastr.success('Programa de rádio cadastrado com sucesso!');
-                    if(vm.canPut || true) {
+                    if(vm.can.put) {
                         $location.path('/radio_programming/edit/' + vm.program.id);
+                    } else {
+                        $location.path('/radio_programming/programs/');
                     }
-                    // vm.program = {title: ''};
                 });
         }
 
@@ -141,11 +141,11 @@
         function _saveGrid() {
             let listPromise = [];
             _prepareGridToSave().forEach(function(grid) {
-                if (grid.idGrid && grid.delete && vm.can.deleteGrid) {
+                if (grid.idGrid && grid.delete) {
                     listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
-                } else if (grid.idGrid && vm.can.putGrid) {
+                } else if (grid.idGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
-                } else if(vm.can.postGrid) { 
+                } else { 
                     listPromise.push(RadioService.registerProgramGrid(grid));
                 }
             });

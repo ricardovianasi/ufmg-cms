@@ -25,14 +25,10 @@
         function getPermissions() {
             let originalPath = $route.current.$$route.originalPath;
             return {
-                getGrid: PermissionService.canGet('radio_programming_grid'),
-                putGrid: PermissionService.canPut('radio_programming_grid'),
-                postGrid: PermissionService.canPost('radio_programming_grid'),
-                deleteGrid: PermissionService.canDelete('radio_programming_grid'),
                 delete: PermissionService.canDelete('radio_programming'),
                 put: PermissionService.canPut('radio_programming'),
                 post: PermissionService.canPost('radio_programming'),
-                view: originalPath.indexOf('/view/') >= 0,
+                isView: originalPath.indexOf('/view/') >= 0,
                 isNew: originalPath.indexOf('/new') >= 0
             };
         }
