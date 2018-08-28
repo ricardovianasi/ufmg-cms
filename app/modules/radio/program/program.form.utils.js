@@ -6,9 +6,8 @@
         .factory('ProgramFormUtils', ProgramFormUtils);
 
     /** ngInject */
-    function ProgramFormUtils(RadioService, PermissionService, $route) {
+    function ProgramFormUtils(PermissionService, $route) {
         var service = {
-            checkValidateDate: checkValidateDate,
             getByWeekDay: getByWeekDay,
             createProgramServer: createProgramServer,
             createListDays: createListDays,
@@ -31,51 +30,6 @@
                 isView: originalPath.indexOf('/view/') >= 0,
                 isNew: originalPath.indexOf('/new') >= 0
             };
-        }
-
-        function checkValidateDate(dayTime, idProgram) {
-            if(!dayTime.moment.start || !dayTime.moment.end) { return {result: []}; }
-            let result = [
-                {
-                    isInvalid: dayTime.moment.start > dayTime.moment.end,
-                    message: 'A hora de início não pode ser maior que a hora final.',
-                    type: 'startBigger'
-                },
-                {
-                    isInvalid: dayTime.moment.start.isSame(dayTime.moment.end),
-                    message: 'A hora de início não pode ser igual a hora final.',
-                    type: 'dateEqual'
-                },
-                {
-                    isInvalid: false,
-                    message: ' já esta alocado neste dia e horário.',
-                    type: 'dayTimeAllocated'
-                }
-            ];
-            RadioService.hasScheduleBusy(idProgram, dayTime.week_day, dayTime.time_start, dayTime.time_end)
-                .then(function(res) {
-                    let items = res.data.items;
-                    if (!dayTime.moment.error && items.length) {
-                        let grid = items[0];
-                        let isSequence = dayTime.time_start === baseFormatHour(grid.time_end) ||
-                            dayTime.time_end === baseFormatHour(grid.time_start);
-                        if(isSequence) {
-                            return;
-                        }
-                        result[2].isInvalid = true;
-                        result[2].message = grid.program.title + result[2].message;
-                        dayTime.moment.error = result[2];
-                    }
-                });
-            dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
-            return !!dayTime.moment.error;
-        }
-
-        function baseFormatHour(time) {
-            if (/(\d{2}:){2}/.test(time)) {
-                return time.replace(/:\d{2}/, '');
-            }
-            return time;
         }
 
         function initObjProgram(data) {

@@ -106,7 +106,7 @@
                             </select-time>
                         </div>
                         <div class="df jc-flex-end msg-time-error" ng-show="day.moment.error">
-                            <p class="text-danger text-center">{{ day.moment.error.message }}</p>
+                            <p class="text-danger text-center" ng-bind-html="day.moment.error.message"></p>
                         </div>
                         <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
                             <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
@@ -128,7 +128,7 @@
                                 </select-time>
                             </div>
                             <div class="df jc-flex-end msg-time-error" ng-show="moreTime.moment.error">
-                                <p class="text-danger text-center">{{ moreTime.moment.error.message }}</p>
+                                <p class="text-danger text-center" ng-bind-html="moreTime.moment.error.message"></p>
                             </div>
                         </div>
 
@@ -139,7 +139,7 @@
                         </button>
                         <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
                             <span class="uppercase"> {{ day.label }} </span>
-                            <input type="checkbox" ng-model="vm.program.highlight" ng-change="vm.setExtraordinary()">
+                            <input type="checkbox" ng-model="vm.program.highlight">
                             <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
                             <span class="checkmark checkmark-extra"></span>
                         </label>

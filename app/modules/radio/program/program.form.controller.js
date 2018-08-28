@@ -20,7 +20,6 @@
         vm.changeTime = changeTime;
         vm.changeCheckDay = changeCheckDay;
         vm.removeHour = removeHour;
-        vm.setExtraordinary = setExtraordinary;
         vm.addNewParent = addNewParent;
         vm.canAddHour = canAddHour;
 
@@ -51,13 +50,10 @@
         function changeTime(moment, time, day, type) {
             day.moment[type] = moment;
             day['time_'+type] = time;
-            vm.errorGrid = ProgramFormUtils.checkValidateDate(day, vm.id);
-        }
-
-        function setExtraordinary() {
-            if (vm.program.highlight) {
-
-            }
+            ProgramFormValidate.checkValidateDate(day, vm.id)
+                .then(function() {
+                    vm.errorGrid = !!ProgramFormValidate.checkGridValid(vm.listDays);
+                });
         }
 
         function changeCheckDay(day) {
@@ -150,7 +146,7 @@
                     listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
                 } else if (grid.idGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
-                } else { 
+                } else if(grid.time_start && grid.time_end) { 
                     listPromise.push(RadioService.registerProgramGrid(grid));
                 }
             });
