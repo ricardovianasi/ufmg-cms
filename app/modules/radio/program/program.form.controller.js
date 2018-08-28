@@ -6,12 +6,13 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, $q, ProgramFormUtils, ModalService) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, $q, ProgramFormUtils, ModalService, ProgramFormValidate) {
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
         vm.listGenre = [];
         vm.loading = false;
+        vm.errorGrid = false;
 
         vm.removeProgram = removeProgram;
         vm.save = save;
@@ -50,7 +51,7 @@
         function changeTime(moment, time, day, type) {
             day.moment[type] = moment;
             day['time_'+type] = time;
-            ProgramFormUtils.checkValidateDate(day, vm.id);
+            vm.errorGrid = ProgramFormUtils.checkValidateDate(day, vm.id);
         }
 
         function setExtraordinary() {
@@ -95,7 +96,11 @@
             return canAdd && !vm.program.highlight;
         }
 
-        function save() {
+        function save(valid) {
+            if(!valid || vm.errorGrid) {
+                toastr.warning('Atenção aos campos em vermelho.');
+                return;
+            }
             let promiseSave;
             vm.loading = true;
             if(vm.id) { promiseSave = _update(); } 
@@ -194,6 +199,7 @@
         }
 
         function activate() {
+            vm.fnsForm = ProgramFormValidate;
             vm.readctorOpts = { plugins: false, buttons: ['bold', 'italic'] };
             vm.program = {title: ''};
             vm.id = $routeParams.id;

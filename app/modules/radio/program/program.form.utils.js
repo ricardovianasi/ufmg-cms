@@ -68,6 +68,7 @@
                     }
                 });
             dayTime.moment.error = result.find(function(error) { return error.isInvalid; });
+            return !!dayTime.moment.error;
         }
 
         function baseFormatHour(time) {

@@ -7,6 +7,10 @@
         &:nth-child(even) {
             padding-left: 30px; 
         }
+        @media (max-width: 1200px) {
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
         .day-time {
             min-height: 50px;
             &.-error {
@@ -22,9 +26,13 @@
             }
 
         }
+        .msg-time-error {
+            p {
+                width: 80%;
+            }
+        }
     }
 }
-
 
 .more-hours {
     .icon-remove {

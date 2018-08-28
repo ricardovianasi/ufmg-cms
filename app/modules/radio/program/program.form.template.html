@@ -8,7 +8,7 @@
                 </h1>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 breadcrumb-env">
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
                     <li>
@@ -31,138 +31,137 @@
         </div>
     </div>
 </div>
-<div class="row" can-get>
+<form can-get name="formData" ng-submit="vm.save(formData.$valid)" class="form row" novalidate>
     <div class="col-xs-8 panel panel-default">
-        <form ng-submit="vm.save()" class="form" name="formData" novalidate>
-            <div class="row">
-                <div class="col-xs-12 form-group" ng-class="{'has-error': vm.formData.title.$error.required && !vm.formData.title.$valid}">
-                    <label>Nome</label>
-                    <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
-                    <div ng-show="!formData.title.$valid" class="error-message" role="alert">
-                        <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
-                        <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
-                    </div>
+        <div class="row">
+            <div class="col-xs-12 form-group" ng-class="{'has-error': !vm.fnsForm.isValidControlForm(formData, 'title')}">
+                <label>Nome</label>
+                <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
+                <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                    <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
+                    <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-xs-12 form-group height-select">
-                    <label>Bloco:</label> 
-                    <span ng-show="vm.program.schedule.id" ng-click="vm.program.schedule = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
-                    <ui-select ng-model="vm.program.id_schedule" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
-                        <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.name }}</ui-select-match>
-                        <ui-select-choices repeat="schedule.id as schedule in vm.listParents | filter: { name: $select.search } track by $index">
-                            <div ng-bind-html="schedule.name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                        <ui-select-no-choice>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-success" ng-click="vm.addNewParent($select.search)">
-                                    <i class="fa fa-check"></i>
-                                    Salvar bloco: <b>{{ $select.search }}</b>
-                                </button>
-                            </div>
-                        </ui-select-no-choice>
-                    </ui-select>
-                </div>
-                <div class="col-md-6 col-xs-12 form-group height-select">
-                    <label>Gênero</label>
-                    <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
-                        <ui-select-match placeholder="Selecione ou procure um gênero...">{{ $select.selected.name }}</ui-select-match>
-                        <ui-select-choices repeat="genre.id as genre in vm.listGenre | filter: $select.search track by $index">
-                            <div ng-bind-html="genre.name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group" >
-                    <label >Link para ver todos</label>
-                    <input ng-model="vm.program.link" type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label> Escolha os dias da semana</label>
-                    <div class="row-days row" ng-repeat="columns in vm.listDays">
-                        <div class="col-lg-6 col-md-12 mb-15 box-day" ng-repeat="day in columns">
-                            <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time" ng-class="{'-error': day.moment.error}">
-                                <label class="check-day uppercase">
-                                    {{ day.label }}
-                                    <input ng-change="vm.changeCheckDay(day)" ng-disabled="vm.program.highlight" type="checkbox" ng-model="day.checked">
-                                    <span class="checkmark checkmark-day"></span>
-                                </label>
-                                <select-time ng-if="day.checked"
-                                    is-disabled="!day.checked || vm.program.highlight"
-                                    change-time="vm.changeTime($moment, $time, day, 'start')"
-                                    week-day="day.week_day"
-                                    ng-model="day.time_start"
-                                    moment="day.moment.start">
-                                </select-time>
-                                <div ng-show="day.checked"> às </div>
-                                <select-time ng-if="day.checked"
-                                    is-disabled="!day.checked || vm.program.highlight"
-                                    change-time="vm.changeTime($moment, $time, day, 'end')"
-                                    week-day="day.week_day"
-                                    ng-model="day.time_end"
-                                    moment="day.moment.end">
-                                </select-time>
-                            </div>
-                            <div ng-show="day.moment.error">
-                                <p class="text-danger text-center">{{ day.moment.error.message }}</p>
-                            </div>
-                            <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
-                                <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
-                                    <div class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                    <select-time ng-model="moreTime.time_start"
-                                        is-disabled="!day.checked || vm.program.highlight"
-                                        change-time="vm.changeTime($moment, $time, moreTime, 'start')"
-                                        week-day="moreTime.week_day"
-                                        moment="moreTime.moment.start">
-                                    </select-time>
-                                    <span> às </span>
-                                    <select-time ng-model="moreTime.time_end"
-                                        is-disabled="!day.checked || vm.program.highlight"
-                                        change-time="vm.changeTime($moment, $time, moreTime, 'end')"
-                                        week-day="moreTime.week_day"
-                                        moment="moreTime.moment.end">
-                                    </select-time>
-                                </div>
-                                <div ng-show="moreTime.moment.error">
-                                    <p class="text-danger text-center">{{ moreTime.moment.error.message }}</p>
-                                </div>
-                            </div>
-
-                            <button ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
-                                ng-click="vm.addHour(day)" class="add-hour" type="button">
-                                <i class="fa fa-plus"></i>
-                                Adicionar outro horário no mesmo dia
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xs-12 form-group height-select">
+                <label>Bloco:</label> 
+                <span ng-show="vm.program.schedule.id" ng-click="vm.program.schedule = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
+                <ui-select ng-model="vm.program.id_schedule" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
+                    <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.name }}</ui-select-match>
+                    <ui-select-choices repeat="schedule.id as schedule in vm.listParents | filter: { name: $select.search } track by $index">
+                        <div ng-bind-html="schedule.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                    <ui-select-no-choice>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success" ng-click="vm.addNewParent($select.search)">
+                                <i class="fa fa-check"></i>
+                                Salvar bloco: <b>{{ $select.search }}</b>
                             </button>
-                            <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
-                                <span class="uppercase"> {{ day.label }} </span>
-                                <input type="checkbox" ng-model="vm.program.highlight" ng-change="vm.setExtraordinary()">
-                                <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
-                                <span class="checkmark checkmark-extra"></span>
-                            </label>
                         </div>
+                    </ui-select-no-choice>
+                </ui-select>
+            </div>
+            <div class="col-md-6 col-xs-12 form-group height-select">
+                <label>Gênero</label>
+                <ui-select ng-model="vm.program.genre_id" theme="bootstrap" class="ui-select" title="Selecione ou procure um gênero...">
+                    <ui-select-match placeholder="Selecione ou procure um gênero...">{{ $select.selected.name }}</ui-select-match>
+                    <ui-select-choices repeat="genre.id as genre in vm.listGenre | filter: $select.search track by $index">
+                        <div ng-bind-html="genre.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group" >
+                <label >Link para ver todos</label>
+                <input ng-model="vm.program.link" type="text" class="form-control" uib-tooltip="Lorem ipsum dolor sit amet">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label> Escolha os dias da semana</label>
+                <div class="row-days row" ng-repeat="columns in vm.listDays">
+                    <div class="col-lg-6 col-md-12 mb-15 box-day" ng-repeat="day in columns">
+                        <div ng-if="!day.isExtraordinary" class="df jc-space-between ai-center day-time" ng-class="{'-error': day.moment.error}">
+                            <label class="check-day uppercase">
+                                {{ day.label }}
+                                <input ng-change="vm.changeCheckDay(day)" ng-disabled="vm.program.highlight" type="checkbox" ng-model="day.checked">
+                                <span class="checkmark checkmark-day"></span>
+                            </label>
+                            <select-time ng-if="day.checked"
+                                is-disabled="!day.checked || vm.program.highlight"
+                                change-time="vm.changeTime($moment, $time, day, 'start')"
+                                week-day="day.week_day"
+                                ng-model="day.time_start"
+                                moment="day.moment.start">
+                            </select-time>
+                            <div ng-show="day.checked"> às </div>
+                            <select-time ng-if="day.checked"
+                                is-disabled="!day.checked || vm.program.highlight"
+                                change-time="vm.changeTime($moment, $time, day, 'end')"
+                                week-day="day.week_day"
+                                ng-model="day.time_end"
+                                moment="day.moment.end">
+                            </select-time>
+                        </div>
+                        <div class="df jc-flex-end msg-time-error" ng-show="day.moment.error">
+                            <p class="text-danger text-center">{{ day.moment.error.message }}</p>
+                        </div>
+                        <div ng-show="day.checked" ng-repeat="moreTime in day.times | filter: {delete: false}">
+                            <div class="df jc-space-between ai-center more-hours day-time" ng-class="{'-error': moreTime.moment.error}">
+                                <div class="icon-remove" ng-click="vm.removeHour(day, moreTime)">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                                <select-time ng-model="moreTime.time_start"
+                                    is-disabled="!day.checked || vm.program.highlight"
+                                    change-time="vm.changeTime($moment, $time, moreTime, 'start')"
+                                    week-day="moreTime.week_day"
+                                    moment="moreTime.moment.start">
+                                </select-time>
+                                <span> às </span>
+                                <select-time ng-model="moreTime.time_end"
+                                    is-disabled="!day.checked || vm.program.highlight"
+                                    change-time="vm.changeTime($moment, $time, moreTime, 'end')"
+                                    week-day="moreTime.week_day"
+                                    moment="moreTime.moment.end">
+                                </select-time>
+                            </div>
+                            <div class="df jc-flex-end msg-time-error" ng-show="moreTime.moment.error">
+                                <p class="text-danger text-center">{{ moreTime.moment.error.message }}</p>
+                            </div>
+                        </div>
+
+                        <button ng-disabled="!vm.canAddHour(day)" ng-show="!day.isExtraordinary && day.checked"
+                            ng-click="vm.addHour(day)" class="add-hour" type="button">
+                            <i class="fa fa-plus"></i>
+                            Adicionar outro horário no mesmo dia
+                        </button>
+                        <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
+                            <span class="uppercase"> {{ day.label }} </span>
+                            <input type="checkbox" ng-model="vm.program.highlight" ng-change="vm.setExtraordinary()">
+                            <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
+                            <span class="checkmark checkmark-extra"></span>
+                        </label>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div ng-if="!vm.can.isView" class="col-xs-12 form-group">
-                    <label>Descrição</label>
-                    <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control"
-                        ng-model="vm.program.description" name="description" required redactor="vm.readctorOpts"></textarea>
-                    <div ng-show="!formData.description.$valid" class="error-message" role="alert">
-                        <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
-                    </div>
-                </div>
-                <div ng-if="vm.can.isView" class="col-xs-12 form-group">
-                    <label>Descrição</label>
-                    <div ng-bind-html="vm.program.description"></div>
+        </div>
+        <div class="row">
+            <div ng-if="!vm.can.isView" class="col-xs-12 form-group" 
+                ng-class="{'has-error': !formData.description.$valid && formData.$submitted}">
+                <label>Descrição</label>
+                <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control redactor-editor"
+                    ng-model="vm.program.description" id="redactor-description" name="description" required redactor="vm.readctorOpts"></textarea>
+                <div ng-show="!formData.description.$valid" class="error-message" role="alert">
+                    <div ng-show="vm.formData.description.$error.required">Campo obrigatório</div>
                 </div>
             </div>
-        </form>
+            <div ng-if="vm.can.isView" class="col-xs-12 form-group">
+                <label>Descrição</label>
+                <div ng-bind-html="vm.program.description"></div>
+            </div>
+        </div>
     </div>
     <div class="col-xs-4">
         <div class="panel panel-default actions-context">
@@ -179,7 +178,7 @@
                 </div>
             </div>
         </div>
-        <form ng-if="!vm.can.isView" class="panel panel-default publishment-options" name="formPub" novalidate>
+        <div ng-if="!vm.can.isView" class="panel panel-default publishment-options">
             <h4 class="publishment-title">Opções de Publicação</h4>
             <div class="publishment-body">
                 <div class="form-group status" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
@@ -188,9 +187,6 @@
                     <select class="form-control" ng-model="vm.program.status" placeholder="Selecione o status da publicação">
                         <option ng-repeat="item in ['draft', 'published'] track by $index" ng-value="item">{{item | translate}}</option>
                     </select>
-                    <div ng-show="formPub.$submitted || formPub.pickStatus.$touched" class="error-message" role="alert">
-                        <div ng-show="formPub.pickStatus.$error.required">Campo obrigatório</div>
-                    </div>
                 </div>
             </div>
             <div class="publishment-footer">
@@ -201,8 +197,7 @@
                             Excluir
                         </button>
 
-
-                        <button type="button" class="btn btn-secondary pull-right" ng-click="vm.save()">
+                        <button type="submit" class="btn btn-secondary pull-right">
                             <i class="fa fa-check"></i>
                             {{ isLoading ? 'Salvando...' : 'Salvar'}}
                         </button>
@@ -213,6 +208,6 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
