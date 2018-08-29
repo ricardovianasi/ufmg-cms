@@ -6,7 +6,7 @@
         .controller('UseTermController', UseTermController);
 
     /** ngInject */
-    function UseTermController(UseTermService, PermissionService, toastr, authService, $window, $rootScope) {
+    function UseTermController(UseTermService, PermissionService, toastr, authService, $window, $rootScope, $location, $timeout) {
         var vm = this;
         vm.idUser;
 
@@ -25,7 +25,11 @@
                 .then(function(idUser) { return UseTermService.signTerm(idUser); })
                 .then(function() {
                     $rootScope.User.term_signed = true;
-                    $window.location.reload(); 
+                    _showMsgTermAssing();
+                    $timeout( function(){
+                        $location.path('/');
+                        $window.location.reload();
+                    }, 2000);
                 })
                 .catch(function(error) { console.error(error); })
                 .finally(function() { vm.signing = false; });
@@ -68,9 +72,13 @@
             if($rootScope.User && 
                 $rootScope.User.term_signed && 
                 !$rootScope.User.is_administrator) {
-                toastr.success('O Termo de uso está assinado.');
+                _showMsgTermAssing();
                 vm.termAssigned = true;
             }
+        }
+
+        function _showMsgTermAssing() {
+            toastr.success('Os termos de uso estão aceito.');
         }
 
         function activate() {

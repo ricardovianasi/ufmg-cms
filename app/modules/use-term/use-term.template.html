@@ -29,11 +29,12 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     <textarea ng-if="vm.canPut" class="form-control" cols="50" rows="10" ng-model="vm.term.term" redactor="redactorConfig"></textarea>
-                    <div ng-if="!vm.canPut" data-ng-bind-html="vm.term.term" class="area-term"></div>
+                    <div ng-if="!vm.canPut" data-ng-bind-html="vm.term.term"></div>
                 </div>
-                <div class="col-xs-12" ng-if="!vm.canPut">
-                    <button ng-disabled="vm.signing || vm.termAssigned" ng-click="vm.signTerm()" class="btn btn-lg btn-secondary pull-right">
-                        {{vm.termAssigned ? 'Já Assinado' : 'Aceitar termos de uso'}}
+                <div class="col-xs-12 p-10 df jc-flex-center" ng-if="!vm.canPut">
+                    <button ng-disabled="vm.signing || vm.termAssigned" ng-click="vm.signTerm()"
+                        class="btn btn-lg btn-secondary" ng-class="{'btn-gray': vm.termAssigned}">
+                        {{vm.termAssigned ? 'Termos já aceito' : 'Aceitar termos de uso'}}
                     </button>
                 </div>
             </div>
@@ -45,7 +46,7 @@
             <div class="panel-body">
                 <div class="col-xs-12 form-group">
                     <input type="checkbox" id="checkbox1" ng-model="vm.forceAccept">
-                    <label for="checkbox1">Forçar aceite do usuário</label>
+                    <label for="checkbox1">Exigir confirmação do usuário</label>
                 </div>
                 <div class="col-xs-12">
                     <button ng-click="vm.updateTerm()" class="btn btn-secondary">Atualizar</button>
