@@ -1,13 +1,14 @@
-var argv = require('yargs').argv;
+// var argv = require('yargs').argv;
 
 var basePath = 'build';
 
 function getPort() {
-    return argv.port === undefined ? 3000 : 5000;
+    return 3000;
+    // return argv.port === undefined ? 3000 : 5000;
 }
 
 function getBasePath() {
-    return './' + (argv.port === undefined ? basePath : getPort() + '-' + basePath);
+    return './' + (undefined === undefined ? basePath : getPort() + '-' + basePath);
 }
 
 var commons = {
