@@ -9,6 +9,7 @@ var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
 var commons = require('./commons.js');
+var babel = require('gulp-babel');
 
 gulp.task('js', function () {
     return gulp
@@ -24,6 +25,7 @@ gulp.task('js', function () {
         .pipe(naturalSort())
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
+        .pipe(babel({ presets: ['env'] }))
         .pipe(ngAnnotate())
         .pipe(rename({
             suffix: '.min'
