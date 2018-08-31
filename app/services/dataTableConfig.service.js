@@ -143,7 +143,8 @@
                 return BuildParamsService.getParamToSearch('like', elementSearch, searchWildCard, '', 'and', filterIndex);
             }
             if (columnsHasOrder.length === 1) {
-                return BuildParamsService.getParamToSearch('like', columnsHasOrder[0].name, searchWildCard, '', 'and', filterIndex);
+                return BuildParamsService.
+                    getParamToSearch('like', columnsHasOrder[0].name, searchWildCard, '', 'and', filterIndex);
             }
             conditionsIndex = 0;
             var searchParam = BuildParamsService.getQueryFilter(filterIndex) + BuildParamsService.getElement('type', 'orx');
@@ -160,12 +161,12 @@
                     }
                 } else if (element.filter) {
                     conditionsIndex++;
-                    searchParam += 
-                        BuildParamsService.getParamToSearch('like', element.name, searchWildCard, element.filter, 'or', filterIndex, conditionsIndex);
+                    searchParam += BuildParamsService.getParamToSearch(
+                        'like', element.name, searchWildCard, element.filter, 'or', filterIndex, conditionsIndex);
                 } else {
                     conditionsIndex++;
-                    searchParam += 
-                        BuildParamsService.getParamToSearch('like', element.name, searchWildCard, '', 'or', filterIndex, conditionsIndex);
+                    searchParam += BuildParamsService
+                        .getParamToSearch('like', element.name, searchWildCard, '', 'or', filterIndex, conditionsIndex);
                 }
             }
             searchParam += BuildParamsService.getQueryFilter(filterIndex) + BuildParamsService.getElement('where', 'and');

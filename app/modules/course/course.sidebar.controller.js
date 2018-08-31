@@ -90,7 +90,7 @@
         function _save() {
             if (typeof vm.courseId !== 'undefined') {
                 CourseService.updateRoutesSidebar(vm.type, vm.courseId, $scope.course.widgets.sidebar).then(function () {
-                    NotificationService.success('sidebar do percurso salva com sucesso!');
+                    NotificationService.success('sidebar do percurso salvo com sucesso!');
                     $location.path('course/list/' + vm.type);
                 });
             } else {

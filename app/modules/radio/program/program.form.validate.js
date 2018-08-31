@@ -43,7 +43,8 @@
                     .then(function (res) {
                         if(res.hasError) {
                             result.dayTimeAllocated.isInvalid = true;
-                            result.dayTimeAllocated.message = _getMessageInvalidHour(res.grid.program.title, res.grid.time_start, res.grid.time_end);
+                            result.dayTimeAllocated.message =
+                                _getMessageInvalidHour(res.grid.program.title, res.grid.time_start, res.grid.time_end);
                             result.typeError = result.dayTimeAllocated.type;
                             _setError(dayTime.moment, result.dayTimeAllocated);
                         }

@@ -8,7 +8,6 @@
     /** ngInject */
     function UseTermController(UseTermService, PermissionService, toastr, authService, $window, $rootScope, $location, $timeout) {
         var vm = this;
-        vm.idUser;
 
         vm.termAssigned = false;
         vm.updateTerm = updateTerm;
@@ -41,7 +40,7 @@
                 updated: vm.forceAccept
             };
             UseTermService.updateTerm(data, vm.term.id)
-                .then(function(data) {
+                .then(function() {
                     toastr.success('Termos de uso atualizado com sucesso.');
                     vm.forceAccept = false;
                 });
@@ -62,7 +61,7 @@
 
         function _getUserTermSign() {
             if(!$rootScope.User) {
-                authService.account().then(function(res) { _setStatusSign(); });
+                authService.account().then(function() { _setStatusSign(); });
                 return;
             }
             _setStatusSign();

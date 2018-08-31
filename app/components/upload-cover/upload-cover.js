@@ -48,7 +48,7 @@
         $ctrl.$onInit = function() {
             $ctrl.labelBox = $ctrl.labelBox || 'Adicionar Capa';
         };
-        $ctrl.$onChanges = function(changesObj) { };
+        $ctrl.$onChanges = function() { };
         $ctrl.$onDestroy = function() { };
     }
 })();

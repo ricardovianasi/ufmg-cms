@@ -140,7 +140,7 @@
 
         function saveThumbnail(idProgram, idImage) {
             let params = { id: idProgram, thumb: idImage };
-            let url = baseUrlRadioThumb + '?' + SerializeService(params);
+            let url = baseUrlRadioThumb + '?' + SerializeService.parseParams(params);
             return $http.get(url);
         }
     }

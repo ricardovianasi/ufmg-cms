@@ -70,7 +70,7 @@
 
         function _removeEventGrid(event) {
             RadioService.deleteProgramGrid(event.id)
-                .then(function(res) {
+                .then(function() {
                     toastr.success('Programação removida com sucesso!');
                     _getCalendar().fullCalendar('removeEvents', event.id);
                 });
@@ -100,10 +100,10 @@
             vm.uiConfig = {
                 calendar: { height: 450, editable: false, defaultView: 'agendaWeek', droppable: true, allDaySlot: false,
                     header: { left: '', center: '', right: '' }, dragOpacity: 0.7, timeFormat: 'H:mm',
-                    // eventReceive: whenReceive,
-                    // eventDrop: whenChange,
-                    // eventResize: whenChange,
-                    // eventClick: _removeEventGrid
+                    eventReceive: whenReceive,
+                    eventDrop: whenChange,
+                    eventResize: whenChange,
+                    eventClick: _removeEventGrid
                 }
             };
         }

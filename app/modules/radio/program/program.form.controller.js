@@ -6,7 +6,9 @@
         .controller('ProgramFormController', ProgramFormController);
     
     /** ngInject */
-    function ProgramFormController(RadioService, $routeParams, toastr, $location, $q, ProgramFormUtils, ModalService, ProgramFormValidate) {
+    function ProgramFormController(RadioService, $routeParams, toastr, $location, $q,
+        ProgramFormUtils, ModalService, ProgramFormValidate) {
+        
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
@@ -124,7 +126,7 @@
 
         function _update() {
             return $q.all([ RadioService.updateProgram(ProgramFormUtils.createProgramServer(vm.program), vm.id), _saveGrid() ])
-                .then(function(res) {
+                .then(function() {
                     _getProgram(vm.id);
                     toastr.success('Programa de rádio atualizado com sucesso!');
                 });

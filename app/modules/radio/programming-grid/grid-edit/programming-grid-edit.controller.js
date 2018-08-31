@@ -18,7 +18,6 @@
         vm.listTable = [];
         vm.loading = false;
         vm.requiredForm = false;
-        vm.weekDayActive;
         vm.dataProgram = {};
 
         activate();
@@ -77,7 +76,7 @@
         }
 
         function _saveChildrenTime(data) {
-            let instanceModal = _openModalGrid(data)
+            let instanceModal = _openModalGrid(data);
             return instanceModal.result.then(function(res) {
                 let listPromises = res.map(function(gridToSave) {
                     gridToSave.week_day = vm.weekDayActive.code;

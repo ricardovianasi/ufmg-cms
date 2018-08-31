@@ -62,7 +62,7 @@
 
         function _removeProgram(id) {
             RadioService.deleteProgram(id)
-                .then(function(data) {
+                .then(function() {
                     NotificationService.success('O programa foi removido com sucesso.');
                     let idx = vm.listPrograms.findIndex(function(program) { return program.id === id; });
                     vm.listPrograms.splice(idx, 1);

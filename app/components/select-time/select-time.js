@@ -73,7 +73,7 @@
         $ctrl.$onInit = function() {
             _setSelectHour();
         };
-        $ctrl.$onChanges = function(changesObj) {
+        $ctrl.$onChanges = function() {
             if ($ctrl.ngModel) {
                 _splitTime($ctrl.ngModel);
             }

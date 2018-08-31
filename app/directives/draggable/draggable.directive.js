@@ -16,7 +16,7 @@
         };
         return directive;
         
-        function link(scope, element, attrs) {
+        function link(scope, element) {
             element.draggable(
                 { revert: true, revertDuration: 2, zIndex: 999 }
             );

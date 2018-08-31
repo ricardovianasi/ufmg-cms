@@ -3,7 +3,7 @@
 
     angular.module('serviceModule')
         .factory('CalendarService',
-            function ($http, $q, SerializeService, apiUrl, $log) {
+            function ($http, $q, apiUrl, $log) {
                 $log.info('CalendarService');
 
                 var week = [
@@ -103,8 +103,6 @@
                             year: period.year,
                             regional: parseInt(period.regional)
                         };
-                        //var serializeObject = new SerializeService(new_period);
-
                         return $http.put(apiUrl + '/period/' + period.id, new_period);
                     },
                     newPeriod: function (period) {
