@@ -35,8 +35,10 @@
 
         function _evenedUpSideBar(sidebar) {
             return sidebar.map(function(widget) {
-                delete widget.content;
-                delete widget.links;
+                if(widget) {
+                    delete widget.content;
+                    delete widget.links;
+                }
                 return widget;
             });
         }
