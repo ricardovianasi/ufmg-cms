@@ -120,7 +120,13 @@
                 return $http.post(apiUrl + '/page', page, { ignoreLoadingBar: true });
             },
             getPage: function (id) {
-                return $http.get(apiUrl + '/page/' + id);
+                return $http.get(apiUrl + '/page/' + id)
+                    .then(function(res) {
+                        var widgets = res.data.widgets;
+                        res.data.widgets.main = widgets.main.filter(function(widget) { return !!widget; });
+                        res.data.widgets.side = widgets.side.filter(function(widget) { return !!widget; });
+                        return res;
+                    });
             },
             updatePage: function (id, page) {
                 page = _parseData(page);
