@@ -20,10 +20,14 @@
                         hasNewsAgencia: hasPerm('news_agencia_de_agencia'), hasNewsFiqueAtento: hasPerm('news_fique_atento'),
                         hasNewsTv: hasPerm('news_tv'), hasNewsRadio: hasPerm('news_radio'),
                         hasPage: hasPerm('page'), hasRector: hasPerm('rector'),
-                        hasRelease: hasPerm('release'), hasUser: hasPerm('user'),
+                        hasRelease: hasPerm('release'), hasUser: hasPerm('user'), hasTermUse: hasPermissionTermUse(),
                         hasRadioGrid: hasPerm('radio_programming_grid'), hasRadioProgramming: hasPerm('radio_programming'),
                         hasRadioParent: hasPerm('radio_category'), hasRadioGenre: hasPerm('radio_genre'), hasRadioThumb: hasPerm('radio_thumb'),
                     };
+                }
+
+                function hasPermissionTermUse() {
+                    return PermissionService.canPut('term_of_use');
                 }
 
                 function hasPermissionRadioProgramming() {
@@ -114,7 +118,7 @@
                             { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq }, 
                             { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags }, 
                             { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser },
-                            { icon: 'fa fa-file-text-o', name: 'Orientações e regras de uso', location: 'use-term', isActive: false, isOpen: false, enabled: true }
+                            { icon: 'fa fa-file-text-o', name: 'Orientações e regras de uso', location: 'use-term', isActive: false, isOpen: false, enabled: permissions.hasTermUse }
                         ]);
                     });
                     return defer.promise;

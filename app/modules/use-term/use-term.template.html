@@ -23,9 +23,9 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" ng-show="vm.term">
     <div class="col-xs-8" ng-class="{'col-xs-offset-2': !vm.canPut}">
-        <div ng-show="!vm.canPut" class="panel panel-default instructions">
+        <div ng-show="!vm.termAssigned" class="panel panel-default instructions">
             Por favor, leia atentamente e aceite as orientações e regras de uso para continuar
         </div>
         <div class="panel panel-default">

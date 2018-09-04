@@ -66,8 +66,7 @@
 
         function _setStatusSign() {
             if($rootScope.User && 
-                $rootScope.User.term_signed && 
-                !$rootScope.User.is_administrator) {
+                $rootScope.User.term_signed) {
                 _showMsgTermAssing();
                 vm.termAssigned = true;
             }
