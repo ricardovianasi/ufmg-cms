@@ -251,6 +251,7 @@
             }
             $rootScope.$on('PERMISSION_ROUTER', function () {
                 verifyPermission(event, next, current);
+                _checkTermUse();
             });
         });
 

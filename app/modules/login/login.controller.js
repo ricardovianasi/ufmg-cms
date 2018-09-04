@@ -41,6 +41,7 @@
                 authService.autenticate(vm.credentials, vm.rememberMe)
                     .then(function (userAccount) {
                         if (userAccount.status) {
+                            $rootScope.shownavbar = true;
                             PermissionService.initService(userAccount)
                                 .then(function () {
                                     $rootScope.modalLoginIsDisabled = true;
