@@ -186,7 +186,6 @@
                     return true;
                 }
                 if(!isTermSigned) {
-                    $location.path('/use-term');
                     return false;
                 }
                 var hasPrivilege = getPrivilege(context, role);
@@ -300,7 +299,6 @@
         function initService(user) {
             var defer = $q.defer();
             if (angular.isDefined(user)) {
-                $rootScope.User = user;
                 if (messagesUserStatus()) {
                     defer.resolve();
                     $rootScope.$broadcast('PERMISSION_ROUTER');
@@ -309,7 +307,6 @@
                 authService
                     .account()
                     .then(function (res) {
-                        $rootScope.User = res.data;
                         if (noHavePermission()) {
                             messageWarn();
                             defer.reject();

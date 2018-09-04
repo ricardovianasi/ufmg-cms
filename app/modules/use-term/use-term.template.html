@@ -2,20 +2,20 @@
     <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title">Termos de uso</h1>
+                <h1 class="title">Orientações e regras de uso</h1>
             </div>
         </div>
         <div class="col-md-6">
             <div class="breadcrumb-env">
                 <ol class="breadcrumb bc-1">
-                    <li>
+                    <li ng-show="vm.termAssigned">
                         <a href="#/">
                             <i class="fa-home"></i>Home
                         </a>
                     </li>
                     <li class="active">
                         <a href="#/use-term">
-                            <strong>Termos de uso</strong>
+                            <strong>Orientações e regras de uso</strong>
                         </a>
                     </li>
                 </ol>
@@ -25,16 +25,19 @@
 </div>
 <div class="row">
     <div class="col-xs-8" ng-class="{'col-xs-offset-2': !vm.canPut}">
+        <div class="panel panel-default instructions">
+            Por favor, leia atentamente e aceite as orientações e regras de uso para continuar
+        </div>
         <div class="panel panel-default">
             <div class="row">
                 <div class="col-xs-12 form-group">
                     <textarea ng-if="vm.canPut" class="form-control" cols="50" rows="10" ng-model="vm.term.term" redactor="redactorConfig"></textarea>
-                    <div ng-if="!vm.canPut" data-ng-bind-html="vm.term.term"></div>
+                    <div class="box-term" ng-if="!vm.canPut" data-ng-bind-html="vm.term.term"></div>
                 </div>
                 <div class="col-xs-12 p-10 df jc-flex-center" ng-if="!vm.canPut">
                     <button ng-disabled="vm.signing || vm.termAssigned" ng-click="vm.signTerm()"
                         class="btn btn-lg btn-secondary" ng-class="{'btn-gray': vm.termAssigned}">
-                        {{vm.termAssigned ? 'Termos já aceito' : 'Aceitar termos de uso'}}
+                        {{vm.termAssigned ? 'Já aceito' : 'Li e aceito as orientações e regras de uso'}}
                     </button>
                 </div>
             </div>

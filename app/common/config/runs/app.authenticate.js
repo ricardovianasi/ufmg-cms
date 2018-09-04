@@ -62,6 +62,13 @@
             }, timeInMillisegunds);
         }
 
+        function _checkTermUse() {
+            var isTermSigned = $rootScope.User.term_signed;
+            if(!isTermSigned) {
+                $location.path('/use-term');
+            }
+        }
+
         function getActionModule() {
             var path = $location.path();
             var lastElement = getLastElement(path);
@@ -240,6 +247,7 @@
             }
             if ($rootScope.User) {
                 verifyPermission(event, next, current);
+                _checkTermUse();
             }
             $rootScope.$on('PERMISSION_ROUTER', function () {
                 verifyPermission(event, next, current);

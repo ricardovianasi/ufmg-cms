@@ -236,26 +236,17 @@
 
                 function _login(isValid) {
                     if (isValid) {
-                        authService
-                            .autenticate(vm.credentials)
-                            .then(function (res) {
-                                sessionService.saveData(res.data, vm.rememberMe);
-                                authService
-                                    .get()
-                                    .then(function (res1) {
-                                        var dataUser = res1;
-                                        var user = dataUser.data;
-                                        if (user.status) {
-                                            $rootScope.dataUser = dataUser;
-                                            PermissionService.initService(user);
-                                            sessionService.setIsLogged();
-                                            changePassword(user);
-                                            $rootScope.modalLoginIsDisabled = true;
-                                            $uibModalInstance.close();
-                                        } else {
-                                            NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
-                                        }
-                                    });
+                        authService.autenticate(vm.credentials, vm.rememberMe)
+                            .then(function (userAccount) {
+                                if (userAccount.status) {
+                                    PermissionService.initService(userAccount);
+                                    sessionService.setIsLogged();
+                                    changePassword(userAccount);
+                                    $rootScope.modalLoginIsDisabled = true;
+                                    $uibModalInstance.close();
+                                } else {
+                                    NotificationService.error('Usuário desativado, entrar em contato com CEDECOM/WEB');
+                                }
                             }, function (err) {
                                 NotificationService.error('Usuário ou senha inválidos, tente novamente.');
                                 vm.credentials.password = '';

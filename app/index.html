@@ -69,8 +69,8 @@
         </div>
     </nav>
     <div class="page-container row">
-        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar"></div>
-        <div class="main-content" ng-class="{'margin-sidebar': shownavbar}">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
+        <div class="main-content" ng-class="{'margin-sidebar': shownavbar && User.term_signed }">
             <ng-view />
         </div>
     </div>

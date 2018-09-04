@@ -6,7 +6,7 @@
 
     /** ngInject */
     function Run($rootScope, dataTableConfigService, sessionService, $window, $log, ModalService, DTDefaultOptions,
-        $timeout, $location, PermissionService) {
+        $location, PermissionService) {
 
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
