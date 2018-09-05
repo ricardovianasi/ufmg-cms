@@ -8,7 +8,7 @@
     /** ngInject */
     function PagesEditController($scope, $location, $routeParams, $timeout, NotificationService,
         PagesService, WidgetsService, StatusService, $q, ModalService, PermissionPageService,
-        TagsService, validationService, Util, HandleChangeService) {
+        TagsService, validationService, Util) {
 
         let vm = $scope;
 
@@ -24,45 +24,6 @@
         vm.setImageCover = setImageCover;
 
         activate();
-
-        function _hasLoaded(oldValue) {
-            return angular.isDefined(oldValue.id);
-        }
-
-        function _evenedObj(obj) {
-            obj = HandleChangeService.removePropsCommon(obj);
-            obj.tags = _evenedTag(obj.tags, 'text');
-            obj.widgets.main = _evenedTagWidget(obj.widgets.main);
-            obj.widgets.side = _evenedTagWidget(obj.widgets.side);
-            return obj;
-        }
-
-        function _evenedTag(tags, label) {
-            if(!tags) {
-                return '';
-            }
-            if(tags.length) {
-                return tags.map(function(tag) { return tag[label] ? tag[label] : tag; } );
-            } else {
-                return tags[label] ? [tags[label]] : [tags];
-            }
-        }
-
-        function _evenedTagWidget(widgets) {
-            if(widgets && widgets.length) {
-                return widgets.map(function(widget) {
-                    if(widget.tag) {
-                        widget.tag = widget.tag.id ? 
-                            _evenedTag(widget.content.tag, 'name') : _evenedTag(widget.tag, 'text');
-                    } else if (widget.content && widget.content.tag) {
-                        widget.tag = _evenedTag(widget.content.tag, 'name');
-                    }
-                    return widget;
-                });
-            } else {
-                return [];
-            }
-        }
 
         function _getType() {
             PagesService.getType()
@@ -192,7 +153,7 @@
                 .then(function (data) {
                     let page = data.data;
                     let tags = page.tags;
-                    
+
                     vm.title = page.title;
                     vm.breadcrumb_active = page.title;
                     page.tags = TagsService.convertTagsInput(tags);
@@ -209,7 +170,7 @@
             vm.isSuperPut = true;
             PermissionPageService.canTotal(['PUT'], ['posts']).then(function(canTotal) {
                 if(canTotal.PUT) {
-                    let perm = PermissionPageService.setConfigPermission({ isPost: true, isAdmin: true, 
+                    let perm = PermissionPageService.setConfigPermission({ isPost: true, isAdmin: true,
                         permissions: { putTag: true, putSuper: true } });
                     _setPermission(perm);
                     return;
@@ -225,7 +186,7 @@
                         perm.modules = PermissionPageService.transformListToObj(perm.modules, 'type');
                     }
                     _setPermission(perm);
-                    if(PermissionPageService.isAuthor(vm.page) && !perm.idPage) { 
+                    if(PermissionPageService.isAuthor(vm.page) && !perm.idPage) {
                         _setPermissionAuthor();
                         return;
                      }
@@ -234,7 +195,7 @@
 
         function _setPermissionAuthor() {
             PermissionPageService.getPostModules({ getAsList: true }).then(function(postModules) {
-                let modules = 
+                let modules =
                     postModules && (!postModules.noPrivilege && !postModules.isTotal) ? postModules : [];
                 let perm = PermissionPageService.setConfigPermission(
                     { isPost: true, isAdmin: !!postModules.isTotal,
@@ -248,7 +209,7 @@
         function _setPermission(objPermission) {
             const isDefinedPermissions = angular.isDefined(objPermission.permissions);
             const hasModuleToHandle = PermissionPageService.hasModuleToHandle(objPermission.modules);
-            vm.viewOnly = !isDefinedPermissions || 
+            vm.viewOnly = !isDefinedPermissions ||
                 (!objPermission.permissions.putSuper && !objPermission.permissions.putTag && !hasModuleToHandle);
             vm.isSuperPut = isDefinedPermissions ? objPermission.permissions.putSuper : false;
             vm.canPutTag = isDefinedPermissions ? objPermission.permissions.putTag : false;
@@ -281,7 +242,6 @@
             };
             _getPage();
             _getType();
-            HandleChangeService.registerHandleChange('/page/', ['PUT', 'DELETE'], $scope, ['page'], _evenedObj, _hasLoaded);
         }
 
     }
