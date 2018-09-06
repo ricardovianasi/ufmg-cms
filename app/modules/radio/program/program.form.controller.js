@@ -4,11 +4,11 @@
     angular
         .module('radioModule')
         .controller('ProgramFormController', ProgramFormController);
-    
+
     /** ngInject */
     function ProgramFormController(RadioService, $routeParams, toastr, $location, $q,
         ProgramFormUtils, ModalService, ProgramFormValidate) {
-        
+
         var vm = this;
         vm.id = '';
         vm.listProgramBlock = [];
@@ -32,7 +32,7 @@
         function removeProgram() {
             ModalService.confirm('Deseja excluir este programa?', ModalService.MODAL_MEDIUM).result
                 .then(function() { return RadioService.deleteProgram(vm.id); })
-                .then(function() { 
+                .then(function() {
                     toastr.success('Programa removido com sucesso.');
                     $location.path('/radio_programming/programs');
                 })
@@ -54,7 +54,7 @@
             day['time_'+type] = time;
             ProgramFormValidate.checkValidateDate(day, vm.id)
                 .then(function() {
-                    vm.errorGrid = !!ProgramFormValidate.checkGridValid(vm.listDays);
+                    _checkErrosOnGrid();
                 });
         }
 
@@ -72,9 +72,10 @@
             let idxTime = day.times.indexOf(timeExtra);
             if(!timeExtra.idGrid) {
                 day.times.splice(idxTime, 1);
-                return;
+            } else {
+                timeExtra.delete = true;
             }
-            timeExtra.delete = true;
+            _checkErrosOnGrid();
         }
 
         function addHour(day, start, end, idGrid) {
@@ -101,13 +102,13 @@
             }
             let promiseSave;
             vm.loading = true;
-            if(vm.id) { promiseSave = _update(); } 
+            if(vm.id) { promiseSave = _update(); }
             else { promiseSave = _register(); }
             promiseSave
                 .catch(function(error) {console.error(error);})
                 .finally(function() {vm.loading = false;});
         }
-        
+
         function _register() {
             return RadioService.registerProgram(ProgramFormUtils.createProgramServer(vm.program))
                 .then(function(res) {
@@ -148,7 +149,7 @@
                     listPromise.push(RadioService.deleteProgramGrid(grid.idGrid));
                 } else if (grid.idGrid) {
                     listPromise.push(RadioService.updateProgramGrid(grid, grid.idGrid));
-                } else if(grid.time_start && grid.time_end) { 
+                } else if(grid.time_start && grid.time_end) {
                     listPromise.push(RadioService.registerProgramGrid(grid));
                 }
             });
@@ -170,14 +171,18 @@
 
         function _loadParents() {
             RadioService.listItemFilter(undefined, RadioService.baseUrlParent)
-                .then(function(res) { 
+                .then(function(res) {
                     _permissions();
-                    vm.listParents = res.data.items; 
+                    vm.listParents = res.data.items;
                 });
         }
 
         function _permissions() {
             vm.can = ProgramFormUtils.getPermissions();
+        }
+
+        function _checkErrosOnGrid() {
+            vm.errorGrid = !!ProgramFormValidate.checkGridValid(vm.listDays);
         }
 
         function initObjProgram(data) {

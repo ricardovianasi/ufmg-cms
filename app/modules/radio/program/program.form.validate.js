@@ -4,7 +4,7 @@
     angular
         .module('radioModule')
         .factory('ProgramFormValidate', ProgramFormValidate);
-    
+
     /** ngInject */
     function ProgramFormValidate(RadioService, $q) {
         var service = {
@@ -12,7 +12,7 @@
             checkValidateDate: checkValidateDate,
             checkGridValid: checkGridValid,
         };
-        
+
         return service;
 
         ////////////////
@@ -30,7 +30,7 @@
                 return rows.concat(columns);
             }, [])
             .reduce(function(resultDays, day) { return resultDays.concat(day.times).concat(day); }, [])
-            .find(function(day) { return day && !day.isExtraordinary && day.moment.error; });
+            .find(function(day) { return day && !day.isExtraordinary && day.moment.error && !day.delete; });
         }
 
         function checkValidateDate(dayTime, idProgram) {
@@ -95,13 +95,13 @@
                         return { hasError: false };
                     }
                     let grid = items[0];
-                    let isSequence = 
+                    let isSequence =
                         timeStart === _baseFormatHour(grid.time_end) || timeEnd === _baseFormatHour(grid.time_start);
                     if(isSequence) {
                         return { hasError: false };
                     }
                     return { hasError: true, grid: grid };
-                }); 
+                });
         }
 
         function _getMessageInvalidHour(titleProgram, hourStart, hourEnd) {
@@ -111,7 +111,7 @@
 
         function _baseFormatHour(time) {
             if (/(\d{2}:){2}/.test(time)) {
-                return time.replace(/:\d{2}/, '');
+                return time.replace(/:\d{2}$/, '');
             }
             return time;
         }
