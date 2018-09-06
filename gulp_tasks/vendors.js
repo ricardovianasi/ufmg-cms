@@ -18,7 +18,7 @@ var SCRIPTS = [
     'app/assets/scripts/redactor-actions.js',
     'app/assets/scripts/global.js',
     'bower_components/lodash/dist/lodash.min.js',
-    'bower_components/angular/angular.min.js',
+    'node_modules/angular/angular.min.js',
     'bower_components/angular-route/angular-route.min.js',
     'bower_components/angular-resource/angular-resource.min.js',
     'bower_components/angular-sanitize/angular-sanitize.min.js',
