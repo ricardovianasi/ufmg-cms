@@ -19,8 +19,8 @@ var env = options.env;
 gulp.task('env', function () {
     var file = 'env-' + env + '.json';
 
-    /*eslint-disable */
-    console.log(options);
+    /*eslint-disable*/
+    console.log('MODE: ' + env);
     /*eslint-enable */
 
 
@@ -29,13 +29,6 @@ gulp.task('env', function () {
         if (err === null) {
             file = 'env-local.json';
         }
-
-        /*eslint-disable */
-        console.log(env);
-        console.log(file);
-        /*eslint-enable */
-
-
 
         gulp.src('./app/' + file)
             .pipe(gulpNgConfig('env'))

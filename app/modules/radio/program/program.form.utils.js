@@ -16,7 +16,7 @@
             initObjProgram: initObjProgram,
             getPermissions: getPermissions,
         };
-        
+
         return service;
 
         ////////////////
@@ -71,9 +71,9 @@
             return {
                 time_start: start || '',
                 time_end: end || '',
-                idGrid: idGrid, 
-                week_day: weekDay, 
-                delete: false, 
+                idGrid: idGrid,
+                week_day: weekDay,
+                delete: false,
                 checked: true,
                 moment: {}
             };
@@ -83,31 +83,33 @@
             return {
                 programming: idProgram,
                 delete: grid.delete,
-                idGrid: grid.idGrid, 
-                time_start: grid.time_start, 
-                time_end: grid.time_end, 
-                week_day: grid.week_day, 
+                idGrid: grid.idGrid,
+                time_start: grid.time_start,
+                time_end: grid.time_end,
+                week_day: grid.week_day,
+            };
+        }
+
+        function _getObjDay(nameDay, weekDay, isExtraordinary) {
+            return {
+                idGrid: undefined,
+                moment: { },
+                label: nameDay,
+                week_day: weekDay,
+                checked: false,
+                time_start: '',
+                time_end: '',
+                times: [ ],
+                isExtraordinary: isExtraordinary
             };
         }
 
         function createListDays() {
             return [
-                [
-                    { idGrid: undefined, moment: { }, label: 'Seg', week_day: 1, checked: false, time_start: '', time_end: '', times: [ ] },
-                    { idGrid: undefined, moment: { }, label: 'Sex', week_day: 5, checked: false, time_start: '', time_end: '', times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, moment: { }, label: 'Ter', week_day: 2, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { idGrid: undefined, moment: { }, label: 'Sab', week_day: 6, checked: false, time_start: '', time_end: '',  times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, moment: { }, label: 'Qua', week_day: 3, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { idGrid: undefined, moment: { }, label: 'Dom', week_day: 7, checked: false, time_start: '', time_end: '',  times: [ ] },
-                ],
-                [
-                    { idGrid: undefined, moment: {}, label: 'Qui', week_day: 4, checked: false, time_start: '', time_end: '',  times: [ ] },
-                    { label: 'Notícia Extraordinária', week_day: 0, checked: false, isExtraordinary: true },
-                ]
+                [ _getObjDay('Seg', 1), _getObjDay('Sex', 5) ],
+                [ _getObjDay('Ter', 2), _getObjDay('Sab', 6) ],
+                [ _getObjDay('Qua', 3), _getObjDay('Dom', 7) ],
+                [ _getObjDay('Qui', 4), _getObjDay('Notícia Extraordinária', 0, true) ],
             ];
         }
     }

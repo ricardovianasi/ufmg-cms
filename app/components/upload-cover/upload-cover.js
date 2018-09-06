@@ -2,9 +2,9 @@
     'use strict';
 
     // Usage:
-    // 
+    //
     // Creates:
-    // 
+    //
 
     angular
         .module('componentsModule')
@@ -28,7 +28,7 @@
 
         $ctrl.openPickCover = openPickCover;
         $ctrl.removeImage = removeImage;
-        
+
 
         ////////////////
 

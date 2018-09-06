@@ -42,7 +42,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^2.1.2",
+    "gulp-uglify": "^3.0.1",
     "imagemin-gifsicle": "^5.2.0",
     "jasmine": "^2.3.2",
     "jshint": "^2.9.4",

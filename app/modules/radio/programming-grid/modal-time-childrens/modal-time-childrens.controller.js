@@ -8,7 +8,7 @@
     /** ngInject */
     function TimeChildrensController($uibModalInstance, dataProgram, gridEdit, toastr) {
         var vm = this;
-        
+
         vm.requiredForm = false;
         vm.isEdit = false;
 
@@ -32,16 +32,6 @@
                 .map(function(child) {return _generateProgramGrid(child);});
             listProgramsToSave.push(_generateProgramGrid(vm.program));
             $uibModalInstance.close(listProgramsToSave);
-        }
-
-
-        function _hasRequired() {
-            vm.requiredForm = vm.program.children.reduce(function(result, child) {
-                let noTime = !child.time_start || !child.time_end;
-                return noTime || result;
-            }, false);
-            let parentTimeRequired = vm.isEdit && (!vm.program.time_start || !vm.program.time_end);
-            return vm.requiredForm || parentTimeRequired;
         }
 
         function _generateProgramGrid(prog) {
@@ -79,7 +69,7 @@
             return {
                 idGrid: programGrid.idGrid,
                 id: programGrid.idProgram,
-                title: programGrid.titleProgram, 
+                title: programGrid.titleProgram,
                 time_start: _setHourToDate(programGrid.timeStart),
                 time_end: _setHourToDate(programGrid.timeEnd),
                 weekDay: programGrid.weekDay,

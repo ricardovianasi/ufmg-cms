@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var gulpif = require('gulp-if');
 var expect = require('gulp-expect-file');
 var commons = require('./commons.js');
+var uglify = require('gulp-uglify');
 
 var SCRIPTS = [
     'bower_components/jquery/dist/jquery.min.js',
@@ -116,6 +117,7 @@ gulp.task('build-vendors-js', function () {
             errorOnFailure: true
         }, SCRIPTS))
         .pipe(gulpif(/[.]js$/, concat('vendors.js')))
+        .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))

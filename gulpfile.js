@@ -12,7 +12,7 @@ gulp.task('default', function () {
     gulp.start('production');
 });
 
-//task for build
+//sequence task for build
 gulp.task('build', [
     'env',
     'html',
@@ -26,16 +26,10 @@ gulp.task('build', [
 
 //task for developer
 gulp.task('serve', function () {
-    /*eslint-disable */
-    console.log('MODE: production');
-    /*eslint-enable */
     return runSequence('build', 'browser-sync', 'watch');
 });
 
 //task for prepare deploy
 gulp.task('production', function () {
-    /*eslint-disable */
-    console.log('MODE: production');
-    /*eslint-enable */
     return runSequence(['build', 'imagemin']);
 });

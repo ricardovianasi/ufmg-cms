@@ -5,6 +5,7 @@ var angularFilesort = require('gulp-angular-filesort');
 var naturalSort = require('gulp-natural-sort');
 var ngAnnotate = require('gulp-ng-annotate');
 var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 var plumber = require('gulp-plumber');
 var stylish = require('jshint-stylish');
 var jshint = require('gulp-jshint');
@@ -23,10 +24,11 @@ gulp.task('js', function () {
         }))
         .pipe(jshint.reporter(stylish))
         .pipe(naturalSort())
+        .pipe(ngAnnotate())
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
         .pipe(babel({ presets: ['env'] }))
-        .pipe(ngAnnotate())
+        .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))

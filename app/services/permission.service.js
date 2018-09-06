@@ -270,7 +270,7 @@
             } else {
                 let newPrivilege = { privilege: privilege };
                 newPrivilege[key] = data;
-                permUpdate.privileges = permUpdate.privileges ? permUpdate.privileges : []; 
+                permUpdate.privileges = permUpdate.privileges ? permUpdate.privileges : [];
                 permUpdate.privileges.push(newPrivilege);
             }
             if(idxPerm < 0) {
@@ -306,7 +306,7 @@
             } else {
                 authService
                     .account()
-                    .then(function (res) {
+                    .then(function () {
                         if (noHavePermission()) {
                             messageWarn();
                             defer.reject();
