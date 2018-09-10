@@ -64,7 +64,7 @@ var SCRIPTS = [
 
 var STYLES = [
     'bower_components/angular-toastr/dist/angular-toastr.min.css',
-    'bower_components/font-awesome/css/font-awesome.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css',
     'bower_components/ng-sortable/dist/ng-sortable.min.css',
     'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
     'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
@@ -95,7 +95,7 @@ var STYLES = [
 ];
 
 var FONTS = [
-    'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
     'node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
     'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}',
 ];

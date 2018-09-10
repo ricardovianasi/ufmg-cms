@@ -60,6 +60,7 @@
     "angular": "^1.6.10",
     "angular-ui-calendar": "^1.0.2",
     "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
     "fullcalendar": "^3.9.0"
   }
 }
