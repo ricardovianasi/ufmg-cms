@@ -28,7 +28,7 @@ gulp.task('js', function () {
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
         .pipe(babel({ presets: ['env'] }))
-        .pipe(uglify({ mangle: false }))
+        // .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))
