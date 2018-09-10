@@ -24,10 +24,10 @@ gulp.task('js', function () {
         }))
         .pipe(jshint.reporter(stylish))
         .pipe(naturalSort())
-        .pipe(ngAnnotate())
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
         .pipe(babel({ presets: ['env'] }))
+        .pipe(ngAnnotate())
         // .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
