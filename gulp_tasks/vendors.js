@@ -117,7 +117,6 @@ gulp.task('build-vendors-js', function () {
             errorOnFailure: true
         }, SCRIPTS))
         .pipe(gulpif(/[.]js$/, concat('vendors.js')))
-        .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))
