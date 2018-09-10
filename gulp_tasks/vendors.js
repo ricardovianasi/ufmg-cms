@@ -10,7 +10,7 @@ var SCRIPTS = [
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/jquery-ui/jquery-ui.min.js',
     'bower_components/datatables/media/js/jquery.dataTables.js',
-    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'app/assets/scripts/redactor-2.1.2.4/redactor.js',
     'app/assets/scripts/redactor-2.1.2.4/pt_br.js',
     'app/assets/scripts/redactor-plugins/video.js',
@@ -96,12 +96,12 @@ var STYLES = [
 
 var FONTS = [
     'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
-    'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
     'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}',
 ];
 
 var BOOTSTRAP_FONTS = [
-    'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
 ];
 
 gulp.task('build-vendors', [
