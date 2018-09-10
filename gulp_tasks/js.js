@@ -26,7 +26,7 @@ gulp.task('js', function () {
         .pipe(naturalSort())
         .pipe(angularFilesort())
         .pipe(concat('app.js'))
-        // .pipe(babel({ presets: ['env'] }))
+        .pipe(babel({ presets: ['env'] }))
         .pipe(ngAnnotate())
         // .pipe(uglify({ mangle: false }))
         .pipe(rename({
