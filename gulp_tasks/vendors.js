@@ -19,9 +19,9 @@ var SCRIPTS = [
     'app/assets/scripts/global.js',
     'bower_components/lodash/dist/lodash.min.js',
     'node_modules/angular/angular.min.js',
-    'node_modules/angular-route/angular-route.js',
-    'node_modules/angular-resource/angular-resource.js',
-    'node_modules/angular-sanitize/angular-sanitize.js',
+    'node_modules/angular-route/angular-route.min.js',
+    'node_modules/angular-resource/angular-resource.min.js',
+    'node_modules/angular-sanitize/angular-sanitize.min.js',
     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
     'bower_components/angular-i18n/angular-locale_pt-br.js',
     'bower_components/angular-filter/dist/angular-filter.min.js',
@@ -117,7 +117,7 @@ gulp.task('build-vendors-js', function () {
             errorOnFailure: true
         }, SCRIPTS))
         .pipe(gulpif(/[.]js$/, concat('vendors.js')))
-        // .pipe(uglify({ mangle: false }))
+        .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))
