@@ -16,8 +16,8 @@
   ],
   "private": true,
   "dependencies": {
-    "angular": "1.6.5",
-    "angular-animate": "^1.4.8",
+    "angular": "1.6.10",
+    "angular-animate": "^1.6.10",
     "angular-bootstrap": "^1.1.2",
     "angular-bootstrap-calendar": "^0.18.4",
     "angular-datatables": "^0.5.2",
@@ -26,9 +26,9 @@
     "angular-img-cropper": "^1.1.0",
     "angular-loading-bar": "^0.9.0",
     "angular-mocks": "^1.4.7",
-    "angular-resource": "^1.4.8",
-    "angular-route": "^1.4.8",
-    "angular-sanitize": "^1.4.8",
+    "angular-resource": "^1.6.10",
+    "angular-route": "^1.6.10",
+    "angular-sanitize": "^1.6.10",
     "angular-toastr": "^1.7.0",
     "angular-translate": "^2.9.0",
     "angular-translate-loader-static-files": "^2.9.0",
@@ -70,6 +70,6 @@
     "jquery": "~2.1.4",
     "moment": "^2.11.1",
     "bootstrap": "~3.3.4",
-    "angular": "1.6.5"
+    "angular": "1.6.10"
   }
 }

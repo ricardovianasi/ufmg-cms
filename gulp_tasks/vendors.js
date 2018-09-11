@@ -18,10 +18,10 @@ var SCRIPTS = [
     'app/assets/scripts/redactor-actions.js',
     'app/assets/scripts/global.js',
     'bower_components/lodash/dist/lodash.min.js',
-    'bower_components/angular/angular.min.js',
-    'bower_components/angular-route/angular-route.min.js',
-    'bower_components/angular-resource/angular-resource.min.js',
-    'bower_components/angular-sanitize/angular-sanitize.min.js',
+    'node_modules/angular/angular.min.js',
+    'node_modules/angular-route/angular-route.js',
+    'node_modules/angular-resource/angular-resource.js',
+    'node_modules/angular-sanitize/angular-sanitize.js',
     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
     'bower_components/angular-i18n/angular-locale_pt-br.js',
     'bower_components/angular-filter/dist/angular-filter.min.js',
@@ -35,7 +35,7 @@ var SCRIPTS = [
     'bower_components/angular-ui-mask/dist/mask.min.js',
     'bower_components/angular-datatables/dist/angular-datatables.min.js',
     'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js',
-    'bower_components/angular-animate/angular-animate.min.js',
+    'node_modules/angular-animate/angular-animate.min.js',
     'bower_components/mr-image/dist/js/mr-image.min.js',
     'bower_components/ng-lodash/build/ng-lodash.min.js',
     'bower_components/log/log.min.js',
@@ -117,7 +117,7 @@ gulp.task('build-vendors-js', function () {
             errorOnFailure: true
         }, SCRIPTS))
         .pipe(gulpif(/[.]js$/, concat('vendors.js')))
-        .pipe(uglify({ mangle: false }))
+        // .pipe(uglify({ mangle: false }))
         .pipe(rename({
             suffix: '.min'
         }))
