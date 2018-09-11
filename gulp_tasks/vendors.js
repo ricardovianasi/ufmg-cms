@@ -10,7 +10,7 @@ var SCRIPTS = [
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/jquery-ui/jquery-ui.min.js',
     'bower_components/datatables/media/js/jquery.dataTables.js',
-    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'app/assets/scripts/redactor-2.1.2.4/redactor.js',
     'app/assets/scripts/redactor-2.1.2.4/pt_br.js',
     'app/assets/scripts/redactor-plugins/video.js',
@@ -64,14 +64,14 @@ var SCRIPTS = [
 
 var STYLES = [
     'node_modules/angular-toastr/dist/angular-toastr.min.css',
-    'bower_components/font-awesome/css/font-awesome.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css',
     'bower_components/ng-sortable/dist/ng-sortable.min.css',
     'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
     'bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css',
     'bower_components/ng-responsive-calendar/dist/css/calendar.min.css',
     'bower_components/ui-select/dist/select.min.css',
     'bower_components/ng-cropper/dist/ngCropper.all.min.css',
-    'bower_components/animate.css/animate.min.css',
+    'node_modules/animate.css/animate.min.css',
     'bower_components/mr-image/dist/css/mr-image.min.css',
     'app/assets/scripts/redactor-2.1.2.4/redactor.css',
     'bower_components/ng-tags-input/ng-tags-input.min.css',
@@ -95,13 +95,13 @@ var STYLES = [
 ];
 
 var FONTS = [
-    'bower_components/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
-    'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
     'app/assets/xenon/css/fonts/linecons/font/*.{eot,svg,ttf,woff,woff2}',
 ];
 
 var BOOTSTRAP_FONTS = [
-    'bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
+    'node_modules/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}',
 ];
 
 gulp.task('build-vendors', [

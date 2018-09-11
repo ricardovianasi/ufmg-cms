@@ -65,6 +65,9 @@
     "angular-toastr": "~1.7.0",
     "angular-translate": "~2.18.1",
     "angular-ui-calendar": "1.0.2",
+    "animate.css": "^3.7.0",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
     "fullcalendar": "^3.9.0"
   }
 }
