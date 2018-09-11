@@ -45,7 +45,10 @@
 
                 obj.type = widget.type;
                 obj.title = widget.title;
-                angular.extend(obj, WidgetModuleService.getWidget(widget.type).parseToSave(widget));
+                var moduleWidget = WidgetModuleService.getWidget(widget.type);
+                if(moduleWidget) {
+                    angular.extend(obj, moduleWidget.parseToSave(widget));
+                }
             }
             return obj;
         }
