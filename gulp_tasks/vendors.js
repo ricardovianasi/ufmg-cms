@@ -25,9 +25,9 @@ var SCRIPTS = [
     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
     'bower_components/angular-i18n/angular-locale_pt-br.js',
     'bower_components/angular-filter/dist/angular-filter.min.js',
-    'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
-    'bower_components/angular-translate/angular-translate.min.js',
-    'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
+    'node_modules/angular-toastr/dist/angular-toastr.tpls.min.js',
+    'node_modules/angular-translate/dist/angular-translate.min.js',
+    'node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
     'bower_components/ui-select/dist/select.min.js',
     'bower_components/ng-sortable/dist/ng-sortable.min.js',
     'bower_components/ng-file-upload/ng-file-upload-all.min.js',
@@ -63,7 +63,7 @@ var SCRIPTS = [
 ];
 
 var STYLES = [
-    'bower_components/angular-toastr/dist/angular-toastr.min.css',
+    'node_modules/angular-toastr/dist/angular-toastr.min.css',
     'bower_components/font-awesome/css/font-awesome.min.css',
     'bower_components/ng-sortable/dist/ng-sortable.min.css',
     'bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',

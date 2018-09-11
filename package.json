@@ -62,6 +62,8 @@
     "angular-resource": "~1.6.10",
     "angular-route": "~1.6.10",
     "angular-sanitize": "~1.6.10",
+    "angular-toastr": "~1.7.0",
+    "angular-translate": "~2.18.1",
     "angular-ui-calendar": "1.0.2",
     "fullcalendar": "^3.9.0"
   }
