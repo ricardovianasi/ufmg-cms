@@ -7,7 +7,7 @@ var commons = require('./commons.js');
 var uglify = require('gulp-uglify');
 
 var SCRIPTS = [
-    'bower_components/jquery/dist/jquery.min.js',
+    'node_modules/jquery/dist/jquery.min.js',
     'bower_components/jquery-ui/jquery-ui.min.js',
     'bower_components/datatables/media/js/jquery.dataTables.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
@@ -43,7 +43,7 @@ var SCRIPTS = [
     'bower_components/ngInflection/dist/ngInflection.min.js',
     'bower_components/ng-tags-input/ng-tags-input.min.js',
     'bower_components/angular-ui-sortable/sortable.min.js',
-    'bower_components/moment/min/moment.min.js',
+    'node_modules/moment/min/moment.min.js',
     'bower_components/angular-loading-bar/build/loading-bar.min.js',
     'bower_components/angular-cookies/angular-cookies.min.js',
     'bower_components/v-accordion/dist/v-accordion.min.js',
@@ -53,7 +53,7 @@ var SCRIPTS = [
     'bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js',
     'bower_components/ng-scrollbars/dist/scrollbars.min.js',
     'bower_components/dropzone/dist/min/dropzone.min.js',
-    'bower_components/ng-dropzone/dist/ng-dropzone.min.js',
+    'node_modules/ngdropzone/dist/ng-dropzone.min.js',
     'node_modules/angular-ui-calendar/src/calendar.js',
     'node_modules/fullcalendar/dist/fullcalendar.min.js',
     'node_modules/fullcalendar/dist/gcal.min.js',
@@ -81,7 +81,7 @@ var STYLES = [
     'bower_components/nanoscroller/bin/css/nanoscroller.css',
     'bower_components/dropzone/dist/min/dropzone.min.css',
     'bower_components/dropzone/dist/min/basic.min.css',
-    'bower_components/ng-dropzone/dist/ng-dropzone.min.css',
+    'node_modules/ngdropzone/dist/ng-dropzone.min.css',
     'node_modules/fullcalendar/dist/fullcalendar.min.css',
 
     // God Damn Xenon
