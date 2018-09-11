@@ -34,7 +34,6 @@
     "angular-translate-loader-static-files": "^2.9.0",
     "angular-ui-calendar": "^1.0.1",
     "angular-ui-mask": "^1.7.2",
-    "angular-ui-router": "^0.2.15",
     "angular-ui-sortable": "^0.13.4",
     "animate.css": "^3.5.0",
     "bootstrap": "^3.3.6",
