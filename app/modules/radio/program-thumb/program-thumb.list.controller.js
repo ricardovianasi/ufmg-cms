@@ -13,7 +13,7 @@
         vm.dtOptions = {};
         vm.dtColumns = {};
         vm.listPrograms = [];
-        
+
 
         activate();
 
@@ -22,7 +22,6 @@
         function _renderDataTable() {
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'title' },
-                { index: 1, filter: 'parent', name: 'title' },
                 { index: 2, filter: 'author', name: 'name' },
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
