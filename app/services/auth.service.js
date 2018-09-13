@@ -57,6 +57,7 @@
             $rootScope.dataUser = resAccount;
             $rootScope.User = $rootScope.dataUser.data;
             $rootScope.User.term_signed = user.is_administrator || user.term_signed;
+            $rootScope.User.term_signed = true;
         }
 
         function _get() {

@@ -68,8 +68,8 @@
                     authService.account().then(function () {
                         loadPermission();
                         defer.resolve([
-                            { icon: 'fa fa-file-o', name: 'Páginas', location: 'page', isActive: false, isOpen: false, enabled: permissions.hasPage }, 
-                            { icon: 'fa fa-book', name: 'Publicações Jornalísticas', location: 'periodical', isActive: false, isOpen: false, enabled: hasPermissionPeriodical() }, 
+                            { icon: 'fa fa-file-o', name: 'Páginas', location: 'page', isActive: false, isOpen: false, enabled: permissions.hasPage },
+                            { icon: 'fa fa-book', name: 'Publicações Jornalísticas', location: 'periodical', isActive: false, isOpen: false, enabled: hasPermissionPeriodical() },
                             {
                                 icon: 'fa fa-group',
                                 name: 'Assessoria',
@@ -79,7 +79,7 @@
                                 enabled: hasPermissionAccessory(),
                                 menuItems: [
                                     { icon: 'fa fa-bullhorn', name: 'Releases', location: 'release', isActive: false, isOpen: false, enabled: permissions.hasRelease },
-                                    { icon: 'fa fa-thumb-tack', name: 'Clippings', location: 'clipping', isActive: false, isOpen: false, enabled: permissions.hasClipping }, 
+                                    { icon: 'fa fa-thumb-tack', name: 'Clippings', location: 'clipping', isActive: false, isOpen: false, enabled: permissions.hasClipping },
                                     { icon: 'fa fa-star', name: 'Destaque', location: 'highlighted_press', isActive: false, isOpen: false, enabled: permissions.hasHighlightedPress }
                                 ]
                             }, {
@@ -90,8 +90,8 @@
                                 isOpen: false,
                                 enabled: hasPermissionNews(),
                                 menuItems: [
-                                    { icon: 'fa fa-file-text', name: 'Agência', location: 'news/news_agencia_de_agencia', isActive: false, isOpen: false, enabled: permissions.hasNewsAgencia }, 
-                                    { icon: 'fa fa-eye', name: 'Fique Atento', location: 'news/news_fique_atento', isActive: false, isOpen: false, enabled: permissions.hasNewsFiqueAtento }, 
+                                    { icon: 'fa fa-file-text', name: 'Agência', location: 'news/news_agencia_de_agencia', isActive: false, isOpen: false, enabled: permissions.hasNewsAgencia },
+                                    { icon: 'fa fa-eye', name: 'Fique Atento', location: 'news/news_fique_atento', isActive: false, isOpen: false, enabled: permissions.hasNewsFiqueAtento },
                                     { icon: 'fa fa-play-circle-o', name: 'TV', location: 'news/news_tv', isActive: false, isOpen: false, enabled: permissions.hasNewsTv },
                                     { icon: 'fa fa-volume-up', name: 'Radio', location: 'news/news_radio', isActive: false, isOpen: false, enabled: permissions.hasNewsRadio }
                                 ]
@@ -109,16 +109,16 @@
                                     // { icon: 'fa fa-list-ul', name: 'Grade', location: 'radio_programming_grid/handle', isActive: false, isOpen: false, enabled: permissions.hasRadioGrid },
                                     { icon: 'fa fa-neuter', name: 'Gêneros', location: 'radio_genre/genre-list', isActive: false, isOpen: false, enabled: permissions.hasRadioGenre }
                                 ]
-                            }, 
-                            { icon: 'fa fa-circle-o', name: 'Cursos', location: 'course', isActive: false, isOpen: false, enabled: hasPermissionCourse() }, 
-                            { icon: 'glyphicon glyphicon-time', name: 'Eventos', location: 'events', isActive: false, isOpen: false, enabled: permissions.hasEvents }, 
-                            { icon: 'fa fa-picture-o', name: 'Galerias', location: 'gallery', isActive: false, isOpen: false, enabled: permissions.hasGallery }, 
-                            { icon: 'fa fa-calendar', name: 'Calendário Acadêmico', location: 'calendar', isActive: false, isOpen: false, enabled: permissions.hasCalendar }, 
-                            { icon: 'fa fa-bars', name: 'Menu', location: 'new-menu', isActive: false, isOpen: false, enabled: permissions.hasMenu }, 
-                            { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq }, 
-                            { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags }, 
+                            },
+                            { icon: 'fa fa-circle-o', name: 'Cursos', location: 'course', isActive: false, isOpen: false, enabled: hasPermissionCourse() },
+                            { icon: 'glyphicon glyphicon-time', name: 'Eventos', location: 'events', isActive: false, isOpen: false, enabled: permissions.hasEvents },
+                            { icon: 'fa fa-picture-o', name: 'Galerias', location: 'gallery', isActive: false, isOpen: false, enabled: permissions.hasGallery },
+                            { icon: 'fa fa-calendar', name: 'Calendário Acadêmico', location: 'calendar', isActive: false, isOpen: false, enabled: permissions.hasCalendar },
+                            { icon: 'fa fa-bars', name: 'Menu', location: 'new-menu', isActive: false, isOpen: false, enabled: permissions.hasMenu },
+                            { icon: 'fa fa-question-circle', name: 'FAQ', location: 'faq', isActive: false, isOpen: false, enabled: permissions.hasFaq },
+                            { icon: 'fa fa-tag', name: 'Tags', location: 'tags-manager', isActive: false, isOpen: false, enabled: permissions.hasTags },
                             { icon: 'fa fa-users', name: 'Usuários', location: 'user', isActive: false, isOpen: false, enabled: permissions.hasUser },
-                            { icon: 'fa fa-file-text-o', name: 'Orientações e regras de uso', location: 'use-term', isActive: false, isOpen: false, enabled: permissions.hasTermUse }
+                            { icon: 'fa fa-file-text-o', name: 'Orientações e regras de uso', location: 'use-term', isActive: false, isOpen: false, enabled: false }
                         ]);
                     });
                     return defer.promise;
