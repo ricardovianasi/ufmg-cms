@@ -17,7 +17,7 @@
         'datatables',
         'datatables.bootstrap',
         'mrImage',
-        'ngLodash',
+        'loadLodash',
         'ngInflection',
         'ngTagsInput',
         'ui.sortable',

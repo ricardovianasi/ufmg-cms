@@ -1,5 +1,6 @@
 node_modules
 bower_components
+bower_components_bkp
 coverage
 public
 app/common/config/env*
