@@ -15,7 +15,5 @@
     "tests"
   ],
   "private": true,
-  "dependencies": {
-    "ng-cropper": "^0.4.1"
-  }
+  "dependencies": { }
 }
