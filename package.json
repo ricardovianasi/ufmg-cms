@@ -78,6 +78,8 @@
     "animate.css": "^3.7.0",
     "bootstrap": "^3.3.7",
     "checklist-model": "~0.10.0",
+    "components-jqueryui": "~1.12.1",
+    "datatables": "~1.10.18",
     "dropzone": "~4.3.0",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^3.9.0",

@@ -8,8 +8,8 @@ var uglify = require('gulp-uglify');
 
 var SCRIPTS = [
     'node_modules/jquery/dist/jquery.min.js',
-    'bower_components/jquery-ui/jquery-ui.min.js',
-    'bower_components/datatables/media/js/jquery.dataTables.js',
+    'node_modules/components-jqueryui/jquery-ui.min.js',
+    'node_modules/datatables/media/js/jquery.dataTables.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'app/assets/scripts/redactor-2.1.2.4/redactor.js',
     'app/assets/scripts/redactor-2.1.2.4/pt_br.js',
@@ -49,7 +49,7 @@ var SCRIPTS = [
     'node_modules/v-accordion/dist/v-accordion.min.js',
     'node_modules/checklist-model/checklist-model.js',
     'node_modules/angular-input-masks/releases/angular-input-masks-standalone.min.js',
-    'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
+    'node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
     'node_modules/nanoscroller/bin/javascripts/jquery.nanoscroller.js',
     'node_modules/ng-scrollbars/dist/scrollbars.min.js',
     'node_modules/dropzone/dist/min/dropzone.min.js',
@@ -77,7 +77,7 @@ var STYLES = [
     'node_modules/ng-tags-input/build/ng-tags-input.min.css',
     'node_modules/angular-loading-bar/build/loading-bar.min.css',
     'node_modules/v-accordion/dist/v-accordion.min.css',
-    'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
+    'node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css',
     'node_modules/nanoscroller/bin/css/nanoscroller.css',
     'node_modules/dropzone/dist/min/dropzone.min.css',
     'node_modules/dropzone/dist/min/basic.min.css',
