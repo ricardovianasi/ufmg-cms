@@ -33,13 +33,14 @@
             .find(function(day) { return day && !day.isExtraordinary && day.moment.error && !day.delete; });
         }
 
-        function checkValidateDate(dayTime, idProgram) {
+        function checkValidateDate(dayTime, idProgram, mainDay) {
             let defer = $q.defer();
             defer.resolve();
             if(!dayTime.moment.start || !dayTime.moment.end) { return defer.promise; }
             let result = _getAbleErros(dayTime.moment.start, dayTime.moment.end);
+            result = _checkAllocatedSameProgram(dayTime, mainDay, result);
             if(!result.typeError) {
-                defer.promise = _checkAllocatedTime(idProgram, dayTime.week_day, dayTime.time_start, dayTime.time_end)
+                defer.promise = _checkAllocatedTime(idProgram, dayTime)
                     .then(function (res) {
                         if(res.hasError) {
                             result.dayTimeAllocated.isInvalid = true;
@@ -87,8 +88,29 @@
             return error;
         }
 
-        function _checkAllocatedTime(idProgram, weekDay, timeStart, timeEnd) {
-            return RadioService.hasScheduleBusy(idProgram, weekDay, timeStart, timeEnd)
+        function _checkAllocatedSameProgram(dayTime, mainDay, resultError) {
+            if(resultError.typeError) {
+                return resultError;
+            }
+            let day = angular.copy(mainDay);
+            day.times.push({ moment: day.moment, time_start: day.time_start, time_end: day.time_end });
+            let idxTime = day.times.findIndex(time => time.time_start === dayTime.time_start && time.time_end === dayTime.time_end);
+            day.times.splice(idxTime, 1);
+
+            let timesAllocated = day.times.filter(time =>
+                dayTime.moment.start >= time.moment.start && dayTime.moment.start < time.moment.end ||
+                dayTime.moment.end > time.moment.start && dayTime.moment.end <= time.moment.end);
+            if(timesAllocated.length) {
+                resultError.dayTimeAllocated.isInvalid = true;
+                resultError.dayTimeAllocated.message =
+                _getMessageInvalidHour('Este programa', timesAllocated[0].time_start, timesAllocated[0].time_end);
+                resultError.typeError = resultError.dayTimeAllocated.type;
+            }
+            return resultError;
+        }
+
+        function _checkAllocatedTime(idProgram, {week_day, time_start, time_end}) {
+            return RadioService.hasScheduleBusy(idProgram, week_day, time_start, time_end)
                 .then(function(res) {
                     let items = res.data.items;
                     if (!items.length) {
@@ -96,7 +118,7 @@
                     }
                     let grid = items[0];
                     let isSequence =
-                        timeStart === _baseFormatHour(grid.time_end) || timeEnd === _baseFormatHour(grid.time_start);
+                        time_start === _baseFormatHour(grid.time_end) || time_end === _baseFormatHour(grid.time_start);
                     if(isSequence) {
                         return { hasError: false };
                     }

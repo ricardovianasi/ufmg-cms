@@ -52,7 +52,8 @@
         function changeTime(moment, time, day, type) {
             day.moment[type] = moment;
             day['time_'+type] = time;
-            ProgramFormValidate.checkValidateDate(day, vm.id)
+            let mainDay = ProgramFormUtils.getByWeekDay(vm.listDays, day.week_day);
+            ProgramFormValidate.checkValidateDate(day, vm.id, mainDay)
                 .then(function() {
                     _checkErrosOnGrid();
                 });
