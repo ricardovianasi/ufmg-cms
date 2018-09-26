@@ -9,7 +9,6 @@
         $timeout,
         $location,
         $routeParams,
-        $window,
         CourseService,
         EventsService,
         MediaService,
@@ -18,7 +17,6 @@
         ModalService,
         ManagerFileService,
         DateTimeHelper,
-        $rootScope,
         PermissionService,
         $log,
         HandleChangeService,
@@ -31,7 +29,7 @@
         vm.addPoster = _addPoster;
 
         HandleChangeService.registerHandleChange('/event', ['PUT', 'DELETE'], $scope, ['event'], _evenedObj, _hasLoaded);
-        
+
         function _hasLoaded(oldValue) {
             return angular.isDefined(oldValue.id);
         }
@@ -47,8 +45,8 @@
                 return [];
             }
             return tags.map(function(tag) {
-                if(tag.text) { return tag.text; } 
-                else if(tag.name) { return tag.name; } 
+                if(tag.text) { return tag.text; }
+                else if(tag.name) { return tag.name; }
                 else { return tag; }
             });
         }
@@ -156,7 +154,7 @@
 
         vm.remove = function () {
             ModalService
-                .confirm('Você deseja excluir o evento <b>' + vm.event.name + '</b>?', 
+                .confirm('Você deseja excluir o evento <b>' + vm.event.name + '</b>?',
                     ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
                 .then(function () {

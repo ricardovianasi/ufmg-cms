@@ -1,0 +1,10 @@
+<div>
+    <label>{{ $ctrl.textLabel }}</label>
+    <button ng-click="$ctrl.clearFaq()" class="btn btn-link pull-right btn-sm button-sm-2 text-danger">Remover FAQ</button>
+</div>
+<ui-select ng-model="$ctrl.faqSelected" theme="bootstrap" class="ui-select">
+    <ui-select-match placeholder="Buscar FAQ">{{ $select.selected.title }}</ui-select-match>
+    <ui-select-choices repeat="item.id as item in $ctrl.dataFaq | filter: $select.search track by $index">
+        <div ng-bind-html="item.title | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>

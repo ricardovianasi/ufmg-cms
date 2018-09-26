@@ -6,7 +6,6 @@
 
     /** ngInject */
     function faqService($http, $log, apiUrl) {
-        $log.info('CourseService');
 
         var _parseData = function (faq) {
             var obj = faq;

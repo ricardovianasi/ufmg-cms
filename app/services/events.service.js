@@ -11,6 +11,7 @@
 
         var _parseData = function (data) {
             var slug = typeof data.slug !== 'undefined' ? data.slug.slug : '';
+            var faq = data.faq && data.faq.id ? data.faq.id : data.faq;
 
             var event = {
                 address: data.address,
@@ -31,7 +32,8 @@
                 status: data.status,
                 type: data.type,
                 video: data.video,
-                slug: slug
+                slug: slug,
+                faq: faq
             };
 
             if (data.photo) {
