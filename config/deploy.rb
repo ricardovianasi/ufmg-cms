@@ -36,7 +36,7 @@ namespace :deploy do
 		desc "Compila scripts e envia via RSYNC"
 		run_locally do
 			execute "npm install"
-			execute "bower install"
+			#execute "bower install"
 			execute "gulp build --env prod"
             #execute "APPLICATION_ENV=prod gulp --color --gulpfile gulpfile.js build"
             roles(:all).each do |host|
