@@ -11,7 +11,7 @@ set :format, :pretty
 set :pty, true
 # set :linked_files, fetch(:linked_files, []).push('app/autoload.php', 'composer')
 # set :linked_files, fetch(:linked_files, []).push('composer')
-set :linked_dirs, fetch(:linked_dirs, []).push('bower_components', 'build', 'node_modules')
+set :linked_dirs, fetch(:linked_dirs, []).push('build')
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
@@ -27,7 +27,7 @@ namespace :deploy do
 	task :prepare do
 		desc "Create server directories"
 		on roles(:all) do
-			execute "mkdir -p /usr/local/www/portal-ufmg/cms/shared/{bower_components,build,node_modules}"
+			execute "mkdir -p /usr/local/www/portal-ufmg/cms/shared/{build}"
 		end
 	end
 
@@ -40,8 +40,8 @@ namespace :deploy do
 			execute "gulp build --env prod"
             #execute "APPLICATION_ENV=prod gulp --color --gulpfile gulpfile.js build"
             roles(:all).each do |host|
-				execute "rsync -CRravzp -e 'ssh -p 22' ./bower_components/ user_cedecom@#{host}:/usr/local/www/portal-ufmg/cms/shared/bower_components/"
-				execute "rsync -CRravzp -e 'ssh -p 22' ./node_modules/ user_cedecom@#{host}:/usr/local/www/portal-ufmg/cms/shared/node_modules/"
+				#execute "rsync -CRravzp -e 'ssh -p 22' ./bower_components/ user_cedecom@#{host}:/usr/local/www/portal-ufmg/cms/shared/bower_components/"
+				#execute "rsync -CRravzp -e 'ssh -p 22' ./node_modules/ user_cedecom@#{host}:/usr/local/www/portal-ufmg/cms/shared/node_modules/"
 				execute "rsync -CRravzp -e 'ssh -p 22' ./build/ user_cedecom@#{host}:/usr/local/www/portal-ufmg/cms/shared"
 			end
 		end
