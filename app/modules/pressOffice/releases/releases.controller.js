@@ -11,12 +11,11 @@
 
         vm.title = 'Releases';
         vm.releases = [];
-        vm.DateTimeHelper = DateTimeHelper;
         vm.currentPage = 1;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
         vm.canPost = false;
-        
+
         vm.changeStatus = changeStatus;
         vm.removeRelease = removeRelease;
 
@@ -42,7 +41,7 @@
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadReleases);
         }
-        
+
         function _loadReleases(params, fnCallback) {
             let numberOfColumns = 3;
             let columnsHasNotOrder = [];
@@ -87,6 +86,7 @@
         }
 
         function activate() {
+            vm.convertDate = DateTimeHelper.convertDate;
             _renderDataTable();
         }
     }

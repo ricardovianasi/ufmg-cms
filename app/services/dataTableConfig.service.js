@@ -93,12 +93,14 @@
             } else {
                 for (var k = 0; k < columnsHasOrder.length; k++) {
                     var el = columnsHasOrder[k];
-                    let isOrderDate = el.name === 'postDate' || el.name === 'initDate' || el.name === 'publishDate';
+                    let isOrderDate = el.name === 'postDate' || el.name === 'initDate' ||
+                        el.name === 'publishDate' || el.name === 'createdAt';
                     let isOrderOrdinary = el.name === 'name' || el.name === 'title';
-                    if (isOrderDate || isOrderOrdinary) {
-                        let direction = isOrderDate ? 'DESC' : 'ASC';
-                        orderBy = BuildParamsService.getObjOrderBy(el.name, direction, el.filter);
+                    if (isOrderDate) {
+                        orderBy = BuildParamsService.getObjOrderBy(el.name, 'DESC', el.filter);
                         break;
+                    } else if (isOrderOrdinary) {
+                        orderBy = BuildParamsService.getObjOrderBy(el.name, 'ASC', el.filter);
                     }
                 }
             }

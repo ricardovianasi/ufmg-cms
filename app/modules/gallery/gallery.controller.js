@@ -10,7 +10,6 @@
 
         let vm = this;
 
-        vm.DateTimeHelper = DateTimeHelper;
         vm.removeGallery = removeGallery;
         vm.changeStatus = changeStatus;
 
@@ -44,11 +43,11 @@
                 name: 'name'
             }, {
                 index: 2,
-                name: 'postDate'
+                name: 'createdAt'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_getGalleries);
         }
-        
+
         function _getGalleries(params, fnCallback) {
             let numberOfColumns = 4;
             let columnsHasNotOrder = [3];
@@ -91,6 +90,7 @@
         }
 
         function onInit() {
+            vm.convertDate = DateTimeHelper.convertDate;
             _initVariables();
             _renderDataTable();
         }

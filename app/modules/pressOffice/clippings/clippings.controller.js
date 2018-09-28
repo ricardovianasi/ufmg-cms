@@ -12,12 +12,11 @@
 
         vm.title = 'Clippings';
         vm.clippings = [];
-        vm.DateTimeHelper = DateTimeHelper;
         vm.currentPage = 1;
         vm.itemStatus = 'all';
         vm.dtInstance = {};
         vm.canPost = false;
-        
+
         vm.changeStatus = changeStatus;
         vm.removeClipping = removeClipping;
 
@@ -39,7 +38,7 @@
                 name: 'name'
             }, {
                 index: 2,
-                name: 'postDate'
+                name: 'createdAt'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadReleases);
         }
@@ -88,6 +87,7 @@
         }
 
         function activate() {
+            vm.convertDate = DateTimeHelper.convertDate;
             _renderDataTable();
         }
 

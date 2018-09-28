@@ -19,7 +19,6 @@
         var vm = $scope;
         var removeConfirmationModal;
 
-        vm.DateTimeHelper = DateTimeHelper;
         vm.remove = _remove;
         vm.highlights = [];
         vm.changeStatus = _changeStatus;
@@ -28,6 +27,7 @@
         vm.canPost = false;
 
         function onInit() {
+            vm.convertDate = DateTimeHelper.convertDate;
             _renderDataTable();
         }
 
