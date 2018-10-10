@@ -6,7 +6,7 @@
     /** ngInject */
     function PagesNewController($scope, $location, $timeout, NotificationService, PagesService,
         WidgetsService, StatusService, ModalService, DateTimeHelper, PermissionPageService,
-        Util, $q, HandleChangeService, validationService) {
+        Util, $q, validationService) {
 
         var vm = $scope;
         var hasRequest = false;
@@ -66,11 +66,6 @@
                 }
             };
 
-            HandleChangeService.registerHandleChange('/page', ['POST'], $scope, ['page'], _evenedObj);
-        }
-
-        function _evenedObj(obj) {
-            return HandleChangeService.removePropsCommon(obj);
         }
 
         function _loadPermissionModules() {
@@ -163,7 +158,7 @@
             if (!validationService.isValid(vm.formData.$invalid)) {
                 return false;
             }
-            vm.isLoading = true; 
+            vm.isLoading = true;
             page.widgetsSave = _handleWidgetsToSave(page);
             PagesService
                 .addPage(page)
