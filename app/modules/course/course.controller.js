@@ -9,12 +9,8 @@
         CourseService,
         dataTableConfigService,
         PermissionService,
-        $scope,
         $location,
-        ManagerFileService,
-        HandleChangeService,
-        $log) {
-        $log.info('CourseController');
+        ManagerFileService) {
 
         var vm = this;
 
@@ -36,8 +32,6 @@
                 return;
             }
             if (vm.courseId) {
-                HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
-                    ['vm.course'], undefined, _hasLoaded);
                 CourseService
                     .getCourseRoutes(vm.type, vm.courseId)
                     .then(function (res) {
@@ -60,10 +54,6 @@
         function _setPermissionEditBar() {
             let previlege = PermissionService.getPrivilege('course_'+vm.type, 'PUT');
             vm.canEditSideBar = (previlege && previlege.posts === null) || PermissionService.isAdministrator();
-        }
-
-        function _hasLoaded(oldValue) {
-            return oldValue && angular.isDefined(oldValue.id) || !vm.courseId;
         }
 
         function _renderDataTable() {

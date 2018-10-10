@@ -12,20 +12,15 @@
         $routeParams,
         $filter,
         $uibModal,
-        $window,
         ReleasesService,
         MediaService,
         ModalService,
         NotificationService,
         ManagerFileService,
         DateTimeHelper,
-        $rootScope,
         PermissionService,
-        $log,
-        validationService,
-        HandleChangeService
+        validationService
     ) {
-        $log.info('ReleasesEditController');
         var vm = $scope;
         var removeConfirmationModal = {};
         var ConfirmationModalCtrl = _ConfirmationModalCtrl;
@@ -44,21 +39,11 @@
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
 
-        HandleChangeService.registerHandleChange('/release', ['PUT', 'DELETE'], $scope, ['release'], _evenedObj, _hasLoaded);
-
         vm.redactorOptions = {
             plugins: false,
         };
 
         vm.addFile = _addFile;
-
-        function _hasLoaded(oldValue) {
-            return angular.isDefined(oldValue.id);
-        }
-
-        function _evenedObj(obj) {
-            return HandleChangeService.removePropsCommon(obj);
-        }
 
         function _addFile(idx) {
             ManagerFileService.allFiles();

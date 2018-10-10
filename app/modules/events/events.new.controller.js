@@ -15,11 +15,7 @@
         ManagerFileService,
         StatusService,
         DateTimeHelper,
-        ModalService,
-        $rootScope,
         $log,
-        $window,
-        HandleChangeService,
         PermissionService,
         validationService) {
 
@@ -43,11 +39,6 @@
 
         function onInit() {
             $log.info('EventsNewController');
-            HandleChangeService.registerHandleChange('/event', ['POST'], $scope, ['event'], _evenedObj);
-        }
-
-        function _evenedObj(obj) {
-            return HandleChangeService.removePropsCommon(obj);
         }
 
         function _addPoster() {

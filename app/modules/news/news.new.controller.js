@@ -17,14 +17,11 @@
         RedactorPluginService,
         GalleryService,
         PermissionService,
-        HandleChangeService,
-        $log,
         validationService) {
 
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-        $log.info('NoticiasNovoController');
         vm.canPermission = PermissionService.canPost(vm.typeNews);
 
         vm.title = 'Nova Notícia';
@@ -47,13 +44,6 @@
             if (vm.typeNews === 'news_agencia_de_agencia') {
                 vm.news.highlight_ufmg = 1;
             }
-            HandleChangeService.registerHandleChange('/news', ['POST'], $scope, ['news'], _evenedObj);
-        }
-
-        function _evenedObj(obj) {
-            obj = HandleChangeService.removePropsCommon(obj);
-            delete obj.type;
-            return obj;
         }
 
         NewsService.getTvProgram().then(function (data) {

@@ -11,16 +11,13 @@
         $scope,
         ReleasesService,
         PermissionService,
-        MediaService,
         ManagerFileService,
         featuredService,
         $timeout,
         NotificationService,
         $location,
-        $routeParams,
-        $log
+        $routeParams
     ) {
-        $log.info('featuredEditController');
 
         var vm = $scope;
         vm.removeImage = _removeImage;

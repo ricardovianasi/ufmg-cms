@@ -19,7 +19,6 @@
         DateTimeHelper,
         PermissionService,
         $log,
-        HandleChangeService,
         validationService) {
 
         $log.info('EventsEditController');
@@ -27,29 +26,6 @@
         vm.vm = vm;
 
         vm.addPoster = _addPoster;
-
-        HandleChangeService.registerHandleChange('/event', ['PUT', 'DELETE'], $scope, ['event'], _evenedObj, _hasLoaded);
-
-        function _hasLoaded(oldValue) {
-            return angular.isDefined(oldValue.id);
-        }
-
-        function _evenedObj(obj) {
-            obj = HandleChangeService.removePropsCommon(obj);
-            obj.tags = _evenedTags(obj.tags);
-            return obj;
-        }
-
-        function _evenedTags(tags) {
-            if(!tags) {
-                return [];
-            }
-            return tags.map(function(tag) {
-                if(tag.text) { return tag.text; }
-                else if(tag.name) { return tag.name; }
-                else { return tag; }
-            });
-        }
 
         function _addPoster() {
             ManagerFileService.allFiles();

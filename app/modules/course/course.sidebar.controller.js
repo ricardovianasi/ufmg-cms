@@ -6,7 +6,7 @@
 
     /** ngInject */
     function CourseSidebarController($scope, $routeParams, WidgetsService, ModalService, CourseService,
-        NotificationService, $rootScope, $location, HandleChangeService, $timeout) {
+        NotificationService, $location, $timeout) {
         var vm = this;
 
         vm.type = $routeParams.type;
@@ -20,27 +20,10 @@
             }
         };
 
-        HandleChangeService.registerHandleChange('/course', ['PUT'], $scope,
-            ['course.widgets.sidebar'], _evenedUpSideBar, _hasLoaded);
-
         if (typeof vm.courseId !== 'undefined') {
             _getCoursesRoutes();
         } else {
             _getCourses();
-        }
-
-        function _hasLoaded(oldValue) {
-            return vm.loadedSidebar;
-        }
-
-        function _evenedUpSideBar(sidebar) {
-            return sidebar.map(function(widget) {
-                if(widget) {
-                    delete widget.content;
-                    delete widget.links;
-                }
-                return widget;
-            });
         }
 
         function _getCourses() {

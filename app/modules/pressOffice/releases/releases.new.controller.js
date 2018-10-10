@@ -10,20 +10,15 @@
         $timeout,
         $location,
         $uibModal,
-        $window,
         ReleasesService,
         MediaService,
         ManagerFileService,
         NotificationService,
         StatusService,
         DateTimeHelper,
-        $rootScope,
-        $log,
         PermissionService,
-        validationService,
-        HandleChangeService
+        validationService
     ) {
-        $log.info('ReleasesNewController');
         var vm = $scope;
         var removeConfirmationModal = {};
         var confirmationModal = _confirmationModal;
@@ -52,12 +47,6 @@
         vm.time_minutes = DateTimeHelper.getMinutes();
 
         vm.addFile = _addFile;
-
-        HandleChangeService.registerHandleChange('/release', ['POST'], $scope, ['release'], _evenedObj);
-
-        function _evenedObj(obj) {
-            return HandleChangeService.removePropsCommon(obj);
-        }
 
         function _addFile(idx) {
             ManagerFileService.allFiles();

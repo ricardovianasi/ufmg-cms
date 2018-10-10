@@ -14,11 +14,8 @@
         NotificationService,
         MediaService,
         PermissionService,
-        $rootScope,
         validationService,
-        ManagerFileService,
-        $log,
-        HandleChangeService
+        ManagerFileService
     ) {
 
         var vm = $scope;
@@ -37,10 +34,8 @@
         onInit();
 
         function onInit() {
-            $log.info('PeriodicalNewController');
             vm.canPermission = PermissionService.canPost('periodical');
             setDateFormats();
-            HandleChangeService.registerHandleChange('/periodical', ['POST'], $scope, ['periodical']);
         }
 
         function setDateFormats() {

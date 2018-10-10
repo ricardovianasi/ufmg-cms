@@ -10,19 +10,14 @@
         $scope,
         PermissionService,
         ReleasesService,
-        MediaService,
         featuredService,
         $timeout,
         NotificationService,
         ManagerFileService,
         $location,
-        $log,
-        $rootScope,
-        validationService,
-        HandleChangeService
+        validationService
     ) {
 
-        $log.info('featuredNewController');
         var vm = $scope;
         vm.removeImage = _removeImage;
         vm.addSpecialist = _addSpecialist;
@@ -33,9 +28,6 @@
         vm.saveEspecialist = _saveEspecialist;
         vm.canPermission = PermissionService.canPost('highlighted_press');
         vm.upload = _upload;
-
-        HandleChangeService.registerHandleChange('/highlighted-press', ['POST'], $scope, ['featured']);
-
 
         ReleasesService.getReleases().then(function (data) {
             vm.releases = data.data;

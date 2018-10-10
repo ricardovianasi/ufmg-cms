@@ -16,11 +16,8 @@
         NotificationService,
         MediaService,
         DateTimeHelper,
-        $rootScope,
         validationService,
-        ManagerFileService,
-        $log,
-        HandleChangeService
+        ManagerFileService
     ) {
 
         var vm = $scope;
@@ -38,15 +35,8 @@
         onInit();
 
         function onInit() {
-            $log.info('PeriodicalEditController');
             getPeriodicals();
             setDateFormats();
-            HandleChangeService.registerHandleChange('/periodical/', ['PUT', 'DELETE'], $scope, 
-                ['periodical'], undefined, _hasLoaded);
-        }
-
-        function _hasLoaded(oldValue) {
-            return angular.isDefined(oldValue.id);
         }
 
         function _upload() {

@@ -4,22 +4,15 @@
     angular.module('faqModule')
         .controller('faqNewController', faqNewController);
 
-    function faqNewController($rootScope,
-        faqService,
+    function faqNewController(faqService,
         NotificationService,
         $location,
         $routeParams,
-        $route,
-        $log,
         permission,
         RedactorPluginService,
-        $scope,
-        HandleChangeService
+        $scope
     ) {
-
         var vm = this; //jshint ignore: line
-
-        $log.info('faNewController');
 
         onInit();
 
@@ -30,8 +23,6 @@
 
             $scope.audioUploadOptions = RedactorPluginService.getOptions('audioUpload');
             $scope.uploadfilesOptions = RedactorPluginService.getOptions('uploadfiles');
-            HandleChangeService.registerHandleChange('faq', ['POST', 'PUT'], $scope, 
-                ['vm.faq', 'vm.newAsk', 'vm.currentNewCategoryAsk'], undefined, _hasLoaded);
         }
 
         var id = $routeParams.faqId;
@@ -69,10 +60,6 @@
         vm.editCategory = _editCategory;
         vm.editCategoryAsk = _editCategoryAsk;
         vm.editAsk = _editAsk;
-
-        function _hasLoaded(oldValue) {
-            return oldValue && angular.isDefined(oldValue.id) || angular.isUndefined(id);
-        }
 
         function _getFaq() {
             if (id) {
@@ -174,7 +161,7 @@
                 })
                 .catch(console.error)
                 .then(function() {
-                    vm.isLoading = false;                    
+                    vm.isLoading = false;
                 });
             } else {
                 faqService.save(angular.copy(vm.faq)).then(function () {
@@ -183,7 +170,7 @@
                 })
                 .catch(console.error)
                 .then(function() {
-                    vm.isLoading = false;                    
+                    vm.isLoading = false;
                 });
             }
         }

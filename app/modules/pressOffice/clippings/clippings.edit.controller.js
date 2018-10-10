@@ -15,12 +15,8 @@
         PermissionService,
         NotificationService,
         DateTimeHelper,
-        $rootScope,
-        validationService,
-        HandleChangeService,
-        $log
+        validationService
     ) {
-        $log.info('ClippingsEditController');
 
         var vm = $scope;
 
@@ -34,12 +30,6 @@
         vm.time_years = ['2015', '2016', '2017'];
         vm.time_hours = DateTimeHelper.getHours();
         vm.time_minutes = DateTimeHelper.getMinutes();
-
-        HandleChangeService.registerHandleChange('/clipping', ['PUT'], $scope, ['clipping'], undefined, _hasLoaded);
-
-        function _hasLoaded(oldValue) {
-            return angular.isDefined(oldValue.id);
-        }
 
         ClippingsService.getClipping($routeParams.id).then(function (data) {
             var clipping = data.data;
@@ -61,7 +51,7 @@
             ClippingsService.update(data, $routeParams.id).then(function () {
                 NotificationService.success('Clipping salvo com sucesso.');
                 $location.path('/clipping');
-                vm.isLoading = false;                
+                vm.isLoading = false;
             }).catch(console.error)
             .then(function () {
                 vm.isLoading = false;

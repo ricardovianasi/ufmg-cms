@@ -12,18 +12,13 @@
         NotificationService,
         StatusService,
         DateTimeHelper,
-        $rootScope,
         PermissionService,
-        validationService,
-        HandleChangeService,
-        $log
+        validationService
     ) {
-        $log.info('ClippingsNewController');
         var vm = $scope;
 
         vm.canPermission = PermissionService.canPost('clipping');
 
-        HandleChangeService.registerHandleChange('/clipping', ['POST'], $scope, ['clipping']);
 
         vm.title = 'Nova Matéria';
         vm.breadcrumb = vm.title;

@@ -7,8 +7,7 @@
 
     /** ngInject */
     function UsersFormController($routeParams, $log, $q, UsersService, ResourcesService, PagesService, ModalService,
-        PeriodicalService, CourseService, Util, $timeout, $location, $scope, NotificationService, HandleChangeService,
-        PermissionService) {
+        PeriodicalService, CourseService, Util, $timeout, $location, NotificationService, PermissionService) {
 
         var vm = this;
         var userId;
@@ -57,8 +56,6 @@
             } else {
                 vm.isUserLoaded = true;
             }
-            HandleChangeService
-                .registerHandleChange('/user', ['POST', 'PUT'], $scope, ['vm.user'], undefined, _hasLoaded);
         }
 
         function loadMoreUser (search) {
@@ -101,10 +98,6 @@
             _setCheckboxPermission('page', keyPut, { method: 'prop', key: 'indeterminate', value: isCheckBoxIntermediate});
             _setCheckboxPermission('page', keyPut, { method: 'attr', key: 'value', value: isCheckBoxIntermediate});
             PermissionService.updatePrivilege(vm.user, 'page', keyPutSpecial, 'modules', customPages.putSpecial);
-        }
-
-        function _hasLoaded(oldValue) {
-            return (oldValue && angular.isDefined(oldValue.id)) || angular.isUndefined(userId);
         }
 
         function reset(data) {
@@ -259,7 +252,7 @@
             let labelPermission = context + '_' + key;
             return vm.modulesCustomPermission[labelPermission] || false;
         }
-        
+
         function hasCustomPermissionSetted(context, key) {
             if(!vm.listPermissions[context]) {
                 return false;
@@ -342,9 +335,9 @@
                             if(!vm.listPermissions[contextName]) {
                                 vm.listPermissions[contextName] = {};
                             }
-                            vm.listPermissions[contextName][res.element.permission] = 
+                            vm.listPermissions[contextName][res.element.permission] =
                                 _mountListPermissionContextId(res.data.items, res.element);
-                            _setCheckboxPermission(contextName, res.element.permission, 
+                            _setCheckboxPermission(contextName, res.element.permission,
                                 { method: 'prop', key: 'indeterminate', value: true });
                         });
                 }
@@ -375,7 +368,7 @@
         }
 
         function checkListContext (context, permission) {
-            if ((vm.resources[context] && vm.resources[context].select && 
+            if ((vm.resources[context] && vm.resources[context].select &&
                 vm.resources[context].select[0] === permission)) {
                 if (angular.isUndefined(vm.user.resources_perms)) {
                     vm.user.resources_perms[context] = {};
@@ -423,7 +416,7 @@
                         if (contextPermissions.ids) {
                             vm.user.resources_perms[context][permission] = [];
                             vm.user.resources_perms[context][permission][0] = permission;
-                            _setCheckboxPermission(context, permission, 
+                            _setCheckboxPermission(context, permission,
                                 { method: 'prop', key: 'checked', value: true});
                         } else {
                             vm.listPermissions[context][permission] = undefined;
@@ -474,9 +467,9 @@
         }
 
         function _hasPermissionOld() {
-            return angular.isDefined(vm.user.resources_perms.page) && 
-                angular.isDefined(vm.user.resources_perms.page.PUT) && 
-                angular.isString(vm.user.resources_perms.page.PUT) && 
+            return angular.isDefined(vm.user.resources_perms.page) &&
+                angular.isDefined(vm.user.resources_perms.page.PUT) &&
+                angular.isString(vm.user.resources_perms.page.PUT) &&
                 !vm.user.resources_perms.page.PUTSPECIAL;
         }
 
@@ -485,11 +478,11 @@
                 data: function() {
                     let mustUpdate = _hasPermissionOld();
                     if(mustUpdate) {
-                        let privilegePut 
+                        let privilegePut
                             = PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUT);
                         _updateOldPermissionPage(privilegePut.posts);
                     }
-                    let privilege = 
+                    let privilege =
                         PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.PUTSPECIAL);
                     return privilege.modules;
                 },
@@ -502,7 +495,7 @@
 
         function _openPermissionModulePostPage() {
             let resolve = {dataModules: [ function() {
-                let privilege = 
+                let privilege =
                     PermissionService.getPrivileges(vm.user, 'page', PermissionService.TYPES_PERMISSIONS.POST);
                 return privilege.modules;
             }]};
