@@ -54,13 +54,13 @@
             let statusRequest = response.status;
             _handleTries(urlError);
             if (_maxTry(urlError, statusRequest, method)) {
-                _emitResponseError(statusRequest);
+                _emitResponseError(response);
                 return $q.reject(response);
             } else {
                 return _retryRequestHttp(response.config);
             }
         }
-        
+
         function _retryRequestHttp(config) {
             let defer = $q.defer();
             $timeout(function() {
@@ -72,13 +72,13 @@
             return defer.promise;
         }
 
-        function _emitResponseError(status) {
-            if (status === 401) {
+        function _emitResponseError(response) {
+            if (response.status === 401) {
                 $rootScope.$broadcast('AuthenticateResponseError');
-            } else if (status === 403) {
+            } else if (response.status === 403) {
                 $rootScope.$broadcast('Error403');
-            } else if (status >= 500) {
-                $rootScope.$broadcast('Error5xx');
+            } else if (response.status >= 500) {
+                $rootScope.$broadcast('Error5xx', response);
             } else {
                 $rootScope.$broadcast('ErrorUnknown');
             }
@@ -102,7 +102,7 @@
             }
             let key = btoa(url);
             if(angular.isDefined(requestTries[key])) {
-                requestTries[key]++; 
+                requestTries[key]++;
             } else {
                 requestTries[key] = 1;
             }

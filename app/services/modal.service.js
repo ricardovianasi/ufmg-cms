@@ -31,7 +31,7 @@
                     options: function () { return options; }
                 }
             });
-            
+
             function InputModalCtrl($scope, $uibModalInstance, NotificationService, title, label, value, options) {
                 let vm = $scope;
                 vm.title = title;
@@ -53,6 +53,28 @@
             }
         }
 
+        function dialogErrorDetails(dataModal) {
+
+            return $uibModal.open({
+                templateUrl: 'components/modal/dialog-errors-detail.modal.template.html',
+                controller: DialogCtrl,
+                backdrop: 'static',
+                size: ModalService.MODAL_MEDIUM,
+                resolve: { dataModal: () => dataModal }
+            });
+
+            function DialogCtrl($scope, $uibModalInstance, dataModal) {
+
+                $scope.title = dataModal.title;
+                $scope.text = dataModal.text;
+                $scope.detail = dataModal.detail;
+
+                $scope.confirm = function () {
+                    $uibModalInstance.close();
+                };
+            }
+        }
+
         function dialog(title, text, size) {
             size = size || ModalService.MODAL_MEDIUM;
 
@@ -62,12 +84,8 @@
                 backdrop: 'static',
                 size: size,
                 resolve: {
-                    title: function () {
-                        return title;
-                    },
-                    text: function () {
-                        return text;
-                    }
+                    title: () => title,
+                    text: () => text
                 }
             });
 
@@ -272,6 +290,7 @@
             inputModal: inputModal,
             confirm: confirm,
             dialog: dialog,
+            dialogErrorDetails: dialogErrorDetails,
             uploadImage: _uploadImage,
             uploadAudio: _uploadAudio,
             uploadFiles: _uploadFiles,
