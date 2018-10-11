@@ -68,7 +68,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <upload-cover-component inner-class="pages-module-cover" select-image="setImageCover(imageSelected)" 
+                    <upload-cover-component inner-class="pages-module-cover" select-image="setImageCover(imageSelected)"
                         url-image="page.image.url" type-cover="pageCover"></upload-cover-component>
                 </div>
             </div>
@@ -103,7 +103,7 @@
         </div>
         <div ng-if="viewOnly" class="panel panel-default">
             <p class="text-primary"> <b> A página atual é filha de: </b> {{ page ? page.parent.title : 'Não tem pai'  }}</p>
-            <p class="text-primary"> <b> Tipo da página: </b> {{  page.page_type || 'Sem tipo'  }}</p>
+            <p class="text-primary"> <b> Tipo da página: </b> {{  page.page_type ? page.page_type.name : 'Sem tipo'  }}</p>
         </div>
     </div>
 </div>
