@@ -32,8 +32,8 @@
             <div class="date">
                 <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDatea.$error.required}">
                     <label>Data e horário:</label>
-                    <div class="select-date">
-                        <div class="form-group select-date-item">
+                    <div class="select-date row">
+                        <div class="form-group col-md-6 col-sm-12">
                             <div class="input-group input-group-sm" ng-class="{'has-error':(formPub.$submitted) && (formPub.initDatea.$error.required || errorInvalidDate)}">
                                 <label for="initDatea" class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
@@ -49,7 +49,7 @@
                                 <div ng-show="errorInvalidDate && !formPub.initDatea.$error.required">Data inválida</div>
                             </div>
                         </div>
-                        <div class="form-group select-hour-item" ng-class="{'has-error':(formPub.$submitted || formPub.initHour.$touched) && (formPub.initHour.$error.required || errorInvalidHour)}">
+                        <div class="form-group col-md-6 col-sm-12" ng-class="{'has-error':(formPub.$submitted || formPub.initHour.$touched) && (formPub.initHour.$error.required || errorInvalidHour)}">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 <input type="text" ng-change="datePostValidateHour()" name="initHour" title="Hora" class="form-control" ng-model="obj.scheduled_time"
@@ -72,26 +72,24 @@
                 {{messageText}}
             </div>
         </div>
-        <div class="publishment-footer">
-            <div class="actions">
-                <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit" class="btn btn-secondary">
-                        <i class="fa fa-check"></i>
-                        {{ isLoading ? 'Salvando...' : 'Salvar'}}
-                    </button>
-                </div>
-                <div class="col" ng-if="obj.id">
-                    <a class="btn btn-gray" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
-                        <i class="fa fa-eye"></i>
-                        Visualizar
-                    </a>
-                </div>
-                <div class="col">
-                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
-                        <i class="fa fa-close"></i>
-                        Excluir
-                    </button>
-                </div>
+        <div class="publishment-footer row">
+            <div class="col-md-4 col-sm-12">
+                <button class="btn btn-secondary btn-block" ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit">
+                    <i class="fa fa-check"></i>
+                    {{ isLoading ? 'Salvando...' : 'Salvar'}}
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-12" ng-if="obj.id">
+                <a class="btn btn-gray btn-block" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
+                    <i class="fa fa-eye"></i>
+                    Visualizar
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <button class="btn btn-danger btn-block" ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" ng-click="remove(obj.id)">
+                    <i class="fa fa-close"></i>
+                    Excluir
+                </button>
             </div>
         </div>
     </div>

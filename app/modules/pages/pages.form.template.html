@@ -29,7 +29,7 @@
     </div>
 </div>
 <div class="row" can-get>
-    <div class="col-xs-8 panel panel-default">
+    <div class="col-md-8 col-xs-12 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="row" ng-if="isSuperPut">
                 <div class="col-xs-12">
@@ -73,14 +73,14 @@
                 </div>
             </div>
             <div class="row">
-                <list-widgets-component ng-if="configPerm" id-component="sort-main" permissions="configPerm" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-8' : 'col-xs-12' }}">
+                <list-widgets-component ng-if="configPerm" id-component="sort-main" permissions="configPerm" list-widgets="page.widgets.main" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-md-8' : 'col-md-12' }}">
                 </list-widgets-component>
-                <list-widgets-component ng-if="configPerm" id-component="sort-side" permissions="configPerm" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-xs-4' : 'hidden' }}">
+                <list-widgets-component ng-if="configPerm" id-component="sort-side" permissions="configPerm" list-widgets="page.widgets.side" view-only="viewOnly" set-class="{{ page.columns == 2 ? 'col-md-4' : 'hidden' }}">
                 </list-widgets-component>
             </div>
         </form>
     </div>
-    <div class="col-xs-4">
+    <div class="col-md-4 col-xs-12">
         <publishment-options is-super-put="isSuperPut" is-loading="isLoading" publish-method="publish" route-model="page"></publishment-options>
         <div ng-if="isSuperPut" class="panel panel-default" onload="loadMorePage()">
             <div class="row">
