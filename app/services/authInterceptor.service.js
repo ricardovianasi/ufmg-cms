@@ -12,8 +12,6 @@
         $location,
         $cookies,
         client_id_auth,
-        apiUrl,
-        $log,
         $rootScope,
         $injector,
         $timeout
@@ -50,25 +48,24 @@
 
         function _responseError(response) {
             let urlError = response.config.url;
-            let method = response.config.method;
-            let statusRequest = response.status;
             _handleTries(urlError);
-            if (_maxTry(urlError, statusRequest, method)) {
+            const objTry = _maxTry(response.config, response.data);
+            if (objTry.cancelTry) {
                 _emitResponseError(response);
                 return $q.reject(response);
             } else {
-                return _retryRequestHttp(response.config);
+                return _retryRequestHttp(response.config, objTry.wait);
             }
         }
 
-        function _retryRequestHttp(config) {
+        function _retryRequestHttp(config, wait) {
             let defer = $q.defer();
             $timeout(function() {
                 let $http = $injector.get('$http');
                 $http(config)
                     .then(function(data) { defer.resolve(data); })
                     .catch(function(error) { defer.reject(error); });
-            }, 1000);
+            }, wait);
             return defer.promise;
         }
 
@@ -84,16 +81,20 @@
             }
         }
 
-        function _maxTry(url, status, method) {
-            let key = btoa(url);
-            let numberMaxTry = 3;
-            let noTry = status === 401 || status === 403 || method !== 'GET';
+        function _maxTry({ method, url }, { status, detail }) {
+            const key = btoa(url);
+            const numberMaxTry = 3;
+            const noActiveTransaction = detail === 'There is no active transaction.';
+            const noTry = (status === 401 || status === 403 || method !== 'GET') && !noActiveTransaction;
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
                 requestTries[key] = 0;
-                return true;
+                return { cancelTry: true };
             }
-            return false;
+            return {
+                cancelTry: false,
+                wait: noActiveTransaction ? 4000 : 1000
+            };
         }
 
         function _handleTries(url) {
