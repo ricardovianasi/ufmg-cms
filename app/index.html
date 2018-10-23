@@ -69,8 +69,11 @@
         </div>
     </nav>
     <div class="page-container row">
-        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
-        <div class="main-content" ng-class="{'margin-sidebar': shownavbar && User.term_signed }">
+        <div ng-click="toggleResponsiveMenu()" class="shortcut-responsive-menu hidden-md hidden-lg">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
+        <div class="sidebar-menu toggle-others fixed col-md-2 col-sm-1" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
+        <div class="main-content col-md-10 col-sm-11" ng-class="{'margin-sidebar': shownavbar && User.term_signed }">
             <ng-view />
         </div>
     </div>

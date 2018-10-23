@@ -8,6 +8,7 @@
     function Run($rootScope, dataTableConfigService, sessionService, $window, $log, ModalService, DTDefaultOptions,
         $location, PermissionService) {
 
+        $rootScope.showResponsiveMenu = false;
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
         $rootScope.moduleCurrent = false;
@@ -24,6 +25,18 @@
                 updateOnContentResize: true
             },
             scrollInertia: 0
+        };
+
+        $rootScope.toggleResponsiveMenu = function (itemMenu) {
+            console.log(itemMenu);
+            let result = document.getElementsByClassName('sidebar-menu');
+            if(itemMenu && (!itemMenu.menuItems || !itemMenu.menuItems.length)) {
+                result[0].classList.remove('sidebar-responsivel-menu');
+                return;
+            } else {
+                result[0].classList.add('sidebar-responsivel-menu');
+            }
+            console.log('toggleResponsiveMenu', $rootScope.showResponsiveMenu);
         };
 
         $rootScope.$on('$routeChangeSuccess', function () {
