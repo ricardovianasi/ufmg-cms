@@ -2,9 +2,9 @@
     'use strict';
 
     // Usage:
-    // 
+    //
     // Creates:
-    // 
+    //
 
     angular
         .module('componentsModule')
@@ -46,8 +46,9 @@
                 });
         }
 
-        function findTags($query) {
-            return TagsService.findTags($query, allTags);
+        function findTags($query = '') {
+            const query = $query.toLocaleLowerCase();
+            return TagsService.findTags(query, allTags);
         }
 
         function _setPermissionTag(userLoaded) {
@@ -80,7 +81,7 @@
             if (!ctrlTags.ngModelTags) {
                 return;
             }
-            ctrlTags.tagsOnlyView = 
+            ctrlTags.tagsOnlyView =
                 ctrlTags.ngModelTags.map(function(tag) { return tag.text || tag.name; }).join(', ');
         }
 
