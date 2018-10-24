@@ -49,7 +49,10 @@
                     if(a.text<b.text) return -1;
                     return 0;
                 });
-            console.log('findTags', query, tagsFilter);
+            console.log('findTags',
+                query,
+                tagsFilter,
+                tags);
             return tagsFilter;
         }
 
