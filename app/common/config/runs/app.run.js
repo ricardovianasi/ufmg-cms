@@ -28,15 +28,8 @@
         };
 
         $rootScope.toggleResponsiveMenu = function (itemMenu) {
-            console.log(itemMenu);
-            let result = document.getElementsByClassName('sidebar-menu');
-            if(itemMenu && (!itemMenu.menuItems || !itemMenu.menuItems.length)) {
-                result[0].classList.remove('sidebar-responsivel-menu');
-                return;
-            } else {
-                result[0].classList.add('sidebar-responsivel-menu');
-            }
-            console.log('toggleResponsiveMenu', $rootScope.showResponsiveMenu);
+            let result = document.getElementsByClassName('menu-mobile');
+            result[0].classList.toggle('hidden');
         };
 
         $rootScope.$on('$routeChangeSuccess', function () {
