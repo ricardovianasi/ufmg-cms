@@ -43,7 +43,12 @@
 
         function findTags($query, tags) {
             var allTags = convertTagsInput(tags);
-            return $filter('filter')(allTags, $query);
+            return $filter('filter')(allTags, $query)
+                .sort((a, b) => {
+                    if(a.text>b.text) return 1;
+                    if(a.text<b.text) return -1;
+                    return 0;
+                });
         }
 
         function convertTagsInput(tags) {
@@ -62,7 +67,7 @@
                     ServerService.setData(KeyLoadedTag, dataTags);
                 }
 
-            } 
+            }
         }
 
         function _getUrlTagId(id) {
