@@ -29,7 +29,7 @@
 
         $rootScope.toggleResponsiveMenu = function (itemMenu) {
             let result = document.getElementsByClassName('menu-mobile');
-            result[0].classList.toggle('hidden');
+            $rootScope.showResponsiveMenu = !result[0].classList.toggle('hidden');
         };
 
         $rootScope.$on('$routeChangeSuccess', function () {

@@ -21,6 +21,7 @@
 
 .table
   margin-top: 10px
+  min-width: 600px
   a:hover
     text-decoration: underline
     font-weight: bolder
@@ -48,3 +49,9 @@
       opacity: 1 !important;
   td
     max-width: 600px
+
+@media screen and (max-width: 992px)
+    .table-responsive .dataTables_wrapper .row
+        .col-xs-6
+            display: block
+            width: 100%
