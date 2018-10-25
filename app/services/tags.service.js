@@ -42,18 +42,13 @@
         }
 
         function findTags(query, tags = []) {
-            const tagsFilter = tags.map(tag => ({text: tag.name}))
+            return tags.map(tag => ({text: tag.name}))
                 .filter(tag => tag.text.toLowerCase().includes(query))
                 .sort((a, b) => {
                     if(a.text>b.text) return 1;
                     if(a.text<b.text) return -1;
                     return 0;
                 });
-            console.log('findTags',
-                query,
-                tagsFilter,
-                tags);
-            return tagsFilter;
         }
 
         function convertTagsInput(tags) {
