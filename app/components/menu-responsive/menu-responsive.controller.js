@@ -20,7 +20,13 @@
         var $ctrl = this;
 
         $ctrl.clickMenu = clickMenu;
+        $ctrl.logout = logout;
         ////////////////
+
+        function logout() {
+            $rootScope.logout();
+            $rootScope.toggleResponsiveMenu();
+        }
 
         function clickMenu(menu) {
             if (menu.location) {
