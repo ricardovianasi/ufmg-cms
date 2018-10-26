@@ -25,13 +25,15 @@
 </div>
 <div class="new-tag panel panel-default color-strong-panel">
     <div class="panel-body">
-        <div ng-if="tagsCtrl.canPost">
+        <div class="row" ng-if="tagsCtrl.canPost">
             <div class="form-group col-md-6" >
                 <input type="text" ng-model="tagsCtrl.nameNewTag" placeholder="Nome da tag" class="form-control">
             </div>
-            <div uib-tooltip="Inserir tag" class="btn btn-success" ng-click="tagsCtrl.createTag()">
-                <i class="fa fa-check"></i>
-                Inserir
+            <div class="col-md-4 col-sm-12">
+                <div uib-tooltip="Inserir tag" class="btn btn-success btn-block" ng-click="tagsCtrl.createTag()">
+                    <i class="fa fa-check"></i>
+                    Inserir
+                </div>
             </div>
         </div>
         <div class="col-md-12 table-responsive">

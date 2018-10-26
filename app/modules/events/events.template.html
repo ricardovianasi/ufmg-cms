@@ -24,8 +24,11 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="btn-toolbar">
-                <div class="btn-group focus-btn-group">
+            <div class="btn-toolbar row">
+                <div class="col-md-6 col-md-push-6 clearfix">
+                    <a ng-if="eventsCtrl.canPost" class="btn btn-secondary btn-lg pull-right" ng-href="#/events/new"><i class="fa fa-plus"></i> NOVO EVENTO</a>
+                </div>
+                <div class="focus-btn-group col-md-6 col-md-pull-6 clearfix">
                     <a ng-click="eventsCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': eventsCtrl.itemStatus === 'all'}">
                         <span ng-class="{ 'strong': eventsCtrl.itemStatus === 'all' }">Tudo</span>
                     </a>
@@ -38,9 +41,6 @@
                     <a ng-click="eventsCtrl.changeStatus('scheduled')" class="btn" ng-class="{ 'btn-gray': eventsCtrl.itemStatus === 'scheduled'}">
                         <span ng-class="{ 'strong': eventsCtrl.itemStatus === 'scheduled'}">Agendado</span>
                     </a>
-                </div>
-                <div class="pull-right">
-                    <a ng-if="eventsCtrl.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/events/new"><i class="fa fa-plus"></i> NOVO EVENTO</a>
                 </div>
             </div>
             <div class="panel-body table-responsive">
