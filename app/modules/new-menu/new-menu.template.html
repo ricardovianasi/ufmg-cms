@@ -1,5 +1,5 @@
 <div class="page-title">
-    <div class="row flex-center">
+    <div class="row flex-center flex-center-mobile-column">
         <div class="col-md-6">
             <div class="title-env">
                 <h1 class="title">Novo Menu</h1>
@@ -82,7 +82,7 @@
                                                 <i class="fa fa-pencil"></i>
                                             </button>
                                             <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemSecondary, itemPrimary)">
-                                                <i class="fa fa-trash"></i>                                    
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                             <button ng-disabled="newMenu.isEmpty(itemSecondary.children)" uib-tooltip="Mostrar/Ocultar" ng-click="newMenu.toggle(itemSecondary.id)" class="btn btn-link view-permission">
                                                 <i ng-show="!newMenu.isOpen(itemSecondary.id)" class="fa fa-arrow-down"></i>
@@ -96,14 +96,14 @@
                                                 <span class="text">
                                                     <i class="fa fa-th" aria-hidden="true"></i>
                                                     {{ itemTertiary.label }}
-                                                    <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>                                                
+                                                    <span ng-show="itemTertiary.oldLabel">( {{ itemTertiary.oldLabel }} )</span>
                                                 </span>
                                                 <span class="actions">
                                                     <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemTertiary, itemSecondary)">
                                                         <i class="fa fa-pencil"></i>
                                                     </button>
                                                     <button ng-if="newMenu.canPut" class="btn btn-link btn-remove" uib-tooltip="Remover" ng-click="newMenu.removeItem('mainMenu', itemTertiary, itemSecondary)">
-                                                        <i class="fa fa-trash"></i>                                    
+                                                        <i class="fa fa-trash"></i>
                                                     </button>
                                                     <button disabled class="btn btn-link">
                                                         <i class="fa fa-arrow-down"></i>
@@ -163,14 +163,14 @@
                 <div class="info">
                     <span class="help">Altere as ordens arrastando os itens.</span>
                 </div>
-                <ul id="itens-quick" ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list main list-no-style-type" 
+                <ul id="itens-quick" ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list main list-no-style-type"
                     ng-model="newMenu.quickAccess">
                     <li class="item primary" ng-repeat="itemQuick in newMenu.quickAccess track by itemQuick.id">
                         <div class="name">
                             <span class="text">
                                 <i class="fa fa-th" aria-hidden="true"></i>
                                 {{ itemQuick.label }}
-                                <span ng-show="itemQuick.oldLabel">( {{ itemQuick.oldLabel }} )</span>                                
+                                <span ng-show="itemQuick.oldLabel">( {{ itemQuick.oldLabel }} )</span>
                             </span>
                             <span class="actions">
                                 <button ng-if="newMenu.canPut" class="btn btn-link" uib-tooltip="Editar" ng-click="newMenu.editItem(itemQuick, null, true)">
@@ -196,7 +196,7 @@
                         <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         <input type="text" ng-model-options="{ debounce: 800 }" ng-model="qPagesQuick.label" ng-change="newMenu.searchPage('pagesQuick', qPagesQuick.label)" class="form-control" placeholder="Procurar..." ng-trim="false">
                     </div>
-                    <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list list-page-add list-no-style-type" 
+                    <ul ui-sortable="newMenu.optionsSortableQuick" class="container-list connect-quickAccess list list-page-add list-no-style-type"
                         ng-model="newMenu.pagesQuick">
                         <li data-type="pagesQuick" data-id="{{ page.id || page.page.id }}" class="page" ng-repeat="page in newMenu.pagesQuick track by page.id">
                             {{ page.label }}

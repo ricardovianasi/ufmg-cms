@@ -1,5 +1,5 @@
 <div class="page-title">
-    <div class="row flex-center">
+    <div class="row flex-center flex-center-mobile-column">
         <div class="col-md-6">
             <div class="title-env">
                 <h1 class="title">Galerias</h1>
@@ -45,7 +45,7 @@
                     <a ng-if="galleryCtrl.canPost" ng-href="#/gallery/new" class="btn btn-secondary btn-lg pull-left">NOVA GALERIA</a>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="panel-body table-responsive">
                 <table class="table table-striped table-bordered" datatable dt-instance="galleryCtrl.dtInstance" dt-options="galleryCtrl.dtOptions" dt-columns="galleryCtrl.dtColumns">
                     <thead>
                         <tr>

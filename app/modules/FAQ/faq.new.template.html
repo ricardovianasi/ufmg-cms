@@ -1,5 +1,5 @@
 <div class="page-title">
-    <div class="row flexcenter">
+    <div class="row flex-center flex-center-mobile-column">
         <div class="col-md-6">
             <div class="title-env">
                 <h1 class="title">FAQ</h1>
@@ -78,7 +78,7 @@
                                 <a ng-href="#/faq" ng-if="!vm.canPermission" class="btn btn-gray pull-left spacer-right">Fechar</a>
                                 <a ng-href="#/faq" ng-if="vm.canPermission" class="btn btn-danger pull-left spacer-right">Cancelar</a>
                                 <a href="" ng-if="vm.canPermission" ng-disabled="vm.isLoading" class="btn btn-secondary btn-lg" ng-click="vm.save()">
-                                    <i class="fa fa-check"></i> 
+                                    <i class="fa fa-check"></i>
                                     {{vm.isLoading ? 'Salvando' : 'Salvar FAQ'}}
                                 </a>
                             </div>

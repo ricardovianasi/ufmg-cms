@@ -1,9 +1,9 @@
 <loading-spinner ng-show="vm.loading"></loading-spinner>
 <div class="page-title">
-    <div class="row flex-center">
+    <div class="row flex-center flex-center-mobile-column">
         <div class="col-md-6">
             <div class="title-env">
-                <h1 class="title"> 
+                <h1 class="title">
                     {{ vm.id ? vm.program.title : 'Novo programa' }}
                 </h1>
             </div>
@@ -45,7 +45,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-xs-12 form-group height-select">
-                <label>Bloco:</label> 
+                <label>Bloco:</label>
                 <span ng-show="vm.program.schedule.id" ng-click="vm.program.schedule = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
                 <ui-select ng-model="vm.program.id_schedule" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
                     <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.name }}</ui-select-match>
@@ -148,7 +148,7 @@
             </div>
         </div>
         <div class="row">
-            <div ng-if="!vm.can.isView" class="col-xs-12 form-group" 
+            <div ng-if="!vm.can.isView" class="col-xs-12 form-group"
                 ng-class="{'has-error': !formData.description.$valid && formData.$submitted}">
                 <label>Descrição</label>
                 <textarea placeholder="Insira uma descrição para o programa." cols="30" rows="10" class="form-control redactor-editor"

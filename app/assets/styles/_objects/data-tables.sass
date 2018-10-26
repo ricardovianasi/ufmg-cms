@@ -51,7 +51,12 @@
     max-width: 600px
 
 @media screen and (max-width: 992px)
-    .table-responsive .dataTables_wrapper .row
-        .col-xs-6
-            display: block
+    .table-responsive .dataTables_wrapper
+        .row:first-child .col-xs-6
+            width: 80%
+            .dataTables_filter label
+                width: 100%
+        .row .col-xs-6
             width: 100%
+            .dataTables_paginate
+                float: none
