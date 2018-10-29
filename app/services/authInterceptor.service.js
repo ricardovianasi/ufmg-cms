@@ -41,6 +41,9 @@
                 config.headers = config.headers || {};
                 config.headers.Authorization = 'Bearer ' + token;
             }
+            if(config.method === 'GET') {
+                config.timeout = 5000;
+            }
             _setCookieIsLoggedCMS();
             $rootScope.$broadcast('httpRequest', config);
             return config;
@@ -48,8 +51,11 @@
 
         function _responseError(response) {
             let urlError = response.config.url;
+            if(!response.data) {
+                response.data = { status: undefined, detail: response.xhrStatus };
+            }
             _handleTries(urlError);
-            const objTry = _maxTry(response.config, response.data);
+            const objTry = _maxTry(response);
             if (objTry.cancelTry) {
                 _emitResponseError(response);
                 return $q.reject(response);
@@ -80,12 +86,12 @@
                 $rootScope.$broadcast('ErrorUnknown');
             }
         }
-
-        function _maxTry({ method, url }, { status, detail }) {
-            const key = btoa(url);
+        function _maxTry({ config, data }) {
+            const key = btoa(config.url);
             const numberMaxTry = 3;
-            const noActiveTransaction = detail === 'There is no active transaction.';
-            const noTry = (status === 401 || status === 403 || method !== 'GET') && !noActiveTransaction;
+            const noActiveTransaction = data.detail === 'There is no active transaction.';
+            const isTimeout = data.detail === 'timeout';
+            const noTry = (data.status === 401 || data.status === 403 || config.method !== 'GET' || !isTimeout) && !noActiveTransaction;
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
                 requestTries[key] = 0;
@@ -93,7 +99,7 @@
             }
             return {
                 cancelTry: false,
-                wait: noActiveTransaction ? 4000 : 1000
+                wait: noActiveTransaction || isTimeout ? 4000 : 1000
             };
         }
 
