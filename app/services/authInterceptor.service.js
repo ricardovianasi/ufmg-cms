@@ -52,7 +52,7 @@
         function _responseError(response) {
             let urlError = response.config.url;
             if(!response.data) {
-                response.data = { status: undefined, detail: response.xhrStatus };
+                response.data = { status: undefined, detail: 'timeout' };
             }
             _handleTries(urlError);
             const objTry = _maxTry(response);
