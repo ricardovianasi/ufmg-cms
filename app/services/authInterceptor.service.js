@@ -92,6 +92,7 @@
             const noActiveTransaction = data.detail === 'There is no active transaction.';
             const isTimeout = data.detail === 'timeout';
             const noTry = (data.status === 401 || data.status === 403 || config.method !== 'GET' || !isTimeout) && !noActiveTransaction;
+            console.log('noTry',{ noTry, data, config });
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
                 requestTries[key] = 0;
