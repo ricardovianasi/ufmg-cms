@@ -41,9 +41,6 @@
                 config.headers = config.headers || {};
                 config.headers.Authorization = 'Bearer ' + token;
             }
-            if(config.method === 'GET') {
-                config.timeout = 5000;
-            }
             _setCookieIsLoggedCMS();
             $rootScope.$broadcast('httpRequest', config);
             return config;
@@ -52,7 +49,7 @@
         function _responseError(response) {
             let urlError = response.config.url;
             if(!response.data) {
-                response.data = { status: undefined, detail: 'timeout' };
+                response.data = { status: undefined, detail: 'error_unknown' };
             }
             _handleTries(urlError);
             const objTry = _maxTry(response);
@@ -89,9 +86,8 @@
         function _maxTry({ config, data }) {
             const key = btoa(config.url);
             const numberMaxTry = 3;
-            const noActiveTransaction = data.detail === 'There is no active transaction.';
-            const isTimeout = data.detail === 'timeout';
-            const noTry = (data.status === 401 || data.status === 403 || config.method !== 'GET' || !isTimeout) && !noActiveTransaction;
+            const isFailed = data.detail === 'There is no active transaction.' || data.detail === 'error_unknown';
+            const noTry = (data.status === 401 || data.status === 403 || config.method !== 'GET') && !isFailed;
             console.log('noTry',{ noTry, data, config });
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
@@ -100,7 +96,7 @@
             }
             return {
                 cancelTry: false,
-                wait: noActiveTransaction || isTimeout ? 4000 : 1000
+                wait: isFailed ? 4000 : 1000
             };
         }
 
