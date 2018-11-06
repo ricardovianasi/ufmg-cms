@@ -29,7 +29,7 @@
                     thumb: article.thumb,
                     tags: article.tags,
                     content: article.content,
-                    slug: typeof article.slug !== 'undefined' ? article.slug.slug : ''
+                    slug: typeof article.slug !== 'undefined' ? (article.slug.slug || article.slug) : ''
                 });
             });
 
