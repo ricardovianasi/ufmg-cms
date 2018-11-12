@@ -5,7 +5,7 @@
         .controller('PeriodicalEditionEditController', PeriodicalEditionEditController);
 
     /** ngInject */
-    function PeriodicalEditionEditController($scope, $uibModal, $routeParams, $location, $timeout, PeriodicalService, 
+    function PeriodicalEditionEditController($scope, $uibModal, $routeParams, $location, $timeout, PeriodicalService,
         StatusService, ModalService, ManagerFileService, NotificationService, MediaService, DateTimeHelper,
         $rootScope, $window, validationService) {
 
@@ -81,6 +81,7 @@
                 angular.forEach(result.data.items, function (article) {
                     var obj = {
                         title: article.title,
+                        id: article.id,
                         subtitle: article.subtitle,
                         author_name: article.author_name,
                         page_number: article.page_number,

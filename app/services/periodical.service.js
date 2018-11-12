@@ -19,17 +19,17 @@
 
 
             angular.forEach(data.articles, function (article) {
-
                 obj.articles.push({
                     title: article.title,
                     subtitle: article.subtitle,
+                    id: article.id,
                     author_name: article.author_name,
                     page_number: article.page_number,
                     cover: article.cover,
                     thumb: article.thumb,
                     tags: article.tags,
                     content: article.content,
-                    slug: typeof article.slug !== 'undefined' ? article.slug.slug : ''
+                    slug: typeof article.slug !== 'undefined' ? (article.slug.slug || article.slug) : ''
                 });
             });
 

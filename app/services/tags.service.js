@@ -41,9 +41,14 @@
             return ServerService.getLoaded(KeyLoadedTag, url, { useLoaded: true });
         }
 
-        function findTags($query, tags) {
-            var allTags = convertTagsInput(tags);
-            return $filter('filter')(allTags, $query);
+        function findTags(query, tags = []) {
+            return tags.map(tag => ({text: tag.name}))
+                .filter(tag => tag.text.toLowerCase().includes(query))
+                .sort((a, b) => {
+                    if(a.text>b.text) return 1;
+                    if(a.text<b.text) return -1;
+                    return 0;
+                });
         }
 
         function convertTagsInput(tags) {
@@ -62,7 +67,7 @@
                     ServerService.setData(KeyLoadedTag, dataTags);
                 }
 
-            } 
+            }
         }
 
         function _getUrlTagId(id) {
