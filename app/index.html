@@ -71,7 +71,7 @@
     </nav>
     <div class="page-container row">
             <menu-responsive-component></menu-responsive-component>
-        <div ng-click="toggleResponsiveMenu()" class="shortcut-responsive-menu hidden-md hidden-lg">
+        <div ng-click="toggleResponsiveMenu()" ng-show="User" class="shortcut-responsive-menu hidden-md hidden-lg">
             <i ng-class="{'fa-bars': !showResponsiveMenu, 'fa-arrow-left': showResponsiveMenu}" class="fa" aria-hidden="true"></i>
         </div>
         <div class="sidebar-menu toggle-others fixed col-md-2 hidden-sm" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
