@@ -38,7 +38,11 @@
             if(params) {
                 return ServerService.getLoaded('', url, { useLoaded: false });
             }
-            return ServerService.getLoaded(KeyLoadedTag, url, { useLoaded: true });
+            return ServerService.getLoaded(KeyLoadedTag, url, { useLoaded: true })
+                .then(dataTags => {
+                    dataTags.data.items = dataTags.data.items.filter(tag => !!tag.name);
+                    return dataTags;
+                });
         }
 
         function findTags(query, tags = []) {
