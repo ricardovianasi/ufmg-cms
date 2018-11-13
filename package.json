@@ -43,6 +43,7 @@
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^3.0.1",
+    "husky": "^1.1.4",
     "imagemin-gifsicle": "^5.2.0",
     "jasmine": "^2.3.2",
     "jshint": "^2.9.4",
@@ -55,6 +56,11 @@
   },
   "jshintConfig": {
     "expr": true
+  },
+  "husky": {
+    "hooks": {
+        "pre-commit": "echo \"*****DON'T FORGET TO UP VERSIONS FILES JS!*******\""
+    }
   },
   "dependencies": {
     "angular": "~1.6.10",
