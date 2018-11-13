@@ -48,7 +48,9 @@
 
         function findTags($query = '') {
             const query = $query.toLocaleLowerCase();
-            return TagsService.findTags(query, allTags);
+            let listTags =  TagsService.findTags(query, allTags);
+            console.log('findTags', query, listTags);
+            return listTags;
         }
 
         function _setPermissionTag(userLoaded) {
