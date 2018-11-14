@@ -1,5 +1,5 @@
 <div class="page-title">
-    <div class="row flex-center flex-center-mobile-column">
+    <div class="row flexcenter">
         <div class="col-md-6">
             <div class="title-env">
                 <h1 class="title">Eventos</h1>
@@ -24,11 +24,8 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="btn-toolbar row">
-                <div class="col-md-6 col-md-push-6 clearfix">
-                    <a ng-if="eventsCtrl.canPost" class="btn btn-secondary btn-lg pull-right" ng-href="#/events/new"><i class="fa fa-plus"></i> NOVO EVENTO</a>
-                </div>
-                <div class="focus-btn-group col-md-6 col-md-pull-6 clearfix">
+            <div class="btn-toolbar">
+                <div class="btn-group focus-btn-group">
                     <a ng-click="eventsCtrl.changeStatus('all')" class="btn" ng-class="{ 'btn-gray': eventsCtrl.itemStatus === 'all'}">
                         <span ng-class="{ 'strong': eventsCtrl.itemStatus === 'all' }">Tudo</span>
                     </a>
@@ -42,8 +39,11 @@
                         <span ng-class="{ 'strong': eventsCtrl.itemStatus === 'scheduled'}">Agendado</span>
                     </a>
                 </div>
+                <div class="pull-right">
+                    <a ng-if="eventsCtrl.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/events/new"><i class="fa fa-plus"></i> NOVO EVENTO</a>
+                </div>
             </div>
-            <div class="panel-body table-responsive">
+            <div class="panel-body">
                 <table class="table table-striped table-bordered" datatable dt-instance="eventsCtrl.dtInstance" dt-options="eventsCtrl.dtOptions" dt-columns="eventsCtrl.dtColumns">
                     <thead>
                         <tr>

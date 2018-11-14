@@ -1,7 +1,7 @@
 <loading-spinner ng-show="galleryCtrl.isLoading"></loading-spinner>
 <div class="row row-content">
     <div class="page-title">
-        <div class="row flex-center flex-center-mobile-column">
+        <div class="row flex-center">
             <div class="col-md-6">
                 <div class="title-env">
                     <h1 class="title">Nova Galeria</h1>
@@ -29,30 +29,32 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label>Título</label>
-                <input ng-disabled="!galleryCtrl.canPermission" type="text" ng-model="galleryCtrl.gallery.title" class="form-control" />
+        <div class="col-xs-12">
+            <div class="col-xs-8">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input ng-disabled="!galleryCtrl.canPermission" type="text" ng-model="galleryCtrl.gallery.title" class="form-control" />
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label>Categoria</label>
-                <select ng-disabled="!galleryCtrl.canPermission" ng-model="galleryCtrl.gallery.category" class="form-control">
-                    <option value="{{ category.id }}" ng-repeat="category in galleryCtrl.categories">{{ category.name }}</option>
-                </select>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select ng-disabled="!galleryCtrl.canPermission" ng-model="galleryCtrl.gallery.category" class="form-control">
+                        <option value="{{ category.id }}" ng-repeat="category in galleryCtrl.categories">{{ category.name }}</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
     <div class="row" ng-if="galleryCtrl.canPermission">
-        <div class="form-group col-md-12">
+        <div class="form-group">
             <label>
-                Adicionar fotos à galeria de imagens:<small ng-show="(galleryCtrl.gallery.photos | filter: {selected: true}).length &gt; 0">( Selecionadas: {{ (galleryCtrl.gallery.photos | filter: {selected: true}).length }}/{{ (galleryCtrl.gallery.photos).length }} )</small>
-            </label>
+                    Adicionar fotos à galeria de imagens:<small ng-show="(galleryCtrl.gallery.photos | filter: {selected: true}).length &gt; 0">( Selecionadas: {{ (galleryCtrl.gallery.photos | filter: {selected: true}).length }}/{{ (galleryCtrl.gallery.photos).length }} )</small>
+                </label>
         </div>
     </div>
     <div class="row">
-        <div class="dashed gallery-item upload-photos upload-gallery col-md-12" ng-if="galleryCtrl.canPermission">
+        <div class="dashed gallery-item upload-photos upload-gallery" ng-if="galleryCtrl.canPermission">
             <div ng-click="galleryCtrl.uploadImage()" class="pages-module add-module">
                 <span class="fa fa-file-image-o"></span>
                 <br> Biblioteca de Mídia
@@ -63,32 +65,38 @@
         <div id="gallery-list" class="sortable-row gallery-list gallery-list__img-gallery clearfix" as-sortable="galleryCtrl.sortableOptions"
             ng-model="galleryCtrl.gallery.photos">
             <div class="row">
-                <div class="col-md-offset-1 col-xs-offset-0 col-xs-12">
+                <div class="col-xs-offset-2">
                     <div ng-if="galleryCtrl.gallery.photos.length &gt; 0" ng-repeat="photo in galleryCtrl.gallery.photos" as-sortable-item ng-class="{ 'selected': photo.selected }"
-                        class="dashed gallery-item as-sortable-item as-sortable-dragging col-md-3 col-xs-12">
-                        <div class="df jc-flex-end" ng-if="galleryCtrl.canPermission">
-                            <button as-sortable-item-handle class="btn btn-xs btn-primary mb-0">
-                                <span class="fa fa-arrows"></span>
-                            </button>
-                            <button ng-click="galleryCtrl.editPhotos($index)" class="btn btn-xs btn-warning mb-0">
-                                <span class="fa fa-pencil"></span>
-                            </button>
-                            <button ng-click="galleryCtrl.removePhoto(photo.file.id)" class="btn btn-xs btn-danger mb-0">
-                                <span class="fa fa-remove"></span>
-                            </button>
+                        class="dashed gallery-item as-sortable-item as-sortable-dragging col-xs-3">
+                        <div class="gallery-photo-control">
+                            <div class="pull-right" ng-if="galleryCtrl.canPermission">
+                                <span as-sortable-item-handle class="label label-primary">
+                                    <span class="fa fa-arrows"></span>
+                                </span>
+                                <span ng-click="galleryCtrl.editPhotos($index)" class="label label-warning">
+                                    <span class="fa fa-pencil"></span>
+                                </span>
+                                <span ng-click="galleryCtrl.removePhoto(photo.file.id)" class="label label-danger">
+                                    <span class="fa fa-remove"></span>
+                                </span>
+                            </div>
                         </div>
                         <div class="gallery-thumb">
                             <img class="img-responsive" ng-src="{{ photo.file.url }}" alt="{{ photo.file.name }}">
                         </div>
-                    </div>
                 </div>
             </div>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <hr>
+        <div class="pull-right">
+            <a ng-href="#/gallery" ng-if="!galleryCtrl.canPermission" class="btn btn-danger pull-left spacer-right">Fechar</a>
+            <a ng-href="#/gallery" ng-if="galleryCtrl.canPermission" class="btn btn-danger pull-left spacer-right">Cancelar</a>
+            <a ng-click="galleryCtrl.publish(page)" ng-if="galleryCtrl.canPermission" class="btn btn-success pull-left">Salvar</a>
         </div>
     </div>
-    <div class="df jc-flex-end p-10">
-        <a ng-href="#/gallery" class="btn btn-danger" ng-if="!galleryCtrl.canPermission">Fechar</a>
-        <a ng-href="#/gallery" class="btn btn-danger" ng-if="galleryCtrl.canPermission">Cancelar</a>
-        <button ng-click="galleryCtrl.publish(page)" ng-if="galleryCtrl.canPermission" class="btn btn-success pull-right">Salvar</button>
-
-    </div>
+</div>
 </div>

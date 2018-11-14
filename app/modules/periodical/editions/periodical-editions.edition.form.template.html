@@ -1,5 +1,5 @@
 <div class="page-title">
-    <div class="row flex-center flex-center-mobile-column">
+    <div class="row flex-center">
         <div class="col-md-6">
             <div class="title-env">
                 <h1 class="title">
@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="row" can-get>
-    <div class="col-md-8 col-xs-12 panel panel-default">
+    <div class="col-xs-8 panel panel-default">
         <form class="form" name="formData" novalidate>
             <div class="">
                 <div class="row">
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class=row>
-                    <div class="col-md-4 col-xs-12">
+                    <div class=col-xs-4>
                         <div class="form-group" ng-class="{'has-error': formData.number.$error.required && !formData.number.$valid}">
                             <label>Número:</label>
                             <input type="number" min="1" ng-model="edition.number" value="{{ edition.number }}" class="form-control" name="number" required>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-xs-4">
                         <div class="form-group" ng-class="{'has-error': formData.initDate.$error.required && !formData.initDate.$valid}">
                             <label>Data da Edição:</label>
                             <div class="input-group input-group-sm form-control remove-padding">
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-xs-6">
+                    <div class="col-xs-4">
                         <div class="form-group" ng-class="{'has-error': formData.year.$error.required && !formData.year.$valid}">
                             <label>Ano:</label>
                             <input type="text" ng-model="edition.year" value="edition.year" class="form-control" name="year" required>
@@ -161,7 +161,7 @@
                 </div>
 
                 <div class=row>
-                    <div class="col-md-8 col-xs-12">
+                    <div class="col-md-8">
                         <div as-sortable=sortableOptions ng-model=edition.articles>
                             <div class="row">
                                 <div class="col-md-12">
@@ -230,10 +230,10 @@
                     </div>
                 </div>
             </div>
-        </form>
     </div>
+    </form>
 
-    <div class="col-md-4 col-xs-12">
+    <div class=col-xs-4>
         <publishment-options is-super-put="true" route-model="edition"></publishment-options>
     </div>
 </div>

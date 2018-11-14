@@ -25,7 +25,7 @@
 body, html
   overflow-x: hidden
 
-.radio-inline, .checkbox-inline
+.radio-inline, .checkbox-inline 
   margin-bottom: 3px
 
 .dataTable
@@ -37,33 +37,34 @@ body, html
   margin-right: 0px
   margin-left: 0px
 
-// .page-container .main-content:hover
-//   z-index: 0
+.page-container .main-content:hover
+  z-index: 0
 
 .page-container .main-content
-  z-index: 0 !important
-//   display: block
-//   height: 100%
-// //   width: 100%
-//   float: left
+  display: block
+  height: 100%
+  width: 100%
+  float: left
+  z-index: 0
 
 .menu-side
   padding: 0px
 
-.row-content
+.row-content 
   margin: 0 !important
 
-// .margin-sidebar
-//   margin-left: 290px
-//   width: calc(100% - 290px) !important
+.margin-sidebar
+  margin-left: 290px
+  width: calc(100% - 290px) !important
 
-// .sidebar-menu
-//   display: block
-//   float: left
 
-// .sidebar-menu, .sidebar-menu-inner
-//   min-width: 290px
-//   max-width: 290px
+.sidebar-menu
+  display: block
+  float: left
+
+.sidebar-menu, .sidebar-menu-inner
+  min-width: 290px
+  max-width: 290px
 
 .btn-widget-remove
   position: absolute
@@ -119,7 +120,7 @@ form .form-group.has-error .input-group-addon
       display: inline-block
     & .edit:hover
       cursor: pointer
-
+  
 .publishment-block.ng-enter,
 .publishment-block.ng-leave .ng-leave-active
   opacity: 0
@@ -199,10 +200,8 @@ form .form-group.has-error .input-group-addon
 .has-sub.opened
   transition: all linear .2s
 
-.sidebar-menu .main-menu
-  padding: 20px 35px
-  a
-    padding: 13px 2px
+.sidebar-menu .main-menu a 
+  padding: 13px 2px
 
 .main-menu li.has-sub
   cursor: pointer
@@ -325,25 +324,3 @@ form .form-group.has-error .input-group-addon
   width: 192px
   height: 50px
   margin: 0 auto
-
-@media screen and (max-width: 992px)
-    .page-title .title-env
-        padding: 0px !important
-    .page-container .main-content
-        padding: 5px
-    .navbar .navbar-inner
-        padding: 15px !important
-        display: flex
-        flex-flow: row-reverse
-        .ufmg
-            padding: 0 !important
-            margin: 0 !important
-            border-right: 0 !important
-            text-align: right
-            width: 55px
-            img
-                height: 12px
-        .post
-            padding: 0 !important
-            img
-                height: 15px

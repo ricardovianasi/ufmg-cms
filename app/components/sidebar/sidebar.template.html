@@ -6,7 +6,7 @@
     </script>
 
     <script type="text/ng-template" id="menu-items-recursive-tpl">
-        <li ng-repeat="item in subItems | filter: {enabled: true} track by $index" ng-class="{'opened expanded': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
+        <li ng-repeat="item in subItems  | filter: {enabled: true} track by $index" ng-class="{'opened expanded': item.isOpen, 'active': itemActive === item.location, 'has-sub': item.menuItems.length}">
             <a href="#/{{item.location}}" ng-include="'menu-item-link-tpl'"></a>
             <ul ng-if="item.menuItems.length" ng-init="subItems = item.menuItems" ng-include="'menu-items-recursive-tpl'"></ul>
         </li>

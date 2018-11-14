@@ -8,7 +8,6 @@
     function Run($rootScope, dataTableConfigService, sessionService, $window, $log, ModalService, DTDefaultOptions,
         $location, PermissionService) {
 
-        $rootScope.showResponsiveMenu = false;
         $rootScope.shownavbar = true;
         $rootScope.viewOnly = false;
         $rootScope.moduleCurrent = false;
@@ -25,11 +24,6 @@
                 updateOnContentResize: true
             },
             scrollInertia: 0
-        };
-
-        $rootScope.toggleResponsiveMenu = function (itemMenu) {
-            let result = document.getElementsByClassName('menu-mobile');
-            $rootScope.showResponsiveMenu = !result[0].classList.toggle('hidden');
         };
 
         $rootScope.$on('$routeChangeSuccess', function () {

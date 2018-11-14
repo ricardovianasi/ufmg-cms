@@ -41,7 +41,7 @@
                     <img src="assets/img/ufmg-post.svg" alt="POST - Sistema de Gerenciamento de Conteúdo">
                 </a>
             </div>
-            <ul class="nav nav-userinfo navbar-right hidden-sm">
+            <ul class="nav nav-userinfo navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <!--<img src="assets/img/logo.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" height="28">-->
@@ -70,13 +70,8 @@
         </div>
     </nav>
     <div class="page-container row">
-            <menu-responsive-component></menu-responsive-component>
-        <div ng-click="toggleResponsiveMenu()" ng-show="User" class="shortcut-responsive-menu hidden-md hidden-lg">
-            <i ng-class="{'fa-bars': !showResponsiveMenu, 'fa-arrow-left': showResponsiveMenu}" class="fa" aria-hidden="true"></i>
-        </div>
-        <div class="sidebar-menu toggle-others fixed col-md-2 hidden-sm" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
-        <div class="main-content col-md-10 col-sm-11"
-            ng-class="{'margin-sidebar': shownavbar && User.term_signed, 'col-md-12': !shownavbar, 'col-md-10': shownavbar }">
+        <div class="sidebar-menu toggle-others fixed" ufmg-sidebar ng-if="shownavbar && User.term_signed"></div>
+        <div class="main-content" ng-class="{'margin-sidebar': shownavbar && User.term_signed }">
             <ng-view />
         </div>
     </div>
