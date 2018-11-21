@@ -15,27 +15,27 @@ server '150.164.30.240',
     passphrase: '@cedecomUFMG245BH'
   }
 
-server '150.164.30.17',
-  user: 'user_cedecom',
-  roles: %w{app web},
-  ssh_options: {
-    user: 'user_cedecom', # overrides user setting above
-    keys: %w(~/.ssh/id_rsa_fundep),
-    forward_agent: true,
-    auth_methods: %w(publickey password),
-    passphrase: '@cedecomUFMG245BH'
-  }
+#server '150.164.30.17',
+#  user: 'user_cedecom',
+#  roles: %w{app web},
+#  ssh_options: {
+#    user: 'user_cedecom', # overrides user setting above
+#    keys: %w(~/.ssh/id_rsa_fundep),
+#    forward_agent: true,
+#    auth_methods: %w(publickey password),
+#    passphrase: '@cedecomUFMG245BH'
+#}
 
-server '150.164.30.18',
-  user: 'user_cedecom',
-  roles: %w{app web},
-  ssh_options: {
-    user: 'user_cedecom', # overrides user setting above
-    keys: %w(~/.ssh/id_rsa_fundep),
-    forward_agent: true,
-    auth_methods: %w(publickey password),
-    passphrase: '@cedecomUFMG245BH'
-  }
+#server '150.164.30.18',
+#  user: 'user_cedecom',
+#  roles: %w{app web},
+#  ssh_options: {
+#    user: 'user_cedecom', # overrides user setting above
+#    keys: %w(~/.ssh/id_rsa_fundep),
+#    forward_agent: true,
+#    auth_methods: %w(publickey password),
+#    passphrase: '@cedecomUFMG245BH'
+#  }
 
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
