@@ -49,7 +49,7 @@
         function _responseError(response) {
             let urlError = response.config.url;
             if(!response.data) {
-                response.data = { status: undefined, detail: 'error_unknown' };
+                response.data = { status: response.status, detail: 'error_unknown' };
             }
             _handleTries(urlError);
             const objTry = _maxTry(response);
@@ -86,8 +86,7 @@
         function _maxTry({ config, data }) {
             const key = btoa(config.url);
             const numberMaxTry = 3;
-            const isFailed = data.detail === 'There is no active transaction.' || data.detail === 'error_unknown';
-            const noTry = (data.status === 401 || data.status === 403 || config.method !== 'GET') && !isFailed;
+            const noTry = _noTry(data, config);
             console.log('noTry',{ noTry, data, config });
             let isMaxTry = angular.isDefined(requestTries[key]) && requestTries[key] >= numberMaxTry;
             if(isMaxTry || noTry) {
@@ -98,6 +97,15 @@
                 cancelTry: false,
                 wait: isFailed ? 4000 : 1000
             };
+        }
+
+        function _noTry(data, config) {
+            const statusNoTry = data.status === 401 || data.status === 403;
+            const methodNoTry = config.method !== 'GET';
+            const isFailedTransaction = data.detail === 'There is no active transaction.';
+            const isFailedUnknow = data.detail === 'error_unknown' && !statusNoTry;
+            console.log({statusNoTry, methodNoTry, isFailedTransaction, isFailedUnknow});
+            return (statusNoTry || methodNoTry) && (!isFailedTransaction && !isFailedUnknow);
         }
 
         function _handleTries(url) {
