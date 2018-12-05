@@ -1,5 +1,5 @@
 {
-    "apiUrl": "https://ufmg.br/webservice",
+    "apiUrl": "https://150.164.30.240/webservice",
     "grant_type_auth": "password",
     "client_id_auth": "cms",
     "ENV": "prod"
