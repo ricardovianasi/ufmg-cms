@@ -49,22 +49,23 @@
                 name: 'postDate'
             }]);
 
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);
+
             function getPages(params, fnCallback) {
                 PagesService.getPagesByUser(dataTableConfigService.getParams(params), true)
-                    .then(function(res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
-                        _permissions();
-                        vm.pages = res.data;
-                        var records = {
-                            'draw': params.draw,
-                            'recordsTotal': res.data.total,
-                            'data': [],
-                            'recordsFiltered': res.data.total
-                        };
-                        fnCallback(records);
-                    });
+                .then(function(res) {
+                    _permissions();
+                    vm.pages = res.data;
+                    var records = {
+                        'draw': params.draw,
+                        'recordsTotal': res.data.total,
+                        'data': [],
+                        'recordsFiltered': res.data.total
+                    };
+                    fnCallback(records);
+                });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getPages);
         }
 
         function _remove(id, title) {
