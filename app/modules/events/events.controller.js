@@ -17,7 +17,7 @@
         vm.itemStatus = 'all';
         vm.dtInstance = { };
         vm.canPost = false;
-        
+
         vm.changeStatus = changeStatus;
         vm.remove = remove;
 
@@ -30,6 +30,9 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 5;
+            let columnsHasNotOrder = [4];
+
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'name'
@@ -45,16 +48,15 @@
                 filter: 'type',
                 name: 'name'
             }]);
+
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadEvents);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
         }
 
         function _loadEvents(params, fnCallback) {
-            let numberOfColumns = 5;
-            let columnsHasNotOrder = [4];
             EventsService
                 .getEvents(dataTableConfigService.getParams(params))
                 .then(function (res) {
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     _permissions();
                     vm.events = res.data;
                     var records = {

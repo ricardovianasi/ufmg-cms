@@ -5,7 +5,7 @@
         .controller('PeriodicalController', PeriodicalController);
 
     /** ngInject */
-    function PeriodicalController(dataTableConfigService, PeriodicalService, DateTimeHelper, NotificationService, 
+    function PeriodicalController(dataTableConfigService, PeriodicalService, DateTimeHelper, NotificationService,
         DTOptionsBuilder, PermissionService, DTColumnDefBuilder, ModalService) {
 
         var vm = this;
@@ -30,6 +30,9 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 4;
+            let columnsHasNotOrder = [3];
+
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'name'
@@ -41,16 +44,15 @@
                 index: 2,
                 name: 'postDate'
             }]);
+
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadPeriodicals);
         }
 
         function _loadPeriodicals(params, fnCallback) {
-            let numberOfColumns = 4;
-            let columnsHasNotOrder = [3];
             PeriodicalService
                 .getPeriodicals(false, dataTableConfigService.getParams(params))
                 .then(function (res) {
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     _permissions();
                     vm.periodicals = res.data;
                     var records = {
