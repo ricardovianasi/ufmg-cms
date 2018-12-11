@@ -64,11 +64,13 @@
                 name: 'name'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCourses);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function getCourses(params, fnCallback) {
                 CourseService
                     .getCourses(vm.type, false, dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         vm.courses = res.data;
                         _setPermissionEditBar();
                         var records = {
@@ -81,7 +83,6 @@
 
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCourses);
         }
 
         function _save(redirect) {

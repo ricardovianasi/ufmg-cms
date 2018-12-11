@@ -34,6 +34,9 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 4;
+            let columnsHasNotOrder = [3];
+
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -46,15 +49,13 @@
                 name: 'createdAt'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_getGalleries);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
         }
 
         function _getGalleries(params, fnCallback) {
-            let numberOfColumns = 4;
-            let columnsHasNotOrder = [3];
             GalleryService
                 .getGalleries(dataTableConfigService.getParams(params))
                 .then(function (res) {
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     _permissions();
                     vm.galleries = res.data;
                     let records = {

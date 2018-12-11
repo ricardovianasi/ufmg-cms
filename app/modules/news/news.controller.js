@@ -54,11 +54,13 @@
                 name: 'postDate'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function getNews(params, fnCallback) {
                 NewsService
                     .getNews(dataTableConfigService.getParams(params), vm.typeNews)
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
                         vm.news = res.data;
                         var records = {
@@ -70,7 +72,6 @@
                         fnCallback(records);
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getNews);
         }
 
         vm.removeNews = function (id, title) {
