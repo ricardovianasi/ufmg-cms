@@ -58,11 +58,13 @@
                 name: 'postDate'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getMedias);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function getMedias(params, fnCallback) {
                 MediaService
                     .getMedias(dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         vm.media = res.data;
                         var records = {
                             'draw': params.draw,
@@ -74,7 +76,6 @@
 
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getMedias);
         }
 
         vm.removeMedia = function (id) {
