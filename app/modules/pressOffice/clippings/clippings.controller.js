@@ -29,6 +29,8 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 3;
+            let columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 name: 'title'
@@ -41,15 +43,13 @@
                 name: 'createdAt'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_loadReleases);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
         }
 
         function _loadReleases(params, fnCallback) {
-            let numberOfColumns = 3;
-            let columnsHasNotOrder = [];
             ClippingsService
                 .getClippings(dataTableConfigService.getParams(params))
                 .then(function (res) {
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     _permissions();
                     vm.clippings = res.data;
                     var records = {

@@ -52,11 +52,13 @@
                 name: 'postDate'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function getFeatureds(params, fnCallback) {
                 featuredService
                     .getFeatureds(dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
                         vm.highlights = res.data;
                         var records = {
@@ -69,7 +71,6 @@
 
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getFeatureds);
         }
 
         var ConfirmationModalCtrl = function ($scope, $uibModalInstance, title) {
