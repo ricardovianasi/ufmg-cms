@@ -26,7 +26,7 @@
         ////////////////
 
         function openUpdateCategory(categ, idx) {
-            let modal = ModalService.inputModal('Edição de gênero da rádio', 'Nome', categ.name, 
+            let modal = ModalService.inputModal('Edição de gênero da rádio', 'Nome', categ.name,
                 ModalService.MODAL_MEDIUM, {required: true});
             modal.result.then(function (name) {
                 categ.name = name;
@@ -75,19 +75,20 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 2;
+            let columnsHasNotOrder = [];
+
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'name' },
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
         }
 
         function getProgramas(params, cb) {
-            let numberOfColumns = 2;
-            let columnsHasNotOrder = [];
             RadioService.listItemFilter(dataTableConfigService.getParams(params), RadioService.baseUrlGenre)
                 .then(function(res) {
                     _permissions();
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     vm.listCategory = res.data.items;
                     let records = {
                         'draw': params.draw,
@@ -97,7 +98,6 @@
                     };
                     cb(records);
                 });
-
         }
 
         function _permissions() {

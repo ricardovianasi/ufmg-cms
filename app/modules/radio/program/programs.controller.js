@@ -22,21 +22,22 @@
         ////////////////
 
         function _renderDataTable() {
+            let numberOfColumns = 3;
+            let columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([
                 { index: 0, name: 'title' },
                 { index: 1, filter: 'genres', name: 'name' },
                 { index: 2, filter: 'author', name: 'name' },
             ]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getProgramas);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
         }
 
         function getProgramas(params, cb) {
-            let numberOfColumns = 3;
-            let columnsHasNotOrder = [];
             RadioService.listPrograms(dataTableConfigService.getParams(params))
                 .then(function(res) {
                     _permissions();
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     vm.listPrograms = res.data.items;
                     let records = {
                         'draw': params.draw,
@@ -46,7 +47,6 @@
                     };
                     cb(records);
                 });
-
         }
 
         function removeProgram(program) {
