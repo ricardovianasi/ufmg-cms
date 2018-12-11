@@ -33,11 +33,13 @@
                 name: 'title'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(faqs);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function faqs(params, fnCallback) {
                 faqService
                     .faqs(dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
                         vm.faqs = res.data.items;
                         var records = {
@@ -50,7 +52,6 @@
 
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(faqs);
         }
 
         vm.removeFaq = function (id, title) {

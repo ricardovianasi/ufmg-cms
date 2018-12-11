@@ -67,12 +67,14 @@
                 name: 'initDate'
             }]);
 
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCalendar);
+
             function getCalendar(params, fnCallback) {
                 CalendarService
                     .getCalendar(dataTableConfigService.getParams(params))
                     .then(function (res) {
                         vm.calendar = res.data;
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
 
                         // angular.forEach(res.data.items, function (calendar_item) {
                         //     vm.period_filter.push(calendar_item.period);
@@ -88,10 +90,8 @@
                         };
                         _permissions();
                         fnCallback(records);
-
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getCalendar);
         }
 
         vm.convertDate = function (date) {
@@ -439,7 +439,7 @@
         }
 
         function _canSaveCalendar(newRegister) {
-            return newRegister.regional && newRegister.description && 
+            return newRegister.regional && newRegister.description &&
             newRegister.init_date && newRegister.end_date;
         }
 

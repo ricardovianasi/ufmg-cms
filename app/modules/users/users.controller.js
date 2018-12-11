@@ -35,11 +35,13 @@
                 name: 'email'
             }]);
 
+            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getUsers);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
+
             function getUsers(params, fnCallback) {
                 UsersService
                     .getUsers(dataTableConfigService.getParams(params))
                     .then(function (res) {
-                        vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                         _permissions();
                         vm.users = res.data.items;
                         var records = {
@@ -49,10 +51,8 @@
                             'recordsFiltered': res.data.total
                         };
                         fnCallback(records);
-
                     });
             }
-            vm.dtOptions = dataTableConfigService.dtOptionsBuilder(getUsers);
         }
 
         function _reset(user) {

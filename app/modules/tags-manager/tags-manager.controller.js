@@ -19,7 +19,7 @@
         ////////////////
 
         function openEditTag(tag, idx) {
-            let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name, 
+            let modal = ModalService.inputModal('Edição de Tag', 'Nome', tag.name,
                 ModalService.MODAL_MEDIUM, {required: true});
             modal.result.then(function (name) {
                 tag.name = name;
@@ -43,7 +43,7 @@
                 .then(function() { _removeTag(id, name, idx); })
                 .catch(function() { console.log('catch modal delete'); });
         }
-        
+
         function _removeTag(id, name, idx) {
             TagsService.deleteTag(id)
                 .then(function() {
@@ -72,22 +72,22 @@
         }
 
         function _renderDataTable() {
+            let numberOfColumns = 2;
+            let columnsHasNotOrder = [];
             dataTableConfigService.setColumnsHasOrderAndSearch([{
                 index: 0,
                 filter: 'name',
                 name: 'name'
             }]);
             vm.dtOptions = dataTableConfigService.dtOptionsBuilder(_getTags);
+            vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
         }
 
         function _getTags(params, fnCallback) {
-            let numberOfColumns = 2;
-            let columnsHasNotOrder = [];
             TagsService
                 .getTags(dataTableConfigService.getParams(params))
                 .then(function (res) {
                     _permissions();
-                    vm.dtColumns = dataTableConfigService.columnBuilder(numberOfColumns, columnsHasNotOrder);
                     vm.tags = res.data.items;
                     let records = {
                         'draw': params.draw,
