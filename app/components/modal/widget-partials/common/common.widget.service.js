@@ -18,7 +18,7 @@
             preparingPostTypes: preparingPostTypes,
             preparingGalleries: preparingGalleries
         };
-        
+
         return service;
 
         ////////////////
@@ -110,9 +110,13 @@
         }
 
         function request(eventName, fnResquest, order_by, searchQuery, customFilter) {
-            $rootScope.$on('set' + eventName, function (event, data) {
+            let keyRequest = 'set' + eventName;
+            if(keyRequest in $rootScope.$$listeners) {
+                return;
+            }
+            $rootScope.$on(keyRequest, function (event, data) {
                 data.dataReturn = data.data || [];
-                angular.extend(data, 
+                angular.extend(data,
                     {order_by: order_by, searchQuery: searchQuery, customFilter: customFilter, fnResquest: fnResquest});
                 if (!data.search && data.countPage === 1) {
                     data.currentElement = 0;
