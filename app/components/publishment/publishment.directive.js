@@ -370,7 +370,7 @@
                 }
                 if (dateChoice.valueOf() < dateCurrent.valueOf()) {
                     vm.retroactive = true;
-                    var datePost = moment(vm.obj.scheduled_date, FORMAT_DATE).toDate();
+                    var datePost = moment(vm.obj.scheduled_date).toDate();
                     if (vm.obj.scheduled_time) {
                         datePost.setHours(Number(vm.obj.scheduled_time.split(':')[0]));
                         datePost.setMinutes(Number(vm.obj.scheduled_time.split(':')[1]));
@@ -381,7 +381,7 @@
                     }
                     datePost.setSeconds(0);
                     datePost.setMilliseconds(0);
-                    console.log('datePostRetroactive', datePost);
+                    console.log('datePostRetroactive', datePost, vm.obj.scheduled_date);
                     vm.obj.post_date = datePost.toISOString();
                     if (!vm.obj.id && isPublished(vm.preSaveStatus)) {
                         vm.showMessageWarn = true;
