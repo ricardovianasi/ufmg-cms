@@ -25,6 +25,7 @@
             var nowDate;
             var dateChoice;
             var dateCurrent;
+            let FORMAT_DATE = "YYYY-MM-DD[T]HH:mm:ss";
             vm.vm = $scope;
             vm.obj.scheduled_date = '';
             vm.obj.scheduled_time = '';
@@ -129,7 +130,7 @@
                 vm.preSaveStatus = vm.obj.status ? vm.obj.status : '';
                 vm.preSaveStatus = vm.obj.id ? vm.obj.status : 'draft';
                 dateChoice = _convertToDate(vm.obj.scheduled_date);
-                dateCurrent = new Date(vm.obj.scheduled_date);
+                dateCurrent = moment(vm.obj.scheduled_date, FORMAT_DATE).toDate();
                 vm.moduleCurrent = $rootScope.moduleCurrent;
                 vm.canDelete = PermissionService.canDelete($rootScope.moduleCurrent, vm.obj.id);
                 vm.canPost = PermissionService.canPost($rootScope.moduleCurrent, vm.obj.id);
@@ -208,7 +209,7 @@
                 vm.$watch('vm.obj.post_date', function () {
                     console.log('$watch', vm.obj.post_date);
                     if (vm.obj.scheduled_date) {
-                        let date = new Date(vm.obj.post_date);
+                        let date = moment(vm.obj.post_date, FORMAT_DATE).toDate();
                         vm.obj.scheduled_date = date;
                         let hh = date.getHours();
                         let MM = date.getMinutes();
@@ -222,7 +223,7 @@
                     }
 
                     if (vm.obj.publish_date) {
-                        let publishDate = new Date(vm.obj.publish_date);
+                        let publishDate = moment(vm.obj.publish_date, FORMAT_DATE).toDate();
                         vm.obj.publish_date = publishDate;
                     }
                 });
@@ -298,7 +299,7 @@
 
             function _validate(formPub) {
                 _validateDate(formPub);
-                var isInvalid = formPub.$invalid;                
+                var isInvalid = formPub.$invalid;
                 if (vm.errorInvalidHour || vm.errorInvalidDate) {
                     validationService.isValid(true);
                     return false;
@@ -369,7 +370,7 @@
                 }
                 if (dateChoice.valueOf() < dateCurrent.valueOf()) {
                     vm.retroactive = true;
-                    var datePost = new Date(vm.obj.scheduled_date);
+                    var datePost = moment(vm.obj.scheduled_date, FORMAT_DATE).toDate();
                     if (vm.obj.scheduled_time) {
                         datePost.setHours(Number(vm.obj.scheduled_time.split(':')[0]));
                         datePost.setMinutes(Number(vm.obj.scheduled_time.split(':')[1]));
