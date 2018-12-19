@@ -1,0 +1,60 @@
+<div class="page-title">
+    <div class="row flexcenter">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">Alerta</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/"><i class="fa-home"></i>Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#/alert">
+                            <strong>Alerta</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+            <!--breadcrumb-env-->
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="btn-toolbar">
+                <div class="pull-right">
+                    <a ng-if="alertCtrl.permission.canPost" class="btn btn-secondary btn-lg pull-left" ng-href="#/alert/new"><i class="fa fa-plus"></i> NOVO ALERTA</a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered" datatable dt-instance="alertCtrl.dtInstance" dt-options="alertCtrl.dtOptions" dt-columns="alertCtrl.dtColumns">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-10">Título</th>
+                            <th class="col-xs-2">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" class="odd" ng-repeat="item in alertCtrl.alerts">
+                            <td>
+                                <a ng-href="#/alert/edit/{{ item.id }}">{{ item.title }}</a>
+                            </td>
+                            <td class="table-fit">
+                                <a uib-tooltip="Editar" can-put context="alert" context-id="item.id" ng-href="#/alert/edit/{{ item.id }}" class="btn btn-warning">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a uib-tooltip="Excluir" ng-if="alertCtrl.permission.canDelete" ng-click="alertCtrl.remove(item.id, item.title)" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,4 @@
-<loading-spinner ng-show="isLoading"></loading-spinner>
-<!-- <div class="panel panel-default actions-context">
+<div class="panel panel-default actions-context">
     <div class="actions">
         <div class="col">
             <a class="btn btn-link" ng-href="{{goBack()}}">
@@ -8,19 +7,18 @@
         </div>
         <div class="col">
             <a class="btn btn-default" ng-href="{{goNew()}}" ng-show="obj.id" ng-if="!$parent.viewOnly && canPost">
-                    <i class="fa fa-plus"></i> Novo
-                </a>
+                <i class="fa fa-plus"></i> Novo
+            </a>
         </div>
     </div>
-</div> -->
-<panel-navigation show-new="!!obj.id && (!$parent.viewOnly && canPost)"></panel-navigation>
+</div>
 <form name="formPub" ng-submit="publish(formPub)" novalidate>
-    <div class="panel panel-default publishment-options" ng-show="showLoad">
+    <div class="panel panel-default publishment-options">
         <h4 class="publishment-title">Opções de Publicação</h4>
-        <div class="publishment-body" ng-if="vm.isSuperPut">
+        <div class="publishment-body">
             <div class="status">
                 <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
-                        <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
+                    <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
                     <label>Status: </label>
                     <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
                         <option ng-repeat="item in ['draft', 'published', 'scheduled'] track by $index" ng-value="item">{{item | translate}}</option>
@@ -62,36 +60,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="publishment-message" ng-class="{'publishment-message-error': showMessageError, 'publishment-message-warn': showMessageWarn, 'publishment-message-active': showMessageError || showMessageWarn}">
-            <div class="icon">
-                <i class="fa fa-exclamation-triangle"></i>
-            </div>
-            <div class="text">
-                {{messageText}}
-            </div>
-        </div>
-        <div class="publishment-footer">
-            <div class="actions">
-                <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit" class="btn btn-secondary">
-                        <i class="fa fa-check"></i>
-                        {{ isLoading ? 'Salvando...' : 'Salvar'}}
-                    </button>
-                </div>
-                <div class="col" ng-if="obj.id">
-                    <a class="btn btn-gray" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
-                        <i class="fa fa-eye"></i>
-                        Visualizar
-                    </a>
-                </div>
-                <div class="col">
-                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
-                        <i class="fa fa-close"></i>
-                        Excluir
-                    </button>
                 </div>
             </div>
         </div>

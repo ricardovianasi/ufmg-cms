@@ -31,6 +31,7 @@
         'thatisuday.dropzone',
 
         // App Modules
+        'alertPortalModule',
         'calendarModule',
         'clippingsModule',
         'componentsModule',

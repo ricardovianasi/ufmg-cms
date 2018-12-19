@@ -1,0 +1,67 @@
+<div class="page-title">
+    <div class="row flex-center">
+        <div class="col-md-6">
+            <div class="title-env">
+                <h1 class="title">{{ vm.title }}</h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="breadcrumb-env">
+                <ol class="breadcrumb bc-1">
+                    <li>
+                        <a href="#/">
+                            <i class="fa-home"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/alert">
+                            <strong>Alertas</strong>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#/alert">
+                            <strong>{{ vm.title }}</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" can-get>
+    <div class="col-xs-8 panel panel-default">
+        <form class="form" name="formData" novalidate>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group" ng-class="{'has-error': formData.title.$error.required && !formData.title.$valid}">
+                        <label for="title">Título</label>
+                        <input id="title" type="text" name="title" class="form-control" ng-model="vm.alert.title" required>
+                        <div ng-show="!formData.title.$valid" class="error-message" role="alert">
+                            <div ng-show="formData.title.$error.required">Campo obrigatório</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="title">Sub título</label>
+                        <input id="title" type="text" name="slug" class="form-control" ng-model="vm.alert.subtitle">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="title">Link</label>
+                        <input id="title" type="text" name="slug" class="form-control" ng-model="vm.alert.link">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-4">
+        <alert-publishment target="vm.alert"></alert-publishment>
+    </div>
+</div>
+<ng-include src="'components/widget/partials/redactor-templates.html'"></ng-include>
