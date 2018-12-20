@@ -1,18 +1,4 @@
 <loading-spinner ng-show="isLoading"></loading-spinner>
-<!-- <div class="panel panel-default actions-context">
-    <div class="actions">
-        <div class="col">
-            <a class="btn btn-link" ng-href="{{goBack()}}">
-                    <i class="fa fa-arrow-left"></i> Voltar para lista
-                </a>
-        </div>
-        <div class="col">
-            <a class="btn btn-default" ng-href="{{goNew()}}" ng-show="obj.id" ng-if="!$parent.viewOnly && canPost">
-                    <i class="fa fa-plus"></i> Novo
-                </a>
-        </div>
-    </div>
-</div> -->
 <panel-navigation show-new="!!obj.id && (!$parent.viewOnly && canPost)"></panel-navigation>
 <form name="formPub" ng-submit="publish(formPub)" novalidate>
     <div class="panel panel-default publishment-options" ng-show="showLoad">

@@ -45,8 +45,6 @@
             vm.datePostValidateHour = datePostValidateHour;
             vm.clearFildHour = _clearFildHour;
             vm.preview = _preview;
-            // vm.goBack = goBack;
-            // vm.goNew = goNew;
             vm.isDateValid = isDateValid;
 
             onInit();
@@ -58,34 +56,6 @@
             function isScheduled(value) {
                 return value === 'scheduled';
             }
-
-            // function goBack() {
-            //     let forceBreak = false;
-            //     let url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
-            //         if (currentValue === 'new' || currentValue === 'edit') {
-            //             forceBreak = true;
-            //         }
-            //         if (forceBreak) {
-            //             return accumulator;
-            //         }
-            //         return accumulator += '/' + currentValue;
-            //     });
-            //     return url;
-            // }
-
-            // function goNew() {
-            //     let forceBreak = false;
-            //     let url = '#' + $location.url().split('/').reduce(function (accumulator, currentValue) {
-            //         if (currentValue === 'new' || currentValue === 'edit') {
-            //             forceBreak = true;
-            //         }
-            //         if (forceBreak) {
-            //             return accumulator;
-            //         }
-            //         return accumulator += '/' + currentValue;
-            //     }) + '/new';
-            //     return url;
-            // }
 
             function isDateValid() {
                 if (!vm.obj.scheduled_date) {
