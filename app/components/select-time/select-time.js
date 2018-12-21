@@ -2,9 +2,9 @@
     'use strict';
 
     // Usage:
-    // 
+    //
     // Creates:
-    // 
+    //
 
     angular
         .module('componentsModule')
@@ -26,7 +26,7 @@
         var $ctrl = this;
 
         $ctrl.selectTime = selectTime;
-        
+
 
         ////////////////
 

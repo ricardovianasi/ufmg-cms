@@ -16,8 +16,16 @@
                     </div>
                 </div>
             </div>
-            <div class="date">
-                <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDatea.$error.required}">
+            <!-- <div class="date"> -->
+                <select-date-time class="date" input-label="Data e horário:"
+                    id-date="initDatea" id-time="initTime"
+                    model="obj" name-prop-date="scheduled_date" name-prop-time="scheduled_time"
+                    on-blur="isDateValid()"
+                    on-change-time="datePostValidateHour()"
+                    on-change-date="datePost()"
+                    has-error="(formPub.$submitted) && formPub.initDatea.$error.required"
+                    is-disable="isScheduledRetroactive"></select-date-time>
+                <!-- <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDatea.$error.required}">
                     <label>Data e horário:</label>
                     <div class="select-date">
                         <div class="form-group select-date-item">
@@ -48,8 +56,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
         </div>
         <div class="publishment-message" ng-class="{'publishment-message-error': showMessageError, 'publishment-message-warn': showMessageWarn, 'publishment-message-active': showMessageError || showMessageWarn}">
             <div class="icon">
