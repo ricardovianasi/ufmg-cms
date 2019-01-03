@@ -1,27 +1,63 @@
 <panel-navigation show-new="true"></panel-navigation>
-<form name="formPub" ng-submit="publish(formPub)" novalidate>
+<form name="formPubAlert" ng-submit="vm.publish(formPubAlert)" novalidate>
     <div class="panel panel-default publishment-options">
         <h4 class="publishment-title">Opções de Publicação</h4>
         <div class="publishment-body">
             <div class="status">
-                <div class="form-group" ng-class="{'has-error':(formPub.$submitted || formPub.pickStatus.$touched) && formPub.pickStatus.$error.required}">
+                <div class="form-group" ng-class="{'has-error':(formPubAlert.$submitted || formPubAlert.pickStatus.$touched) && formPubAlert.pickStatus.$error.required}">
                     <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
                     <label>Status: </label>
                     <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
                         <option ng-repeat="item in ['draft', 'published', 'scheduled'] track by $index" ng-value="item">{{item | translate}}</option>
                     </select>
-                    <div ng-show="formPub.$submitted || formPub.pickStatus.$touched" class="error-message" role="alert">
-                        <div ng-show="formPub.pickStatus.$error.required">Campo obrigatório</div>
+                    <div ng-show="formPubAlert.$submitted || formPubAlert.pickStatus.$touched" class="error-message" role="alert">
+                        <div ng-show="formPubAlert.pickStatus.$error.required">Campo obrigatório</div>
                     </div>
                 </div>
             </div>
-            <div class="date">
-                <select-date-time
-                    input-label="Data início:"
-                    id-date="initDatea"
-                    id-time="initTime"
-                    model-date="target.dateInit"
-                    model-time="target.timeInit"></select-date-time>
+            <select-date-time-directive class="date" input-label="Data/Hora início:"
+                id-form="formPubAlert" id-date="initDate" id-time="initTime"
+                model="vm.target" name-prop-date="post_date" name-prop-time="post_time"
+                datepicker-opt="vm.initdatepickerOpt" on-change-time="vm.onChangeInitTime()" on-change-date="vm.onChangeInitDate()"
+                is-disable="false" is-required="true">
+            </select-date-time-directive>
+
+            <select-date-time-directive class="date" input-label="Data/Hora final:"
+                id-form="formPubAlert" id-date="endDate" id-time="endTime"
+                model="vm.target" name-prop-date="end_date" name-prop-time="end_time"
+                datepicker-opt="vm.enddatepickerOpt" on-change-time="vm.onChangeEndTime()" on-change-date="vm.onChangeEndDate()"
+                is-disable="false" is-required="true">
+            </select-date-time-directive>
+        </div>
+        <div class="publishment-message" ng-class="{'publishment-message-error': showMessageError, 'publishment-message-warn': showMessageWarn, 'publishment-message-active': showMessageError || showMessageWarn}">
+            <div class="icon">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <div class="text">
+                {{messageText}}
+            </div>
+        </div>
+
+        <div class="publishment-footer">
+            <div class="actions">
+                <div class="col">
+                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit" class="btn btn-secondary">
+                        <i class="fa fa-check"></i>
+                        {{ isLoading ? 'Salvando...' : 'Salvar'}}
+                    </button>
+                </div>
+                <div class="col" ng-if="obj.id">
+                    <a class="btn btn-gray" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
+                        <i class="fa fa-eye"></i>
+                        Visualizar
+                    </a>
+                </div>
+                <div class="col">
+                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
+                        <i class="fa fa-close"></i>
+                        Excluir
+                    </button>
+                </div>
             </div>
         </div>
     </div>

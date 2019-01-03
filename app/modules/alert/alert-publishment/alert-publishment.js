@@ -1,31 +1,71 @@
 (function() {
     'use strict';
 
-    // Usage:
-    //
-    // Creates:
-    //
-
     angular
         .module('alertPortalModule')
-        .component('alertPublishment', {
+        .directive('alertPublishment', alertPublishment);
+
+    alertPublishment.$inject = ['DateTimeHelper'];
+    function alertPublishment(DateTimeHelper) {
+        // Usage:
+        //
+        // Creates:
+        //
+        var directive = {
+            bindToController: true,
+            controller: AlertPublishmentController,
+            controllerAs: 'vm',
+            link: link,
             templateUrl: 'modules/alert/alert-publishment/alert.publishment.html',
-            controller: AlertPublishmentCtrl,
-            controllerAs: '$ctrl',
-            bindings: {
+            restrict: 'E',
+            scope: {
                 target: '=',
-            },
-        });
+                methodPublish: '&'
+            }
+        };
+        return directive;
 
-    /** ngInject */
-    function AlertPublishmentCtrl() {
-        var $ctrl = this;
+        function link(scope, element, attrs, ctrl) {
+            _initDatePickerOptions();
 
+            ctrl.onChangeInitTime = onChangeInitTime;
+            ctrl.onChangeInitDate = onChangeInitDate;
+            ctrl.onChangeEndTime = onChangeEndTime;
+            ctrl.onChangeEndDate = onChangeEndDate;
 
-        ////////////////
+            function publish(formPubAlert) {
+                console.log('publish', formPubAlert);
+                ctrl.methodPublish();
+            }
 
-        $ctrl.$onInit = function() { };
-        $ctrl.$onChanges = function(changesObj) { };
-        $ctrl.$onDestroy = function() { };
+            function onChangeInitTime() {
+
+            }
+
+            function onChangeInitDate() {
+
+            }
+
+            function onChangeEndTime() {
+
+            }
+
+            function onChangeEndDate() {
+
+            }
+
+            function _initDatePickerOptions() {
+                ctrl.initdatepickerOpt = {
+                    initDate: DateTimeHelper.getDatepickerOpt(),
+                };
+                ctrl.enddatepickerOpt = {
+                    endDate: DateTimeHelper.getDatepickerOpt(),
+                };
+            }
+        }
+    }
+    /* @ngInject */
+    function AlertPublishmentController () {
+
     }
 })();
