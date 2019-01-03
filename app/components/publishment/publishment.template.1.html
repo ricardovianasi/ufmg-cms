@@ -17,14 +17,12 @@
                 </div>
             </div>
             <!-- <div class="date"> -->
-                <select-date-time class="date" input-label="Data e horário:"
-                    id-date="initDatea" id-time="initTime"
+                <select-date-time-directive class="date" input-label="Data e horário:"
+                    id-form="formPub" id-date="initDatea" id-time="initTime"
                     model="obj" name-prop-date="scheduled_date" name-prop-time="scheduled_time"
-                    on-blur="isDateValid()"
-                    on-change-time="datePostValidateHour()"
-                    on-change-date="datePost()"
-                    has-error="(formPub.$submitted) && formPub.initDatea.$error.required"
-                    is-disable="isScheduledRetroactive"></select-date-time>
+                    datepicker-opt="datepickerOpt" on-change-time="datePostValidateHour()" on-change-date="datePost()"
+                    is-disable="isScheduledRetroactive">
+                </select-date-time-directive>
                 <!-- <div class="form-group" ng-class="{'has-error':(formPub.$submitted) && formPub.initDatea.$error.required}">
                     <label>Data e horário:</label>
                     <div class="select-date">

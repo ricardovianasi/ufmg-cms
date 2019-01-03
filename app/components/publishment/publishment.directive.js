@@ -45,7 +45,6 @@
             vm.datePostValidateHour = datePostValidateHour;
             vm.clearFildHour = _clearFildHour;
             vm.preview = _preview;
-            vm.isDateValid = isDateValid;
 
             onInit();
 
@@ -55,14 +54,6 @@
 
             function isScheduled(value) {
                 return value === 'scheduled';
-            }
-
-            function isDateValid() {
-                if (!vm.obj.scheduled_date) {
-                    vm.errorInvalidDate = true;
-                } else {
-                    vm.errorInvalidDate = false;
-                }
             }
 
             function onInit() {
