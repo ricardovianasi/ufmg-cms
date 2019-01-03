@@ -31,65 +31,80 @@
                 onChangeTime: '&',
                 onChangeDate: '&',
                 isDisable: '=',
+                isRequired: '='
             }
         };
         return directive;
 
-        function link(scope, element, attrs) {
+        function link(scope, element, attrs, ctrl) {
+            ctrl.errorInvalidDate = false;
+            ctrl.errorInvalidHour = false;
+            ctrl.blur = blur;
+            ctrl.changeTime = changeTime;
+            ctrl.changeDate = changeDate;
+
+            function blur() {
+                _isDateValid();
+                ctrl.onBlur();
+            }
+
+            function changeTime() {
+                _isTimeValid();
+                ctrl.onChangeTime();
+            }
+
+            function changeDate() {
+                ctrl.onChangeDate();
+            }
+
+            function _isTimeValid() {
+                let time = _getTime();
+                let patternTime = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/;
+                let isValidHour = patternTime.test(time);
+                if (!isValidHour && !!time) {
+                    ctrl.errorInvalidHour = true;
+                    _setValidity(ctrl.idTime, 'validTime', false);
+                }else {
+                    ctrl.errorInvalidHour = false;
+                    _setValidity(ctrl.idTime, 'validTime', true);
+                }
+            }
+
+            function _isDateValid() {
+                if (!_getDate()) {
+                    ctrl.errorInvalidDate = true;
+                    _setValidity(ctrl.idDate, 'validDate', false);
+                } else {
+                    ctrl.errorInvalidDate = false;
+                    _setValidity(ctrl.idDate, 'validDate', true);
+                }
+            }
+
+            function _getTime() {
+                return ctrl.model[ctrl.namePropTime];
+            }
+
+            function _getDate() {
+                return ctrl.model[ctrl.namePropDate];
+            }
+
+            function _getForm() {
+                return scope.$parent.$parent[ctrl.idForm];
+            }
+
+            function _setValidity(idController, key, isValid) {
+                let form = _getForm();
+                if(isValid) {
+                    delete form.$error[key];
+                    delete form[idController].$error[key];
+                } else {
+                    form[idController].$setValidity(key, isValid);
+                }
+            }
         }
     }
     /* @ngInject */
     function SelectDateTimeDirectiveController () {
 
-        var $ctrl = this;
-
-        $ctrl.errorInvalidDate = false;
-        $ctrl.errorInvalidHour = false;
-        $ctrl.blur = blur;
-        $ctrl.changeTime = changeTime;
-        $ctrl.changeDate = changeDate;
-
-        function blur() {
-            _isDateValid();
-            $ctrl.onBlur();
-        }
-
-        function changeTime() {
-            _isTimeValid();
-            $ctrl.onChangeTime();
-        }
-
-        function changeDate() {
-            $ctrl.onChangeDate();
-        }
-
-        function _isTimeValid() {
-            let time = _getTime();
-            let patternTime = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/;
-            let isValidHour = patternTime.test(time);
-            if (!isValidHour && !!time) {
-                $ctrl.errorInvalidHour = true;
-            }else {
-                $ctrl.errorInvalidHour = false;
-            }
-            console.log('_isTimeValid', $ctrl.errorInvalidHour, time);
-        }
-
-        function _isDateValid() {
-            if (!_getDate()) {
-                $ctrl.errorInvalidDate = true;
-            } else {
-                $ctrl.errorInvalidDate = false;
-            }
-            console.log('_isDateValid', $ctrl.errorInvalidDate);
-        }
-
-        function _getTime() {
-            return $ctrl.model[$ctrl.namePropTime];
-        }
-
-        function _getDate() {
-            return $ctrl.model[$ctrl.namePropDate];
-        }
     }
 })();

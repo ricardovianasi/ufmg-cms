@@ -11,7 +11,7 @@
                 <input id="{{ $ctrl.idDate }}" ui-mask="99/99/9999" ng-blur="$ctrl.blur()" ng-change="$ctrl.changeDate()" type="text" name="{{$ctrl.idDate}}" class="form-control"
                     ng-model="$ctrl.model[$ctrl.namePropDate]" ng-click="$ctrl.datepickerOpt[$ctrl.idDate].open($ctrl, $event)" uib-datepicker-popup="{{ $ctrl.datepickerOpt[$ctrl.idDate].format }}"
                     datepicker-options="$ctrl.datepickerOpt[$ctrl.idDate].dateOptions" is-open="$ctrl.datepickerOpt[$ctrl.idDate].status.opened"
-                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required model-view-value="true"
+                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required="{{ $ctrl.isRequired }}" model-view-value="true"
                     ng-disabled="$ctrl.isDisable">
             </div>
             <div ng-show="$parent[$ctrl.idForm].$submitted" class="error-message" role="alert">
@@ -23,7 +23,7 @@
             <div class="input-group input-group-sm">
                 <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                 <input type="text" ng-change="$ctrl.changeTime()" name="{{$ctrl.idTime}}" title="Hora" class="form-control" ng-model="$ctrl.model[$ctrl.namePropTime]"
-                    ui-mask="99:99" model-view-value="true" required ng-disabled="$ctrl.isDisable">
+                    ui-mask="99:99" model-view-value="true" required="{{ $ctrl.isRequired }}" ng-disabled="$ctrl.isDisable">
             </div>
             <div ng-show="$parent[$ctrl.idForm].$submitted || $parent[$ctrl.idForm][$ctrl.idTime].$touched" class="error-message" role="alert">
                 <div ng-show="$parent[$ctrl.idForm][$ctrl.idTime].$error.required && !$parent[$ctrl.idForm].initDatea.$error.required">Campo obrigatório</div>

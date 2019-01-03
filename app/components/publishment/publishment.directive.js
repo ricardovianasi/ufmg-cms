@@ -261,7 +261,7 @@
             function _validate(formPub) {
                 _validateDate(formPub);
                 var isInvalid = formPub.$invalid;
-                if (vm.errorInvalidHour || vm.errorInvalidDate) {
+                if (formPub.initDatea.$error.validTime || formPub.initDatea.$error.validDate) {
                     validationService.isValid(true);
                     return false;
                 }
@@ -284,11 +284,7 @@
             }
 
             function datePostValidateHour() {
-                var isValidHour = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(vm.obj.scheduled_time);
-                if (!isValidHour && !!vm.obj.scheduled_time) {
-                    vm.errorInvalidHour = true;
-                    return true;
-                } else if (!vm.obj.scheduled_time) {
+                if (!vm.obj.scheduled_time) {
                     return true;
                 } else if (isScheduled(vm.preSaveStatus) && !isDateFuture()) {
                     if (verifyHourFuture()) {
@@ -307,7 +303,6 @@
                 } else {
                     vm.showMessageWarn = false;
                     vm.showMessageError = false;
-                    vm.errorInvalidHour = false;
                 }
                 return false;
             }
