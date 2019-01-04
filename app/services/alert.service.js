@@ -23,7 +23,7 @@
         ////////////////
         function listAlerts(params = '') {
             let url = `${baseUrl}${params}`;
-            return $http.get(baseUrl);
+            return $http.get(url);
         }
 
         function alert(id) {
@@ -41,7 +41,7 @@
 
         function  remove(id) {
             let url = `${baseUrl}/${id}`;
-            return $http.get(url);
+            return $http.delete(url);
         }
 
         function save(data) {

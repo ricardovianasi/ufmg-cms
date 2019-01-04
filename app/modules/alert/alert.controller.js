@@ -6,9 +6,12 @@
         .controller('alertController', alertController);
 
     /** ngInject */
-    function alertController(dataTableConfigService, AlertService, AlertPermissionService) {
+    function alertController(dataTableConfigService, AlertService, AlertPermissionService, ModalService, NotificationService) {
         var vm = this;
 
+        vm.remove = remove;
+
+        vm.dtInstance = {};
 
         activate();
 
@@ -44,6 +47,17 @@
                         fnCallback(records);
                     });
             }
+        }
+
+        function remove(id, title) {
+            ModalService
+                .confirm('Você deseja excluir o alerta <b>' + title + '</b>?', ModalService.MODAL_MEDIUM, { isDanger: true })
+                .result
+                .then(() => AlertService.remove(id))
+                .then(() => {
+                    vm.dtInstance.DataTable.draw();
+                    NotificationService.success('Alerta excluído com sucesso.');
+                });
         }
 
         function _permissions() {
