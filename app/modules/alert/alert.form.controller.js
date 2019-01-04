@@ -6,7 +6,7 @@
         .controller('alertFormController', alertFormController);
 
     /** ngInject */
-    function alertFormController(AlertService, AlertPermissionService, $routeParams) {
+    function alertFormController(AlertService, AlertPermissionService, $routeParams, NotificationService, $location) {
         var vm = this;
 
         vm.saveAlert = saveAlert;
@@ -16,18 +16,21 @@
         ////////////////
 
         function saveAlert() {
-            console.log('saveAlert', vm.alert);
             AlertService.save(vm.alert)
-                .then(res => console.log(res));
+                .then(res => {
+                    $location.path('/alert/edit/' + res.data.id);
+                    NotificationService.success('O alerta foi salvo com sucesso.');
+                });
         }
 
         function activate() {
-            vm.title = 'Cadastrar Alerta';
             vm.idAlert = $routeParams.id;
 
             if(vm.idAlert) {
+                vm.title = 'Editar alerta';
                 loadAlert();
             } else {
+                vm.title = 'Cadastrar alerta';
                 vm.alert = {post_date: new Date(), post_time: '12:00'};
             }
         }

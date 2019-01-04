@@ -64,10 +64,13 @@
         }
 
         function _prepareToSaveDate(date, time) {
+            if(!date || !time) {
+                return;
+            }
             let partTime = time.split(':');
             let dateMoment = moment(date);
             dateMoment.set({'hour': partTime[0], 'minute': partTime[1]});
-            return dateMoment.format("d/MM/YYYY HH:mm");
+            return dateMoment.format("DD/MM/YYYY HH:mm");
         }
 
         function _convertTimeToString(date) {
