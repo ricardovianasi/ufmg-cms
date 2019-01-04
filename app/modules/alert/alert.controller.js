@@ -31,7 +31,7 @@
 
             function alerts(params, fnCallback) {
                 AlertService
-                    .alerts(dataTableConfigService.getParams(params))
+                    .listAlerts(dataTableConfigService.getParams(params))
                     .then(function (res) {
                         _permissions();
                         vm.alerts = res.data.items;

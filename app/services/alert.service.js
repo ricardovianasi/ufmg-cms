@@ -6,16 +6,40 @@
         .factory('AlertService', AlertService);
 
     /** ngInject */
-    function AlertService() {
+    function AlertService(apiUrl, $http) {
+        let baseUrl = `${apiUrl}/alert`;
+
         var service = {
-            alerts:alerts
+            listAlerts:listAlerts,
+            alert:alert,
+            remove: remove,
+            save: save
         };
 
         return service;
 
         ////////////////
-        function alerts() {
+        function listAlerts(params = '') {
+            let url = `${baseUrl}${params}`;
+            return $http.get(baseUrl);
+        }
 
+        function alert(id) {
+            let url = `${baseUrl}/${id}`;
+            return $http.get(url);
+        }
+
+        function  remove(id) {
+            let url = `${baseUrl}/${id}`;
+            return $http.get(url);
+        }
+
+        function save(data) {
+            let url = `${baseUrl}/${id}`;
+            if (id in data) {
+                return $http.put(url, data);
+            }
+            return $http.post(baseUrl, data);
         }
     }
 })();
