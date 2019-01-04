@@ -44,14 +44,8 @@
                         {{ isLoading ? 'Salvando...' : 'Salvar'}}
                     </button>
                 </div>
-                <div class="col" ng-if="obj.id">
-                    <a class="btn btn-gray" ng-href="{{ obj['edition_url'] || obj[moduleCurrent+'_url'] || obj['event_url'] || obj['news_url']}}" target="__blank">
-                        <i class="fa fa-eye"></i>
-                        Visualizar
-                    </a>
-                </div>
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly && canDelete" ng-show="obj.id" type="button" class="btn btn-danger pull-right" ng-click="remove(obj.id)">
+                    <button ng-show="vm.target.id" type="button" class="btn btn-danger pull-right" ng-click="vm.remove()">
                         <i class="fa fa-close"></i>
                         Excluir
                     </button>

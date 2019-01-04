@@ -1,33 +1,33 @@
 <div class="form-group"
-    ng-class="{'has-error':($parent[$ctrl.idForm].$submitted) && $parent[$ctrl.idForm][$ctrl.idDate].$error.required}">
+    ng-class="{'has-error':($ctrl.getForm().$submitted) && $ctrl.getForm()[$ctrl.idDate].$error.required}">
     <label>{{ $ctrl.inputLabel }}</label>
     <div class="select-date">
         <div class="form-group select-date-item">
             <div class="input-group input-group-sm"
-                ng-class="{'has-error':($parent[$ctrl.idForm].$submitted) && ($parent[$ctrl.idForm][$ctrl.idDate].$error.required || $ctrl.errorInvalidDate)}">
+                ng-class="{'has-error':($ctrl.getForm().$submitted) && ($ctrl.getForm()[$ctrl.idDate].$error.required || $ctrl.errorInvalidDate)}">
                 <label for="initDatea" class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </label>
                 <input id="{{ $ctrl.idDate }}" ui-mask="99/99/9999" ng-blur="$ctrl.blur()" ng-change="$ctrl.changeDate()" type="text" name="{{$ctrl.idDate}}" class="form-control"
                     ng-model="$ctrl.model[$ctrl.namePropDate]" ng-click="$ctrl.datepickerOpt[$ctrl.idDate].open($ctrl, $event)" uib-datepicker-popup="{{ $ctrl.datepickerOpt[$ctrl.idDate].format }}"
                     datepicker-options="$ctrl.datepickerOpt[$ctrl.idDate].dateOptions" is-open="$ctrl.datepickerOpt[$ctrl.idDate].status.opened"
-                    clear-text="Limpar" close-text="Fechar" current-text="Agora" required="{{ $ctrl.isRequired }}" model-view-value="true"
+                    clear-text="Limpar" close-text="Fechar" current-text="Agora" ng-required="$ctrl.isRequired" model-view-value="true"
                     ng-disabled="$ctrl.isDisable">
             </div>
-            <div ng-show="$parent[$ctrl.idForm].$submitted" class="error-message" role="alert">
-                <div ng-show="$parent[$ctrl.idForm][$ctrl.idDate].$error.required">Campo obrigatório</div>
-                <div ng-show="$ctrl.errorInvalidDate && !$parent[$ctrl.idForm][$ctrl.idDate].$error.required">Data inválida</div>
+            <div ng-show="$ctrl.getForm().$submitted" class="error-message" role="alert">
+                <div ng-show="$ctrl.getForm()[$ctrl.idDate].$error.required">Campo obrigatório</div>
+                <div ng-show="$ctrl.errorInvalidDate && !$ctrl.getForm()[$ctrl.idDate].$error.required">Data inválida</div>
             </div>
         </div>
-        <div class="form-group select-hour-item" ng-class="{'has-error':($parent[$ctrl.idForm].$submitted || $parent[$ctrl.idForm][$ctrl.idTime].$touched) && ($parent[$ctrl.idForm][$ctrl.idTime].$error.required || $ctrl.errorInvalidHour)}">
+        <div class="form-group select-hour-item" ng-class="{'has-error':($ctrl.getForm().$submitted || $ctrl.getForm()[$ctrl.idTime].$touched) && ($ctrl.getForm()[$ctrl.idTime].$error.required || $ctrl.errorInvalidHour)}">
             <div class="input-group input-group-sm">
                 <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                 <input type="text" ng-change="$ctrl.changeTime()" name="{{$ctrl.idTime}}" title="Hora" class="form-control" ng-model="$ctrl.model[$ctrl.namePropTime]"
-                    ui-mask="99:99" model-view-value="true" required="{{ $ctrl.isRequired }}" ng-disabled="$ctrl.isDisable">
+                    ui-mask="99:99" model-view-value="true" ng-required="$ctrl.isRequired" ng-disabled="$ctrl.isDisable">
             </div>
-            <div ng-show="$parent[$ctrl.idForm].$submitted || $parent[$ctrl.idForm][$ctrl.idTime].$touched" class="error-message" role="alert">
-                <div ng-show="$parent[$ctrl.idForm][$ctrl.idTime].$error.required && !$parent[$ctrl.idForm].initDatea.$error.required">Campo obrigatório</div>
-                <div ng-show="$ctrl.errorInvalidHour && !$parent[$ctrl.idForm].initHour.$error.required">Data inválida</div>
+            <div ng-show="$ctrl.getForm().$submitted || $ctrl.getForm()[$ctrl.idTime].$touched" class="error-message" role="alert">
+                <div ng-show="$ctrl.getForm()[$ctrl.idTime].$error.required">Campo obrigatório</div>
+                <div ng-show="$ctrl.errorInvalidHour && !$ctrl.getForm().initHour.$error.required">Data inválida</div>
             </div>
         </div>
     </div>

@@ -6,10 +6,11 @@
         .controller('alertFormController', alertFormController);
 
     /** ngInject */
-    function alertFormController(AlertService, AlertPermissionService, $routeParams, NotificationService, $location) {
+    function alertFormController(AlertService, AlertPermissionService, $routeParams, NotificationService, $location, ModalService) {
         var vm = this;
 
         vm.saveAlert = saveAlert;
+        vm.removeAlert = removeAlert;
 
         activate();
 
@@ -23,6 +24,25 @@
                 });
         }
 
+        function removeAlert() {
+            ModalService
+                .confirm('Você deseja excluir este alerta?', ModalService.MODAL_MEDIUM, { isDanger: true })
+                .result
+                .then(() => AlertService.remove(id))
+                .then(() => {
+                    NotificationService.success('O alerta excluído com sucesso.');
+                    $location.path('/alert');
+                });
+        }
+
+        function loadAlert() {
+            AlertService.alert(vm.idAlert)
+                .then(alert => {
+                    vm.alert = alert;
+                    console.log(vm.alert);
+                });
+        }
+
         function activate() {
             vm.idAlert = $routeParams.id;
 
@@ -31,17 +51,8 @@
                 loadAlert();
             } else {
                 vm.title = 'Cadastrar alerta';
-                vm.alert = {post_date: new Date(), post_time: '12:00'};
+                vm.alert = {post_date: new Date(), post_time: '12:00', status: 'draft'};
             }
-        }
-
-        function loadAlert() {
-
-            AlertService.alert(vm.idAlert)
-                .then(alert => {
-                    vm.alert = alert;
-                    console.log(vm.alert);
-                });
         }
     }
 })();

@@ -20,7 +20,8 @@
             restrict: 'E',
             scope: {
                 target: '=',
-                methodPublish: '&'
+                methodPublish: '&',
+                methodRemove: '&'
             }
         };
         return directive;
@@ -29,10 +30,15 @@
             _initDatePickerOptions();
 
             ctrl.publish = publish;
+            ctrl.remove = remove;
 
             function publish(formPubAlert) {
                 console.log('publish', formPubAlert);
                 ctrl.methodPublish();
+            }
+
+            function remove() {
+                ctrl.methodRemove();
             }
 
             function _initDatePickerOptions() {

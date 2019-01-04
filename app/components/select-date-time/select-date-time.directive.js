@@ -42,6 +42,7 @@
             ctrl.blur = blur;
             ctrl.changeTime = changeTime;
             ctrl.changeDate = changeDate;
+            ctrl.getForm = getForm;
 
             function blur() {
                 _isDateValid();
@@ -88,7 +89,7 @@
                 return ctrl.model[ctrl.namePropDate];
             }
 
-            function _getForm() {
+            function getForm() {
                 if(scope.$parent[ctrl.idForm]) {
                     return scope.$parent[ctrl.idForm];
                 } else {
@@ -97,7 +98,7 @@
             }
 
             function _setValidity(idController, key, isValid) {
-                let form = _getForm();
+                let form = getForm();
                 if(isValid) {
                     delete form.$error[key];
                     delete form[idController].$error[key];
