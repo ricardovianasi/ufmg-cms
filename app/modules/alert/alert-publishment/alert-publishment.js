@@ -5,8 +5,8 @@
         .module('alertPortalModule')
         .directive('alertPublishment', alertPublishment);
 
-    alertPublishment.$inject = ['DateTimeHelper'];
-    function alertPublishment(DateTimeHelper) {
+    alertPublishment.$inject = ['DateTimeHelper', 'NotificationService'];
+    function alertPublishment(DateTimeHelper, NotificationService) {
         // Usage:
         //
         // Creates:
@@ -33,8 +33,12 @@
             ctrl.remove = remove;
 
             function publish(formPubAlert) {
-                console.log('publish', formPubAlert);
-                ctrl.methodPublish();
+                let formAlert = scope.$parent.formData;
+                if(formPubAlert.$valid && formAlert.$valid) {
+                    ctrl.methodPublish();
+                } else {
+                    NotificationService.error('Existem campos obrigatórios vazios ou inválidos.');
+                }
             }
 
             function remove() {
