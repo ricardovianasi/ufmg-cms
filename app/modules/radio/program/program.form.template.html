@@ -48,7 +48,7 @@
                 <label>Bloco:</label>
                 <span ng-show="vm.program.schedule.id" ng-click="vm.program.schedule = null" class="btn btn-link text-danger remove-padding remove-margin"><i class="fa fa-trash"></i>Remover do bloco</span>
                 <ui-select ng-model="vm.program.id_schedule" theme="bootstrap" class="ui-select" title="Busque um bloco para adicionar o programa">
-                    <ui-select-match placeholder="Busque um bloco para adicionar o programa">{{ $select.selected.name }}</ui-select-match>
+                    <ui-select-match placeholder="Digite para adicionar ou buscar um bloco na lista">{{ $select.selected.name }}</ui-select-match>
                     <ui-select-choices repeat="schedule.id as schedule in vm.listParents | filter: { name: $select.search } track by $index">
                         <div ng-bind-html="schedule.name | highlight: $select.search"></div>
                     </ui-select-choices>
@@ -140,7 +140,7 @@
                         <label ng-if="day.isExtraordinary" class="col-md-6 col-xs-12 mv-10 news-extra weight-300 check-day">
                             <span class="uppercase"> {{ day.label }} </span>
                             <input type="checkbox" ng-model="vm.program.highlight">
-                            <p class="text-black">Ao Salvar esta opção, a programação atual será imediatamente substituída.</p>
+                            <p class="text-black">Ao salvar esta opção, o programa em streaming ficara em stand by.</p>
                             <span class="checkmark checkmark-extra"></span>
                         </label>
                     </div>

@@ -36,7 +36,7 @@
             return {
                 id: data ? data.id : '',
                 title: data ? data.title : '',
-                status: data ? data.status : 'published',
+                status: data ? data.status : 'draft',
                 highlight: data ? data.highlight : false,
                 id_schedule: data && data.schedule ? data.schedule.id : null,
                 description: data ? data.description: '',
