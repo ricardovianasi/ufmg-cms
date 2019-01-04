@@ -24,7 +24,7 @@ server '150.164.30.240',
 #    forward_agent: true,
 #    auth_methods: %w(publickey password),
 #    passphrase: '@cedecomUFMG245BH'
-#  }
+#}
 
 #server '150.164.30.18',
 #  user: 'user_cedecom',
@@ -35,7 +35,7 @@ server '150.164.30.240',
 #    forward_agent: true,
 #    auth_methods: %w(publickey password),
 #    passphrase: '@cedecomUFMG245BH'
-#  }
+#}
 
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
