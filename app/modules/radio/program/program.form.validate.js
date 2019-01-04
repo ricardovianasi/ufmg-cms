@@ -20,7 +20,7 @@
             let control = form[field];
             let isValid = control.$valid || !control.$touched;
             if (submit) {
-                isValid = isValid || !form.$submitted;
+                isValid = !form.$submitted || isValid;
             }
             return isValid;
         }

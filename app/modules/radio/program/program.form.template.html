@@ -34,12 +34,12 @@
 <form can-get name="formData" ng-submit="vm.save(formData.$valid)" class="form row" novalidate>
     <div class="col-xs-8 panel panel-default">
         <div class="row">
-            <div class="col-xs-12 form-group" ng-class="{'has-error': !vm.fnsForm.isValidControlForm(formData, 'title')}">
+            <div class="col-xs-12 form-group" ng-class="{'has-error': !vm.fnsForm.isValidControlForm(formData, 'title', true)}">
                 <label>Nome</label>
                 <input type="text" class="form-control" ng-model="vm.program.title" ng-maxlength="45" maxlength="45" name="title" required>
-                <div ng-show="!formData.title.$valid" class="error-message" role="alert">
-                    <div ng-show="vm.formData.title.$error.required">Campo obrigatório</div>
-                    <div ng-show="vm.formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
+                <div ng-show="!vm.fnsForm.isValidControlForm(formData, 'title', true)" class="error-message" role="alert">
+                    <div ng-show="formData.title.$error.required">Campo obrigatório</div>
+                    <div ng-show="formData.title.$error.maxlength">Tamanho máximo de 45 caracteres</div>
                 </div>
             </div>
         </div>
