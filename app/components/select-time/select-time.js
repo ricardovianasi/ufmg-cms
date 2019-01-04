@@ -55,7 +55,6 @@
         function _setSelectHour() {
             $ctrl.listHours = [...Array(24).keys()].map(function(n) {return pad2(n);});
             $ctrl.listMinutes = [...Array(60).keys()]
-                .filter(function(n) { return n % 5 == 0; })
                 .map(function(n) {return pad2(n);});
         }
 
