@@ -7,7 +7,7 @@
                 <div class="form-group" ng-class="{'has-error':(formPubAlert.$submitted || formPubAlert.pickStatus.$touched) && formPubAlert.pickStatus.$error.required}">
                     <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="A alteração do status influencia na disponibilidade da página no portal."></i>
                     <label>Status: </label>
-                    <select class="form-control" ng-model="vm.preSaveStatus" placeholder="Selecione o status da publicação">
+                    <select class="form-control" ng-model="vm.target.status" placeholder="Selecione o status da publicação">
                         <option ng-repeat="item in ['draft', 'published', 'scheduled'] track by $index" ng-value="item">{{item | translate}}</option>
                     </select>
                     <div ng-show="formPubAlert.$submitted || formPubAlert.pickStatus.$touched" class="error-message" role="alert">
@@ -18,15 +18,13 @@
             <select-date-time-directive class="date" input-label="Data/Hora início:"
                 id-form="formPubAlert" id-date="initDate" id-time="initTime"
                 model="vm.target" name-prop-date="post_date" name-prop-time="post_time"
-                datepicker-opt="vm.initdatepickerOpt" on-change-time="vm.onChangeInitTime()" on-change-date="vm.onChangeInitDate()"
-                is-disable="false" is-required="true">
+                datepicker-opt="vm.initdatepickerOpt" is-disable="false" is-required="true">
             </select-date-time-directive>
 
             <select-date-time-directive class="date" input-label="Data/Hora final:"
                 id-form="formPubAlert" id-date="endDate" id-time="endTime"
                 model="vm.target" name-prop-date="end_date" name-prop-time="end_time"
-                datepicker-opt="vm.enddatepickerOpt" on-change-time="vm.onChangeEndTime()" on-change-date="vm.onChangeEndDate()"
-                is-disable="false" is-required="true">
+                datepicker-opt="vm.enddatepickerOpt" is-disable="false" is-required="false">
             </select-date-time-directive>
         </div>
         <div class="publishment-message" ng-class="{'publishment-message-error': showMessageError, 'publishment-message-warn': showMessageWarn, 'publishment-message-active': showMessageError || showMessageWarn}">

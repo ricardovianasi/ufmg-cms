@@ -89,7 +89,11 @@
             }
 
             function _getForm() {
-                return scope.$parent.$parent[ctrl.idForm];
+                if(scope.$parent[ctrl.idForm]) {
+                    return scope.$parent[ctrl.idForm];
+                } else {
+                    return scope.$parent.$parent[ctrl.idForm];
+                }
             }
 
             function _setValidity(idController, key, isValid) {

@@ -28,30 +28,11 @@
         function link(scope, element, attrs, ctrl) {
             _initDatePickerOptions();
 
-            ctrl.onChangeInitTime = onChangeInitTime;
-            ctrl.onChangeInitDate = onChangeInitDate;
-            ctrl.onChangeEndTime = onChangeEndTime;
-            ctrl.onChangeEndDate = onChangeEndDate;
+            ctrl.publish = publish;
 
             function publish(formPubAlert) {
                 console.log('publish', formPubAlert);
                 ctrl.methodPublish();
-            }
-
-            function onChangeInitTime() {
-
-            }
-
-            function onChangeInitDate() {
-
-            }
-
-            function onChangeEndTime() {
-
-            }
-
-            function onChangeEndDate() {
-
             }
 
             function _initDatePickerOptions() {
