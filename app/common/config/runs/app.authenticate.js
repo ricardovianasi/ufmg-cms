@@ -163,7 +163,7 @@
             var pathOne = hash.split('/')[1];
             let pages = [
                 'calendar', 'clipping', 'events', 'faq', 'gallery', 'tags', 'highlighted_press',
-                'menu', 'page', 'periodical', 'release', 'user', 'radio_thumb',
+                'menu', 'page', 'periodical', 'release', 'user', 'radio_thumb', 'alert',
                 'radio_programming_grid', 'radio_programming', 'radio_genre', 'radio_category'];
             let idx = pages.indexOf(pathOne);
             if (idx !== -1) {

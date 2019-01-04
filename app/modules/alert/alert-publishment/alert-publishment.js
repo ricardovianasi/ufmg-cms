@@ -20,6 +20,7 @@
             restrict: 'E',
             scope: {
                 target: '=',
+                permission: '=',
                 methodPublish: '&',
                 methodRemove: '&'
             }

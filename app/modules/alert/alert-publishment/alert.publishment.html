@@ -39,13 +39,13 @@
         <div class="publishment-footer">
             <div class="actions">
                 <div class="col">
-                    <button ng-if="!$parent.viewOnly" id="publish-button" ng-disabled="showMessageError || isLoading" type="submit" class="btn btn-secondary">
+                    <button ng-if="vm.permission.canPost || vm.permission.canPut" id="publish-button" type="submit" class="btn btn-secondary">
                         <i class="fa fa-check"></i>
                         {{ isLoading ? 'Salvando...' : 'Salvar'}}
                     </button>
                 </div>
                 <div class="col">
-                    <button ng-show="vm.target.id" type="button" class="btn btn-danger pull-right" ng-click="vm.remove()">
+                    <button ng-if="vm.target.id && vm.permission.canDelete" type="button" class="btn btn-danger pull-right" ng-click="vm.remove()">
                         <i class="fa fa-close"></i>
                         Excluir
                     </button>

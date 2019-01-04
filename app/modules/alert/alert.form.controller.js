@@ -6,7 +6,7 @@
         .controller('alertFormController', alertFormController);
 
     /** ngInject */
-    function alertFormController(AlertService, AlertPermissionService, $routeParams, NotificationService, $location, ModalService) {
+    function alertFormController(AlertService, AlertPermissionService, $routeParams, NotificationService, $location, ModalService, authService) {
         var vm = this;
 
         vm.saveAlert = saveAlert;
@@ -28,7 +28,7 @@
             ModalService
                 .confirm('Você deseja excluir este alerta?', ModalService.MODAL_MEDIUM, { isDanger: true })
                 .result
-                .then(() => AlertService.remove(id))
+                .then(() => AlertService.remove(vm.idAlert))
                 .then(() => {
                     NotificationService.success('O alerta excluído com sucesso.');
                     $location.path('/alert');
@@ -43,9 +43,16 @@
                 });
         }
 
+        function _permissions() {
+            authService.account()
+                .then(() => {
+                    vm.permission = AlertPermissionService.permissions();
+                });
+        }
+
         function activate() {
             vm.idAlert = $routeParams.id;
-
+            _permissions();
             if(vm.idAlert) {
                 vm.title = 'Editar alerta';
                 loadAlert();
