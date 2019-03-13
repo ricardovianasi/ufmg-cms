@@ -5,7 +5,7 @@
         .directive('publishmentOptions', PublishmentOptions);
 
     /** ngInject */
-    function PublishmentOptions( $location, $filter, $q, validationService, StatusService, DateTimeHelper,
+    function PublishmentOptions( $log, $location, $filter, $q, validationService, StatusService, DateTimeHelper,
         PermissionService, $rootScope, $timeout, ModalService) {
 
         return {
@@ -261,7 +261,11 @@
             function _validate(formPub) {
                 _validateDate(formPub);
                 var isInvalid = formPub.$invalid;
-                if (formPub.initDatea.$error.validTime || formPub.initDatea.$error.validDate) {
+
+                $log.info(formPub);
+
+                //if (formPub.initDatea.$error.validTime || formPub.initDatea.$error.validDate) {
+                if (vm.errorInvalidHour || vm.errorInvalidDate) {
                     validationService.isValid(true);
                     return false;
                 }
