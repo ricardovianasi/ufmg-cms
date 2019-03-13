@@ -262,10 +262,7 @@
                 _validateDate(formPub);
                 var isInvalid = formPub.$invalid;
 
-                $log.info(formPub);
-
-                //if (formPub.initDatea.$error.validTime || formPub.initDatea.$error.validDate) {
-                if (vm.errorInvalidHour || vm.errorInvalidDate) {
+                if (formPub.initDatea && (formPub.initDatea.$error.validTime || formPub.initDatea.$error.validDate)) {
                     validationService.isValid(true);
                     return false;
                 }
