@@ -17,6 +17,7 @@
         vm.status = [];
         vm.types = [];
         vm.highlight_ufmg_visible = true;
+        vm.canSlug = PermissionService.canPutSlug($routeParams.typeNews, $routeParams.id);
 
         vm.datepickerOpt = {
             initDate: DateTimeHelper.getDatepickerOpt()

@@ -23,6 +23,7 @@
         vm.typeNews = $routeParams.typeNews;
 
         vm.canPermission = PermissionService.canPost(vm.typeNews);
+        vm.canSlug = PermissionService.canPutSlug(vm.typeNews, vm.id);
 
         vm.title = 'Nova Notícia';
         vm.breadcrumb = 'Nova Notícia';

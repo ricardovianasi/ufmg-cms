@@ -207,6 +207,7 @@
         }
 
         function _setPermission(objPermission) {
+
             const isDefinedPermissions = angular.isDefined(objPermission.permissions);
             const hasModuleToHandle = PermissionPageService.hasModuleToHandle(objPermission.modules);
             vm.viewOnly = !isDefinedPermissions ||
@@ -214,6 +215,7 @@
             vm.isSuperPut = isDefinedPermissions ? objPermission.permissions.putSuper : false;
             vm.canPutTag = isDefinedPermissions ? objPermission.permissions.putTag : false;
             vm.configPerm = objPermission;
+            vm.canPutSlug = isDefinedPermissions ? objPermission.permissions.putSlug : false;
         }
 
         function activate() {

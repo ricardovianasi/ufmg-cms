@@ -13,7 +13,7 @@
         $rootScope.User = null;
         let showMessage = null;
         let TYPES_PERMISSIONS = Object.freeze({ POST: 'POST', GET: 'GET', PUT: 'PUT', DELETE: 'DELETE', PUTTAG: 'PUTTAG',
-            PUTSPECIAL: 'PUTSPECIAL' });
+            PUTSPECIAL: 'PUTSPECIAL', PUTSLUG: 'PUTSLUG' });
         let service = {
             check: check,
             initService: initService,
@@ -22,6 +22,7 @@
             canPut: canPut,
             canGet: canGet,
             canPutTag: canPutTag,
+            canPutSlug: canPutSlug,
             canPutSpecial: canPutSpecial,
             run: initService,
             hasPermission: hasPermission,
@@ -206,6 +207,10 @@
 
         function canPutTag(context, id) {
             return check(context, id, TYPES_PERMISSIONS.PUTTAG);
+        }
+
+        function canPutSlug(context, id) {
+            return check(context, id, TYPES_PERMISSIONS.PUTSLUG);
         }
 
         function canPutSpecial(context, id) {
