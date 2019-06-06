@@ -5,7 +5,7 @@
         .factory('NewsService', NewsService);
 
     /** ngInject */
-    function NewsService($http, $filter, apiUrl, ServerService) {
+    function NewsService($http, $filter, apiUrl, $rootScope, ServerService, authService) {
 
         function convertPostDateToSend(data) {
             var datePost = new Date(data.scheduled_date);

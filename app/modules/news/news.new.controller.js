@@ -22,8 +22,7 @@
         var vm = $scope;
         vm.typeNews = $routeParams.typeNews;
 
-        vm.canPermission = PermissionService.canPost(vm.typeNews);
-        vm.canSlug = PermissionService.canPutSlug(vm.typeNews, vm.id);
+
 
         vm.title = 'Nova Notícia';
         vm.breadcrumb = 'Nova Notícia';
@@ -96,7 +95,16 @@
                         break;
                     }
                 }
+
+                vm.canPermission = PermissionService.canPost(vm.typeNews);
+                vm.canSlug = PermissionService.canPutSlug(vm.typeNews, vm.id);
+
+                log('************************');
+                log(vm.canSlug);
+                log('************************');
             });
+
+
 
         StatusService.getStatus().then(function (data) {
             vm.status = data.data;
