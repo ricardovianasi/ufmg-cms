@@ -98,10 +98,6 @@
 
                 vm.canPermission = PermissionService.canPost(vm.typeNews);
                 vm.canSlug = PermissionService.canPutSlug(vm.typeNews, vm.id);
-
-                log('************************');
-                log(vm.canSlug);
-                log('************************');
             });
 
 
