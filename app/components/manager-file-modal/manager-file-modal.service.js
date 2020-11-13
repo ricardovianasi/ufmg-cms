@@ -33,7 +33,7 @@
         };
         var AUDIO = {
             name: 'Audio',
-            files: 'AIF,IFF,M3U,M4A,MID,MP3,MPA,WAV,WMA'.toLowerCase()
+            files: 'AIF,IFF,M3U,M4A,MID,MP3,MPA,WAV,WMA,MPEG'.toLowerCase()
         };
         var APRESENTATION = {
             name: 'Apresentação',

@@ -187,6 +187,7 @@
 
         function _isValidFile(file) {
             var currentExtension = file.type.split('/')[1];
+            console.log(currentExtension);
             for (var j = 0; j < vm.EXTENSION.length; j += 1) {
                 var extensions = vm.EXTENSION[j].files;
                 if (extensions === 'all') {
